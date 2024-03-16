@@ -8,6 +8,10 @@ const locals = Astro.locals as Locals;
 const isLoggedIn = locals.isLoggedIn;
 const sessions = await lucia.getUserSessions(locals.dbUser.id);
 
+if (!isLoggedIn) {
+    return Astro.redirect('/dashboard/login');
+}
+
 const getUserName = () => {
   if (locals.isLoggedIn) {
 	if (locals.dbUser.name) {
@@ -35,9 +39,6 @@ const role = async () => {
     return title;
 }
 
-if (!isLoggedIn) {
-    return Astro.redirect('/dashboard/login');
-}
 
 ---
 

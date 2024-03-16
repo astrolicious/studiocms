@@ -1,11 +1,17 @@
 ---
-import { Blog, db } from 'astro:db';
+import { Blog, db, eq } from 'astro:db';
 import { marked } from 'marked';
 import BlogPost from '../../layouts/BlogPost.astro';
 
 const { slug } = Astro.params;
 
-const post = (await db.select().from(Blog)).find((post) => post.slug === slug);
+if (!slug) {
+	return Astro.redirect('/404');
+}
+
+const postArrayed = await db.select().from(Blog).where(eq(Blog.slug, slug));
+
+const post = postArrayed[0];
 
 if (!post) {
 	return Astro.redirect('/404');
