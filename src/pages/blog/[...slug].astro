@@ -40,7 +40,8 @@ type Props = {
 	heroImage={post.heroImage} 
 	publishedAt={post.publishedAt} 
 	updatedAt={post.updatedAt} >
-	{isLoggedIn && isAdmin(locals.dbUser.username) && (
+	{ //@ts-ignore
+	isLoggedIn && isAdmin(locals.dbUser.username) && (
 		<a href={`/dashboard/edit/${post.slug}`}><button class="btn">✏️ Edit Post</button></a>
 		)}
 	<Fragment 
