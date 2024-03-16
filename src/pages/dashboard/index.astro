@@ -1,10 +1,14 @@
 ---
 import Default from "../../layouts/Default.astro"
 import type { Locals } from "./locals";
+import { Admins, db } from 'astro:db';
 
 const locals = Astro.locals as Locals;
 const isLoggedIn = locals.isLoggedIn;
 
+if (!isLoggedIn) {
+    return Astro.redirect('/dashboard/login');
+}
 
 const getUserName = () => {
   if (locals.isLoggedIn) {
@@ -18,9 +22,14 @@ const getUserName = () => {
   }
 };
 
-if (!isLoggedIn) {
-    return Astro.redirect('/dashboard/login');
-}
+const adminList = await db.select().from(Admins);
+
+const isAdmin = async (user: string) => {
+    if (adminList.includes({GitHubUsername: user})) {
+        return true;
+    }
+    return false;
+};
 
 ---
 
@@ -37,6 +46,9 @@ if (!isLoggedIn) {
                 Currently logged in user: <bold>{getUserName}</bold> | <a href="/dashboard/profile">More info...</a>
                 </p>
 
+                { isAdmin(locals.user.username) && (
+                    <button class="btn" onclick="window.location.href='/dashboard/new-post'">Create a new post</button>
+                )}
                 
             </div>
         </div>
@@ -65,6 +77,15 @@ if (!isLoggedIn) {
     button {
         padding: 1rem;
         background-color: rgb(202, 0, 0);
+        font-weight: bold;
+        color: #fff;
+        border: none;
+        border-radius: 99rem;
+        cursor: pointer;
+    }
+    .btn {
+        padding: 1rem;
+        background-color: rgb(0, 37, 202);
         font-weight: bold;
         color: #fff;
         border: none;

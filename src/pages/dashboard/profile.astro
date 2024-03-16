@@ -13,15 +13,14 @@ if (!isLoggedIn) {
 }
 
 const getUserName = () => {
-  if (locals.isLoggedIn) {
-	if (locals.dbUser.name) {
-		return locals.dbUser.name;
-	} else {
-		return locals.user.username;
-	}
-  } else {
-	return 'Astronaut';
-  }
+    if (locals.isLoggedIn) {
+	    if (locals.dbUser.name) {
+		    return locals.dbUser.name;
+	    } else {
+		    return locals.user.username;
+	    }
+    }
+	return null;
 };
 
 const adminList = await db.select().from(Admins);
@@ -38,7 +37,6 @@ const role = async () => {
     const title = isAdmin(locals.dbUser.username) ? 'Admin' : 'User';
     return title;
 }
-
 
 ---
 
