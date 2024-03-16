@@ -104,7 +104,7 @@ if (Astro.request.method === 'POST') {
                     <label for="hero-image">Hero Image:</label><br>
                     <input type="text" id="hero-image" name="hero-image" required><br><br>
                     <label for="content">Content:</label><br>
-                    <textarea id="content" name="content" required></textarea><br><br>
+                    <textarea id="content" name="content" data-provide="markdown" rows="10" required></textarea><br><br>
 
                     <button class="btn" type="submit">Create!</button>
 
