@@ -46,7 +46,8 @@ const isAdmin = async (user: string) => {
                 Currently logged in user: <bold>{getUserName}</bold> | <a href="/dashboard/profile">More info...</a>
                 </p>
 
-                { isAdmin(locals.user.username) && (
+                { //@ts-ignore
+                 isAdmin(locals.user.username) && (
                     <button class="btn" onclick="window.location.href='/dashboard/new-post'">Create a new post</button>
                 )}
                 

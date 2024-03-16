@@ -69,8 +69,7 @@ if (Astro.request.method === 'POST') {
             return new Response('Error creating post', { status: 500 });
         });
 
-    return Astro.redirect('/dashboard');
-
+    return Astro.redirect('/dashboard')
 }
 
 ---
