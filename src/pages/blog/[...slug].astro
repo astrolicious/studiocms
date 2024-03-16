@@ -1,0 +1,27 @@
+---
+import { Blog, db } from 'astro:db';
+import { marked } from 'marked';
+import BlogPost from '../../layouts/BlogPost.astro';
+
+const { slug } = Astro.params;
+
+const post = (await db.select().from(Blog)).find((post) => post.slug === slug);
+
+if (!post) {
+	return Astro.redirect('/404');
+}
+
+type Props = {
+	post: typeof Blog.$inferSelect;
+};
+---
+
+<BlogPost 
+	title={post.title} 
+	description={post.description} 
+	heroImage={post.heroImage} 
+	publishedAt={post.publishedAt} 
+	updatedAt={post.updatedAt} >
+	<Fragment 
+		set:html={marked(post.content, { async: true })} />
+</BlogPost>

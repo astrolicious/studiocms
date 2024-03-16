@@ -1,0 +1,39 @@
+---
+import { Cloudinary } from '@cloudinary/url-gen';
+
+const cld = new Cloudinary({
+  cloud: {
+    cloudName: import.meta.env.CLOUDINARY_CLOUD_NAME
+  }
+});
+
+const { src, ...props } = Astro.props;
+
+let cldSrc = cld.image(src)
+                .format('auto')
+                .delivery('q_auto')
+                .resize(`w_${props.width},h_${props.height},c_lfill,f_auto`);
+
+function isLocalImage(src: string) {
+    if (src.startsWith('/')) {
+        return true;
+    }
+    return false;
+}
+
+
+if (src.startsWith('https://')) {
+    cldSrc.setDeliveryType('fetch');
+}
+
+const imgSRC = isLocalImage(src) ? src : cldSrc.toURL();
+
+interface Props {
+    src: string;
+    alt: string;
+    width: string|number;
+    height: string|number;
+}
+---
+
+<img src={imgSRC} loading="lazy" {...props} />

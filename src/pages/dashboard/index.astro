@@ -1,0 +1,74 @@
+---
+import Default from "../../layouts/Default.astro"
+import type { Locals } from "./locals";
+
+const locals = Astro.locals as Locals;
+const isLoggedIn = locals.isLoggedIn;
+
+
+const getUserName = () => {
+  if (locals.isLoggedIn) {
+	if (locals.dbUser.name) {
+		return locals.dbUser.name;
+	} else {
+		return locals.user.username;
+	}
+  } else {
+	return 'Astronaut';
+  }
+};
+
+if (!isLoggedIn) {
+    return Astro.redirect('/dashboard/login');
+}
+
+---
+
+<Default>
+        <div class="dash">
+            <form method="post" action="/dashboard/logout">
+                <button>Logout</button>
+            </form>
+            <center>
+                <h1>Dashboard</h1>
+            </center>
+            <div>
+                <p class="font-small">
+                Currently logged in user: <bold>{getUserName}</bold> | <a href="/dashboard/profile">More info...</a>
+                </p>
+
+                
+            </div>
+        </div>
+</Default>
+
+<style>
+    .dash {
+        padding: 2rem;
+        border: 2px solid #ccc;
+        border-radius: 5rem;
+        background-color: #fff;
+        margin: 2rem;
+        
+    }
+    bold {
+        font-weight: bold;
+    }
+    .font-small {
+        font-size: 1rem;
+    }
+    form {
+        display: flex;
+        justify-content: flex-end;
+        padding-right: 4rem;
+    }
+    button {
+        padding: 1rem;
+        background-color: rgb(202, 0, 0);
+        font-weight: bold;
+        color: #fff;
+        border: none;
+        border-radius: 99rem;
+        cursor: pointer;
+    }
+</style>
