@@ -1,4 +1,4 @@
-import { Admins, Blog, db } from 'astro:db';
+import { Pages, Admins, Blog, db } from 'astro:db';
 
 const LOREM_IPSUM =
 	'## It\'s Alive! \nLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.';
@@ -16,5 +16,21 @@ export default async function seed() {
 	]);
 	await db.insert(Admins).values([
 		{ GitHubUsername: 'Adammatthiesen' },
+	]);
+	await db.insert(Pages).values([
+		{
+			title: 'Home',
+			slug: 'index',
+			description: 'Index page',
+			heroImage: '/blog-placeholder-1.jpg',
+			content: LOREM_IPSUM,
+		},
+		{
+			title: 'About',
+			slug: 'about',
+			description: 'About page',
+			heroImage: '/blog-placeholder-1.jpg',
+			content: LOREM_IPSUM,
+		},
 	]);
 }

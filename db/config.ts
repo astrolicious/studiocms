@@ -1,5 +1,5 @@
 import { defineDb } from 'astro:db';
-import { Blog, Session, User, Admins } from './tables';
+import { Blog, Pages, Session, User, Admins } from './tables';
 
 // https://astro.build/db/config
 export default defineDb({
@@ -8,5 +8,6 @@ export default defineDb({
 		Session,
 		User,
 		Admins,
+		Pages,
 	},
 });

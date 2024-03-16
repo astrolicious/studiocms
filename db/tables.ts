@@ -43,3 +43,17 @@ export const Blog = defineTable({
 		content: column.text({ multiline: true }),
 	},
 });
+
+export const Pages = defineTable({
+	columns: {
+		id: column.number({ primaryKey: true }),
+		title: column.text(),
+		description: column.text(),
+		publishedAt: column.date({ default: NOW }),
+		slug: column.text(),
+		heroImage: column.text({
+			default: '/blog-placeholder-1.jpg',
+		}),
+		content: column.text({ multiline: true }),
+	},
+});
