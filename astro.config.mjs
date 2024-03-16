@@ -9,4 +9,7 @@ export default defineConfig({
 	output: "server",
 	adapter: vercel(),
 	integrations: [db(), sitemap()],
+	image: {
+		domains: ['res.cloudinary.com']
+	}
 });

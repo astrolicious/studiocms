@@ -1,7 +1,17 @@
 ---
-import Default from "../../layouts/Default.astro"
-import type { Locals } from "./locals";
+import Default from "../../../layouts/Default.astro"
+import type { Locals } from "../locals";
 import { Blog, Admins, db, eq } from 'astro:db';
+
+const { slug } = Astro.params;
+
+if (!slug) {
+	return new Response('No slug provided', { status: 400 });
+}
+
+const postArrayed = await db.select().from(Blog).where(eq(Blog.slug, slug));
+
+const post = postArrayed[0];
 
 const locals = Astro.locals as Locals;
 const isLoggedIn = locals.isLoggedIn;
@@ -44,30 +54,24 @@ if (Astro.request.method === 'POST') {
     }).formData();
 
     const title = formData.get('title');
-    const slug = formData.get('slug');
     const description = formData.get('description');
     const heroImage = formData.get('hero-image');
     const content = formData.get('content');
 
-    const postArrayed = await db.select().from(Blog).where(eq(Blog.slug, slug as string));
-    const existingPost = postArrayed[0];
-
-    if (existingPost) {
-        return new Response('Post with that slug already exists', { status: 400 });
-    }
-
-    await db.insert(Blog)
-        .values({
-            title: title as string,
-            slug: slug as string,
-            description: description as string,
-            heroImage: heroImage as string,
-            content: content as string,
-        }).then(() => {
-            return new Response('Post created', { status: 200 });
-        }).catch(() => {
-            return new Response('Error creating post', { status: 500 });
-        });
+    await db.update(Blog)
+            .set({
+                title: title as string,
+                slug: post.slug,
+                description: description as string,
+                heroImage: heroImage as string,
+                content: content as string,
+            })
+            .where(eq(Blog.slug, post.slug))
+            .then(() => {
+                return new Response('Post updated', { status: 200 });
+            }).catch(() => {
+                return new Response('Error updating post', { status: 500 });
+            });
 
     return Astro.redirect('/dashboard')
 }
@@ -85,7 +89,7 @@ if (Astro.request.method === 'POST') {
                 </form>
             </div>
             <center>
-                <h1>Create a new post</h1>
+                <h1>Edit post</h1>
             </center>
             <div>
                 <p class="font-small">
@@ -100,6 +104,7 @@ if (Astro.request.method === 'POST') {
                         id="title" 
                         name="title" 
                         placeholder="Your Post Title" 
+                        value={post.title}
                         required><br>
                     <label for="slug">Slug</label><br>
                     <input 
@@ -107,6 +112,8 @@ if (Astro.request.method === 'POST') {
                         id="slug" 
                         name="slug" 
                         placeholder="your-post-slug"
+                        value={post.slug}
+                        disabled
                         required><br>
                     <label for="description">Description</label><br>
                     <input
@@ -114,6 +121,7 @@ if (Astro.request.method === 'POST') {
                         id="description" 
                         name="description" 
                         placeholder="Your post's basic description"
+                        value={post.description}
                         required><br>
                     <label for="hero-image">Hero Image</label><br>
                     <p class="info-text">Use the 'https://' full url, or the direct Cloudinary media library asset (Example: 'samples/landscapes/nature-mountains')</p><br>
@@ -122,6 +130,7 @@ if (Astro.request.method === 'POST') {
                         id="hero-image" 
                         name="hero-image" 
                         placeholder="Your post's hero image URL"
+                        value={post.heroImage}
                         required><br>
                     <label for="content">Content</label><br>
                     <textarea 
@@ -130,9 +139,9 @@ if (Astro.request.method === 'POST') {
                         data-provide="markdown" 
                         rows="10" 
                         placeholder="Your post's content in markdown format."
-                        required /><br><br>
+                        required>{post.content}</textarea><br><br>
 
-                    <button class="btn" type="submit">Create!</button>
+                    <button class="grn-btn" type="submit">Update!</button>
 
                 </form>
 
@@ -184,6 +193,15 @@ if (Astro.request.method === 'POST') {
         background-color: rgb(0, 37, 202);
         font-weight: bold;
         color: #fff;
+        border: none;
+        border-radius: 99rem;
+        cursor: pointer;
+    }
+    .grn-btn {
+        padding: 1rem;
+        background-color: rgb(0, 241, 0);
+        font-weight: bold;
+        color: #000000;
         border: none;
         border-radius: 99rem;
         cursor: pointer;
