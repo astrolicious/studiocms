@@ -1,5 +1,7 @@
 ## AstroDB / Studio CMS Prototype
 
+This will be extracted into a Astro-Integration once ready.
+
 This is a SSR Blog CMS built with AstroDB / Lucia Auth / Cloudinary CDN / Astro
 
 ### Authentication
