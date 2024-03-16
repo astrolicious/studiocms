@@ -50,7 +50,14 @@ const isAdmin = async (user: string) => {
                  isAdmin(locals.user.username) && (
                     <button class="btn" onclick="window.location.href='/dashboard/new-post'">Create a new post</button>
                 )}
-                
+                { //@ts-ignore
+                 isAdmin(locals.user.username) && (
+                    <button class="btn-edit" onclick="window.location.href='/dashboard/edit/home'">Edit Home Page</button>
+                )}
+                { //@ts-ignore
+                    isAdmin(locals.user.username) && (
+                       <button class="btn-edit" onclick="window.location.href='/dashboard/edit/about'">Edit About Page</button>
+                   )}
             </div>
         </div>
 </Default>
@@ -87,6 +94,15 @@ const isAdmin = async (user: string) => {
     .btn {
         padding: 1rem;
         background-color: rgb(0, 37, 202);
+        font-weight: bold;
+        color: #fff;
+        border: none;
+        border-radius: 99rem;
+        cursor: pointer;
+    }
+    .btn-edit {
+        padding: 1rem;
+        background-color: rgb(169, 0, 211);
         font-weight: bold;
         color: #fff;
         border: none;

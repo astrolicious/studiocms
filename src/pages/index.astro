@@ -40,12 +40,12 @@ type Props = {
 ---
 
 <Default>
-	{ //@ts-ignore
-	isLoggedIn && isAdmin(locals.dbUser.username) && (
-		<a href={`/dashboard/edit/home`}><button class="btn">✏️ Edit Page</button></a>
-		)}
 		<main>
 			{isLoggedIn && <h1>Hello, {getUserName}!</h1>}
+			{ //@ts-ignore
+			isLoggedIn && isAdmin(locals.dbUser.username) && (
+				<a href={`/dashboard/edit/home`}><button class="btn">✏️ Edit Page</button></a>
+				)}
 			
 			
 		<Fragment 
