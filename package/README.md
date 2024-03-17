@@ -41,7 +41,7 @@ Your `astro.config.mjs` should look like the following
 
 ```mjs
 import { defineConfig } from "astro/config";
-import studioCMS from "@matthiesenxyz/astro-studio-cms";
+import studioCMS from "@nametbd/astro-studio-cms";
 import db from '@astrojs/db';
 import vercel from "@astrojs/vercel/serverless";
 
