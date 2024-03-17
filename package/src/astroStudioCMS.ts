@@ -52,11 +52,13 @@ export default defineIntegration({
                     'virtual:astro-studio-cms:config': `export default ${JSON.stringify(options) };`,
                 })
 
-                // Add Authentication Middleware
-                addMiddleware({
-                    entrypoint: resolve('./middleware/index.ts'),
-                    order: "post",
-                });
+                // Add Authentication Middleware if not disabled
+                if (!options.disableAuth) {
+                    addMiddleware({
+                        entrypoint: resolve('./middleware/auth.ts'),
+                        order: "pre",
+                    });
+                }
 
                 // Add Page Routes
                 injectRoute({ 

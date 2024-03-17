@@ -14,6 +14,7 @@ export const optionsSchema = z.object({
      * @example ["Adammatthiesen", "ElianCodes"]
       */
     siteAdmins: z.array(z.string()).optional().default(['developer']),
+    disableAuth: z.boolean().optional().default(false),
 });
 
 export type Options = z.infer<typeof optionsSchema>;
