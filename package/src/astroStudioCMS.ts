@@ -55,8 +55,8 @@ export default defineIntegration({
                 // Add Authentication Middleware if not disabled
                 if (!options.disableAuth) {
                     addMiddleware({
-                        entrypoint: resolve('./middleware/auth.ts'),
-                        order: "pre",
+                        entrypoint: resolve('./middleware/index.ts'),
+                        order: "post",
                     });
                 }
 
