@@ -1,12 +1,13 @@
 import { defineDbIntegration } from '@astrojs/db/utils';
+import { integrationLogger } from '../utils';
 
 // This is the integration that will be used to link the database to the Astro Studio CMS
 /**
- * AstroStudioCMS Database link & seed Integration
+ * AstroStudioCMS Database config & seed Integration
  */
 export default function StudioCMS() {
     return defineDbIntegration({
-        name: 'astro-studio-cms-dblink',
+        name: 'astro-studio-cms-db',
         hooks: {
             'astro:db:setup': ({ extendDb }) => {
                 extendDb({
@@ -15,7 +16,7 @@ export default function StudioCMS() {
                 });
             },
             'astro:config:setup': ({ logger }) => {
-                logger.info('Astro Studio CMS Database Integration Enabled');
+                integrationLogger(logger, true, 'info', 'Custom AstroDB configuration loaded!');
 
             }
         },

@@ -1,14 +1,13 @@
+import { imageService } from "@unpic/astro/service";
+import { AstroError } from "astro/errors";
 import { createResolver, defineIntegration } from "astro-integration-kit";
 import { corePlugins } from "astro-integration-kit/plugins";
-import { optionsSchema } from "./schemas";
 import { loadEnv } from "vite";
-import { imageService } from "@unpic/astro/service";
+import { optionsSchema } from "./schemas";
+import { integrationLogger } from "./utils";
 import dbInject from "./db/integration";
 
-const { 
-    GITHUB_CLIENT_ID, 
-    GITHUB_CLIENT_SECRET
-    } = loadEnv("all", process.cwd(), "GITHUB");
+const { GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET } = loadEnv( "all", process.cwd(), "GITHUB");
 
 // This is the primary user-facing integration that will be used to install the Astro Studio CMS
 /**
@@ -19,7 +18,6 @@ export default defineIntegration({
     optionsSchema,
     plugins: [...corePlugins],
     setup({ options }) {
-
         return {
             "astro:config:setup": ({ 
                 watchIntegration, 
@@ -31,9 +29,20 @@ export default defineIntegration({
                 logger,
                 injectRoute,
             }) => {
+                // Check for Verbose Mode
+                const isVerbose = options.verbose;
+
+                // Create Resolver for Virtual Imports
                 const { resolve } = createResolver(import.meta.url);
+                
+                // Check for SSR Mode
                 if (config.output !== "server" ) {
-                    throw new Error("Astro Studio CMS is only supported in 'Output: server' SSR mode.");
+                    throw new AstroError("Astro Studio CMS is only supported in 'Output: server' SSR mode.");
+                }
+
+                // Check for Site URL
+                if (!config.site) {
+                    throw new AstroError("Astro Studio CMS requires a 'site' configuration in your Astro Config.");
                 }
 
                 // Watch Integration for changes
@@ -41,26 +50,45 @@ export default defineIntegration({
 
                 // Check for Required Environment Variables
                 if (!GITHUB_CLIENT_ID || !GITHUB_CLIENT_SECRET) {
-                    throw new Error("GitHub OAuth Client ID and Secret are required to use Astro Studio CMS.");
+                    throw new AstroError("GitHub OAuth Client ID and Secret are required to use Astro Studio CMS.");
                 }
 
-                // Add Database Integration
-                addIntegration(dbInject())
-
                 // Add Virtual Imports
+                integrationLogger(
+                    logger, isVerbose, 
+                    "info", 
+                    "Adding Virtual Imports..."
+                );
                 addVirtualImports({
                     'virtual:astro-studio-cms:config': `export default ${JSON.stringify(options) };`,
                 })
 
                 // Add Authentication Middleware if not disabled
                 if (!options.disableAuth) {
+                    integrationLogger(
+                        logger, isVerbose, 
+                        "info", 
+                        "Authentication Middleware Enabled"
+                    );
                     addMiddleware({
                         entrypoint: resolve('./middleware/index.ts'),
                         order: "post",
                     });
+                } else {
+                    // Log that Authentication Middleware is Disabled
+                    integrationLogger(
+                        logger, isVerbose, 
+                        "info", 
+                        "Authentication Middleware Disabled"
+                    );
                 }
 
                 // Add Page Routes
+                integrationLogger(
+                    logger, isVerbose, 
+                    "info", 
+                    "Adding Page Routes..."
+                );
                 injectRoute({ 
                     pattern: config.base, 
                     entrypoint: resolve('./pages/index.astro'), 
@@ -122,14 +150,34 @@ export default defineIntegration({
                     entrypoint: resolve('./pages/dashboard/logout.ts'), 
                 });
 
+                // Add Database Integration
+                integrationLogger(
+                    logger, isVerbose, 
+                    "info", 
+                    "Loading Custom AstroDB configuration..."
+                );
+                addIntegration(dbInject())
 
+                // Update Astro Config
+                integrationLogger(
+                    logger, isVerbose, 
+                    "info", 
+                    "Updating Astro Config..."
+                );
                 updateConfig({
                     image: {
                         service: imageService({
                             placeholder: "blurhash",
+                            fallbackService: "squoosh",
                         }),
                     }
-                })
+                });
+
+                integrationLogger(
+                    logger, isVerbose,
+                    "info", 
+                    "Astro Studio CMS Setup Complete!"
+                );
             }
         }
     }

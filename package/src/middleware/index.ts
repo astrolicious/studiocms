@@ -1,6 +1,6 @@
 import { lucia } from "../lib/auth";
 import { verifyRequestOrigin } from "lucia";
-import { defineMiddleware } from "astro:middleware";
+import { defineMiddleware } from "astro/middleware";
 import { User, db, eq } from "astro:db";
 
 export const onRequest = defineMiddleware(async (context, next) => {

@@ -8,5 +8,11 @@ export default defineConfig({
 	site: 'https://example.com',
 	output: "server",
 	adapter: vercel(),
-	integrations: [db(),studioCMS({ siteAdmins: ['Adammatthiesen' ]})],
+	integrations: [
+		db(),
+		studioCMS({ 
+			siteAdmins: ['Adammatthiesen'],
+			verbose: true,
+		}),
+	],
 });
