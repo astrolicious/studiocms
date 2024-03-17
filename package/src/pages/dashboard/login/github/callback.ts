@@ -1,6 +1,6 @@
 import type { APIContext } from "astro";
 import { getAstroBaseURL } from '../../../../utils';
-import { github, lucia } from "../../../../lib/auth";
+import { github, lucia } from "../../../../middleware";
 import { OAuth2RequestError } from "arctic";
 import { db, User, eq } from "astro:db";
 

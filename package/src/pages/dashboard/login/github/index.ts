@@ -1,6 +1,6 @@
 import type { APIRoute } from "astro";
 import { generateState } from "arctic";
-import { github } from "../../../../lib/auth";
+import { github } from "../../../../middleware";
 import { getAstroBaseURL } from '../../../../utils';
 
 export const GET: APIRoute = async ({ redirect, cookies }) => {
