@@ -1,0 +1,88 @@
+---
+import HeaderLink from './HeaderLink.astro';
+import Config from 'virtual:astro-studio-cms:config';
+import profileImg from '../assets/profile.webp'
+
+
+const isLoggedIn = Astro.locals.isLoggedIn;
+const userProfile = Astro.locals.dbUser;
+
+const baseURL = import.meta.env.BASE_URL;
+---
+
+<header>
+	<nav>
+		<h2><a href={baseURL}>{Config.siteTitle}</a></h2>
+		<div class="internal-links">
+			<HeaderLink href={baseURL}>Home</HeaderLink>
+			<HeaderLink href=`${baseURL}blog`>Blog</HeaderLink>
+			<HeaderLink href=`${baseURL}about`>About</HeaderLink>
+		</div>
+		<div class="profile-link">
+			{
+				isLoggedIn ? (
+					<a href={`${baseURL}dashboard`} title="User Dashboard">
+					<img
+						src={userProfile.avatar}
+						alt={userProfile.name}
+						width="48"
+						height="48" />
+					</a>
+				) : (
+					<a href={`${baseURL}dashboard`} title="Login">
+					<img 
+						src={profileImg.src} 
+						alt="Logged Out user" 
+						width="48" 
+						height="48" />
+					</a>
+				)
+			}
+		</div>
+	</nav>
+</header>
+<style>
+	header {
+		margin: 0;
+		padding: 0 1em;
+		background: white;
+		box-shadow: 0 2px 8px rgba(var(--black), 5%);
+	}
+	h2 {
+		margin: 0;
+		font-size: 1em;
+	}
+
+	h2 a,
+	h2 a.active {
+		text-decoration: none;
+	}
+	nav {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+	}
+	nav a {
+		padding: 1em 0.5em;
+		color: var(--black);
+		border-bottom: 4px solid transparent;
+		text-decoration: none;
+	}
+	nav a.active {
+		text-decoration: none;
+		border-bottom-color: var(--accent);
+	}
+	.social-links,
+	.social-links a {
+		display: flex;
+	}
+	@media (max-width: 720px) {
+		.social-links {
+			display: none;
+		}
+	}
+	.profile-link,
+	.profile-link a {
+		display: flex;
+	}
+</style>

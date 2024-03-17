@@ -1,0 +1,65 @@
+---
+import { Blog, db, eq } from 'astro:db';
+import { marked } from 'marked';
+import BlogPost from '../../layouts/BlogPost.astro';
+import type { Locals } from '../dashboard/locals';
+import Config from "virtual:astro-studio-cms:config";
+import { getAstroBaseURL } from '../../utils';
+
+const adminList = Config.siteAdmins;
+
+const isAdmin = (user: string) => {
+    if (adminList.includes(user)) {
+		return true;
+	}
+    return false;
+};
+
+
+const locals = Astro.locals as Locals;
+const isLoggedIn = locals.isLoggedIn;
+
+const { slug } = Astro.params;
+
+if (!slug) {
+	return Astro.redirect(`${getAstroBaseURL}404`);
+}
+
+const postArrayed = await db.select().from(Blog).where(eq(Blog.slug, slug));
+
+const post = postArrayed[0];
+
+if (!post) {
+	return Astro.redirect(`${getAstroBaseURL}404`);
+}
+
+type Props = {
+	post: typeof Blog.$inferSelect;
+};
+---
+<BlogPost 
+	title={post.title} 
+	description={post.description} 
+	heroImage={post.heroImage} 
+	publishedAt={post.publishedAt} 
+	updatedAt={post.updatedAt} >
+	{ //@ts-ignore
+	isLoggedIn && isAdmin(locals.dbUser.username) && (
+		<a href={`${getAstroBaseURL()}dashboard/edit/${post.slug}`}><button class="btn">✏️ Edit Post</button></a>
+		)}
+	<Fragment 
+		set:html={marked(post.content, { async: true })} />
+</BlogPost>
+
+<style>
+    .btn {
+        padding: 0.5rem;
+        background-color: rgb(184, 184, 184);
+        font-weight: bold;
+        color: #202020;
+        border: 1px solid #202020;
+        border-radius: 99rem;
+        cursor: pointer;
+		float: right;
+    }
+</style>

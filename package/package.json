@@ -1,0 +1,55 @@
+{
+  "name": "@nametbd/astro-studio-cms",
+  "version": "0.0.1",
+  "description": "DESCRIPTION",
+  "author": {
+    "email": "adam@matthiesen.xyz",
+    "name": "Adam Matthiesen",
+    "url": "https://matthiesen.xyz"
+  },
+  "license": "MIT",
+  "keywords": [
+    "astro-integration",
+    "astro-component",
+    "withastro",
+    "astro",
+    "astrodb",
+    "astro-studio",
+    "astrostudio",
+    "astrocms",
+    "cms"
+  ],
+  "homepage": "",
+  "publishConfig": {
+    "access": "public"
+  },
+  "sideEffects": false,
+  "files": ["src"],
+  "exports": {
+    ".": "./src/index.ts",
+    "./config.ts": "./src/db/config.ts",
+    "./seed.ts": "./src/db/seed.ts",
+    "./middleware": "./src/middleware/index.ts"
+  },
+  "scripts": {},
+  "type": "module",
+  "peerDependencies": {
+    "astro": ">=4.5.5",
+    "@astrojs/db": "^0.8.5"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.28"
+  },
+  "dependencies": {
+    "@astrojs/rss": "^4.0.5",
+    "@astrojs/sitemap": "^3.1.1",
+    "@lucia-auth/adapter-drizzle": "^1.0.4",
+    "@unpic/astro": "^0.0.44",
+    "arctic": "^1.2.1",
+    "astro-integration-kit": "^0.6.0",
+    "lucia": "3.1.1",
+    "marked": "^11.0.1",
+    "typescript": "^5.4.2",
+    "vite": "^5.1.6"
+  }
+}

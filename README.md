@@ -1,25 +1,9 @@
-## AstroDB / Studio CMS Prototype
+# Astro Studio CMS
 
-This will be extracted into a Astro-Integration once ready.
+This is a SSR Blog CMS built with AstroDB / Lucia Auth / Unpic Image handler / Astro
 
-This is a SSR Blog CMS built with AstroDB / Lucia Auth / Cloudinary CDN / Astro
+To see how to get started, check out the [package README](./package/README.md)
 
-### Authentication
+## Licensing
 
-Lucia Auth - requires two .env tokens
-
-```
-# credentials for GitHub OAuth App
-GITHUB_CLIENT_ID=
-GITHUB_CLIENT_SECRET=
-```
-
-### Images - CDN
-
-Cloudinary - Requires one .env token
-
-```
-CLOUDINARY_CLOUD_NAME=
-```
-
-### Add githubUsername's to seed file who you want to be an admin(be able to create posts and edit)!
+[MIT Licensed](./LICENSE). Made with ❤️ by [Adam M.](https://github.com/adammatthiesen).

@@ -1,0 +1,21 @@
+---
+// This component is a wrapper around the Astro Image component with @unpic/astro Image service handler that infers the width and height of the image if it's not provided.
+import { Image } from 'astro:assets';
+
+const { src, ...props } = Astro.props;
+
+function shouldInferSize(src: string) {
+    if (src.startsWith('http://') || src.startsWith('https://')){
+        return true;
+    }
+    return false;
+}
+
+interface Props {
+    src: string;
+    alt: string;
+    width: number;
+    height: number;
+}
+---
+<Image src={src} inferSize={shouldInferSize(src)} {...props} />

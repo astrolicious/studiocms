@@ -1,31 +1,19 @@
 {
-  "name": "studio-template-blog",
-  "type": "module",
-  "version": "0.0.1",
-  "scripts": {
-    "dev": "astro dev",
-    "start": "astro dev",
-    "build": "astro build",
-    "preview": "astro preview",
-    "astro": "astro"
-  },
-  "dependencies": {
-    "@astrojs/db": "^0.8.5",
-    "@astrojs/rss": "^4.0.5",
-    "@astrojs/sitemap": "^3.1.1",
-    "@astrojs/vercel": "^7.3.6",
-    "@cloudinary/url-gen": "^1.19.0",
-    "@cloudinary/html": "1.13.0",
-    "@lucia-auth/adapter-drizzle": "^1.0.4",
-    "arctic": "^1.2.1",
-    "astro": "^4.5.4",
-    "astro-navbar": "^2.3.1",
-    "lucia": "3.1.1",
-    "marked": "^11.0.1",
-    "typescript": "^5.4.2"
-  },
-  "devDependencies": {
-    "@astrojs/check": "^0.5.9",
-    "@types/node": "^20.10.4"
-  }
+	"name": "root",
+	"private": true,
+	"packageManager": "pnpm@8.14.1",
+	"engines": {
+		"node": ">=18.19.0"
+	},
+	"scripts": {
+		"dev": "pnpm --filter playground dev",
+		"lint": "biome check .",
+		"lint:fix": "biome check --apply .",
+		"ci:version": "pnpm changeset version",
+		"ci:publish": "pnpm changeset publish"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "1.6.0",
+		"@changesets/cli": "^2.27.1"
+	}
 }

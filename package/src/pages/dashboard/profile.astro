@@ -1,0 +1,100 @@
+---
+import Default from "../../layouts/Default.astro"
+import { lucia } from "../../lib/auth";
+import type { Locals } from "./locals";
+import Config from "virtual:astro-studio-cms:config";
+import { getAstroBaseURL } from '../../utils';
+
+const locals = Astro.locals as Locals;
+const isLoggedIn = locals.isLoggedIn;
+const sessions = await lucia.getUserSessions(locals.dbUser.id);
+
+if (!isLoggedIn) {
+    return Astro.redirect(`${getAstroBaseURL()}dashboard/login`);
+}
+
+const getUserName = () => {
+    if (locals.isLoggedIn) {
+	    if (locals.dbUser.name) {
+		    return locals.dbUser.name;
+	    } 
+		return locals.user.username;
+    }
+	return null;
+};
+
+const adminList = Config.siteAdmins;
+
+const isAdmin = async (user: string) => {
+    if (adminList.includes(user)) {
+		return true;
+	}
+    return false;
+};
+
+const role = async () => {
+    const title = await isAdmin(locals.dbUser.username) ? 'Admin' : 'User';
+    return title;
+}
+
+---
+
+<Default>
+        <div class="dash">
+            <div class="dash-header">
+                <img src={locals.dbUser.avatar} alt={locals.dbUser.name} height="64px" width="64px">
+                <p><bold>{getUserName}</bold>'s Profile</p>
+                <form method="post" action={`${getAstroBaseURL()}dashboard/logout`}>
+                    <button>Logout</button>
+                </form>
+            </div>
+        <div>
+
+                <p><bold>Display Name:</bold> {locals.dbUser.name}</p>
+                <p><bold>Role:</bold> {role}</p>
+                <p><bold>GitHub:</bold> <a href={locals.dbUser.githubURL}>{locals.user.username}</a> 
+                { sessions[0] && (
+                    <p><bold>Session Expires:</bold> {new Date(sessions[0].expiresAt).toLocaleString()} </p>
+                ) } 
+                </p>
+                
+                
+            </div>
+        </div>
+</Default>
+
+<style>
+    .dash {
+        padding: 2rem;
+        border: 2px solid #ccc;
+        border-radius: 5rem;
+        background-color: #fff;
+        margin: 2rem;
+    }
+    .dash-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-right: 4rem;
+        padding-left: 4rem;
+    }
+    bold {
+        font-weight: bold;
+    }
+    .font-small {
+        font-size: 1rem;
+    }
+    form {
+        display: flex;
+        justify-content: flex-end;
+    }
+    button {
+        padding: 1rem;
+        background-color: rgb(202, 0, 0);
+        font-weight: bold;
+        color: #fff;
+        border: none;
+        border-radius: 99rem;
+        cursor: pointer;
+    }
+</style>
