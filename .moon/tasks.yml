@@ -1,0 +1,9 @@
+# tasks:
+#   format:
+#     command: 'prettier --check .'
+#   lint:
+#     command: 'eslint --no-error-on-unmatched-pattern .'
+#   test:
+#     command: 'jest --passWithNoTests .'
+#   typecheck:
+#     command: 'tsc --build'
