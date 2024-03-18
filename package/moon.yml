@@ -1,5 +1,5 @@
 language: 'typescript'
-tags: ['astro', 'typescript', ]
+tags: ['astro', 'typescript']
 
 project: 
   name: 'astro-studio-cms'

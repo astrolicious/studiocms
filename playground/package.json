@@ -3,6 +3,11 @@
   "type": "module",
   "version": "0.0.1",
   "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "astro": "astro"
+  },
   "devDependencies": {
     "@types/node": "^20.11.28",
     "typescript": "^5.4.2"
