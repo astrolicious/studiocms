@@ -1,9 +1,22 @@
-# tasks:
-#   format:
-#     command: 'prettier --check .'
-#   lint:
-#     command: 'eslint --no-error-on-unmatched-pattern .'
-#   test:
-#     command: 'jest --passWithNoTests .'
-#   typecheck:
-#     command: 'tsc --build'
+tasks:
+  changeset:
+    command: changeset
+    platform: node
+  ci-publish:
+    command: 'pnpm changeset publish'
+    platform: node
+  ci-version:
+    command: 'pnpm changeset version'
+    platform: node
+  lint:
+    command: 'biome check .'
+    platform: node
+  lint-fix:
+    command: 'biome check --apply .'
+    platform: node
+  moon:
+    command: moon
+    platform: node
+  dev:
+    command: 'pnpm --filter playground dev'
+    platform: node

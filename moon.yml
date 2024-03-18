@@ -1,3 +1,7 @@
+project: 
+  name: 'root'
+  description: 'A moon monorepo for Astro'
+
 tasks:
   changeset:
     command: changeset
@@ -30,10 +34,5 @@ tasks:
   moon:
     command: moon
     platform: node
-  playground-dev:
-    command:
-    - pnpm
-    - --filter
-    - playground
-    - dev
-    platform: node
+  dev:
+    command: 'moon run playground:dev'

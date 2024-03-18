@@ -2,7 +2,6 @@ import { Lucia, TimeSpan } from "lucia";
 import { DrizzleSQLiteAdapter } from "@lucia-auth/adapter-drizzle";
 import { GitHub } from "arctic";
 import { db } from "astro:db";
-
 import { asDrizzleTable, type SqliteDB } from "@astrojs/db/runtime";
 import { Session, User } from "../db/tables";
 
