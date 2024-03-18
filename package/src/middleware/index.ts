@@ -4,6 +4,11 @@ import { defineMiddleware } from "astro/middleware";
 import { User, db, eq } from "astro:db";
 
 export const onRequest = defineMiddleware(async (context, next) => {
+	if (context.url.pathname === '/happy-mongoose') {
+		const response = await next();
+		const html = await response.text();
+		return new Response(html, {status: 200, headers: response.headers});
+	}
 	if (context.request.method !== "GET") {
 		const originHeader = context.request.headers.get("Origin");
 		const hostHeader = context.request.headers.get("Host");

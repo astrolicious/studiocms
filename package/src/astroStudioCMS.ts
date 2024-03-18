@@ -6,6 +6,7 @@ import { loadEnv } from "vite";
 import { optionsSchema } from "./schemas";
 import { integrationLogger } from "./utils";
 import dbInject from "./db/integration";
+import fs from "node:fs"
 
 const { GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET } = loadEnv( "all", process.cwd(), "GITHUB");
 
@@ -18,6 +19,9 @@ export default defineIntegration({
     optionsSchema,
     plugins: [...corePlugins],
     setup({ options }) {
+        // Check for Verbose Mode
+        const isVerbose = options.verbose;
+
         return {
             "astro:config:setup": ({ 
                 watchIntegration, 
@@ -29,11 +33,10 @@ export default defineIntegration({
                 logger,
                 injectRoute,
             }) => {
-                // Check for Verbose Mode
-                const isVerbose = options.verbose;
 
                 // Create Resolver for Virtual Imports
                 const { resolve } = createResolver(import.meta.url);
+                const { resolve: rootResolve } = createResolver(config.root.pathname)
                 
                 // Check for SSR Mode
                 if (config.output !== "server" ) {
@@ -138,15 +141,15 @@ export default defineIntegration({
                     entrypoint: resolve('./pages/rss.xml.ts'), 
                 });
                 injectRoute({ 
-                    pattern: `${config.base}dashboard/login/github/`, 
+                    pattern: `${config.base}dashboard/login/github`, 
                     entrypoint: resolve('./pages/dashboard/login/github/index.ts'), 
                 });
                 injectRoute({ 
-                    pattern: `${config.base}dashboard/login/github/callback/`, 
+                    pattern: `${config.base}dashboard/login/github/callback`, 
                     entrypoint: resolve('./pages/dashboard/login/github/callback.ts'), 
                 });
                 injectRoute({ 
-                    pattern: `${config.base}dashboard/logout/`, 
+                    pattern: `${config.base}dashboard/logout`, 
                     entrypoint: resolve('./pages/dashboard/logout.ts'), 
                 });
 
@@ -173,11 +176,56 @@ export default defineIntegration({
                     }
                 });
 
+                // Add routes for the database initialization page
+                if (options.dbinitpage) {
+                    integrationLogger(
+                        logger, true, 
+                        "warn", 
+                        "Database Initialization Page Enabled, if you have already initialized your database, you may want to put 'dbinitpage: false` in your Astro Studio CMS Config. This will also prevent creating a new page on every server start."
+                    );
+
+                    const dbinitpage = resolve('./pages/happy-mongoose.astro');
+                    const initPageUser = rootResolve('./src/pages/happy-mongoose.astro');
+
+                    if ( !fs.existsSync(initPageUser) ) {
+                        if (!fs.existsSync(rootResolve('./src/pages'))) {
+                            try {
+                                fs.mkdirSync(rootResolve('./src/pages'), { recursive: true });
+                            } catch (err) {
+                                console.error(err);
+                            }
+                        }
+                        try {
+                            fs.writeFileSync(initPageUser, fs.readFileSync(dbinitpage));
+                        } catch (err) {
+                            console.error(err);
+                        }
+                    }
+
+
+                    // injectRoute({ 
+                    //     pattern: `${config.base}happy-mongoose`, 
+                    //     entrypoint: resolve('./pages/happy-mongoose.astro'), 
+                    //     prerender: true,
+                    // });
+                }
+
                 integrationLogger(
                     logger, isVerbose,
                     "info", 
                     "Astro Studio CMS Setup Complete!"
                 );
+
+            },
+            // DEV MODE: Log a message to the console when the server starts to let the user know they need to initialize their database if it's their first time using Astro Studio CMS
+            'astro:server:start': ({ logger }) => {
+                if (options.dbinitpage) {
+                    integrationLogger(
+                        logger, true,
+                        "info",
+                        "If this is your first time using Astro Studio CMS, you may need to navigate to http://localhost:4321/happy-mongoose/ to initialize your database and remove any SQL errors."
+                    )
+                }
             }
         }
     }

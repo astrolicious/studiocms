@@ -1,0 +1,7 @@
+---
+import { db, Pages } from 'astro:db';
+
+const data = db.select(Pages);
+
+---
+<h1>Hello!</h1>

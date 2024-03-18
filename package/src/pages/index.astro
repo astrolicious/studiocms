@@ -2,36 +2,10 @@
 import { Pages, db, eq } from 'astro:db';
 import { marked } from 'marked';
 import Default from '../layouts/Default.astro';
-import type { Locals } from './dashboard/locals';
-import Config from 'virtual:astro-studio-cms:config';
-import { getAstroBaseURL } from '../utils';
-
-const locals = Astro.locals as Locals;
-const isLoggedIn = locals.isLoggedIn;
-
-const getUserName = () => {
-  if (locals.isLoggedIn) {
-	if (locals.dbUser.name) {
-		return locals.dbUser.name;
-	} 
-	return locals.user.username;
-  } 
-  return 'Fellow Astronaut';
-};
-
 
 const postArrayed = await db.select().from(Pages).where(eq(Pages.slug, "index"));
 
 const post = postArrayed[0];
-
-const adminList = Config.siteAdmins;
-
-const isAdmin = (user: string) => {
-    if (adminList.includes(user)) {
-		return true;
-	}
-    return false;
-};
 
 type Props = {
 	post: typeof Pages.$inferSelect;
@@ -41,13 +15,6 @@ type Props = {
 
 <Default>
 		<main>
-			{isLoggedIn && <h1>Hello, {getUserName}!</h1>}
-			{ //@ts-ignore
-			isLoggedIn && isAdmin(locals.dbUser.username) && (
-				<a href={`${getAstroBaseURL()}dashboard/edit/home`}><button class="btn">✏️ Edit Page</button></a>
-				)}
-			
-			
 		<Fragment 
 		set:html={marked(post.content, { async: true })} />
 
