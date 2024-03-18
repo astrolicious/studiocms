@@ -18,7 +18,9 @@ Our ToolSet
 
 Follow install instructions listed on Moonrepo's docs, and you'll be all set to go! Its even a super easy single line command you put in your terminal!
 
-To use the dev server the command is `moon run root:dev`
+To use the dev server the command is `moon run playground:dev`
+
+> Note: You can always fallback to standard pnpm, Please ensure your version matches our project, and run `pnpm i --frozen-lockfile` to install deps
 
 ## Licensing
 
