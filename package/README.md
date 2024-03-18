@@ -56,6 +56,13 @@ export default defineConfig({
             siteTitle: "Astro Studio Blog",
             siteDescription: "My awesome website!",
             siteAdmins: ['firstGithubUsername','secondGithubUsername'],
+            dbinitpage: true // DEFAULT - This creates a file in your /src/pages folder to allow first initialization of the DB
         })],
 });
 ```
+
+### First Start
+
+During the first start of Astro Studio CMS, you may need to 
+navigate to http://localhost:4321/happy-mongoose/ to initialize your database and remove any SQL errors.
+
