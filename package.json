@@ -5,6 +5,15 @@
   "engines": {
     "node": "20.11.1"
   },
+  "scripts": {
+    "moon": "moon",
+    "changeset": "changeset",
+    "playground:dev": "pnpm --filter playground dev",
+    "lint": "biome check .",
+    "lint:fix": "biome check --apply .",
+    "ci:version": "pnpm changeset version",
+    "ci:publish": "pnpm changeset publish"
+  },
   "devDependencies": {
     "@biomejs/biome": "1.6.1",
     "@changesets/cli": "2.27.1",
