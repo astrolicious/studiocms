@@ -176,38 +176,19 @@ export default defineIntegration({
                     }
                 });
 
-                // Add routes for the database initialization page
+                // Add routes for the database initialization page if needed
                 if (options.dbinitpage) {
-                    integrationLogger(
-                        logger, true, 
-                        "warn", 
-                        "Database Initialization Page Enabled, if you have already initialized your database, you may want to put 'dbinitpage: false` in your Astro Studio CMS Config. This will also prevent creating a new page on every server start."
-                    );
-
+                    integrationLogger(logger, true, "warn", 
+                        "Database Initialization Page Enabled, if you have already initialized your database, you may want to put 'dbinitpage: false` in your Astro Studio CMS Config. This will also prevent creating a new page on every server start." );
                     const dbinitpage = resolve('./pages/happy-mongoose.astro');
                     const initPageUser = rootResolve('./src/pages/happy-mongoose.astro');
-
                     if ( !fs.existsSync(initPageUser) ) {
                         if (!fs.existsSync(rootResolve('./src/pages'))) {
-                            try {
-                                fs.mkdirSync(rootResolve('./src/pages'), { recursive: true });
-                            } catch (err) {
-                                console.error(err);
-                            }
-                        }
-                        try {
-                            fs.writeFileSync(initPageUser, fs.readFileSync(dbinitpage));
-                        } catch (err) {
-                            console.error(err);
-                        }
+                            try { fs.mkdirSync(rootResolve('./src/pages'), { recursive: true });
+                            } catch (err) { logger.debug(err as string); }
+                        } try { fs.writeFileSync(initPageUser, fs.readFileSync(dbinitpage));
+                        } catch (err) { logger.debug(err as string); }
                     }
-
-
-                    // injectRoute({ 
-                    //     pattern: `${config.base}happy-mongoose`, 
-                    //     entrypoint: resolve('./pages/happy-mongoose.astro'), 
-                    //     prerender: true,
-                    // });
                 }
 
                 integrationLogger(
