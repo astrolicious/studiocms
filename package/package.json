@@ -1,7 +1,7 @@
 {
   "name": "@nametbd/astro-studio-cms",
-  "version": "0.0.1",
-  "description": "DESCRIPTION",
+  "version": "0.0.0-proto.1",
+  "description": "Content Management System built for Astro Studio and AstroDB",
   "author": {
     "email": "adam@matthiesen.xyz",
     "name": "Adam Matthiesen",
