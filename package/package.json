@@ -24,21 +24,14 @@
     "access": "public"
   },
   "sideEffects": false,
-  "files": ["src"],
+  "files": [
+    "src"
+  ],
   "exports": {
     ".": "./src/index.ts",
     "./config.ts": "./src/db/config.ts",
     "./seed.ts": "./src/db/seed.ts",
     "./middleware": "./src/middleware/index.ts"
-  },
-  "scripts": {},
-  "type": "module",
-  "peerDependencies": {
-    "astro": ">=4.5.5",
-    "@astrojs/db": "^0.8.5"
-  },
-  "devDependencies": {
-    "@types/node": "^20.11.28"
   },
   "dependencies": {
     "@astrojs/rss": "^4.0.5",
@@ -51,5 +44,13 @@
     "marked": "^11.0.1",
     "typescript": "^5.4.2",
     "vite": "^5.1.6"
+  },
+  "type": "module",
+  "peerDependencies": {
+    "astro": ">=4.5.5",
+    "@astrojs/db": "^0.8.5"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.28"
   }
 }
