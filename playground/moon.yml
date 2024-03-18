@@ -1,3 +1,9 @@
+tags: ['astro']
+
+toolchain:
+  typescript:
+    syncProjectReferences: false
+
 dependsOn:
 - package
 tasks:
