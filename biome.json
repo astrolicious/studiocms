@@ -1,18 +1,35 @@
 {
-	"$schema": "https://biomejs.dev/schemas/1.5.2/schema.json",
-	"organizeImports": {
-		"enabled": true
-	},
-	"linter": {
-		"enabled": true,
-		"rules": {
-			"recommended": true,
-			"suspicious": {
-				"noExplicitAny": "warn"
-			}
-		}
+	"$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
+	"vcs": {
+	  "enabled": true,
+	  "clientKind": "git",
+	  "useIgnoreFile": true,
+	  "defaultBranch": "main"
 	},
 	"files": {
-		"ignore": ["dist", ".astro"]
+	  "ignoreUnknown": true
+	},
+	"formatter": {
+	  "lineWidth": 100
+	},
+	"javascript": {
+	  "formatter": {
+		"quoteStyle": "single",
+		"trailingComma": "es5"
+	  }
+	},
+	"json": {
+	  "formatter": {
+		"indentStyle": "space"
+	  }
+	},
+	"organizeImports": {
+	  "enabled": true
+	},
+	"linter": {
+	  "enabled": true,
+	  "rules": {
+		"recommended": true
+	  }
 	}
-}
+  }

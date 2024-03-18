@@ -1,0 +1,48 @@
+# https://moonrepo.dev/docs/config/workspace
+$schema: 'https://moonrepo.dev/schemas/workspace.json'
+
+projects:
+  package: 'package'
+  playground: 'playground'
+
+# https://moonrepo.dev/docs/config/workspace#constraints
+constraints:
+  # https://moonrepo.dev/docs/config/workspace#enforceprojecttyperelationships
+  enforceProjectTypeRelationships: true
+
+# https://moonrepo.dev/docs/config/workspace#experiments
+experiments:
+  strictProjectAliases: true
+
+# https://moonrepo.dev/docs/config/workspace#runner
+runner:
+  cacheLifetime: "7 days"
+  inheritColorsForPipedTasks: true
+  logRunningCommand: true
+
+# https://moonrepo.dev/docs/config/workspace#telemetry
+telemetry: true
+
+# Configures the version control system to utilize within the workspace. A VCS
+# is required for determining touched (added, modified, etc) files, calculating file hashes,
+# computing affected files, and much more.
+vcs:
+  # https://moonrepo.dev/docs/config/workspace#defaultbranch
+  defaultBranch: 'main'
+
+  # https://moonrepo.dev/docs/config/workspace#hooks
+  # hooks:
+
+  # https://moonrepo.dev/docs/config/workspace#synchooks
+  # syncHooks: 
+
+  # https://moonrepo.dev/docs/config/workspace#manager
+  manager: 'git'
+
+  # https://moonrepo.dev/docs/config/workspace#provider
+  provider: 'github'
+
+  # https://moonrepo.dev/docs/config/workspace#remotecandidates
+  remoteCandidates:
+    - 'origin'
+    - 'upstream'
