@@ -11,10 +11,14 @@ tasks:
     command: astro
     platform: node
   dev:
-    command: 'astro dev'
+    command: 
+      - astro 
+      - dev
     local: true
     platform: node
   start:
-    command: 'astro dev'
+    command: 
+      - astro 
+      - dev
     local: true
     platform: node
