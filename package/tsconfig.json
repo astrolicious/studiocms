@@ -2,6 +2,8 @@
   "extends": "astro/tsconfigs/strictest",
   "compilerOptions": {
     "composite": true,
+    "noEmit": false,
+    "emitDeclarationOnly": true,
     "jsx": "preserve",
     "outDir": "../.moon/cache/types/package"
   }
