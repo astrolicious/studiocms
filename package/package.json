@@ -28,10 +28,7 @@
     "src"
   ],
   "exports": {
-    ".": "./src/index.ts",
-    "./config.ts": "./src/db/config.ts",
-    "./seed.ts": "./src/db/seed.ts",
-    "./middleware": "./src/middleware/index.ts"
+    ".": "./src/index.ts"
   },
   "dependencies": {
     "@astrojs/rss": "^4.0.5",
