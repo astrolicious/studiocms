@@ -75,3 +75,6 @@ export default defineConfig({
 During the first start of Astro Studio CMS, you need to navigate to http://localhost:4321/start/ to initialize your database Setup your installation.
 
 it will redirect and ask you to shutdown and change the above mentioned config option `dbStartPage` to `false` at which point that will enable full functionality of the CMS.
+
+Once you have setup your basic Database you are ready to [Link to Astro Studio](https://docs.astro.build/en/recipes/studio/#create-a-new-studio-project) and push your tables
+

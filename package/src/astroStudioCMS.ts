@@ -5,7 +5,6 @@ import { corePlugins } from "astro-integration-kit/plugins";
 import { loadEnv } from "vite";
 import { optionsSchema } from "./schemas";
 import { integrationLogger } from "./utils";
-import dbInject from "./db/integration";
 import fs from "node:fs";
 
 const { GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET } = loadEnv( "all", process.cwd(), "GITHUB");
@@ -203,7 +202,7 @@ export default defineIntegration({
                     "info", 
                     "Loading Custom AstroDB configuration..."
                 );
-                addIntegration(dbInject())
+                // addIntegration(dbInject())
 
                 // Update Astro Config
                 integrationLogger(
