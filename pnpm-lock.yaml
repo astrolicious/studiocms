@@ -24,7 +24,7 @@ importers:
   package:
     dependencies:
       '@astrojs/db':
-        specifier: ^0.8.8
+        specifier: '>=0.8.8'
         version: 0.8.8
       '@astrojs/rss':
         specifier: ^4.0.5
@@ -42,13 +42,13 @@ importers:
         specifier: ^1.2.1
         version: 1.2.1
       astro:
-        specifier: '>=4.5.5'
+        specifier: '>=4.5.6'
         version: 4.5.6(@types/node@20.11.28)(typescript@5.4.2)
       astro-integration-kit:
-        specifier: ^0.6.0
+        specifier: 0.6.0
         version: 0.6.0(astro@4.5.6)
       lucia:
-        specifier: 3.1.1
+        specifier: ^3.1.1
         version: 3.1.1
       marked:
         specifier: ^11.0.1

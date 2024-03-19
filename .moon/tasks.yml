@@ -20,3 +20,6 @@ tasks:
   dev:
     command: 'pnpm --filter playground dev'
     platform: node
+  update:
+    command: 'pnpm install'
+    platform: node
