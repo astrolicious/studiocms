@@ -33,7 +33,7 @@ const isAdmin = async (user: string) => {
 };
 
 const role = async () => {
-    const title = await isAdmin(locals.dbUser.username) ? 'Admin' : 'User';
+    const title = isAdmin(locals.dbUser.username) ? 'Admin' : 'User';
     return title;
 }
 

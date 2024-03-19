@@ -123,13 +123,16 @@ if (Astro.request.method === 'POST') {
                         placeholder="Your post's hero image URL"
                         required><br>
                     <label for="content">Content</label><br>
-                    <textarea 
-                        id="content" 
-                        name="content" 
-                        data-provide="markdown" 
-                        rows="10" 
-                        placeholder="Your post's content in markdown format."
-                        required /><br><br>
+                    <div id="editor">
+                        <textarea 
+                            id="content" 
+                            name="content" 
+                            data-provide="markdown" 
+                            rows="10" 
+                            placeholder="Your post's content in markdown format."
+                            required></textarea>
+                        <div id="html-preview"></div>
+                    </div><br><br>
 
                     <button class="btn" type="submit">Create!</button>
 
@@ -140,6 +143,17 @@ if (Astro.request.method === 'POST') {
         </div>
 </Default>
 
+<script>
+    import { marked } from "marked";
+        document.getElementById('content').addEventListener('input', function () {
+            const markdownContent = document.getElementById('content');
+            const htmlPreview = document.getElementById('html-preview');
+            const htmlContent = marked.parse(markdownContent.value);
+    
+            htmlPreview.innerHTML = htmlContent;
+    
+        });
+    </script>
 <style>
     .dash {
         padding: 2rem;
@@ -209,6 +223,33 @@ if (Astro.request.method === 'POST') {
         font-size: small;
         display: inline;
         font-style: italic;
+    }
+    #editor {
+        display: flex;
+        position: relative;
+        width: max-content;
+    }
+    #content,
+    #html-preview {
+        padding: 20px;
+        width: 35vw;
+        height: 400px;
+        overflow-y: auto;
+    }
+
+    #content {
+        background: #98a2ba;
+        border: none;
+        border-radius: 8px 0 0 8px;
+        color: #000000;
+        outline: none;
+        resize: none;
+    }
+
+    #html-preview {
+        background: #bbc8e1;
+        border-radius: 0 8px 8px 0;
+        color: #1f1f1f;
     }
 
 </style>

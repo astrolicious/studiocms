@@ -33,6 +33,18 @@ GITHUB_CLIENT_ID=
 GITHUB_CLIENT_SECRET=
 ```
 
+When you setup the Github Oauth App for these keys use the following for the setup:
+
+For Local dev to work:
+
+Homepage URL: http://localhost:4321
+Authorization callback URL: http://localhost:4321/dashboard/login/github/callback
+
+For going to Production:
+
+Homepage URL: https://example.com
+Authorization callback URL: https://example.com/dashboard/login/github/callback
+
 ### Configuration
 
 Your `astro.config.mjs` should look like the following
@@ -62,3 +74,4 @@ export default defineConfig({
 
 During the first start of Astro Studio CMS, you need to navigate to http://localhost:4321/start/ to initialize your database Setup your installation.
 
+it will redirect and ask you to shutdown and change the above mentioned config option `dbStartPage` to `false` at which point that will enable full functionality of the CMS.
