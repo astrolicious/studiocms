@@ -41,7 +41,7 @@ export default defineIntegration({
                 const astroPackagePath = rootResolve('./node_modules/astro/package.json');
                 const astroPackage = JSON.parse(fs.readFileSync(astroPackagePath, 'utf-8'));
                 const astroVersion = astroPackage.version;
-                
+
                 if (astroVersion < "4.5.5") {
                     throw new AstroError("Astro Studio CMS requires Astro 4.5.5 or later.");
                 }
@@ -74,92 +74,103 @@ export default defineIntegration({
                     'virtual:astro-studio-cms:config': `export default ${JSON.stringify(options) };`,
                 })
 
-                // Add Authentication Middleware if not disabled
-                if (!options.disableAuth) {
+                // dbStartPage - Choose whether to run the Start Page or Inject the Integration
+                if (options.dbStartPage) {
+                    integrationLogger(logger, true, "warn", 
+                        "Start Page Enabled.  This will be the only page available until you initialize your database. To get started, visit http://localhost:4321/start in your browser to initialize your database. And Setup your installation.");
+                    
+                    const dbinitpage = resolve('./pages/start.astro');
+                    const initPageUser = rootResolve('./src/pages/start.astro');
+
+                    if ( !fs.existsSync(initPageUser) ) {
+                        if (!fs.existsSync(rootResolve('./src/pages'))) {
+                            try { 
+                                fs.mkdirSync(rootResolve('./src/pages'), { recursive: true });
+                            } catch (err) { 
+                                logger.debug(err as string); 
+                            }
+                        } try { 
+                            fs.writeFileSync(initPageUser, fs.readFileSync(dbinitpage));
+                        } catch (err) { 
+                            logger.debug(err as string); 
+                        }
+                    }
+                } else {
+                    // Add Authentication Middleware
                     integrationLogger(
-                        logger, isVerbose, 
-                        "info", 
-                        "Authentication Middleware Enabled"
+                        logger, isVerbose, "info", "Adding Authentication Middleware"
                     );
                     addMiddleware({
                         entrypoint: resolve('./middleware/index.ts'),
                         order: "post",
                     });
-                } else {
-                    // Log that Authentication Middleware is Disabled
-                    integrationLogger(
-                        logger, isVerbose, 
-                        "info", 
-                        "Authentication Middleware Disabled"
-                    );
-                }
 
-                // Add Page Routes
-                integrationLogger(
-                    logger, isVerbose, 
-                    "info", 
-                    "Adding Page Routes..."
-                );
-                injectRoute({ 
-                    pattern: config.base, 
-                    entrypoint: resolve('./pages/index.astro'), 
-                });
-                injectRoute({ 
-                    pattern: `${config.base}about/`, 
-                    entrypoint: resolve('./pages/about.astro'), 
-                });
-                injectRoute({ 
-                    pattern: `${config.base}blog/`, 
-                    entrypoint: resolve('./pages/blog/index.astro'), 
-                });
-                injectRoute({ 
-                    pattern: `${config.base}blog/[slug]`, 
-                    entrypoint: resolve('./pages/blog/[...slug].astro'), 
-                });
-                injectRoute({ 
-                    pattern: `${config.base}dashboard/`, 
-                    entrypoint: resolve('./pages/dashboard/index.astro'), 
-                });
-                injectRoute({ 
-                    pattern: `${config.base}dashboard/profile`, 
-                    entrypoint: resolve('./pages/dashboard/profile.astro'), 
-                });
-                injectRoute({ 
-                    pattern: `${config.base}dashboard/new-post`, 
-                    entrypoint: resolve('./pages/dashboard/new-post.astro'), 
-                });
-                injectRoute({ 
-                    pattern: `${config.base}dashboard/login`, 
-                    entrypoint: resolve('./pages/dashboard/login/index.astro'), 
-                });
-                injectRoute({ 
-                    pattern: `${config.base}dashboard/edit/home`, 
-                    entrypoint: resolve('./pages/dashboard/edit/home.astro'), 
-                });
-                injectRoute({ 
-                    pattern: `${config.base}dashboard/edit/about`, 
-                    entrypoint: resolve('./pages/dashboard/edit/about.astro'), 
-                });
-                injectRoute({ 
-                    pattern: `${config.base}dashboard/edit/[...slug]`, 
-                    entrypoint: resolve('./pages/dashboard/edit/[...slug].astro'), 
-                });
-                injectRoute({ 
-                    pattern: `${config.base}rss.xml`, 
-                    entrypoint: resolve('./pages/rss.xml.ts'), 
-                });
-                injectRoute({ 
-                    pattern: `${config.base}dashboard/login/github`, 
-                    entrypoint: resolve('./pages/dashboard/login/github/index.ts'), 
-                });
-                injectRoute({ 
-                    pattern: `${config.base}dashboard/login/github/callback`, 
-                    entrypoint: resolve('./pages/dashboard/login/github/callback.ts'), 
-                });
-                injectRoute({ 
-                    pattern: `${config.base}dashboard/logout`, 
-                    entrypoint: resolve('./pages/dashboard/logout.ts'), 
-                });
+                    // Add Page Routes
+                    integrationLogger(
+                        logger, isVerbose, "info", "Adding Page Routes..."
+                    );
+                    injectRoute({ 
+                        pattern: config.base, 
+                        entrypoint: resolve('./pages/index.astro'), 
+                    });
+                    injectRoute({ 
+                        pattern: `${config.base}about/`, 
+                        entrypoint: resolve('./pages/about.astro'), 
+                    });
+                    injectRoute({ 
+                        pattern: `${config.base}blog/`, 
+                        entrypoint: resolve('./pages/blog/index.astro'), 
+                    });
+                    injectRoute({ 
+                        pattern: `${config.base}blog/[slug]`, 
+                        entrypoint: resolve('./pages/blog/[...slug].astro'), 
+                    });
+                    injectRoute({ 
+                        pattern: `${config.base}dashboard/`, 
+                        entrypoint: resolve('./pages/dashboard/index.astro'), 
+                    });
+                    injectRoute({ 
+                        pattern: `${config.base}dashboard/profile`, 
+                        entrypoint: resolve('./pages/dashboard/profile.astro'), 
+                    });
+                    injectRoute({ 
+                        pattern: `${config.base}dashboard/new-post`, 
+                        entrypoint: resolve('./pages/dashboard/new-post.astro'), 
+                    });
+                    injectRoute({ 
+                        pattern: `${config.base}dashboard/login`, 
+                        entrypoint: resolve('./pages/dashboard/login/index.astro'), 
+                    });
+                    injectRoute({ 
+                        pattern: `${config.base}dashboard/edit/home`, 
+                        entrypoint: resolve('./pages/dashboard/edit/home.astro'), 
+                    });
+                    injectRoute({ 
+                        pattern: `${config.base}dashboard/edit/about`, 
+                        entrypoint: resolve('./pages/dashboard/edit/about.astro'), 
+                    });
+                    injectRoute({ 
+                        pattern: `${config.base}dashboard/edit/[...slug]`, 
+                        entrypoint: resolve('./pages/dashboard/edit/[...slug].astro'), 
+                    });
+                    injectRoute({ 
+                        pattern: `${config.base}rss.xml`, 
+                        entrypoint: resolve('./pages/rss.xml.ts'), 
+                    });
+                    injectRoute({ 
+                        pattern: `${config.base}dashboard/login/github`, 
+                        entrypoint: resolve('./pages/dashboard/login/github/index.ts'), 
+                    });
+                    injectRoute({ 
+                        pattern: `${config.base}dashboard/login/github/callback`, 
+                        entrypoint: resolve('./pages/dashboard/login/github/callback.ts'), 
+                    });
+                    injectRoute({ 
+                        pattern: `${config.base}dashboard/logout`, 
+                        entrypoint: resolve('./pages/dashboard/logout.ts'), 
+                    });
+
+                }
 
                 // Add Database Integration
                 integrationLogger(
@@ -184,21 +195,6 @@ export default defineIntegration({
                     }
                 });
 
-                // Add routes for the database initialization page if needed
-                if (options.dbinitpage) {
-                    integrationLogger(logger, true, "warn", 
-                        "Database Initialization Page Enabled, if you have already initialized your database, you may want to put 'dbinitpage: false` in your Astro Studio CMS Config. This will also prevent creating a new page on every server start." );
-                    const dbinitpage = resolve('./pages/happy-mongoose.astro');
-                    const initPageUser = rootResolve('./src/pages/happy-mongoose.astro');
-                    if ( !fs.existsSync(initPageUser) ) {
-                        if (!fs.existsSync(rootResolve('./src/pages'))) {
-                            try { fs.mkdirSync(rootResolve('./src/pages'), { recursive: true });
-                            } catch (err) { logger.debug(err as string); }
-                        } try { fs.writeFileSync(initPageUser, fs.readFileSync(dbinitpage));
-                        } catch (err) { logger.debug(err as string); }
-                    }
-                }
-
                 integrationLogger(
                     logger, isVerbose,
                     "info", 
@@ -206,13 +202,12 @@ export default defineIntegration({
                 );
 
             },
-            // DEV MODE: Log a message to the console when the server starts to let the user know they need to initialize their database if it's their first time using Astro Studio CMS
             'astro:server:start': ({ logger }) => {
-                if (options.dbinitpage) {
+                if (options.dbStartPage) {
                     integrationLogger(
                         logger, true,
-                        "info",
-                        "If this is your first time using Astro Studio CMS, you may need to navigate to http://localhost:4321/happy-mongoose/ to initialize your database and remove any SQL errors."
+                        "warn",
+                        "Astro Studio CMS is running in Development Mode. To get started, visit http://localhost:4321/start in your browser to initialize your database. And Setup your installation."
                     )
                 }
             }
