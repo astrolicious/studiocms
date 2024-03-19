@@ -44,7 +44,7 @@
   },
   "type": "module",
   "peerDependencies": {
-    "@astrojs/db": "^0.8.5",
+    "@astrojs/db": "^0.8.8",
     "astro": ">=4.5.5"
   },
   "devDependencies": {
