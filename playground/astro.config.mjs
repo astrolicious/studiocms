@@ -10,8 +10,7 @@ export default defineConfig({
 	adapter: vercel(),
 	integrations: [
 		db(),
-		studioCMS({ 
-			siteAdmins: ['Adammatthiesen'],
+		studioCMS({
 			dbStartPage: false,
 			verbose: true,
 		}),

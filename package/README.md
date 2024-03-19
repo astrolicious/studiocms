@@ -52,11 +52,8 @@ export default defineConfig({
 	adapter: vercel(),
 	integrations: [
         db(),
-        studioCMS({ 
-            siteTitle: "Astro Studio Blog",
-            siteDescription: "My awesome website!",
-            siteAdmins: ['firstGithubUsername','secondGithubUsername'],
-            dbStartPage: true // DEFAULT - This creates a file in your /src/pages folder to allow first initialization of the DB
+        studioCMS({
+            dbStartPage: true // DEFAULT - This creates a file in your /src/pages folder to allow first initialization and config of the installation
         })],
 });
 ```
