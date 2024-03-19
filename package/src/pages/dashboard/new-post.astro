@@ -30,7 +30,6 @@ const getUserName = () => {
     return null;
 };
 
-//@ts-ignore
 if (!isAdmin(locals.user.username)) {
     console.log('User is not an admin');
     return Astro.redirect(`${getAstroBaseURL()}dashboard`);

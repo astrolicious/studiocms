@@ -1,10 +1,31 @@
 ---
-import { Admins, SiteConfig, db } from 'astro:db';
-import { VirtualLayout } from 'virtual:astro-studio-cms:layout';
+import { Admins, SiteConfig, db, eq } from 'astro:db';
+import Default from "../../layouts/Default.astro"
+import type { Locals } from "./locals";
+import { getAstroBaseURL } from '../../utils';
 
-export const getAstroBaseURL = () => {
-    return import.meta.env.BASE_URL
+const adminList = await db.select().from(Admins);
+const ConfigArray = await db.select().from(SiteConfig);
+const contextConfig = ConfigArray[0];
+
+const isAdmin = async (user: string) => {
+    if (adminList.includes({GitHubUsername: user})) {
+        return true;
+    }
+    return false;
 };
+
+const locals = Astro.locals as Locals;
+const isLoggedIn = locals.isLoggedIn;
+
+if (!isLoggedIn) {
+    return Astro.redirect(`${getAstroBaseURL()}dashboard/login`);
+}
+
+if (!isAdmin(locals.user.username)) {
+    console.log('User is not an admin');
+    return Astro.redirect(`${getAstroBaseURL()}dashboard`);
+}
 
 if (Astro.request.method === 'POST') {
     const formData = await new Request(Astro.request.url, {
@@ -15,52 +36,37 @@ if (Astro.request.method === 'POST') {
 
     const title = formData.get('title');
     const description = formData.get('description');
-    const admin = formData.get('admin');
 
-    await db.insert(SiteConfig)
-        .values({
+    await db.update(SiteConfig)
+        .set({
             title: title as string,
             description: description as string,
-        }).then(() => {
+        }).where(eq(SiteConfig._id, "1")).then(() => {
             return new Response('Success', { status: 200 });
         }).catch(() => {
             return new Response('Error', { status: 500 });
         });
 
-    await db.insert(Admins)
-        .values({
-            GitHubUsername: admin as string,
-        }).then(() => {
-            return new Response('Success', { status: 200 });
-        }).catch(() => {
-            return new Response('Error', { status: 500 });
-        });
-
-    return Astro.redirect(`${getAstroBaseURL()}done/`)
+    return Astro.redirect(`${getAstroBaseURL()}dashboard/`)
 }
 
 ---
 
-<VirtualLayout>
+<Default>
         <div class="dash">
+            <div class="dash-header">
+                <form class="left" method="post" action={`${getAstroBaseURL()}dashboard`}>
+                    <button class="btn">Dashboard</button>
+                </form>
+                <form class="right" method="post" action={`${getAstroBaseURL()}dashboard/logout`}>
+                    <button>Logout</button>
+                </form>
+            </div>
             <center>
-                <h2>Welcome to Astro-Studio-CMS</h2>
+                <h1>Site Configuration</h1>
             </center>
 
-            <p>
-                <bold>What is Astro-Studio-CMS?</bold> <br>
-                Astro-Studio-CMS is a simple, easy to use, and fast CMS for Astro. It's built with the latest technologies and is designed to be as simple as possible. It's also open source and free to use. <br>
-                <bold>How do I use it?</bold> <br>
-                To use Astro-Studio-CMS, you need to have a basic understanding of Astro and how it works. You can use the CMS to create, edit, and delete posts. You can also use it to manage your site's settings and more. <br>
-                <bold>What's next?</bold> <br>
-                The next step is to start by filling in your site details below!<br>
-            </p>
-
             <div>
-
-                <center>
-                    <h4>Welcome to Astro-Studio-CMS</h4>
-                </center>
 
                 <form method="post" enctype="multipart/form-data" >
                 
@@ -69,25 +75,18 @@ if (Astro.request.method === 'POST') {
                         type="text" 
                         id="title" 
                         name="title" 
-                        placeholder="Astro Studio Blog" 
+                        value={contextConfig.title} 
                         required><br>
                     <label for="description">Description</label><br>
                     <input
                         type="text" 
                         id="description" 
                         name="description" 
-                        placeholder="My Awesome Blog"
-                        required><br>
-                    <label for="admins">Default Site Admin <info>( Just set one, You can add more later )</info> </label><br>
-                    <input
-                        type="text" 
-                        id="admins" 
-                        name="admins" 
-                        placeholder="YourGitHubUsername"
+                        value={contextConfig.description}
                         required><br>
 
                     <center>
-                        <button class="btn" type="submit">Initialize Database!</button>
+                        <button class="btn" type="submit">Update!</button>
                     </center>
 
                 </form>
@@ -95,7 +94,7 @@ if (Astro.request.method === 'POST') {
                 
             </div>
         </div>
-</VirtualLayout>
+</Default>
 
 <style>
     .dash {

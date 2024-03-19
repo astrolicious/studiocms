@@ -155,6 +155,14 @@ export default defineIntegration({
                         entrypoint: resolve('./pages/dashboard/new-post.astro'), 
                     });
                     injectRoute({ 
+                        pattern: `${config.base}dashboard/site-config`, 
+                        entrypoint: resolve('./pages/dashboard/site-config.astro'), 
+                    });
+                    injectRoute({ 
+                        pattern: `${config.base}dashboard/admin-config`, 
+                        entrypoint: resolve('./pages/dashboard/admin-config.astro'), 
+                    });
+                    injectRoute({ 
                         pattern: `${config.base}dashboard/login`, 
                         entrypoint: resolve('./pages/dashboard/login/index.astro'), 
                     });

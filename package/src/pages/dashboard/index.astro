@@ -59,6 +59,14 @@ const getUserName = () => {
                  isAdmin(locals.user.username) && (
                     <a href={`${getAstroBaseURL()}dashboard/edit/about`}><button class="btn-edit">Edit About Page</button></a>
                 )}
+                { //@ts-ignore
+                 isAdmin(locals.user.username) && (
+                    <a href={`${getAstroBaseURL()}dashboard/site-config`}><button class="btn-edit">Edit Site Configuration</button></a>
+                )}
+                { //@ts-ignore
+                 isAdmin(locals.user.username) && (
+                    <a href={`${getAstroBaseURL()}dashboard/admin-config`}><button class="btn-edit">Edit Admins</button></a>
+                )}
             </div>
         </div>
 </Default>
