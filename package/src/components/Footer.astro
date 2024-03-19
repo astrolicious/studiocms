@@ -1,10 +1,13 @@
 ---
 const today = new Date();
-import Config from 'virtual:astro-studio-cms:config';
+import { SiteConfig, db } from 'astro:db';
+
+const ConfigArray = await db.select().from(SiteConfig);
+const contextConfig = ConfigArray[0];
 ---
 
 <footer>
-	&copy; {today.getFullYear()} {Config.siteTitle}. All rights reserved.
+	&copy; {today.getFullYear()} {contextConfig.title}. All rights reserved.
 	<div class="social-links">
 		<a href="https://m.webtoo.ls/@astro" target="_blank">
 			<span class="sr-only">Follow Astro on Mastodon</span>

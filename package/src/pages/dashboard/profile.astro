@@ -2,8 +2,8 @@
 import Default from "../../layouts/Default.astro"
 import { lucia } from "../../lib/auth";
 import type { Locals } from "./locals";
-import Config from "virtual:astro-studio-cms:config";
 import { getAstroBaseURL } from '../../utils';
+import { Admins, db } from "astro:db";
 
 const locals = Astro.locals as Locals;
 const isLoggedIn = locals.isLoggedIn;
@@ -23,12 +23,12 @@ const getUserName = () => {
 	return null;
 };
 
-const adminList = Config.siteAdmins;
+const adminList = await db.select().from(Admins);
 
 const isAdmin = async (user: string) => {
-    if (adminList.includes(user)) {
-		return true;
-	}
+    if (adminList.includes({GitHubUsername: user})) {
+        return true;
+    }
     return false;
 };
 

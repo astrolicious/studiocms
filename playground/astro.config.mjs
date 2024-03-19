@@ -12,7 +12,7 @@ export default defineConfig({
 		db(),
 		studioCMS({ 
 			siteAdmins: ['Adammatthiesen'],
-			dbStartPage: true,
+			dbStartPage: false,
 			verbose: true,
 		}),
 	],

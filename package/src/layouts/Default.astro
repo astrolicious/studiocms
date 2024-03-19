@@ -2,16 +2,19 @@
 import BaseHead from "../components/BaseHead.astro";
 import Footer from "../components/Footer.astro";
 import Header from "../components/Header.astro";
-import Config from 'virtual:astro-studio-cms:config';
+import { SiteConfig, db } from 'astro:db';
+
+const ConfigArray = await db.select().from(SiteConfig);
+const contextConfig = ConfigArray[0];
 ---
 
 <!doctype html>
 <html lang="en">
 	<head>
-		<BaseHead title={Config.siteTitle} description={Config.siteDescription} />
+		<BaseHead title={contextConfig.title} description={contextConfig.description} />
 	</head>
 	<body>
-		<Header title={Config.siteTitle} />
+		<Header title={contextConfig.title} />
 		
 		<slot />
 

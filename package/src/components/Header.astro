@@ -1,8 +1,10 @@
 ---
 import HeaderLink from './HeaderLink.astro';
-import Config from 'virtual:astro-studio-cms:config';
 import profileImg from '../assets/profile.webp'
+import { SiteConfig, db } from 'astro:db';
 
+const ConfigArray = await db.select().from(SiteConfig);
+const contextConfig = ConfigArray[0];
 
 const isLoggedIn = Astro.locals.isLoggedIn;
 const userProfile = Astro.locals.dbUser;
@@ -12,7 +14,7 @@ const baseURL = import.meta.env.BASE_URL;
 
 <header>
 	<nav>
-		<h2><a href={baseURL}>{Config.siteTitle}</a></h2>
+		<h2><a href={baseURL}>{contextConfig.title}</a></h2>
 		<div class="internal-links">
 			<HeaderLink href={baseURL}>Home</HeaderLink>
 			<HeaderLink href=`${baseURL}blog`>Blog</HeaderLink>

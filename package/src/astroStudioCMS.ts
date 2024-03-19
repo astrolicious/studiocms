@@ -28,6 +28,7 @@ export default defineIntegration({
                 addMiddleware, 
                 addIntegration,
                 addVirtualImports,
+                addDts,
                 updateConfig,
                 config,
                 logger,
@@ -72,6 +73,16 @@ export default defineIntegration({
                 );
                 addVirtualImports({
                     'virtual:astro-studio-cms:config': `export default ${JSON.stringify(options) };`,
+                    'virtual:astro-studio-cms:layout': `export { default as VirtualLayout } from '${resolve('./layouts/Virtual.astro')}'`,
+                })
+
+                addDts({
+                    name: "virtual:astro-studio-cms",
+                    content: `
+                        declare module 'virtual:astro-studio-cms:layout' {
+                            export const VirtualLayout: typeof import('${resolve('./layouts/Virtual.astro')}');
+                        }
+                    `
                 })
 
                 // dbStartPage - Choose whether to run the Start Page or Inject the Integration

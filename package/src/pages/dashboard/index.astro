@@ -1,15 +1,15 @@
 ---
 import Default from "../../layouts/Default.astro"
 import type { Locals } from "./locals";
-import Config from "virtual:astro-studio-cms:config";
+import { db, Admins } from "astro:db";
 import { getAstroBaseURL } from '../../utils';
 
-const adminList = Config.siteAdmins;
+const adminList = await db.select().from(Admins);
 
-const isAdmin = (user: string) => {
-    if (adminList.includes(user)) {
-		return true;
-	}
+const isAdmin = async (user: string) => {
+    if (adminList.includes({GitHubUsername: user})) {
+        return true;
+    }
     return false;
 };
 

@@ -1,9 +1,8 @@
 ---
-import { Pages, db, eq } from 'astro:db';
+import { Admins, Pages, db, eq } from 'astro:db';
 import { marked } from 'marked';
 import Layout from '../layouts/BlogPost.astro';
 import type { Locals } from './dashboard/locals';
-import Config from 'virtual:astro-studio-cms:config';
 import { getAstroBaseURL } from '../utils';
 
 const locals = Astro.locals as Locals;
@@ -13,12 +12,12 @@ const postArrayed = await db.select().from(Pages).where(eq(Pages.slug, "about"))
 
 const post = postArrayed[0];
 
-const adminList = Config.siteAdmins;
+const adminList = await db.select().from(Admins);
 
-const isAdmin = (user: string) => {
-    if (adminList.includes(user)) {
-		return true;
-	}
+const isAdmin = async (user: string) => {
+    if (adminList.includes({GitHubUsername: user})) {
+        return true;
+    }
     return false;
 };
 

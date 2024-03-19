@@ -1,7 +1,10 @@
 ---
-import Default from "../layouts/Default.astro"
 import { Admins, SiteConfig, db } from 'astro:db';
-import { getAstroBaseURL } from '../utils';
+import { VirtualLayout } from 'virtual:astro-studio-cms:layout';
+
+export const getAstroBaseURL = () => {
+    return import.meta.env.BASE_URL
+};
 
 if (Astro.request.method === 'POST') {
     const formData = await new Request(Astro.request.url, {
@@ -38,7 +41,7 @@ if (Astro.request.method === 'POST') {
 
 ---
 
-<Default>
+<VirtualLayout>
         <div class="dash">
             <center>
                 <h1>Welcome to Astro-Studio-CMS</h1>
@@ -71,7 +74,7 @@ if (Astro.request.method === 'POST') {
                         name="description" 
                         placeholder="My Awesome Blog"
                         required><br>
-                    <label for="admins">Default Site Admin</label><p>Just set one, You can add more later</p><br>
+                    <label for="admins">Default Site Admin <info>( Just set one, You can add more later )</info> </label><br>
                     <input
                         type="text" 
                         id="admins" 
@@ -79,14 +82,16 @@ if (Astro.request.method === 'POST') {
                         placeholder="YourGitHubUsername"
                         required><br>
 
-                    <button class="btn" type="submit">Initialize Database!</button>
+                    <center>
+                        <button class="btn" type="submit">Initialize Database!</button>
+                    </center>
 
                 </form>
 
                 
             </div>
         </div>
-</Default>
+</VirtualLayout>
 
 <style>
     .dash {
@@ -154,6 +159,11 @@ if (Astro.request.method === 'POST') {
         font-weight: bold;
     }
     .info-text {
+        font-size: small;
+        display: inline;
+        font-style: italic;
+    }
+    info {
         font-size: small;
         display: inline;
         font-style: italic;
