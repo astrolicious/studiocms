@@ -70,11 +70,12 @@ export default defineConfig({
 });
 ```
 
-### First Start
+### First Start and setup
 
-During the first start of Astro Studio CMS, you need to navigate to http://localhost:4321/start/ to initialize your database Setup your installation.
+This project is designed to be setup to a new Studio DB, to get started follow the [Link to Astro Studio](https://docs.astro.build/en/recipes/studio/#create-a-new-studio-project)
 
-it will redirect and ask you to shutdown and change the above mentioned config option `dbStartPage` to `false` at which point that will enable full functionality of the CMS.
+Then start the dev server using `astro dev` once it completes, stop the dev server and run `astro db push`
 
-Once you have setup your basic Database you are ready to [Link to Astro Studio](https://docs.astro.build/en/recipes/studio/#create-a-new-studio-project) and push your tables
+Once that process completes successfuly you are ready to launch the integration for the first time.  Start the dev server linked to your remote DB by running `astro dev --remote` and then navigate to http://localhost:4321/start and follow the instructions.
 
+It will redirect and ask you to shutdown and change the above mentioned config option `dbStartPage` to `false` at which point that will enable full functionality of the CMS. you can now restart the dev server with `astro dev --remote` to continue viewing your new site!
