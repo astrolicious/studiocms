@@ -54,6 +54,7 @@ export const Pages = defineTable({
 
 export const SiteConfig = defineTable({
 	columns: {
+		id: column.number({ primaryKey: true }),
 		title: column.text(),
 		description: column.text(),
 	},

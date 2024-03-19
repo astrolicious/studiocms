@@ -11,7 +11,7 @@ export default defineConfig({
 	integrations: [
 		db(),
 		studioCMS({
-			dbStartPage: false,
+			dbStartPage: true,
 			verbose: true,
 		}),
 	],

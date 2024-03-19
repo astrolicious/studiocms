@@ -1,11 +1,8 @@
-import astroStudioCMS from "./astroStudioCMS";
-
-// export default astroStudioCMS;
-
 import { defineDbIntegration } from '@astrojs/db/utils';
 import { integrationLogger } from './utils';
 import { createResolver } from "astro-integration-kit";
 import type { Options } from "./schemas";
+import astroStudioCMS from "./astroStudioCMS";
 
 // This is the integration that will be used to link the database to the Astro Studio CMS
 /**

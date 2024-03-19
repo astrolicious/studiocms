@@ -24,8 +24,7 @@ export default defineIntegration({
         return {
             "astro:config:setup": ({ 
                 watchIntegration, 
-                addMiddleware, 
-                addIntegration,
+                addMiddleware,
                 addVirtualImports,
                 addDts,
                 updateConfig,
@@ -195,14 +194,6 @@ export default defineIntegration({
                     });
 
                 }
-
-                // Add Database Integration
-                integrationLogger(
-                    logger, isVerbose, 
-                    "info", 
-                    "Loading Custom AstroDB configuration..."
-                );
-                // addIntegration(dbInject())
 
                 // Update Astro Config
                 integrationLogger(
