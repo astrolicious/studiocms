@@ -6,7 +6,7 @@ import { loadEnv } from "vite";
 import { optionsSchema } from "./schemas";
 import { integrationLogger } from "./utils";
 import dbInject from "./db/integration";
-import fs from "node:fs"
+import fs from "node:fs";
 
 const { GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET } = loadEnv( "all", process.cwd(), "GITHUB");
 
@@ -33,11 +33,19 @@ export default defineIntegration({
                 logger,
                 injectRoute,
             }) => {
-
                 // Create Resolver for Virtual Imports
                 const { resolve } = createResolver(import.meta.url);
                 const { resolve: rootResolve } = createResolver(config.root.pathname)
                 
+                // Check for Astro Version
+                const astroPackagePath = rootResolve('./node_modules/astro/package.json');
+                const astroPackage = JSON.parse(fs.readFileSync(astroPackagePath, 'utf-8'));
+                const astroVersion = astroPackage.version;
+                
+                if (astroVersion < "4.5.5") {
+                    throw new AstroError("Astro Studio CMS requires Astro 4.5.5 or later.");
+                }
+
                 // Check for SSR Mode
                 if (config.output !== "server" ) {
                     throw new AstroError("Astro Studio CMS is only supported in 'Output: server' SSR mode.");
