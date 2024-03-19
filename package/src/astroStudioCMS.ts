@@ -95,6 +95,12 @@ export default defineIntegration({
                             logger.debug(err as string); 
                         }
                     }
+
+                    injectRoute({
+                        pattern: `${config.base}done/`,
+                        entrypoint: resolve('./pages/done.astro'),
+                    })
+
                 } else {
                     // Add Authentication Middleware
                     integrationLogger(

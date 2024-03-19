@@ -1,0 +1,21 @@
+---
+import { Code } from "astro/components";
+---
+<h1>Setup Done!</h1>
+
+<p>You can now change the following flag in your astro.config to start using Astro-Studio-CMS</p>
+
+<Code lang="ts" code={`import { defineConfig } from "astro/config";
+import studioCMS from "@nametbd/astro-studio-cms";
+import db from '@astrojs/db';
+
+// https://astro.build/config
+export default defineConfig({
+    ...other config options,
+	integrations: [
+		db(),
+		studioCMS({ 
+			dbStartPage: false, // Change this to false
+		}),
+	],
+});`}/>

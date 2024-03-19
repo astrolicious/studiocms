@@ -51,3 +51,16 @@ export const Pages = defineTable({
 		content: column.text({ multiline: true }),
 	},
 });
+
+export const SiteConfig = defineTable({
+	columns: {
+		title: column.text(),
+		description: column.text(),
+	},
+});
+
+export const Admins = defineTable({
+	columns: {
+		GitHubUsername: column.text(),
+	},
+});
