@@ -33,6 +33,9 @@ export default defineIntegration({
             }) => {
                 // Create Resolver for Virtual Imports
                 const { resolve } = createResolver(import.meta.url);
+                
+                // Watch Integration for changes
+                watchIntegration(resolve());
 
                 // Check for SSR Mode
                 if (config.output !== "server" ) {
@@ -43,9 +46,6 @@ export default defineIntegration({
                 if (!config.site) {
                     throw new AstroError("Astro Studio CMS requires a 'site' configuration in your Astro Config.");
                 }
-
-                // Watch Integration for changes
-                watchIntegration(resolve());
 
                 // Check for Required Environment Variables
                 if (!GITHUB_CLIENT_ID || !GITHUB_CLIENT_SECRET) {
