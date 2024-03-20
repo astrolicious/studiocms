@@ -1,6 +1,7 @@
 ---
 import HeaderLink from './HeaderLink.astro';
 import profileImg from '../assets/profile.webp'
+// @ts-expect-error
 import { SiteConfig, db } from 'astro:db';
 
 const ConfigArray = await db.select().from(SiteConfig);

@@ -1,3 +1,5 @@
+
+// @ts-expect-error
 import { defineDb } from "astro:db";
 import { Blog, Pages, Session, User, SiteConfig, Admins } from './tables';
 

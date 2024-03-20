@@ -1,9 +1,13 @@
 ---
 import { Code } from "astro/components";
+import { VirtualLayout } from "virtual:astro-studio-cms:layout";
 ---
-<h1>Setup Done!</h1>
+<VirtualLayout>
+	<center>
+		<h1>Setup Done!</h1>
+	</center>
 
-<p>You can now stop your dev server and add the following option in your astro.config to start using Astro-Studio-CMS then start back up to see your new CMS data</p>
+	<p>You can now stop your dev server and add the following option in your astro.config to start using Astro-Studio-CMS then start back up to see your new CMS data</p>
 
 <Code lang="diff" code={`import { defineConfig } from "astro/config";
 import studioCMS from "@nametbd/astro-studio-cms";
@@ -19,3 +23,5 @@ export default defineConfig({
 		}),
 	],
 });`}/>
+
+</VirtualLayout>

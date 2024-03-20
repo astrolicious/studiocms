@@ -67,6 +67,15 @@ const getUserName = () => {
                  isAdmin(locals.user.username) && (
                     <a href={`${getAstroBaseURL()}dashboard/admin-config`}><button class="btn-edit">Edit Admins</button></a>
                 )}
+
+
+
+                { //@ts-ignore
+                 !isAdmin(locals.user.username) && (
+                    <p>
+                        You are not an admin. You can only view your profile. This is a feature that is still in development.    
+                    </p>
+                )}
             </div>
         </div>
 </Default>

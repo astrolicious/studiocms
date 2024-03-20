@@ -8,6 +8,19 @@ import BaseHead from "../components/BaseHead.astro";
 		<BaseHead title={"Astro-Studio-CMS Setup"} description={"Setup page for Astro-Studio-CMS"} />
 	</head>
 	<body>		
-		<slot />
+        <div class="dash">
+			<slot />
+		</div>
 	</body>
 </html>
+
+<style>
+    .dash {
+        padding: 2rem;
+        border: 2px solid #ccc;
+        border-radius: 5rem;
+        background-color: #fff;
+        margin: 2rem;
+        
+    }
+</style>

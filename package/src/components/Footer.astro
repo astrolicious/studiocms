@@ -1,5 +1,6 @@
 ---
 const today = new Date();
+// @ts-expect-error
 import { SiteConfig, db } from 'astro:db';
 
 const ConfigArray = await db.select().from(SiteConfig);

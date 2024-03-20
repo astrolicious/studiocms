@@ -1,3 +1,4 @@
+// @ts-expect-error
 import { db } from "astro:db";
 import { Blog, Pages } from './tables';
 import { asDrizzleTable } from '@astrojs/db/utils';

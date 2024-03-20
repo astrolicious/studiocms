@@ -48,11 +48,8 @@ export default function StudioCMS(options?: Options) {
                 // Inject the actual integration that handles everything besides the database...
                 updateConfig({
                     integrations: [astroStudioCMS(options)]
-                })
-    
-            }
-
-            
+                });
+            },
         },
     });
-}
+};

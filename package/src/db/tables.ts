@@ -1,3 +1,4 @@
+// @ts-expect-error
 import { defineTable, column, NOW } from 'astro:db';
 
 export const Session = defineTable({

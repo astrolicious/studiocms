@@ -8,10 +8,6 @@ import { integrationLogger } from "./utils";
 
 const { GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET } = loadEnv( "all", process.cwd(), "GITHUB");
 
-// This is the primary user-facing integration that will be used to install the Astro Studio CMS
-/**
- * Astro Studio CMS Integration - Experimental
- */
 export default defineIntegration({
     name: "astro-studio-cms",
     optionsSchema,
@@ -20,19 +16,19 @@ export default defineIntegration({
         // Check for Verbose Mode
         const isVerbose = options.verbose;
 
+        // Create Resolver for Virtual Imports
+        const { resolve } = createResolver(import.meta.url);
+
         return {
             "astro:config:setup": ({ 
                 watchIntegration, 
                 addMiddleware,
                 addVirtualImports,
-                addDts,
                 updateConfig,
                 config,
                 logger,
                 injectRoute,
             }) => {
-                // Create Resolver for Virtual Imports
-                const { resolve } = createResolver(import.meta.url);
                 
                 // Watch Integration for changes
                 watchIntegration(resolve());
@@ -40,17 +36,17 @@ export default defineIntegration({
                 // Check for SSR Mode
                 if (config.output !== "server" ) {
                     throw new AstroError("Astro Studio CMS is only supported in 'Output: server' SSR mode.");
-                }
+                };
 
                 // Check for Site URL
                 if (!config.site) {
                     throw new AstroError("Astro Studio CMS requires a 'site' configuration in your Astro Config.");
-                }
+                };
 
                 // Check for Required Environment Variables
                 if (!GITHUB_CLIENT_ID || !GITHUB_CLIENT_SECRET) {
                     throw new AstroError("GitHub OAuth Client ID and Secret are required to use Astro Studio CMS.");
-                }
+                };
 
                 // Add Virtual Imports
                 integrationLogger(
@@ -61,16 +57,7 @@ export default defineIntegration({
                 addVirtualImports({
                     'virtual:astro-studio-cms:config': `export default ${JSON.stringify(options) };`,
                     'virtual:astro-studio-cms:layout': `export { default as VirtualLayout } from '${resolve('./layouts/Virtual.astro')}'`,
-                })
-
-                addDts({
-                    name: "virtual:astro-studio-cms",
-                    content: `
-                        declare module 'virtual:astro-studio-cms:layout' {
-                            export const VirtualLayout: typeof import('${resolve('./layouts/Virtual.astro')}');
-                        }
-                    `
-                })
+                });
 
                 // dbStartPage - Choose whether to run the Start Page or Inject the Integration
                 if (options.dbStartPage) {
@@ -79,11 +66,11 @@ export default defineIntegration({
                     injectRoute({
                         pattern: `${config.base}start/`,
                         entrypoint: resolve('./pages/start.astro'),
-                    })
+                    });
                     injectRoute({
                         pattern: `${config.base}done/`,
                         entrypoint: resolve('./pages/done.astro'),
-                    })
+                    });
 
                 } else {
                     // Add Authentication Middleware
@@ -168,7 +155,7 @@ export default defineIntegration({
                         entrypoint: resolve('./pages/dashboard/logout.ts'), 
                     });
 
-                }
+                };
 
                 // Update Astro Config
                 integrationLogger(
@@ -186,8 +173,7 @@ export default defineIntegration({
                 });
 
                 integrationLogger(
-                    logger, isVerbose,
-                    "info", 
+                    logger, isVerbose, "info", 
                     "Astro Studio CMS Setup Complete!"
                 );
 
@@ -198,10 +184,9 @@ export default defineIntegration({
                         logger, true,
                         "warn",
                         "Astro Studio CMS is running in Development Mode. To get started, visit http://localhost:4321/start in your browser to initialize your database. And Setup your installation."
-                    )
-                }
-            }
-        }
-    }
-})
-
+                    );
+                };
+            },
+        };
+    },
+});
