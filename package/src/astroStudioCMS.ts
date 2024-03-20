@@ -5,7 +5,6 @@ import { corePlugins } from "astro-integration-kit/plugins";
 import { loadEnv } from "vite";
 import { optionsSchema } from "./schemas";
 import { integrationLogger } from "./utils";
-import fs from "node:fs";
 
 const { GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET } = loadEnv( "all", process.cwd(), "GITHUB");
 
@@ -34,16 +33,6 @@ export default defineIntegration({
             }) => {
                 // Create Resolver for Virtual Imports
                 const { resolve } = createResolver(import.meta.url);
-                const { resolve: rootResolve } = createResolver(config.root.pathname)
-                
-                // Check for Astro Version
-                const astroPackagePath = rootResolve('./node_modules/astro/package.json');
-                const astroPackage = JSON.parse(fs.readFileSync(astroPackagePath, 'utf-8'));
-                const astroVersion = astroPackage.version;
-
-                if (astroVersion < "4.5.5") {
-                    throw new AstroError("Astro Studio CMS requires Astro 4.5.5 or later.");
-                }
 
                 // Check for SSR Mode
                 if (config.output !== "server" ) {
@@ -86,25 +75,11 @@ export default defineIntegration({
                 // dbStartPage - Choose whether to run the Start Page or Inject the Integration
                 if (options.dbStartPage) {
                     integrationLogger(logger, true, "warn", 
-                        "Start Page Enabled.  This will be the only page available until you initialize your database. To get started, visit http://localhost:4321/start in your browser to initialize your database. And Setup your installation.");
-                    
-                    const dbinitpage = resolve('./pages/start.astro');
-                    const initPageUser = rootResolve('./src/pages/start.astro');
-
-                    if ( !fs.existsSync(initPageUser) ) {
-                        if (!fs.existsSync(rootResolve('./src/pages'))) {
-                            try { 
-                                fs.mkdirSync(rootResolve('./src/pages'), { recursive: true });
-                            } catch (err) { 
-                                logger.debug(err as string); 
-                            }
-                        } try { 
-                            fs.writeFileSync(initPageUser, fs.readFileSync(dbinitpage));
-                        } catch (err) { 
-                            logger.debug(err as string); 
-                        }
-                    }
-
+                        "Start Page Enabled.  This will be the only page available until you initialize your database. To get started, visit http://localhost:4321/start/ in your browser to initialize your database. And Setup your installation.");
+                    injectRoute({
+                        pattern: `${config.base}start/`,
+                        entrypoint: resolve('./pages/start.astro'),
+                    })
                     injectRoute({
                         pattern: `${config.base}done/`,
                         entrypoint: resolve('./pages/done.astro'),
