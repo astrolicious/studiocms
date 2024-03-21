@@ -1,4 +1,10 @@
 import type { AstroIntegrationLogger } from "astro";
+import { Marked } from "marked";
+import markedAlert from "marked-alert";
+import markedFootnote from "marked-footnote";
+import { markedSmartypants } from "marked-smartypants";
+import { markedEmoji } from "marked-emoji";
+import emojiList from "emojilib/dist/emoji-en-US.json";
 
 export const getAstroBaseURL = () => {
     return import.meta.env.BASE_URL
@@ -21,3 +27,22 @@ export const integrationLogger = async (
             } 
         }
     };
+    
+
+export const emojiMap = Object.entries(emojiList).reduce(
+    (ret, [emoji, names]) => {
+        for (const name of names) {
+            ret[name] = ret[name] || emoji;
+        }
+        return ret;
+    },
+    {} as Record<string, string>
+);
+
+export const customMarked = new Marked( 
+    markedAlert(), 
+    markedSmartypants(),
+    markedFootnote(),
+    markedEmoji({ emojis: emojiMap, unicode: true }),
+    { async: true, gfm: true, }, 
+);

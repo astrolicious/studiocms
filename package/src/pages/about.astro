@@ -1,9 +1,8 @@
 ---
 import { Admins, Pages, db, eq } from 'astro:db';
-import { marked } from 'marked';
 import Layout from '../layouts/BlogPost.astro';
 import type { Locals } from './dashboard/locals';
-import { getAstroBaseURL } from '../utils';
+import { customMarked, getAstroBaseURL } from '../utils';
 
 const locals = Astro.locals as Locals;
 const isLoggedIn = locals.isLoggedIn;
@@ -37,7 +36,7 @@ type Props = {
 		<a href={`${getAstroBaseURL()}dashboard/edit/about`}><button class="btn">✏️ Edit Page</button></a>
 		)}
 	<Fragment 
-		set:html={marked(post.content, { async: true })} />
+		set:html={customMarked.parse(post.content)} />
 </Layout>
 <style>
     .btn {

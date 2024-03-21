@@ -1,7 +1,7 @@
 ---
 import { Pages, db, eq } from 'astro:db';
-import { marked } from 'marked';
 import Default from '../layouts/Default.astro';
+import { customMarked } from '../utils';
 
 const postArrayed = await db.select().from(Pages).where(eq(Pages.slug, "index"));
 
@@ -16,7 +16,7 @@ type Props = {
 <Default>
 		<main>
 		<Fragment 
-		set:html={marked(post.content, { async: true })} />
+		set:html={customMarked.parse(post.content)} />
 
 		</main>
 </Default>

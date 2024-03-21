@@ -155,11 +155,11 @@ if (Astro.request.method === 'POST') {
 </Default>
 
 <script>
-import { marked } from "marked";
-    document.getElementById('content').addEventListener('input', function () {
+import { customMarked } from "../../../utils";
+    document.getElementById('content').addEventListener('input', async function () {
         const markdownContent = document.getElementById('content');
         const htmlPreview = document.getElementById('html-preview');
-        const htmlContent = marked.parse(markdownContent.value);
+        const htmlContent = await customMarked.parse(markdownContent.value);
 
         htmlPreview.innerHTML = htmlContent;
 
