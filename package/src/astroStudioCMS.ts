@@ -9,7 +9,7 @@ import { integrationLogger } from "./utils";
 const { GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET } = loadEnv( "all", process.cwd(), "GITHUB");
 
 export default defineIntegration({
-    name: "astro-studio-cms",
+    name: "astro-studiocms",
     optionsSchema,
     plugins: [...corePlugins],
     setup({ options }) {

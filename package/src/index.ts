@@ -34,7 +34,7 @@ export default function StudioCMS(options?: Options) {
     const { resolve } = createResolver(import.meta.url);
 
     return defineDbIntegration({
-        name: 'astro-studio-cms-db',
+        name: 'astro-studiocms-db',
         hooks: {
             'astro:db:setup': ({ extendDb }) => {
                 extendDb({
