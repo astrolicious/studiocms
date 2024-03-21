@@ -28,7 +28,6 @@ export const integrationLogger = async (
         }
     };
     
-
 export const emojiMap = Object.entries(emojiList).reduce(
     (ret, [emoji, names]) => {
         for (const name of names) {
