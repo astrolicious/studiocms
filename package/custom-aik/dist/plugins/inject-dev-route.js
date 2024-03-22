@@ -1,0 +1,2 @@
+var n=e=>e;var r=({command:e,injectRoute:t,injectedRoute:o})=>{e==="dev"&&t(o)};var p=n({name:"injectDevRoute",hook:"astro:config:setup",implementation:({command:e,injectRoute:t})=>o=>r({command:e,injectRoute:t,injectedRoute:o})});export{p as injectDevRoutePlugin};
+//# sourceMappingURL=inject-dev-route.js.map

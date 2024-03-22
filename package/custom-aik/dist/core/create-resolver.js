@@ -1,0 +1,2 @@
+import{fileURLToPath as o}from"node:url";import{dirname as i,resolve as s}from"pathe";var f=e=>{let r=e;return r.startsWith("file://")&&(r=i(o(r))),{resolve:(...t)=>s(r,...t)}};export{f as createResolver};
+//# sourceMappingURL=create-resolver.js.map

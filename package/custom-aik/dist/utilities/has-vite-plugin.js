@@ -1,0 +1,2 @@
+function s(n){let t=[];if(n){for(let o of n)if(o){if(Array.isArray(o)){t.push(...s(o));continue}o instanceof Promise||t.push(o.name)}}return t}var a=({plugin:n,config:t})=>{if(!n||n instanceof Promise)return!1;let o=new Set(s(t?.vite?.plugins)),e=new Set;if(typeof n=="string"&&e.add(n),typeof n=="object")if(Array.isArray(n)){let i=new Set(s(n));for(let r of i)e.add(r)}else e.add(n.name);return[...e].some(i=>o.has(i))};export{a as hasVitePlugin};
+//# sourceMappingURL=has-vite-plugin.js.map
