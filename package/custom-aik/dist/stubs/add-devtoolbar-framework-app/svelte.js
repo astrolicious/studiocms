@@ -1,2 +1,0 @@
-import o from"@@COMPONENT_SRC@@";var i={id:"@@ID@@",name:"@@NAME@@",icon:"@@ICON@@",init(t,n){let e=document.createElement("astro-dev-toolbar-window");t.appendChild(e),e.insertAdjacentHTML("beforebegin","<style>@@STYLE@@</style>");let r=new o({target:e,props:{canvas:t,eventTarget:n,renderWindow:e}})}};export{i as default};
-//# sourceMappingURL=svelte.js.map

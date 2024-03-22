@@ -1,2 +1,0 @@
-import n from"@@COMPONENT_SRC@@";import{h as r,render as d}from"preact";var l={id:"@@ID@@",name:"@@NAME@@",icon:"@@ICON@@",init(o,t){let e=document.createElement("astro-dev-toolbar-window");o.appendChild(e),e.insertAdjacentHTML("beforebegin","<style>@@STYLE@@</style>"),d(r(n,{canvas:o,eventTarget:t,renderWindow:e},[]),e)}};export{l as default};
-//# sourceMappingURL=preact.js.map

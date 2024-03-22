@@ -1,2 +1,0 @@
-import r from"@@COMPONENT_SRC@@";import{Suspense as i,createApp as u,h as c}from"vue";var m={id:"@@ID@@",name:"@@NAME@@",icon:"@@ICON@@",init(e,n){let t=document.createElement("astro-dev-toolbar-window");e.appendChild(t),t.insertAdjacentHTML("beforebegin","<style>@@STYLE@@</style>"),u({name:"${ virtualModuleName }",render(){let o=c(r,{canvas:e,eventTarget:n,renderWindow:t},{});return p(r.setup)&&(o=c(i,null,o)),o}}).mount(t,!0)}};function p(e){let n=e?.constructor;return n&&n.name==="AsyncFunction"}export{m as default};
-//# sourceMappingURL=vue.js.map
