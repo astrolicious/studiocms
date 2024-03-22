@@ -25,7 +25,8 @@
   },
   "sideEffects": false,
   "files": [
-    "src"
+    "src",
+    "custom-aik"
   ],
   "exports": {
     ".": "./src/index.ts"
@@ -45,7 +46,9 @@
     "marked-footnote": "^1.2.2",
     "marked-smartypants": "^1.1.6",
     "typescript": "^5.4.2",
-    "vite": "^5.1.6"
+    "vite": "^5.1.6",
+		"pathe": "^1.1.2",
+		"recast": "^0.23.5"
   },
   "type": "module",
   "peerDependencies": {

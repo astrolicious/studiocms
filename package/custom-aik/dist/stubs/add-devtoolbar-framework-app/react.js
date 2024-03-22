@@ -1,0 +1,2 @@
+import m from"@@COMPONENT_SRC@@";import{createElement as i}from"react";import{createRoot as d}from"react-dom/client";var a={id:"@@ID@@",name:"@@NAME@@",icon:"@@ICON@@",init(o,t){let e=document.createElement("astro-dev-toolbar-window");o.appendChild(e),e.insertAdjacentHTML("beforebegin","<style>@@STYLE@@</style>");let n=d(e),r=i(m,{canvas:o,eventTarget:t,renderWindow:e},[]);n.render(r)}};export{a as default};
+//# sourceMappingURL=react.js.map
