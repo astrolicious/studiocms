@@ -7,6 +7,7 @@
     "name": "Adam Matthiesen",
     "url": "https://matthiesen.xyz"
   },
+  "contributors": ["Adammatthiesen", "jdtjenkins", "dreyfus92"],
   "license": "MIT",
   "keywords": [
     "astro-integration",

@@ -4,4 +4,4 @@ tags: ['astro', 'typescript']
 project: 
   name: 'astro-studio-cms'
   description: 'A CMS that bridges Astro with Astro DB & Studio'
-  maintainers: ['Adammatthiesen']
+  maintainers: ['Adammatthiesen','jdtjenkins','dreyfus92']
