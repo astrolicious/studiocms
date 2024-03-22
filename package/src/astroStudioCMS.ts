@@ -5,6 +5,7 @@ import { optionsSchema } from "./schemas";
 import { integrationLogger } from "./utils";
 
 // Astro-Integration-Kit Imports ( This is a custom version of the Astro-Integration-Kit based on PR #91 )
+// to be replaced with the official version once the PR is merged.
 import { createResolver, defineIntegration } from "../custom-aik/dist/core";
 import { corePlugins } from "../custom-aik/dist/plugins";
 import "../custom-aik/types/db.d.ts";

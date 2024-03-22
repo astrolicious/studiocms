@@ -1,5 +1,7 @@
 # `astro-integration-kit`
 
+This is a custom build of AIK from PR #91 to be removed once PR is merged.  mainly to allow me to continue with development of the StudioCMS package.
+
 This is a package that contains utilities to help you build Astro integrations.
 
 ## Documentation

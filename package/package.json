@@ -25,7 +25,8 @@
   },
   "sideEffects": false,
   "files": [
-    "src"
+    "src",
+    "custom-aik"
   ],
   "exports": {
     ".": "./src/index.ts"
