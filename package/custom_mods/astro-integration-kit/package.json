@@ -1,0 +1,98 @@
+{
+	"name": "astro-integration-kit",
+	"version": "0.7.0",
+	"description": "A package that contains utilities to help you build Astro integrations.",
+	"author": {
+		"email": "contact@florian-lefebvre.dev",
+		"name": "Florian Lefebvre",
+		"url": "https://florian-lefebvre.dev"
+	},
+	"license": "MIT",
+	"keywords": [
+		"withastro",
+		"astro",
+		"utils",
+		"utilities"
+	],
+	"homepage": "https://github.com/florian-lefebvre/astro-integration-kit",
+	"publishConfig": {
+		"access": "public"
+	},
+	"sideEffects": false,
+	"exports": {
+		".": {
+			"types": "./dist/core/index.d.ts",
+			"default": "./dist/core/index.js"
+		},
+		"./utilities": {
+			"types": "./dist/utilities/index.d.ts",
+			"default": "./dist/utilities/index.js"
+		},
+		"./plugins": {
+			"types": "./dist/plugins/index.d.ts",
+			"default": "./dist/plugins/index.js"
+		},
+		"./types/db": {
+			"types": "./types/db.d.ts",
+			"default": "./types/noop.js"
+		}
+	},
+	"files": [
+		"dist",
+		"types"
+	],
+	"scripts": {
+		"dev": "tsup --watch",
+		"build": "tsup",
+		"test": "vitest"
+	},
+	"type": "module",
+	"peerDependencies": {
+		"@astrojs/db": "^0.9.0",
+		"@vitejs/plugin-react": "^4.2.1",
+		"astro": "^4.4.1",
+		"preact": "^10.19.4",
+		"react": "^18.2.0",
+		"react-dom": "^18.2.0",
+		"solid-js": "^1.8.15",
+		"svelte": "^4.2.11",
+		"vue": "^3.4.19"
+	},
+	"peerDependenciesMeta": {
+		"@astrojs/db": {
+			"optional": true
+		},
+		"@vitejs/plugin-react": {
+			"optional": true
+		},
+		"preact": {
+			"optional": true
+		},
+		"react": {
+			"optional": true
+		},
+		"react-dom": {
+			"optional": true
+		},
+		"solid-js": {
+			"optional": true
+		},
+		"svelte": {
+			"optional": true
+		},
+		"vue": {
+			"optional": true
+		}
+	},
+	"devDependencies": {
+		"@types/node": "^20.11.0",
+		"tsup": "^8.0.2",
+		"typescript": "^5.3.3",
+		"vite": "^5.1.0",
+		"vitest": "^1.2.1"
+	},
+	"dependencies": {
+		"pathe": "^1.1.2",
+		"recast": "^0.23.5"
+	}
+}

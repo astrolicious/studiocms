@@ -1,7 +1,7 @@
 import { imageService } from "@unpic/astro/service";
 import { AstroError } from "astro/errors";
-import { createResolver, defineIntegration } from "astro-integration-kit";
-import { corePlugins } from "astro-integration-kit/plugins";
+import { createResolver, defineIntegration } from "../custom_mods/astro-integration-kit/dist/core";
+import { corePlugins } from "../custom_mods/astro-integration-kit/dist/plugins";
 import { loadEnv } from "vite";
 import { optionsSchema } from "./schemas";
 import { integrationLogger } from "./utils";
