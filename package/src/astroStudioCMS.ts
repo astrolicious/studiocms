@@ -1,10 +1,13 @@
 import { imageService } from "@unpic/astro/service";
 import { AstroError } from "astro/errors";
-import { createResolver, defineIntegration } from "../custom_mods/astro-integration-kit/dist/core";
-import { corePlugins } from "../custom_mods/astro-integration-kit/dist/plugins";
 import { loadEnv } from "vite";
 import { optionsSchema } from "./schemas";
 import { integrationLogger } from "./utils";
+
+// Astro-Integration-Kit Imports ( This is a custom version of the Astro-Integration-Kit based on PR #91 )
+import { createResolver, defineIntegration } from "../custom-aik/dist/core";
+import { corePlugins } from "../custom-aik/dist/plugins";
+import "../custom-aik/types/db.d.ts";
 
 const { GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET } = loadEnv( "all", process.cwd(), "GITHUB");
 
@@ -20,6 +23,12 @@ export default defineIntegration({
         const { resolve } = createResolver(import.meta.url);
 
         return {
+            "astro:db:setup": ({ extendDb }) => {
+                extendDb({
+                    configEntrypoint: resolve('./db/config.ts'),
+                    seedEntrypoint: resolve('./db/seed.ts'),
+                });
+            },
             "astro:config:setup": ({ 
                 watchIntegration, 
                 addMiddleware,

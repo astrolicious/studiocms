@@ -68,6 +68,12 @@ importers:
       marked-smartypants:
         specifier: ^1.1.6
         version: 1.1.6(marked@11.2.0)
+      pathe:
+        specifier: ^1.1.2
+        version: 1.1.2
+      recast:
+        specifier: ^0.23.5
+        version: 0.23.6
       typescript:
         specifier: ^5.4.2
         version: 5.4.2
