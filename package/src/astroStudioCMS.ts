@@ -5,6 +5,7 @@ import { optionsSchema } from "./schemas";
 import { integrationLogger } from "./utils";
 import { createResolver, defineIntegration } from "astro-integration-kit";
 import { corePlugins } from "astro-integration-kit/plugins";
+import "astro-integration-kit/types/db";
 
 const { GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET } = loadEnv( "all", process.cwd(), "GITHUB");
 
@@ -20,12 +21,12 @@ export default defineIntegration({
         const { resolve } = createResolver(import.meta.url);
 
         return {
-            // "astro:db:setup": ({ extendDb }) => {
-            //     extendDb({
-            //         configEntrypoint: resolve('./db/config.ts'),
-            //         seedEntrypoint: resolve('./db/seed.ts'),
-            //     });
-            // },
+            "astro:db:setup": ({ extendDb }) => {
+                extendDb({
+                    configEntrypoint: resolve('./db/config.ts'),
+                    seedEntrypoint: resolve('./db/seed.ts'),
+                });
+            },
             "astro:config:setup": ({ 
                 watchIntegration, 
                 addMiddleware,

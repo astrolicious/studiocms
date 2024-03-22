@@ -38,7 +38,7 @@
     "@lucia-auth/adapter-drizzle": "^1.0.4",
     "@unpic/astro": "^0.0.44",
     "arctic": "^1.2.1",
-    "astro-integration-kit": "0.6.0",
+    "astro-integration-kit": "0.7.1",
     "emojilib": "^3.0.11",
     "lucia": "^3.1.1",
     "marked": "^11.0.1",
@@ -53,8 +53,8 @@
   },
   "type": "module",
   "peerDependencies": {
-    "@astrojs/db": ">=0.8.8",
-    "astro": ">=4.5.6"
+    "@astrojs/db": ">=0.9.3",
+    "astro": ">=4.5.8"
   },
   "devDependencies": {
     "@types/node": "^20.11.28"
