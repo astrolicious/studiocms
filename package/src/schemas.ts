@@ -8,6 +8,7 @@ type UnpicFallbackServiceOptions = ImageCdn | "sharp" | "squoosh";
 type UnpicPlaceHolder = "blurhash" | "dominantColor" | "lqip" | (string & {});
 type UnpicLayout = "constrained" | "fixed" | "fullWidth";
 type AstroImageService = "sharp" | "squoosh";
+type authConfigModeOptions = "plugin" | "built-in" | "disable";
 
 //
 // UNPIC CONFIG OPTIONS SCHEMA
@@ -72,6 +73,27 @@ export const imageServiceSchema = z.object({
 }).optional().default({})
 
 //
+// AUTH CONFIG SCHEMA
+//
+export const authConfigSchema = z.object({
+    /**
+     * OPTIONAL - Allows the user to customize the authentication mode for the Astro Studio CMS
+     * 
+     * Disable - Disables authentication & the ENTIRE dashboard for the Astro Studio CMS This means you will need to manage your content via the Astro Studio Dashboard at http://studio.astro.build
+     * 
+     * @default "built-in"
+     * @param `"plugin"` - Enables authentication via a plugin
+     * @param `"built-in"` - Enables authentication via the built-in Astro Studio CMS authentication (Lucia Auth)
+     * @param `"disable"` - Disables authentication & the Internal dashboard and the user will need to manage their content via the Astro Studio Dashboard at http://studio.astro.build
+     */
+    mode: z.custom<authConfigModeOptions>().optional().default("built-in"),
+    /**
+     * Not yet implemented
+     */
+    plugins: z.boolean().optional().default(false),
+}).optional().default({});
+
+//
 // MAIN SCHEMA
 //
 export const optionsSchema = z.object({
@@ -84,6 +106,10 @@ export const optionsSchema = z.object({
      * Allows customization of the Image Service Options
      */
     imageService: imageServiceSchema,
+    /**
+     * Allows customization of the Authentication Configuration
+     */
+    authConfig: authConfigSchema,
     /**
      * Whether to show verbose output
      * @default false

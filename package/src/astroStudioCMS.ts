@@ -81,14 +81,6 @@ export default defineIntegration({
                     });
 
                 } else {
-                    // Add Authentication Middleware
-                    integrationLogger(
-                        logger, isVerbose, "info", "Adding Authentication Middleware"
-                    );
-                    addMiddleware({
-                        entrypoint: resolve('./middleware/index.ts'),
-                        order: "post",
-                    });
 
                     // Add Page Routes
                     integrationLogger(
@@ -111,61 +103,85 @@ export default defineIntegration({
                         entrypoint: resolve('./pages/blog/[...slug].astro'), 
                     });
                     injectRoute({ 
-                        pattern: `${config.base}dashboard/`, 
-                        entrypoint: resolve('./pages/dashboard/index.astro'), 
-                    });
-                    injectRoute({ 
-                        pattern: `${config.base}dashboard/profile`, 
-                        entrypoint: resolve('./pages/dashboard/profile.astro'), 
-                    });
-                    injectRoute({ 
-                        pattern: `${config.base}dashboard/new-post`, 
-                        entrypoint: resolve('./pages/dashboard/new-post.astro'), 
-                    });
-                    injectRoute({ 
-                        pattern: `${config.base}dashboard/post-list`, 
-                        entrypoint: resolve('./pages/dashboard/post-list.astro'), 
-                    });
-                    injectRoute({ 
-                        pattern: `${config.base}dashboard/site-config`, 
-                        entrypoint: resolve('./pages/dashboard/site-config.astro'), 
-                    });
-                    injectRoute({ 
-                        pattern: `${config.base}dashboard/admin-config`, 
-                        entrypoint: resolve('./pages/dashboard/admin-config.astro'), 
-                    });
-                    injectRoute({ 
-                        pattern: `${config.base}dashboard/login`, 
-                        entrypoint: resolve('./pages/dashboard/login/index.astro'), 
-                    });
-                    injectRoute({ 
-                        pattern: `${config.base}dashboard/edit/home`, 
-                        entrypoint: resolve('./pages/dashboard/edit/home.astro'), 
-                    });
-                    injectRoute({ 
-                        pattern: `${config.base}dashboard/edit/about`, 
-                        entrypoint: resolve('./pages/dashboard/edit/about.astro'), 
-                    });
-                    injectRoute({ 
-                        pattern: `${config.base}dashboard/edit/[...slug]`, 
-                        entrypoint: resolve('./pages/dashboard/edit/[...slug].astro'), 
-                    });
-                    injectRoute({ 
                         pattern: `${config.base}rss.xml`, 
                         entrypoint: resolve('./pages/rss.xml.ts'), 
                     });
-                    injectRoute({ 
-                        pattern: `${config.base}dashboard/login/github`, 
-                        entrypoint: resolve('./pages/dashboard/login/github/index.ts'), 
-                    });
-                    injectRoute({ 
-                        pattern: `${config.base}dashboard/login/github/callback`, 
-                        entrypoint: resolve('./pages/dashboard/login/github/callback.ts'), 
-                    });
-                    injectRoute({ 
-                        pattern: `${config.base}dashboard/logout`, 
-                        entrypoint: resolve('./pages/dashboard/logout.ts'), 
-                    });
+
+                    // Add Dashboard Routes & Middleware if Auth is Enabled
+                    const { mode } = options.authConfig;
+
+                    if (mode === "disable") {
+                        integrationLogger(
+                            logger, isVerbose, "warn", 
+                            "Authentication Disabled. The ENTIRE Internal dashboard for the Astro Studio CMS is disabled. This means you will need to manage your content via the Astro Studio Dashboard at http://studio.astro.build"
+                        );
+                    } else if (mode === "built-in") {
+                        // Add Authentication Middleware
+                        integrationLogger(
+                            logger, isVerbose, "info", "Adding Authentication Middleware"
+                        );
+                        addMiddleware({
+                            entrypoint: resolve('./middleware/index.ts'),
+                            order: "post",
+                        });
+                        injectRoute({ 
+                            pattern: `${config.base}dashboard/`, 
+                            entrypoint: resolve('./pages/dashboard/index.astro'), 
+                        });
+                        injectRoute({ 
+                            pattern: `${config.base}dashboard/profile`, 
+                            entrypoint: resolve('./pages/dashboard/profile.astro'), 
+                        });
+                        injectRoute({ 
+                            pattern: `${config.base}dashboard/new-post`, 
+                            entrypoint: resolve('./pages/dashboard/new-post.astro'), 
+                        });
+                        injectRoute({ 
+                            pattern: `${config.base}dashboard/post-list`, 
+                            entrypoint: resolve('./pages/dashboard/post-list.astro'), 
+                        });
+                        injectRoute({ 
+                            pattern: `${config.base}dashboard/site-config`, 
+                            entrypoint: resolve('./pages/dashboard/site-config.astro'), 
+                        });
+                        injectRoute({ 
+                            pattern: `${config.base}dashboard/admin-config`, 
+                            entrypoint: resolve('./pages/dashboard/admin-config.astro'), 
+                        });
+                        injectRoute({ 
+                            pattern: `${config.base}dashboard/login`, 
+                            entrypoint: resolve('./pages/dashboard/login/index.astro'), 
+                        });
+                        injectRoute({ 
+                            pattern: `${config.base}dashboard/edit/home`, 
+                            entrypoint: resolve('./pages/dashboard/edit/home.astro'), 
+                        });
+                        injectRoute({ 
+                            pattern: `${config.base}dashboard/edit/about`, 
+                            entrypoint: resolve('./pages/dashboard/edit/about.astro'), 
+                        });
+                        injectRoute({ 
+                            pattern: `${config.base}dashboard/edit/[...slug]`, 
+                            entrypoint: resolve('./pages/dashboard/edit/[...slug].astro'), 
+                        });
+                        injectRoute({ 
+                            pattern: `${config.base}dashboard/login/github`, 
+                            entrypoint: resolve('./pages/dashboard/login/github/index.ts'), 
+                        });
+                        injectRoute({ 
+                            pattern: `${config.base}dashboard/login/github/callback`, 
+                            entrypoint: resolve('./pages/dashboard/login/github/callback.ts'), 
+                        });
+                        injectRoute({ 
+                            pattern: `${config.base}dashboard/logout`, 
+                            entrypoint: resolve('./pages/dashboard/logout.ts'), 
+                        });
+                    } else if (mode === "plugin") {
+                        integrationLogger(
+                            logger, isVerbose, "warn", 
+                            "Plugin Authentication is not yet supported. Please use the built-in Astro Studio CMS authentication."
+                        );
+                    }
 
                 };
 
