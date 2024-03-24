@@ -170,14 +170,17 @@ export default defineIntegration({
                     "info", 
                     "Updating Astro Config..."
                 );
-                updateConfig({
-                    image: {
-                        service: imageService({
-                            placeholder: "blurhash",
-                            fallbackService: "squoosh",
-                        }),
-                    }
-                });
+
+                if (options.useUnPic) {
+                    updateConfig({
+                        image: {
+                            service: imageService({
+                                placeholder: "blurhash",
+                                fallbackService: "squoosh",
+                            }),
+                        }
+                    });
+                }
 
                 integrationLogger(
                     logger, isVerbose, "info", 

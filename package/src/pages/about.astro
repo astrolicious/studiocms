@@ -1,24 +1,11 @@
 ---
-import { Admins, Pages, db, eq } from 'astro:db';
+import { Pages, db, eq } from 'astro:db';
 import Layout from '../layouts/BlogPost.astro';
-import type { Locals } from './dashboard/locals';
-import { customMarked, getAstroBaseURL } from '../utils';
-
-const locals = Astro.locals as Locals;
-const isLoggedIn = locals.isLoggedIn;
+import { customMarked } from '../utils';
 
 const postArrayed = await db.select().from(Pages).where(eq(Pages.slug, "about"));
 
 const post = postArrayed[0];
-
-const adminList = await db.select().from(Admins);
-
-const isAdmin = async (user: string) => {
-    if (adminList.includes({GitHubUsername: user})) {
-        return true;
-    }
-    return false;
-};
 
 type Props = {
 	post: typeof Pages.$inferSelect;
@@ -31,10 +18,6 @@ type Props = {
 	publishedAt={post.publishedAt}
 	heroImage={post.heroImage}
 >
-	{ //@ts-ignore
-	isLoggedIn && isAdmin(locals.dbUser.username) && (
-		<a href={`${getAstroBaseURL()}dashboard/edit/about`}><button class="btn">✏️ Edit Page</button></a>
-		)}
 	<Fragment 
 		set:html={customMarked.parse(post.content)} />
 </Layout>

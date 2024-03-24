@@ -3,15 +3,11 @@ import Default from "../../layouts/Default.astro"
 import { lucia } from "../../lib/auth";
 import type { Locals } from "./locals";
 import { getAstroBaseURL } from '../../utils';
-import { Admins, db } from "astro:db";
+import { Admins, db, eq } from "astro:db";
 
 const locals = Astro.locals as Locals;
 const isLoggedIn = locals.isLoggedIn;
 const sessions = await lucia.getUserSessions(locals.dbUser.id);
-
-if (!isLoggedIn) {
-    return Astro.redirect(`${getAstroBaseURL()}dashboard/login`);
-}
 
 const getUserName = () => {
     if (locals.isLoggedIn) {
@@ -23,19 +19,24 @@ const getUserName = () => {
 	return null;
 };
 
-const adminList = await db.select().from(Admins);
-
-const isAdmin = async (user: string) => {
-    if (adminList.includes({GitHubUsername: user})) {
+const isAdmin = async () => {
+    const isAdminCheck = await db.select()
+            .from(Admins)
+            .where(eq(Admins.GitHubUsername, locals.user.username))
+            .catch(() => {
+        return false;
+    })
+    if (isAdminCheck[0] && isAdminCheck[0].GitHubUsername === locals.user.username) {
         return true;
     }
     return false;
 };
 
-const role = async () => {
-    const title = isAdmin(locals.dbUser.username) ? 'Admin' : 'User';
-    return title;
+if (!isLoggedIn) {
+    return Astro.redirect(`${getAstroBaseURL()}dashboard/login`);
 }
+
+const role = await isAdmin() ? 'Admin' : 'User';
 
 ---
 

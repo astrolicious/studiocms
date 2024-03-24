@@ -4,27 +4,31 @@ import Default from "../../layouts/Default.astro"
 import type { Locals } from "./locals";
 import { getAstroBaseURL } from '../../utils';
 
-const adminList = await db.select().from(Admins);
 const ConfigArray = await db.select().from(SiteConfig);
 const contextConfig = ConfigArray[0];
+const locals = Astro.locals as Locals;
+const isLoggedIn = locals.isLoggedIn;
 
-const isAdmin = async (user: string) => {
-    if (adminList.includes({GitHubUsername: user})) {
+const isAdmin = async () => {
+    const isAdminCheck = await db.select()
+            .from(Admins)
+            .where(eq(Admins.GitHubUsername, locals.user.username))
+            .catch(() => {
+        return false;
+    })
+    if (isAdminCheck[0] && isAdminCheck[0].GitHubUsername === locals.user.username) {
         return true;
     }
     return false;
 };
 
-const locals = Astro.locals as Locals;
-const isLoggedIn = locals.isLoggedIn;
-
 if (!isLoggedIn) {
     return Astro.redirect(`${getAstroBaseURL()}dashboard/login`);
 }
 
-if (!isAdmin(locals.user.username)) {
+if (await isAdmin() === false) {
     console.log('User is not an admin');
-    return Astro.redirect(`${getAstroBaseURL()}dashboard`);
+    return Astro.redirect(`${getAstroBaseURL()}dashboard/profile`);
 }
 
 if (Astro.request.method === 'POST') {

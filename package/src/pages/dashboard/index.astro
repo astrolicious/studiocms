@@ -1,25 +1,11 @@
 ---
 import Default from "../../layouts/Default.astro"
 import type { Locals } from "./locals";
-import { db, Admins } from "astro:db";
+import { db, Admins, eq } from "astro:db";
 import { getAstroBaseURL } from '../../utils';
-
-const adminList = await db.select().from(Admins);
-
-const isAdmin = async (user: string) => {
-    if (adminList.includes({GitHubUsername: user})) {
-        return true;
-    }
-    return false;
-};
-
 
 const locals = Astro.locals as Locals;
 const isLoggedIn = locals.isLoggedIn;
-
-if (!isLoggedIn) {
-    return Astro.redirect(`${getAstroBaseURL()}dashboard/login`);
-}
 
 const getUserName = () => {
     if (locals.isLoggedIn) {
@@ -31,7 +17,27 @@ const getUserName = () => {
 	return 'Astronaut';
 };
 
+const isAdmin = async () => {
+    const isAdminCheck = await db.select()
+            .from(Admins)
+            .where(eq(Admins.GitHubUsername, locals.user.username))
+            .catch(() => {
+        return false;
+    })
+    if (isAdminCheck[0] && isAdminCheck[0].GitHubUsername === locals.user.username) {
+        return true;
+    }
+    return false;
+};
 
+if (!isLoggedIn) {
+    return Astro.redirect(`${getAstroBaseURL()}dashboard/login`);
+}
+
+if (await isAdmin() === false) {
+    console.log('User is not an admin');
+    return Astro.redirect(`${getAstroBaseURL()}dashboard/profile`);
+}
 ---
 
 <Default>
@@ -47,35 +53,15 @@ const getUserName = () => {
                 Currently logged in user: <bold>{getUserName}</bold> | <a href={`${getAstroBaseURL()}dashboard/profile`}>More info...</a>
                 </p>
 
-                { //@ts-ignore
-                 isAdmin(locals.user.username) && (
                     <a href={`${getAstroBaseURL()}dashboard/new-post`}><button class="btn">Create a new post</button></a>
-                )}
-                { //@ts-ignore
-                 isAdmin(locals.user.username) && (
+
                     <a href={`${getAstroBaseURL()}dashboard/edit/home`}><button class="btn-edit">Edit Home Page</button></a>
-                )}
-                { //@ts-ignore
-                 isAdmin(locals.user.username) && (
+            
                     <a href={`${getAstroBaseURL()}dashboard/edit/about`}><button class="btn-edit">Edit About Page</button></a>
-                )}
-                { //@ts-ignore
-                 isAdmin(locals.user.username) && (
+            
                     <a href={`${getAstroBaseURL()}dashboard/site-config`}><button class="btn-edit">Edit Site Configuration</button></a>
-                )}
-                { //@ts-ignore
-                 isAdmin(locals.user.username) && (
+            
                     <a href={`${getAstroBaseURL()}dashboard/admin-config`}><button class="btn-edit">Edit Admins</button></a>
-                )}
-
-
-
-                { //@ts-ignore
-                 !isAdmin(locals.user.username) && (
-                    <p>
-                        You are not an admin. You can only view your profile. This is a feature that is still in development.    
-                    </p>
-                )}
             </div>
         </div>
 </Default>

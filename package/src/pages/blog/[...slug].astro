@@ -5,16 +5,6 @@ import BlogPost from '../../layouts/BlogPost.astro';
 import type { Locals } from '../dashboard/locals';
 import { getAstroBaseURL } from '../../utils';
 
-const adminList = await db.select().from(Admins);
-
-const isAdmin = async (user: string) => {
-    if (adminList.includes({GitHubUsername: user})) {
-        return true;
-    }
-    return false;
-};
-
-
 const locals = Astro.locals as Locals;
 const isLoggedIn = locals.isLoggedIn;
 
@@ -32,6 +22,21 @@ if (!post) {
 	return Astro.redirect(`${getAstroBaseURL}404`);
 }
 
+const isAdmin = async () => {
+    const isAdminCheck = await db.select()
+            .from(Admins)
+            .where(eq(Admins.GitHubUsername, locals.user.username))
+            .catch(() => {
+        return false;
+    })
+    if (isAdminCheck[0] && isAdminCheck[0].GitHubUsername === locals.user.username) {
+        return true;
+    }
+    return false;
+};
+
+const userisAdmin = await isAdmin();
+
 type Props = {
 	post: typeof Blog.$inferSelect;
 };
@@ -42,8 +47,7 @@ type Props = {
 	heroImage={post.heroImage} 
 	publishedAt={post.publishedAt} 
 	updatedAt={post.updatedAt} >
-	{ //@ts-ignore
-	isLoggedIn && isAdmin(locals.dbUser.username) && (
+	{ isLoggedIn && userisAdmin && (
 		<a href={`${getAstroBaseURL()}dashboard/edit/${post.slug}`}><button class="btn">✏️ Edit Post</button></a>
 		)}
 	<Fragment 

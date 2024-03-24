@@ -4,21 +4,8 @@ import type { Locals } from "./locals";
 import { Admins, Blog, db, eq } from 'astro:db';
 import { getAstroBaseURL } from '../../utils';
 
-const adminList = await db.select().from(Admins);
-
-const isAdmin = async (user: string) => {
-    if (adminList.includes({GitHubUsername: user})) {
-        return true;
-    }
-    return false;
-};
-
 const locals = Astro.locals as Locals;
 const isLoggedIn = locals.isLoggedIn;
-
-if (!isLoggedIn) {
-    return Astro.redirect(`${getAstroBaseURL()}dashboard/login`);
-}
 
 const getUserName = () => {
     if (locals.isLoggedIn) {
@@ -30,9 +17,27 @@ const getUserName = () => {
     return null;
 };
 
-if (!isAdmin(locals.user.username)) {
+
+const isAdmin = async () => {
+    const isAdminCheck = await db.select()
+            .from(Admins)
+            .where(eq(Admins.GitHubUsername, locals.user.username))
+            .catch(() => {
+        return false;
+    })
+    if (isAdminCheck[0] && isAdminCheck[0].GitHubUsername === locals.user.username) {
+        return true;
+    }
+    return false;
+};
+
+if (!isLoggedIn) {
+    return Astro.redirect(`${getAstroBaseURL()}dashboard/login`);
+}
+
+if (await isAdmin() === false) {
     console.log('User is not an admin');
-    return Astro.redirect(`${getAstroBaseURL()}dashboard`);
+    return Astro.redirect(`${getAstroBaseURL()}dashboard/profile`);
 }
 
 if (Astro.request.method === 'POST') {
@@ -115,7 +120,7 @@ if (Astro.request.method === 'POST') {
                         placeholder="Your post's basic description"
                         required><br>
                     <label for="hero-image">Hero Image</label><br>
-                    <p class="info-text">Use the 'https://' full url. All Images are ran through the unpic Image service!</p><br>
+                    <p class="info-text">To use images stored in your public/ folder use the following example: <pre>/my-image.png</pre></p><br>
                     <input 
                         type="text" 
                         id="hero-image" 
@@ -250,6 +255,13 @@ import { customMarked } from "../../utils";
         background: #bbc8e1;
         border-radius: 0 8px 8px 0;
         color: #1f1f1f;
+    }
+    pre {
+        display: inline;
+        background-color: #f0f0f0;
+        padding: 0rem;
+        font-size: 1rem;
+
     }
 
 </style>

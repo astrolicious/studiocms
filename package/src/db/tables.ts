@@ -3,9 +3,9 @@ import { defineTable, column, NOW } from 'astro:db';
 
 export const Session = defineTable({
 	columns: {
-		id: column.text({ primaryKey: true }),
-		userId: column.number({ references: () => User.columns.id }),
-		expiresAt: column.number(),
+		id: column.text({ primaryKey: true, nullable: false }),
+		userId: column.number({ references: () => User.columns.id, nullable: false }),
+		expiresAt: column.number({ nullable: false }),
 	},
 });
 
