@@ -51,11 +51,6 @@ export default defineIntegration({
                     throw new AstroError("Astro Studio CMS requires a 'site' configuration in your Astro Config.");
                 };
 
-                // Check for Required Environment Variables
-                if (!GITHUB_CLIENT_ID || !GITHUB_CLIENT_SECRET) {
-                    throw new AstroError("GitHub OAuth Client ID and Secret are required to use Astro Studio CMS.");
-                };
-
                 // Add Virtual Imports
                 integrationLogger(
                     logger, isVerbose, 
@@ -116,6 +111,12 @@ export default defineIntegration({
                             "Authentication Disabled. The ENTIRE Internal dashboard for the Astro Studio CMS is disabled. This means you will need to manage your content via the Astro Studio Dashboard at http://studio.astro.build"
                         );
                     } else if (mode === "built-in") {
+
+                        // Check for Required Environment Variables
+                        if (!GITHUB_CLIENT_ID || !GITHUB_CLIENT_SECRET) {
+                            throw new AstroError("GitHub OAuth Client ID and Secret are required to use Astro Studio CMS with the built-in authentication. Please add these to your .env file.");
+                        };
+
                         // Add Authentication Middleware
                         integrationLogger(
                             logger, isVerbose, "info", "Adding Authentication Middleware"
