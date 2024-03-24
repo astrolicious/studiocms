@@ -1,12 +1,8 @@
 ---
-import { Admins, Blog, db, eq } from 'astro:db';
+import { Blog, db, eq } from 'astro:db';
 import { marked } from 'marked';
 import BlogPost from '../../layouts/BlogPost.astro';
-import type { Locals } from '../dashboard/locals';
 import { getAstroBaseURL } from '../../utils';
-
-const locals = Astro.locals as Locals;
-const isLoggedIn = locals.isLoggedIn;
 
 const { slug } = Astro.params;
 
@@ -22,21 +18,6 @@ if (!post) {
 	return Astro.redirect(`${getAstroBaseURL}404`);
 }
 
-const isAdmin = async () => {
-    const isAdminCheck = await db.select()
-            .from(Admins)
-            .where(eq(Admins.GitHubUsername, locals.user.username))
-            .catch(() => {
-        return false;
-    })
-    if (isAdminCheck[0] && isAdminCheck[0].GitHubUsername === locals.user.username) {
-        return true;
-    }
-    return false;
-};
-
-const userisAdmin = await isAdmin();
-
 type Props = {
 	post: typeof Blog.$inferSelect;
 };
@@ -47,9 +28,6 @@ type Props = {
 	heroImage={post.heroImage} 
 	publishedAt={post.publishedAt} 
 	updatedAt={post.updatedAt} >
-	{ isLoggedIn && userisAdmin && (
-		<a href={`${getAstroBaseURL()}dashboard/edit/${post.slug}`}><button class="btn">✏️ Edit Post</button></a>
-		)}
 	<Fragment 
 		set:html={marked(post.content, { async: true })} />
 </BlogPost>

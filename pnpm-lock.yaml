@@ -77,6 +77,9 @@ importers:
       typescript:
         specifier: ^5.4.2
         version: 5.4.2
+      unpic:
+        specifier: ^3.18.0
+        version: 3.18.0
       vite:
         specifier: ^5.1.6
         version: 5.1.6(@types/node@20.11.28)

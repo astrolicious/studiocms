@@ -6,6 +6,7 @@ import { integrationLogger } from "./utils";
 import { createResolver, defineIntegration } from "astro-integration-kit";
 import { corePlugins } from "astro-integration-kit/plugins";
 import "astro-integration-kit/types/db";
+import { sharpImageService, squooshImageService } from "astro/config";
 
 const { GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET } = loadEnv( "all", process.cwd(), "GITHUB");
 
@@ -122,6 +123,10 @@ export default defineIntegration({
                         entrypoint: resolve('./pages/dashboard/new-post.astro'), 
                     });
                     injectRoute({ 
+                        pattern: `${config.base}dashboard/post-list`, 
+                        entrypoint: resolve('./pages/dashboard/post-list.astro'), 
+                    });
+                    injectRoute({ 
                         pattern: `${config.base}dashboard/site-config`, 
                         entrypoint: resolve('./pages/dashboard/site-config.astro'), 
                     });
@@ -171,15 +176,33 @@ export default defineIntegration({
                     "Updating Astro Config..."
                 );
 
-                if (options.useUnPic) {
+                if (options.imageService.useUnpic) {
+                    integrationLogger(logger, isVerbose, "info", "Loading @unpic/astro Image Service for External Images")
+                    const { fallbackService, layout, placeholder, cdnOptions } = options.imageService.unpicConfig;
                     updateConfig({
                         image: {
                             service: imageService({
-                                placeholder: "blurhash",
-                                fallbackService: "squoosh",
+                                placeholder: placeholder,
+                                fallbackService: fallbackService,
+                                layout: layout,
+                                cdnOptions: cdnOptions,
                             }),
                         }
                     });
+                } else {
+                    integrationLogger(logger, isVerbose, "info", "@unpic/astro Image Service Disabled, using Astro Built-in Image Service.")
+                    const { astroImageServiceConfig } = options.imageService;
+                    if (astroImageServiceConfig === "squoosh") {
+                        integrationLogger(logger, isVerbose, "info", "Using Squoosh Image Service")
+                        updateConfig({
+                            image: { service: squooshImageService(), }
+                        })
+                    } else if (astroImageServiceConfig === "sharp") {
+                        integrationLogger(logger, isVerbose, "info", "Using Sharp Image Service")
+                        updateConfig({
+                            image: { service: sharpImageService(), }
+                        })
+                    }
                 }
 
                 integrationLogger(
