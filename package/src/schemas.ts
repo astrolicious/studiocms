@@ -91,4 +91,4 @@ export const optionsSchema = z.object({
     verbose: z.boolean().optional().default(false),
 }).optional().default({});
 
-export type Options = z.infer<typeof optionsSchema>;
+export type AstroStudioCMSOptions = z.infer<typeof optionsSchema>;
