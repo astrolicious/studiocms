@@ -18,7 +18,7 @@ export const unpicConfigSchema = z.object({
      * The image service to use for local images and when the CDN can't be
      * determined from the image src. Value can be any supported image CDN,
      * or "sharp" or "squoosh" to use the local image service.
-     * By default it will either use the local "sharp" service, or will
+     * By default it will either use the local "squoosh" service, or will
      * try to detect available services based on the environment.
      * This detection currently works on Netlify and Vercel.
      * @default "squoosh"
