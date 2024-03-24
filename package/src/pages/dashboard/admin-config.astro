@@ -73,7 +73,7 @@ const adminList = await db.select().from(Admins);
                 <h4>Current Admins:</h4>
                 <ul>
                     {
-                        adminList.map((admin) => {
+                        adminList.map((admin: Admins.$inferSelect) => {
                             return (
                                 <li>{admin.GitHubUsername}</li>
                             )
