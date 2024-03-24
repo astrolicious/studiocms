@@ -57,7 +57,7 @@ const posts = await db.select().from(Blog).orderBy(asc(Blog.publishedAt));
                 </p>
 
                 <h2>Posts</h2>
-                { posts && posts.map((post) => (
+                { posts && posts.map((post: Blog.$inferSelect) => (
                     <div>
                         <p>
                             <bold>{post.title}</bold> - <FormattedDate date={post.publishedAt} />

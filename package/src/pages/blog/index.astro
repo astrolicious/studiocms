@@ -16,7 +16,7 @@ const posts = await db.select().from(Blog).orderBy(asc(Blog.publishedAt));
 <!doctype html>
 <html lang="en">
 	<head>
-		<BaseHead title={contextConfig.title} description={contextConfig.description} />
+		<BaseHead title={"Blog | " + contextConfig.title} description={contextConfig.description} />
 		<style>
 			main {
 				width: 960px;
