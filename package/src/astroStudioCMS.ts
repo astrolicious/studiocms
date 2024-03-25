@@ -25,6 +25,7 @@ import { optionsSchema } from "./schemas";
 const { 
     CMS_GITHUB_CLIENT_ID, 
     CMS_GITHUB_CLIENT_SECRET, 
+    CMS_CLOUDINARY_CLOUDNAME,
     CMS_WATCH_INTEGRATION_HOOK 
 } = loadEnv( "all", process.cwd(), "CMS");
 
@@ -241,8 +242,26 @@ export default defineIntegration({
                     integrationLogger(
                         logger, verbose, "info", "Cloudflare Adapter Detected. Using Cloudflare Image Service."
                     );
-                } else if ( cdnPlugin !== undefined ) {
-                    integrationLogger(logger, verbose, "error", "Custom CDN Plugins are not yet supported.");
+                } else if ( cdnPlugin === "cloudinary-js" ) {
+                    if (!CMS_CLOUDINARY_CLOUDNAME){
+                        throw new AstroError("Cloudinary Cloudname is required to use the Cloudinary CDN Plugin. Please add this to your .env file. `CMS_CLOUDINARY_CLOUDNAME`");
+                    }
+                    if ( astroImageServiceConfig === "squoosh" ) {
+                        integrationLogger(logger, verbose, "info", "Using Squoosh Image Service as Fallback for Cloudinary CDN Plugin")
+                        updateConfig({
+                            image: { service: squooshImageService(), }
+                        })
+                    } else if ( astroImageServiceConfig === "sharp" ) {
+                        integrationLogger(logger, verbose, "info", "Using Sharp Image Service as Fallback for Cloudinary CDN Plugin")
+                        updateConfig({
+                            image: { service: sharpImageService(), }
+                        })
+                    } else if ( astroImageServiceConfig === "no-op" ) {
+                        integrationLogger(logger, verbose, "info", "Using No-Op Image Service as Fallback for Cloudinary CDN Plugin")
+                        updateConfig({
+                            image: { service: passthroughImageService(), }
+                        })
+                    }
                 } else if ( useUnpic && astroImageServiceConfig !== "no-op" ) {
                     integrationLogger(logger, verbose, "info", "Loading @unpic/astro Image Service for External Images")
                     updateConfig({

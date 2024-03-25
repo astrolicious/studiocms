@@ -75,9 +75,9 @@ export const imageServiceSchema = z.object({
     /**
      * If the user wants to use a custom Supported CDN Plugin, they can specify it here.
      * 
-     * Currently Supported CDN Plugins: **Not Yet Implemented**
+     * Currently Supported CDN Plugins: **cloudinary-js**
      * 
-     * Note: This option will only be used if all other ImageService options are at their default values and will override the image component used to display ALL images
+     * Note: Enabling this option will disable the use of the `@unpic/astro` image service for external images. For local images and Fallback, the `astroImageServiceConfig` will be used.
      */
     cdnPlugin: z.custom<cdnImageServicePlugin>().optional(),
 }).optional().default({})
