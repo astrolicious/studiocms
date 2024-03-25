@@ -1,4 +1,5 @@
 ---
+// @ts-ignore
 import { SiteConfig, Blog, db, asc } from 'astro:db';
 import BaseHead from '../../components/BaseHead.astro';
 import Footer from '../../components/Footer.astro';
@@ -6,6 +7,9 @@ import FormattedDate from '../../components/FormattedDate.astro';
 import Header from '../../components/Header.astro';
 import CImage from '../../components/CImage.astro';
 import { getAstroBaseURL } from '../../utils';
+import sitemap from 'sitemap-ext:config';
+
+sitemap(true);
 
 const ConfigArray = await db.select().from(SiteConfig);
 const contextConfig = ConfigArray[0];
@@ -93,7 +97,7 @@ const posts = await db.select().from(Blog).orderBy(asc(Blog.publishedAt));
 			<section>
 				<ul>
 					{
-						posts.map((post) => (
+						posts.map((post: typeof Blog.$inferSelect) => (
 							<li>
 								<a href={`${getAstroBaseURL()}blog/${post.slug || post.id}/`}>
 									<CImage width={720} height={360} src={post.heroImage} alt="" />

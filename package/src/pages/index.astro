@@ -1,7 +1,11 @@
 ---
+// @ts-ignore
 import { Pages, db, eq } from 'astro:db';
 import Default from '../layouts/Default.astro';
 import { customMarked } from '../utils';
+import sitemap from 'sitemap-ext:config';
+
+sitemap(true); // opt-in
 
 const postArrayed = await db.select().from(Pages).where(eq(Pages.slug, "index"));
 

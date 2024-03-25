@@ -15,6 +15,7 @@ import cloudflare from "@astrojs/cloudflare";
 
 // Integrations
 import robots from "astro-robots";
+import sitemap from "@inox-tools/sitemap-ext";
 
 // Image Services
 import { imageService as unpicImageService } from "@unpic/astro/service";
@@ -61,6 +62,7 @@ export default defineIntegration({
             }, 
             includedIntegrations: { 
                 astroRobots, 
+                inoxSitemap,
             },
         },
     }) {
@@ -338,6 +340,14 @@ export default defineIntegration({
                                 disallow: ["/dashboard/"],
                             }, ],
                         })});
+                    }
+                }
+
+                if ( inoxSitemap ) {
+                    if ( !hasIntegration(params, { name: "@astrojs/sitemap" }) 
+                    || !hasIntegration(params, { name: "@inox-tools/sitemap-ext"}) ) {
+                        integrationLogger(logger, verbose, "info", "No Sitemap Integration found. Adding `@inox-tools/sitemap-ext` Integration")
+                        addIntegration(params, { integration: sitemap({ includeByDefault: false }) });
                     }
                 }
 

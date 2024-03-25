@@ -114,6 +114,13 @@ export const includedIntegrationsSchema = z.object({
      * @default true
      */
     astroRobots: z.boolean().optional().default(true),
+    /**
+     * Allows the user to enable/disable the use of the Inox-tools Sitemap Plugin
+     * For more information on the Inox-tools Sitemap Plugin, visit:
+     * @see https://inox-tools.vercel.app/sitemap-ext
+     * @default true
+     */
+    inoxSitemap: z.boolean().optional().default(true),
 }).optional().default({});
 
 //

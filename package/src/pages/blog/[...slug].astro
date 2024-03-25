@@ -1,8 +1,21 @@
 ---
-import { Blog, db, eq } from 'astro:db';
+// @ts-ignore
+import { Blog, db, eq, asc } from 'astro:db';
 import { marked } from 'marked';
 import BlogPost from '../../layouts/BlogPost.astro';
 import { getAstroBaseURL } from '../../utils';
+import sitemap from 'sitemap-ext:config';
+
+sitemap(async ({ addToSitemap }) => {
+	const posts = await db.select().from(Blog).orderBy(asc(Blog.publishedAt));
+
+	addToSitemap(posts.map((post: typeof Blog.$inferSelect) => ({
+		sitemap: true,
+		params: {
+			slug: post.slug
+		},
+	})));
+})
 
 const { slug } = Astro.params;
 
