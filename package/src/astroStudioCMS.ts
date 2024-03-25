@@ -1,50 +1,48 @@
-import { imageService } from "@unpic/astro/service";
+// Tools and Utilities
 import { AstroError } from "astro/errors";
 import { loadEnv } from "vite";
-import { optionsSchema } from "./schemas";
 import { integrationLogger } from "./utils";
 import { createResolver, defineIntegration } from "astro-integration-kit";
 import { corePlugins } from "astro-integration-kit/plugins";
 import "astro-integration-kit/types/db";
-import { passthroughImageService, sharpImageService, squooshImageService } from "astro/config";
 
 // Adapters
 import vercel from "@astrojs/vercel/serverless";
 import netlify from "@astrojs/netlify";
 import cloudflare from "@astrojs/cloudflare";
 
+// Image Services
+import { imageService } from "@unpic/astro/service";
+import { passthroughImageService, 
+    sharpImageService, squooshImageService } from "astro/config";
+
+// Environment Variables
 const { 
     CMS_GITHUB_CLIENT_ID, 
     CMS_GITHUB_CLIENT_SECRET, 
     CMS_WATCH_INTEGRATION_HOOK 
 } = loadEnv( "all", process.cwd(), "CMS");
 
+// Options Schema
+import { optionsSchema } from "./schemas";
+
+// Main Integration
 export default defineIntegration({
     name: "astro-studiocms",
     optionsSchema,
     plugins: [...corePlugins],
     setup({ options }) {
         // Destructure Options
-        const { 
-            verbose: isVerbose, 
-            imageService: ImageServiceConfig,
-            dbStartPage, authConfig,
-        } = options;
+        const { imageService: ImageServiceConfig, verbose, 
+            dbStartPage, authConfig } = options;
         
         const { mode: authMode } = authConfig;
 
-        const { 
-            astroImageServiceConfig, 
-            useUnpic, 
-            unpicConfig 
-        } = ImageServiceConfig;
+        const { astroImageServiceConfig, useUnpic, 
+            unpicConfig } = ImageServiceConfig;
 
-        const { 
-            fallbackService, 
-            layout, 
-            placeholder, 
-            cdnOptions 
-        } = unpicConfig;
+        const { fallbackService, layout, placeholder, 
+            cdnOptions } = unpicConfig;
 
         // Create Resolver for Virtual Imports
         const { resolve } = createResolver(import.meta.url);
@@ -66,18 +64,14 @@ export default defineIntegration({
                 injectRoute,
             }) => {
                 
-                // Watch Integration for changes in dev mode
+                // Watch Integration for changes in dev mode *TO BE REMOVED*
                 if (CMS_WATCH_INTEGRATION_HOOK) {
-                    integrationLogger(logger.fork("Astro-StudioCMS-Dev"), isVerbose, "warn", "Watching Integration for Changes... This should only be enabled during Development of the Integration.")
+                    integrationLogger(logger.fork("Astro-StudioCMS-Dev"), verbose, "warn", "Watching Integration for Changes... This should only be enabled during Development of the Integration.")
                     watchIntegration(resolve());
                 }
 
-                const { 
-                    site: DomainName, 
-                    output: RenderMode, 
-                    base: BaseURL,
-                    adapter,
-                } = config;
+                const { site: DomainName, output: RenderMode, 
+                    base: BaseURL, adapter } = config;
 
                 // Check for SSR Mode
                 if (RenderMode !== "server" ) {
@@ -91,9 +85,7 @@ export default defineIntegration({
 
                 // Add Virtual Imports
                 integrationLogger(
-                    logger, isVerbose, 
-                    "info", 
-                    "Adding Virtual Imports..."
+                    logger, verbose, "info", "Adding Virtual Imports..."
                 );
                 addVirtualImports({
                     'virtual:astro-studio-cms:config': `export default ${JSON.stringify(options) };`,
@@ -117,7 +109,7 @@ export default defineIntegration({
 
                     // Add Page Routes
                     integrationLogger(
-                        logger, isVerbose, "info", "Adding Page Routes..."
+                        logger, verbose, "info", "Adding Page Routes..."
                     );
                     injectRoute({ 
                         pattern: BaseURL, 
@@ -142,7 +134,7 @@ export default defineIntegration({
 
                     if (authMode === "disable") {
                         integrationLogger(
-                            logger, isVerbose, "warn", 
+                            logger, verbose, "warn", 
                             "Authentication Disabled. The ENTIRE Internal dashboard for the Astro Studio CMS is disabled. This means you will need to manage your content via the Astro Studio Dashboard at http://studio.astro.build"
                         );
                     } else if (authMode === "built-in") {
@@ -154,7 +146,7 @@ export default defineIntegration({
 
                         // Add Authentication Middleware
                         integrationLogger(
-                            logger, isVerbose, "info", "Adding Authentication Middleware"
+                            logger, verbose, "info", "Adding Authentication Middleware"
                         );
                         addMiddleware({
                             entrypoint: resolve('./middleware/index.ts'),
@@ -214,7 +206,7 @@ export default defineIntegration({
                         });
                     } else if (authMode === "plugin") {
                         integrationLogger(
-                            logger, isVerbose, "warn", 
+                            logger, verbose, "warn", 
                             "Plugin Authentication is not yet supported. Please use the built-in Astro Studio CMS authentication."
                         );
                     }
@@ -223,25 +215,19 @@ export default defineIntegration({
 
                 // Update Astro Config
                 integrationLogger(
-                    logger, isVerbose, 
-                    "info", 
-                    "Updating Astro Config..."
+                    logger, verbose, "info", "Updating Astro Config..."
                 );
 
                 if ( adapter === vercel({ imageService: true }) ) {
                     integrationLogger(
-                        logger, isVerbose, 
-                        "info", 
-                        "Vercel Adapter Detected. Using Vercel Image Service."
+                        logger, verbose, "info", "Vercel Adapter Detected. Using Vercel Image Service."
                     );
                 } else if ( 
                     adapter === netlify() 
                     && adapter !== netlify({ imageCDN: false })
                     ) {
                     integrationLogger(
-                        logger, isVerbose, 
-                        "info", 
-                        "Netlify Adapter Detected. Using Netlify Image Service."
+                        logger, verbose, "info", "Netlify Adapter Detected. Using Netlify Image Service."
                     );
                 } else if ( 
                     adapter === cloudflare({ imageService: 'cloudflare'}) 
@@ -249,12 +235,10 @@ export default defineIntegration({
                     && adapter !== cloudflare({ imageService: 'compile' }) 
                     ) {
                     integrationLogger(
-                        logger, isVerbose, 
-                        "info", 
-                        "Cloudflare Adapter Detected. Using Cloudflare Image Service."
+                        logger, verbose, "info", "Cloudflare Adapter Detected. Using Cloudflare Image Service."
                     );
                 } else if (useUnpic) {
-                    integrationLogger(logger, isVerbose, "info", "Loading @unpic/astro Image Service for External Images")
+                    integrationLogger(logger, verbose, "info", "Loading @unpic/astro Image Service for External Images")
                     updateConfig({
                         image: {
                             service: imageService({
@@ -266,19 +250,19 @@ export default defineIntegration({
                         }
                     });
                 } else {
-                    integrationLogger(logger, isVerbose, "info", "@unpic/astro Image Service Disabled, using Astro Built-in Image Service.")
+                    integrationLogger(logger, verbose, "info", "@unpic/astro Image Service Disabled, using Astro Built-in Image Service.")
                     if ( astroImageServiceConfig === "squoosh" ) {
-                        integrationLogger(logger, isVerbose, "info", "Using Squoosh Image Service")
+                        integrationLogger(logger, verbose, "info", "Using Squoosh Image Service")
                         updateConfig({
                             image: { service: squooshImageService(), }
                         })
                     } else if ( astroImageServiceConfig === "sharp" ) {
-                        integrationLogger(logger, isVerbose, "info", "Using Sharp Image Service")
+                        integrationLogger(logger, verbose, "info", "Using Sharp Image Service")
                         updateConfig({
                             image: { service: sharpImageService(), }
                         })
                     } else if ( astroImageServiceConfig === "no-op" ) {
-                        integrationLogger(logger, isVerbose, "info", "Using No-Op Image Service")
+                        integrationLogger(logger, verbose, "info", "Using No-Op Image Service")
                         updateConfig({
                             image: { service: passthroughImageService(), }
                         })
@@ -286,17 +270,14 @@ export default defineIntegration({
                 }
 
                 integrationLogger(
-                    logger, isVerbose, "info", 
-                    "Astro Studio CMS Setup Complete!"
+                    logger, verbose, "info", "Astro Studio CMS Setup Complete!"
                 );
 
             },
             'astro:server:start': ({ logger }) => {
                 if (dbStartPage) {
                     integrationLogger(
-                        logger, true,
-                        "warn",
-                        "Astro Studio CMS is running in Development Mode. To get started, visit http://localhost:4321/start in your browser to initialize your database. And Setup your installation."
+                        logger, true, "warn", "Astro Studio CMS is running in Development Mode. To get started, visit http://localhost:4321/start in your browser to initialize your database. And Setup your installation."
                     );
                 };
             },
