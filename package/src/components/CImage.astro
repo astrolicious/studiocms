@@ -21,7 +21,7 @@ const cldSrc = cld.image(src).format('auto').quality('auto').resize(fill('auto')
 if (src.startsWith('https://')) { cldSrc.setDeliveryType('fetch');}
 
 // Get the current configured image service
-function getCurrentConfiguredImageService() {
+function getCurrentConfiguredImageServiceSRC() {
     switch (cdnPlugin) {
         case 'cloudinary-js':
             return cldSrc.toURL();
@@ -31,4 +31,4 @@ function getCurrentConfiguredImageService() {
 }
 
 ---
-<Image src={getCurrentConfiguredImageService()} {...props} />
+<Image src={getCurrentConfiguredImageServiceSRC()} {...props} />
