@@ -54,7 +54,7 @@ export default defineIntegration({
             authConfig: {
                 mode: authMode,
             }, 
-            integrationsConfig: { useAstroRobots }
+            includedIntegrations: { astroRobots }
         } }) {
         // Create Resolver for Virtual Imports
         const { resolve } = createResolver(import.meta.url);
@@ -310,20 +310,18 @@ export default defineIntegration({
                     }
                 }
 
-                if (useAstroRobots) {
+                if ( astroRobots ) {
                     if ( !hasIntegration(params, { name: "astro-robots-txt" }) 
                         || !hasIntegration( params, { name: "astro-robots" }) ) {
                         integrationLogger(logger, verbose, "info", "No Robots.txt Integration found. Adding `astro-robots` Integration")
-                        addIntegration(params, { 
-                            integration: robots({
-                                host: site, 
-                                policy: [ { 
-                                    userAgent: ["*"],
-                                    allow: ["/"],
-                                    disallow: ["/dashboard/"],
-                                }, ],
-                            }) 
-                        });
+                        addIntegration(params, { integration: robots({
+                            host: site, 
+                            policy: [ { 
+                                userAgent: ["*"],
+                                allow: ["/"],
+                                disallow: ["/dashboard/"],
+                            }, ],
+                        })});
                     }
                 }
 
