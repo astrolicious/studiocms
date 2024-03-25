@@ -1,6 +1,5 @@
 // Tools and Utilities
-import { createResolver, defineIntegration } from "astro-integration-kit";
-import { corePlugins } from "astro-integration-kit/plugins";
+import { addVirtualImports, createResolver, defineIntegration, watchIntegration } from "astro-integration-kit";
 import "astro-integration-kit/types/db";
 import { AstroError } from "astro/errors";
 import { loadEnv } from "vite";
@@ -33,8 +32,7 @@ const {
 export default defineIntegration({
     name: "astro-studiocms",
     optionsSchema,
-    plugins: [...corePlugins],
-    setup({ options }) {
+    setup({ options, name }) {
         // Destructure Options
 
         // Main Options
@@ -59,20 +57,14 @@ export default defineIntegration({
                     // seedEntrypoint: resolve('./db/seed.ts'),
                 });
             },
-            "astro:config:setup": ({ 
-                watchIntegration, 
-                addMiddleware,
-                addVirtualImports,
-                updateConfig,
-                injectRoute,
-                config,
-                logger,
-            }) => {
+            "astro:config:setup": (params) => {
                 
+                const { addMiddleware, updateConfig, injectRoute, config, logger } = params;
+
                 // Watch Integration for changes in dev mode *TO BE REMOVED*
                 if (CMS_WATCH_INTEGRATION_HOOK) {
                     integrationLogger(logger.fork("Astro-StudioCMS-Dev"), verbose, "warn", "Watching Integration for Changes... This should only be enabled during Development of the Integration.")
-                    watchIntegration(resolve());
+                    watchIntegration(params, resolve());
                 }
 
                 // Destructure Astro Config
@@ -92,10 +84,13 @@ export default defineIntegration({
                 integrationLogger(
                     logger, verbose, "info", "Adding Virtual Imports..."
                 );
-                addVirtualImports({
-                    'virtual:astro-studio-cms:config': `export default ${JSON.stringify(options) };`,
-                    'virtual:astro-studio-cms:layout': `export { default as VirtualLayout } from '${resolve('./layouts/Virtual.astro')}'`,
-                });
+                addVirtualImports( params, {
+                    name,
+                    imports: {
+                        'virtual:astro-studio-cms:config': `export default ${ JSON.stringify(options) }`,
+                        'virtual:astro-studio-cms:layout': `export { default as VirtualLayout } from '${resolve('./layouts/Virtual.astro')}'`
+                    },
+                })
 
                 // dbStartPage - Choose whether to run the Start Page or Inject the Integration
                 if (dbStartPage) {

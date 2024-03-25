@@ -54,8 +54,8 @@ importers:
         specifier: '>=4.5.9'
         version: 4.5.9(@types/node@20.11.28)(typescript@5.4.2)
       astro-integration-kit:
-        specifier: 0.7.1
-        version: 0.7.1(@astrojs/db@0.9.4)(astro@4.5.9)
+        specifier: 0.8.0
+        version: 0.8.0(@astrojs/db@0.9.4)(astro@4.5.9)
       emojilib:
         specifier: ^3.0.11
         version: 3.0.11
@@ -2106,8 +2106,8 @@ packages:
       tslib: 2.6.2
     dev: false
 
-  /astro-integration-kit@0.7.1(@astrojs/db@0.9.4)(astro@4.5.9):
-    resolution: {integrity: sha512-QiIRvNdESlm7bziuEkWXUJI6uWdQgmeUEOLXkbpuMZrZK8c7DytbGSs3SStpT0b5ITQ1XcDV9r9DAixyW0F2Dg==}
+  /astro-integration-kit@0.8.0(@astrojs/db@0.9.4)(astro@4.5.9):
+    resolution: {integrity: sha512-YTdSYrE6xrYpYWZghUUhsTs6Mt1H+/Mucv2VUPfhHoeY8IS9XbpA2adFEBRMd4n+sFd8W490gCUtjmWxnhEs9Q==}
     peerDependencies:
       '@astrojs/db': ^0.9.0
       '@vitejs/plugin-react': ^4.2.1
