@@ -1,5 +1,8 @@
-// Tools and Utilities
-import { addVirtualImports, createResolver, defineIntegration, watchIntegration, addIntegration, hasIntegration } from "astro-integration-kit";
+import { // Tools and Utilities
+    defineIntegration, createResolver, 
+    addVirtualImports, watchIntegration, 
+    addIntegration, hasIntegration
+} from "astro-integration-kit";
 import "astro-integration-kit/types/db";
 import { AstroError } from "astro/errors";
 import { loadEnv } from "vite";
@@ -36,12 +39,15 @@ const {
 export default defineIntegration({
     name: "astro-studiocms",
     optionsSchema,
-    setup({ name, options, 
+    setup({ 
+        name, 
+        options, 
         options: { 
             verbose, 
             dbStartPage, 
             imageService: { 
                 astroImageServiceConfig, 
+                cdnPlugin,
                 useUnpic, 
                 unpicConfig: { 
                     fallbackService, 
@@ -49,13 +55,15 @@ export default defineIntegration({
                     placeholder, 
                     cdnOptions,
                 }, 
-                cdnPlugin,
             }, 
             authConfig: {
                 mode: authMode,
             }, 
-            includedIntegrations: { astroRobots }
-        } }) {
+            includedIntegrations: { 
+                astroRobots, 
+            },
+        },
+    }) {
         // Create Resolver for Virtual Imports
         const { resolve } = createResolver(import.meta.url);
 
@@ -68,16 +76,24 @@ export default defineIntegration({
             },
             "astro:config:setup": ( params ) => {
                 
-                const { addMiddleware, updateConfig, injectRoute, config, logger } = params;
+                const { 
+                    addMiddleware, 
+                    updateConfig, 
+                    injectRoute, 
+                    logger,
+                    config: { 
+                        base, 
+                        adapter, 
+                        output, 
+                        site 
+                    },
+                } = params;
 
                 // Watch Integration for changes in dev mode *TO BE REMOVED*
                 if (CMS_WATCH_INTEGRATION_HOOK) {
                     integrationLogger(logger.fork("Astro-StudioCMS-Dev"), verbose, "warn", "Watching Integration for Changes... This should only be enabled during Development of the Integration.")
                     watchIntegration(params, resolve());
                 }
-
-                // Destructure Astro Config
-                const { site, output, adapter, base } = config;
 
                 // Check for SSR Mode
                 if (output !== "server" ) {
@@ -86,7 +102,7 @@ export default defineIntegration({
 
                 // Check for Site URL
                 if (!site) {
-                    throw new AstroError("Astro Studio CMS requires a 'site' configuration in your Astro Config.");
+                    throw new AstroError("Astro Studio CMS requires a 'site' configuration in your Astro Config. This can be your domain or localhost (localhost should only be used during development and should not be used in production).");
                 };
 
                 // Add Virtual Imports
