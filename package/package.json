@@ -58,7 +58,21 @@
   "type": "module",
   "peerDependencies": {
     "@astrojs/db": ">=0.9.3",
+    "@astrojs/vercel": "^7.3.6",
+    "@astrojs/netlify": "^5.2.0",
+    "@astrojs/cloudflare": "^9.2.0",
     "astro": ">=4.5.8"
+  },
+  "peerDependenciesMeta": {
+    "@astrojs/vercel": {
+      "optional": true
+    },
+    "@astrojs/netlify": {
+      "optional": true
+    },
+    "@astrojs/cloudflare": {
+      "optional": true
+    }
   },
   "devDependencies": {
     "@types/node": "^20.11.28"

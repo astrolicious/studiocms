@@ -8,6 +8,11 @@ import { corePlugins } from "astro-integration-kit/plugins";
 import "astro-integration-kit/types/db";
 import { passthroughImageService, sharpImageService, squooshImageService } from "astro/config";
 
+// Adapters
+import vercel from "@astrojs/vercel/serverless";
+import netlify from "@astrojs/netlify";
+import cloudflare from "@astrojs/cloudflare";
+
 const { 
     CMS_GITHUB_CLIENT_ID, 
     CMS_GITHUB_CLIENT_SECRET, 
@@ -70,7 +75,8 @@ export default defineIntegration({
                 const { 
                     site: DomainName, 
                     output: RenderMode, 
-                    base: BaseURL 
+                    base: BaseURL,
+                    adapter,
                 } = config;
 
                 // Check for SSR Mode
@@ -222,7 +228,32 @@ export default defineIntegration({
                     "Updating Astro Config..."
                 );
 
-                if (useUnpic) {
+                if ( adapter === vercel({ imageService: true }) ) {
+                    integrationLogger(
+                        logger, isVerbose, 
+                        "info", 
+                        "Vercel Adapter Detected. Using Vercel Image Service."
+                    );
+                } else if ( 
+                    adapter === netlify() 
+                    && adapter !== netlify({ imageCDN: false })
+                    ) {
+                    integrationLogger(
+                        logger, isVerbose, 
+                        "info", 
+                        "Netlify Adapter Detected. Using Netlify Image Service."
+                    );
+                } else if ( 
+                    adapter === cloudflare({ imageService: 'cloudflare'}) 
+                    || adapter === cloudflare({ imageService: 'passthrough'}) 
+                    && adapter !== cloudflare({ imageService: 'compile' }) 
+                    ) {
+                    integrationLogger(
+                        logger, isVerbose, 
+                        "info", 
+                        "Cloudflare Adapter Detected. Using Cloudflare Image Service."
+                    );
+                } else if (useUnpic) {
                     integrationLogger(logger, isVerbose, "info", "Loading @unpic/astro Image Service for External Images")
                     updateConfig({
                         image: {
@@ -236,17 +267,17 @@ export default defineIntegration({
                     });
                 } else {
                     integrationLogger(logger, isVerbose, "info", "@unpic/astro Image Service Disabled, using Astro Built-in Image Service.")
-                    if (astroImageServiceConfig === "squoosh") {
+                    if ( astroImageServiceConfig === "squoosh" ) {
                         integrationLogger(logger, isVerbose, "info", "Using Squoosh Image Service")
                         updateConfig({
                             image: { service: squooshImageService(), }
                         })
-                    } else if (astroImageServiceConfig === "sharp") {
+                    } else if ( astroImageServiceConfig === "sharp" ) {
                         integrationLogger(logger, isVerbose, "info", "Using Sharp Image Service")
                         updateConfig({
                             image: { service: sharpImageService(), }
                         })
-                    } else if (astroImageServiceConfig === "no-op") {
+                    } else if ( astroImageServiceConfig === "no-op" ) {
                         integrationLogger(logger, isVerbose, "info", "Using No-Op Image Service")
                         updateConfig({
                             image: { service: passthroughImageService(), }
