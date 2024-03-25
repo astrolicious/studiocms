@@ -1,10 +1,10 @@
 // Tools and Utilities
-import { AstroError } from "astro/errors";
-import { loadEnv } from "vite";
-import { integrationLogger } from "./utils";
 import { createResolver, defineIntegration } from "astro-integration-kit";
 import { corePlugins } from "astro-integration-kit/plugins";
 import "astro-integration-kit/types/db";
+import { AstroError } from "astro/errors";
+import { loadEnv } from "vite";
+import { integrationLogger } from "./utils";
 
 // Adapters
 import vercel from "@astrojs/vercel/serverless";
@@ -13,8 +13,14 @@ import cloudflare from "@astrojs/cloudflare";
 
 // Image Services
 import { imageService as unpicImageService } from "@unpic/astro/service";
-import { passthroughImageService, 
-    sharpImageService, squooshImageService } from "astro/config";
+import { 
+    passthroughImageService, 
+    sharpImageService, 
+    squooshImageService
+} from "astro/config";
+
+// Options Schema
+import { optionsSchema } from "./schemas";
 
 // Environment Variables
 const { 
@@ -22,9 +28,6 @@ const {
     CMS_GITHUB_CLIENT_SECRET, 
     CMS_WATCH_INTEGRATION_HOOK 
 } = loadEnv( "all", process.cwd(), "CMS");
-
-// Options Schema
-import { optionsSchema } from "./schemas";
 
 // Main Integration
 export default defineIntegration({
