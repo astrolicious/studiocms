@@ -32,21 +32,24 @@ const {
 export default defineIntegration({
     name: "astro-studiocms",
     optionsSchema,
-    setup({ options, name }) {
-        // Destructure Options
-
-        // Main Options
-        const { imageService, verbose, dbStartPage, authConfig } = options;
-
-        // Image Service Options
-        const { astroImageServiceConfig, useUnpic, unpicConfig } = imageService;
-
-        // Unpic Config Options
-        const { fallbackService, layout, placeholder, cdnOptions } = unpicConfig;
-        
-        // Authentication Config Options
-        const { mode: authMode } = authConfig;
-
+    setup({ name, options, 
+        options: { 
+            verbose, 
+            dbStartPage, 
+            imageService: { 
+                astroImageServiceConfig, 
+                useUnpic, 
+                unpicConfig: { 
+                    fallbackService, 
+                    layout, 
+                    placeholder, 
+                    cdnOptions,
+                }, 
+            }, 
+            authConfig: {
+                mode: authMode,
+            }, 
+        } }) {
         // Create Resolver for Virtual Imports
         const { resolve } = createResolver(import.meta.url);
 
@@ -57,7 +60,7 @@ export default defineIntegration({
                     // seedEntrypoint: resolve('./db/seed.ts'),
                 });
             },
-            "astro:config:setup": (params) => {
+            "astro:config:setup": ( params ) => {
                 
                 const { addMiddleware, updateConfig, injectRoute, config, logger } = params;
 
