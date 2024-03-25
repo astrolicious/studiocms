@@ -2,25 +2,9 @@
   "extends": "astro/tsconfigs/strict",
   "compilerOptions": {
     "jsx": "preserve",
-    "outDir": "../.moon/cache/types/playground",
-    "paths": {
-      "@nametbd/astro-studio-cms": [
-        "../package/src/index.ts"
-      ],
-      "@nametbd/astro-studio-cms/*": [
-        "../package/src/*"
-      ]
-    }
+    "outDir": "../.moon/cache/types/playground"
   },
   "exclude": [
     "dist"
-  ],
-  "references": [
-    {
-      "path": "../package"
-    }
-  ],
-  "include": [
-    "../package/**/*"
   ]
 }
