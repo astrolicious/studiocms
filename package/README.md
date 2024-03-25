@@ -31,6 +31,10 @@ Lucia Auth - requires two .env tokens to create the connection between Github an
 # credentials for GitHub OAuth App
 CMS_GITHUB_CLIENT_ID=
 CMS_GITHUB_CLIENT_SECRET=
+
+# OPTIONALS
+## Cloudinary Javascript SDK
+CMS_CLOUDINARY_CLOUDNAME="demo"
 ```
 
 When you setup the Github Oauth App for these keys use the following for the setup:

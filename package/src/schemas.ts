@@ -9,6 +9,7 @@ type UnpicPlaceHolder = "blurhash" | "dominantColor" | "lqip" | (string & {});
 type UnpicLayout = "constrained" | "fixed" | "fullWidth";
 type AstroImageService = "sharp" | "squoosh" | "no-op";
 type authConfigModeOptions = "plugin" | "built-in" | "disable";
+type cdnImageServicePlugin = "cloudinary-js";
 
 //
 // UNPIC CONFIG OPTIONS SCHEMA
@@ -71,6 +72,14 @@ export const imageServiceSchema = z.object({
      * @default "squoosh"
      */
     astroImageServiceConfig: z.custom<AstroImageService>().optional().default("squoosh"),
+    /**
+     * If the user wants to use a custom Supported CDN Plugin, they can specify it here.
+     * 
+     * Currently Supported CDN Plugins: **Not Yet Implemented**
+     * 
+     * Note: This option will only be used if all other ImageService options are at their default values and will override the image component used to display ALL images
+     */
+    cdnPlugin: z.custom<cdnImageServicePlugin>().optional(),
 }).optional().default({})
 
 //

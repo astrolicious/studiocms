@@ -38,6 +38,7 @@
   "dependencies": {
     "@astrojs/rss": "^4.0.5",
     "@astrojs/sitemap": "^3.1.1",
+    "@cloudinary/url-gen": "^1.19.0",
     "@lucia-auth/adapter-drizzle": "^1.0.4",
     "@unpic/astro": "^0.0.44",
     "arctic": "^1.2.1",

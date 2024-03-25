@@ -45,6 +45,7 @@ export default defineIntegration({
                     placeholder, 
                     cdnOptions,
                 }, 
+                cdnPlugin,
             }, 
             authConfig: {
                 mode: authMode,
@@ -240,6 +241,8 @@ export default defineIntegration({
                     integrationLogger(
                         logger, verbose, "info", "Cloudflare Adapter Detected. Using Cloudflare Image Service."
                     );
+                } else if ( cdnPlugin !== undefined ) {
+                    integrationLogger(logger, verbose, "error", "Custom CDN Plugins are not yet supported.");
                 } else if ( useUnpic && astroImageServiceConfig !== "no-op" ) {
                     integrationLogger(logger, verbose, "info", "Loading @unpic/astro Image Service for External Images")
                     updateConfig({

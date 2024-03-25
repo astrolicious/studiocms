@@ -41,6 +41,9 @@ importers:
       '@astrojs/vercel':
         specifier: ^7.3.6
         version: 7.3.6(astro@4.5.9)
+      '@cloudinary/url-gen':
+        specifier: ^1.19.0
+        version: 1.19.0
       '@lucia-auth/adapter-drizzle':
         specifier: ^1.0.4
         version: 1.0.4(lucia@3.1.1)
@@ -860,6 +863,18 @@ packages:
 
   /@cloudflare/workers-types@4.20240320.1:
     resolution: {integrity: sha512-CiYtVpQURPgQqtBKkmOAnfPElVZuD7Xyf1IxKtKp2B4aB9gnooapwJhzeY8c4Ls4u17SgMS0MprOkrgYwzZ6xg==}
+    dev: false
+
+  /@cloudinary/transformation-builder-sdk@1.13.2:
+    resolution: {integrity: sha512-GuM+gItKLR7GGYr4IFNQ2ALaykz7jjqqeycJacoN5p0Cswm+S2bA2x0P3I/Wq8V1WWqmW/TC82m0+1zhPIzGRg==}
+    dependencies:
+      '@cloudinary/url-gen': 1.19.0
+    dev: false
+
+  /@cloudinary/url-gen@1.19.0:
+    resolution: {integrity: sha512-3WSqYAMEe8lcYMFmkNPhOfv6Ql76mpf8O7YEC+CCaoIYrfBubzzeF8yENCaZK9tFJEHvMepI+uWWfilNrz48XA==}
+    dependencies:
+      '@cloudinary/transformation-builder-sdk': 1.13.2
     dev: false
 
   /@emnapi/core@0.45.0:
