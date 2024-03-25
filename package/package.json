@@ -1,5 +1,5 @@
 {
-  "name": "@astrolicious/astro-studiocms",
+  "name": "@astrolicious/studiocms",
   "version": "0.0.0-alpha.1",
   "description": "Content Management System built for Astro Studio and AstroDB",
   "author": {

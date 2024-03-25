@@ -1,5 +1,5 @@
 import { defineConfig } from "astro/config";
-import astroStudioCMS from "@astrolicious/astro-studiocms";
+import astroStudioCMS from "@astrolicious/studiocms";
 import db from '@astrojs/db';
 import node from "@astrojs/node";
 

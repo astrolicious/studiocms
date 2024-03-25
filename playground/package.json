@@ -16,6 +16,6 @@
     "@astrojs/db": "^0.9.4",
     "@astrojs/node": "^8.2.5",
     "astro": "^4.5.9",
-    "@astrolicious/astro-studiocms": "workspace:*"
+    "@astrolicious/studiocms": "workspace:*"
   }
 }
