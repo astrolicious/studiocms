@@ -53,18 +53,18 @@ Your `astro.config.mjs` should look like the following
 
 ```mjs
 import { defineConfig } from "astro/config";
-import studioCMS from "@nametbd/astro-studio-cms";
+import astroStudioCMS from "@astrolicious/astro-studiocms";
 import db from '@astrojs/db';
-import vercel from "@astrojs/vercel/serverless";
+import node from "@astrojs/node";
 
 // https://astro.build/config
 export default defineConfig({
 	site: 'https://example.com',
 	output: "server",
-	adapter: vercel(),
+	adapter: node({ mode: 'standalone' }),
 	integrations: [
         db(),
-        studioCMS({
+        astroStudioCMS({
             dbStartPage: true // DEFAULT - This creates a file in your /src/pages folder to allow first initialization and config of the installation
         })],
 });

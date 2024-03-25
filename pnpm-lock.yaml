@@ -105,7 +105,7 @@ importers:
       '@astrojs/node':
         specifier: ^8.2.5
         version: 8.2.5(astro@4.5.8)
-      '@nametbd/astro-studio-cms':
+      '@astrolicious/astro-studiocms':
         specifier: workspace:*
         version: link:../package
       astro:

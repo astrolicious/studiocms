@@ -10,7 +10,7 @@ import { VirtualLayout } from "virtual:astro-studio-cms:layout";
 	<p>You can now stop your dev server and add the following option in your astro.config to start using Astro-StudioCMS then start back up to see your new CMS data</p>
 
 <Code lang="diff" code={`import { defineConfig } from "astro/config";
-import studioCMS from "@nametbd/astro-studio-cms";
+import astroStudioCMS from "@astrolicious/astro-studiocms";
 import db from '@astrojs/db';
 
 // https://astro.build/config
@@ -18,7 +18,7 @@ export default defineConfig({
     // other config options,
 	integrations: [
 		db(),
-		studioCMS({ 
+		astroStudioCMS({ 
 +			dbStartPage: false,
 		}),
 	],

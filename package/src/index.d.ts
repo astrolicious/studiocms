@@ -3,7 +3,9 @@ import type { AstroStudioCMSOptions } from "./schemas";
 
 /**
  * # Astro Studio CMS Integration 
- * A CMS built for Astro by the Astro Community
+ * A CMS built for Astro by the Astro Community for the Astro Community.
+ * 
+ * Checkout our [GitHub Repo `@astrolicious/astro-studiocms`](https://github.com/astrolicious/)
  * 
  * Check out [Astro-StudioCMS.xyz](https://astro-studiocms.xyz) or the Built-in JSDocs *(Hover Docs like this)* for more information.
  * 
@@ -14,7 +16,7 @@ import type { AstroStudioCMSOptions } from "./schemas";
  * import { defineConfig } from "astro/config";
  * import node from "@astrojs/node";
  * import db from "@astrojs/db";
- * import astroStudioCMS from "@nametdb/astro-studiocms";
+ * import astroStudioCMS from "@astrolicious/astro-studiocms";
  * 
  * export default defineConfig({
  *   site: 'https://example.com',

@@ -56,7 +56,7 @@ export default defineIntegration({
             "astro:db:setup": ({ extendDb }) => {
                 extendDb({
                     configEntrypoint: resolve('./db/config.ts'),
-                    seedEntrypoint: resolve('./db/seed.ts'),
+                    // seedEntrypoint: resolve('./db/seed.ts'),
                 });
             },
             "astro:config:setup": ({ 
@@ -64,9 +64,9 @@ export default defineIntegration({
                 addMiddleware,
                 addVirtualImports,
                 updateConfig,
+                injectRoute,
                 config,
                 logger,
-                injectRoute,
             }) => {
                 
                 // Watch Integration for changes in dev mode *TO BE REMOVED*
