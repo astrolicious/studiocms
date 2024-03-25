@@ -104,6 +104,18 @@ export const authConfigSchema = z.object({
 }).optional().default({});
 
 //
+// INTEGRATIONS CONFIG SCHEMA
+//
+export const integrationsConfigSchema = z.object({
+    /**
+     * OPTIONAL - Allows the user to enable/disable the use of the Astro Robots Plugin
+     * For more information on the Astro Robots Plugin, visit:
+     * @see https://www.npmjs.com/package/astro-robots
+     */
+    useAstroRobots: z.boolean().optional().default(true),
+}).optional().default({});
+
+//
 // MAIN SCHEMA
 //
 export const optionsSchema = z.object({
@@ -120,6 +132,10 @@ export const optionsSchema = z.object({
      * Allows customization of the Authentication Configuration
      */
     authConfig: authConfigSchema,
+    /**
+     * Allows enabling and disabling of the included integrations
+     */
+    integrationsConfig: integrationsConfigSchema,
     /**
      * Whether to show verbose output
      * @default false
