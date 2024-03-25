@@ -7,7 +7,7 @@ import type { ImageCdn, CdnOptions } from "unpic";
 type UnpicFallbackServiceOptions = ImageCdn | "sharp" | "squoosh";
 type UnpicPlaceHolder = "blurhash" | "dominantColor" | "lqip" | (string & {});
 type UnpicLayout = "constrained" | "fixed" | "fullWidth";
-type AstroImageService = "sharp" | "squoosh";
+type AstroImageService = "sharp" | "squoosh" | "no-op";
 type authConfigModeOptions = "plugin" | "built-in" | "disable";
 
 //

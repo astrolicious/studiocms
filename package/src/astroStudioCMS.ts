@@ -6,7 +6,7 @@ import { integrationLogger } from "./utils";
 import { createResolver, defineIntegration } from "astro-integration-kit";
 import { corePlugins } from "astro-integration-kit/plugins";
 import "astro-integration-kit/types/db";
-import { sharpImageService, squooshImageService } from "astro/config";
+import { passthroughImageService, sharpImageService, squooshImageService } from "astro/config";
 
 const { 
     CMS_GITHUB_CLIENT_ID, 
@@ -245,6 +245,11 @@ export default defineIntegration({
                         integrationLogger(logger, isVerbose, "info", "Using Sharp Image Service")
                         updateConfig({
                             image: { service: sharpImageService(), }
+                        })
+                    } else if (astroImageServiceConfig === "no-op") {
+                        integrationLogger(logger, isVerbose, "info", "Using No-Op Image Service")
+                        updateConfig({
+                            image: { service: passthroughImageService(), }
                         })
                     }
                 }
