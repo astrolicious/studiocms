@@ -21,9 +21,10 @@ export const unpicConfigSchema = z.object({
      * By default it will either use the local "squoosh" service, or will
      * try to detect available services based on the environment.
      * This detection currently works on Netlify and Vercel.
-     * @default "squoosh"
+     * 
+     * Falls back to the value of `astroImageServiceConfig` if not set here
      */
-    fallbackService: z.custom<UnpicFallbackServiceOptions>().optional().default("squoosh"),
+    fallbackService: z.custom<UnpicFallbackServiceOptions>().optional(),
     /**
      * The default placeholder background to use for images.
      * Can be `"blurhash"`, `"dominantColor"`, `"lqip"`, a data URI or a CSS color string.

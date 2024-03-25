@@ -242,13 +242,25 @@ export default defineIntegration({
                     integrationLogger(
                         logger, verbose, "info", "Cloudflare Adapter Detected. Using Cloudflare Image Service."
                     );
-                } else if (useUnpic) {
+                } else if ( useUnpic && astroImageServiceConfig !== "no-op" ) {
                     integrationLogger(logger, verbose, "info", "Loading @unpic/astro Image Service for External Images")
                     updateConfig({
                         image: {
                             service: unpicImageService({
                                 placeholder: placeholder,
-                                fallbackService: fallbackService,
+                                fallbackService: fallbackService ? fallbackService : astroImageServiceConfig,
+                                layout: layout,
+                                cdnOptions: cdnOptions,
+                            }),
+                        }
+                    });
+                } else if ( useUnpic && astroImageServiceConfig === "no-op" ) {
+                    integrationLogger(logger, verbose, "info", "Loading @unpic/astro Image Service for External Images")
+                    updateConfig({
+                        image: {
+                            service: unpicImageService({
+                                placeholder: placeholder,
+                                fallbackService: fallbackService ? fallbackService : "astro",
                                 layout: layout,
                                 cdnOptions: cdnOptions,
                             }),
