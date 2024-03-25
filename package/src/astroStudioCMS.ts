@@ -8,15 +8,38 @@ import { corePlugins } from "astro-integration-kit/plugins";
 import "astro-integration-kit/types/db";
 import { sharpImageService, squooshImageService } from "astro/config";
 
-const { GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET } = loadEnv( "all", process.cwd(), "GITHUB");
+const { 
+    CMS_GITHUB_CLIENT_ID, 
+    CMS_GITHUB_CLIENT_SECRET, 
+    CMS_WATCH_INTEGRATION_HOOK 
+} = loadEnv( "all", process.cwd(), "CMS");
 
 export default defineIntegration({
     name: "astro-studiocms",
     optionsSchema,
     plugins: [...corePlugins],
     setup({ options }) {
-        // Check for Verbose Mode
-        const isVerbose = options.verbose;
+        // Destructure Options
+        const { 
+            verbose: isVerbose, 
+            imageService: ImageServiceConfig,
+            dbStartPage, authConfig,
+        } = options;
+        
+        const { mode: authMode } = authConfig;
+
+        const { 
+            astroImageServiceConfig, 
+            useUnpic, 
+            unpicConfig 
+        } = ImageServiceConfig;
+
+        const { 
+            fallbackService, 
+            layout, 
+            placeholder, 
+            cdnOptions 
+        } = unpicConfig;
 
         // Create Resolver for Virtual Imports
         const { resolve } = createResolver(import.meta.url);
@@ -38,16 +61,25 @@ export default defineIntegration({
                 injectRoute,
             }) => {
                 
-                // Watch Integration for changes
-                watchIntegration(resolve());
+                // Watch Integration for changes in dev mode
+                if (CMS_WATCH_INTEGRATION_HOOK) {
+                    integrationLogger(logger.fork("Astro-StudioCMS-Dev"), isVerbose, "warn", "Watching Integration for Changes... This should only be enabled during Development of the Integration.")
+                    watchIntegration(resolve());
+                }
+
+                const { 
+                    site: DomainName, 
+                    output: RenderMode, 
+                    base: BaseURL 
+                } = config;
 
                 // Check for SSR Mode
-                if (config.output !== "server" ) {
+                if (RenderMode !== "server" ) {
                     throw new AstroError("Astro Studio CMS is only supported in 'Output: server' SSR mode.");
                 };
 
                 // Check for Site URL
-                if (!config.site) {
+                if (!DomainName) {
                     throw new AstroError("Astro Studio CMS requires a 'site' configuration in your Astro Config.");
                 };
 
@@ -63,15 +95,15 @@ export default defineIntegration({
                 });
 
                 // dbStartPage - Choose whether to run the Start Page or Inject the Integration
-                if (options.dbStartPage) {
+                if (dbStartPage) {
                     integrationLogger(logger, true, "warn", 
                         "Start Page Enabled.  This will be the only page available until you initialize your database. To get started, visit http://localhost:4321/start/ in your browser to initialize your database. And Setup your installation.");
                     injectRoute({
-                        pattern: `${config.base}start/`,
+                        pattern: `${BaseURL}start/`,
                         entrypoint: resolve('./pages/start.astro'),
                     });
                     injectRoute({
-                        pattern: `${config.base}done/`,
+                        pattern: `${BaseURL}done/`,
                         entrypoint: resolve('./pages/done.astro'),
                     });
 
@@ -82,38 +114,35 @@ export default defineIntegration({
                         logger, isVerbose, "info", "Adding Page Routes..."
                     );
                     injectRoute({ 
-                        pattern: config.base, 
+                        pattern: BaseURL, 
                         entrypoint: resolve('./pages/index.astro'), 
                     });
                     injectRoute({ 
-                        pattern: `${config.base}about/`, 
+                        pattern: `${BaseURL}about/`, 
                         entrypoint: resolve('./pages/about.astro'), 
                     });
                     injectRoute({ 
-                        pattern: `${config.base}blog/`, 
+                        pattern: `${BaseURL}blog/`, 
                         entrypoint: resolve('./pages/blog/index.astro'), 
                     });
                     injectRoute({ 
-                        pattern: `${config.base}blog/[slug]`, 
+                        pattern: `${BaseURL}blog/[slug]`, 
                         entrypoint: resolve('./pages/blog/[...slug].astro'), 
                     });
                     injectRoute({ 
-                        pattern: `${config.base}rss.xml`, 
+                        pattern: `${BaseURL}rss.xml`, 
                         entrypoint: resolve('./pages/rss.xml.ts'), 
                     });
 
-                    // Add Dashboard Routes & Middleware if Auth is Enabled
-                    const { mode } = options.authConfig;
-
-                    if (mode === "disable") {
+                    if (authMode === "disable") {
                         integrationLogger(
                             logger, isVerbose, "warn", 
                             "Authentication Disabled. The ENTIRE Internal dashboard for the Astro Studio CMS is disabled. This means you will need to manage your content via the Astro Studio Dashboard at http://studio.astro.build"
                         );
-                    } else if (mode === "built-in") {
+                    } else if (authMode === "built-in") {
 
                         // Check for Required Environment Variables
-                        if (!GITHUB_CLIENT_ID || !GITHUB_CLIENT_SECRET) {
+                        if (!CMS_GITHUB_CLIENT_ID || !CMS_GITHUB_CLIENT_SECRET) {
                             throw new AstroError("GitHub OAuth Client ID and Secret are required to use Astro Studio CMS with the built-in authentication. Please add these to your .env file.");
                         };
 
@@ -126,58 +155,58 @@ export default defineIntegration({
                             order: "post",
                         });
                         injectRoute({ 
-                            pattern: `${config.base}dashboard/`, 
+                            pattern: `${BaseURL}dashboard/`, 
                             entrypoint: resolve('./pages/dashboard/index.astro'), 
                         });
                         injectRoute({ 
-                            pattern: `${config.base}dashboard/profile`, 
+                            pattern: `${BaseURL}dashboard/profile`, 
                             entrypoint: resolve('./pages/dashboard/profile.astro'), 
                         });
                         injectRoute({ 
-                            pattern: `${config.base}dashboard/new-post`, 
+                            pattern: `${BaseURL}dashboard/new-post`, 
                             entrypoint: resolve('./pages/dashboard/new-post.astro'), 
                         });
                         injectRoute({ 
-                            pattern: `${config.base}dashboard/post-list`, 
+                            pattern: `${BaseURL}dashboard/post-list`, 
                             entrypoint: resolve('./pages/dashboard/post-list.astro'), 
                         });
                         injectRoute({ 
-                            pattern: `${config.base}dashboard/site-config`, 
+                            pattern: `${BaseURL}dashboard/site-config`, 
                             entrypoint: resolve('./pages/dashboard/site-config.astro'), 
                         });
                         injectRoute({ 
-                            pattern: `${config.base}dashboard/admin-config`, 
+                            pattern: `${BaseURL}dashboard/admin-config`, 
                             entrypoint: resolve('./pages/dashboard/admin-config.astro'), 
                         });
                         injectRoute({ 
-                            pattern: `${config.base}dashboard/login`, 
+                            pattern: `${BaseURL}dashboard/login`, 
                             entrypoint: resolve('./pages/dashboard/login/index.astro'), 
                         });
                         injectRoute({ 
-                            pattern: `${config.base}dashboard/edit/home`, 
+                            pattern: `${BaseURL}dashboard/edit/home`, 
                             entrypoint: resolve('./pages/dashboard/edit/home.astro'), 
                         });
                         injectRoute({ 
-                            pattern: `${config.base}dashboard/edit/about`, 
+                            pattern: `${BaseURL}dashboard/edit/about`, 
                             entrypoint: resolve('./pages/dashboard/edit/about.astro'), 
                         });
                         injectRoute({ 
-                            pattern: `${config.base}dashboard/edit/[...slug]`, 
+                            pattern: `${BaseURL}dashboard/edit/[...slug]`, 
                             entrypoint: resolve('./pages/dashboard/edit/[...slug].astro'), 
                         });
                         injectRoute({ 
-                            pattern: `${config.base}dashboard/login/github`, 
+                            pattern: `${BaseURL}dashboard/login/github`, 
                             entrypoint: resolve('./pages/dashboard/login/github/index.ts'), 
                         });
                         injectRoute({ 
-                            pattern: `${config.base}dashboard/login/github/callback`, 
+                            pattern: `${BaseURL}dashboard/login/github/callback`, 
                             entrypoint: resolve('./pages/dashboard/login/github/callback.ts'), 
                         });
                         injectRoute({ 
-                            pattern: `${config.base}dashboard/logout`, 
+                            pattern: `${BaseURL}dashboard/logout`, 
                             entrypoint: resolve('./pages/dashboard/logout.ts'), 
                         });
-                    } else if (mode === "plugin") {
+                    } else if (authMode === "plugin") {
                         integrationLogger(
                             logger, isVerbose, "warn", 
                             "Plugin Authentication is not yet supported. Please use the built-in Astro Studio CMS authentication."
@@ -193,9 +222,8 @@ export default defineIntegration({
                     "Updating Astro Config..."
                 );
 
-                if (options.imageService.useUnpic) {
+                if (useUnpic) {
                     integrationLogger(logger, isVerbose, "info", "Loading @unpic/astro Image Service for External Images")
-                    const { fallbackService, layout, placeholder, cdnOptions } = options.imageService.unpicConfig;
                     updateConfig({
                         image: {
                             service: imageService({
@@ -208,7 +236,6 @@ export default defineIntegration({
                     });
                 } else {
                     integrationLogger(logger, isVerbose, "info", "@unpic/astro Image Service Disabled, using Astro Built-in Image Service.")
-                    const { astroImageServiceConfig } = options.imageService;
                     if (astroImageServiceConfig === "squoosh") {
                         integrationLogger(logger, isVerbose, "info", "Using Squoosh Image Service")
                         updateConfig({
@@ -229,7 +256,7 @@ export default defineIntegration({
 
             },
             'astro:server:start': ({ logger }) => {
-                if (options.dbStartPage) {
+                if (dbStartPage) {
                     integrationLogger(
                         logger, true,
                         "warn",
