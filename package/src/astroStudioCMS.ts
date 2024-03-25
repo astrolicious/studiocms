@@ -1,5 +1,5 @@
 // Tools and Utilities
-import { addVirtualImports, createResolver, defineIntegration, watchIntegration } from "astro-integration-kit";
+import { addVirtualImports, createResolver, defineIntegration, watchIntegration, addIntegration, hasIntegration } from "astro-integration-kit";
 import "astro-integration-kit/types/db";
 import { AstroError } from "astro/errors";
 import { loadEnv } from "vite";
@@ -9,6 +9,9 @@ import { integrationLogger } from "./utils";
 import vercel from "@astrojs/vercel/serverless";
 import netlify from "@astrojs/netlify";
 import cloudflare from "@astrojs/cloudflare";
+
+// Integrations
+import robots from "astro-robots";
 
 // Image Services
 import { imageService as unpicImageService } from "@unpic/astro/service";
@@ -304,6 +307,21 @@ export default defineIntegration({
                             image: { service: passthroughImageService(), }
                         })
                     }
+                }
+
+                if ( !hasIntegration(params, { name: "astro-robots-txt" }) 
+                    || !hasIntegration( params, { name: "astro-robots" }) ) {
+                    integrationLogger(logger, verbose, "info", "No Robots.txt Integration found. Adding `astro-robots` Integration")
+                    addIntegration(params, { 
+                        integration: robots({
+                            host: site, 
+                            policy: [ { 
+                                userAgent: ["*"],
+                                allow: ["/"],
+                                disallow: ["/dashboard/"],
+                            }, ],
+                        }) 
+                    });
                 }
 
                 integrationLogger(

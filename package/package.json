@@ -43,6 +43,7 @@
     "@unpic/astro": "^0.0.44",
     "arctic": "^1.2.1",
     "astro-integration-kit": "0.8.0",
+    "astro-robots": "^2.0.1",
     "emojilib": "^3.0.11",
     "lucia": "^3.1.1",
     "marked": "^11.0.1",

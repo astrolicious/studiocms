@@ -59,6 +59,9 @@ importers:
       astro-integration-kit:
         specifier: 0.8.0
         version: 0.8.0(@astrojs/db@0.9.4)(astro@4.5.9)
+      astro-robots:
+        specifier: ^2.0.1
+        version: 2.0.1
       emojilib:
         specifier: ^3.0.11
         version: 3.0.11
@@ -2155,6 +2158,10 @@ packages:
       astro: 4.5.9(@types/node@20.11.28)(typescript@5.4.2)
       pathe: 1.1.2
       recast: 0.23.6
+    dev: false
+
+  /astro-robots@2.0.1:
+    resolution: {integrity: sha512-1yBXF7uEcX4kyKfuzGn1fwxkuhY+ID/WA0gg9VgtD0CmOlsPy48tmVSpfN10gwN8h4/qhfnAOA2h8avxmgaG4A==}
     dev: false
 
   /astro@4.5.9(@types/node@20.11.28)(typescript@5.4.2):
