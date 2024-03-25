@@ -12,7 +12,7 @@ import netlify from "@astrojs/netlify";
 import cloudflare from "@astrojs/cloudflare";
 
 // Image Services
-import { imageService } from "@unpic/astro/service";
+import { imageService as unpicImageService } from "@unpic/astro/service";
 import { passthroughImageService, 
     sharpImageService, squooshImageService } from "astro/config";
 
@@ -33,16 +33,18 @@ export default defineIntegration({
     plugins: [...corePlugins],
     setup({ options }) {
         // Destructure Options
-        const { imageService: ImageServiceConfig, verbose, 
-            dbStartPage, authConfig } = options;
+
+        // Main Options
+        const { imageService, verbose, dbStartPage, authConfig } = options;
+
+        // Image Service Options
+        const { astroImageServiceConfig, useUnpic, unpicConfig } = imageService;
+
+        // Unpic Config Options
+        const { fallbackService, layout, placeholder, cdnOptions } = unpicConfig;
         
+        // Authentication Config Options
         const { mode: authMode } = authConfig;
-
-        const { astroImageServiceConfig, useUnpic, 
-            unpicConfig } = ImageServiceConfig;
-
-        const { fallbackService, layout, placeholder, 
-            cdnOptions } = unpicConfig;
 
         // Create Resolver for Virtual Imports
         const { resolve } = createResolver(import.meta.url);
@@ -70,16 +72,16 @@ export default defineIntegration({
                     watchIntegration(resolve());
                 }
 
-                const { site: DomainName, output: RenderMode, 
-                    base: BaseURL, adapter } = config;
+                // Destructure Astro Config
+                const { site, output, adapter, base } = config;
 
                 // Check for SSR Mode
-                if (RenderMode !== "server" ) {
+                if (output !== "server" ) {
                     throw new AstroError("Astro Studio CMS is only supported in 'Output: server' SSR mode.");
                 };
 
                 // Check for Site URL
-                if (!DomainName) {
+                if (!site) {
                     throw new AstroError("Astro Studio CMS requires a 'site' configuration in your Astro Config.");
                 };
 
@@ -97,11 +99,11 @@ export default defineIntegration({
                     integrationLogger(logger, true, "warn", 
                         "Start Page Enabled.  This will be the only page available until you initialize your database. To get started, visit http://localhost:4321/start/ in your browser to initialize your database. And Setup your installation.");
                     injectRoute({
-                        pattern: `${BaseURL}start/`,
+                        pattern: `${base}start/`,
                         entrypoint: resolve('./pages/start.astro'),
                     });
                     injectRoute({
-                        pattern: `${BaseURL}done/`,
+                        pattern: `${base}done/`,
                         entrypoint: resolve('./pages/done.astro'),
                     });
 
@@ -112,23 +114,23 @@ export default defineIntegration({
                         logger, verbose, "info", "Adding Page Routes..."
                     );
                     injectRoute({ 
-                        pattern: BaseURL, 
+                        pattern: base, 
                         entrypoint: resolve('./pages/index.astro'), 
                     });
                     injectRoute({ 
-                        pattern: `${BaseURL}about/`, 
+                        pattern: `${base}about/`, 
                         entrypoint: resolve('./pages/about.astro'), 
                     });
                     injectRoute({ 
-                        pattern: `${BaseURL}blog/`, 
+                        pattern: `${base}blog/`, 
                         entrypoint: resolve('./pages/blog/index.astro'), 
                     });
                     injectRoute({ 
-                        pattern: `${BaseURL}blog/[slug]`, 
+                        pattern: `${base}blog/[slug]`, 
                         entrypoint: resolve('./pages/blog/[...slug].astro'), 
                     });
                     injectRoute({ 
-                        pattern: `${BaseURL}rss.xml`, 
+                        pattern: `${base}rss.xml`, 
                         entrypoint: resolve('./pages/rss.xml.ts'), 
                     });
 
@@ -153,55 +155,55 @@ export default defineIntegration({
                             order: "post",
                         });
                         injectRoute({ 
-                            pattern: `${BaseURL}dashboard/`, 
+                            pattern: `${base}dashboard/`, 
                             entrypoint: resolve('./pages/dashboard/index.astro'), 
                         });
                         injectRoute({ 
-                            pattern: `${BaseURL}dashboard/profile`, 
+                            pattern: `${base}dashboard/profile`, 
                             entrypoint: resolve('./pages/dashboard/profile.astro'), 
                         });
                         injectRoute({ 
-                            pattern: `${BaseURL}dashboard/new-post`, 
+                            pattern: `${base}dashboard/new-post`, 
                             entrypoint: resolve('./pages/dashboard/new-post.astro'), 
                         });
                         injectRoute({ 
-                            pattern: `${BaseURL}dashboard/post-list`, 
+                            pattern: `${base}dashboard/post-list`, 
                             entrypoint: resolve('./pages/dashboard/post-list.astro'), 
                         });
                         injectRoute({ 
-                            pattern: `${BaseURL}dashboard/site-config`, 
+                            pattern: `${base}dashboard/site-config`, 
                             entrypoint: resolve('./pages/dashboard/site-config.astro'), 
                         });
                         injectRoute({ 
-                            pattern: `${BaseURL}dashboard/admin-config`, 
+                            pattern: `${base}dashboard/admin-config`, 
                             entrypoint: resolve('./pages/dashboard/admin-config.astro'), 
                         });
                         injectRoute({ 
-                            pattern: `${BaseURL}dashboard/login`, 
+                            pattern: `${base}dashboard/login`, 
                             entrypoint: resolve('./pages/dashboard/login/index.astro'), 
                         });
                         injectRoute({ 
-                            pattern: `${BaseURL}dashboard/edit/home`, 
+                            pattern: `${base}dashboard/edit/home`, 
                             entrypoint: resolve('./pages/dashboard/edit/home.astro'), 
                         });
                         injectRoute({ 
-                            pattern: `${BaseURL}dashboard/edit/about`, 
+                            pattern: `${base}dashboard/edit/about`, 
                             entrypoint: resolve('./pages/dashboard/edit/about.astro'), 
                         });
                         injectRoute({ 
-                            pattern: `${BaseURL}dashboard/edit/[...slug]`, 
+                            pattern: `${base}dashboard/edit/[...slug]`, 
                             entrypoint: resolve('./pages/dashboard/edit/[...slug].astro'), 
                         });
                         injectRoute({ 
-                            pattern: `${BaseURL}dashboard/login/github`, 
+                            pattern: `${base}dashboard/login/github`, 
                             entrypoint: resolve('./pages/dashboard/login/github/index.ts'), 
                         });
                         injectRoute({ 
-                            pattern: `${BaseURL}dashboard/login/github/callback`, 
+                            pattern: `${base}dashboard/login/github/callback`, 
                             entrypoint: resolve('./pages/dashboard/login/github/callback.ts'), 
                         });
                         injectRoute({ 
-                            pattern: `${BaseURL}dashboard/logout`, 
+                            pattern: `${base}dashboard/logout`, 
                             entrypoint: resolve('./pages/dashboard/logout.ts'), 
                         });
                     } else if (authMode === "plugin") {
@@ -241,7 +243,7 @@ export default defineIntegration({
                     integrationLogger(logger, verbose, "info", "Loading @unpic/astro Image Service for External Images")
                     updateConfig({
                         image: {
-                            service: imageService({
+                            service: unpicImageService({
                                 placeholder: placeholder,
                                 fallbackService: fallbackService,
                                 layout: layout,
