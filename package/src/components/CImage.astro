@@ -14,7 +14,7 @@ interface Props {
 const { src, ...props } = Astro.props;
 const { imageService: { cdnPlugin } } = Config;
 
-// Cloudinary Image Service - https://cloudinary.com/documentation/image_transformations
+// Cloudinary Image Service (JavaScript SDK) - https://cloudinary.com/documentation/javascript_integration#landingpage
 // Only used when the cdnPlugin is set to 'cloudinary-js'
 const cld = new Cloudinary({ cloud: { cloudName: import.meta.env.CMS_CLOUDINARY_CLOUDNAME, } });
 const cldSrc = cld.image(src).format('auto').quality('auto').resize(fill('auto').width(props.width).height(props.height));
