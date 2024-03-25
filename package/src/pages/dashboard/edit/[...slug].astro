@@ -7,7 +7,7 @@ import { getAstroBaseURL } from '../../../utils';
 const { slug } = Astro.params;
 
 if (!slug) {
-	return new Response('No slug provided', { status: 400 });
+	return new Response('No slug provided', { status: 400 }) && Astro.redirect(`${getAstroBaseURL()}dashboard`);
 }
 
 const postArrayed = await db.select().from(Blog).where(eq(Blog.slug, slug));

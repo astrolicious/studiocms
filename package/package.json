@@ -35,6 +35,7 @@
       "import": "./src/index.ts"
     }
   },
+  "type": "module",
   "dependencies": {
     "@astrojs/rss": "^4.0.5",
     "@astrojs/sitemap": "^3.1.1",
@@ -58,7 +59,6 @@
 		"pathe": "^1.1.2",
 		"recast": "^0.23.5"
   },
-  "type": "module",
   "peerDependencies": {
     "@astrojs/db": ">=0.9.4",
     "@astrojs/vercel": "^7.3.6",
