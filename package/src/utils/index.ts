@@ -7,6 +7,7 @@ import { markedEmoji } from "marked-emoji";
 import emojiList from "emojilib/dist/emoji-en-US.json";
 
 export const getAstroBaseURL = () => {
+    // @ts-ignore - This works fine during runtime and can be safely ignored
     return import.meta.env.BASE_URL
 };
 
