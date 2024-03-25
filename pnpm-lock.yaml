@@ -25,13 +25,13 @@ importers:
     dependencies:
       '@astrojs/cloudflare':
         specifier: ^9.2.0
-        version: 9.2.0(astro@4.5.8)
+        version: 9.2.0(astro@4.5.9)
       '@astrojs/db':
-        specifier: '>=0.9.3'
-        version: 0.9.3
+        specifier: '>=0.9.4'
+        version: 0.9.4
       '@astrojs/netlify':
         specifier: ^5.2.0
-        version: 5.2.0(astro@4.5.8)
+        version: 5.2.0(astro@4.5.9)
       '@astrojs/rss':
         specifier: ^4.0.5
         version: 4.0.5
@@ -40,22 +40,22 @@ importers:
         version: 3.1.1
       '@astrojs/vercel':
         specifier: ^7.3.6
-        version: 7.3.6(astro@4.5.8)
+        version: 7.3.6(astro@4.5.9)
       '@lucia-auth/adapter-drizzle':
         specifier: ^1.0.4
         version: 1.0.4(lucia@3.1.1)
       '@unpic/astro':
         specifier: ^0.0.44
-        version: 0.0.44(astro@4.5.8)
+        version: 0.0.44(astro@4.5.9)
       arctic:
         specifier: ^1.2.1
         version: 1.2.1
       astro:
-        specifier: '>=4.5.8'
-        version: 4.5.8(@types/node@20.11.28)(typescript@5.4.2)
+        specifier: '>=4.5.9'
+        version: 4.5.9(@types/node@20.11.28)(typescript@5.4.2)
       astro-integration-kit:
         specifier: 0.7.1
-        version: 0.7.1(@astrojs/db@0.9.3)(astro@4.5.8)
+        version: 0.7.1(@astrojs/db@0.9.4)(astro@4.5.9)
       emojilib:
         specifier: ^3.0.11
         version: 3.0.11
@@ -100,17 +100,17 @@ importers:
   playground:
     dependencies:
       '@astrojs/db':
-        specifier: ^0.8.6
-        version: 0.8.8
+        specifier: ^0.9.4
+        version: 0.9.4
       '@astrojs/node':
         specifier: ^8.2.5
-        version: 8.2.5(astro@4.5.8)
+        version: 8.2.5(astro@4.5.9)
       '@astrolicious/astro-studiocms':
         specifier: workspace:*
         version: link:../package
       astro:
-        specifier: ^4.5.6
-        version: 4.5.8(@types/node@20.11.28)(typescript@5.4.2)
+        specifier: ^4.5.9
+        version: 4.5.9(@types/node@20.11.28)(typescript@5.4.2)
     devDependencies:
       '@types/node':
         specifier: ^20.11.28
@@ -129,7 +129,7 @@ packages:
       '@jridgewell/trace-mapping': 0.3.25
     dev: false
 
-  /@astrojs/cloudflare@9.2.0(astro@4.5.8):
+  /@astrojs/cloudflare@9.2.0(astro@4.5.9):
     resolution: {integrity: sha512-mh18aYIgC4ZPHVwRGNUWAEEYpYE1odlY4kd9sGDhZ0+2eZ6uKSJuo19zD0z52t6LEzEve4C5dSNGK2YXmz5MyQ==}
     peerDependencies:
       astro: ^4.2.0
@@ -137,7 +137,7 @@ packages:
       '@astrojs/underscore-redirects': 0.3.3
       '@cloudflare/workers-types': 4.20240320.1
       '@iarna/toml': 2.2.5
-      astro: 4.5.8(@types/node@20.11.28)(typescript@5.4.2)
+      astro: 4.5.9(@types/node@20.11.28)(typescript@5.4.2)
       dotenv: 16.4.5
       esbuild: 0.19.12
       find-up: 6.3.0
@@ -153,50 +153,8 @@ packages:
     resolution: {integrity: sha512-XpC8MAaWjD1ff6/IfkRq/5k1EFj6zhCNqXRd5J43SVJEBj/Bsmizkm8N0xOYscGcDFQkRgEw6/eKnI5x/1l6aA==}
     dev: false
 
-  /@astrojs/db@0.8.8:
-    resolution: {integrity: sha512-tTIXt0oSSgcT33UARUkWBAnP1I0ihrp0cI7qvaIDM9yCSlg849HH5hCTVwOOIV4uDDwmYRhdfclvFnL8oma7gw==}
-    dependencies:
-      '@libsql/client': 0.5.6
-      async-listen: 3.0.1
-      deep-diff: 1.0.2
-      drizzle-orm: 0.29.5(@libsql/client@0.5.6)
-      kleur: 4.1.5
-      nanoid: 5.0.6
-      open: 10.1.0
-      ora: 7.0.1
-      prompts: 2.4.2
-      strip-ansi: 7.1.0
-      yargs-parser: 21.1.1
-      zod: 3.22.4
-    transitivePeerDependencies:
-      - '@aws-sdk/client-rds-data'
-      - '@cloudflare/workers-types'
-      - '@neondatabase/serverless'
-      - '@opentelemetry/api'
-      - '@planetscale/database'
-      - '@types/better-sqlite3'
-      - '@types/pg'
-      - '@types/react'
-      - '@types/sql.js'
-      - '@vercel/postgres'
-      - better-sqlite3
-      - bufferutil
-      - bun-types
-      - encoding
-      - expo-sqlite
-      - knex
-      - kysely
-      - mysql2
-      - pg
-      - postgres
-      - react
-      - sql.js
-      - sqlite3
-      - utf-8-validate
-    dev: false
-
-  /@astrojs/db@0.9.3:
-    resolution: {integrity: sha512-9cMfggdDr0U+sGGH0y6qppvw+sOx2JrJT+EVSRo784o7W/zxSJVeoZ+U46nsFN8l3BgRReUgUd4CRPObl15fKw==}
+  /@astrojs/db@0.9.4:
+    resolution: {integrity: sha512-CfBmFwnsQ+N/zOSvuEvAm6IxQpVAFqMla8uMqXgwvpHojLvkcqpPPKzNLDvuhSrSFaZjlqvt2m4gs4vhtYG2VA==}
     dependencies:
       '@libsql/client': 0.5.6
       async-listen: 3.0.1
@@ -269,23 +227,23 @@ packages:
       - supports-color
     dev: false
 
-  /@astrojs/netlify@5.2.0(astro@4.5.8):
+  /@astrojs/netlify@5.2.0(astro@4.5.9):
     resolution: {integrity: sha512-NFg3AdUToV7kbY5w2yHZY5UskqfsmIo9i0zIzQ2GgUcTwjyZCekZ89DLtKCJ1jFVle+QXJGsJAS61EYyptBDBQ==}
     peerDependencies:
       astro: ^4.2.0
     dependencies:
       '@astrojs/underscore-redirects': 0.3.3
       '@netlify/functions': 2.6.0
-      astro: 4.5.8(@types/node@20.11.28)(typescript@5.4.2)
+      astro: 4.5.9(@types/node@20.11.28)(typescript@5.4.2)
       esbuild: 0.19.12
     dev: false
 
-  /@astrojs/node@8.2.5(astro@4.5.8):
+  /@astrojs/node@8.2.5(astro@4.5.9):
     resolution: {integrity: sha512-IdVD4dBNyg+ScmCATZ0FM7vNLAHq0TSdiJ3LpR4jcWIUhpN1ps5Jg+9CfzMaLmCCe/SJUZejK5EnzqUJdnGYyg==}
     peerDependencies:
       astro: ^4.2.0
     dependencies:
-      astro: 4.5.8(@types/node@20.11.28)(typescript@5.4.2)
+      astro: 4.5.9(@types/node@20.11.28)(typescript@5.4.2)
       send: 0.18.0
       server-destroy: 1.0.1
     transitivePeerDependencies:
@@ -332,7 +290,7 @@ packages:
     resolution: {integrity: sha512-qDAKhFO4M1KzP7mxoJfiehf8oyf3EB158MxAa6z10NeD2pR3o4K3LlOQI8CfJgXE+BDBQcnaLvVCg/Mz/Gkg4Q==}
     dev: false
 
-  /@astrojs/vercel@7.3.6(astro@4.5.8):
+  /@astrojs/vercel@7.3.6(astro@4.5.9):
     resolution: {integrity: sha512-dQj3cvTOsgOj/V8EVya16X1L3PCJ9aw0rWCggsFcERI72qEDXctd7l+K/iZC1dOvsM3k6VhwiacwsETowsctAA==}
     peerDependencies:
       astro: ^4.2.0
@@ -340,7 +298,7 @@ packages:
       '@astrojs/internal-helpers': 0.3.0
       '@vercel/analytics': 1.2.2
       '@vercel/nft': 0.26.4
-      astro: 4.5.8(@types/node@20.11.28)(typescript@5.4.2)
+      astro: 4.5.9(@types/node@20.11.28)(typescript@5.4.2)
       esbuild: 0.19.12
       fast-glob: 3.3.2
       set-cookie-parser: 2.6.0
@@ -1906,7 +1864,7 @@ packages:
     resolution: {integrity: sha512-zuVdFrMJiuCDQUMCzQaD6KL28MjnqqN8XnAqiEq9PNm/hCPTSGfrXCOfwj1ow4LFb/tNymJPwsNbVePc1xFqrQ==}
     dev: false
 
-  /@unpic/astro@0.0.44(astro@4.5.8):
+  /@unpic/astro@0.0.44(astro@4.5.9):
     resolution: {integrity: sha512-U+Apd0ozv6xhPfuRiTSJlVcSLiY7vo7LCNohR6k4Xhz11El4fMT336Bp8xRplzdmR8duVmdCqIr3F2RlDTPOzw==}
     peerDependencies:
       astro: ^2.0.0 || ^3.0.0 || ^4.0.0
@@ -1914,7 +1872,7 @@ packages:
       '@unpic/core': 0.0.47
       '@unpic/pixels': 1.2.2
       '@unpic/placeholder': 0.1.2
-      astro: 4.5.8(@types/node@20.11.28)(typescript@5.4.2)
+      astro: 4.5.9(@types/node@20.11.28)(typescript@5.4.2)
       blurhash: 2.0.5
     dev: false
 
@@ -2148,7 +2106,7 @@ packages:
       tslib: 2.6.2
     dev: false
 
-  /astro-integration-kit@0.7.1(@astrojs/db@0.9.3)(astro@4.5.8):
+  /astro-integration-kit@0.7.1(@astrojs/db@0.9.4)(astro@4.5.9):
     resolution: {integrity: sha512-QiIRvNdESlm7bziuEkWXUJI6uWdQgmeUEOLXkbpuMZrZK8c7DytbGSs3SStpT0b5ITQ1XcDV9r9DAixyW0F2Dg==}
     peerDependencies:
       '@astrojs/db': ^0.9.0
@@ -2178,14 +2136,14 @@ packages:
       vue:
         optional: true
     dependencies:
-      '@astrojs/db': 0.9.3
-      astro: 4.5.8(@types/node@20.11.28)(typescript@5.4.2)
+      '@astrojs/db': 0.9.4
+      astro: 4.5.9(@types/node@20.11.28)(typescript@5.4.2)
       pathe: 1.1.2
       recast: 0.23.6
     dev: false
 
-  /astro@4.5.8(@types/node@20.11.28)(typescript@5.4.2):
-    resolution: {integrity: sha512-bhKsoZQWT6LW8aYMvTGglZTPa3rYRbcdc2buiJyFPCvSWOOyZmxqpp6vtQ+x6fXxD8P1NecM/c4g5GaPi+MokQ==}
+  /astro@4.5.9(@types/node@20.11.28)(typescript@5.4.2):
+    resolution: {integrity: sha512-GheU72Goz7dYQNKaqTxB2H49cNvHfahGSbNkTvMXk+gyHf/g633qadqlO2ZQbTUacoUWmDzvS5fhMZt2/w4naQ==}
     engines: {node: '>=18.14.1', npm: '>=6.14.0'}
     hasBin: true
     dependencies:
@@ -2956,80 +2914,6 @@ packages:
   /dotenv@16.4.5:
     resolution: {integrity: sha512-ZmdL2rui+eB2YwhsWzjInR8LldtZHGDoQ1ugH85ppHKwpUHL7j7rN0Ti9NCnGiQbhaZ11FpR+7ao1dNsmduNUg==}
     engines: {node: '>=12'}
-    dev: false
-
-  /drizzle-orm@0.29.5(@libsql/client@0.5.6):
-    resolution: {integrity: sha512-jS3+uyzTz4P0Y2CICx8FmRQ1eplURPaIMWDn/yq6k4ShRFj9V7vlJk67lSf2kyYPzQ60GkkNGXcJcwrxZ6QCRw==}
-    peerDependencies:
-      '@aws-sdk/client-rds-data': '>=3'
-      '@cloudflare/workers-types': '>=3'
-      '@libsql/client': '*'
-      '@neondatabase/serverless': '>=0.1'
-      '@opentelemetry/api': ^1.4.1
-      '@planetscale/database': '>=1'
-      '@types/better-sqlite3': '*'
-      '@types/pg': '*'
-      '@types/react': '>=18'
-      '@types/sql.js': '*'
-      '@vercel/postgres': '*'
-      better-sqlite3: '>=7'
-      bun-types: '*'
-      expo-sqlite: '>=13.2.0'
-      knex: '*'
-      kysely: '*'
-      mysql2: '>=2'
-      pg: '>=8'
-      postgres: '>=3'
-      react: '>=18'
-      sql.js: '>=1'
-      sqlite3: '>=5'
-    peerDependenciesMeta:
-      '@aws-sdk/client-rds-data':
-        optional: true
-      '@cloudflare/workers-types':
-        optional: true
-      '@libsql/client':
-        optional: true
-      '@neondatabase/serverless':
-        optional: true
-      '@opentelemetry/api':
-        optional: true
-      '@planetscale/database':
-        optional: true
-      '@types/better-sqlite3':
-        optional: true
-      '@types/pg':
-        optional: true
-      '@types/react':
-        optional: true
-      '@types/sql.js':
-        optional: true
-      '@vercel/postgres':
-        optional: true
-      better-sqlite3:
-        optional: true
-      bun-types:
-        optional: true
-      expo-sqlite:
-        optional: true
-      knex:
-        optional: true
-      kysely:
-        optional: true
-      mysql2:
-        optional: true
-      pg:
-        optional: true
-      postgres:
-        optional: true
-      react:
-        optional: true
-      sql.js:
-        optional: true
-      sqlite3:
-        optional: true
-    dependencies:
-      '@libsql/client': 0.5.6
     dev: false
 
   /drizzle-orm@0.30.4(@libsql/client@0.5.6):
