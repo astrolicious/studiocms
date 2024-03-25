@@ -1,5 +1,5 @@
 import { defineConfig } from "astro/config";
-import studioCMS from "@nametbd/astro-studio-cms";
+import astroStudioCMS from "@nametbd/astro-studio-cms";
 import db from '@astrojs/db';
 import vercel from "@astrojs/vercel/serverless";
 
@@ -10,7 +10,7 @@ export default defineConfig({
 	adapter: vercel(),
 	integrations: [
 		db(),
-		studioCMS({
+		astroStudioCMS({
 			dbStartPage: false,
 			verbose: true,
 		}),
