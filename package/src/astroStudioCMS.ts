@@ -347,7 +347,7 @@ export default defineIntegration({
                     if ( !hasIntegration(params, { name: "@astrojs/sitemap" }) 
                     || !hasIntegration(params, { name: "@inox-tools/sitemap-ext"}) ) {
                         integrationLogger(logger, verbose, "info", "No Sitemap Integration found. Adding `@inox-tools/sitemap-ext` Integration")
-                        addIntegration(params, { integration: sitemap({ includeByDefault: false }) });
+                        addIntegration(params, { integration: sitemap({ includeByDefault: true }) });
                     }
                 }
 
