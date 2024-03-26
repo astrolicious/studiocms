@@ -1,11 +1,11 @@
 ---
+import sitemap from 'sitemap-ext:config';
 import { db, eq } from 'astro:db';
 import Default from "../../layouts/Default.astro"
 import type { Locals } from "./locals";
 import { getAstroBaseURL } from '../../utils';
 import { asDrizzleTable } from '@astrojs/db/utils';
 import { Admins, SiteConfig as siteConfigTable } from "../../db/tables"
-import sitemap from 'sitemap-ext:config';
 
 sitemap(false); // opt-out
 
