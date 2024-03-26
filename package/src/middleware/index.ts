@@ -1,7 +1,8 @@
+// @ts-expect-error - This is a missing type definition for the `astro:db` import since its a virtual module during Astro Runtime
+import { User, db, eq } from "astro:db";
 import { lucia } from "../lib/auth";
 import { verifyRequestOrigin } from "lucia";
 import { defineMiddleware } from "astro/middleware";
-import { User, db, eq } from "astro:db";
 
 export const onRequest = defineMiddleware(async (context, next) => {
 	if (context.request.method !== "GET") {

@@ -1,7 +1,8 @@
 ---
+// @ts-expect-error - This is a missing type definition for the `astro:db` import since its a virtual module during Astro Runtime
+import { Admins, Blog, db, eq } from 'astro:db';
 import Default from "../../../layouts/Default.astro"
 import type { Locals } from "../locals";
-import { Admins, Blog, db, eq } from 'astro:db';
 import { getAstroBaseURL } from '../../../utils';
 
 const { slug } = Astro.params;
@@ -155,11 +156,11 @@ if (Astro.request.method === 'POST') {
 </Default>
 
 <script>
-import { customMarked } from "../../../utils";
+import { markdown } from "../../../utils/marked";
     document.getElementById('content').addEventListener('input', async function () {
         const markdownContent = document.getElementById('content');
         const htmlPreview = document.getElementById('html-preview');
-        const htmlContent = await customMarked.parse(markdownContent.value);
+        const htmlContent = await markdown(markdownContent.value);
 
         htmlPreview.innerHTML = htmlContent;
 

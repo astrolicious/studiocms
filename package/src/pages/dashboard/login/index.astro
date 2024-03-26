@@ -1,8 +1,11 @@
 ---
 import Layout from "../../../layouts/Default.astro";
 import { getAstroBaseURL } from '../../../utils';
+import type { Locals } from '../locals';
 
-if (Astro.locals.isLoggedIn) {
+const locals = Astro.locals as Locals;
+
+if (locals.isLoggedIn) {
   return Astro.redirect(`${getAstroBaseURL()}dashboard`);
 }
 ---

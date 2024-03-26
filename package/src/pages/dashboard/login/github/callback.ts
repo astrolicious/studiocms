@@ -1,8 +1,9 @@
+// @ts-expect-error - This is a missing type definition for the `astro:db` import since its a virtual module during Astro Runtime
+import { db, User, eq } from "astro:db";
 import type { APIContext } from "astro";
 import { getAstroBaseURL } from '../../../../utils';
 import { github, lucia } from "../../../../lib/auth";
 import { OAuth2RequestError } from "arctic";
-import { db, User, eq } from "astro:db";
 
 export async function GET(context: APIContext): Promise<Response> {
 	const code = context.url.searchParams.get("code");

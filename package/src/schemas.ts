@@ -1,4 +1,5 @@
 import { z } from "astro/zod";
+import type { MarkedExtension } from "marked";
 import type { ImageCdn, CdnOptions } from "unpic";
 
 //
@@ -124,6 +125,47 @@ export const includedIntegrationsSchema = z.object({
 }).optional().default({});
 
 //
+// MARKED CONFIG SCHEMA
+//
+export const markedConfigSchema = z.object({
+    /**
+     * Allows Enabling and Disabling of the included Marked Extensions
+     */
+    includedExtensions: z.object({
+        /**
+         * Allows the user to enable/disable the use of the `marked-alert` extension
+         * @default true
+         * @see https://www.npmjs.com/package/marked-alert
+         */
+        markedAlert: z.boolean().optional().default(true),
+        /**
+         * Allows the user to enable/disable the use of the `marked-footnote` extension
+         * @default true
+         * @see https://www.npmjs.com/package/marked-footnote
+         */
+        markedFootnote: z.boolean().optional().default(true),
+        /**
+         * Allows the user to enable/disable the use of the `marked-smartypants` extension
+         * @default true
+         * @see https://www.npmjs.com/package/marked-smartypants
+         */
+        markedSmartypants: z.boolean().optional().default(true),
+        /**
+         * Allows the user to enable/disable the use of the `marked-emoji` extension
+         * @default true
+         * @see https://www.npmjs.com/package/marked-emoji
+         */
+        markedEmoji: z.boolean().optional().default(true),
+    }).optional().default({}),
+    /**
+     * Allows the user to load additional Marked Extensions
+     * 
+     * Note: This option is only used if the user wants to load additional Marked Extensions
+     */
+    loadmarkedExtensions: z.array(z.custom<MarkedExtension>()).optional()
+}).optional().default({});
+
+//
 // MAIN SCHEMA
 //
 export const optionsSchema = z.object({
@@ -132,6 +174,13 @@ export const optionsSchema = z.object({
      * @default true
      */
     dbStartPage: z.boolean().optional().default(true),
+    /**
+     * Allows customization of the Marked Configuration
+     * 
+     * Marked is a markdown parser and compiler. Built for speed. It is used to convert markdown strings into HTML for rendering content on StudioCMS pages.
+     * @see https://marked.js.org/ for more info about marked.
+     */
+    markedConfig: markedConfigSchema,
     /**
      * Allows customization of the Image Service Options
      */

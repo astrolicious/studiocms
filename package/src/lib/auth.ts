@@ -1,9 +1,10 @@
+// @ts-expect-error - This is a missing type definition for the `astro:db` import since its a virtual module during Astro Runtime
+import { db } from "astro:db";
+import { asDrizzleTable } from "@astrojs/db/utils";
 import { Lucia, TimeSpan } from "lucia";
 import { DrizzleSQLiteAdapter } from "@lucia-auth/adapter-drizzle";
 import { GitHub } from "arctic";
-import { db } from "astro:db";
 import { Session, User } from "../db/tables";
-import { asDrizzleTable } from "@astrojs/db/utils";
 
 export const github = new GitHub(
 	import.meta.env.GITHUB_CLIENT_ID,

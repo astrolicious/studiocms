@@ -1,8 +1,8 @@
 ---
-// @ts-ignore
+// @ts-expect-error - This is a missing type definition for the `astro:db` import since its a virtual module during Astro Runtime
 import { Pages, db, eq } from 'astro:db';
 import Layout from '../layouts/BlogPost.astro';
-import { customMarked } from '../utils';
+import { markdown } from '../utils/marked';
 import sitemap from 'sitemap-ext:config';
 
 sitemap(true); // opt-in
@@ -23,7 +23,7 @@ type Props = {
 	heroImage={post.heroImage}
 >
 	<Fragment 
-		set:html={customMarked.parse(post.content)} />
+		set:html={markdown(post.content)} />
 </Layout>
 <style>
     .btn {

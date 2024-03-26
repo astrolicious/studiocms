@@ -1,10 +1,4 @@
 import type { AstroIntegrationLogger } from "astro";
-import { Marked } from "marked";
-import markedAlert from "marked-alert";
-import markedFootnote from "marked-footnote";
-import { markedSmartypants } from "marked-smartypants";
-import { markedEmoji } from "marked-emoji";
-import emojiList from "emojilib/dist/emoji-en-US.json";
 
 export const getAstroBaseURL = () => {
     // @ts-ignore - This works fine during runtime and can be safely ignored
@@ -13,12 +7,12 @@ export const getAstroBaseURL = () => {
 
 export const integrationLogger = async (
     logger: AstroIntegrationLogger, 
-    isVerbose: boolean,
+    verbose: boolean,
     type: "info"|"warn"|"error", 
     message: string,
     ) => {
         // if checkVerbose is true and isVerbose is true, log the message
-        if (isVerbose) {
+        if (verbose) {
             if (type === "info") {
                 logger.info(message);
             } else if (type === "warn") {
@@ -29,20 +23,3 @@ export const integrationLogger = async (
         }
     };
     
-export const emojiMap = Object.entries(emojiList).reduce(
-    (ret, [emoji, names]) => {
-        for (const name of names) {
-            ret[name] = ret[name] || emoji;
-        }
-        return ret;
-    },
-    {} as Record<string, string>
-);
-
-export const customMarked = new Marked( 
-    markedAlert(), 
-    markedSmartypants(),
-    markedFootnote(),
-    markedEmoji({ emojis: emojiMap, unicode: true }),
-    { async: true, gfm: true, }, 
-);
