@@ -8,14 +8,13 @@ import emojiList from "./emoji-en-US.json"
 
 const { 
     markedConfig: { 
+        loadmarkedExtensions,
         includedExtensions: {
             markedAlert: mAlertExt, 
             markedEmoji: mEmojiExt, 
             markedFootnote: mFootnoteExt, 
             markedSmartypants: mSmartypantsExt
-        }, 
-        loadmarkedExtensions 
-    } 
+        }, } 
 } = Config;
 
 
