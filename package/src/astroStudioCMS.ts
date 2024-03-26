@@ -333,7 +333,6 @@ export default defineIntegration({
                         || !hasIntegration( params, { name: "astro-robots" }) ) {
                         integrationLogger(logger, verbose, "info", "No Robots.txt Integration found. Adding `astro-robots` Integration")
                         addIntegration(params, { integration: robots({
-                            host: site, 
                             policy: [ { 
                                 userAgent: ["*"],
                                 allow: ["/"],
