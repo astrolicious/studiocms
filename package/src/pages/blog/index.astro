@@ -1,4 +1,5 @@
 ---
+import sitemap from 'sitemap-ext:config';
 // @ts-expect-error - This is a missing type definition for the `astro:db` import since its a virtual module during Astro Runtime
 import { SiteConfig, Blog, db, asc } from 'astro:db';
 import BaseHead from '../../components/BaseHead.astro';
@@ -7,7 +8,6 @@ import FormattedDate from '../../components/FormattedDate.astro';
 import Header from '../../components/Header.astro';
 import CImage from '../../components/CImage.astro';
 import { getAstroBaseURL } from '../../utils';
-import sitemap from 'sitemap-ext:config';
 
 sitemap(true);
 

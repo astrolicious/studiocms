@@ -1,10 +1,10 @@
 ---
+import sitemap from 'sitemap-ext:config';
 // @ts-expect-error - This is a missing type definition for the `astro:db` import since its a virtual module during Astro Runtime
 import { Blog, db, eq, asc } from 'astro:db';
 import { markdown } from '../../utils/marked';
 import BlogPost from '../../layouts/BlogPost.astro';
 import { getAstroBaseURL } from '../../utils';
-import sitemap from 'sitemap-ext:config';
 
 sitemap(false); // opt-out
 
