@@ -3,8 +3,8 @@ import markedAlert from "marked-alert";
 import markedFootnote from "marked-footnote";
 import { markedSmartypants } from "marked-smartypants";
 import { markedEmoji } from "marked-emoji";
-import emojiList from "emojilib/dist/emoji-en-US.json";
 import Config from 'virtual:astro-studio-cms:config';
+import emojiList from "./emoji-en-US.json"
 
 const { 
     markedConfig: { 

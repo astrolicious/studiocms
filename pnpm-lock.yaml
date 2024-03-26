@@ -65,9 +65,6 @@ importers:
       astro-robots:
         specifier: ^2.0.1
         version: 2.0.1
-      emojilib:
-        specifier: ^3.0.11
-        version: 3.0.11
       lucia:
         specifier: ^3.1.1
         version: 3.1.1
@@ -3095,10 +3092,6 @@ packages:
 
   /emoji-regex@9.2.2:
     resolution: {integrity: sha512-L18DaJsXSUk2+42pv8mLs5jJT2hqFkFE4j21wOmgbUqsZ2hL72NsUU785g9RXgo3s0ZNgVl42TiHp3ZtOv/Vyg==}
-    dev: false
-
-  /emojilib@3.0.11:
-    resolution: {integrity: sha512-OuML9z640prB+0Rms1RgzJrBAqNC9mFdqT2HeFcXSGSGNEiZh9adsaPPxWbqRoMyJPzu+zNKPyGKv4/sPmJDyg==}
     dev: false
 
   /encodeurl@1.0.2:

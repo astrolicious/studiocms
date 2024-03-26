@@ -115,7 +115,6 @@ export default defineIntegration({
                     name,
                     imports: {
                         'virtual:astro-studio-cms:config': `export default ${ JSON.stringify(options) }`,
-                        'virtual:astro-studio-cms:layout': `export { default as VirtualLayout } from '${resolve('./layouts/Virtual.astro')}'`
                     },
                 })
 

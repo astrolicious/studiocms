@@ -2,7 +2,16 @@
   "extends": "astro/tsconfigs/strictest",
   "compilerOptions": {
     "composite": true,
+    "resolveJsonModule": true,
     "jsx": "preserve",
     "outDir": "../.moon/cache/types/package"
-  }
+  },
+  "include": [
+    "src",
+    "src/**/*.ts",
+    "src/**/*.astro",
+    "src/**/*.d.ts",
+    "src/**/*.json",
+    "virt-dev.d.ts"
+  ],
 }
