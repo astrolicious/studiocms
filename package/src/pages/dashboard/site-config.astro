@@ -1,19 +1,22 @@
 ---
-// @ts-expect-error - This is a missing type definition for the `astro:db` import since its a virtual module during Astro Runtime
-import { Admins, SiteConfig, db, eq } from 'astro:db';
+import { db, eq } from 'astro:db';
 import Default from "../../layouts/Default.astro"
 import type { Locals } from "./locals";
 import { getAstroBaseURL } from '../../utils';
+import { asDrizzleTable } from '@astrojs/db/utils';
+import { Admins, SiteConfig as siteConfigTable } from "../../db/tables"
 
-const ConfigArray = await db.select().from(SiteConfig);
+const SiteConfigSafe = asDrizzleTable("SiteConfig", siteConfigTable)
+const AdminsSafe = asDrizzleTable("Admins", Admins)
+const ConfigArray = await db.select().from(SiteConfigSafe);
 const contextConfig = ConfigArray[0];
 const locals = Astro.locals as Locals;
 const isLoggedIn = locals.isLoggedIn;
 
 const isAdmin = async () => {
     const isAdminCheck = await db.select()
-            .from(Admins)
-            .where(eq(Admins.GitHubUsername, locals.user.username))
+            .from(AdminsSafe)
+            .where(eq(AdminsSafe.GitHubUsername, locals.user.username))
             .catch(() => {
         return false;
     })
@@ -42,11 +45,11 @@ if (Astro.request.method === 'POST') {
     const title = formData.get('title');
     const description = formData.get('description');
 
-    await db.update(SiteConfig)
+    await db.update(SiteConfigSafe)
         .set({
             title: title as string,
             description: description as string,
-        }).where(eq(SiteConfig._id, "1")).then(() => {
+        }).where(eq(SiteConfigSafe.id, "1")).then(() => {
             return new Response('Success', { status: 200 });
         }).catch(() => {
             return new Response('Error', { status: 500 });
