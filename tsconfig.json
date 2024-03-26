@@ -3,11 +3,6 @@
   "include": [
     "**/*"
   ],
-  "references": [
-    {
-      "path": "package"
-    }
-  ],
   "compilerOptions": {
     "composite": true,
     "declaration": true,
