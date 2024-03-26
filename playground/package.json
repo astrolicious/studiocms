@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "astro dev --host",
     "start": "astro dev",
-    "build": "astro build",
+    "build": "astro build --remote",
     "astro": "astro"
   },
   "devDependencies": {
