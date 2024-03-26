@@ -5,7 +5,7 @@ import node from "@astrojs/node";
 
 // https://astro.build/config
 export default defineConfig({
-	site: 'https://example.com',
+	site: 'https://ikc4k48.astro-studiocms.xyz/',
 	output: "server",
 	adapter: node({ mode: "standalone" }),
 	integrations: [
