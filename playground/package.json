@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "dev": "astro dev --host",
-    "start": "astro dev",
+    "start": "astro dev --remote",
     "build": "astro build --remote",
     "astro": "astro"
   },
