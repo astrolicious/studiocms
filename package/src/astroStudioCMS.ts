@@ -234,15 +234,15 @@ export default defineIntegration({
                     } else if (authMode === "plugin") {
                         integrationLogger(
                             logger, verbose, "warn", 
-                            "Plugin Authentication is not yet supported. Please use the built-in Astro Studio CMS authentication."
+                            "Authentication Plugins are not supported. Please use the built-in Astro Studio CMS authentication. or Disable Authentication in your Astro Config, to manage your content via the Astro Studio Dashboard at http://studio.astro.build"
                         );
                     }
 
                 };
 
-                // Update Astro Config
+                // Update Image Service
                 integrationLogger(
-                    logger, verbose, "info", "Updating Astro Config..."
+                    logger, verbose, "info", "Determining Image Service Configuration"
                 );
 
                 if ( adapter === vercel({ imageService: true }) ) {
@@ -328,6 +328,7 @@ export default defineIntegration({
                     }
                 }
 
+                // Robots.txt Integration
                 if ( astroRobots ) {
                     if ( !hasIntegration(params, { name: "astro-robots-txt" }) 
                         || !hasIntegration( params, { name: "astro-robots" }) ) {
@@ -343,6 +344,7 @@ export default defineIntegration({
                     }
                 }
 
+                // Sitemap Integration
                 if ( inoxSitemap ) {
                     if ( !hasIntegration(params, { name: "@astrojs/sitemap" }) 
                     || !hasIntegration(params, { name: "@inox-tools/sitemap-ext"}) ) {
