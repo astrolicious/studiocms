@@ -4,6 +4,9 @@ import { Admins, Pages, db, eq } from 'astro:db';
 import Default from "../../../layouts/Default.astro"
 import type { Locals } from "../locals";
 import { getAstroBaseURL } from '../../../utils';
+import sitemap from 'sitemap-ext:config';
+
+sitemap(false); // opt-out
 
 const postArrayed = await db.select().from(Pages).where(eq(Pages.slug, "index"));
 const post = postArrayed[0];
