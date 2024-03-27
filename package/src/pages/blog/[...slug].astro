@@ -6,17 +6,18 @@ import { markdown } from '../../utils/marked';
 import BlogPost from '../../layouts/BlogPost.astro';
 import { getAstroBaseURL } from '../../utils';
 
-sitemap(false);
-// sitemap(async ({ addToSitemap }) => {
-// 	const posts = await db.select().from(Blog).orderBy(asc(Blog.publishedAt));
+// sitemap(false);
 
-// 	addToSitemap(posts.map((post: typeof Blog.$inferSelect) => ({
-// 		params: {
-// 			postId: post.id as string,
-// 			slug: post.slug as string,
-// 		},
-// 	})));
-// })
+sitemap(async ({ addToSitemap }) => {
+	const posts = await db.select().from(Blog).orderBy(asc(Blog.publishedAt));
+
+	addToSitemap(posts.map((post: typeof Blog.$inferSelect) => ({
+		sitemap: true,
+		params: {
+			slug: post.slug as string,
+		},
+	})));
+})
 
 const { slug } = Astro.params;
 
