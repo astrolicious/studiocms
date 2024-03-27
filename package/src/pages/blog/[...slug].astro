@@ -9,15 +9,11 @@ import { getAstroBaseURL } from '../../utils';
 // sitemap(false);
 
 sitemap(async ({ addToSitemap }) => {
-	const posts = await db.select().from(Blog);
+    const posts = await db.select().from(Blog);
 
-	addToSitemap(posts.map((post) => ({
-		sitemap: true,
-		params: {
-			postId: post.slug || post.id,
-		},
-		props: { post },
-	})));
+    addToSitemap(posts.map((post) => ({
+        slug: post.slug,
+    })));
 })
 
 const { slug } = Astro.params;
