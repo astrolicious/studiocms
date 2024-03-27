@@ -3,7 +3,7 @@ import markedAlert from "marked-alert";
 import markedFootnote from "marked-footnote";
 import { markedSmartypants } from "marked-smartypants";
 import markedShiki from 'marked-shiki'
-import { bundledLanguages, getHighlighter } from 'shiki'
+import { bundledLanguages, bundledThemes, getHighlighter, type BundledTheme, type BundledLanguage } from 'shiki'
 import {
   transformerNotationDiff,
   transformerNotationHighlight,
@@ -20,6 +20,9 @@ import emojiList from "./emoji-en-US.json"
 const { 
     markedConfig: { 
         loadmarkedExtensions,
+        shikiConfig: { 
+            theme: shikiTheme, 
+        },
         includedExtensions: {
             markedAlert: mAlertExt, 
             markedEmoji: mEmojiExt, 
@@ -60,15 +63,19 @@ export async function markdown(input: string): Promise<string> {
         markedExtensions.push(...loadmarkedExtensions);
     }
 
-    const bunlangs = [];
+    const langs: string[] = [];
+    const themes: string[] = [];
 
     for (const lang of Object.keys(bundledLanguages)) {
-        bunlangs.push(lang);
+        langs.push(lang);
+    }
+    for (const theme of Object.keys(bundledThemes)) {
+        themes.push(theme);
     }
 
     const highlighter = await getHighlighter({ 
-        langs: bunlangs,
-        themes: ["houston"]
+        langs,
+        themes,
     });
 
     markedExtensions.push(markedShiki({
@@ -77,7 +84,7 @@ export async function markdown(input: string): Promise<string> {
                 .codeToHtml(
                     code, { 
                         lang, 
-                        theme: "houston",
+                        theme: shikiTheme,
                         meta: {__raw: props.join(' ')},
                         transformers: [
                             transformerNotationDiff(),

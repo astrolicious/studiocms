@@ -1,5 +1,6 @@
 import { z } from "astro/zod";
 import type { MarkedExtension } from "marked";
+import type { BundledTheme } from "shiki";
 
 //
 // MARKED EXTENSIONS SCHEMA
@@ -39,6 +40,9 @@ export const markedConfigSchema = z.object({
      * Allows Enabling and Disabling of the included Marked Extensions
      */
     includedExtensions: markedExtensionsSchema,
+    shikiConfig: z.object({
+        theme: z.custom<BundledTheme>().optional().default('houston'),
+    }).optional().default({}),
     /**
      * Allows the user to load additional Marked Extensions
      * 
