@@ -238,6 +238,10 @@ export default defineIntegration({
                             entrypoint: resolve('./pages/dashboard/edit/[...slug].astro'), 
                         });
                         injectRoute({ 
+                            pattern: `${base}dashboard/delete/[...slug]`, 
+                            entrypoint: resolve('./pages/dashboard/delete/[...slug].astro'), 
+                        });
+                        injectRoute({ 
                             pattern: `${base}dashboard/login/github`, 
                             entrypoint: resolve('./pages/dashboard/login/github/index.ts'), 
                         });
