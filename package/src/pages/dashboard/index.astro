@@ -12,6 +12,10 @@ sitemap(false); // opt-out
 const locals = Astro.locals as Locals;
 const isLoggedIn = locals.isLoggedIn;
 
+if (!isLoggedIn) {
+    return Astro.redirect(`${getAstroBaseURL()}dashboard/login`);
+}
+
 const getUserName = () => {
     if (locals.isLoggedIn) {
 	    if (locals.dbUser.name) {
@@ -23,10 +27,6 @@ const getUserName = () => {
 };
 
 const currentUserRank = await rankCheck(locals);
-
-if (!isLoggedIn) {
-    return Astro.redirect(`${getAstroBaseURL()}dashboard/login`);
-}
 
 if ( currentUserRank !== "admin" && currentUserRank !== "editor" ) {
     console.log('User is not an admin or editor. Redirecting to profile page.');
