@@ -20,14 +20,13 @@
     "astrocms",
     "cms"
   ],
-  "homepage": "",
+  "homepage": "https://astro-studiocms.xyz",
   "publishConfig": {
     "access": "public"
   },
   "sideEffects": false,
   "files": [
-    "src",
-    "custom-aik"
+    "src"
   ],
   "exports": {
     ".": {
