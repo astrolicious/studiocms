@@ -11,8 +11,8 @@ sitemap(async ({ addToSitemap }) => {
 	const posts = await db.select().from(Blog).orderBy(asc(Blog.publishedAt));
 
 	addToSitemap(posts.map((post: typeof Blog.$inferSelect) => ({
-		sitemap: true,
 		params: {
+			postId: post.id as string,
 			slug: post.slug as string,
 		},
 	})));
