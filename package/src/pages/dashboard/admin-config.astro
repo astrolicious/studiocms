@@ -5,6 +5,7 @@ import { Admins, db, eq } from 'astro:db';
 import Default from "../../layouts/Default.astro"
 import type { Locals } from "./locals";
 import { getAstroBaseURL } from '../../utils';
+import { rankCheck } from '../../utils/rankcheck';
 
 sitemap(false); // opt-out
 
@@ -32,24 +33,13 @@ if (Astro.request.method === 'POST') {
     return Astro.redirect(`${getAstroBaseURL()}dashboard/`)
 }
 
-const isAdmin = async () => {
-    const isAdminCheck = await db.select()
-            .from(Admins)
-            .where(eq(Admins.GitHubUsername, locals.user.username))
-            .catch(() => {
-        return false;
-    })
-    if (isAdminCheck[0] && isAdminCheck[0].GitHubUsername === locals.user.username) {
-        return true;
-    }
-    return false;
-};
+const currentUserRank = await rankCheck(locals);
 
 if (!isLoggedIn) {
     return Astro.redirect(`${getAstroBaseURL()}dashboard/login`);
 }
 
-if (await isAdmin() === false) {
+if (currentUserRank !== "admin") {
     console.log('User is not an admin');
     return Astro.redirect(`${getAstroBaseURL()}dashboard/profile`);
 }

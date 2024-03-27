@@ -6,6 +6,7 @@ import Default from "../../layouts/Default.astro"
 import { lucia } from "../../lib/auth";
 import type { Locals } from "./locals";
 import { getAstroBaseURL } from '../../utils';
+import { rankCheck } from '../../utils/rankcheck';
 
 sitemap(false); // opt-out
 
@@ -23,24 +24,12 @@ const getUserName = () => {
 	return null;
 };
 
-const isAdmin = async () => {
-    const isAdminCheck = await db.select()
-            .from(Admins)
-            .where(eq(Admins.GitHubUsername, locals.user.username))
-            .catch(() => {
-        return false;
-    })
-    if (isAdminCheck[0] && isAdminCheck[0].GitHubUsername === locals.user.username) {
-        return true;
-    }
-    return false;
-};
+const currentUserRank = await rankCheck(locals);
 
 if (!isLoggedIn) {
     return Astro.redirect(`${getAstroBaseURL()}dashboard/login`);
 }
 
-const role = await isAdmin() ? 'Admin' : 'User';
 
 ---
 
@@ -56,7 +45,7 @@ const role = await isAdmin() ? 'Admin' : 'User';
         <div>
 
                 <p><bold>Display Name:</bold> {locals.dbUser.name}</p>
-                <p><bold>Role:</bold> {role}</p>
+                <p><bold>Role:</bold> {currentUserRank}</p>
                 <p><bold>GitHub:</bold> <a href={locals.dbUser.githubURL}>{locals.user.username}</a> 
                 { sessions[0] && (
                     <p><bold>Session Expires:</bold> {new Date(sessions[0].expiresAt).toLocaleString()} </p>

@@ -5,6 +5,7 @@ import { db, Admins, eq } from "astro:db";
 import Default from "../../layouts/Default.astro"
 import type { Locals } from "./locals";
 import { getAstroBaseURL } from '../../utils';
+import { rankCheck } from '../../utils/rankcheck';
 
 sitemap(false); // opt-out
 
@@ -21,25 +22,14 @@ const getUserName = () => {
 	return 'Astronaut';
 };
 
-const isAdmin = async () => {
-    const isAdminCheck = await db.select()
-            .from(Admins)
-            .where(eq(Admins.GitHubUsername, locals.user.username))
-            .catch(() => {
-        return false;
-    })
-    if (isAdminCheck[0] && isAdminCheck[0].GitHubUsername === locals.user.username) {
-        return true;
-    }
-    return false;
-};
+const currentUserRank = await rankCheck(locals);
 
 if (!isLoggedIn) {
     return Astro.redirect(`${getAstroBaseURL()}dashboard/login`);
 }
 
-if (await isAdmin() === false) {
-    console.log('User is not an admin');
+if ( currentUserRank !== "admin" && currentUserRank !== "editor" ) {
+    console.log('User is not an admin or editor. Redirecting to profile page.');
     return Astro.redirect(`${getAstroBaseURL()}dashboard/profile`);
 }
 ---
@@ -57,6 +47,13 @@ if (await isAdmin() === false) {
                 Currently logged in user: <bold>{getUserName}</bold> | <a href={`${getAstroBaseURL()}dashboard/profile`}>More info...</a>
                 </p>
 
+                { currentUserRank === "editor" && (
+                    <a href={`${getAstroBaseURL()}dashboard/new-post`}><button class="btn">Create a new post</button></a>
+
+                    <a href={`${getAstroBaseURL()}dashboard/post-list`}><button class="btn-edit">Edit Posts</button></a>
+                )}
+
+                { currentUserRank === "admin" && (
                     <a href={`${getAstroBaseURL()}dashboard/new-post`}><button class="btn">Create a new post</button></a>
 
                     <a href={`${getAstroBaseURL()}dashboard/post-list`}><button class="btn-edit">Edit Posts</button></a>
@@ -68,6 +65,8 @@ if (await isAdmin() === false) {
                     <a href={`${getAstroBaseURL()}dashboard/site-config`}><button class="btn-edit">Edit Site Configuration</button></a>
             
                     <a href={`${getAstroBaseURL()}dashboard/admin-config`}><button class="btn-edit">Edit Admins</button></a>
+                )}
+
             </div>
         </div>
 </Default>

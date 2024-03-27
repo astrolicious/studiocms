@@ -7,34 +7,23 @@ import type { Locals } from "./locals";
 import { getAstroBaseURL } from '../../utils';
 import { asDrizzleTable } from '@astrojs/db/utils';
 import { Admins, SiteConfig as siteConfigTable } from "../../db/tables"
+import { rankCheck } from '../../utils/rankcheck';
 
 sitemap(false); // opt-out
 
 const SiteConfigSafe = asDrizzleTable("SiteConfig", siteConfigTable)
-const AdminsSafe = asDrizzleTable("Admins", Admins)
 const ConfigArray = await db.select().from(SiteConfigSafe);
 const contextConfig = ConfigArray[0];
 const locals = Astro.locals as Locals;
 const isLoggedIn = locals.isLoggedIn;
 
-const isAdmin = async () => {
-    const isAdminCheck = await db.select()
-            .from(AdminsSafe)
-            .where(eq(AdminsSafe.GitHubUsername, locals.user.username))
-            .catch(() => {
-        return false;
-    })
-    if (isAdminCheck[0] && isAdminCheck[0].GitHubUsername === locals.user.username) {
-        return true;
-    }
-    return false;
-};
+const currentUserRank = await rankCheck(locals);
 
 if (!isLoggedIn) {
     return Astro.redirect(`${getAstroBaseURL()}dashboard/login`);
 }
 
-if (await isAdmin() === false) {
+if (currentUserRank !== 'admin') {
     console.log('User is not an admin');
     return Astro.redirect(`${getAstroBaseURL()}dashboard/profile`);
 }

@@ -66,3 +66,10 @@ export const Admins = defineTable({
 		GitHubUsername: column.text(),
 	},
 });
+
+export const Permissions = defineTable({
+	columns: {
+		username: column.text(),
+		rank: column.text(),
+	},
+});
