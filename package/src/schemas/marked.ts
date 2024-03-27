@@ -33,6 +33,18 @@ export const markedExtensionsSchema = z.object({
 }).optional().default({})
 
 //
+// MARKED SHIKI CONFIG SCHEMA
+//
+export const markedShikiConfigSchema = z.object({
+    /**
+     * Allows the user to configure the Shiki Highlighter Theme
+     * @default 'houston'
+     * @see https://shiki.style/
+     */
+    theme: z.custom<BundledTheme>().optional().default('houston'),
+}).optional().default({})
+
+//
 // MARKED CONFIG SCHEMA
 //
 export const markedConfigSchema = z.object({
@@ -40,9 +52,10 @@ export const markedConfigSchema = z.object({
      * Allows Enabling and Disabling of the included Marked Extensions
      */
     includedExtensions: markedExtensionsSchema,
-    shikiConfig: z.object({
-        theme: z.custom<BundledTheme>().optional().default('houston'),
-    }).optional().default({}),
+    /**
+     * Allows the user to configure the Shiki Highlighter
+     */
+    shikiConfig: markedShikiConfigSchema,
     /**
      * Allows the user to load additional Marked Extensions
      * 
