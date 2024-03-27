@@ -5,6 +5,7 @@ import { Admins, Pages, db, eq } from 'astro:db';
 import Default from "../../../layouts/Default.astro"
 import type { Locals } from "../locals";
 import { getAstroBaseURL } from '../../../utils';
+import { rankCheck } from '../../../utils/rankcheck';
 
 sitemap(false); // opt-out
 
