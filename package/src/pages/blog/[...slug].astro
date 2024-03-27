@@ -9,13 +9,14 @@ import { getAstroBaseURL } from '../../utils';
 // sitemap(false);
 
 sitemap(async ({ addToSitemap }) => {
-	const posts = await db.select().from(Blog).orderBy(asc(Blog.publishedAt));
+	const posts = await db.select().from(Blog);
 
-	addToSitemap(posts.map((post: typeof Blog.$inferSelect) => ({
+	addToSitemap(posts.map((post) => ({
 		sitemap: true,
 		params: {
-			slug: post.slug as string,
+			postId: post.slug || post.id,
 		},
+		props: { post },
 	})));
 })
 
