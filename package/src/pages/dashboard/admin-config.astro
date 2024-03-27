@@ -1,7 +1,7 @@
 ---
 import sitemap from 'sitemap-ext:config';
 // @ts-expect-error - This is a missing type definition for the `astro:db` import since its a virtual module during Astro Runtime
-import { Admins, db, eq } from 'astro:db';
+import { Permissions, db, eq } from 'astro:db';
 import Default from "../../layouts/Default.astro"
 import type { Locals } from "./locals";
 import { getAstroBaseURL } from '../../utils';
@@ -20,10 +20,12 @@ if (Astro.request.method === 'POST') {
     }).formData();
 
     const admin = formData.get('admins');
+    const rank = formData.get('rank');
 
-    await db.insert(Admins)
+    await db.insert(Permissions)
         .values({
-            GitHubUsername: admin as string,
+            username: admin as string,
+            rank: rank as string,
         }).then(() => {
             return new Response('Success', { status: 200 });
         }).catch(() => {
@@ -44,7 +46,7 @@ if (currentUserRank !== "admin") {
     return Astro.redirect(`${getAstroBaseURL()}dashboard/profile`);
 }
 
-const adminList = await db.select().from(Admins);
+const adminList = await db.select().from(Permissions);
 ---
 
 <Default>
@@ -67,9 +69,9 @@ const adminList = await db.select().from(Admins);
                 <h4>Current Admins:</h4>
                 <ul>
                     {
-                        adminList.map((admin: Admins.$inferSelect) => {
+                        adminList.map((admin: Permissions.$inferSelect) => {
                             return (
-                                <li>{admin.GitHubUsername}</li>
+                                <li>{admin.username} - {admin.rank}</li>
                             )
                         })
                     }
@@ -80,12 +82,19 @@ const adminList = await db.select().from(Admins);
 
                 <form method="post" enctype="multipart/form-data" >
                 
-                    <label for="admins">New Admin</label><br>
+                    <label for="admins">Add New Admin or Editor</label><br>
                     <input 
                         type="text" 
                         id="admins" 
                         name="admins" 
                         placeholder="GitHubUsername"
+                        required><br>
+                    <input 
+                        type="text" 
+                        id="rank" 
+                        name="rank" 
+                        placeholder="admin / editor"
+                        value="editor"
                         required><br>
                     <center>
                         <button class="btn" type="submit">Add!</button>
