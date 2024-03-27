@@ -95,7 +95,7 @@ if (Astro.request.method === 'POST') {
                         placeholder="Your Post Slug (THIS WILL DELETE THE POST)"
                         required><br><br>
 
-                    <button class="grn-btn" type="submit">DELETE!</button>
+                    <button class="red-btn" type="submit">DELETE!</button>
 
                 </form>
 
@@ -166,6 +166,15 @@ import { markdown } from "../../../utils/marked";
     .grn-btn {
         padding: 1rem;
         background-color: rgb(0, 241, 0);
+        font-weight: bold;
+        color: #000000;
+        border: none;
+        border-radius: 99rem;
+        cursor: pointer;
+    }
+    .red-btn {
+        padding: 1rem;
+        background-color: rgb(160, 0, 0);
         font-weight: bold;
         color: #000000;
         border: none;
