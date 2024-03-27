@@ -55,6 +55,7 @@ const posts = await db.select().from(Blog).orderBy(asc(Blog.publishedAt));
                         <p>
                             <bold>{post.title}</bold> - <FormattedDate date={post.publishedAt} />
                             <a href={`${getAstroBaseURL()}dashboard/edit/${post.slug}`} class="btn-edit">Edit</a>
+                            { currentUserRank === 'admin' && <a href={`${getAstroBaseURL()}dashboard/delete/${post.slug}`} class="btn-delete">Delete</a> }
                         </p>
                     </div>
                 )) }
@@ -103,6 +104,15 @@ const posts = await db.select().from(Blog).orderBy(asc(Blog.publishedAt));
     .btn-edit {
         padding: 1rem;
         background-color: rgb(169, 0, 211);
+        font-weight: bold;
+        color: #fff;
+        border: none;
+        border-radius: 99rem;
+        cursor: pointer;
+    }
+    .btn-edit {
+        padding: 1rem;
+        background-color: rgb(142, 0, 0);
         font-weight: bold;
         color: #fff;
         border: none;
