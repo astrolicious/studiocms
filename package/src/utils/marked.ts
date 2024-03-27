@@ -2,6 +2,17 @@ import { marked, type MarkedExtension } from "marked";
 import markedAlert from "marked-alert";
 import markedFootnote from "marked-footnote";
 import { markedSmartypants } from "marked-smartypants";
+import markedShiki from 'marked-shiki'
+import { bundledLanguages, getHighlighter } from 'shiki'
+import {
+  transformerNotationDiff,
+  transformerNotationHighlight,
+  transformerNotationWordHighlight,
+  transformerNotationFocus,
+  transformerNotationErrorLevel,
+  transformerMetaHighlight,
+  transformerMetaWordHighlight
+} from '@shikijs/transformers'
 import { markedEmoji } from "marked-emoji";
 import Config from 'virtual:astro-studio-cms:config';
 import emojiList from "./emoji-en-US.json"
@@ -49,7 +60,38 @@ export async function markdown(input: string): Promise<string> {
         markedExtensions.push(...loadmarkedExtensions);
     }
 
-    marked.use( ...markedExtensions, { async: true, gfm: true } );
+    const bunlangs = [];
+
+    for (const lang of Object.keys(bundledLanguages)) {
+        bunlangs.push(lang);
+    }
+
+    const highlighter = await getHighlighter({ 
+        langs: bunlangs,
+        themes: ["houston"]
+    });
+
+    markedExtensions.push(markedShiki({
+        highlight(code, lang, props) {
+            return highlighter
+                .codeToHtml(
+                    code, { 
+                        lang, 
+                        theme: "houston",
+                        meta: {__raw: props.join(' ')},
+                        transformers: [
+                            transformerNotationDiff(),
+                            transformerNotationHighlight(),
+                            transformerNotationWordHighlight(),
+                            transformerNotationFocus(),
+                            transformerNotationErrorLevel(),
+                            transformerMetaHighlight(),
+                            transformerMetaWordHighlight()
+                        ]
+                    }) },}),)
+
+    marked.use( 
+        ...markedExtensions, { async: true, gfm: true } );
 
     const content = await marked.parse(input);
 

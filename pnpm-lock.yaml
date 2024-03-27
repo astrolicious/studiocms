@@ -53,6 +53,9 @@ importers:
       '@lucia-auth/adapter-drizzle':
         specifier: ^1.0.4
         version: 1.0.4(lucia@3.1.1)
+      '@shikijs/transformers':
+        specifier: ^1.2.1
+        version: 1.2.1
       '@unpic/astro':
         specifier: ^0.0.44
         version: 0.0.44(astro@4.5.9)
@@ -83,6 +86,9 @@ importers:
       marked-footnote:
         specifier: ^1.2.2
         version: 1.2.2(marked@11.2.0)
+      marked-shiki:
+        specifier: ^1.0.1
+        version: 1.0.1(marked@11.2.0)(shiki@1.2.1)
       marked-smartypants:
         specifier: ^1.1.6
         version: 1.1.6(marked@11.2.0)
@@ -92,6 +98,9 @@ importers:
       recast:
         specifier: ^0.23.5
         version: 0.23.6
+      shiki:
+        specifier: ^1.2.1
+        version: 1.2.1
       typescript:
         specifier: ^5.4.2
         version: 5.4.2
@@ -226,7 +235,7 @@ packages:
       remark-parse: 11.0.0
       remark-rehype: 11.1.0
       remark-smartypants: 2.1.0
-      shiki: 1.2.0
+      shiki: 1.2.1
       unified: 11.0.4
       unist-util-remove-position: 5.0.0
       unist-util-visit: 5.0.0
@@ -1804,8 +1813,14 @@ packages:
     dev: false
     optional: true
 
-  /@shikijs/core@1.2.0:
-    resolution: {integrity: sha512-OlFvx+nyr5C8zpcMBnSGir0YPD6K11uYhouqhNmm1qLiis4GA7SsGtu07r9gKS9omks8RtQqHrJL4S+lqWK01A==}
+  /@shikijs/core@1.2.1:
+    resolution: {integrity: sha512-KaIS0H4EQ3KI2d++TjYqRNgwp8E3M/68e9veR4QtInzA7kKFgcjeiJqb80fuXW+blDy5fmd11PN9g9soz/3ANQ==}
+    dev: false
+
+  /@shikijs/transformers@1.2.1:
+    resolution: {integrity: sha512-H7cVtrdv6BW2kx83t2IQgP5ri1IA50mE3QnzgJ0AvOKCGtCEieXu0JIP3245cgjNLrL+LBwb8DtTXdky1iQL9Q==}
+    dependencies:
+      shiki: 1.2.1
     dev: false
 
   /@tybys/wasm-util@0.8.1:
@@ -2270,7 +2285,7 @@ packages:
       rehype: 13.0.1
       resolve: 1.22.8
       semver: 7.6.0
-      shiki: 1.2.0
+      shiki: 1.2.1
       string-width: 7.1.0
       strip-ansi: 7.1.0
       tsconfck: 3.0.3(typescript@5.4.2)
@@ -4333,6 +4348,16 @@ packages:
       marked: 11.2.0
     dev: false
 
+  /marked-shiki@1.0.1(marked@11.2.0)(shiki@1.2.1):
+    resolution: {integrity: sha512-fVz5Gq4ZBEptQH4kZTpNfILLxnBONxrXdpjko7rfXm68psltGaZL5VcR1xNNbF/ZN7W4u7ba5fxM+bzzEZoPlQ==}
+    peerDependencies:
+      marked: '>=7.0.0'
+      shiki: '>=1.0.0'
+    dependencies:
+      marked: 11.2.0
+      shiki: 1.2.1
+    dev: false
+
   /marked-smartypants@1.1.6(marked@11.2.0):
     resolution: {integrity: sha512-38rdxcV3+EHrvoHioSrgBDvOmFb+TNcszZggrl15qe4MEfQxBArfSgsGgFP0YqHlGy8Rgoyi4gN4ThBWzwNJeA==}
     peerDependencies:
@@ -5835,10 +5860,10 @@ packages:
     engines: {node: '>=8'}
     dev: false
 
-  /shiki@1.2.0:
-    resolution: {integrity: sha512-xLhiTMOIUXCv5DqJ4I70GgQCtdlzsTqFLZWcMHHG3TAieBUbvEGthdrlPDlX4mL/Wszx9C6rEcxU6kMlg4YlxA==}
+  /shiki@1.2.1:
+    resolution: {integrity: sha512-u+XW6o0vCkUNlneZb914dLO+AayEIwK5tI62WeS//R5HIXBFiYaj/Hc5xcq27Yh83Grr4JbNtUBV8W6zyK4hWg==}
     dependencies:
-      '@shikijs/core': 1.2.0
+      '@shikijs/core': 1.2.1
     dev: false
 
   /side-channel@1.0.6:
