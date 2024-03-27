@@ -12,6 +12,10 @@ sitemap(false); // opt-out
 const locals = Astro.locals as Locals;
 const isLoggedIn = locals.isLoggedIn;
 
+if (!isLoggedIn) {
+    return Astro.redirect(`${getAstroBaseURL()}dashboard/login`);
+}
+
 if (Astro.request.method === 'POST') {
     const formData = await new Request(Astro.request.url, {
         method: Astro.request.method,
@@ -37,9 +41,6 @@ if (Astro.request.method === 'POST') {
 
 const currentUserRank = await rankCheck(locals);
 
-if (!isLoggedIn) {
-    return Astro.redirect(`${getAstroBaseURL()}dashboard/login`);
-}
 
 if (currentUserRank !== "admin") {
     console.log('User is not an admin');

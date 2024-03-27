@@ -23,12 +23,12 @@ if (!isLoggedIn) {
     return Astro.redirect(`${getAstroBaseURL()}dashboard/login`);
 }
 
-if (currentUserRank !== 'admin') {
-    console.log('User is not an admin');
-    return Astro.redirect(`${getAstroBaseURL()}dashboard/profile`);
-}
-
 if (Astro.request.method === 'POST') {
+
+    if (currentUserRank !== 'admin') {
+        console.log('User is not an admin');
+        return Astro.redirect(`${getAstroBaseURL()}dashboard/profile`);
+    }
     const formData = await new Request(Astro.request.url, {
         method: Astro.request.method,
         headers: Astro.request.headers,
@@ -49,6 +49,11 @@ if (Astro.request.method === 'POST') {
         });
 
     return Astro.redirect(`${getAstroBaseURL()}dashboard/`)
+}
+
+if (currentUserRank !== 'admin') {
+    console.log('User is not an admin');
+    return Astro.redirect(`${getAstroBaseURL()}dashboard/profile`);
 }
 
 ---
