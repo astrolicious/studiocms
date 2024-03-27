@@ -36,6 +36,23 @@ const {
     CMS_WATCH_INTEGRATION_HOOK 
 } = loadEnv( "all", process.cwd(), "CMS");
 
+const clientId = { 
+    name: "CMS_GITHUB_CLIENT_ID",
+    key: CMS_GITHUB_CLIENT_ID
+} 
+const clientSecret = { 
+    name: "CMS_GITHUB_CLIENT_SECRET",
+    key: CMS_GITHUB_CLIENT_SECRET
+}
+
+const cloudinaryCloudName = {
+    name: "CMS_CLOUDINARY_CLOUDNAME",
+    key: CMS_CLOUDINARY_CLOUDNAME
+}
+
+const authENVs = [ clientId, clientSecret ];
+
+
 // Main Integration
 export default defineIntegration({
     name: "astro-studiocms",
@@ -166,9 +183,11 @@ export default defineIntegration({
                     } else if (authMode === "built-in") {
 
                         // Check for Required Environment Variables
-                        if (!CMS_GITHUB_CLIENT_ID || !CMS_GITHUB_CLIENT_SECRET) {
-                            throw new AstroError("GitHub OAuth Client ID and Secret are required to use Astro Studio CMS with the built-in authentication. Please add these to your .env file.");
-                        };
+                        for (const env of authENVs) {
+                            if (!env.key) {
+                                throw new AstroError(`Astro Studio CMS requires the ${env.name} environment variable to be set. Please add this to your .env file.`);
+                            }
+                        }
 
                         // Add Authentication Middleware
                         integrationLogger(
@@ -264,8 +283,8 @@ export default defineIntegration({
                         logger, verbose, "info", "Cloudflare Adapter Detected. Using Cloudflare Image Service."
                     );
                 } else if ( cdnPlugin === "cloudinary-js" ) {
-                    if (!CMS_CLOUDINARY_CLOUDNAME){
-                        throw new AstroError("Cloudinary Cloudname is required to use the Cloudinary CDN Plugin. Please add this to your .env file. `CMS_CLOUDINARY_CLOUDNAME`");
+                    if (!cloudinaryCloudName.key){
+                        throw new AstroError(`Using the Cloudinary CDN JS SDK Plugin requires the ${cloudinaryCloudName.name} environment variable to be set. Please add this to your .env file.`);
                     }
                     if ( astroImageServiceConfig === "squoosh" ) {
                         integrationLogger(logger, verbose, "info", "Using Squoosh Image Service as Fallback for Cloudinary CDN Plugin")
