@@ -3,7 +3,6 @@ import sitemap from 'sitemap-ext:config';
 import { SiteConfig, Blog, db } from 'astro:db';
 import rss from '@astrojs/rss';
 import type { APIContext } from 'astro';
-import { getAstroBaseURL } from '../utils';
 
 sitemap(true);
 
@@ -18,7 +17,7 @@ export async function GET(context: APIContext) {
 		items: posts.map((post: typeof Blog.$inferSelect) => ({
 			title: post.title,
 			description: post.description,
-			link: `${getAstroBaseURL()}blog/${post.slug || post.id}`,
+			link: `${import.meta.env.BASE_URL}blog/${post.slug || post.id}`,
 			pubDate: post.publishedAt,
 		})),
 	});
