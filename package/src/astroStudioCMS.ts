@@ -60,30 +60,12 @@ export const CLOUDINARYCLOUDNAME = {
 export default defineIntegration({
     name: "astro-studiocms",
     optionsSchema,
-    setup({ 
-        name, 
-        options, 
-        options: { 
-            verbose, 
-            dbStartPage, 
-            imageService: { 
-                astroImageServiceConfig, 
-                cdnPlugin,
-                useUnpic, 
-                unpicConfig: { 
-                    fallbackService, 
-                    layout, 
-                    placeholder, 
-                    cdnOptions,
-                }, 
+    setup({ name, options, options: { verbose, dbStartPage, 
+            authConfig: { mode: authMode }, 
+            includedIntegrations: { astroRobots, inoxSitemap },
+            imageService: { astroImageServiceConfig, cdnPlugin, useUnpic, 
+                unpicConfig: { fallbackService, layout, placeholder, cdnOptions }, 
             }, 
-            authConfig: {
-                mode: authMode,
-            }, 
-            includedIntegrations: { 
-                astroRobots, 
-                inoxSitemap,
-            },
         },
     }) {
         // Create Resolver for Virtual Imports
@@ -99,16 +81,8 @@ export default defineIntegration({
             "astro:config:setup": ( params ) => {
                 
                 const { 
-                    addMiddleware, 
-                    updateConfig, 
-                    injectRoute, 
-                    logger,
-                    config: { 
-                        base, 
-                        adapter, 
-                        output, 
-                        site 
-                    },
+                    addMiddleware, updateConfig, injectRoute, logger,
+                    config: { base, adapter, output, site }
                 } = params;
 
                 // Watch Integration for changes in dev mode *TO BE REMOVED*
