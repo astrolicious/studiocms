@@ -38,9 +38,6 @@ importers:
       '@astrojs/rss':
         specifier: ^4.0.5
         version: 4.0.5
-      '@astrojs/sitemap':
-        specifier: ^3.1.1
-        version: 3.1.1
       '@astrojs/vercel':
         specifier: ^7.3.6
         version: 7.3.6(astro@4.5.10)
