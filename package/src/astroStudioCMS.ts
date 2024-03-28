@@ -553,7 +553,7 @@ export default defineIntegration({
                                 image: {
                                     service: unpicImageService({
                                         placeholder: placeholder,
-                                        fallbackService: fallbackService ? fallbackService : astroImageServiceConfig,
+                                        fallbackService: fallbackService ? fallbackService : "astro",
                                         layout: layout,
                                         cdnOptions: cdnOptions,
                                     }),
