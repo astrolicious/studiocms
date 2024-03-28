@@ -28,5 +28,4 @@ tasks:
       - astro 
       - build
       - --remote
-    local: true
     platform: node
