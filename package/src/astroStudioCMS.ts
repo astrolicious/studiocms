@@ -98,7 +98,7 @@ export default defineIntegration({
 
                 // Check for Site URL
                 if (!site) {
-                    throw new AstroError("Astro Studio CMS requires a 'site' configuration in your Astro Config. This can be your domain or localhost (localhost should only be used during development and should not be used in production).");
+                    throw new AstroError("Astro Studio CMS requires a 'site' configuration in your Astro Config. This can be your domain ( 'https://example.com' ) or localhost ( 'http://localhost:4321' - localhost should only be used during development and should not be used in production).");
                 };
 
                 // Add Virtual Imports
@@ -414,7 +414,8 @@ export default defineIntegration({
                     );
 
                     // Setup Image Service
-                    if ( adapter === netlify({ imageCDN: true }) || adapter !== netlify({ imageCDN: false })) {
+                    if ( adapter === netlify({ imageCDN: true }) 
+                    || adapter !== netlify({ imageCDN: false })) {
                         integrationLogger(
                             logger, verbose, "info", "Netlify Image Service Enabled. Using Netlify Image Service."
                         );
@@ -593,7 +594,9 @@ export default defineIntegration({
                     if ( !hasIntegration(params, { name: "@astrojs/sitemap" }) 
                     || !hasIntegration(params, { name: "@inox-tools/sitemap-ext"}) ) {
                         integrationLogger(logger, verbose, "info", "No Sitemap Integration found. Adding `@inox-tools/sitemap-ext` Integration")
-                        addIntegration(params, { integration: sitemap({includeByDefault: true}) });
+                        addIntegration(params, { integration: sitemap({
+                            includeByDefault: true
+                        })});
                     }
                 }
 
