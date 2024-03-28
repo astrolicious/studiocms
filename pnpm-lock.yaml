@@ -47,12 +47,9 @@ importers:
       '@cloudinary/url-gen':
         specifier: ^1.19.0
         version: 1.19.0
-      '@inox-tools/aik-route-config':
-        specifier: pr--base-trailing-slash
-        version: 0.0.0-base-trailing-slash-20240327001804(@types/node@20.11.28)(astro-integration-kit@0.8.0)(astro@4.5.9)
       '@inox-tools/sitemap-ext':
-        specifier: pr--base-trailing-slash
-        version: 0.0.0-base-trailing-slash-20240327001804(@astrojs/db@0.9.4)(@types/node@20.11.28)(astro@4.5.9)
+        specifier: ^0.2.3
+        version: 0.2.3(@astrojs/db@0.9.4)(@types/node@20.11.28)(astro@4.5.9)
       '@lucia-auth/adapter-drizzle':
         specifier: ^1.0.4
         version: 1.0.4(lucia@3.1.1)
@@ -1130,8 +1127,8 @@ packages:
     resolution: {integrity: sha512-trnsAYxU3xnS1gPHPyU961coFyLkh4gAD/0zQ5mymY4yOZ+CYvsPqUbOFSw0aDM4y0tV7tiFxL/1XfXPNC6IPg==}
     dev: false
 
-  /@inox-tools/aik-route-config@0.0.0-base-trailing-slash-20240327001804(@types/node@20.11.28)(astro-integration-kit@0.8.0)(astro@4.5.9):
-    resolution: {integrity: sha512-f6Ky1VMaAMctpzCLppAAIxgJ7n+nP4BMMJzkxUvrOX1K/w64KY6Lco2UAseEnGdigc/9P2Rc8oKWXxrlo+GpEA==}
+  /@inox-tools/aik-route-config@0.3.1(@types/node@20.11.28)(astro-integration-kit@0.8.0)(astro@4.5.9):
+    resolution: {integrity: sha512-wKcXuonacOxYf1w2lGoSKmQZlhp0CRzvh/uiowTHFHK+iqlsVpOhlsf5sIS3E+wiiUbwpD8CCUVxijG07GxyKg==}
     peerDependencies:
       astro: ^4.3.5
       astro-integration-kit: ~0.8
@@ -1150,13 +1147,13 @@ packages:
       - terser
     dev: false
 
-  /@inox-tools/sitemap-ext@0.0.0-base-trailing-slash-20240327001804(@astrojs/db@0.9.4)(@types/node@20.11.28)(astro@4.5.9):
-    resolution: {integrity: sha512-o1Eo7g6pHW9ULpwtxi2c4MboZGeU2SX1rmKbQTqjvw3q77AsSfGG+TxPkqEJlnsA+xNXrA8aMT+u/RMiAEL2yQ==}
+  /@inox-tools/sitemap-ext@0.2.3(@astrojs/db@0.9.4)(@types/node@20.11.28)(astro@4.5.9):
+    resolution: {integrity: sha512-IdNJ3XYvPYVxeytnV3HPuOB4bwoD/THheu3HD9eBIUDaPRNb9ArkIxZEj457aQt8hq3VzrXAQiD3gOA9wiuILg==}
     peerDependencies:
       astro: ^4.3.5
     dependencies:
       '@astrojs/sitemap': 3.1.1
-      '@inox-tools/aik-route-config': 0.0.0-base-trailing-slash-20240327001804(@types/node@20.11.28)(astro-integration-kit@0.8.0)(astro@4.5.9)
+      '@inox-tools/aik-route-config': 0.3.1(@types/node@20.11.28)(astro-integration-kit@0.8.0)(astro@4.5.9)
       astro: 4.5.9(@types/node@20.11.28)(typescript@5.4.2)
       astro-integration-kit: 0.8.0(@astrojs/db@0.9.4)(astro@4.5.9)
       sitemap: 7.1.1
