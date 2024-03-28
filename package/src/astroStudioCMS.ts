@@ -574,29 +574,31 @@ export default defineIntegration({
                 }
 
 
-                // Robots.txt Integration
-                if ( astroRobots ) {
-                    if ( !hasIntegration(params, { name: "astro-robots-txt" }) 
-                        || !hasIntegration( params, { name: "astro-robots" }) ) {
-                        integrationLogger(logger, verbose, "info", "No Robots.txt Integration found. Adding `astro-robots` Integration")
-                        addIntegration(params, { integration: robots({
-                            policy: [ { 
-                                userAgent: ["*"],
-                                allow: ["/"],
-                                disallow: ["/dashboard/"],
-                            }, ],
-                        })});
+                if ( adapter !== cloudflare()) {
+                    // Robots.txt Integration
+                    if ( astroRobots ) {
+                        if ( !hasIntegration(params, { name: "astro-robots-txt" }) 
+                            || !hasIntegration( params, { name: "astro-robots" }) ) {
+                            integrationLogger(logger, verbose, "info", "No Robots.txt Integration found. Adding `astro-robots` Integration")
+                            addIntegration(params, { integration: robots({
+                                policy: [ { 
+                                    userAgent: ["*"],
+                                    allow: ["/"],
+                                    disallow: ["/dashboard/"],
+                                }, ],
+                            })});
+                        }
                     }
-                }
-
-                // Sitemap Integration
-                if ( inoxSitemap ) {
-                    if ( !hasIntegration(params, { name: "@astrojs/sitemap" }) 
-                    || !hasIntegration(params, { name: "@inox-tools/sitemap-ext"}) ) {
-                        integrationLogger(logger, verbose, "info", "No Sitemap Integration found. Adding `@inox-tools/sitemap-ext` Integration")
-                        addIntegration(params, { integration: sitemap({
-                            includeByDefault: true
-                        })});
+    
+                    // Sitemap Integration
+                    if ( inoxSitemap ) {
+                        if ( !hasIntegration(params, { name: "@astrojs/sitemap" }) 
+                        || !hasIntegration(params, { name: "@inox-tools/sitemap-ext"}) ) {
+                            integrationLogger(logger, verbose, "info", "No Sitemap Integration found. Adding `@inox-tools/sitemap-ext` Integration")
+                            addIntegration(params, { integration: sitemap({
+                                includeByDefault: true
+                            })});
+                        }
                     }
                 }
 
