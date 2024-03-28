@@ -18,16 +18,10 @@ sitemap(async ({ addToSitemap }) => {
 })
 
 const { slug } = Astro.params;
-
-if (!slug) {
-	return Astro.redirect(import.meta.env.BASE_URL+"404");
-}
-
 const postArrayed = await db.select().from(Blog).where(eq(Blog.slug, slug));
-
 const post = postArrayed[0];
 
-if (!post) {
+if (!slug || !post) {
 	return Astro.redirect(import.meta.env.BASE_URL+"404");
 }
 

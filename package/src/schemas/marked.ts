@@ -41,7 +41,7 @@ export const markedShikiConfigSchema = z.object({
      * @default 'houston'
      * @see https://shiki.style/
      */
-    theme: z.custom<BundledTheme>().optional(),
+    theme: z.custom<BundledTheme>().optional().default('houston'),
 }).optional().default({})
 
 //

@@ -60,7 +60,7 @@ export async function markdown(input: string): Promise<string> {
     customMarkedExtList.push(markedShiki({
         highlight(code, lang, props) {
             return highlighter.codeToHtml(code, { 
-                        lang, theme: shikiTheme || 'houston',
+                        lang, theme: shikiTheme,
                         meta: {__raw: props.join(' ')},
                         transformers: [
                             sT.transformerNotationDiff(),
