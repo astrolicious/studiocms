@@ -23,3 +23,10 @@ tasks:
       - dev
     local: true
     platform: node
+  build:
+    command: 
+      - astro 
+      - build
+      - --remote
+    local: true
+    platform: node
