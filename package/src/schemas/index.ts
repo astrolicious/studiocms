@@ -15,6 +15,12 @@ export const optionsSchema = z.object({
     dbStartPage: z.boolean().optional().default(true),
     /**
      * The Markdown Content Renderer to use for rendering pages and posts
+     * 
+     * Marked is A markdown parser and compiler. Built for speed.
+     * @see https://marked.js.org/ for more info about marked.
+     * 
+     * Markdoc is a powerful, flexible, Markdown-based authoring framework. Built by Stripe.
+     * @see https://markdoc.dev/ for more info about markdoc.
      */
     contentRenderer: z.enum(["markdoc", "marked"]).optional().default("marked"),
     /**

@@ -60,6 +60,14 @@ export const markedConfigSchema = z.object({
      * Allows the user to load additional Marked Extensions
      * 
      * Note: This option is only used if the user wants to load additional Marked Extensions
+     * 
+     * @see https://marked.js.org/using_advanced#extensions for more info about Marked Extensions
+     * @example
+     * ```ts
+     * import markedAlert from "marked-alert";
+     * 
+     * loadmarkedExtensions: [ markedAlert() ]
+     * ```
      */
     loadmarkedExtensions: z.array(z.custom<MarkedExtension>()).optional(),
 }).optional().default({});
