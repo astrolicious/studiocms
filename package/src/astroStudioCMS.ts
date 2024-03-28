@@ -136,6 +136,10 @@ export default defineIntegration({
                         entrypoint: resolve('./pages/index.astro'), 
                     });
                     injectRoute({ 
+                        pattern: "404", 
+                        entrypoint: resolve('./pages/404.astro'), 
+                    });
+                    injectRoute({ 
                         pattern: `${base}about/`, 
                         entrypoint: resolve('./pages/about.astro'), 
                     });

@@ -4,7 +4,6 @@ import sitemap from 'sitemap-ext:config';
 import { Blog, db, eq } from 'astro:db';
 import Default from "../../../layouts/Default.astro"
 import type { Locals } from "../locals";
-import { getAstroBaseURL } from '../../../utils';
 import { rankCheck } from '../../../utils/rankcheck';
 
 sitemap(false); // opt-out
@@ -12,7 +11,7 @@ sitemap(false); // opt-out
 const { slug } = Astro.params;
 
 if (!slug) {
-	return new Response('No slug provided', { status: 400 }) && Astro.redirect(`${getAstroBaseURL()}dashboard`);
+	return new Response('No slug provided', { status: 400 }) && Astro.redirect(`${import.meta.env.BASE_URL}dashboard`);
 }
 
 const postArrayed = await db.select().from(Blog).where(eq(Blog.slug, slug));
@@ -21,7 +20,7 @@ const locals = Astro.locals as Locals;
 const isLoggedIn = locals.isLoggedIn;
 
 if (!isLoggedIn) {
-    return Astro.redirect(`${getAstroBaseURL()}dashboard/login`);
+    return Astro.redirect(`${import.meta.env.BASE_URL}dashboard/login`);
 }
 
 const getUserName = () => {
@@ -39,7 +38,7 @@ const currentUserRank = await rankCheck(locals);
 
 if (currentUserRank !== "admin" && currentUserRank !== "editor") {
     console.log('User is not an admin');
-    return Astro.redirect(`${getAstroBaseURL()}dashboard/profile`);
+    return Astro.redirect(`${import.meta.env.BASE_URL}dashboard/profile`);
 }
 
 if (Astro.request.method === 'POST') {
@@ -69,7 +68,7 @@ if (Astro.request.method === 'POST') {
                 return new Response('Error updating post', { status: 500 });
             });
 
-    return Astro.redirect(`${getAstroBaseURL()}dashboard`)
+    return Astro.redirect(`${import.meta.env.BASE_URL}dashboard`)
 }
 
 ---
@@ -77,10 +76,10 @@ if (Astro.request.method === 'POST') {
 <Default>
         <div class="dash">
             <div class="dash-header">
-                <form class="left" method="post" action={`${getAstroBaseURL()}dashboard`}>
+                <form class="left" method="post" action={`${import.meta.env.BASE_URL}dashboard`}>
                     <button class="btn">Dashboard</button>
                 </form>
-                <form class="right" method="post" action={`${getAstroBaseURL()}dashboard/logout`}>
+                <form class="right" method="post" action={`${import.meta.env.BASE_URL}dashboard/logout`}>
                     <button>Logout</button>
                 </form>
             </div>

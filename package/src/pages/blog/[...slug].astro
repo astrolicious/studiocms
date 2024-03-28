@@ -4,7 +4,6 @@ import sitemap from 'sitemap-ext:config';
 import { Blog, db, eq, asc } from 'astro:db';
 import { markdown } from '../../utils/marked';
 import BlogPost from '../../layouts/BlogPost.astro';
-import { getAstroBaseURL } from '../../utils';
 import Config from 'virtual:astro-studio-cms:config';
 import { renderMarkDoc } from '../../utils/markdoc';
 
@@ -21,7 +20,7 @@ sitemap(async ({ addToSitemap }) => {
 const { slug } = Astro.params;
 
 if (!slug) {
-	return Astro.redirect(`${getAstroBaseURL}404`);
+	return Astro.redirect(import.meta.env.BASE_URL+"404");
 }
 
 const postArrayed = await db.select().from(Blog).where(eq(Blog.slug, slug));
@@ -29,7 +28,7 @@ const postArrayed = await db.select().from(Blog).where(eq(Blog.slug, slug));
 const post = postArrayed[0];
 
 if (!post) {
-	return Astro.redirect(`${getAstroBaseURL}404`);
+	return Astro.redirect(import.meta.env.BASE_URL+"404");
 }
 
 type Props = {

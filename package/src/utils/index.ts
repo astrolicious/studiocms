@@ -1,10 +1,5 @@
 import type { AstroIntegrationLogger } from "astro";
 
-export const getAstroBaseURL = () => {
-    // @ts-ignore - This works fine during runtime and can be safely ignored
-    return import.meta.env.BASE_URL
-};
-
 export const integrationLogger = async (
     logger: AstroIntegrationLogger, 
     verbose: boolean,

@@ -97,7 +97,7 @@ if (Astro.request.method === 'POST') {
             return new Response('Error Adding Blog Data', { status: 500 });
         });
 
-    return Astro.redirect(`${getAstroBaseURL()}done/`)
+    return Astro.redirect(import.meta.env.BASE_URL+"done/")
 }
 
 ---

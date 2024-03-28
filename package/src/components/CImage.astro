@@ -3,6 +3,7 @@ import { Image } from 'astro:assets';
 import Config from 'virtual:astro-studio-cms:config';
 import { Cloudinary } from '@cloudinary/url-gen';
 import { fill } from '@cloudinary/url-gen/actions/resize';
+import type { Locals } from '../pages/dashboard/locals';
 
 interface Props {
     src: string;
@@ -14,6 +15,8 @@ interface Props {
 const { src, ...props } = Astro.props;
 const { imageService: { cdnPlugin } } = Config;
 
+const { runtime } = Astro.locals as Locals;
+
 // Get the current configured image service
 async function getImageSrc() {
     // Cloudinary Image Service (JavaScript SDK) - https://cloudinary.com/documentation/javascript_integration#landingpage
@@ -23,6 +26,7 @@ async function getImageSrc() {
             cloud: { 
                 cloudName: import.meta.env.CMS_CLOUDINARY_CLOUDNAME 
                 || process.env.CMS_CLOUDINARY_CLOUDNAME 
+                || runtime.env.CMS_CLOUDINARY_CLOUDNAME
                 || "demo", 
             } 
         });

@@ -8,6 +8,7 @@ interface ImportMetaEnv {
     readonly CMS_GITHUB_CLIENT_SECRET: string;
     readonly CMS_CLOUDINARY_CLOUDNAME: string;
     readonly PROD: boolean;
+    readonly BASE_URL: string;
   }
   
   interface ImportMeta {

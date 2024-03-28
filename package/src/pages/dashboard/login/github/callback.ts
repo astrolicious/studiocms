@@ -1,19 +1,25 @@
 // @ts-expect-error - This is a missing type definition for the `astro:db` import since its a virtual module during Astro Runtime
 import { db, User, eq } from "astro:db";
 import type { APIContext } from "astro";
-import { getAstroBaseURL } from '../../../../utils';
-import { github, lucia } from "../../../../lib/auth";
-import { OAuth2RequestError } from "arctic";
+import { lucia } from "../../../../lib/auth";
+import { GitHub, OAuth2RequestError } from "arctic";
 
 export async function GET(context: APIContext): Promise<Response> {
-	const code = context.url.searchParams.get("code");
-	const state = context.url.searchParams.get("state");
-	const storedState = context.cookies.get("github_oauth_state")?.value ?? null;
+	const { locals: { runtime }, url, cookies, redirect } = context;
+
+    const github = new GitHub(
+        import.meta.env.CMS_GITHUB_CLIENT_ID || process.env.CMS_GITHUB_CLIENT_ID || runtime.env.CMS_GITHUB_CLIENT_ID,
+        import.meta.env.CMS_GITHUB_CLIENT_SECRET || process.env.CMS_GITHUB_CLIENT_SECRET || runtime.env.CMS_GITHUB_CLIENT_ID,
+    );
+
+	const code = url.searchParams.get("code");
+	const state = url.searchParams.get("state");
+	const storedState = cookies.get("github_oauth_state")?.value ?? null;
 	if (!code || !state || !storedState || state !== storedState) {
 		// return new Response(null, {
 		// 	status: 403,
 		// });
-		return context.redirect(`${getAstroBaseURL()}dashboard/login`);
+		return redirect(`${import.meta.env.BASE_URL}dashboard/login`);
 	}
 
 	try {
@@ -43,12 +49,12 @@ export async function GET(context: APIContext): Promise<Response> {
 		if (existingUser) {
 			const session = await lucia.createSession(existingUser.id.toString(), {});
 			const sessionCookie = lucia.createSessionCookie(session.id);
-			context.cookies.set(
+			cookies.set(
 				sessionCookie.name,
 				sessionCookie.value,
 				sessionCookie.attributes,
 			);
-			return context.redirect(`${getAstroBaseURL()}dashboard`);
+			return redirect(`${import.meta.env.BASE_URL}dashboard`);
 		}
 
 		const createdUser = await db
@@ -68,12 +74,12 @@ export async function GET(context: APIContext): Promise<Response> {
 
 		const sessionCookie = lucia.createSessionCookie(session.id);
 
-		context.cookies.set(
+		cookies.set(
 			sessionCookie.name,
 			sessionCookie.value,
 			sessionCookie.attributes,
 		);
-		return context.redirect(`${getAstroBaseURL()}dashboard`);
+		return redirect(`${import.meta.env.BASE_URL}dashboard`);
 	} catch (e) {
 		// the specific error message depends on the provider
 		if (e instanceof OAuth2RequestError) {

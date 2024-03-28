@@ -1,7 +1,6 @@
 ---
 import sitemap from 'sitemap-ext:config';
 import Layout from "../../../layouts/Default.astro";
-import { getAstroBaseURL } from '../../../utils';
 import type { Locals } from '../locals';
 
 sitemap(false); // opt-out
@@ -9,7 +8,7 @@ sitemap(false); // opt-out
 const locals = Astro.locals as Locals;
 
 if (locals.isLoggedIn) {
-  return Astro.redirect(`${getAstroBaseURL()}dashboard`);
+  return Astro.redirect(import.meta.env.BASE_URL+"dashboard");
 }
 ---
 
@@ -22,7 +21,7 @@ if (locals.isLoggedIn) {
     </p>
 
       <div>
-      <a href={`${getAstroBaseURL()}dashboard/login/github`}>
+      <a href={`${import.meta.env.BASE_URL}dashboard/login/github`}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"

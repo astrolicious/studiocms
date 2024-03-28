@@ -4,7 +4,6 @@ import sitemap from 'sitemap-ext:config';
 import { Permissions, db, eq } from 'astro:db';
 import Default from "../../layouts/Default.astro"
 import type { Locals } from "./locals";
-import { getAstroBaseURL } from '../../utils';
 import { rankCheck } from '../../utils/rankcheck';
 
 sitemap(false); // opt-out
@@ -13,7 +12,7 @@ const locals = Astro.locals as Locals;
 const isLoggedIn = locals.isLoggedIn;
 
 if (!isLoggedIn) {
-    return Astro.redirect(`${getAstroBaseURL()}dashboard/login`);
+    return Astro.redirect(import.meta.env.BASE_URL+"dashboard/login");
 }
 
 if (Astro.request.method === 'POST') {
@@ -36,7 +35,7 @@ if (Astro.request.method === 'POST') {
             return new Response('Error', { status: 500 });
         });
 
-    return Astro.redirect(`${getAstroBaseURL()}dashboard/`)
+    return Astro.redirect(import.meta.env.BASE_URL+"dashboard/")
 }
 
 const currentUserRank = await rankCheck(locals);
@@ -44,7 +43,7 @@ const currentUserRank = await rankCheck(locals);
 
 if (currentUserRank !== "admin") {
     console.log('User is not an admin');
-    return Astro.redirect(`${getAstroBaseURL()}dashboard/profile`);
+    return Astro.redirect(import.meta.env.BASE_URL+"dashboard/profile");
 }
 
 const adminList = await db.select().from(Permissions);
@@ -53,10 +52,10 @@ const adminList = await db.select().from(Permissions);
 <Default>
         <div class="dash">
             <div class="dash-header">
-                <form class="left" method="post" action={`${getAstroBaseURL()}dashboard`}>
+                <form class="left" method="post" action={`${import.meta.env.BASE_URL}dashboard`}>
                     <button class="btn">Dashboard</button>
                 </form>
-                <form class="right" method="post" action={`${getAstroBaseURL()}dashboard/logout`}>
+                <form class="right" method="post" action={`${import.meta.env.BASE_URL}dashboard/logout`}>
                     <button>Logout</button>
                 </form>
             </div>

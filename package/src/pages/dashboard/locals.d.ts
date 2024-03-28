@@ -17,4 +17,11 @@ export type Locals = {
       username: string;
       githubId: number;
     };
+    runtime: {
+      env: {
+        CMS_GITHUB_CLIENT_ID: string;
+        CMS_GITHUB_CLIENT_SECRET: string;
+        CMS_CLOUDINARY_CLOUDNAME: string;
+      }
+    }
 };
