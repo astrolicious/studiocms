@@ -1,14 +1,13 @@
 import { lucia } from "../../lib/auth";
 import type { APIContext } from "astro";
-import { getAstroBaseURL } from '../../utils';
 
 export async function GET(context: APIContext): Promise<Response> {
-	return context.redirect(getAstroBaseURL());
+	return context.redirect(import.meta.env.BASE_URL);
 }
 
 export async function POST(context: APIContext): Promise<Response> {
 	if (!context.locals.session) {
-		return context.redirect(`${getAstroBaseURL()}dashboard/login`);
+		return context.redirect(`${import.meta.env.BASE_URL}dashboard/login`);
 	}
 
 	await lucia.invalidateSession(context.locals.session.id);
@@ -25,5 +24,5 @@ export async function POST(context: APIContext): Promise<Response> {
 	context.locals.user = null;
 	context.locals.dbUser = null;
 
-	return context.redirect(getAstroBaseURL());
+	return context.redirect(import.meta.env.BASE_URL);
 }
