@@ -4,6 +4,7 @@
     "composite": true,
     "module": "ESNext",
     "resolveJsonModule": true,
+    "moduleResolution": "Bundler",
     "jsx": "preserve",
     "outDir": "../.moon/cache/types/package"
   },
