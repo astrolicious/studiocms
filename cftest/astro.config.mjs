@@ -19,4 +19,9 @@ export default defineConfig({
 			verbose: true,
 		}),
 	],
+	vite: {
+	  ssr: {
+		external: ['node:fs'],
+	  },
+	},
 });
