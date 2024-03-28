@@ -20,7 +20,6 @@ export async function GET(context: APIContext) {
 			description: post.description,
 			link: `${getAstroBaseURL()}blog/${post.slug || post.id}`,
 			pubDate: post.publishedAt,
-			content: post.content,
 		})),
 	});
 }
