@@ -19,7 +19,9 @@ import robots from "astro-robots";
 import sitemap from "@inox-tools/sitemap-ext";
 
 // Image Services
-import { imageService as unpicImageService } from "@unpic/astro/service";
+import { 
+    imageService as unpicImageService 
+} from "@unpic/astro/service";
 import { 
     passthroughImageService, 
     sharpImageService, 
@@ -34,18 +36,24 @@ const env = loadEnv( "all", process.cwd(), "CMS");
 
 export const AUTHKEYS = { 
     GITHUBCLIENTID: {
-        name: "CMS_GITHUB_CLIENT_ID",
-        key: env.CMS_GITHUB_CLIENT_ID || import.meta.env.CMS_GITHUB_CLIENT_ID || process.env.CMS_GITHUB_CLIENT_ID
+        N: "CMS_GITHUB_CLIENT_ID",
+        KEY: env.CMS_GITHUB_CLIENT_ID 
+        || import.meta.env.CMS_GITHUB_CLIENT_ID 
+        || process.env.CMS_GITHUB_CLIENT_ID
     }, 
     GITHUBCLIENTSECRET: {
-        name: "CMS_GITHUB_CLIENT_SECRET",
-        key: env.CMS_GITHUB_CLIENT_SECRET || import.meta.env.CMS_GITHUB_CLIENT_SECRET || process.env.CMS_GITHUB_CLIENT_SECRET
+        N: "CMS_GITHUB_CLIENT_SECRET",
+        KEY: env.CMS_GITHUB_CLIENT_SECRET 
+        || import.meta.env.CMS_GITHUB_CLIENT_SECRET 
+        || process.env.CMS_GITHUB_CLIENT_SECRET
     }
 };
 
 export const CLOUDINARYCLOUDNAME = {
-    name: "CMS_CLOUDINARY_CLOUDNAME",
-    key: env.CMS_CLOUDINARY_CLOUDNAME || import.meta.env.CMS_CLOUDINARY_CLOUDNAME || process.env.CMS_CLOUDINARY_CLOUDNAME
+    N: "CMS_CLOUDINARY_CLOUDNAME",
+    KEY: env.CMS_CLOUDINARY_CLOUDNAME 
+    || import.meta.env.CMS_CLOUDINARY_CLOUDNAME 
+    || process.env.CMS_CLOUDINARY_CLOUDNAME
 }
 
 // Main Integration
@@ -178,11 +186,11 @@ export default defineIntegration({
                     } else if (authMode === "built-in") {
 
                         // Check for Required Environment Variables
-                        if (!AUTHKEYS.GITHUBCLIENTID.key) {
-                            throw new AstroError(`Using the Built-in Authentication requires the ${AUTHKEYS.GITHUBCLIENTID.name} environment variable to be set. Please add this to your .env file.`);
+                        if (!AUTHKEYS.GITHUBCLIENTID.KEY) {
+                            throw new AstroError(`Using the Built-in Authentication requires the ${AUTHKEYS.GITHUBCLIENTID.N} environment variable to be set. Please add this to your .env file.`);
                         }
-                        if (!AUTHKEYS.GITHUBCLIENTSECRET.key) {
-                            throw new AstroError(`Using the Built-in Authentication requires the ${AUTHKEYS.GITHUBCLIENTSECRET.name} environment variable to be set. Please add this to your .env file.`);
+                        if (!AUTHKEYS.GITHUBCLIENTSECRET.KEY) {
+                            throw new AstroError(`Using the Built-in Authentication requires the ${AUTHKEYS.GITHUBCLIENTSECRET.N} environment variable to be set. Please add this to your .env file.`);
                         }
 
                         // Add Authentication Middleware
@@ -278,8 +286,8 @@ export default defineIntegration({
 
                     // Setup Image Service
                     if ( cdnPlugin === "cloudinary-js" ) {
-                        if (!CLOUDINARYCLOUDNAME.key){
-                            throw new AstroError(`Using the Cloudinary CDN JS SDK Plugin requires the ${CLOUDINARYCLOUDNAME.name} environment variable to be set. Please add this to your .env file.`);
+                        if (!CLOUDINARYCLOUDNAME.KEY){
+                            throw new AstroError(`Using the Cloudinary CDN JS SDK Plugin requires the ${CLOUDINARYCLOUDNAME.N} environment variable to be set. Please add this to your .env file.`);
                         }
                         if ( astroImageServiceConfig === "squoosh" ) {
                             integrationLogger(logger, verbose, "info", "Using Squoosh Image Service as Fallback for Cloudinary CDN Plugin")
@@ -359,8 +367,8 @@ export default defineIntegration({
                             logger, verbose, "info", "Vercel Image Service Disabled. Using Astro Built-in Image Service."
                         );
                         if ( cdnPlugin === "cloudinary-js" ) {
-                            if (!CLOUDINARYCLOUDNAME.key){
-                                throw new AstroError(`Using the Cloudinary CDN JS SDK Plugin requires the ${CLOUDINARYCLOUDNAME.name} environment variable to be set. Please add this to your .env file.`);
+                            if (!CLOUDINARYCLOUDNAME.KEY){
+                                throw new AstroError(`Using the Cloudinary CDN JS SDK Plugin requires the ${CLOUDINARYCLOUDNAME.N} environment variable to be set. Please add this to your .env file.`);
                             }
                             if ( astroImageServiceConfig === "squoosh" ) {
                                 integrationLogger(logger, verbose, "info", "Using Squoosh Image Service as Fallback for Cloudinary CDN Plugin")
@@ -439,8 +447,8 @@ export default defineIntegration({
                     } else if ( adapter === netlify({ imageCDN: false })) {
                         integrationLogger(logger, verbose, "info", "Netlify Image Service Disabled. Using Built-in Image Service.")
                         if ( cdnPlugin === "cloudinary-js" ) {
-                            if (!CLOUDINARYCLOUDNAME.key){
-                                throw new AstroError(`Using the Cloudinary CDN JS SDK Plugin requires the ${CLOUDINARYCLOUDNAME.name} environment variable to be set. Please add this to your .env file.`);
+                            if (!CLOUDINARYCLOUDNAME.KEY){
+                                throw new AstroError(`Using the Cloudinary CDN JS SDK Plugin requires the ${CLOUDINARYCLOUDNAME.N} environment variable to be set. Please add this to your .env file.`);
                             }
                             if ( astroImageServiceConfig === "squoosh" ) {
                                 integrationLogger(logger, verbose, "info", "Using Squoosh Image Service as Fallback for Cloudinary CDN Plugin")
