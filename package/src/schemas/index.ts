@@ -14,6 +14,10 @@ export const optionsSchema = z.object({
      */
     dbStartPage: z.boolean().optional().default(true),
     /**
+     * The Markdown Content Renderer to use for rendering pages and posts
+     */
+    contentRenderer: z.enum(["markdoc", "marked"]).optional().default("marked"),
+    /**
      * Allows customization of the Marked Configuration
      * 
      * Marked is a markdown parser and compiler. Built for speed. It is used to convert markdown strings into HTML for rendering content on StudioCMS pages.

@@ -144,16 +144,25 @@ if (Astro.request.method === 'POST') {
 </Default>
 
 <script>
-import { markdown } from "../../utils/marked";
-        document.getElementById('content').addEventListener('input', async function () {
-            const markdownContent = document.getElementById('content');
-            const htmlPreview = document.getElementById('html-preview');
-            const htmlContent = await markdown(markdownContent.value);
+    import { markdown } from "../../utils/marked";
+    import Config from 'virtual:astro-studio-cms:config';
+    import { renderMarkDoc } from '../../utils/markdoc';
     
-            htmlPreview.innerHTML = htmlContent;
+            document.getElementById('content').addEventListener('input', async function () {
+                const markdownContent = document.getElementById('content');
+                const htmlPreview = document.getElementById('html-preview');
     
-        });
-    </script>
+                if (Config.contentRenderer === 'marked' ) {
+                    const htmlContent = await markdown(markdownContent.value);
+                    htmlPreview.innerHTML = htmlContent;
+                } else if (Config.contentRenderer === 'markdoc') {
+                    const htmlContent = await renderMarkDoc(markdownContent.value);
+                    htmlPreview.innerHTML = htmlContent;
+                }
+    
+            });
+</script>
+
 <style>
     .dash {
         padding: 2rem;

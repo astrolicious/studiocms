@@ -4,6 +4,8 @@ import sitemap from 'sitemap-ext:config';
 import { Pages, db, eq } from 'astro:db';
 import Layout from '../layouts/BlogPost.astro';
 import { markdown } from '../utils/marked';
+import Config from 'virtual:astro-studio-cms:config';
+import { renderMarkDoc } from '../utils/markdoc';
 
 sitemap(true); // opt-in
 
@@ -14,6 +16,15 @@ const post = postArrayed[0];
 type Props = {
 	post: typeof Pages.$inferSelect;
 };
+
+
+async function contentRenderer() {
+    if (Config.contentRenderer === 'markdoc') {
+        return renderMarkDoc(post.content);
+    }
+    return markdown(post.content);
+
+}
 ---
 
 <Layout
@@ -23,7 +34,7 @@ type Props = {
 	heroImage={post.heroImage}
 >
 	<Fragment 
-		set:html={markdown(post.content)} />
+		set:html={contentRenderer()} />
 </Layout>
 <style>
     .btn {

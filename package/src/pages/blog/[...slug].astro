@@ -5,6 +5,8 @@ import { Blog, db, eq, asc } from 'astro:db';
 import { markdown } from '../../utils/marked';
 import BlogPost from '../../layouts/BlogPost.astro';
 import { getAstroBaseURL } from '../../utils';
+import Config from 'virtual:astro-studio-cms:config';
+import { renderMarkDoc } from '../../utils/markdoc';
 
 // sitemap(false);
 
@@ -33,6 +35,15 @@ if (!post) {
 type Props = {
 	post: typeof Blog.$inferSelect;
 };
+
+async function contentRenderer() {
+    if (Config.contentRenderer === 'markdoc') {
+        return renderMarkDoc(post.content);
+    }
+    return markdown(post.content);
+
+}
+
 ---
 <BlogPost 
 	title={post.title} 
@@ -41,7 +52,7 @@ type Props = {
 	publishedAt={post.publishedAt} 
 	updatedAt={post.updatedAt} >
 	<Fragment 
-		set:html={markdown(post.content)} />
+		set:html={contentRenderer()} />
 </BlogPost>
 
 <style>
