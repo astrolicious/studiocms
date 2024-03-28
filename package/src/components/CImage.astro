@@ -14,21 +14,52 @@ interface Props {
 const { src, ...props } = Astro.props;
 const { imageService: { cdnPlugin } } = Config;
 
-// Cloudinary Image Service (JavaScript SDK) - https://cloudinary.com/documentation/javascript_integration#landingpage
-// Only used when the cdnPlugin is set to 'cloudinary-js'
-const cld = new Cloudinary({ cloud: { cloudName: import.meta.env.CMS_CLOUDINARY_CLOUDNAME || process.env.CMS_CLOUDINARY_CLOUDNAME, } });
-const cldSrc = cld.image(src).format('auto').quality('auto').resize(fill('auto').width(props.width).height(props.height));
-if (src.startsWith('https://')) { cldSrc.setDeliveryType('fetch');}
-
 // Get the current configured image service
-function getCurrentConfiguredImageServiceSRC() {
-    switch (cdnPlugin) {
-        case 'cloudinary-js':
-            return cldSrc.toURL();
-        case undefined:
-            return src;
+async function getImageSrc() {
+    // Cloudinary Image Service (JavaScript SDK) - https://cloudinary.com/documentation/javascript_integration#landingpage
+    if (cdnPlugin === 'cloudinary-js') {
+        //// Initialize Cloudinary
+        const cld = new Cloudinary({ 
+            cloud: { 
+                cloudName: import.meta.env.CMS_CLOUDINARY_CLOUDNAME 
+                || process.env.CMS_CLOUDINARY_CLOUDNAME 
+                || "demo", 
+            } 
+        });
+        //// Configure the image
+        const cldSrc = cld.image(src)
+            .format('auto').quality('auto')
+            .resize(
+                fill('auto')
+                .width(props.width).height(props.height)
+            );
+
+        // Set the delivery type to 'fetch' if the image source is an external URL
+        if (src.startsWith('https://')) { cldSrc.setDeliveryType('fetch');}
+        return cldSrc.toURL();
     }
+
+    // Return the original image source if no External image service plugin is configured
+    return src;
 }
 
+// check if the image source is an external URL
+function inferSizeNeeded(url: string) {
+    if (url.startsWith('https://') || url.startsWith('http://')) {
+        return true;
+    }
+    return false;
+}
+
+// Get the current configured image service source URL
+const currentSrcURL = await getImageSrc();
+
+// Set the image properties
+const imageProps = {
+    src: await getImageSrc(),
+    inferSize: inferSizeNeeded(currentSrcURL),
+    ...props
+};
+
 ---
-<Image src={getCurrentConfiguredImageServiceSRC()} {...props} />
+<Image loading={"lazy"} {...imageProps}/>
