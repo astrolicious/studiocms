@@ -10,7 +10,7 @@
     "changeset": "changeset",
     "playground:dev": "pnpm --filter playground dev",
     "build": "pnpm --filter playground build",
-    "cf:build": "pnpm --filter playground build",
+    "cf:build": "pnpm --filter cftest build",
     "lint": "biome check .",
     "lint:fix": "biome check --apply .",
     "ci:version": "pnpm changeset version",

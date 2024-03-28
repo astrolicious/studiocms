@@ -571,10 +571,6 @@ export default defineIntegration({
                         }
                     }
 
-                } else {
-                    integrationLogger(
-                        logger, verbose, "warn", "Astro Studio CMS does not supported in this Adapter yet. Please use Node, Vercel, Netlify, or Cloudflare Adapters. or Submit a new Issue or Pull Request to add support for this Adapter."
-                    );
                 }
 
 

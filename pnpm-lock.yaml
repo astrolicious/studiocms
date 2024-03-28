@@ -27,7 +27,7 @@ importers:
   cftest:
     dependencies:
       '@astrojs/cloudflare':
-        specifier: 10.0.0
+        specifier: ^10.0.0
         version: 10.0.0(astro@4.5.12)
       '@astrojs/db':
         specifier: ^0.9.8
