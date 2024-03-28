@@ -5,10 +5,11 @@ import { Lucia, TimeSpan } from "lucia";
 import { DrizzleSQLiteAdapter } from "@lucia-auth/adapter-drizzle";
 import { GitHub } from "arctic";
 import { Session, User } from "../db/tables";
+import { AUTHKEYS } from "../astroStudioCMS"
 
 export const github = new GitHub(
-	import.meta.env.CMS_GITHUB_CLIENT_ID,
-	import.meta.env.CMS_GITHUB_CLIENT_SECRET,
+	AUTHKEYS.GITHUBCLIENTID.key || "",
+	AUTHKEYS.GITHUBCLIENTSECRET.key || "",
 );
 
 const typeSafeSession = asDrizzleTable("Session", Session);

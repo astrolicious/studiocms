@@ -12,6 +12,7 @@
     "src/**/*.astro",
     "src/**/*.d.ts",
     "src/**/*.json",
-    "virt-dev.d.ts"
+    "virt-dev.d.ts",
+    "import-meta-env.d.ts"
   ],
 }

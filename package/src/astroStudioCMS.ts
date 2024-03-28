@@ -12,6 +12,7 @@ import { integrationLogger } from "./utils";
 import vercel from "@astrojs/vercel/serverless";
 import netlify from "@astrojs/netlify";
 import cloudflare from "@astrojs/cloudflare";
+import node from "@astrojs/node";
 
 // Integrations
 import robots from "astro-robots";
@@ -29,29 +30,23 @@ import {
 import { optionsSchema } from "./schemas";
 
 // Environment Variables
-const { 
-    CMS_GITHUB_CLIENT_ID, 
-    CMS_GITHUB_CLIENT_SECRET, 
-    CMS_CLOUDINARY_CLOUDNAME,
-    CMS_WATCH_INTEGRATION_HOOK 
-} = loadEnv( "all", process.cwd(), "CMS");
+const ENV = loadEnv( "all", process.cwd(), "CMS");
 
-const clientId = { 
-    name: "CMS_GITHUB_CLIENT_ID",
-    key: CMS_GITHUB_CLIENT_ID
-} 
-const clientSecret = { 
-    name: "CMS_GITHUB_CLIENT_SECRET",
-    key: CMS_GITHUB_CLIENT_SECRET
-}
+export const AUTHKEYS = { 
+    GITHUBCLIENTID: {
+        name: "CMS_GITHUB_CLIENT_ID",
+        key: ENV.CMS_GITHUB_CLIENT_ID || import.meta.env.CMS_GITHUB_CLIENT_ID || process.env.CMS_GITHUB_CLIENT_ID
+    }, 
+    GITHUBCLIENTSECRET: {
+        name: "CMS_GITHUB_CLIENT_SECRET",
+        key: ENV.CMS_GITHUB_CLIENT_SECRET || import.meta.env.CMS_GITHUB_CLIENT_SECRET || process.env.CMS_GITHUB_CLIENT_SECRET
+    }
+};
 
-const cloudinaryCloudName = {
+export const CLOUDINARYCLOUDNAME = {
     name: "CMS_CLOUDINARY_CLOUDNAME",
-    key: CMS_CLOUDINARY_CLOUDNAME
+    key: ENV.CMS_CLOUDINARY_CLOUDNAME || import.meta.env.CMS_CLOUDINARY_CLOUDNAME || process.env.CMS_CLOUDINARY_CLOUDNAME
 }
-
-const authENVs = [ clientId, clientSecret ];
-
 
 // Main Integration
 export default defineIntegration({
@@ -109,7 +104,7 @@ export default defineIntegration({
                 } = params;
 
                 // Watch Integration for changes in dev mode *TO BE REMOVED*
-                if (CMS_WATCH_INTEGRATION_HOOK) {
+                if (ENV.CMS_WATCH_INTEGRATION_HOOK) {
                     integrationLogger(logger.fork("Astro-StudioCMS-Dev"), verbose, "warn", "Watching Integration for Changes... This should only be enabled during Development of the Integration.")
                     watchIntegration(params, resolve());
                 }
@@ -183,10 +178,11 @@ export default defineIntegration({
                     } else if (authMode === "built-in") {
 
                         // Check for Required Environment Variables
-                        for (const env of authENVs) {
-                            if (!env.key) {
-                                throw new AstroError(`Astro Studio CMS requires the ${env.name} environment variable to be set. Please add this to your .env file.`);
-                            }
+                        if (!AUTHKEYS.GITHUBCLIENTID.key) {
+                            throw new AstroError(`Using the Built-in Authentication requires the ${AUTHKEYS.GITHUBCLIENTID.name} environment variable to be set. Please add this to your .env file.`);
+                        }
+                        if (!AUTHKEYS.GITHUBCLIENTSECRET.key) {
+                            throw new AstroError(`Using the Built-in Authentication requires the ${AUTHKEYS.GITHUBCLIENTSECRET.name} environment variable to be set. Please add this to your .env file.`);
                         }
 
                         // Add Authentication Middleware
@@ -262,93 +258,263 @@ export default defineIntegration({
 
                 };
 
-                // Update Image Service
+
+                // Setup and Configure Astro Adapters and Image Services based on the Adapter and Image Service Configurations
                 integrationLogger(
-                    logger, verbose, "info", "Determining Image Service Configuration"
+                    logger, verbose, "info", "Determining Astro Adapter Configuration"
                 );
 
-                if ( adapter === vercel({ imageService: true }) ) {
+                //
+                // NODE ADAPTER CONFIGS
+                //
+                if ( adapter === node({ mode: "middleware" }) ) {
                     integrationLogger(
-                        logger, verbose, "info", "Vercel Adapter Detected. Using Vercel Image Service."
+                        logger, verbose, "warn", "Node Adapter Detected. Using Node Adapter. Please note that the Astro Studio CMS is not supported in Middleware Mode. Please use the Standalone Mode for full support."
                     );
-                } else if ( 
-                    adapter === netlify() 
-                    && adapter !== netlify({ imageCDN: false })
-                    ) {
+                } else if ( adapter === node({ mode: "standalone" }) ) {
                     integrationLogger(
-                        logger, verbose, "info", "Netlify Adapter Detected. Using Netlify Image Service."
+                        logger, verbose, "info", "Node Adapter Detected. Using Node Adapter."
                     );
-                } else if ( 
-                    adapter === cloudflare({ imageService: 'cloudflare'}) 
-                    || adapter === cloudflare({ imageService: 'passthrough'}) 
-                    && adapter !== cloudflare({ imageService: 'compile' }) 
-                    ) {
-                    integrationLogger(
-                        logger, verbose, "info", "Cloudflare Adapter Detected. Using Cloudflare Image Service."
-                    );
-                } else if ( cdnPlugin === "cloudinary-js" ) {
-                    if (!cloudinaryCloudName.key){
-                        throw new AstroError(`Using the Cloudinary CDN JS SDK Plugin requires the ${cloudinaryCloudName.name} environment variable to be set. Please add this to your .env file.`);
-                    }
-                    if ( astroImageServiceConfig === "squoosh" ) {
-                        integrationLogger(logger, verbose, "info", "Using Squoosh Image Service as Fallback for Cloudinary CDN Plugin")
-                        updateConfig({
-                            image: { service: squooshImageService(), }
-                        })
-                    } else if ( astroImageServiceConfig === "sharp" ) {
-                        integrationLogger(logger, verbose, "info", "Using Sharp Image Service as Fallback for Cloudinary CDN Plugin")
-                        updateConfig({
-                            image: { service: sharpImageService(), }
-                        })
-                    } else if ( astroImageServiceConfig === "no-op" ) {
-                        integrationLogger(logger, verbose, "info", "Using No-Op Image Service as Fallback for Cloudinary CDN Plugin")
-                        updateConfig({
-                            image: { service: passthroughImageService(), }
-                        })
-                    }
-                } else if ( useUnpic && astroImageServiceConfig !== "no-op" ) {
-                    integrationLogger(logger, verbose, "info", "Loading @unpic/astro Image Service for External Images")
-                    updateConfig({
-                        image: {
-                            service: unpicImageService({
-                                placeholder: placeholder,
-                                fallbackService: fallbackService ? fallbackService : astroImageServiceConfig,
-                                layout: layout,
-                                cdnOptions: cdnOptions,
-                            }),
+
+                    // Setup Image Service
+                    if ( cdnPlugin === "cloudinary-js" ) {
+                        if (!CLOUDINARYCLOUDNAME.key){
+                            throw new AstroError(`Using the Cloudinary CDN JS SDK Plugin requires the ${CLOUDINARYCLOUDNAME.name} environment variable to be set. Please add this to your .env file.`);
                         }
-                    });
-                } else if ( useUnpic && astroImageServiceConfig === "no-op" ) {
-                    integrationLogger(logger, verbose, "info", "Loading @unpic/astro Image Service for External Images")
-                    updateConfig({
-                        image: {
-                            service: unpicImageService({
-                                placeholder: placeholder,
-                                fallbackService: fallbackService ? fallbackService : "astro",
-                                layout: layout,
-                                cdnOptions: cdnOptions,
-                            }),
+                        if ( astroImageServiceConfig === "squoosh" ) {
+                            integrationLogger(logger, verbose, "info", "Using Squoosh Image Service as Fallback for Cloudinary CDN Plugin")
+                            updateConfig({
+                                image: { service: squooshImageService(), }
+                            })
+                        } else if ( astroImageServiceConfig === "sharp" ) {
+                            integrationLogger(logger, verbose, "info", "Using Sharp Image Service as Fallback for Cloudinary CDN Plugin")
+                            updateConfig({
+                                image: { service: sharpImageService(), }
+                            })
+                        } else if ( astroImageServiceConfig === "no-op" ) {
+                            integrationLogger(logger, verbose, "info", "Using No-Op Image Service as Fallback for Cloudinary CDN Plugin")
+                            updateConfig({
+                                image: { service: passthroughImageService(), }
+                            })
                         }
-                    });
-                } else {
-                    integrationLogger(logger, verbose, "info", "@unpic/astro Image Service Disabled, using Astro Built-in Image Service.")
-                    if ( astroImageServiceConfig === "squoosh" ) {
-                        integrationLogger(logger, verbose, "info", "Using Squoosh Image Service")
+                    } else if ( useUnpic && astroImageServiceConfig !== "no-op" ) {
+                        integrationLogger(logger, verbose, "info", "Loading @unpic/astro Image Service for External Images")
                         updateConfig({
-                            image: { service: squooshImageService(), }
-                        })
-                    } else if ( astroImageServiceConfig === "sharp" ) {
-                        integrationLogger(logger, verbose, "info", "Using Sharp Image Service")
+                            image: {
+                                service: unpicImageService({
+                                    placeholder: placeholder,
+                                    fallbackService: fallbackService ? fallbackService : astroImageServiceConfig,
+                                    layout: layout,
+                                    cdnOptions: cdnOptions,
+                                }),
+                            }
+                        });
+                    } else if ( useUnpic && astroImageServiceConfig === "no-op" ) {
+                        integrationLogger(logger, verbose, "info", "Loading @unpic/astro Image Service for External Images")
                         updateConfig({
-                            image: { service: sharpImageService(), }
-                        })
-                    } else if ( astroImageServiceConfig === "no-op" ) {
-                        integrationLogger(logger, verbose, "info", "Using No-Op Image Service")
-                        updateConfig({
-                            image: { service: passthroughImageService(), }
-                        })
+                            image: {
+                                service: unpicImageService({
+                                    placeholder: placeholder,
+                                    fallbackService: fallbackService ? fallbackService : "astro",
+                                    layout: layout,
+                                    cdnOptions: cdnOptions,
+                                }),
+                            }
+                        });
+                    } else {
+                        integrationLogger(logger, verbose, "info", "@unpic/astro Image Service Disabled, using Astro Built-in Image Service.")
+                        if ( astroImageServiceConfig === "squoosh" ) {
+                            integrationLogger(logger, verbose, "info", "Using Squoosh Image Service")
+                            updateConfig({
+                                image: { service: squooshImageService(), }
+                            })
+                        } else if ( astroImageServiceConfig === "sharp" ) {
+                            integrationLogger(logger, verbose, "info", "Using Sharp Image Service")
+                            updateConfig({
+                                image: { service: sharpImageService(), }
+                            })
+                        } else if ( astroImageServiceConfig === "no-op" ) {
+                            integrationLogger(logger, verbose, "info", "Using No-Op Image Service")
+                            updateConfig({
+                                image: { service: passthroughImageService(), }
+                            })
+                        }
                     }
+
+                //
+                // VERCEL ADAPTER CONFIGS
+                //
+                } else if ( adapter === vercel() ) {
+                    integrationLogger(
+                        logger, verbose, "info", "Vercel Adapter Detected. Using Vercel Adapter."
+                    );
+
+                    // Setup Image Service
+                    if ( adapter === vercel({ imageService: true}) ) {
+                        integrationLogger(
+                            logger, verbose, "info", "Vercel Image Service Enabled. Using Vercel Image Service."
+                        );
+                    } else {
+                        integrationLogger(
+                            logger, verbose, "info", "Vercel Image Service Disabled. Using Astro Built-in Image Service."
+                        );
+                        if ( cdnPlugin === "cloudinary-js" ) {
+                            if (!CLOUDINARYCLOUDNAME.key){
+                                throw new AstroError(`Using the Cloudinary CDN JS SDK Plugin requires the ${CLOUDINARYCLOUDNAME.name} environment variable to be set. Please add this to your .env file.`);
+                            }
+                            if ( astroImageServiceConfig === "squoosh" ) {
+                                integrationLogger(logger, verbose, "info", "Using Squoosh Image Service as Fallback for Cloudinary CDN Plugin")
+                                updateConfig({
+                                    image: { service: squooshImageService(), }
+                                })
+                            } else if ( astroImageServiceConfig === "sharp" ) {
+                                integrationLogger(logger, verbose, "info", "Using Sharp Image Service as Fallback for Cloudinary CDN Plugin")
+                                updateConfig({
+                                    image: { service: sharpImageService(), }
+                                })
+                            } else if ( astroImageServiceConfig === "no-op" ) {
+                                integrationLogger(logger, verbose, "info", "Using No-Op Image Service as Fallback for Cloudinary CDN Plugin")
+                                updateConfig({
+                                    image: { service: passthroughImageService(), }
+                                })
+                            }
+                        } else if ( useUnpic && astroImageServiceConfig !== "no-op" ) {
+                            integrationLogger(logger, verbose, "info", "Loading @unpic/astro Image Service for External Images")
+                            updateConfig({
+                                image: {
+                                    service: unpicImageService({
+                                        placeholder: placeholder,
+                                        fallbackService: fallbackService ? fallbackService : astroImageServiceConfig,
+                                        layout: layout,
+                                        cdnOptions: cdnOptions,
+                                    }),
+                                }
+                            });
+                        } else if ( useUnpic && astroImageServiceConfig === "no-op" ) {
+                            integrationLogger(logger, verbose, "info", "Loading @unpic/astro Image Service for External Images")
+                            updateConfig({
+                                image: {
+                                    service: unpicImageService({
+                                        placeholder: placeholder,
+                                        fallbackService: fallbackService ? fallbackService : "astro",
+                                        layout: layout,
+                                        cdnOptions: cdnOptions,
+                                    }),
+                                }
+                            });
+                        } else {
+                            integrationLogger(logger, verbose, "info", "@unpic/astro Image Service Disabled, using Astro Built-in Image Service.")
+                            if ( astroImageServiceConfig === "squoosh" ) {
+                                integrationLogger(logger, verbose, "info", "Using Squoosh Image Service")
+                                updateConfig({
+                                    image: { service: squooshImageService(), }
+                                })
+                            } else if ( astroImageServiceConfig === "sharp" ) {
+                                integrationLogger(logger, verbose, "info", "Using Sharp Image Service")
+                                updateConfig({
+                                    image: { service: sharpImageService(), }
+                                })
+                            } else if ( astroImageServiceConfig === "no-op" ) {
+                                integrationLogger(logger, verbose, "info", "Using No-Op Image Service")
+                                updateConfig({
+                                    image: { service: passthroughImageService(), }
+                                })
+                            }
+                        }
+                    }
+
+                //
+                // NETLIFY ADAPTER CONFIGS
+                //
+                } else if ( adapter === netlify() ) {
+                    integrationLogger(
+                        logger, verbose, "info", "Netlify Adapter Detected. Using Netlify Adapter."
+                    );
+
+                    // Setup Image Service
+                    if ( adapter === netlify({ imageCDN: true }) || adapter !== netlify({ imageCDN: false })) {
+                        integrationLogger(
+                            logger, verbose, "info", "Netlify Image Service Enabled. Using Netlify Image Service."
+                        );
+                    } else if ( adapter === netlify({ imageCDN: false })) {
+                        integrationLogger(logger, verbose, "info", "Netlify Image Service Disabled. Using Built-in Image Service.")
+                        if ( cdnPlugin === "cloudinary-js" ) {
+                            if (!CLOUDINARYCLOUDNAME.key){
+                                throw new AstroError(`Using the Cloudinary CDN JS SDK Plugin requires the ${CLOUDINARYCLOUDNAME.name} environment variable to be set. Please add this to your .env file.`);
+                            }
+                            if ( astroImageServiceConfig === "squoosh" ) {
+                                integrationLogger(logger, verbose, "info", "Using Squoosh Image Service as Fallback for Cloudinary CDN Plugin")
+                                updateConfig({
+                                    image: { service: squooshImageService(), }
+                                })
+                            } else if ( astroImageServiceConfig === "sharp" ) {
+                                integrationLogger(logger, verbose, "info", "Using Sharp Image Service as Fallback for Cloudinary CDN Plugin")
+                                updateConfig({
+                                    image: { service: sharpImageService(), }
+                                })
+                            } else if ( astroImageServiceConfig === "no-op" ) {
+                                integrationLogger(logger, verbose, "info", "Using No-Op Image Service as Fallback for Cloudinary CDN Plugin")
+                                updateConfig({
+                                    image: { service: passthroughImageService(), }
+                                })
+                            }
+                        } else if ( useUnpic && astroImageServiceConfig !== "no-op" ) {
+                            integrationLogger(logger, verbose, "info", "Loading @unpic/astro Image Service for External Images")
+                            updateConfig({
+                                image: {
+                                    service: unpicImageService({
+                                        placeholder: placeholder,
+                                        fallbackService: fallbackService ? fallbackService : astroImageServiceConfig,
+                                        layout: layout,
+                                        cdnOptions: cdnOptions,
+                                    }),
+                                }
+                            });
+                        } else if ( useUnpic && astroImageServiceConfig === "no-op" ) {
+                            integrationLogger(logger, verbose, "info", "Loading @unpic/astro Image Service for External Images")
+                            updateConfig({
+                                image: {
+                                    service: unpicImageService({
+                                        placeholder: placeholder,
+                                        fallbackService: fallbackService ? fallbackService : "astro",
+                                        layout: layout,
+                                        cdnOptions: cdnOptions,
+                                    }),
+                                }
+                            });
+                        } else {
+                            integrationLogger(logger, verbose, "info", "@unpic/astro Image Service Disabled, using Astro Built-in Image Service.")
+                            if ( astroImageServiceConfig === "squoosh" ) {
+                                integrationLogger(logger, verbose, "info", "Using Squoosh Image Service")
+                                updateConfig({
+                                    image: { service: squooshImageService(), }
+                                })
+                            } else if ( astroImageServiceConfig === "sharp" ) {
+                                integrationLogger(logger, verbose, "info", "Using Sharp Image Service")
+                                updateConfig({
+                                    image: { service: sharpImageService(), }
+                                })
+                            } else if ( astroImageServiceConfig === "no-op" ) {
+                                integrationLogger(logger, verbose, "info", "Using No-Op Image Service")
+                                updateConfig({
+                                    image: { service: passthroughImageService(), }
+                                })
+                            }
+                        }
+                    }
+
+                //
+                // CLOUDFLARE ADAPTER CONFIGS
+                //
+                } else if ( adapter === cloudflare() ) {
+                    integrationLogger(
+                        logger, verbose, "info", "Cloudflare Adapter Detected. Using Cloudflare Adapter."
+                    );
+
+                    // WAITING FOR V10 REALEASE TO ADD CLOUDFLARE ADAPTER AND IMAGE SERVICE
+
                 }
+
 
                 // Robots.txt Integration
                 if ( astroRobots ) {

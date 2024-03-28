@@ -32,6 +32,9 @@ importers:
       '@astrojs/netlify':
         specifier: ^5.2.0
         version: 5.2.0(astro@4.5.9)
+      '@astrojs/node':
+        specifier: ^8.2.5
+        version: 8.2.5(astro@4.5.9)
       '@astrojs/rss':
         specifier: ^4.0.5
         version: 4.0.5

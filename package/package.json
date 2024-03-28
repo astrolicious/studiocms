@@ -66,6 +66,7 @@
     "@astrojs/vercel": "^7.3.6",
     "@astrojs/netlify": "^5.2.0",
     "@astrojs/cloudflare": "^9.2.0",
+    "@astrojs/node": "^8.2.5",
     "astro": ">=4.5.9"
   },
   "peerDependenciesMeta": {
@@ -76,6 +77,9 @@
       "optional": true
     },
     "@astrojs/cloudflare": {
+      "optional": true
+    },
+    "@astrojs/node": {
       "optional": true
     }
   },
