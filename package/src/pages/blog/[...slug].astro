@@ -35,7 +35,7 @@ type Props = {
 	post: typeof Blog.$inferSelect;
 };
 
-async function contentRenderer() {
+function contentRenderer() {
     if (Config.contentRenderer === 'markdoc') {
         return renderMarkDoc(post.content);
     }
