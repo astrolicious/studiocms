@@ -30,22 +30,22 @@ import {
 import { optionsSchema } from "./schemas";
 
 // Environment Variables
-const ENV = loadEnv( "all", process.cwd(), "CMS");
+const env = loadEnv( "all", process.cwd(), "CMS");
 
 export const AUTHKEYS = { 
     GITHUBCLIENTID: {
         name: "CMS_GITHUB_CLIENT_ID",
-        key: ENV.CMS_GITHUB_CLIENT_ID || import.meta.env.CMS_GITHUB_CLIENT_ID || process.env.CMS_GITHUB_CLIENT_ID
+        key: env.CMS_GITHUB_CLIENT_ID || import.meta.env.CMS_GITHUB_CLIENT_ID || process.env.CMS_GITHUB_CLIENT_ID
     }, 
     GITHUBCLIENTSECRET: {
         name: "CMS_GITHUB_CLIENT_SECRET",
-        key: ENV.CMS_GITHUB_CLIENT_SECRET || import.meta.env.CMS_GITHUB_CLIENT_SECRET || process.env.CMS_GITHUB_CLIENT_SECRET
+        key: env.CMS_GITHUB_CLIENT_SECRET || import.meta.env.CMS_GITHUB_CLIENT_SECRET || process.env.CMS_GITHUB_CLIENT_SECRET
     }
 };
 
 export const CLOUDINARYCLOUDNAME = {
     name: "CMS_CLOUDINARY_CLOUDNAME",
-    key: ENV.CMS_CLOUDINARY_CLOUDNAME || import.meta.env.CMS_CLOUDINARY_CLOUDNAME || process.env.CMS_CLOUDINARY_CLOUDNAME
+    key: env.CMS_CLOUDINARY_CLOUDNAME || import.meta.env.CMS_CLOUDINARY_CLOUDNAME || process.env.CMS_CLOUDINARY_CLOUDNAME
 }
 
 // Main Integration
@@ -104,7 +104,7 @@ export default defineIntegration({
                 } = params;
 
                 // Watch Integration for changes in dev mode *TO BE REMOVED*
-                if (ENV.CMS_WATCH_INTEGRATION_HOOK) {
+                if (env.CMS_WATCH_INTEGRATION_HOOK) {
                     integrationLogger(logger.fork("Astro-StudioCMS-Dev"), verbose, "warn", "Watching Integration for Changes... This should only be enabled during Development of the Integration.")
                     watchIntegration(params, resolve());
                 }
