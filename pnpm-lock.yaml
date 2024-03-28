@@ -24,6 +24,28 @@ importers:
         specifier: 5.4.2
         version: 5.4.2
 
+  cftest:
+    dependencies:
+      '@astrojs/cloudflare':
+        specifier: 10.0.0
+        version: 10.0.0(astro@4.5.12)
+      '@astrojs/db':
+        specifier: ^0.9.8
+        version: 0.9.8
+      '@astrolicious/studiocms':
+        specifier: workspace:*
+        version: link:../package
+      astro:
+        specifier: ^4.5.12
+        version: 4.5.12(@types/node@20.11.30)(typescript@5.4.3)
+    devDependencies:
+      '@types/node':
+        specifier: ^20.11.30
+        version: 20.11.30
+      typescript:
+        specifier: ^5.4.3
+        version: 5.4.3
+
   package:
     dependencies:
       '@astrojs/cloudflare':
@@ -158,7 +180,7 @@ packages:
       '@astrojs/internal-helpers': 0.3.0
       '@astrojs/underscore-redirects': 0.3.3
       '@cloudflare/workers-types': 4.20240320.1
-      astro: 4.5.12(@types/node@20.11.28)(typescript@5.4.3)
+      astro: 4.5.12(@types/node@20.11.30)(typescript@5.4.3)
       esbuild: 0.19.12
       miniflare: 3.20240320.0
       tiny-glob: 0.2.9
@@ -7180,7 +7202,7 @@ packages:
       vite:
         optional: true
     dependencies:
-      vite: 5.1.6(@types/node@20.11.28)
+      vite: 5.1.6(@types/node@20.11.30)
     dev: false
 
   /wcwidth@1.0.1:

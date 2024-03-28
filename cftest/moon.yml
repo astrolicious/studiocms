@@ -1,0 +1,31 @@
+tags: ['astro']
+
+toolchain:
+  typescript:
+    syncProjectReferences: false
+
+dependsOn:
+- package
+tasks:
+  astro:
+    command: astro
+    platform: node
+  dev:
+    command: 
+      - astro 
+      - dev
+      - --host
+    local: true
+    platform: node
+  start:
+    command: 
+      - astro 
+      - dev
+    local: true
+    platform: node
+  build:
+    command: 
+      - astro 
+      - build
+    local: true
+    platform: node
