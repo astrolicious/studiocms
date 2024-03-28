@@ -7,8 +7,8 @@ import { GitHub } from "arctic";
 import { Session, User } from "../db/tables";
 
 export const github = new GitHub(
-	import.meta.env.CMS_GITHUB_CLIENT_ID,
-	import.meta.env.CMS_GITHUB_CLIENT_SECRET,
+	import.meta.env.CMS_GITHUB_CLIENT_ID || process.env.CMS_GITHUB_CLIENT_ID,
+	import.meta.env.CMS_GITHUB_CLIENT_SECRET || process.env.CMS_GITHUB_CLIENT_SECRET,
 );
 
 const typeSafeSession = asDrizzleTable("Session", Session);
