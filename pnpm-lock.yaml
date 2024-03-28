@@ -25,28 +25,28 @@ importers:
     dependencies:
       '@astrojs/cloudflare':
         specifier: ^10.0.0
-        version: 10.0.0(astro@4.5.11)
+        version: 10.0.0(astro@4.5.12)
       '@astrojs/db':
-        specifier: '>=0.9.7'
-        version: 0.9.7
+        specifier: '>=0.9.8'
+        version: 0.9.8
       '@astrojs/netlify':
         specifier: ^5.2.0
-        version: 5.2.0(astro@4.5.11)
+        version: 5.2.0(astro@4.5.12)
       '@astrojs/node':
         specifier: ^8.2.5
-        version: 8.2.5(astro@4.5.11)
+        version: 8.2.5(astro@4.5.12)
       '@astrojs/rss':
         specifier: ^4.0.5
         version: 4.0.5
       '@astrojs/vercel':
-        specifier: ^7.3.6
-        version: 7.3.6(astro@4.5.11)
+        specifier: ^7.5.0
+        version: 7.5.0(astro@4.5.12)
       '@cloudinary/url-gen':
         specifier: ^1.19.0
         version: 1.19.0
       '@inox-tools/sitemap-ext':
         specifier: ^0.2.3
-        version: 0.2.3(@astrojs/db@0.9.7)(@types/node@20.11.28)(astro@4.5.11)
+        version: 0.2.3(@astrojs/db@0.9.8)(@types/node@20.11.28)(astro@4.5.12)
       '@lucia-auth/adapter-drizzle':
         specifier: ^1.0.4
         version: 1.0.4(lucia@3.1.1)
@@ -58,16 +58,16 @@ importers:
         version: 1.2.1
       '@unpic/astro':
         specifier: ^0.0.44
-        version: 0.0.44(astro@4.5.11)
+        version: 0.0.44(astro@4.5.12)
       arctic:
         specifier: ^1.2.1
         version: 1.2.1
       astro:
-        specifier: '>=4.5.11'
-        version: 4.5.11(@types/node@20.11.28)(typescript@5.4.3)
+        specifier: '>=4.5.12'
+        version: 4.5.12(@types/node@20.11.28)(typescript@5.4.3)
       astro-integration-kit:
         specifier: 0.8.0
-        version: 0.8.0(@astrojs/db@0.9.7)(astro@4.5.11)
+        version: 0.8.0(@astrojs/db@0.9.8)(astro@4.5.12)
       astro-robots:
         specifier: ^2.0.1
         version: 2.0.1
@@ -118,17 +118,17 @@ importers:
   playground:
     dependencies:
       '@astrojs/db':
-        specifier: ^0.9.7
-        version: 0.9.7
+        specifier: ^0.9.8
+        version: 0.9.8
       '@astrojs/node':
         specifier: ^8.2.5
-        version: 8.2.5(astro@4.5.11)
+        version: 8.2.5(astro@4.5.12)
       '@astrolicious/studiocms':
         specifier: workspace:*
         version: link:../package
       astro:
-        specifier: ^4.5.11
-        version: 4.5.11(@types/node@20.11.30)(typescript@5.4.3)
+        specifier: ^4.5.12
+        version: 4.5.12(@types/node@20.11.30)(typescript@5.4.3)
     devDependencies:
       '@types/node':
         specifier: ^20.11.30
@@ -147,7 +147,7 @@ packages:
       '@jridgewell/trace-mapping': 0.3.25
     dev: false
 
-  /@astrojs/cloudflare@10.0.0(astro@4.5.11):
+  /@astrojs/cloudflare@10.0.0(astro@4.5.12):
     resolution: {integrity: sha512-EnkD9pLBjX2OEUFFTi1dBRsekk0cYdt+Q5SGbmrvr987WajsKHJ1yFt5BuTJ3IrO6zunyQnlmdMdzXM/5CzWeA==}
     peerDependencies:
       astro: ^4.2.0
@@ -155,7 +155,7 @@ packages:
       '@astrojs/internal-helpers': 0.3.0
       '@astrojs/underscore-redirects': 0.3.3
       '@cloudflare/workers-types': 4.20240320.1
-      astro: 4.5.11(@types/node@20.11.28)(typescript@5.4.3)
+      astro: 4.5.12(@types/node@20.11.28)(typescript@5.4.3)
       esbuild: 0.19.12
       miniflare: 3.20240320.0
       tiny-glob: 0.2.9
@@ -170,8 +170,8 @@ packages:
     resolution: {integrity: sha512-XpC8MAaWjD1ff6/IfkRq/5k1EFj6zhCNqXRd5J43SVJEBj/Bsmizkm8N0xOYscGcDFQkRgEw6/eKnI5x/1l6aA==}
     dev: false
 
-  /@astrojs/db@0.9.7:
-    resolution: {integrity: sha512-JfdbArFg49CIb11Q7W0RYe4nlOc/yC8grAsSzHoLNtKoD9XEtHyxmeKqtsg/JeCZ0HzeQGEE4gOwN2WIDsr3qw==}
+  /@astrojs/db@0.9.8:
+    resolution: {integrity: sha512-wTeJ6KcJTv6EOjinu6BkVwldJvSb8jUgZWITc6qeF/6Hrq33esnAa3h6N8wSuW+WCWf1CqNEGXMi7FcAs3hMyA==}
     dependencies:
       '@libsql/client': 0.5.6
       async-listen: 3.0.1
@@ -219,6 +219,10 @@ packages:
     resolution: {integrity: sha512-tGmHvrhpzuz0JBHaJX8GywN9g4rldVNHtkoVDC3m/DdzBO70jGoVuc0uuNVglRYnsdwkbG0K02Iw3nOOR3/Y4g==}
     dev: false
 
+  /@astrojs/internal-helpers@0.4.0:
+    resolution: {integrity: sha512-6B13lz5n6BrbTqCTwhXjJXuR1sqiX/H6rTxzlXx+lN1NnV4jgnq/KJldCQaUWJzPL5SiWahQyinxAbxQtwgPHA==}
+    dev: false
+
   /@astrojs/markdown-remark@4.3.2:
     resolution: {integrity: sha512-4Oa4VaYiBd0MatB+rWIU/0A8pZH/sK3c2QkRYb+OO2lPl+qzevJtWaZY8hAQc4qurIOlRdn6B6ofDAGhWw+DSg==}
     dependencies:
@@ -244,23 +248,23 @@ packages:
       - supports-color
     dev: false
 
-  /@astrojs/netlify@5.2.0(astro@4.5.11):
+  /@astrojs/netlify@5.2.0(astro@4.5.12):
     resolution: {integrity: sha512-NFg3AdUToV7kbY5w2yHZY5UskqfsmIo9i0zIzQ2GgUcTwjyZCekZ89DLtKCJ1jFVle+QXJGsJAS61EYyptBDBQ==}
     peerDependencies:
       astro: ^4.2.0
     dependencies:
       '@astrojs/underscore-redirects': 0.3.3
       '@netlify/functions': 2.6.0
-      astro: 4.5.11(@types/node@20.11.28)(typescript@5.4.3)
+      astro: 4.5.12(@types/node@20.11.28)(typescript@5.4.3)
       esbuild: 0.19.12
     dev: false
 
-  /@astrojs/node@8.2.5(astro@4.5.11):
+  /@astrojs/node@8.2.5(astro@4.5.12):
     resolution: {integrity: sha512-IdVD4dBNyg+ScmCATZ0FM7vNLAHq0TSdiJ3LpR4jcWIUhpN1ps5Jg+9CfzMaLmCCe/SJUZejK5EnzqUJdnGYyg==}
     peerDependencies:
       astro: ^4.2.0
     dependencies:
-      astro: 4.5.11(@types/node@20.11.28)(typescript@5.4.3)
+      astro: 4.5.12(@types/node@20.11.28)(typescript@5.4.3)
       send: 0.18.0
       server-destroy: 1.0.1
     transitivePeerDependencies:
@@ -307,15 +311,16 @@ packages:
     resolution: {integrity: sha512-qDAKhFO4M1KzP7mxoJfiehf8oyf3EB158MxAa6z10NeD2pR3o4K3LlOQI8CfJgXE+BDBQcnaLvVCg/Mz/Gkg4Q==}
     dev: false
 
-  /@astrojs/vercel@7.3.6(astro@4.5.11):
-    resolution: {integrity: sha512-dQj3cvTOsgOj/V8EVya16X1L3PCJ9aw0rWCggsFcERI72qEDXctd7l+K/iZC1dOvsM3k6VhwiacwsETowsctAA==}
+  /@astrojs/vercel@7.5.0(astro@4.5.12):
+    resolution: {integrity: sha512-RYFZNHkfNgFNb41nblG26ubw5924hAjLYs+Bpp4kttcsYJAX/wavIfDbfZQ/XesDTKwIH+Gi/+3c5bldZePFDA==}
     peerDependencies:
       astro: ^4.2.0
     dependencies:
-      '@astrojs/internal-helpers': 0.3.0
+      '@astrojs/internal-helpers': 0.4.0
       '@vercel/analytics': 1.2.2
+      '@vercel/edge': 1.1.1
       '@vercel/nft': 0.26.4
-      astro: 4.5.11(@types/node@20.11.28)(typescript@5.4.3)
+      astro: 4.5.12(@types/node@20.11.28)(typescript@5.4.3)
       esbuild: 0.19.12
       fast-glob: 3.3.2
       set-cookie-parser: 2.6.0
@@ -1348,14 +1353,14 @@ packages:
     engines: {node: '>=14'}
     dev: false
 
-  /@inox-tools/aik-route-config@0.3.1(@types/node@20.11.28)(astro-integration-kit@0.8.0)(astro@4.5.11):
+  /@inox-tools/aik-route-config@0.3.1(@types/node@20.11.28)(astro-integration-kit@0.8.0)(astro@4.5.12):
     resolution: {integrity: sha512-wKcXuonacOxYf1w2lGoSKmQZlhp0CRzvh/uiowTHFHK+iqlsVpOhlsf5sIS3E+wiiUbwpD8CCUVxijG07GxyKg==}
     peerDependencies:
       astro: ^4.3.5
       astro-integration-kit: ~0.8
     dependencies:
-      astro: 4.5.11(@types/node@20.11.28)(typescript@5.4.3)
-      astro-integration-kit: 0.8.0(@astrojs/db@0.9.7)(astro@4.5.11)
+      astro: 4.5.12(@types/node@20.11.28)(typescript@5.4.3)
+      astro-integration-kit: 0.8.0(@astrojs/db@0.9.8)(astro@4.5.12)
       recast: 0.23.6
       vite: 5.1.6(@types/node@20.11.28)
     transitivePeerDependencies:
@@ -1368,15 +1373,15 @@ packages:
       - terser
     dev: false
 
-  /@inox-tools/sitemap-ext@0.2.3(@astrojs/db@0.9.7)(@types/node@20.11.28)(astro@4.5.11):
+  /@inox-tools/sitemap-ext@0.2.3(@astrojs/db@0.9.8)(@types/node@20.11.28)(astro@4.5.12):
     resolution: {integrity: sha512-IdNJ3XYvPYVxeytnV3HPuOB4bwoD/THheu3HD9eBIUDaPRNb9ArkIxZEj457aQt8hq3VzrXAQiD3gOA9wiuILg==}
     peerDependencies:
       astro: ^4.3.5
     dependencies:
       '@astrojs/sitemap': 3.1.1
-      '@inox-tools/aik-route-config': 0.3.1(@types/node@20.11.28)(astro-integration-kit@0.8.0)(astro@4.5.11)
-      astro: 4.5.11(@types/node@20.11.28)(typescript@5.4.3)
-      astro-integration-kit: 0.8.0(@astrojs/db@0.9.7)(astro@4.5.11)
+      '@inox-tools/aik-route-config': 0.3.1(@types/node@20.11.28)(astro-integration-kit@0.8.0)(astro@4.5.12)
+      astro: 4.5.12(@types/node@20.11.28)(typescript@5.4.3)
+      astro-integration-kit: 0.8.0(@astrojs/db@0.9.8)(astro@4.5.12)
       sitemap: 7.1.1
     transitivePeerDependencies:
       - '@astrojs/db'
@@ -2226,7 +2231,7 @@ packages:
     resolution: {integrity: sha512-zuVdFrMJiuCDQUMCzQaD6KL28MjnqqN8XnAqiEq9PNm/hCPTSGfrXCOfwj1ow4LFb/tNymJPwsNbVePc1xFqrQ==}
     dev: false
 
-  /@unpic/astro@0.0.44(astro@4.5.11):
+  /@unpic/astro@0.0.44(astro@4.5.12):
     resolution: {integrity: sha512-U+Apd0ozv6xhPfuRiTSJlVcSLiY7vo7LCNohR6k4Xhz11El4fMT336Bp8xRplzdmR8duVmdCqIr3F2RlDTPOzw==}
     peerDependencies:
       astro: ^2.0.0 || ^3.0.0 || ^4.0.0
@@ -2234,7 +2239,7 @@ packages:
       '@unpic/core': 0.0.47
       '@unpic/pixels': 1.2.2
       '@unpic/placeholder': 0.1.2
-      astro: 4.5.11(@types/node@20.11.28)(typescript@5.4.3)
+      astro: 4.5.12(@types/node@20.11.28)(typescript@5.4.3)
       blurhash: 2.0.5
     dev: false
 
@@ -2270,6 +2275,10 @@ packages:
         optional: true
     dependencies:
       server-only: 0.0.1
+    dev: false
+
+  /@vercel/edge@1.1.1:
+    resolution: {integrity: sha512-NtKiIbn9Cq6HWGy+qRudz28mz5nxfOJWls5Pnckjw1yCfSX8rhXdvY/il3Sy3Zd5n/sKCM2h7VSCCpJF/oaDrQ==}
     dev: false
 
   /@vercel/nft@0.26.4:
@@ -2468,7 +2477,7 @@ packages:
       tslib: 2.6.2
     dev: false
 
-  /astro-integration-kit@0.8.0(@astrojs/db@0.9.7)(astro@4.5.11):
+  /astro-integration-kit@0.8.0(@astrojs/db@0.9.8)(astro@4.5.12):
     resolution: {integrity: sha512-YTdSYrE6xrYpYWZghUUhsTs6Mt1H+/Mucv2VUPfhHoeY8IS9XbpA2adFEBRMd4n+sFd8W490gCUtjmWxnhEs9Q==}
     peerDependencies:
       '@astrojs/db': ^0.9.0
@@ -2498,8 +2507,8 @@ packages:
       vue:
         optional: true
     dependencies:
-      '@astrojs/db': 0.9.7
-      astro: 4.5.11(@types/node@20.11.28)(typescript@5.4.3)
+      '@astrojs/db': 0.9.8
+      astro: 4.5.12(@types/node@20.11.28)(typescript@5.4.3)
       pathe: 1.1.2
       recast: 0.23.6
     dev: false
@@ -2508,13 +2517,13 @@ packages:
     resolution: {integrity: sha512-1yBXF7uEcX4kyKfuzGn1fwxkuhY+ID/WA0gg9VgtD0CmOlsPy48tmVSpfN10gwN8h4/qhfnAOA2h8avxmgaG4A==}
     dev: false
 
-  /astro@4.5.11(@types/node@20.11.28)(typescript@5.4.3):
-    resolution: {integrity: sha512-PS3b4VvGmY3Z5V+3fHGZF2g2cZEd9TRDQzgq9mO9RkA3Gcp/K/O0vl3Ffkj4jg+RFGhunTpvv1knkSsbE0f+rw==}
+  /astro@4.5.12(@types/node@20.11.28)(typescript@5.4.3):
+    resolution: {integrity: sha512-xIJcFI2hbyV8+h5pWjL7SKD1jIP0K01fYVAH+gdAt0mJaXy+u8Mj+goD0cPlK6sEaykR+7zxQLYGKJ44U4qarg==}
     engines: {node: '>=18.14.1', npm: '>=6.14.0'}
     hasBin: true
     dependencies:
       '@astrojs/compiler': 2.7.0
-      '@astrojs/internal-helpers': 0.3.0
+      '@astrojs/internal-helpers': 0.4.0
       '@astrojs/markdown-remark': 4.3.2
       '@astrojs/telemetry': 3.0.4
       '@babel/core': 7.24.3
@@ -2589,13 +2598,13 @@ packages:
       - typescript
     dev: false
 
-  /astro@4.5.11(@types/node@20.11.30)(typescript@5.4.3):
-    resolution: {integrity: sha512-PS3b4VvGmY3Z5V+3fHGZF2g2cZEd9TRDQzgq9mO9RkA3Gcp/K/O0vl3Ffkj4jg+RFGhunTpvv1knkSsbE0f+rw==}
+  /astro@4.5.12(@types/node@20.11.30)(typescript@5.4.3):
+    resolution: {integrity: sha512-xIJcFI2hbyV8+h5pWjL7SKD1jIP0K01fYVAH+gdAt0mJaXy+u8Mj+goD0cPlK6sEaykR+7zxQLYGKJ44U4qarg==}
     engines: {node: '>=18.14.1', npm: '>=6.14.0'}
     hasBin: true
     dependencies:
       '@astrojs/compiler': 2.7.0
-      '@astrojs/internal-helpers': 0.3.0
+      '@astrojs/internal-helpers': 0.4.0
       '@astrojs/markdown-remark': 4.3.2
       '@astrojs/telemetry': 3.0.4
       '@babel/core': 7.24.3
