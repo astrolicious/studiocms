@@ -48,7 +48,7 @@
     "astro-integration-kit": "0.8.0",
     "astro-robots": "^2.0.1",
     "lucia": "^3.1.1",
-    "marked": "^11.0.1",
+    "marked": "^12.0.1",
     "marked-alert": "^2.0.1",
     "marked-emoji": "^1.3.2",
     "marked-footnote": "^1.2.2",
