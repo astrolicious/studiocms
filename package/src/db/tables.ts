@@ -61,12 +61,6 @@ export const SiteConfig = defineTable({
 	},
 });
 
-export const Admins = defineTable({
-	columns: {
-		GitHubUsername: column.text(),
-	},
-});
-
 export const Permissions = defineTable({
 	columns: {
 		username: column.text(),
