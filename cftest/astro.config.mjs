@@ -11,7 +11,8 @@ export default defineConfig({
 		imageService: "passthrough",
 		routes: {
 			extend: {
-				include: [{ pattern: "/start" }],
+				include: [{ pattern: "/" }],
+				exclude: [{ pattern: "/_astro/*" }],
 			},
 		},
 		platformProxy: {
