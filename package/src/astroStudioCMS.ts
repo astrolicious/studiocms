@@ -250,11 +250,11 @@ export default defineIntegration({
                 //
                 // NODE ADAPTER CONFIGS
                 //
-                if ( adapter === node({ mode: "middleware" }) ) {
+                if ( adapter?.name === "@astrojs/node" && adapter === node({ mode: "middleware" }) ) {
                     integrationLogger(
                         logger, verbose, "warn", "Node Adapter Detected. Using Node Adapter. Please note that the Astro Studio CMS is not supported in Middleware Mode. Please use the Standalone Mode for full support."
                     );
-                } else if ( adapter === node({ mode: "standalone" }) ) {
+                } else if ( adapter?.name === "@astrojs/node" && adapter === node({ mode: "standalone" }) ) {
                     integrationLogger(
                         logger, verbose, "info", "Node Adapter Detected. Using Node Adapter."
                     );
@@ -327,7 +327,7 @@ export default defineIntegration({
                 //
                 // VERCEL ADAPTER CONFIGS
                 //
-                } else if ( adapter === vercel() ) {
+                } else if ( adapter?.name === "@astrojs/vercel/serverless" ) {
                     integrationLogger(
                         logger, verbose, "info", "Vercel Adapter Detected. Using Vercel Adapter."
                     );
@@ -409,7 +409,7 @@ export default defineIntegration({
                 //
                 // NETLIFY ADAPTER CONFIGS
                 //
-                } else if ( adapter === netlify() ) {
+                } else if ( adapter?.name === "@astrojs/netlify" ) {
                     integrationLogger(
                         logger, verbose, "info", "Netlify Adapter Detected. Using Netlify Adapter."
                     );
