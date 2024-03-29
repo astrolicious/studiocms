@@ -180,7 +180,7 @@ export default defineIntegration({
                             order: "post",
                         });
                         injectRoute({ 
-                            pattern: `${base}dashboard/`, 
+                            pattern: `${base}dashboard`, 
                             entrypoint: resolve('./pages/dashboard/index.astro'), 
                         });
                         injectRoute({ 
