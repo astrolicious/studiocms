@@ -2,10 +2,10 @@
 import sitemap from 'sitemap-ext:config';
 // @ts-expect-error - This is a missing type definition for the `astro:db` import since its a virtual module during Astro Runtime
 import { Blog, db, eq, asc } from 'astro:db';
+import { markdown } from '../../utils/marked';
 import BlogPost from '../../layouts/BlogPost.astro';
-// import { markdown } from '../../utils/marked';
-// import Config from 'virtual:astro-studio-cms:config';
-// import { renderMarkDoc } from '../../utils/markdoc';
+import Config from 'virtual:astro-studio-cms:config';
+import { renderMarkDoc } from '../../utils/markdoc';
 
 // sitemap(false);
 
@@ -29,13 +29,13 @@ type Props = {
 	post: typeof Blog.$inferSelect;
 };
 
-// function contentRenderer() {
-//     if (Config.contentRenderer === 'markdoc') {
-//         return renderMarkDoc(post.content);
-//     }
-//     return markdown(post.content);
+function contentRenderer() {
+    if (Config.contentRenderer === 'markdoc') {
+        return renderMarkDoc(post.content);
+    }
+    return markdown(post.content);
 
-// }
+}
 
 ---
 <BlogPost 
@@ -44,14 +44,8 @@ type Props = {
 	heroImage={post.heroImage} 
 	publishedAt={post.publishedAt} 
 	updatedAt={post.updatedAt} >
-	<!-- <Fragment 
-		set:html={contentRenderer()} /> -->
-  <div id="content"></div>
-  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-  <script>
-    document.getElementById('content').innerHTML =
-      marked.parse('# Marked in the browser\n\nRendered by **marked**.');
-  </script>
+	<Fragment 
+		set:html={contentRenderer()} />
 </BlogPost>
 
 <style>
