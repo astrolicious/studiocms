@@ -5,7 +5,7 @@ import { // Tools and Utilities
 } from "astro-integration-kit";
 import "astro-integration-kit/types/db";
 import { AstroError } from "astro/errors";
-import { loadEnv } from "vite";
+// import { loadEnv } from "vite";
 import { integrationLogger } from "./utils";
 
 // Adapters
@@ -32,27 +32,24 @@ import {
 import { optionsSchema } from "./schemas";
 
 // Environment Variables
-const env = loadEnv( "all", process.cwd(), "CMS");
+// const env = loadEnv( "all", process.cwd(), "CMS");
 
 export const AUTHKEYS = { 
     GITHUBCLIENTID: {
         N: "CMS_GITHUB_CLIENT_ID",
-        KEY: env.CMS_GITHUB_CLIENT_ID 
-        || import.meta.env.CMS_GITHUB_CLIENT_ID 
+        KEY: import.meta.env.CMS_GITHUB_CLIENT_ID 
         || process.env.CMS_GITHUB_CLIENT_ID
     }, 
     GITHUBCLIENTSECRET: {
         N: "CMS_GITHUB_CLIENT_SECRET",
-        KEY: env.CMS_GITHUB_CLIENT_SECRET 
-        || import.meta.env.CMS_GITHUB_CLIENT_SECRET 
+        KEY: import.meta.env.CMS_GITHUB_CLIENT_SECRET 
         || process.env.CMS_GITHUB_CLIENT_SECRET
     }
 };
 
 export const CLOUDINARYCLOUDNAME = {
     N: "CMS_CLOUDINARY_CLOUDNAME",
-    KEY: env.CMS_CLOUDINARY_CLOUDNAME 
-    || import.meta.env.CMS_CLOUDINARY_CLOUDNAME 
+    KEY: import.meta.env.CMS_CLOUDINARY_CLOUDNAME 
     || process.env.CMS_CLOUDINARY_CLOUDNAME
 }
 
@@ -86,10 +83,10 @@ export default defineIntegration({
                 } = params;
 
                 // Watch Integration for changes in dev mode *TO BE REMOVED*
-                if (env.CMS_WATCH_INTEGRATION_HOOK) {
-                    integrationLogger(logger.fork("Astro-StudioCMS-Dev"), verbose, "warn", "Watching Integration for Changes... This should only be enabled during Development of the Integration.")
-                    watchIntegration(params, resolve());
-                }
+                // if (env.CMS_WATCH_INTEGRATION_HOOK) {
+                //     integrationLogger(logger.fork("Astro-StudioCMS-Dev"), verbose, "warn", "Watching Integration for Changes... This should only be enabled during Development of the Integration.")
+                //     watchIntegration(params, resolve());
+                // }
 
                 // Check for SSR Mode
                 if (output !== "server" ) {
