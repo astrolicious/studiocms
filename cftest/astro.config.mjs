@@ -11,7 +11,7 @@ export default defineConfig({
 		imageService: "passthrough",
 		routes: {
 			extend: {
-				exclude: [{ pattern: '/*' }],
+				exclude: [{ pattern: '/' }],
 			},
 		},
 		platformProxy: {

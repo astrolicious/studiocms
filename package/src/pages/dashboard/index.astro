@@ -1,10 +1,10 @@
 ---
-import sitemap from 'sitemap-ext:config';
+// import sitemap from 'sitemap-ext:config';
 import Default from "../../layouts/Default.astro"
 import type { Locals } from "./locals";
 import { rankCheck } from '../../utils/rankcheck';
 
-sitemap(false); // opt-out
+// sitemap(false); // opt-out
 
 const locals = Astro.locals as Locals;
 const isLoggedIn = locals.isLoggedIn;
