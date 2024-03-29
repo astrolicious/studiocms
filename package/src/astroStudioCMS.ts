@@ -490,7 +490,7 @@ export default defineIntegration({
                 //
                 // CLOUDFLARE ADAPTER CONFIGS
                 //
-                } else if ( adapter === cloudflare() ) {
+                } else if ( adapter?.name === "@astrojs/cloudflare" ) {
                     integrationLogger(
                         logger, verbose, "info", "Cloudflare Adapter Detected. Using Cloudflare Adapter."
                     );
@@ -570,8 +570,6 @@ export default defineIntegration({
 
                 }
 
-
-                if ( adapter !== cloudflare()) {
                     // Robots.txt Integration
                     if ( astroRobots ) {
                         if ( !hasIntegration(params, { name: "astro-robots-txt" }) 
@@ -597,7 +595,6 @@ export default defineIntegration({
                             })});
                         }
                     }
-                }
 
                 integrationLogger(
                     logger, verbose, "info", "Astro Studio CMS Setup Complete!"
