@@ -172,10 +172,10 @@ export default defineIntegration({
                         integrationLogger(
                             logger, verbose, "info", "Adding Authentication Middleware"
                         );
-                        // addMiddleware({
-                        //     entrypoint: resolve('./middleware/index.ts'),
-                        //     order: "post",
-                        // });
+                        addMiddleware({
+                            entrypoint: resolve('./middleware/index.ts'),
+                            order: "post",
+                        });
                         injectRoute({ 
                             pattern: `${base}dashboard/`, 
                             entrypoint: resolve('./pages/dashboard/index.astro'), 
