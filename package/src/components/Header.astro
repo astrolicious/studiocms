@@ -4,6 +4,9 @@ import { SiteConfig, db } from 'astro:db';
 import HeaderLink from './HeaderLink.astro';
 import profileImg from '../assets/profile.webp'
 import type { Locals } from '../pages/dashboard/locals';
+import Config from 'virtual:astro-studio-cms:config';
+
+const { authConfig: { mode } } = Config;
 
 const locals = Astro.locals as Locals;
 
@@ -25,8 +28,7 @@ const baseURL = import.meta.env.BASE_URL;
 			<HeaderLink href=`${baseURL}about`>About</HeaderLink>
 		</div>
 		<div class="profile-link">
-			{
-				isLoggedIn ? (
+			{ mode !== "disable" && isLoggedIn ? (
 					<a href={`${baseURL}dashboard`} title="User Dashboard">
 					<img
 						src={userProfile.avatar}
