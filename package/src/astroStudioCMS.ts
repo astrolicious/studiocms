@@ -12,7 +12,7 @@ import { integrationLogger } from "./utils";
 import vercel from "@astrojs/vercel/serverless";
 import netlify from "@astrojs/netlify";
 import cloudflare from "@astrojs/cloudflare";
-import node from "@astrojs/node";
+// import node from "@astrojs/node";
 
 // Integrations
 import robots from "astro-robots";
@@ -62,7 +62,7 @@ export default defineIntegration({
     optionsSchema,
     setup({ name, options, options: { verbose, dbStartPage, 
             authConfig: { mode: authMode }, 
-            includedIntegrations: { astroRobots, inoxSitemap },
+            includedIntegrations: { astroRobots },
             imageService: { astroImageServiceConfig, cdnPlugin, useUnpic, 
                 unpicConfig: { fallbackService, layout, placeholder, cdnOptions }, 
             }, 
@@ -75,13 +75,13 @@ export default defineIntegration({
             "astro:db:setup": ({ extendDb }) => {
                 extendDb({
                     configEntrypoint: resolve('./db/config.ts'),
-                    // seedEntrypoint: resolve('./db/seed.ts'),
+                    seedEntrypoint: resolve('./db/seed.ts'),
                 });
             },
             "astro:config:setup": ( params ) => {
                 
                 const { 
-                    addMiddleware, updateConfig, injectRoute, logger,
+                    addMiddleware, updateConfig, injectRoute, logger, command,
                     config: { base, adapter, output, site }
                 } = params;
 
@@ -163,12 +163,14 @@ export default defineIntegration({
                         );
                     } else if (authMode === "built-in") {
 
-                        // Check for Required Environment Variables
-                        if (!AUTHKEYS.GITHUBCLIENTID.KEY) {
-                            throw new AstroError(`Using the Built-in Authentication requires the ${AUTHKEYS.GITHUBCLIENTID.N} environment variable to be set. Please add this to your .env file.`);
-                        }
-                        if (!AUTHKEYS.GITHUBCLIENTSECRET.KEY) {
-                            throw new AstroError(`Using the Built-in Authentication requires the ${AUTHKEYS.GITHUBCLIENTSECRET.N} environment variable to be set. Please add this to your .env file.`);
+                        if ( command === "build" ){
+                            // Check for Required Environment Variables
+                            if (!AUTHKEYS.GITHUBCLIENTID.KEY) {
+                                throw new AstroError(`Using the Built-in Authentication requires the ${AUTHKEYS.GITHUBCLIENTID.N} environment variable to be set. Please add this to your .env file.`);
+                            }
+                            if (!AUTHKEYS.GITHUBCLIENTSECRET.KEY) {
+                                throw new AstroError(`Using the Built-in Authentication requires the ${AUTHKEYS.GITHUBCLIENTSECRET.N} environment variable to be set. Please add this to your .env file.`);
+                            }
                         }
 
                         // Add Authentication Middleware
@@ -180,39 +182,39 @@ export default defineIntegration({
                             order: "pre",
                         });
                         injectRoute({ 
-                            pattern: `${base}dashboard`, 
+                            pattern: `${base}dashboard/`, 
                             entrypoint: resolve('./pages/dashboard/index.astro'), 
                         });
                         injectRoute({ 
-                            pattern: `${base}dashboard/profile`, 
+                            pattern: `${base}dashboard/profile/`, 
                             entrypoint: resolve('./pages/dashboard/profile.astro'), 
                         });
                         injectRoute({ 
-                            pattern: `${base}dashboard/new-post`, 
+                            pattern: `${base}dashboard/new-post/`, 
                             entrypoint: resolve('./pages/dashboard/new-post.astro'), 
                         });
                         injectRoute({ 
-                            pattern: `${base}dashboard/post-list`, 
+                            pattern: `${base}dashboard/post-list/`, 
                             entrypoint: resolve('./pages/dashboard/post-list.astro'), 
                         });
                         injectRoute({ 
-                            pattern: `${base}dashboard/site-config`, 
+                            pattern: `${base}dashboard/site-config/`, 
                             entrypoint: resolve('./pages/dashboard/site-config.astro'), 
                         });
                         injectRoute({ 
-                            pattern: `${base}dashboard/admin-config`, 
+                            pattern: `${base}dashboard/admin-config/`, 
                             entrypoint: resolve('./pages/dashboard/admin-config.astro'), 
                         });
                         injectRoute({ 
-                            pattern: `${base}dashboard/login`, 
+                            pattern: `${base}dashboard/login/`, 
                             entrypoint: resolve('./pages/dashboard/login/index.astro'), 
                         });
                         injectRoute({ 
-                            pattern: `${base}dashboard/edit/home`, 
+                            pattern: `${base}dashboard/edit/home/`, 
                             entrypoint: resolve('./pages/dashboard/edit/home.astro'), 
                         });
                         injectRoute({ 
-                            pattern: `${base}dashboard/edit/about`, 
+                            pattern: `${base}dashboard/edit/about/`, 
                             entrypoint: resolve('./pages/dashboard/edit/about.astro'), 
                         });
                         injectRoute({ 
