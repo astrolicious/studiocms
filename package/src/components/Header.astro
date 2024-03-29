@@ -46,6 +46,15 @@ const baseURL = import.meta.env.BASE_URL;
 					</a>
 				))
 			}
+			{ mode === "disable" && (
+				<a href="#" aria-disabled="true" title="Please Edit your Database through your Studio Dashboard">
+					<img 
+						src={profileImg.src} 
+						alt="Authentication Disabled" 
+						width="48" 
+						height="48" />	
+				</a>
+			)}
 		</div>
 	</nav>
 </header>
