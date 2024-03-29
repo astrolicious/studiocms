@@ -5,24 +5,24 @@ import { markedSmartypants } from "marked-smartypants";
 import markedShiki from 'marked-shiki'
 import { bundledLanguages, bundledThemes, getHighlighter} from 'shiki'
 import * as sT from '@shikijs/transformers'
-import { markedEmoji } from "marked-emoji";
+// import { markedEmoji } from "marked-emoji";
 import Config from 'virtual:astro-studio-cms:config';
-import emojiList from "./emoji-en-US.json"
+// import emojiList from "./emoji-en-US.json"
 
 const { markedConfig: { loadmarkedExtensions,
         shikiConfig: { theme: shikiTheme },
         includedExtensions: {
             markedAlert: mAlertExt, 
-            markedEmoji: mEmojiExt, 
+            // markedEmoji: mEmojiExt, 
             markedFootnote: mFootnoteExt, 
             markedSmartypants: mSmartypantsExt
 }, } } = Config;
 
 
-export const emojiMap = Object.entries(emojiList).reduce((ret, [emoji, names]) => {
-        for (const name of names) { ret[name] = ret[name] || emoji; }
-        return ret; }, {} as Record<string, string>
-);
+// export const emojiMap = Object.entries(emojiList).reduce((ret, [emoji, names]) => {
+//         for (const name of names) { ret[name] = ret[name] || emoji; }
+//         return ret; }, {} as Record<string, string>
+// );
 
 
 export async function markdown(input: string): Promise<string> {
@@ -31,9 +31,9 @@ export async function markdown(input: string): Promise<string> {
     if ( mAlertExt ) {
         customMarkedExtList.push(markedAlert());
     }
-    if ( mEmojiExt ) {
-        customMarkedExtList.push(markedEmoji({ emojis: emojiMap, unicode: true }));
-    }
+    // if ( mEmojiExt ) {
+    //     customMarkedExtList.push(markedEmoji({ emojis: emojiMap, unicode: true }));
+    // }
     if ( mFootnoteExt ) {
         customMarkedExtList.push(markedFootnote());
     }
