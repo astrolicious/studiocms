@@ -8,6 +8,12 @@ export default defineConfig({
 	site: 'http://localhost:4321',
 	output: "server",
 	adapter: cloudflare({
+		imageService: "passthrough",
+		routes: {
+			extend: {
+				include: [{ pattern: "/*" }],
+			},
+		},
 		platformProxy: {
 		  enabled: true,
 		},
