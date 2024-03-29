@@ -28,7 +28,7 @@ const baseURL = import.meta.env.BASE_URL;
 			<HeaderLink href=`${baseURL}about`>About</HeaderLink>
 		</div>
 		<div class="profile-link">
-			{ mode !== "disable" && isLoggedIn ? (
+			{ mode !== "disable" && (isLoggedIn ? (
 					<a href={`${baseURL}dashboard`} title="User Dashboard">
 					<img
 						src={userProfile.avatar}
@@ -44,7 +44,7 @@ const baseURL = import.meta.env.BASE_URL;
 						width="48" 
 						height="48" />
 					</a>
-				)
+				))
 			}
 		</div>
 	</nav>
