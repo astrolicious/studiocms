@@ -15,9 +15,8 @@ export default defineConfig({
 	integrations: [
 		db(),
 		astroStudioCMS({
-			dbStartPage: false,
+			dbStartPage: true,
 			verbose: true,
-			contentRenderer: "markdoc",
 		}),
 	],
 });
