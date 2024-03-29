@@ -11,7 +11,8 @@ export default defineConfig({
 		imageService: "passthrough",
 		routes: {
 			extend: {
-				exclude: [{ pattern: '/' }],
+				include: [{ path: "/" }],
+				exclude: [{ path: "/favicon.svg"}]
 			},
 		},
 		platformProxy: {
