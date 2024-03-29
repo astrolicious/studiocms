@@ -1,6 +1,6 @@
 import { // Tools and Utilities
     defineIntegration, createResolver, 
-    addVirtualImports, watchIntegration, 
+    addVirtualImports, //watchIntegration, 
     addIntegration, hasIntegration
 } from "astro-integration-kit";
 import "astro-integration-kit/types/db";

@@ -3,9 +3,9 @@ import sitemap from 'sitemap-ext:config';
 // @ts-expect-error - This is a missing type definition for the `astro:db` import since its a virtual module during Astro Runtime
 import { Pages, db, eq } from 'astro:db';
 import Layout from '../layouts/BlogPost.astro';
-import { markdown } from '../utils/marked';
-import Config from 'virtual:astro-studio-cms:config';
-import { renderMarkDoc } from '../utils/markdoc';
+// import { markdown } from '../utils/marked';
+// import Config from 'virtual:astro-studio-cms:config';
+// import { renderMarkDoc } from '../utils/markdoc';
 
 sitemap(true); // opt-in
 
@@ -18,13 +18,13 @@ type Props = {
 };
 
 
-function contentRenderer() {
-    if (Config.contentRenderer === 'markdoc') {
-        return renderMarkDoc(post.content);
-    }
-    return markdown(post.content);
+// function contentRenderer() {
+//     if (Config.contentRenderer === 'markdoc') {
+//         return renderMarkDoc(post.content);
+//     }
+//     return markdown(post.content);
 
-}
+// }
 ---
 
 <Layout
@@ -33,8 +33,14 @@ function contentRenderer() {
 	publishedAt={post.publishedAt}
 	heroImage={post.heroImage}
 >
-	<Fragment 
-		set:html={contentRenderer()} />
+	<!-- <Fragment 
+		set:html={contentRenderer()} /> -->
+  <div id="content"></div>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script type="module">
+    document.getElementById('content').innerHTML =
+      marked.parse(post.content);
+  </script>
 </Layout>
 <style>
     .btn {
