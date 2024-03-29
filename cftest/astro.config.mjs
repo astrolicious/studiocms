@@ -17,6 +17,7 @@ export default defineConfig({
 		astroStudioCMS({
 			dbStartPage: false,
 			verbose: true,
+			contentRenderer: "markdoc",
 		}),
 	],
 });
