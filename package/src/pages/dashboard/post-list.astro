@@ -3,17 +3,17 @@
 // @ts-expect-error - This is a missing type definition for the `astro:db` import since its a virtual module during Astro Runtime
 import { db, Blog, eq, asc } from "astro:db";
 import Default from "../../layouts/Default.astro"
-import type { Locals } from "./locals";
+// import type { Locals } from "./locals";
 import FormattedDate from "../../components/FormattedDate.astro";
 import { rankCheck } from '../../utils/rankcheck';
 
 // sitemap(false); // opt-out
 
-const locals = Astro.locals as Locals;
+const locals = Astro.locals;
 const isLoggedIn = locals.isLoggedIn;
 
 if (!isLoggedIn) {
-    return Astro.redirect(import.meta.env.BASE_URL+"dashboard/login");
+    return Astro.redirect("/dashboard/login");
 }
 
 const getUserName = () => {
@@ -30,7 +30,7 @@ const currentUserRank = await rankCheck(locals);
 
 if (currentUserRank !== 'admin' && currentUserRank !== 'editor') {
     console.log('User is not an admin or editor. Redirecting to profile...');
-    return Astro.redirect(import.meta.env.BASE_URL+"dashboard/profile");
+    return Astro.redirect("/dashboard/profile");
 }
 
 const posts = await db.select().from(Blog).orderBy(asc(Blog.publishedAt));
@@ -38,7 +38,7 @@ const posts = await db.select().from(Blog).orderBy(asc(Blog.publishedAt));
 
 <Default>
         <div class="dash">
-            <form method="post" action={import.meta.env.BASE_URL+"dashboard/logout"}>
+            <form method="post" action={"/dashboard/logout"}>
                 <button>Logout</button>
             </form>
             <center>
@@ -46,7 +46,7 @@ const posts = await db.select().from(Blog).orderBy(asc(Blog.publishedAt));
             </center>
             <div>
                 <p class="font-small">
-                Currently logged in user: <bold>{getUserName}</bold> | <a href={import.meta.env.BASE_URL+"dashboard/profile"}>More info...</a>
+                Currently logged in user: <bold>{getUserName}</bold> | <a href={"/dashboard/profile"}>More info...</a>
                 </p>
 
                 { posts && posts.map((post: Blog.$inferSelect) => (
@@ -54,7 +54,7 @@ const posts = await db.select().from(Blog).orderBy(asc(Blog.publishedAt));
                         <p>
                             <bold>{post.title}</bold> - <FormattedDate date={post.publishedAt} />
                             <a href={`${import.meta.env.BASE_URL}dashboard/edit/${post.slug}`} class="btn-edit">Edit</a>
-                            { currentUserRank === 'admin' && <a href={`${import.meta.env.BASE_URL}dashboard/delete/${post.slug}`} class="btn-delete">Delete</a> }
+                            { currentUserRank === 'admin' && <a href={`/dashboard/delete/${post.slug}`} class="btn-delete">Delete</a> }
                         </p>
                     </div>
                 )) }

@@ -5,8 +5,8 @@ import { GitHub } from "arctic";
 
 export const GET: APIRoute = async ({ redirect, cookies, locals: { runtime } }) => {
     const github = new GitHub(
-        import.meta.env.CMS_GITHUB_CLIENT_ID || process.env.CMS_GITHUB_CLIENT_ID || runtime.env.CMS_GITHUB_CLIENT_ID,
-        import.meta.env.CMS_GITHUB_CLIENT_SECRET || process.env.CMS_GITHUB_CLIENT_SECRET || runtime.env.CMS_GITHUB_CLIENT_ID,
+        import.meta.env.CMS_GITHUB_CLIENT_ID || runtime.env.CMS_GITHUB_CLIENT_ID,
+        import.meta.env.CMS_GITHUB_CLIENT_SECRET || runtime.env.CMS_GITHUB_CLIENT_ID,
     );
 	const state = generateState();
 	const url = await github.createAuthorizationURL(state);

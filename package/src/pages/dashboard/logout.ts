@@ -7,7 +7,7 @@ export async function GET(context: APIContext): Promise<Response> {
 
 export async function POST(context: APIContext): Promise<Response> {
 	if (!context.locals.session) {
-		return context.redirect(`${import.meta.env.BASE_URL}dashboard/login`);
+		return context.redirect('/dashboard/login');
 	}
 
 	await lucia.invalidateSession(context.locals.session.id);
@@ -24,5 +24,5 @@ export async function POST(context: APIContext): Promise<Response> {
 	context.locals.user = null;
 	context.locals.dbUser = null;
 
-	return context.redirect(import.meta.env.BASE_URL);
+	return context.redirect("/");
 }

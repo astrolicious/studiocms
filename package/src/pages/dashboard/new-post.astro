@@ -3,16 +3,16 @@
 // @ts-expect-error - This is a missing type definition for the `astro:db` import since its a virtual module during Astro Runtime
 import { Blog, db, eq } from 'astro:db';
 import Default from "../../layouts/Default.astro"
-import type { Locals } from "./locals";
+// import type { Locals } from "./locals";
 import { rankCheck } from '../../utils/rankcheck';
 
 // sitemap(false); // opt-out
 
-const locals = Astro.locals as Locals;
+const locals = Astro.locals;
 const isLoggedIn = locals.isLoggedIn;
 
 if (!isLoggedIn) {
-    return Astro.redirect(import.meta.env.BASE_URL+"dashboard/login");
+    return Astro.redirect("/dashboard/login");
 }
 
 const getUserName = () => {
@@ -30,7 +30,7 @@ const currentUserRank = await rankCheck(locals);
 
 if (currentUserRank !== "admin" && currentUserRank !== "editor") {
     console.log('User is not an admin or editor. Redirecting to profile.');
-    return Astro.redirect(import.meta.env.BASE_URL+"dashboard/profile");
+    return Astro.redirect("/dashboard/profile");
 }
 
 if (Astro.request.method === 'POST') {
@@ -66,7 +66,7 @@ if (Astro.request.method === 'POST') {
             return new Response('Error creating post', { status: 500 });
         });
 
-    return Astro.redirect(import.meta.env.BASE_URL+"dashboard")
+    return Astro.redirect("/dashboard")
 }
 
 ---
@@ -74,10 +74,10 @@ if (Astro.request.method === 'POST') {
 <Default>
         <div class="dash">
             <div class="dash-header">
-                <form class="left" method="post" action={`${import.meta.env.BASE_URL}dashboard`}>
+                <form class="left" method="post" action={`/dashboard`}>
                     <button class="btn">Dashboard</button>
                 </form>
-                <form class="right" method="post" action={`${import.meta.env.BASE_URL}dashboard/logout`}>
+                <form class="right" method="post" action={`/dashboard/logout`}>
                     <button>Logout</button>
                 </form>
             </div>

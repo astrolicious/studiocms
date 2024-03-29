@@ -2,12 +2,12 @@
 // import sitemap from 'sitemap-ext:config';
 import Default from "../../layouts/Default.astro"
 import { lucia } from "../../lib/auth";
-import type { Locals } from "./locals";
+// import type { Locals } from "./locals";
 import { rankCheck } from '../../utils/rankcheck';
 
 // sitemap(false); // opt-out
 
-const locals = Astro.locals as Locals;
+const locals = Astro.locals;
 const isLoggedIn = locals.isLoggedIn;
 const sessions = await lucia.getUserSessions(locals.dbUser.id);
 
@@ -24,7 +24,7 @@ const getUserName = () => {
 const currentUserRank = await rankCheck(locals);
 
 if (!isLoggedIn) {
-    return Astro.redirect(import.meta.env.BASE_URL+"dashboard/login");
+    return Astro.redirect("/dashboard/login");
 }
 
 

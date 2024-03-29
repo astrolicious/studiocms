@@ -8,8 +8,8 @@ export async function GET(context: APIContext): Promise<Response> {
 	const { locals: { runtime }, url, cookies, redirect } = context;
 
     const github = new GitHub(
-        import.meta.env.CMS_GITHUB_CLIENT_ID || process.env.CMS_GITHUB_CLIENT_ID || runtime.env.CMS_GITHUB_CLIENT_ID,
-        import.meta.env.CMS_GITHUB_CLIENT_SECRET || process.env.CMS_GITHUB_CLIENT_SECRET || runtime.env.CMS_GITHUB_CLIENT_ID,
+        import.meta.env.CMS_GITHUB_CLIENT_ID || runtime.env.CMS_GITHUB_CLIENT_ID,
+        import.meta.env.CMS_GITHUB_CLIENT_SECRET || runtime.env.CMS_GITHUB_CLIENT_ID,
     );
 
 	const code = url.searchParams.get("code");
@@ -19,7 +19,7 @@ export async function GET(context: APIContext): Promise<Response> {
 		// return new Response(null, {
 		// 	status: 403,
 		// });
-		return redirect(`${import.meta.env.BASE_URL}dashboard/login`);
+		return redirect('/dashboard/login');
 	}
 
 	try {
@@ -54,7 +54,7 @@ export async function GET(context: APIContext): Promise<Response> {
 				sessionCookie.value,
 				sessionCookie.attributes,
 			);
-			return redirect(`${import.meta.env.BASE_URL}dashboard`);
+			return redirect('/dashboard/');
 		}
 
 		const createdUser = await db
@@ -79,7 +79,7 @@ export async function GET(context: APIContext): Promise<Response> {
 			sessionCookie.value,
 			sessionCookie.attributes,
 		);
-		return redirect(`${import.meta.env.BASE_URL}dashboard`);
+		return redirect('/dashboard/');
 	} catch (e) {
 		// the specific error message depends on the provider
 		if (e instanceof OAuth2RequestError) {
