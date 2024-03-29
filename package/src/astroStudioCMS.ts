@@ -5,7 +5,7 @@ import { // Tools and Utilities
 } from "astro-integration-kit";
 import "astro-integration-kit/types/db";
 import { AstroError } from "astro/errors";
-// import { loadEnv } from "vite";
+import { loadEnv } from "vite";
 import { integrationLogger } from "./utils";
 
 // Adapters
@@ -16,7 +16,7 @@ import node from "@astrojs/node";
 
 // Integrations
 import robots from "astro-robots";
-import sitemap from "@inox-tools/sitemap-ext";
+// import sitemap from "@inox-tools/sitemap-ext";
 
 // Image Services
 import { 
@@ -32,24 +32,27 @@ import {
 import { optionsSchema } from "./schemas";
 
 // Environment Variables
-// const env = loadEnv( "all", process.cwd(), "CMS");
+const env = loadEnv( "all", process.cwd(), "CMS");
 
 export const AUTHKEYS = { 
     GITHUBCLIENTID: {
         N: "CMS_GITHUB_CLIENT_ID",
-        KEY: import.meta.env.CMS_GITHUB_CLIENT_ID 
+        KEY: env.CMS_GITHUB_CLIENT_ID 
+        || import.meta.env.CMS_GITHUB_CLIENT_ID 
         || process.env.CMS_GITHUB_CLIENT_ID
     }, 
     GITHUBCLIENTSECRET: {
         N: "CMS_GITHUB_CLIENT_SECRET",
-        KEY: import.meta.env.CMS_GITHUB_CLIENT_SECRET 
+        KEY: env.CMS_GITHUB_CLIENT_SECRET
+        || import.meta.env.CMS_GITHUB_CLIENT_SECRET 
         || process.env.CMS_GITHUB_CLIENT_SECRET
     }
 };
 
 export const CLOUDINARYCLOUDNAME = {
     N: "CMS_CLOUDINARY_CLOUDNAME",
-    KEY: import.meta.env.CMS_CLOUDINARY_CLOUDNAME 
+    KEY: env.CMS_CLOUDINARY_CLOUDNAME
+    || import.meta.env.CMS_CLOUDINARY_CLOUDNAME 
     || process.env.CMS_CLOUDINARY_CLOUDNAME
 }
 
