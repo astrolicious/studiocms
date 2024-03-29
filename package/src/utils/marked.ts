@@ -2,11 +2,11 @@ import { marked, type MarkedExtension } from "marked";
 import markedAlert from "marked-alert";
 import markedFootnote from "marked-footnote";
 import { markedSmartypants } from "marked-smartypants";
-import markedShiki from 'marked-shiki'
-import { bundledLanguages, 
-    // bundledThemes, 
-    getHighlighter} from 'shiki'
-import * as sT from '@shikijs/transformers'
+// import markedShiki from 'marked-shiki'
+// import { bundledLanguages, 
+//     // bundledThemes, 
+//     getHighlighter} from 'shiki'
+// import * as sT from '@shikijs/transformers'
 import { markedEmoji } from "marked-emoji";
 import Config from 'virtual:astro-studio-cms:config';
 import emojiList from "./emoji-en-US.json"
@@ -47,12 +47,12 @@ export async function markdown(input: string): Promise<string> {
         customMarkedExtList.push(...loadmarkedExtensions);
     }
 
-    const langs: string[] = [];
-    const themes: string[] = [];
+    // const langs: string[] = [];
+    // const themes: string[] = [];
 
-    for (const lang of Object.keys(bundledLanguages)) {
-        langs.push(lang);
-    }
+    // for (const lang of Object.keys(bundledLanguages)) {
+    //     langs.push(lang);
+    // }
     // for (const theme of Object.keys(bundledThemes)) {
     //     themes.push(theme);
     // }
