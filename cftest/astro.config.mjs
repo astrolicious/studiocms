@@ -5,7 +5,7 @@ import cloudflare from "@astrojs/cloudflare";
 
 // https://astro.build/config
 export default defineConfig({
-	site: 'http://localhost:4321',
+	site: 'https://astro-studiocms.pages.dev',
 	output: "server",
 	adapter: cloudflare({
 		imageService: "passthrough",
