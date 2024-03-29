@@ -1,5 +1,5 @@
 ---
-import sitemap from 'sitemap-ext:config';
+// import sitemap from 'sitemap-ext:config';
 // @ts-expect-error - This is a missing type definition for the `astro:db` import since its a virtual module during Astro Runtime
 import { Blog, db, eq, asc } from 'astro:db';
 import { markdown } from '../../utils/marked';
@@ -9,13 +9,13 @@ import { renderMarkDoc } from '../../utils/markdoc';
 
 // sitemap(false);
 
-sitemap(async ({ addToSitemap }) => {
-    const posts = await db.select().from(Blog);
+// sitemap(async ({ addToSitemap }) => {
+//     const posts = await db.select().from(Blog);
 
-    addToSitemap(posts.map((post: Blog.$inferSelect) => ({
-        slug: post.slug as string,
-    })));
-})
+//     addToSitemap(posts.map((post: Blog.$inferSelect) => ({
+//         slug: post.slug as string,
+//     })));
+// })
 
 const { slug } = Astro.params;
 const postArrayed = await db.select().from(Blog).where(eq(Blog.slug, slug));

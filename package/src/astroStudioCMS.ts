@@ -586,15 +586,15 @@ export default defineIntegration({
                     }
     
                     // Sitemap Integration
-                    if ( inoxSitemap ) {
-                        if ( !hasIntegration(params, { name: "@astrojs/sitemap" }) 
-                        || !hasIntegration(params, { name: "@inox-tools/sitemap-ext"}) ) {
-                            integrationLogger(logger, verbose, "info", "No Sitemap Integration found. Adding `@inox-tools/sitemap-ext` Integration")
-                            addIntegration(params, { integration: sitemap({
-                                includeByDefault: true
-                            })});
-                        }
-                    }
+                    // if ( inoxSitemap ) {
+                    //     if ( !hasIntegration(params, { name: "@astrojs/sitemap" }) 
+                    //     || !hasIntegration(params, { name: "@inox-tools/sitemap-ext"}) ) {
+                    //         integrationLogger(logger, verbose, "info", "No Sitemap Integration found. Adding `@inox-tools/sitemap-ext` Integration")
+                    //         addIntegration(params, { integration: sitemap({
+                    //             includeByDefault: true
+                    //         })});
+                    //     }
+                    // }
 
                 integrationLogger(
                     logger, verbose, "info", "Astro Studio CMS Setup Complete!"

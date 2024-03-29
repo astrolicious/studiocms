@@ -1,5 +1,5 @@
 ---
-import sitemap from 'sitemap-ext:config';
+// import sitemap from 'sitemap-ext:config';
 // @ts-expect-error - This is a missing type definition for the `astro:db` import since its a virtual module during Astro Runtime
 import { db, eq } from 'astro:db';
 import Default from "../../layouts/Default.astro"
@@ -8,7 +8,7 @@ import { asDrizzleTable } from '@astrojs/db/utils';
 import { SiteConfig as siteConfigTable } from "../../db/tables"
 import { rankCheck } from '../../utils/rankcheck';
 
-sitemap(false); // opt-out
+// sitemap(false); // opt-out
 
 const SiteConfigSafe = asDrizzleTable("SiteConfig", siteConfigTable)
 const ConfigArray = await db.select().from(SiteConfigSafe);
