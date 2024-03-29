@@ -17,6 +17,9 @@ export default defineConfig({
 		db(),
 		astroStudioCMS({
 			dbStartPage: false,
+			authConfig: {
+				mode: "disable"
+			},
 			verbose: true,
 		}),
 	],
