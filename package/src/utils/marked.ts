@@ -12,7 +12,7 @@ import Config from 'virtual:astro-studio-cms:config';
 import emojiList from "./emoji-en-US.json"
 
 const { markedConfig: { loadmarkedExtensions,
-        shikiConfig: { theme: shikiTheme },
+        // shikiConfig: { theme: shikiTheme },
         includedExtensions: {
             markedAlert: mAlertExt, 
             markedEmoji: mEmojiExt, 
@@ -57,23 +57,24 @@ export async function markdown(input: string): Promise<string> {
     //     themes.push(theme);
     // }
 
-    const highlighter = await getHighlighter({ langs, themes });
+    // const highlighter = await getHighlighter({ langs, themes });
 
-    customMarkedExtList.push(markedShiki({
-        highlight(code, lang, props) {
-            return highlighter.codeToHtml(code, { 
-                        lang, theme: shikiTheme,
-                        meta: {__raw: props.join(' ')},
-                        transformers: [
-                            sT.transformerNotationDiff(),
-                            sT.transformerNotationHighlight(),
-                            sT.transformerNotationWordHighlight(),
-                            sT.transformerNotationFocus(),
-                            sT.transformerNotationErrorLevel(),
-                            sT.transformerMetaHighlight(),
-                            sT.transformerMetaWordHighlight(),
-                        ]
-                    }) },}),)
+    // customMarkedExtList.push(markedShiki({
+    //     highlight(code, lang, props) {
+    //         return highlighter.codeToHtml(code, { 
+    //                     lang, 
+    //                     theme: shikiTheme,
+    //                     meta: {__raw: props.join(' ')},
+    //                     transformers: [
+    //                         sT.transformerNotationDiff(),
+    //                         sT.transformerNotationHighlight(),
+    //                         sT.transformerNotationWordHighlight(),
+    //                         sT.transformerNotationFocus(),
+    //                         sT.transformerNotationErrorLevel(),
+    //                         sT.transformerMetaHighlight(),
+    //                         sT.transformerMetaWordHighlight(),
+    //                     ]
+    //                 }) },}),)
 
     marked.use( ...customMarkedExtList, { async: true, gfm: true } );
 
