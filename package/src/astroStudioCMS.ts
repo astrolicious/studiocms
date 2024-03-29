@@ -250,11 +250,11 @@ export default defineIntegration({
                 //
                 // NODE ADAPTER CONFIGS
                 //
-                if ( adapter?.name === "@astrojs/node" && adapter === node({ mode: "middleware" }) ) {
+                if ( adapter === node({ mode: "middleware" }) ) {
                     integrationLogger(
                         logger, verbose, "warn", "Node Adapter Detected. Using Node Adapter. Please note that the Astro Studio CMS is not supported in Middleware Mode. Please use the Standalone Mode for full support."
                     );
-                } else if ( adapter?.name === "@astrojs/node" && adapter === node({ mode: "standalone" }) ) {
+                } else if ( adapter === node({ mode: "standalone" }) ) {
                     integrationLogger(
                         logger, verbose, "info", "Node Adapter Detected. Using Node Adapter."
                     );
