@@ -16,7 +16,7 @@ export default defineConfig({
 	integrations: [
 		db(),
 		astroStudioCMS({
-			dbStartPage: true,
+			dbStartPage: false,
 			verbose: true,
 		}),
 	],
