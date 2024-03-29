@@ -9,6 +9,11 @@ export default defineConfig({
 	output: "server",
 	adapter: cloudflare({
 		imageService: "passthrough",
+		routes: {
+			extend: {
+				include: [{ pattern: "/dashboard/*"}],
+			},
+		},
 		platformProxy: {
 		  enabled: true,
 		},
