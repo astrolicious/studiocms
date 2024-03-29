@@ -177,7 +177,7 @@ export default defineIntegration({
                         );
                         addMiddleware({
                             entrypoint: resolve('./middleware/index.ts'),
-                            order: "post",
+                            order: "pre",
                         });
                         injectRoute({ 
                             pattern: `${base}dashboard`, 
