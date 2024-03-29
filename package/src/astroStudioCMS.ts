@@ -1,22 +1,18 @@
 import { // Tools and Utilities
-    defineIntegration, createResolver, 
-    addVirtualImports, //watchIntegration, 
-    addIntegration, hasIntegration
+    defineIntegration, 
+    createResolver, 
+    addVirtualImports,
+    addIntegration, 
+    hasIntegration
 } from "astro-integration-kit";
 import "astro-integration-kit/types/db";
 import { AstroError } from "astro/errors";
 import { loadEnv } from "vite";
 import { integrationLogger } from "./utils";
 
-// Adapters
-import vercel from "@astrojs/vercel/serverless";
-import netlify from "@astrojs/netlify";
-import cloudflare from "@astrojs/cloudflare";
-// import node from "@astrojs/node";
-
 // Integrations
 import robots from "astro-robots";
-// import sitemap from "@inox-tools/sitemap-ext";
+// import sitemap from "@inox-tools/sitemap-ext"; // breaks cloudflare deployments
 
 // Image Services
 import { 
@@ -75,21 +71,15 @@ export default defineIntegration({
             "astro:db:setup": ({ extendDb }) => {
                 extendDb({
                     configEntrypoint: resolve('./db/config.ts'),
-                    seedEntrypoint: resolve('./db/seed.ts'),
+                    seedEntrypoint: resolve('./db/seed.ts'), // Broken Solution is coming... @see https://github.com/withastro/astro/pull/10599
                 });
             },
             "astro:config:setup": ( params ) => {
                 
                 const { 
-                    addMiddleware, updateConfig, injectRoute, logger, command,
+                    addMiddleware, updateConfig, injectRoute, logger, command, config,
                     config: { base, adapter, output, site }
                 } = params;
-
-                // Watch Integration for changes in dev mode *TO BE REMOVED*
-                // if (env.CMS_WATCH_INTEGRATION_HOOK) {
-                //     integrationLogger(logger.fork("Astro-StudioCMS-Dev"), verbose, "warn", "Watching Integration for Changes... This should only be enabled during Development of the Integration.")
-                //     watchIntegration(params, resolve());
-                // }
 
                 // Check for SSR Mode
                 if (output !== "server" ) {
@@ -334,7 +324,7 @@ export default defineIntegration({
                     );
 
                     // Setup Image Service
-                    if ( adapter === vercel({ imageService: true}) ) {
+                    if ( command === "build" && config.image.service.entrypoint === "@astrojs/vercel/build-image-service" ) {
                         integrationLogger(
                             logger, verbose, "info", "Vercel Image Service Enabled. Using Vercel Image Service."
                         );
@@ -416,12 +406,11 @@ export default defineIntegration({
                     );
 
                     // Setup Image Service
-                    if ( adapter === netlify({ imageCDN: true }) 
-                    || adapter !== netlify({ imageCDN: false })) {
+                    if ( config.image?.service.entrypoint === "@astrojs/netlify/image-service.js" ) {
                         integrationLogger(
                             logger, verbose, "info", "Netlify Image Service Enabled. Using Netlify Image Service."
                         );
-                    } else if ( adapter === netlify({ imageCDN: false })) {
+                    } else {
                         integrationLogger(logger, verbose, "info", "Netlify Image Service Disabled. Using Built-in Image Service.")
                         if ( cdnPlugin === "cloudinary-js" ) {
                             if (!CLOUDINARYCLOUDNAME.KEY){
@@ -497,7 +486,7 @@ export default defineIntegration({
                     );
                     
                     // Setup Image Service
-                    if ( adapter === cloudflare({ imageService: 'cloudflare' }) ) {
+                    if ( config.image?.service.entrypoint === "@astrojs/cloudflare/image-endpoint" ) {
                         integrationLogger(
                             logger, verbose, "info", "Cloudflare Image Service Enabled. Using Cloudflare Image Service."
                         );
@@ -586,7 +575,7 @@ export default defineIntegration({
                         }
                     }
     
-                    // Sitemap Integration
+                    // Sitemap Integration - Removed due to Cloudflare Deployment Issues
                     // if ( inoxSitemap ) {
                     //     if ( !hasIntegration(params, { name: "@astrojs/sitemap" }) 
                     //     || !hasIntegration(params, { name: "@inox-tools/sitemap-ext"}) ) {
