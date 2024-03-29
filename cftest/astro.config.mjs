@@ -12,7 +12,6 @@ export default defineConfig({
 		routes: {
 			extend: {
 				include: [{ path: "/" }],
-				exclude: [{ path: "/favicon.svg"}]
 			},
 		},
 		platformProxy: {
