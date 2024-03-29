@@ -3,7 +3,9 @@ import markedAlert from "marked-alert";
 import markedFootnote from "marked-footnote";
 import { markedSmartypants } from "marked-smartypants";
 import markedShiki from 'marked-shiki'
-import { bundledLanguages, bundledThemes, getHighlighter} from 'shiki'
+import { bundledLanguages, 
+    // bundledThemes, 
+    getHighlighter} from 'shiki'
 import * as sT from '@shikijs/transformers'
 import { markedEmoji } from "marked-emoji";
 import Config from 'virtual:astro-studio-cms:config';
@@ -51,9 +53,9 @@ export async function markdown(input: string): Promise<string> {
     for (const lang of Object.keys(bundledLanguages)) {
         langs.push(lang);
     }
-    for (const theme of Object.keys(bundledThemes)) {
-        themes.push(theme);
-    }
+    // for (const theme of Object.keys(bundledThemes)) {
+    //     themes.push(theme);
+    // }
 
     const highlighter = await getHighlighter({ langs, themes });
 
