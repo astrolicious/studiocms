@@ -3,10 +3,6 @@ declare module 'virtual:astro-studio-cms:config' {
 	export default Config;
 }
 
-declare module 'virtual:astro-studio-cms:internal' {
-	export const currentAdapter: string;
-}
-
 interface ImportMetaEnv {
 	readonly CMS_GITHUB_CLIENT_ID: string;
 	readonly CMS_GITHUB_CLIENT_SECRET: string;
