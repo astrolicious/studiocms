@@ -3,6 +3,9 @@
 import { Pages, Blog, Permissions, SiteConfig, db, eq } from 'astro:db';
 import Starter from '../layouts/Starter.astro';
 
+function redirectToPath(path: string){
+    return Astro.redirect(import.meta.env.BASE_URL+path);
+}
 
 const LOREM_IPSUM = '## Hello World \nLorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.';
 
@@ -97,7 +100,7 @@ if (Astro.request.method === 'POST') {
             return new Response('Error Adding Blog Data', { status: 500 });
         });
 
-    return Astro.redirect(import.meta.env.BASE_URL+"done/")
+    redirectToPath("done/")
 }
 
 ---

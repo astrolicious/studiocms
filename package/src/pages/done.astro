@@ -1,4 +1,5 @@
 ---
+import { Code } from 'astro:components';
 import Starter from '../layouts/Starter.astro';
 ---
 <Starter>
@@ -7,5 +8,20 @@ import Starter from '../layouts/Starter.astro';
 	</center>
 
 	<p>You can now stop your dev server and add the following option in your astro.config to start using Astro-StudioCMS then start back up to see your new CMS data</p>
+
+	<Code lang="diff" code={`import { defineConfig } from "astro/config";
+import astroStudioCMS from "@astrolicious/studiocms";
+import db from '@astrojs/db';
+
+// https://astro.build/config
+export default defineConfig({
+    // other config options,
+	integrations: [
+		db(),
+		astroStudioCMS({ 
++			dbStartPage: false,
+		}),
+	],
+});`}/>
 
 </Starter>
