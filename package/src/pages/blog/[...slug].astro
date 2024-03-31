@@ -7,12 +7,10 @@ import BlogPost from '../../layouts/BlogPost.astro';
 import Config from 'virtual:astro-studio-cms:config';
 import { renderMarkDoc } from '../../utils/markdoc';
 
-// sitemap(false);
-
 sitemap(async ({ addToSitemap }) => {
     const posts = await db.select().from(Blog);
 
-    addToSitemap(posts.map((post: Blog.$inferSelect) => ({
+    addToSitemap(posts.map((post) => ({
         slug: post.slug as string,
     })));
 })
