@@ -9,12 +9,6 @@ export default defineConfig({
 	output: "server",
 	adapter: cloudflare({
 		imageService: "passthrough",
-		// routes: {
-		// 	extend: {
-		//      // This route does not work, even though it should... i tried to add this but it does not work
-		// 		include: [{ pattern: "/dashboard/*"}],
-		// 	},
-		// },
 		platformProxy: {
 		  enabled: true,
 		},
@@ -24,8 +18,8 @@ export default defineConfig({
 		astroStudioCMS({
 			dbStartPage: false,
 			markedConfig: {
-				shikiConfig: {
-					enabled: false
+				highlighterConfig: {
+					highlighter: "highlightJs",
 				},
 			},
 			authConfig: {
