@@ -7,8 +7,12 @@ import Layout from "../../../layouts/Default.astro";
 
 const locals = Astro.locals;
 
+function redirectToPath(path: string){
+    return Astro.redirect(import.meta.env.BASE_URL+path);
+}
+
 if (locals.isLoggedIn) {
-  return Astro.redirect("/dashboard");
+  redirectToPath("dashboard");
 }
 ---
 

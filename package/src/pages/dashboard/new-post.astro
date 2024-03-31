@@ -8,11 +8,15 @@ import { rankCheck } from '../../utils/rankcheck';
 
 // sitemap(false); // opt-out
 
+function redirectToPath(path: string){
+    return Astro.redirect(import.meta.env.BASE_URL+path);
+}
+
 const locals = Astro.locals;
 const isLoggedIn = locals.isLoggedIn;
 
 if (!isLoggedIn) {
-    return Astro.redirect("/dashboard/login");
+    redirectToPath("dashboard/login");
 }
 
 const getUserName = () => {
@@ -30,7 +34,7 @@ const currentUserRank = await rankCheck(locals);
 
 if (currentUserRank !== "admin" && currentUserRank !== "editor") {
     console.log('User is not an admin or editor. Redirecting to profile.');
-    return Astro.redirect("/dashboard/profile");
+    redirectToPath("dashboard/profile");
 }
 
 if (Astro.request.method === 'POST') {
@@ -49,8 +53,12 @@ if (Astro.request.method === 'POST') {
     const postArrayed = await db.select().from(Blog).where(eq(Blog.slug, slug as string));
     const existingPost = postArrayed[0];
 
+    function makeResponse(message: string, status: number) {
+        return new Response(message, { status: status });
+    }
+
     if (existingPost) {
-        return new Response('Post with that slug already exists', { status: 400 });
+        makeResponse('Post with that slug already exists', 400);
     }
 
     await db.insert(Blog)
@@ -66,7 +74,7 @@ if (Astro.request.method === 'POST') {
             return new Response('Error creating post', { status: 500 });
         });
 
-    return Astro.redirect("/dashboard")
+    redirectToPath("dashboard")
 }
 
 ---

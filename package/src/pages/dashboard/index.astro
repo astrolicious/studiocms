@@ -9,8 +9,12 @@ import { rankCheck } from '../../utils/rankcheck';
 const locals = Astro.locals;
 const isLoggedIn = locals.isLoggedIn;
 
+function redirectToPath(path: string){
+    return Astro.redirect(import.meta.env.BASE_URL+path);
+}
+
 if (!isLoggedIn) {
-    return Astro.redirect("/dashboard/login");
+    redirectToPath("dashboard/login");
 }
 
 const getUserName = () => {
@@ -27,7 +31,7 @@ const currentUserRank = await rankCheck(locals);
 
 if ( currentUserRank !== "admin" && currentUserRank !== "editor" ) {
     console.log('User is not an admin or editor. Redirecting to profile page.');
-    return Astro.redirect("/dashboard/profile");
+    redirectToPath("dashboard/profile");
 }
 ---
 

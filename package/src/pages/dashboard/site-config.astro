@@ -16,17 +16,22 @@ const contextConfig = ConfigArray[0];
 const locals = Astro.locals;
 const isLoggedIn = locals.isLoggedIn;
 
+function redirectToPath(path: string){
+    return Astro.redirect(import.meta.env.BASE_URL+path);
+}
+
 const currentUserRank = await rankCheck(locals);
 
 if (!isLoggedIn) {
-    return Astro.redirect("/dashboard/login");
+    console.log('User is not logged in');
+    redirectToPath("dashboard/login");
 }
 
 if (Astro.request.method === 'POST') {
 
     if (currentUserRank !== 'admin') {
         console.log('User is not an admin');
-        return Astro.redirect(import.meta.env.BASE_URL+"dashboard/profile");
+        redirectToPath("dashboard/profile");
     }
     const formData = await new Request(Astro.request.url, {
         method: Astro.request.method,
@@ -47,12 +52,12 @@ if (Astro.request.method === 'POST') {
             return new Response('Error', { status: 500 });
         });
 
-    return Astro.redirect(import.meta.env.BASE_URL+"dashboard")
+    redirectToPath("dashboard");
 }
 
 if (currentUserRank !== 'admin') {
     console.log('User is not an admin');
-    return Astro.redirect(import.meta.env.BASE_URL+"dashboard/profile");
+    redirectToPath("dashboard/profile");
 }
 
 ---

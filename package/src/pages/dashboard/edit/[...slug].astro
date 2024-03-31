@@ -8,19 +8,23 @@ import { rankCheck } from '../../../utils/rankcheck';
 
 // sitemap(false); // opt-out
 
-const { slug } = Astro.params;
-
-if (!slug) {
-	return new Response('No slug provided', { status: 400 }) && Astro.redirect(`/dashboard`);
+function redirectToPath(path: string){
+    return Astro.redirect(import.meta.env.BASE_URL+path);
 }
 
+const { slug } = Astro.params;
 const postArrayed = await db.select().from(Blog).where(eq(Blog.slug, slug));
 const post = postArrayed[0];
+
+if (!slug || !post) {
+	redirectToPath('dashboard/');
+}
+
 const locals = Astro.locals;
 const isLoggedIn = locals.isLoggedIn;
 
 if (!isLoggedIn) {
-    return Astro.redirect(`/dashboard/login`);
+    redirectToPath('dashboard/login/');
 }
 
 const getUserName = () => {
@@ -38,7 +42,7 @@ const currentUserRank = await rankCheck(locals);
 
 if (currentUserRank !== "admin" && currentUserRank !== "editor") {
     console.log('User is not an admin');
-    return Astro.redirect(`/dashboard/profile`);
+    redirectToPath('dashboard/profile/');
 }
 
 if (Astro.request.method === 'POST') {
@@ -68,7 +72,7 @@ if (Astro.request.method === 'POST') {
                 return new Response('Error updating post', { status: 500 });
             });
 
-    return Astro.redirect(`/dashboard`)
+    redirectToPath('dashboard/')
 }
 
 ---

@@ -11,8 +11,12 @@ import { rankCheck } from '../../utils/rankcheck';
 const locals = Astro.locals;
 const isLoggedIn = locals.isLoggedIn;
 
+function redirectToPath(path: string){
+    return Astro.redirect(import.meta.env.BASE_URL+path);
+}
+
 if (!isLoggedIn) {
-    return Astro.redirect("/dashboard/login");
+    redirectToPath("dashboard/login");
 }
 
 if (Astro.request.method === 'POST') {
@@ -35,7 +39,7 @@ if (Astro.request.method === 'POST') {
             return new Response('Error', { status: 500 });
         });
 
-    return Astro.redirect("/dashboard/")
+    redirectToPath("dashboard/")
 }
 
 const currentUserRank = await rankCheck(locals);
@@ -43,7 +47,7 @@ const currentUserRank = await rankCheck(locals);
 
 if (currentUserRank !== "admin") {
     console.log('User is not an admin');
-    return Astro.redirect("/dashboard/profile");
+    redirectToPath("dashboard/profile");
 }
 
 const adminList = await db.select().from(Permissions);
