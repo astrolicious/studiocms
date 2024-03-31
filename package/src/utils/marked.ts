@@ -4,13 +4,14 @@ import markedFootnote from "marked-footnote";
 import { markedSmartypants } from "marked-smartypants";
 import { markedEmoji } from "marked-emoji";
 import Config from 'virtual:astro-studio-cms:config';
-import internalConfig from 'virtual:astro-studio-cms:internal';
 import emojiList from "./emoji-en-US.json"
 
 const { markedConfig: { loadmarkedExtensions,
-        shikiConfig: { 
-            enabled: enableShiki,
-            theme: shikiTheme,
+        highlighterConfig: {
+            highlighter: selectedHighlighter,
+            shikiConfig: {
+                theme: shikiTheme,
+            }
         },
         includedExtensions: {
             markedAlert: mAlertExt, 
@@ -18,8 +19,6 @@ const { markedConfig: { loadmarkedExtensions,
             markedFootnote: mFootnoteExt, 
             markedSmartypants: mSmartypantsExt
 }, } } = Config;
-
-const { currentAdapter } = internalConfig;
 
 
 export const emojiMap = Object.entries(emojiList).reduce((ret, [emoji, names]) => {
@@ -51,21 +50,35 @@ export async function markdown(input: string): Promise<string> {
         customMarkedExtList.push(markedSmartypants());
     }
 
-    // MarkedShiki Extension
-    if ( enableShiki ) {
-        // Check if the current adapter is Cloudflare
-        if ( currentAdapter !== "@astrojs/cloudflare" ) {
-            // if not, then use the shiki highlighter
+    // Setup Marked Highlighter
+    if ( selectedHighlighter === "shiki" ) {
+        const { createShikiHighlighter } = await import('@astrojs/markdown-remark');
+        const markedShiki = (await import('marked-shiki')).default;
 
-            const { createShikiHighlighter } = await import('@astrojs/markdown-remark');
-            const markedShiki = (await import('marked-shiki')).default;
+        const highlighter = await createShikiHighlighter({ theme: shikiTheme })
+        customMarkedExtList.push( 
+            markedShiki({ 
+                highlight(code, lang, props) {
+                    return highlighter.highlight(code, lang, {
+                        attributes: {
+                            class: props.join(' ')}
+                        });
+                }, 
+            })
+        )
 
-            const highlighter = await createShikiHighlighter({ theme: shikiTheme })
+    } else if ( selectedHighlighter === "highlightJs" ) {
+        const { markedHighlight } = await import('marked-highlight');
+        const hljs = (await import('highlight.js')).default;
 
-            customMarkedExtList.push( markedShiki({ highlight(code, lang, props) {
-                return highlighter.highlight(code, lang, {attributes: {class: props.join(' ')}})
-            }, }));
-        }
+        customMarkedExtList.push( markedHighlight({
+            langPrefix: 'hljs language-',
+            highlight(code, lang) {
+                const language = hljs.getLanguage(lang) ? lang : 'plaintext';
+                return hljs.highlight(code, { language }).value;
+            }
+        }))
+
     }
 
     // Load any additional User-Defined marked extensions

@@ -30,21 +30,35 @@ export const markedExtensionsSchema = z.object({
      * @see https://www.npmjs.com/package/marked-emoji
      */
     markedEmoji: z.boolean().optional().default(true),
-}).optional().default({})
+}).optional().default({});
 
 //
-// MARKED SHIKI CONFIG SCHEMA
+// SHIKI CONFIG SCHEMA
 //
-export const markedShikiConfigSchema = z.object({
-    enabled: z.boolean().optional().default(true),
-    CloudflareOverride: z.boolean().optional().default(false),
+export const shikiConfigSchema = z.object({
     /**
-     * Allows the user to configure the Shiki Highlighter Theme
-     * @default 'houston'
-     * @see https://shiki.style/
+     * Allows the user to choose a Shiki Theme
      */
     theme: z.custom<BundledTheme>().optional().default('houston'),
-}).optional().default({})
+}).optional().default({});
+
+//
+// MARKED HIGHLIGHTER CONFIG SCHEMA
+//
+export const markedHighlighterConfigSchema = z.object({
+    /**
+     * Allows the user to choose between the `shiki` and `highlight.js` Highlighters
+     * 
+     * Note: The Shiki Highlighter is from the `astro` package.
+     * 
+     * @default 'shiki'
+     */
+    highlighter: z.enum(['shiki', 'highlightJs']).optional().default('shiki'),
+    /**
+     * Allows the user to configure the Shiki Highlighter
+     */
+    shikiConfig: shikiConfigSchema,
+}).optional().default({});
 
 //
 // MARKED CONFIG SCHEMA
@@ -55,9 +69,9 @@ export const markedConfigSchema = z.object({
      */
     includedExtensions: markedExtensionsSchema,
     /**
-     * Allows the user to configure the Shiki Highlighter
+     * Allows the user to customize the current Marked Highlighter
      */
-    shikiConfig: markedShikiConfigSchema,
+    highlighterConfig: markedHighlighterConfigSchema,
     /**
      * Allows the user to load additional Marked Extensions
      * 
