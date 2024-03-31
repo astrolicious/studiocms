@@ -30,7 +30,7 @@ import { optionsSchema } from "./schemas";
 // Environment Variables
 const env = loadEnv( "all", process.cwd(), "CMS");
 
-export const AUTHKEYS = { 
+const AUTHKEYS = { 
     GITHUBCLIENTID: {
         N: "CMS_GITHUB_CLIENT_ID",
         KEY: env.CMS_GITHUB_CLIENT_ID 
@@ -42,15 +42,14 @@ export const AUTHKEYS = {
         KEY: env.CMS_GITHUB_CLIENT_SECRET
         || import.meta.env.CMS_GITHUB_CLIENT_SECRET 
         || process.env.CMS_GITHUB_CLIENT_SECRET
+    },
+    CLOUDINARYCLOUDNAME: {
+        N: "CMS_CLOUDINARY_CLOUDNAME",
+        KEY: env.CMS_CLOUDINARY_CLOUDNAME
+        || import.meta.env.CMS_CLOUDINARY_CLOUDNAME 
+        || process.env.CMS_CLOUDINARY_CLOUDNAME
     }
 };
-
-export const CLOUDINARYCLOUDNAME = {
-    N: "CMS_CLOUDINARY_CLOUDNAME",
-    KEY: env.CMS_CLOUDINARY_CLOUDNAME
-    || import.meta.env.CMS_CLOUDINARY_CLOUDNAME 
-    || process.env.CMS_CLOUDINARY_CLOUDNAME
-}
 
 // Main Integration
 export default defineIntegration({
@@ -252,8 +251,8 @@ export default defineIntegration({
 
                     // Setup Image Service
                     if ( cdnPlugin === "cloudinary-js" ) {
-                        if (!CLOUDINARYCLOUDNAME.KEY){
-                            throw new AstroError(`Using the Cloudinary CDN JS SDK Plugin requires the ${CLOUDINARYCLOUDNAME.N} environment variable to be set. Please add this to your .env file.`);
+                        if (!AUTHKEYS.CLOUDINARYCLOUDNAME.KEY){
+                            throw new AstroError(`Using the Cloudinary CDN JS SDK Plugin requires the ${AUTHKEYS.CLOUDINARYCLOUDNAME.N} environment variable to be set. Please add this to your .env file.`);
                         }
                         if ( astroImageServiceConfig === "squoosh" ) {
                             integrationLogger(logger, verbose, "info", "Using Squoosh Image Service as Fallback for Cloudinary CDN Plugin")
@@ -333,8 +332,8 @@ export default defineIntegration({
                             logger, verbose, "info", "Vercel Image Service Disabled. Using Astro Built-in Image Service."
                         );
                         if ( cdnPlugin === "cloudinary-js" ) {
-                            if (!CLOUDINARYCLOUDNAME.KEY){
-                                throw new AstroError(`Using the Cloudinary CDN JS SDK Plugin requires the ${CLOUDINARYCLOUDNAME.N} environment variable to be set. Please add this to your .env file.`);
+                            if (!AUTHKEYS.CLOUDINARYCLOUDNAME.KEY){
+                                throw new AstroError(`Using the Cloudinary CDN JS SDK Plugin requires the ${AUTHKEYS.CLOUDINARYCLOUDNAME.N} environment variable to be set. Please add this to your .env file.`);
                             }
                             if ( astroImageServiceConfig === "squoosh" ) {
                                 integrationLogger(logger, verbose, "info", "Using Squoosh Image Service as Fallback for Cloudinary CDN Plugin")
@@ -413,8 +412,8 @@ export default defineIntegration({
                     } else {
                         integrationLogger(logger, verbose, "info", "Netlify Image Service Disabled. Using Built-in Image Service.")
                         if ( cdnPlugin === "cloudinary-js" ) {
-                            if (!CLOUDINARYCLOUDNAME.KEY){
-                                throw new AstroError(`Using the Cloudinary CDN JS SDK Plugin requires the ${CLOUDINARYCLOUDNAME.N} environment variable to be set. Please add this to your .env file.`);
+                            if (!AUTHKEYS.CLOUDINARYCLOUDNAME.KEY){
+                                throw new AstroError(`Using the Cloudinary CDN JS SDK Plugin requires the ${AUTHKEYS.CLOUDINARYCLOUDNAME.N} environment variable to be set. Please add this to your .env file.`);
                             }
                             if ( astroImageServiceConfig === "squoosh" ) {
                                 integrationLogger(logger, verbose, "info", "Using Squoosh Image Service as Fallback for Cloudinary CDN Plugin")
@@ -494,8 +493,8 @@ export default defineIntegration({
                         integrationLogger(logger, verbose, "info", "Cloudflare Image Service Disabled. Using Built-in Image Service.")
 
                         if ( cdnPlugin === "cloudinary-js" ) {
-                            if (!CLOUDINARYCLOUDNAME.KEY){
-                                throw new AstroError(`Using the Cloudinary CDN JS SDK Plugin requires the ${CLOUDINARYCLOUDNAME.N} environment variable to be set. Please add this to your .env file.`);
+                            if (!AUTHKEYS.CLOUDINARYCLOUDNAME.KEY){
+                                throw new AstroError(`Using the Cloudinary CDN JS SDK Plugin requires the ${AUTHKEYS.CLOUDINARYCLOUDNAME.N} environment variable to be set. Please add this to your .env file.`);
                             }
                             if ( astroImageServiceConfig === "squoosh" ) {
                                 integrationLogger(logger, verbose, "warn", "Cloudflare SSR does not support Squoosh Image Service. Using no-op Service as astroImageServiceConfig is set to 'squoosh'")
