@@ -1,10 +1,7 @@
-// import sitemap from 'sitemap-ext:config';
-// @ts-expect-error - This is a missing type definition for the `astro:db` import since its a virtual module during Astro Runtime
+// @ts-expect-error - Types are only available during runtime
 import { SiteConfig, Blog, db } from 'astro:db';
 import rss from '@astrojs/rss';
 import type { APIContext } from 'astro';
-
-// sitemap(true);
 
 export async function GET(context: APIContext) {
 	const posts = await db.select().from(Blog);
