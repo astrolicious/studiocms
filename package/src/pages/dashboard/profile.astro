@@ -2,12 +2,12 @@
 // import sitemap from 'sitemap-ext:config';
 import Default from "../../layouts/Default.astro"
 import { lucia } from "../../lib/auth";
-// import type { Locals } from "./locals";
+import type { Locals } from "./locals";
 import { rankCheck } from '../../utils/rankcheck';
 
 // sitemap(false); // opt-out
 
-const locals = Astro.locals;
+const locals = Astro.locals as Locals;
 const isLoggedIn = locals.isLoggedIn;
 const sessions = await lucia.getUserSessions(locals.dbUser.id);
 

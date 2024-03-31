@@ -3,7 +3,7 @@
 // @ts-expect-error - This is a missing type definition for the `astro:db` import since its a virtual module during Astro Runtime
 import { db, Blog, eq, asc } from "astro:db";
 import Default from "../../layouts/Default.astro"
-// import type { Locals } from "./locals";
+import type { Locals } from "./locals";
 import FormattedDate from "../../components/FormattedDate.astro";
 import { rankCheck } from '../../utils/rankcheck';
 
@@ -13,7 +13,7 @@ function redirectToPath(path: string){
     return Astro.redirect(import.meta.env.BASE_URL+path);
 }
 
-const locals = Astro.locals;
+const locals = Astro.locals as Locals;
 const isLoggedIn = locals.isLoggedIn;
 
 if (!isLoggedIn) {
