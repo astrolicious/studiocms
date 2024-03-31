@@ -69,7 +69,7 @@ export default defineConfig({
 	integrations: [
         db(),
         astroStudioCMS({
-            dbStartPage: true // DEFAULT - This creates a file in your /src/pages folder to allow first initialization and config of the installation
+            dbStartPage: true // DEFAULT - This injects a start page to setup your DB data.
         })],
 });
 ```
@@ -78,8 +78,15 @@ export default defineConfig({
 
 This project is designed to be setup to a new Studio DB, to get started follow the [Link to Astro Studio](https://docs.astro.build/en/recipes/studio/#create-a-new-studio-project)
 
-Then start the dev server using `astro dev` once it completes, stop the dev server and run `astro db push`
+*Note: Due to a limitation in `astrojs/db` currently it is impossible for a integrations injected pages to populate the local database.*
 
-Once that process completes successfuly you are ready to launch the integration for the first time.  Start the dev server linked to your remote DB by running `astro dev --remote` and then navigate to http://localhost:4321/start and follow the instructions.
+*Note: `astrojs/db` does not currently maintain all database data without a [seed file](https://docs.astro.build/en/guides/astro-db/#seed-your-database) which would not work with the CMS. Until a local database is persistant between sessions we highly recommend connecting to a remote DB to allow for data to persist*
+
+Commands to run:
+- `astro db link` - Link to Astro Studio and Create a new DB for your CMS Installation
+- `astro db push` - Creates the base tables on the remote database.
+- `astro dev --remote` - Starts the Dev server connected to the linked database
+
+Once that process completes successfuly you are ready to navigate to http://localhost:4321/start and follow the instructions to get started.
 
 It will redirect and ask you to shutdown and change the above mentioned config option `dbStartPage` to `false` at which point that will enable full functionality of the CMS. you can now restart the dev server with `astro dev --remote` to continue viewing your new site!
