@@ -1,15 +1,15 @@
 ---
-import sitemap from 'sitemap-ext:config';
 // @ts-expect-error - This is a missing type definition for the `astro:db` import since its a virtual module during Astro Runtime
 import { Pages, db, eq } from 'astro:db';
-import Layout from '../layouts/BlogPost.astro';
-import { markdown } from '../utils/marked';
+import sitemap from 'sitemap-ext:config';
 import Config from 'virtual:astro-studio-cms:config';
+import Layout from '../layouts/BlogPost.astro';
 import { renderMarkDoc } from '../utils/markdoc';
+import { markdown } from '../utils/marked';
 
 sitemap(true); // opt-in
 
-const postArrayed = await db.select().from(Pages).where(eq(Pages.slug, "about"));
+const postArrayed = await db.select().from(Pages).where(eq(Pages.slug, 'about'));
 
 const post = postArrayed[0];
 
@@ -17,13 +17,11 @@ type Props = {
 	post: typeof Pages.$inferSelect;
 };
 
-
 function contentRenderer() {
-    if (Config.contentRenderer === 'markdoc') {
-        return renderMarkDoc(post.content);
-    }
-    return markdown(post.content);
-
+	if (Config.contentRenderer === 'markdoc') {
+		return renderMarkDoc(post.content);
+	}
+	return markdown(post.content);
 }
 ---
 

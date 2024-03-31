@@ -1,37 +1,37 @@
 ---
 // import sitemap from 'sitemap-ext:config';
-import Default from "../../layouts/Default.astro"
-import type { Locals } from "./locals";
+import Default from '../../layouts/Default.astro';
 import { rankCheck } from '../../utils/rankcheck';
+import type { Locals } from './locals';
 
 // sitemap(false); // opt-out
 
 const locals = Astro.locals as Locals;
 const isLoggedIn = locals.isLoggedIn;
 
-function redirectToPath(path: string){
-    return Astro.redirect(import.meta.env.BASE_URL+path);
+function redirectToPath(path: string) {
+	return Astro.redirect(import.meta.env.BASE_URL + path);
 }
 
 if (!isLoggedIn) {
-    redirectToPath("dashboard/login");
+	redirectToPath('dashboard/login');
 }
 
 const getUserName = () => {
-    if (locals.isLoggedIn) {
-	    if (locals.dbUser.name) {
-		    return locals.dbUser.name;
-	    } 
-        return locals.user.username;
-    }
+	if (locals.isLoggedIn) {
+		if (locals.dbUser.name) {
+			return locals.dbUser.name;
+		}
+		return locals.user.username;
+	}
 	return 'Astronaut';
 };
 
 const currentUserRank = await rankCheck(locals);
 
-if ( currentUserRank !== "admin" && currentUserRank !== "editor" ) {
-    console.log('User is not an admin or editor. Redirecting to profile page.');
-    redirectToPath("dashboard/profile");
+if (currentUserRank !== 'admin' && currentUserRank !== 'editor') {
+	console.log('User is not an admin or editor. Redirecting to profile page.');
+	redirectToPath('dashboard/profile');
 }
 ---
 

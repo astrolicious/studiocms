@@ -2,14 +2,14 @@
 // import sitemap from 'sitemap-ext:config';
 // @ts-expect-error - This is a missing type definition for the `astro:db` import since its a virtual module during Astro Runtime
 import { Blog, db, eq } from 'astro:db';
-import Default from "../../../layouts/Default.astro"
-import type { Locals } from "../locals";
+import Default from '../../../layouts/Default.astro';
 import { rankCheck } from '../../../utils/rankcheck';
+import type { Locals } from '../locals';
 
 // sitemap(false); // opt-out
 
-function redirectToPath(path: string){
-    return Astro.redirect(import.meta.env.BASE_URL+path);
+function redirectToPath(path: string) {
+	return Astro.redirect(import.meta.env.BASE_URL + path);
 }
 
 const { slug } = Astro.params;
@@ -24,57 +24,57 @@ const locals = Astro.locals as Locals;
 const isLoggedIn = locals.isLoggedIn;
 
 if (!isLoggedIn) {
-    redirectToPath('dashboard/login/');
+	redirectToPath('dashboard/login/');
 }
 
 const getUserName = () => {
-    if (locals.isLoggedIn) {
-	    if (locals.dbUser.name) {
-	    	return locals.dbUser.name;
-	    } 
-        return locals.user.username;
-	} 
-    return null;
+	if (locals.isLoggedIn) {
+		if (locals.dbUser.name) {
+			return locals.dbUser.name;
+		}
+		return locals.user.username;
+	}
+	return null;
 };
 
 const currentUserRank = await rankCheck(locals);
 
-
-if (currentUserRank !== "admin" && currentUserRank !== "editor") {
-    console.log('User is not an admin');
-    redirectToPath('dashboard/profile/');
+if (currentUserRank !== 'admin' && currentUserRank !== 'editor') {
+	console.log('User is not an admin');
+	redirectToPath('dashboard/profile/');
 }
 
 if (Astro.request.method === 'POST') {
-    const formData = await new Request(Astro.request.url, {
-        method: Astro.request.method,
-        headers: Astro.request.headers,
-        body: Buffer.from(await Astro.request.arrayBuffer()),
-    }).formData();
+	const formData = await new Request(Astro.request.url, {
+		method: Astro.request.method,
+		headers: Astro.request.headers,
+		body: Buffer.from(await Astro.request.arrayBuffer()),
+	}).formData();
 
-    const title = formData.get('title');
-    const description = formData.get('description');
-    const heroImage = formData.get('hero-image');
-    const content = formData.get('content');
+	const title = formData.get('title');
+	const description = formData.get('description');
+	const heroImage = formData.get('hero-image');
+	const content = formData.get('content');
 
-    await db.update(Blog)
-            .set({
-                title: title as string,
-                slug: post.slug,
-                description: description as string,
-                heroImage: heroImage as string,
-                content: content as string,
-            })
-            .where(eq(Blog.slug, post.slug))
-            .then(() => {
-                return new Response('Post updated', { status: 200 });
-            }).catch(() => {
-                return new Response('Error updating post', { status: 500 });
-            });
+	await db
+		.update(Blog)
+		.set({
+			title: title as string,
+			slug: post.slug,
+			description: description as string,
+			heroImage: heroImage as string,
+			content: content as string,
+		})
+		.where(eq(Blog.slug, post.slug))
+		.then(() => {
+			return new Response('Post updated', { status: 200 });
+		})
+		.catch(() => {
+			return new Response('Error updating post', { status: 500 });
+		});
 
-    redirectToPath('dashboard/')
+	redirectToPath('dashboard/');
 }
-
 ---
 
 <Default>

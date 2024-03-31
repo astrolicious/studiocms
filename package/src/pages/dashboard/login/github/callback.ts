@@ -1,20 +1,25 @@
 // @ts-expect-error - This is a missing type definition for the `astro:db` import since its a virtual module during Astro Runtime
-import { db, User, eq } from "astro:db";
-import type { APIContext } from "astro";
-import { lucia } from "../../../../lib/auth";
-import { GitHub, OAuth2RequestError } from "arctic";
+import { User, db, eq } from 'astro:db';
+import { GitHub, OAuth2RequestError } from 'arctic';
+import type { APIContext } from 'astro';
+import { lucia } from '../../../../lib/auth';
 
 export async function GET(context: APIContext): Promise<Response> {
-	const { locals: { runtime }, url, cookies, redirect } = context;
+	const {
+		locals: { runtime },
+		url,
+		cookies,
+		redirect,
+	} = context;
 
-    const github = new GitHub(
-        import.meta.env.CMS_GITHUB_CLIENT_ID || runtime.env.CMS_GITHUB_CLIENT_ID,
-        import.meta.env.CMS_GITHUB_CLIENT_SECRET || runtime.env.CMS_GITHUB_CLIENT_ID,
-    );
+	const github = new GitHub(
+		import.meta.env.CMS_GITHUB_CLIENT_ID || runtime.env.CMS_GITHUB_CLIENT_ID,
+		import.meta.env.CMS_GITHUB_CLIENT_SECRET || runtime.env.CMS_GITHUB_CLIENT_ID
+	);
 
-	const code = url.searchParams.get("code");
-	const state = url.searchParams.get("state");
-	const storedState = cookies.get("github_oauth_state")?.value ?? null;
+	const code = url.searchParams.get('code');
+	const state = url.searchParams.get('state');
+	const storedState = cookies.get('github_oauth_state')?.value ?? null;
 	if (!code || !state || !storedState || state !== storedState) {
 		// return new Response(null, {
 		// 	status: 403,
@@ -24,7 +29,7 @@ export async function GET(context: APIContext): Promise<Response> {
 
 	try {
 		const tokens = await github.validateAuthorizationCode(code);
-		const githubUserResponse = await fetch("https://api.github.com/user", {
+		const githubUserResponse = await fetch('https://api.github.com/user', {
 			headers: {
 				Authorization: `Bearer ${tokens.accessToken}`,
 			},
@@ -40,20 +45,12 @@ export async function GET(context: APIContext): Promise<Response> {
 			avatar_url: avatar,
 		} = githubUser;
 
-		const existingUser = await db
-			.select()
-			.from(User)
-			.where(eq(User.githubId, githubId))
-			.get();
+		const existingUser = await db.select().from(User).where(eq(User.githubId, githubId)).get();
 
 		if (existingUser) {
 			const session = await lucia.createSession(existingUser.id.toString(), {});
 			const sessionCookie = lucia.createSessionCookie(session.id);
-			cookies.set(
-				sessionCookie.name,
-				sessionCookie.value,
-				sessionCookie.attributes,
-			);
+			cookies.set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
 			return redirect('/dashboard/');
 		}
 
@@ -74,11 +71,7 @@ export async function GET(context: APIContext): Promise<Response> {
 
 		const sessionCookie = lucia.createSessionCookie(session.id);
 
-		cookies.set(
-			sessionCookie.name,
-			sessionCookie.value,
-			sessionCookie.attributes,
-		);
+		cookies.set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
 		return redirect('/dashboard/');
 	} catch (e) {
 		// the specific error message depends on the provider

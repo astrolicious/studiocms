@@ -1,18 +1,14 @@
 // @ts-expect-error - This is a missing type definition for the `astro:db` import since its a virtual module during Astro Runtime
-import { User, db, eq } from "astro:db";
-import { lucia } from "../lib/auth";
-import { verifyRequestOrigin } from "lucia";
-import { defineMiddleware } from "astro/middleware";
+import { User, db, eq } from 'astro:db';
+import { defineMiddleware } from 'astro/middleware';
+import { verifyRequestOrigin } from 'lucia';
+import { lucia } from '../lib/auth';
 
 export const onRequest = defineMiddleware(async (context, next) => {
-	if (context.request.method !== "GET") {
-		const originHeader = context.request.headers.get("Origin");
-		const hostHeader = context.request.headers.get("Host");
-		if (
-			!originHeader ||
-			!hostHeader ||
-			!verifyRequestOrigin(originHeader, [hostHeader])
-		) {
+	if (context.request.method !== 'GET') {
+		const originHeader = context.request.headers.get('Origin');
+		const hostHeader = context.request.headers.get('Host');
+		if (!originHeader || !hostHeader || !verifyRequestOrigin(originHeader, [hostHeader])) {
 			return new Response(null, {
 				status: 403,
 			});
@@ -32,11 +28,7 @@ export const onRequest = defineMiddleware(async (context, next) => {
 
 	if (!session || session === null) {
 		const sessionCookie = lucia.createBlankSessionCookie();
-		context.cookies.set(
-			sessionCookie.name,
-			sessionCookie.value,
-			sessionCookie.attributes,
-		);
+		context.cookies.set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
 		return next();
 	}
 
@@ -46,11 +38,7 @@ export const onRequest = defineMiddleware(async (context, next) => {
 
 	if (session.fresh) {
 		const sessionCookie = lucia.createSessionCookie(session.id);
-		context.cookies.set(
-			sessionCookie.name,
-			sessionCookie.value,
-			sessionCookie.attributes,
-		);
+		context.cookies.set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
 		const [dbUser] = await db
 			.select()
 			.from(User)
@@ -61,11 +49,7 @@ export const onRequest = defineMiddleware(async (context, next) => {
 	} else if (session && !session.fresh) {
 		const sessionCookie = lucia.createBlankSessionCookie();
 		await lucia.invalidateSession(session.id);
-		context.cookies.set(
-			sessionCookie.name,
-			sessionCookie.value,
-			sessionCookie.attributes,
-		);
+		context.cookies.set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
 	}
 
 	context.locals.session = session;

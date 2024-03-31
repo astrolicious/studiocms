@@ -18,7 +18,5 @@
     "strict": true,
     "outDir": "../.moon/cache/types/playground"
   },
-  "exclude": [
-    "dist"
-  ]
+  "exclude": ["dist"]
 }

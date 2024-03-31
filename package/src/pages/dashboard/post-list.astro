@@ -1,40 +1,40 @@
 ---
 // import sitemap from 'sitemap-ext:config';
 // @ts-expect-error - This is a missing type definition for the `astro:db` import since its a virtual module during Astro Runtime
-import { db, Blog, eq, asc } from "astro:db";
-import Default from "../../layouts/Default.astro"
-import type { Locals } from "./locals";
-import FormattedDate from "../../components/FormattedDate.astro";
+import { Blog, asc, db, eq } from 'astro:db';
+import FormattedDate from '../../components/FormattedDate.astro';
+import Default from '../../layouts/Default.astro';
 import { rankCheck } from '../../utils/rankcheck';
+import type { Locals } from './locals';
 
 // sitemap(false); // opt-out
 
-function redirectToPath(path: string){
-    return Astro.redirect(import.meta.env.BASE_URL+path);
+function redirectToPath(path: string) {
+	return Astro.redirect(import.meta.env.BASE_URL + path);
 }
 
 const locals = Astro.locals as Locals;
 const isLoggedIn = locals.isLoggedIn;
 
 if (!isLoggedIn) {
-    redirectToPath("dashboard/login");
+	redirectToPath('dashboard/login');
 }
 
 const getUserName = () => {
-    if (locals.isLoggedIn) {
-	    if (locals.dbUser.name) {
-		    return locals.dbUser.name;
-	    } 
-        return locals.user.username;
-    }
+	if (locals.isLoggedIn) {
+		if (locals.dbUser.name) {
+			return locals.dbUser.name;
+		}
+		return locals.user.username;
+	}
 	return 'Astronaut';
 };
 
 const currentUserRank = await rankCheck(locals);
 
 if (currentUserRank !== 'admin' && currentUserRank !== 'editor') {
-    console.log('User is not an admin or editor. Redirecting to profile...');
-    redirectToPath("dashboard/profile");
+	console.log('User is not an admin or editor. Redirecting to profile...');
+	redirectToPath('dashboard/profile');
 }
 
 const posts = await db.select().from(Blog).orderBy(asc(Blog.publishedAt));

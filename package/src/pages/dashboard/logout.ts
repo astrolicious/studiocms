@@ -1,5 +1,5 @@
-import { lucia } from "../../lib/auth";
-import type { APIContext } from "astro";
+import type { APIContext } from 'astro';
+import { lucia } from '../../lib/auth';
 
 export async function GET(context: APIContext): Promise<Response> {
 	return context.redirect(import.meta.env.BASE_URL);
@@ -13,16 +13,12 @@ export async function POST(context: APIContext): Promise<Response> {
 	await lucia.invalidateSession(context.locals.session.id);
 
 	const sessionCookie = lucia.createBlankSessionCookie();
-	context.cookies.set(
-		sessionCookie.name,
-		sessionCookie.value,
-		sessionCookie.attributes,
-	);
+	context.cookies.set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
 
 	context.locals.session = null;
 	context.locals.isLoggedIn = false;
 	context.locals.user = null;
 	context.locals.dbUser = null;
 
-	return context.redirect("/");
+	return context.redirect('/');
 }

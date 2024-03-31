@@ -1,35 +1,35 @@
 {
-	"$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
-	"vcs": {
-	  "enabled": true,
-	  "clientKind": "git",
-	  "useIgnoreFile": true,
-	  "defaultBranch": "main"
-	},
-	"files": {
-	  "ignoreUnknown": true
-	},
-	"formatter": {
-	  "lineWidth": 100
-	},
-	"javascript": {
-	  "formatter": {
-		"quoteStyle": "single",
-		"trailingComma": "es5"
-	  }
-	},
-	"json": {
-	  "formatter": {
-		"indentStyle": "space"
-	  }
-	},
-	"organizeImports": {
-	  "enabled": true
-	},
-	"linter": {
-	  "enabled": true,
-	  "rules": {
-		"recommended": true
-	  }
-	}
+  "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
+  "vcs": {
+    "enabled": true,
+    "clientKind": "git",
+    "useIgnoreFile": true,
+    "defaultBranch": "main"
+  },
+  "files": {
+    "ignoreUnknown": true
+  },
+  "formatter": {
+    "lineWidth": 100
+  },
+  "javascript": {
+    "formatter": {
+      "quoteStyle": "single",
+      "trailingComma": "es5"
+    }
+  },
+  "json": {
+    "formatter": {
+      "indentStyle": "space"
+    }
+  },
+  "organizeImports": {
+    "enabled": true
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "recommended": true
+    }
   }
+}

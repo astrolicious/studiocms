@@ -1,18 +1,18 @@
 ---
 // import sitemap from 'sitemap-ext:config';
-import Layout from "../../../layouts/Default.astro";
+import Layout from '../../../layouts/Default.astro';
 import type { Locals } from '../locals';
 
 // sitemap(false); // opt-out
 
 const locals = Astro.locals as Locals;
 
-function redirectToPath(path: string){
-    return Astro.redirect(import.meta.env.BASE_URL+path);
+function redirectToPath(path: string) {
+	return Astro.redirect(import.meta.env.BASE_URL + path);
 }
 
 if (locals.isLoggedIn) {
-  redirectToPath("dashboard");
+	redirectToPath('dashboard');
 }
 ---
 
