@@ -1,4 +1,3 @@
-// Tools and Utilities
 import {
 	addIntegration,
 	addVirtualImports,
@@ -10,17 +9,10 @@ import 'astro-integration-kit/types/db';
 import { AstroError } from 'astro/errors';
 import { loadEnv } from 'vite';
 import { integrationLogger } from './utils';
-
 import inoxsitemap from '@inox-tools/sitemap-ext';
-// Integrations
 import robots from 'astro-robots';
-
-// Image Services
 import { imageService as unpicImageService } from '@unpic/astro/service';
-
 import { passthroughImageService, sharpImageService, squooshImageService } from 'astro/config';
-
-// Options Schema
 import { optionsSchema } from './schemas';
 
 // Environment Variables
