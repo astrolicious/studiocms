@@ -23,6 +23,11 @@ export default defineConfig({
 		db(),
 		astroStudioCMS({
 			dbStartPage: false,
+			markedConfig: {
+				shikiConfig: {
+					enabled: false
+				},
+			},
 			authConfig: {
 				mode: "disable",
 			},

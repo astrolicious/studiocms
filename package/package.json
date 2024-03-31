@@ -37,6 +37,7 @@
   "type": "module",
   "dependencies": {
     "@astrojs/rss": "^4.0.5",
+    "@astrojs/markdown-remark": "^4.3.2",
     "@cloudinary/url-gen": "^1.19.0",
     "@inox-tools/sitemap-ext": "^0.2.3",
     "@lucia-auth/adapter-drizzle": "^1.0.4",

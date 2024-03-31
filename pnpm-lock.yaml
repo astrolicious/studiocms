@@ -54,6 +54,9 @@ importers:
       '@astrojs/db':
         specifier: '>=0.9.8'
         version: 0.9.8
+      '@astrojs/markdown-remark':
+        specifier: ^4.3.2
+        version: 4.3.2
       '@astrojs/netlify':
         specifier: ^5.2.0
         version: 5.2.0(astro@4.5.12)

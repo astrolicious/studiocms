@@ -36,6 +36,8 @@ export const markedExtensionsSchema = z.object({
 // MARKED SHIKI CONFIG SCHEMA
 //
 export const markedShikiConfigSchema = z.object({
+    enabled: z.boolean().optional().default(true),
+    CloudflareOverride: z.boolean().optional().default(false),
     /**
      * Allows the user to configure the Shiki Highlighter Theme
      * @default 'houston'

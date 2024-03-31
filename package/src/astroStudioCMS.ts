@@ -81,6 +81,10 @@ export default defineIntegration({
                     config: { base, adapter, output, site }
                 } = params;
 
+                const currentAdapter = adapter?.name;
+
+                const internalConfig = {currentAdapter}
+
                 // Check for SSR Mode
                 if (output !== "server" ) {
                     throw new AstroError("Astro Studio CMS is only supported in 'Output: server' SSR mode.");
@@ -99,6 +103,7 @@ export default defineIntegration({
                     name,
                     imports: {
                         'virtual:astro-studio-cms:config': `export default ${ JSON.stringify(options) }`,
+                        'virtual:astro-studio-cms:internal': `export default ${ JSON.stringify(internalConfig) }`,
                     },
                 })
 
