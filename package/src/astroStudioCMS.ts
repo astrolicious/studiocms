@@ -12,7 +12,7 @@ import { integrationLogger } from "./utils";
 
 // Integrations
 import robots from "astro-robots";
-// import sitemap from "@inox-tools/sitemap-ext"; // breaks cloudflare deployments
+import inoxsitemap from "@inox-tools/sitemap-ext";
 
 // Image Services
 import { 
@@ -58,7 +58,7 @@ export default defineIntegration({
     optionsSchema,
     setup({ name, options, options: { verbose, dbStartPage, 
             authConfig: { mode: authMode }, 
-            includedIntegrations: { astroRobots },
+            includedIntegrations: { astroRobots, inoxSitemap: useInoxSitemap },
             imageService: { astroImageServiceConfig, cdnPlugin, useUnpic, 
                 unpicConfig: { fallbackService, layout, placeholder, cdnOptions }, 
             }, 
@@ -575,16 +575,14 @@ export default defineIntegration({
                         }
                     }
     
-                    // Sitemap Integration - Removed due to Cloudflare Deployment Issues
-                    // if ( inoxSitemap ) {
-                    //     if ( !hasIntegration(params, { name: "@astrojs/sitemap" }) 
-                    //     || !hasIntegration(params, { name: "@inox-tools/sitemap-ext"}) ) {
-                    //         integrationLogger(logger, verbose, "info", "No Sitemap Integration found. Adding `@inox-tools/sitemap-ext` Integration")
-                    //         addIntegration(params, { integration: sitemap({
-                    //             includeByDefault: true
-                    //         })});
-                    //     }
-                    // }
+                    // Sitemap Integration
+                    if ( useInoxSitemap ) {
+                        if ( !hasIntegration(params, { name: "@astrojs/sitemap" }) 
+                        || !hasIntegration(params, { name: "@inox-tools/sitemap-ext"}) ) {
+                            integrationLogger(logger, verbose, "info", "No Sitemap Integration found. Adding `@inox-tools/sitemap-ext` Integration")
+                            addIntegration(params, { integration: inoxsitemap()});
+                        }
+                    }
 
                 integrationLogger(
                     logger, verbose, "info", "Astro Studio CMS Setup Complete!"
