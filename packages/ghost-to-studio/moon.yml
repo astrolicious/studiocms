@@ -4,8 +4,6 @@ toolchain:
   typescript:
     syncProjectReferences: false
 
-dependsOn:
-- studioCMS
 tasks:
   astro:
     command: astro

@@ -1,4 +1,4 @@
 packages:
-  - "package"
+  - "packages/*"
   - "playground"
   - "cftest"
