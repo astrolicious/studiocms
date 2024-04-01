@@ -17,7 +17,6 @@ if (!isLoggedIn) {
 	redirectToPath('dashboard/login');
 }
 
-
 const currentUserRank = await rankCheck(locals);
 
 if (currentUserRank !== 'admin' && currentUserRank !== 'editor') {
