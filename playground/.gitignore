@@ -4,6 +4,9 @@ dist/
 # generated types
 .astro/
 
+#VERCEL IS ANNOYING
+.vercel/
+
 # dependencies
 node_modules/
 
