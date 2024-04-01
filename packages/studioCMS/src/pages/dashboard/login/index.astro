@@ -12,7 +12,7 @@ function redirectToPath(path: string) {
 }
 
 if (locals.isLoggedIn) {
-	redirectToPath('dashboard');
+	return redirectToPath('dashboard');
 }
 ---
 

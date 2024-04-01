@@ -24,13 +24,13 @@ const currentUserRank = await rankCheck(locals);
 
 if (!isLoggedIn) {
 	console.log('User is not logged in');
-	redirectToPath('dashboard/login');
+	return redirectToPath('dashboard/login');
 }
 
 if (Astro.request.method === 'POST') {
 	if (currentUserRank !== 'admin') {
 		console.log('User is not an admin');
-		redirectToPath('dashboard/profile');
+		return redirectToPath('dashboard/profile');
 	}
 	const formData = await new Request(Astro.request.url, {
 		method: Astro.request.method,
@@ -55,12 +55,12 @@ if (Astro.request.method === 'POST') {
 			return new Response('Error', { status: 500 });
 		});
 
-	redirectToPath('dashboard');
+    return redirectToPath('dashboard');
 }
 
 if (currentUserRank !== 'admin') {
 	console.log('User is not an admin');
-	redirectToPath('dashboard/profile');
+	return redirectToPath('dashboard/profile');
 }
 ---
 

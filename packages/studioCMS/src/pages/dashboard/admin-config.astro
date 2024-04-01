@@ -16,7 +16,7 @@ function redirectToPath(path: string) {
 }
 
 if (!isLoggedIn) {
-	redirectToPath('dashboard/login');
+	return redirectToPath('dashboard/login');
 }
 
 if (Astro.request.method === 'POST') {
@@ -49,7 +49,7 @@ const currentUserRank = await rankCheck(locals);
 
 if (currentUserRank !== 'admin') {
 	console.log('User is not an admin');
-	redirectToPath('dashboard/profile');
+	return redirectToPath('dashboard/profile');
 }
 
 const adminList = await db.select().from(Permissions);

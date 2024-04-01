@@ -17,14 +17,14 @@ const postArrayed = await db.select().from(Blog).where(eq(Blog.slug, slug));
 const post = postArrayed[0];
 
 if (!slug || !post) {
-	redirectToPath('dashboard/');
+	return redirectToPath('dashboard/');
 }
 
 const locals = Astro.locals as Locals;
 const isLoggedIn = locals.isLoggedIn;
 
 if (!isLoggedIn) {
-	redirectToPath('dashboard/login/');
+	return redirectToPath('dashboard/login/');
 }
 
 const getUserName = () => {
@@ -41,7 +41,7 @@ const currentUserRank = await rankCheck(locals);
 
 if (currentUserRank !== 'admin' && currentUserRank !== 'editor') {
 	console.log('User is not an admin');
-	redirectToPath('dashboard/profile/');
+	return redirectToPath('dashboard/profile/');
 }
 
 if (Astro.request.method === 'POST') {
@@ -73,7 +73,7 @@ if (Astro.request.method === 'POST') {
 			return new Response('Error updating post', { status: 500 });
 		});
 
-	redirectToPath('dashboard/');
+    return redirectToPath('dashboard/');
 }
 ---
 

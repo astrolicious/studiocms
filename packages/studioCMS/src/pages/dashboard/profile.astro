@@ -28,7 +28,7 @@ const getUserName = () => {
 const currentUserRank = await rankCheck(locals);
 
 if (!isLoggedIn) {
-	redirectToPath('dashboard/login');
+	return redirectToPath('dashboard/login');
 }
 ---
 

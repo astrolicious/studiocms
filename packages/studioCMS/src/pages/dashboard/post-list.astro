@@ -17,7 +17,7 @@ const locals = Astro.locals as Locals;
 const isLoggedIn = locals.isLoggedIn;
 
 if (!isLoggedIn) {
-	redirectToPath('dashboard/login');
+	return redirectToPath('dashboard/login');
 }
 
 const getUserName = () => {
@@ -34,7 +34,7 @@ const currentUserRank = await rankCheck(locals);
 
 if (currentUserRank !== 'admin' && currentUserRank !== 'editor') {
 	console.log('User is not an admin or editor. Redirecting to profile...');
-	redirectToPath('dashboard/profile');
+	return redirectToPath('dashboard/profile');
 }
 
 const posts = await db.select().from(Blog).orderBy(asc(Blog.publishedAt));

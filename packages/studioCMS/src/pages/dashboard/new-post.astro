@@ -16,7 +16,7 @@ const locals = Astro.locals as Locals;
 const isLoggedIn = locals.isLoggedIn;
 
 if (!isLoggedIn) {
-	redirectToPath('dashboard/login');
+	return redirectToPath('dashboard/login');
 }
 
 const getUserName = () => {
@@ -33,7 +33,7 @@ const currentUserRank = await rankCheck(locals);
 
 if (currentUserRank !== 'admin' && currentUserRank !== 'editor') {
 	console.log('User is not an admin or editor. Redirecting to profile.');
-	redirectToPath('dashboard/profile');
+	return redirectToPath('dashboard/profile');
 }
 
 if (Astro.request.method === 'POST') {
@@ -60,7 +60,7 @@ if (Astro.request.method === 'POST') {
 	}
 
 	if (existingPost) {
-		makeResponse('Post with that slug already exists', 400);
+		return makeResponse('Post with that slug already exists', 400);
 	}
 
 	await db
@@ -79,7 +79,7 @@ if (Astro.request.method === 'POST') {
 			return new Response('Error creating post', { status: 500 });
 		});
 
-	redirectToPath('dashboard');
+    return redirectToPath('dashboard');
 }
 ---
 
