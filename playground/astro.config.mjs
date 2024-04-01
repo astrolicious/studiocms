@@ -15,7 +15,7 @@ export default defineConfig({
 			contentRenderer: 'marked',
 			markedConfig: {
 				highlighterConfig: {
-					highlighter: 'highlightJs',
+					highlighter: 'shiki',
 				},
 			},
 			verbose: true,
