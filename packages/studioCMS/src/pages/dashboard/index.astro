@@ -17,6 +17,14 @@ if (!isLoggedIn) {
 	redirectToPath('dashboard/login');
 }
 
+
+const currentUserRank = await rankCheck(locals);
+
+if (currentUserRank !== 'admin' && currentUserRank !== 'editor') {
+	console.log('User is not an admin or editor. Redirecting to profile page.');
+	redirectToPath('dashboard/profile');
+}
+
 const getUserName = () => {
 	if (locals.isLoggedIn) {
 		if (locals.dbUser.name) {
@@ -26,13 +34,6 @@ const getUserName = () => {
 	}
 	return 'Astronaut';
 };
-
-const currentUserRank = await rankCheck(locals);
-
-if (currentUserRank !== 'admin' && currentUserRank !== 'editor') {
-	console.log('User is not an admin or editor. Redirecting to profile page.');
-	redirectToPath('dashboard/profile');
-}
 ---
 
 <Default>

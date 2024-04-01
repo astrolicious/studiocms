@@ -12,6 +12,7 @@ export default defineConfig({
 		db(),
 		astroStudioCMS({
 			dbStartPage: false,
+			contentRenderer: 'marked',
 			verbose: true,
 		}),
 	],
