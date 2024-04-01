@@ -19,6 +19,7 @@ export const rankCheck = async (locals: Locals) => {
 				return 'editor';
 			}
 		}
+		return 'visitor';
 	}
-	return 'visitor';
+	return 'unknown';
 };
