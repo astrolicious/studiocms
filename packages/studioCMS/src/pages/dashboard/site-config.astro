@@ -1,5 +1,4 @@
 ---
-// import sitemap from 'sitemap-ext:config';
 // @ts-expect-error - This is a missing type definition for the `astro:db` import since its a virtual module during Astro Runtime
 import { db, eq } from 'astro:db';
 import { asDrizzleTable } from '@astrojs/db/utils';
@@ -8,23 +7,25 @@ import Default from '../../layouts/Default.astro';
 import { rankCheck } from '../../utils/rankcheck';
 import type { Locals } from './locals';
 
-// sitemap(false); // opt-out
-
 const SiteConfigSafe = asDrizzleTable('SiteConfig', siteConfigTable);
 const ConfigArray = await db.select().from(SiteConfigSafe);
 const contextConfig = ConfigArray[0];
 const locals = Astro.locals as Locals;
-const isLoggedIn = locals.isLoggedIn;
+
+const currentUserRank = await rankCheck(locals);
 
 function redirectToPath(path: string) {
 	return Astro.redirect(import.meta.env.BASE_URL + path);
 }
 
-const currentUserRank = await rankCheck(locals);
-
-if (!isLoggedIn) {
-	console.log('User is not logged in');
-	return redirectToPath('dashboard/login');
+// If the user is not logged in, redirect to the login page
+if ( currentUserRank === "unknown" ) {
+    console.log('User is not logged in. Redirecting to login page.');
+    return redirectToPath('dashboard/login');
+}
+if ( currentUserRank !== 'admin') {
+    console.log('User is not an admin. Redirecting to profile page.');
+    return redirectToPath('dashboard/profile');
 }
 
 if (Astro.request.method === 'POST') {
@@ -56,11 +57,6 @@ if (Astro.request.method === 'POST') {
 		});
 
     return redirectToPath('dashboard');
-}
-
-if (currentUserRank !== 'admin') {
-	console.log('User is not an admin');
-	return redirectToPath('dashboard/profile');
 }
 ---
 

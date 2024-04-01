@@ -1,22 +1,22 @@
 ---
-// import sitemap from 'sitemap-ext:config';
 // @ts-expect-error - This is a missing type definition for the `astro:db` import since its a virtual module during Astro Runtime
 import { Permissions, db, eq } from 'astro:db';
 import Default from '../../layouts/Default.astro';
 import { rankCheck } from '../../utils/rankcheck';
 import type { Locals } from './locals';
 
-// sitemap(false); // opt-out
-
-const locals = Astro.locals as Locals;
-const isLoggedIn = locals.isLoggedIn;
-
 function redirectToPath(path: string) {
 	return Astro.redirect(import.meta.env.BASE_URL + path);
 }
+const currentUserRank = await rankCheck(Astro.locals as Locals);
 
-if (!isLoggedIn) {
-	return redirectToPath('dashboard/login');
+if ( currentUserRank === "unknown" ) {
+    console.log('User is not logged in. Redirecting to login page.');
+    return redirectToPath('dashboard/login');
+}
+if (currentUserRank !== 'admin') {
+	console.log('User is not an admin');
+	return redirectToPath('dashboard/profile');
 }
 
 if (Astro.request.method === 'POST') {
@@ -43,13 +43,6 @@ if (Astro.request.method === 'POST') {
 		});
 
 	redirectToPath('dashboard/');
-}
-
-const currentUserRank = await rankCheck(locals);
-
-if (currentUserRank !== 'admin') {
-	console.log('User is not an admin');
-	return redirectToPath('dashboard/profile');
 }
 
 const adminList = await db.select().from(Permissions);

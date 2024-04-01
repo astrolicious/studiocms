@@ -21,28 +21,20 @@ if (!slug || !post) {
 }
 
 const locals = Astro.locals as Locals;
-const isLoggedIn = locals.isLoggedIn;
-
-if (!isLoggedIn) {
-	return redirectToPath('dashboard/login/');
-}
-
-const getUserName = () => {
-	if (locals.isLoggedIn) {
-		if (locals.dbUser.name) {
-			return locals.dbUser.name;
-		}
-		return locals.user.username;
-	}
-	return null;
-};
 
 const currentUserRank = await rankCheck(locals);
 
-if (currentUserRank !== 'admin' && currentUserRank !== 'editor') {
-	console.log('User is not an admin');
-	return redirectToPath('dashboard/profile/');
+// If the user is not logged in, redirect to the login page
+if ( currentUserRank === "unknown" ) {
+    console.log('User is not logged in. Redirecting to login page.');
+    return redirectToPath('dashboard/login');
 }
+if ( currentUserRank !== 'admin' && currentUserRank !== 'editor' ) {
+    console.log('User is not an admin or editor. Redirecting to profile page.');
+    return redirectToPath('dashboard/profile');
+}
+
+const getUserName = locals.dbUser.name ? locals.dbUser.name : locals.user.username;
 
 if (Astro.request.method === 'POST') {
 	const formData = await new Request(Astro.request.url, {
