@@ -1,7 +1,8 @@
 // @ts-expect-error - Types are only available during runtime
 import { Permissions, db, eq } from 'astro:db';
+import type { Locals } from '../pages/dashboard/locals';
 
-export const rankCheck = async (locals: { user: { username: string } }) => {
+export const rankCheck = async (locals: Locals) => {
 	const permissions = await db
 		.select()
 		.from(Permissions)
