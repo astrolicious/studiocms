@@ -9,7 +9,7 @@ import type { Locals } from './locals';
 const locals = Astro.locals as Locals;
 const isLoggedIn = locals.isLoggedIn;
 
-function redirectToPath(path: string) {
+async function redirectToPath(path: string) {
 	return Astro.redirect(import.meta.env.BASE_URL + path);
 }
 
