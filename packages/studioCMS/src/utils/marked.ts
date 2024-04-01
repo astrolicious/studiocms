@@ -5,8 +5,6 @@ import { markedEmoji } from 'marked-emoji';
 import markedFootnote from 'marked-footnote';
 import { markedSmartypants } from 'marked-smartypants';
 import emojiList from './emoji-en-US.json';
-import { markedHighlight } from "marked-highlight";
-import hljs from 'highlight.js';
 
 const {
 	markedConfig: {
@@ -74,17 +72,6 @@ export async function markdown(input: string): Promise<string> {
 				},
 			})
 		);
-	} else if (selectedHighlighter === 'highlightJs') {
-
-		// customMarkedExtList.push(
-		// 	markedHighlight({
-		// 		langPrefix: 'hljs language-',
-		// 		highlight(code, lang) {
-		// 			const language = hljs.getLanguage(lang) ? lang : 'plaintext';
-		// 			return hljs.highlightAuto(code).value;
-		// 		},
-		// 	})
-		// );
 	}
 
 	// Load any additional User-Defined marked extensions

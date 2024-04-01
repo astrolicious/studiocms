@@ -173,6 +173,9 @@ importers:
       '@astrojs/node':
         specifier: ^8.2.5
         version: 8.2.5(astro@4.5.12)
+      '@astrojs/vercel':
+        specifier: 7.5.0
+        version: 7.5.0(astro@4.5.12)
       '@astrolicious/studiocms':
         specifier: workspace:*
         version: link:../packages/studioCMS
