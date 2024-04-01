@@ -123,7 +123,7 @@ if (Astro.request.method === 'POST') {
 			return new Response('Error Adding Blog Data', { status: 500 });
 		});
 
-	redirectToPath('done/');
+	return redirectToPath('done/');
 }
 ---
 

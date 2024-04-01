@@ -29,10 +29,6 @@ if ( currentUserRank !== 'admin') {
 }
 
 if (Astro.request.method === 'POST') {
-	if (currentUserRank !== 'admin') {
-		console.log('User is not an admin');
-		return redirectToPath('dashboard/profile');
-	}
 	const formData = await new Request(Astro.request.url, {
 		method: Astro.request.method,
 		headers: Astro.request.headers,
