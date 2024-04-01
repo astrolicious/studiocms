@@ -23,17 +23,13 @@ const post = postArrayed[0];
 
 if (!slug || !post) {
 	return Astro.redirect(`${import.meta.env.BASE_URL}404`);
-}
-
-type Props = {
-	post: typeof Blog.$inferSelect;
 };
 
 function contentRenderer() {
 	if (Config.contentRenderer === 'markdoc') {
-		return renderMarkDoc(post.content);
+		return renderMarkDoc(post.content as string);
 	}
-	return markdown(post.content);
+	return markdown(post.content as string);
 }
 ---
 <BlogPost 
