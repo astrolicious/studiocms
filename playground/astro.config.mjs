@@ -13,6 +13,11 @@ export default defineConfig({
 		astroStudioCMS({
 			dbStartPage: false,
 			contentRenderer: 'marked',
+			markedConfig: {
+				highlighterConfig: {
+					highlighter: 'highlightJs',
+				},
+			},
 			verbose: true,
 		}),
 	],

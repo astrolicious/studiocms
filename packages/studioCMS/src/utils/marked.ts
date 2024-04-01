@@ -5,6 +5,8 @@ import { markedEmoji } from 'marked-emoji';
 import markedFootnote from 'marked-footnote';
 import { markedSmartypants } from 'marked-smartypants';
 import emojiList from './emoji-en-US.json';
+import { markedHighlight } from "marked-highlight";
+import hljs from 'highlight.js';
 
 const {
 	markedConfig: {
@@ -73,15 +75,13 @@ export async function markdown(input: string): Promise<string> {
 			})
 		);
 	} else if (selectedHighlighter === 'highlightJs') {
-		const { markedHighlight } = await import('marked-highlight');
-		const hljs = (await import('highlight.js')).default;
 
 		customMarkedExtList.push(
 			markedHighlight({
 				langPrefix: 'hljs language-',
 				highlight(code, lang) {
 					const language = hljs.getLanguage(lang) ? lang : 'plaintext';
-					return hljs.highlight(code, { language }).value;
+					return hljs.highlightAuto(code).value;
 				},
 			})
 		);
