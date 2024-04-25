@@ -70,7 +70,7 @@ export default defineIntegration({
 				'astro:db:setup': ({ extendDb }) => {
 					extendDb({
 						configEntrypoint: resolve('./db/config.ts'),
-						seedEntrypoint: resolve('./db/seed.ts'), // Broken Solution is coming... @see https://github.com/withastro/astro/pull/10599
+						seedEntrypoint: resolve('./db/seed.ts'),
 					});
 				},
 				'astro:config:setup': (params) => {
