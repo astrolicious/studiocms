@@ -1,6 +1,6 @@
 import { z } from 'astro/zod';
 import type { MarkedExtension } from 'marked';
-import type { BundledTheme, ThemeInput } from 'shiki';
+import type { BundledTheme } from 'shiki';
 
 //
 // MARKED EXTENSIONS SCHEMA
