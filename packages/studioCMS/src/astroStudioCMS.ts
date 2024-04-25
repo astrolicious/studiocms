@@ -10,7 +10,7 @@ import { AstroError } from 'astro/errors';
 import { loadEnv } from 'vite';
 import { integrationLogger } from './utils';
 // import inoxsitemap from '@inox-tools/sitemap-ext';
-import robots from 'astro-robots';
+import robotsTXT from './integrations/robotstxt';
 import { imageService as unpicImageService } from '@unpic/astro/service';
 import { passthroughImageService, sharpImageService, squooshImageService } from 'astro/config';
 import { optionsSchema } from './schemas';
@@ -41,7 +41,6 @@ const AUTHKEYS = {
 			process.env.CMS_CLOUDINARY_CLOUDNAME,
 	},
 };
-
 
 // Main Integration
 export default defineIntegration({
@@ -745,7 +744,7 @@ export default defineIntegration({
 								'No known robotstxt integration found. Adding `astro-robots` integration'
 							);
 							addIntegration(params, {
-								integration: robots({
+								integration: robotsTXT({
 									policy: [
 										{
 											userAgent: ['*'],

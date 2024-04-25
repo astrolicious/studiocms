@@ -1,4 +1,4 @@
-import type { RobotsConfig } from 'astro-robots';
+import type { RobotsConfig } from '../integrations/robotstxt';
 import { z } from 'astro/zod';
 
 //

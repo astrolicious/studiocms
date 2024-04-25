@@ -100,9 +100,6 @@ importers:
       astro-integration-kit:
         specifier: ^0.12.0
         version: 0.12.0(@astrojs/db@0.10.6)(astro@4.7.0)
-      astro-robots:
-        specifier: ^2.0.1
-        version: 2.0.1
       lucia:
         specifier: ^3.1.1
         version: 3.1.1
@@ -3256,10 +3253,6 @@ packages:
       astro: 4.7.0(@types/node@20.12.7)(typescript@5.4.3)
       pathe: 1.1.2
       recast: 0.23.6
-    dev: false
-
-  /astro-robots@2.0.1:
-    resolution: {integrity: sha512-1yBXF7uEcX4kyKfuzGn1fwxkuhY+ID/WA0gg9VgtD0CmOlsPy48tmVSpfN10gwN8h4/qhfnAOA2h8avxmgaG4A==}
     dev: false
 
   /astro@4.5.12(@types/node@20.11.30)(typescript@5.4.3):
