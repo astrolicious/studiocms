@@ -51,6 +51,7 @@
     "marked-shiki": "^1.1.0",
     "marked-smartypants": "^1.1.6",
     "shiki": "^1.3.0",
+    "@shikijs/transformers": "^1.3.0",
     "typescript": "^5.4.3",
     "unpic": "^3.18.0",
     "vite": "^5.2.10",

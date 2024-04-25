@@ -46,23 +46,11 @@ const AUTHKEYS = {
 export default defineIntegration({
 	name: 'astro-studiocms',
 	optionsSchema,
-	setup({ name,
-		options,
-		options: {
-			verbose,
-			dbStartPage,
-			authConfig: { mode: authMode },
-			includedIntegrations: { useAstroRobots, astroRobotsConfig },
-			imageService: {
-				astroImageServiceConfig,
-				cdnPlugin,
-				useUnpic,
-				unpicConfig: { fallbackService, layout, placeholder, cdnOptions },
-			},
-		},
-	}) {
+	setup({ name, options }) {
+
 		// Create Resolver for Virtual Imports
 		const { resolve } = createResolver(import.meta.url);
+
 		return {
 			hooks: {
 				'astro:db:setup': ({ extendDb }) => {
@@ -71,7 +59,9 @@ export default defineIntegration({
 						seedEntrypoint: resolve('./db/seed.ts'),
 					});
 				},
-				'astro:config:setup': (params) => {
+				'astro:config:setup': ( params ) => {
+
+					// Destructure Params
 					const {
 						addMiddleware,
 						updateConfig,
@@ -81,6 +71,30 @@ export default defineIntegration({
 						config,
 						config: { base, adapter, output, site },
 					} = params;
+
+					// Destructure Options
+					const {
+						verbose,
+						dbStartPage,
+						authConfig: { 
+							mode: authMode 
+						},
+						includedIntegrations: { 
+							useAstroRobots, 
+							astroRobotsConfig 
+						},
+						imageService: {
+							unpicConfig: { 
+								fallbackService, 
+								layout, 
+								placeholder, 
+								cdnOptions 
+							},
+							astroImageServiceConfig,
+							cdnPlugin,
+							useUnpic,
+						},
+					} = options;
 
 					// Check for SSR Mode
 					if (output !== 'server') {
@@ -776,7 +790,8 @@ export default defineIntegration({
 					integrationLogger(logger, verbose, 'info', 'Astro Studio CMS Setup Complete!');
 				},
 				'astro:server:start': ({ logger }) => {
-					if (dbStartPage) {
+
+					if (options.dbStartPage) {
 						integrationLogger(
 							logger,
 							true,

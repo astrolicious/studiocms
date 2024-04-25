@@ -1,6 +1,6 @@
 import { z } from 'astro/zod';
 import type { MarkedExtension } from 'marked';
-import type { BundledTheme } from 'shiki';
+import type { BundledTheme, ThemeInput } from 'shiki';
 
 //
 // MARKED EXTENSIONS SCHEMA
@@ -42,8 +42,11 @@ export const shikiConfigSchema = z
 	.object({
 		/**
 		 * Allows the user to choose a Shiki Theme
+		 * 
+		 * Import the theme from the `shiki` package
+		 * @default theme: import('shiki/themes/houston.mjs') 
 		 */
-		theme: z.custom<BundledTheme>().optional().default('houston'),
+		theme: z.custom<BundledTheme>().optional().default("houston"),
 	})
 	.optional()
 	.default({});

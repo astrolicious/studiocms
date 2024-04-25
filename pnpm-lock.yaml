@@ -88,6 +88,9 @@ importers:
       '@markdoc/markdoc':
         specifier: ^0.4.0
         version: 0.4.0
+      '@shikijs/transformers':
+        specifier: ^1.3.0
+        version: 1.3.0
       '@unpic/astro':
         specifier: ^0.0.44
         version: 0.0.44(astro@4.7.0)
@@ -2795,6 +2798,12 @@ packages:
 
   /@shikijs/core@1.3.0:
     resolution: {integrity: sha512-7fedsBfuILDTBmrYZNFI8B6ATTxhQAasUHllHmjvSZPnoq4bULWoTpHwmuQvZ8Aq03/tAa2IGo6RXqWtHdWaCA==}
+    dev: false
+
+  /@shikijs/transformers@1.3.0:
+    resolution: {integrity: sha512-3mlpg2I9CjhjE96dEWQOGeCWoPcyTov3s4aAsHmgvnTHa8MBknEnCQy8/xivJPSpD+olqOqIEoHnLfbNJK29AA==}
+    dependencies:
+      shiki: 1.3.0
     dev: false
 
   /@tybys/wasm-util@0.8.1:
