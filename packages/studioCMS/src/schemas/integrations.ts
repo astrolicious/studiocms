@@ -1,3 +1,4 @@
+import type { RobotsConfig } from 'astro-robots';
 import { z } from 'astro/zod';
 
 //
@@ -11,7 +12,8 @@ export const includedIntegrationsSchema = z
 		 * @see https://www.npmjs.com/package/astro-robots
 		 * @default true
 		 */
-		astroRobots: z.boolean().optional().default(true),
+		useAstroRobots: z.boolean().optional().default(true),
+		astroRobotsConfig: z.custom<RobotsConfig>().default({})
 		// /**
 		//  * Allows the user to enable/disable the use of the Inox-tools Sitemap Plugin
 		//  * For more information on the Inox-tools Sitemap Plugin, visit:

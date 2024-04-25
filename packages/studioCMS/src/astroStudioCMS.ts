@@ -47,14 +47,13 @@ const AUTHKEYS = {
 export default defineIntegration({
 	name: 'astro-studiocms',
 	optionsSchema,
-	setup({
-		name,
+	setup({ name,
 		options,
 		options: {
 			verbose,
 			dbStartPage,
 			authConfig: { mode: authMode },
-			includedIntegrations: { astroRobots },
+			includedIntegrations: { useAstroRobots, astroRobotsConfig },
 			imageService: {
 				astroImageServiceConfig,
 				cdnPlugin,
@@ -734,7 +733,7 @@ export default defineIntegration({
 					}
 
 					// Robots.txt Integration
-					if (astroRobots) {
+					if (useAstroRobots) {
 						if (
 							!hasIntegration(params, { name: 'astro-robots-txt' }) ||
 							!hasIntegration(params, { name: 'astro-robots' })
@@ -753,8 +752,8 @@ export default defineIntegration({
 											allow: ['/'],
 											disallow: ['/dashboard/'],
 										},
-									],
-								}),
+									], ...astroRobotsConfig
+								},),
 							});
 						}
 					}
