@@ -29,7 +29,7 @@ User-agent: adidxbot
 
 # apple.com search engine
 User-agent: Applebot
-user-agent: AppleNewsBot
+User-agent: AppleNewsBot
 
 # baidu.com chinese search engine
 User-agent: Baiduspider
