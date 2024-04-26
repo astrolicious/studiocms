@@ -1,2 +1,2 @@
 // @internal
-export const packageName = 'studio-robots';
+export const packageName = 'astrolicious/studioCMS:robotstxt';
