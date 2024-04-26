@@ -181,7 +181,7 @@ User-agent: Yandex
 User-agent: YandexMobileBot
 
 # search.naver.com south korean search engine
-user-agent: Yeti
+User-agent: Yeti
 
 # yioop.com international search engine
 User-agent: YioopBot
