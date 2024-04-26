@@ -42,8 +42,11 @@ export const shikiConfigSchema = z
 	.object({
 		/**
 		 * Allows the user to choose a Shiki Theme
+		 * 
+		 * Import the theme from the `shiki` package
+		 * @default theme: import('shiki/themes/houston.mjs') 
 		 */
-		theme: z.custom<BundledTheme>().optional().default('houston'),
+		theme: z.custom<BundledTheme>().optional().default("houston"),
 	})
 	.optional()
 	.default({});

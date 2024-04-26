@@ -3,8 +3,19 @@ import { type MarkedExtension, marked } from 'marked';
 import markedAlert from 'marked-alert';
 import { markedEmoji } from 'marked-emoji';
 import markedFootnote from 'marked-footnote';
+import markedShiki from 'marked-shiki';
 import { markedSmartypants } from 'marked-smartypants';
 import emojiList from './emoji-en-US.json';
+import { bundledLanguages, getHighlighter } from 'shiki/bundle/web'
+import {
+  transformerNotationDiff,
+  transformerNotationHighlight,
+  transformerNotationWordHighlight,
+  transformerNotationFocus,
+  transformerNotationErrorLevel,
+  transformerMetaHighlight,
+  transformerMetaWordHighlight
+} from '@shikijs/transformers'
 
 const {
 	markedConfig: {
@@ -57,17 +68,28 @@ export async function markdown(input: string): Promise<string> {
 
 	// Setup Marked Highlighter
 	if (selectedHighlighter === 'shiki') {
-		const { createShikiHighlighter } = await import('@astrojs/markdown-remark');
-		const markedShiki = (await import('marked-shiki')).default;
+	  
+		const highlighter = await getHighlighter({ 
+			themes: [shikiTheme],
+			langs: Object.keys(bundledLanguages)
+		});
 
-		const highlighter = await createShikiHighlighter({ theme: shikiTheme });
 		customMarkedExtList.push(
 			markedShiki({
 				highlight(code, lang, props) {
-					return highlighter.highlight(code, lang, {
-						attributes: {
-							class: props.join(' '),
-						},
+					return highlighter.codeToHtml(code, { 
+						lang, 
+						theme: shikiTheme, 
+						meta: { __raw: props.join(' ') },// required by `transformerMeta*`
+						transformers: [
+							transformerNotationDiff(),
+							transformerNotationHighlight(),
+							transformerNotationWordHighlight(),
+							transformerNotationFocus(),
+							transformerNotationErrorLevel(),
+							transformerMetaHighlight(),
+							transformerMetaWordHighlight()
+						] 
 					});
 				},
 			})

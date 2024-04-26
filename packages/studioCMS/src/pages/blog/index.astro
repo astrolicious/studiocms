@@ -1,6 +1,6 @@
 ---
 // @ts-expect-error - This is a missing type definition for the `astro:db` import since its a virtual module during Astro Runtime
-import { Blog, SiteConfig, asc, db } from 'astro:db';
+import { SiteConfig, Blog, asc, db } from 'astro:db';
 // import sitemap from 'sitemap-ext:config';
 import BaseHead from '../../components/BaseHead.astro';
 import CImage from '../../components/CImage.astro';
@@ -96,13 +96,13 @@ const posts = await db.select().from(Blog).orderBy(asc(Blog.publishedAt));
 			<section>
 				<ul>
 					{
-						posts.map((post: typeof Blog.$inferSelect) => (
+						posts.map(({ slug, heroImage, title, publishedAt }: typeof Blog.$inferSelect) => (
 							<li>
-								<a href={`${import.meta.env.BASE_URL}blog/${post.slug || post.id}/`}>
-									<CImage width={720} height={360} src={post.heroImage} alt="" />
-									<h4 class="title">{post.title}</h4>
+								<a href={`${import.meta.env.BASE_URL}blog/${slug}/`}>
+									<CImage width={720} height={360} src={heroImage} alt={title} />
+									<h4 class="title">{title}</h4>
 									<p class="date">
-										<FormattedDate date={post.publishedAt} />
+										<FormattedDate date={publishedAt} />
 									</p>
 								</a>
 							</li>
