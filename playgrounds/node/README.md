@@ -6,4 +6,7 @@ This is the Dev testing environment and playground.
 
 Follow install instructions listed on Moonrepo's docs, and you'll be all set to go! Its even a super easy single line command you put in your terminal!
 
-To use the dev server the command is `moon run playground:dev`
+To use the dev server the command is:
+
+**Moon**: `moon run playground:dev`
+**pnpm**: `pnpm playground:dev`

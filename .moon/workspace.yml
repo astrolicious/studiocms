@@ -2,10 +2,10 @@
 $schema: 'https://moonrepo.dev/schemas/workspace.json'
 
 projects:
-  root: '.'
   studioCMS: 'packages/studioCMS'
   ghost-to-studio: 'packages/ghost-to-studio'
-  playground: 'playground'
+  playground: 'playgrounds/node'
+  cloudflare-playground: 'playgrounds/cloudflare'
 
 # https://moonrepo.dev/docs/config/workspace#constraints
 constraints:

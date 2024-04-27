@@ -5,20 +5,26 @@
   "author": {
     "email": "adam@matthiesen.xyz",
     "name": "Adam Matthiesen",
-    "url": "https://matthiesen.xyz"
+    "url": "https://astro-studiocms.xyz"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/astrolicious/studiocms.git"
   },
   "contributors": ["Adammatthiesen", "jdtjenkins", "dreyfus92"],
   "license": "MIT",
   "keywords": [
-    "astro-integration",
-    "astro-component",
-    "withastro",
     "astro",
-    "astrodb",
-    "astro-studio",
-    "astrostudio",
     "astrocms",
-    "cms"
+    "astrodb",
+    "astrolicious",
+    "astrostudio",
+    "astro-integration",
+    "astro-studio",
+    "astro-studiocms",
+    "cms",
+    "studiocms",
+    "withastro"
   ],
   "homepage": "https://astro-studiocms.xyz",
   "publishConfig": {
@@ -35,9 +41,7 @@
   "type": "module",
   "dependencies": {
     "@astrojs/rss": "^4.0.5",
-    "@astrojs/markdown-remark": "^5.1.0",
     "@cloudinary/url-gen": "^1.19.0",
-    "@inox-tools/sitemap-ext": "^0.2.8",
     "@lucia-auth/adapter-drizzle": "^1.0.7",
     "@markdoc/markdoc": "^0.4.0",
     "@unpic/astro": "^0.0.44",

@@ -1,8 +1,8 @@
 # Astro Studio CMS
 
-This is a SSR Blog CMS built with AstroDB / Lucia Auth / Unpic Image handler / Astro
+This is a SSR Blog CMS built with AstroDB / Lucia Auth / Unpic Image handler for the Astro Ecosystem.
 
-To see how to get started, check out the [package README](./package/README.md)
+To see how to get started, check out the [studioCMS README](./packages/studioCMS/README.md)
 
 ## Contributing
 
@@ -24,4 +24,4 @@ To use the dev server the command is `moon run playground:dev`
 
 ## Licensing
 
-[MIT Licensed](./LICENSE). Made with ❤️ by [Adam M.](https://github.com/adammatthiesen).
+[MIT Licensed](./LICENSE).

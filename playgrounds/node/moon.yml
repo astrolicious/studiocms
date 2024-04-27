@@ -14,18 +14,20 @@ tasks:
     command: 
       - astro 
       - dev
-      - --host
+      - --remote
     local: true
     platform: node
   start:
     command: 
       - astro 
       - dev
+      - --remote
     local: true
     platform: node
   build:
     command: 
       - astro 
       - build
+      - --remote
     local: true
     platform: node
