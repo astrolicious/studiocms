@@ -45,7 +45,7 @@ By fostering a sense of shared ownership and investment, we aim to create a CMS 
 
 So don't be a stranger - come join us on this journey and help us realize the full potential of AstroStudio CMS!
 
-### Installation
+# Installation
 
 Start from a clean Astro installation with AstroDB
 
@@ -66,7 +66,7 @@ pnpm astro add db
 pnpm astro add @astrolicious/studiocms
 ```
 
-### Authentication
+## Authentication
 
 Lucia Auth - requires two .env tokens to create the connection between Github and your Auth
 
@@ -92,7 +92,7 @@ For going to Production:
 Homepage URL: https://example.com
 Authorization callback URL: https://example.com/dashboard/login/github/callback
 
-### Configuration
+## Configuration
 
 Your `astro.config.mjs` should look like the following
 
@@ -117,7 +117,7 @@ export default defineConfig({
 });
 ```
 
-### First Start and setup
+## First Start and setup
 
 This project is designed to be setup to a new Studio DB, to get started follow the [Link to Astro Studio](https://docs.astro.build/en/recipes/studio/#create-a-new-studio-project)
 
