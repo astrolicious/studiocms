@@ -73,8 +73,8 @@ importers:
         specifier: '>=4.7.0'
         version: 4.7.0(@types/node@20.12.7)(typescript@5.4.3)
       astro-integration-kit:
-        specifier: ^0.13.0
-        version: 0.13.0(@astrojs/db@0.10.6)(astro@4.7.0)
+        specifier: ^0.13.1
+        version: 0.13.1(@astrojs/db@0.10.6)(astro@4.7.0)
       lucia:
         specifier: ^3.1.1
         version: 3.1.1
@@ -3014,8 +3014,8 @@ packages:
       tslib: 2.6.2
     dev: false
 
-  /astro-integration-kit@0.13.0(@astrojs/db@0.10.6)(astro@4.7.0):
-    resolution: {integrity: sha512-54H6CITn1mYiNSnLZHcnPBuWJPZsSiE6vnBSQJzEhn98VyS4naDd48MVADKvbD4F868+cZdGAC5lw6Sjjo7ZLg==}
+  /astro-integration-kit@0.13.1(@astrojs/db@0.10.6)(astro@4.7.0):
+    resolution: {integrity: sha512-c/VEvRXJdnKa7/Y4s9CYr81L7Vvue7Bijtgp2TKuf9etCXiMDzEzQ3C5RdjMCzRI68VlKuVblfnLmY4iWizFdg==}
     peerDependencies:
       '@astrojs/db': ^0.9 || ^0.10
       astro: ^4.4.1
