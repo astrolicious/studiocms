@@ -17,11 +17,6 @@ export default defineConfig({
 		db(),
 		studioCMS({
 			dbStartPage: false,
-			markedConfig: {
-				highlighterConfig: {
-					highlighter: 'highlightJs',
-				},
-			},
 			authConfig: {
 				mode: 'disable',
 			},

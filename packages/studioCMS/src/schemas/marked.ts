@@ -61,9 +61,9 @@ export const markedHighlighterConfigSchema = z
 		 *
 		 * Note: The Shiki Highlighter is from the `astro` package.
 		 *
-		 * @default 'shiki'
+		 * @default 'disabled'
 		 */
-		highlighter: z.enum(['shiki']).optional().default('shiki'),
+		highlighter: z.enum(['shiki','disabled']).optional().default('disabled'),
 		/**
 		 * Allows the user to configure the Shiki Highlighter
 		 */
