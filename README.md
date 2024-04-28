@@ -10,7 +10,7 @@ Our ToolSet
 
 - **Node** - 20.11.1
 - **pnpm** - 8.15.4
-- [`BiomeJS`](https://biomejs.dev/) - 1.6.1
+- [`BiomeJS`](https://biomejs.dev/) - 1.7.1
 - [`Moon`](https://moonrepo.dev) - 1.22.7
 - [`Proto`](https://moonrepo.dev) - 0.31.5
 
