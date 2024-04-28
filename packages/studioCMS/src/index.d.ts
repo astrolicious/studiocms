@@ -12,4 +12,4 @@ import type { AstroStudioCMSOptions } from './schemas';
  * > **Note: Astro SSR adapters that are configured for Image Optimization will automatically take full control of the Image Optimization Service. Making the `imageService` option in this integration not have any effect.**
  *
  */
-export default function astroStudioCMS(options?: AstroStudioCMSOptions): AstroIntegration;
+export default function studioCMS(options?: AstroStudioCMSOptions): AstroIntegration;

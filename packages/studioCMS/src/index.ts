@@ -1,3 +1,3 @@
-import astroStudioCMS from './astroStudioCMS';
+import studioCMS from './studioCMS';
 
-export default astroStudioCMS;
+export default studioCMS;

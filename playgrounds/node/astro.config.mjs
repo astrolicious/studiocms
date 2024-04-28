@@ -1,6 +1,6 @@
 import db from '@astrojs/db';
 import node from '@astrojs/node';
-import astroStudioCMS from '@astrolicious/studiocms';
+import studioCMS from '@astrolicious/studiocms';
 import { defineConfig } from 'astro/config';
 
 // https://astro.build/config
@@ -10,7 +10,7 @@ export default defineConfig({
 	adapter: node({ mode: "standalone" }),
 	integrations: [
 		db(),
-		astroStudioCMS({
+		studioCMS({
 			dbStartPage: false,
 			contentRenderer: 'marked',
 			verbose: true,

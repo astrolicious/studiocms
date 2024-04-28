@@ -152,14 +152,10 @@ export default defineIntegration({
 							if (command === 'build') {
 								// Check for Required Environment Variables
 								if (!AUTHKEYS.GITHUBCLIENTID.KEY) {
-									throw new AstroError(
-										`Using the Built-in Authentication requires the ${AUTHKEYS.GITHUBCLIENTID.N} environment variable to be set. Please add this to your .env file.`
-									);
+									integrationLogger(logger, verbose, 'error', `In order to use the Built-in Github Authentication, you must set the ${AUTHKEYS.GITHUBCLIENTID.N} environment variable.`);
 								}
 								if (!AUTHKEYS.GITHUBCLIENTSECRET.KEY) {
-									throw new AstroError(
-										`Using the Built-in Authentication requires the ${AUTHKEYS.GITHUBCLIENTSECRET.N} environment variable to be set. Please add this to your .env file.`
-									);
+									integrationLogger(logger, verbose, 'error', `In order to use the Built-in Github Authentication, you must set the ${AUTHKEYS.GITHUBCLIENTSECRET.N} environment variable.`);
 								}
 							}
 

@@ -1,11 +1,6 @@
 import { z } from 'astro/zod';
 
 //
-// Custom Types used for `z.custom`
-//
-type authConfigModeOptions = 'plugin' | 'built-in' | 'disable';
-
-//
 // AUTH CONFIG SCHEMA
 //
 export const authConfigSchema = z
@@ -20,7 +15,7 @@ export const authConfigSchema = z
 		 * @param `"built-in"` - Enables authentication via the built-in Astro Studio CMS authentication (Lucia Auth)
 		 * @param `"disable"` - Disables authentication & the Internal dashboard and the user will need to manage their content via the Astro Studio Dashboard at http://studio.astro.build
 		 */
-		mode: z.custom<authConfigModeOptions>().optional().default('built-in'),
+		mode: z.enum(['plugin', 'built-in', 'disable']).optional().default('built-in'),
 		/**
 		 * Not yet implemented
 		 */

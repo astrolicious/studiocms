@@ -1,6 +1,6 @@
 import cloudflare from '@astrojs/cloudflare';
 import db from '@astrojs/db';
-import astroStudioCMS from '@astrolicious/studiocms';
+import studioCMS from '@astrolicious/studiocms';
 import { defineConfig } from 'astro/config';
 
 // https://astro.build/config
@@ -15,7 +15,7 @@ export default defineConfig({
 	}),
 	integrations: [
 		db(),
-		astroStudioCMS({
+		studioCMS({
 			dbStartPage: false,
 			markedConfig: {
 				highlighterConfig: {
