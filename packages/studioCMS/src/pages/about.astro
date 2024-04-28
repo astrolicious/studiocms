@@ -11,7 +11,7 @@ import { markdown } from '../utils/marked';
 
 const postArrayed = await db.select().from(Pages).where(eq(Pages.slug, 'about'));
 
-const post = postArrayed[0];
+const post = postArrayed.pop();
 
 type Props = {
 	post: typeof Pages.$inferSelect;

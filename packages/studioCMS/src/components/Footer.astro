@@ -3,7 +3,7 @@
 import { SiteConfig, db } from 'astro:db';
 
 const ConfigArray = await db.select().from(SiteConfig);
-const contextConfig = ConfigArray[0];
+const contextConfig = ConfigArray.pop();
 const today = new Date();
 ---
 

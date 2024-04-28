@@ -11,7 +11,7 @@ import Header from '../../components/Header.astro';
 // sitemap(true);
 
 const ConfigArray = await db.select().from(SiteConfig);
-const contextConfig = ConfigArray[0];
+const contextConfig = ConfigArray.pop();
 
 const posts = await db.select().from(Blog).orderBy(asc(Blog.publishedAt));
 ---

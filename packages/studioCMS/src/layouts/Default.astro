@@ -6,7 +6,7 @@ import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
 
 const ConfigArray = await db.select().from(SiteConfig);
-const contextConfig = ConfigArray[0];
+const contextConfig = ConfigArray.pop();
 ---
 
 <!doctype html>

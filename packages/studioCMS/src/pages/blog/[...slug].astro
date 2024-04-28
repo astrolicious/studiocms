@@ -19,7 +19,7 @@ import { markdown } from '../../utils/marked';
 
 const { slug } = Astro.params;
 const postArrayed = await db.select().from(Blog).where(eq(Blog.slug, slug));
-const post = postArrayed[0];
+const post = postArrayed.pop();
 
 if (!slug || !post) {
 	return Astro.redirect(`${import.meta.env.BASE_URL}404`);
