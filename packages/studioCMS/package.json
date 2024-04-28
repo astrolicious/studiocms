@@ -46,7 +46,7 @@
     "@markdoc/markdoc": "^0.4.0",
     "@unpic/astro": "^0.0.44",
     "arctic": "^1.2.1",
-    "astro-integration-kit": "^0.12.0",
+    "astro-integration-kit": "^0.13.0",
     "lucia": "^3.1.1",
     "marked": "^12.0.2",
     "marked-alert": "^2.0.1",
