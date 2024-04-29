@@ -45,6 +45,7 @@
     "@lucia-auth/adapter-drizzle": "^1.0.7",
     "@markdoc/markdoc": "^0.4.0",
     "@unpic/astro": "^0.0.44",
+    "@inox-tools/sitemap-ext": "0.2.9",
     "arctic": "^1.2.1",
     "astro-integration-kit": "^0.13.1",
     "lucia": "^3.1.1",

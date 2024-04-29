@@ -13,14 +13,14 @@ export const includedIntegrationsSchema = z
 		 * @default true
 		 */
 		useAstroRobots: z.boolean().optional().default(true),
-		astroRobotsConfig: z.custom<RobotsConfig>().default({})
+		astroRobotsConfig: z.custom<RobotsConfig>().default({}),
 		// /**
 		//  * Allows the user to enable/disable the use of the Inox-tools Sitemap Plugin
 		//  * For more information on the Inox-tools Sitemap Plugin, visit:
 		//  * @see https://inox-tools.vercel.app/sitemap-ext
 		//  * @default true
 		//  */
-		// inoxSitemap: z.boolean().optional().default(true),
+		useInoxSitemap: z.boolean().optional().default(true),
 	})
 	.optional()
 	.default({});

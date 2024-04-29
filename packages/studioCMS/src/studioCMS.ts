@@ -10,7 +10,7 @@ import { AstroError } from 'astro/errors';
 import { loadEnv } from 'vite';
 import { integrationLogger } from './utils';
 import { optionsSchema } from './schemas';
-// import inoxsitemap from '@inox-tools/sitemap-ext';
+import inoxsitemap from '@inox-tools/sitemap-ext';
 import robotsTXT from './integrations/robotstxt';
 import imageHandler from './integrations/imageHandler';
 
@@ -71,7 +71,8 @@ export default defineIntegration({
 						},
 						includedIntegrations: { 
 							useAstroRobots, 
-							astroRobotsConfig 
+							astroRobotsConfig,
+							useInoxSitemap
 						},
 						imageService: ImageServiceConfig
 					} = options;
@@ -263,20 +264,20 @@ export default defineIntegration({
 					}
 
 					// Sitemap Integration
-					// if (useInoxSitemap) {
-					// 	if (
-					// 		!hasIntegration(params, { name: '@astrojs/sitemap' }) ||
-					// 		!hasIntegration(params, { name: '@inox-tools/sitemap-ext' })
-					// 	) {
-					// 		integrationLogger(
-					// 			logger,
-					// 			verbose,
-					// 			'info',
-					// 			'No known sitemap integration found. Adding `@inox-tools/sitemap-ext` integration'
-					// 		);
-					// 		addIntegration(params, { integration: inoxsitemap() });
-					// 	}
-					// }
+					if (useInoxSitemap) {
+						if (
+							!hasIntegration(params, { name: '@astrojs/sitemap' }) ||
+							!hasIntegration(params, { name: '@inox-tools/sitemap-ext' })
+						) {
+							integrationLogger(
+								logger,
+								verbose,
+								'info',
+								'No known sitemap integration found. Adding `@inox-tools/sitemap-ext` integration'
+							);
+							addIntegration(params, { integration: inoxsitemap() });
+						}
+					}
 
 					integrationLogger(logger, verbose, 'info', 'Astro Studio CMS Setup Complete!');
 				},

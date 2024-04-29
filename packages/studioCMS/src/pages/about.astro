@@ -1,13 +1,13 @@
 ---
 // @ts-expect-error - This is a missing type definition for the `astro:db` import since its a virtual module during Astro Runtime
 import { Pages, db, eq } from 'astro:db';
-// import sitemap from 'sitemap-ext:config';
+import sitemap from 'sitemap-ext:config';
 import Config from 'virtual:astro-studio-cms:config';
 import Layout from '../layouts/BlogPost.astro';
 import { renderMarkDoc } from '../utils/markdoc';
 import { markdown } from '../utils/marked';
 
-// sitemap(true); // opt-in
+sitemap(true); // opt-in
 
 const postArrayed = await db.select().from(Pages).where(eq(Pages.slug, 'about'));
 

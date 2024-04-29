@@ -4,6 +4,8 @@ import { Pages, db, eq } from 'astro:db';
 import Default from '../../../layouts/Default.astro';
 import { rankCheck } from '../../../utils/rankcheck';
 import type { Locals } from '../locals';
+import sitemap from 'sitemap-ext:config';
+sitemap(false); // opt-out
 
 const postArrayed = await db.select().from(Pages).where(eq(Pages.slug, 'about'));
 const post = postArrayed[0];

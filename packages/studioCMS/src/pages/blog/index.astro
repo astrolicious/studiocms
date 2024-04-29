@@ -1,14 +1,14 @@
 ---
 // @ts-expect-error - This is a missing type definition for the `astro:db` import since its a virtual module during Astro Runtime
 import { SiteConfig, Blog, asc, db } from 'astro:db';
-// import sitemap from 'sitemap-ext:config';
+import sitemap from 'sitemap-ext:config';
 import BaseHead from '../../components/BaseHead.astro';
 import CImage from '../../components/CImage.astro';
 import Footer from '../../components/Footer.astro';
 import FormattedDate from '../../components/FormattedDate.astro';
 import Header from '../../components/Header.astro';
 
-// sitemap(true);
+sitemap(true);
 
 const ConfigArray = await db.select().from(SiteConfig);
 const contextConfig = ConfigArray.pop();
