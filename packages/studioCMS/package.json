@@ -3,8 +3,7 @@
   "version": "0.0.0-alpha.1",
   "description": "Content Management System built for Astro Studio and AstroDB",
   "author": {
-    "email": "adam@matthiesen.xyz",
-    "name": "Adam Matthiesen",
+    "name": "Adam Matthiesen | Jacob Jenkins | Paul Valladares",
     "url": "https://astro-studiocms.xyz"
   },
   "repository": {
