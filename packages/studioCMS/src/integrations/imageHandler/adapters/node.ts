@@ -1,11 +1,10 @@
 import { defineIntegration } from 'astro-integration-kit';
-import { z } from 'astro/zod';
 import { imageService as unpicImageService } from '@unpic/astro/service';
 import { passthroughImageService, sharpImageService, squooshImageService } from 'astro/config';
-import { imageServiceSchema } from '../../schemas/imageService';
-import { integrationLogger } from '../../utils';
+import { integrationLogger } from '../../../utils';
 import { AstroError } from 'astro/errors';
 import { loadEnv } from 'vite';
+import { ImageHandlerOptionsSchema } from '../schemas';
 
 // Environment Variables
 const env = loadEnv('all', process.cwd(), 'CMS');
@@ -21,11 +20,8 @@ const AUTHKEYS = {
 };
 
 export default defineIntegration({
-    name: 'astrolicious/studioCMS:imageHandler:node',
-    optionsSchema: z.object({
-        ImageServiceConfig: imageServiceSchema,
-        verbose: z.boolean().optional().default(false),
-    }).default({}),
+    name: 'astrolicious/studioCMS:imageHandler/node',
+    optionsSchema: ImageHandlerOptionsSchema,
     setup({ options }) {
         return {
             hooks: {

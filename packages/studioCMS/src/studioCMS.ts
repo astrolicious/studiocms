@@ -11,8 +11,8 @@ import { loadEnv } from 'vite';
 import { integrationLogger } from './utils';
 import { optionsSchema } from './schemas';
 import inoxsitemap from '@inox-tools/sitemap-ext';
-import robotsTXT from './integrations/robotstxt';
-import imageHandler from './integrations/imageHandler';
+import studioCMSRobotsTXT from './integrations/robotstxt';
+import studioCMSImageHandler from './integrations/imageHandler';
 
 // Environment Variables
 const env = loadEnv('all', process.cwd(), 'CMS');
@@ -234,7 +234,7 @@ export default defineIntegration({
 
 					// Add Image Service
 					addIntegration(params, { 
-						integration: imageHandler({ ImageServiceConfig, verbose })
+						integration: studioCMSImageHandler({ ImageServiceConfig, verbose })
 					})
 
 					// Robots.txt Integration
@@ -250,7 +250,7 @@ export default defineIntegration({
 								'No known robotstxt integration found. Adding `astro-robots` integration'
 							);
 							addIntegration(params, {
-								integration: robotsTXT({
+								integration: studioCMSRobotsTXT({
 									policy: [
 										{
 											userAgent: ['*'],
