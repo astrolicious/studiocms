@@ -104,7 +104,7 @@ export default defineIntegration({
 							logger,
 							true,
 							'warn',
-							'Start Page Enabled.  This will be the only page available until you initialize your database. To get started, visit http://localhost:4321/start/ in your browser to initialize your database. And Setup your installation.'
+							'Start Page Enabled.  This will be the only page available until you initialize your database and disable the config option forcing this page to be displayed. To get started, visit http://localhost:4321/start/ in your browser to initialize your database. And Setup your installation.'
 						);
 						injectRoute({
 							pattern: `${base}start/`,
@@ -115,7 +115,7 @@ export default defineIntegration({
 							entrypoint: resolve('./pages/done.astro'),
 						});
 					} else {
-						// Add Page Routes
+						// If dbStartPage is disabled, inject the routes to allow the CMS to function
 						integrationLogger(logger, verbose, 'info', 'Adding Page Routes...');
 						injectRoute({
 							pattern: base,
@@ -142,6 +142,8 @@ export default defineIntegration({
 							entrypoint: resolve('./pages/rss.xml.ts'),
 						});
 
+						// Authentication and Dashboard Setup
+						// If Authentication is disabled it will disable the entire back-end dashboard allowing editing only via the Astro Studio Dashboard at https://studio.astro.build
 						if (authMode === 'disable') {
 							integrationLogger(
 								logger,
@@ -151,7 +153,7 @@ export default defineIntegration({
 							);
 						} else if (authMode === 'built-in') {
 							if (command === 'build') {
-								// Check for Required Environment Variables
+								// Check for Authenication Environment Variables
 								if (!AUTHKEYS.GITHUBCLIENTID.KEY) {
 									integrationLogger(logger, verbose, 'error', `In order to use the Built-in Github Authentication, you must set the ${AUTHKEYS.GITHUBCLIENTID.N} environment variable.`);
 								}
@@ -166,6 +168,7 @@ export default defineIntegration({
 								entrypoint: resolve('./middleware/index.ts'),
 								order: 'pre',
 							});
+							// Add Dashboard Routes
 							injectRoute({
 								pattern: `${base}dashboard/`,
 								entrypoint: resolve('./pages/dashboard/index.astro'),
@@ -232,7 +235,7 @@ export default defineIntegration({
 						}
 					}
 
-					// Add Image Service
+					// Add Image Service Handler Integration
 					addIntegration(params, { 
 						integration: studioCMSImageHandler({ ImageServiceConfig, verbose })
 					})
@@ -283,6 +286,7 @@ export default defineIntegration({
 				},
 				'astro:server:start': ({ logger }) => {
 
+					// Display Console Message if dbStartPage(First Time DB Initialization) is enabled
 					if (options.dbStartPage) {
 						integrationLogger(
 							logger,
