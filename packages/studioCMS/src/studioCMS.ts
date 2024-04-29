@@ -9,9 +9,9 @@ import 'astro-integration-kit/types/db';
 import { AstroError } from 'astro/errors';
 import { loadEnv } from 'vite';
 import { integrationLogger } from './utils';
+import { optionsSchema } from './schemas';
 // import inoxsitemap from '@inox-tools/sitemap-ext';
 import robotsTXT from './integrations/robotstxt';
-import { optionsSchema } from './schemas';
 import imageHandler from './integrations/imageHandler';
 
 // Environment Variables
