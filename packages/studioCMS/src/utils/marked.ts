@@ -6,7 +6,6 @@ import markedFootnote from 'marked-footnote';
 import markedShiki from 'marked-shiki';
 import { markedSmartypants } from 'marked-smartypants';
 import emojiList from './emoji-en-US.json';
-import { bundledLanguages, getHighlighter } from 'shiki/bundle/web'
 import {
   transformerNotationDiff,
   transformerNotationHighlight,
@@ -16,13 +15,19 @@ import {
   transformerMetaHighlight,
   transformerMetaWordHighlight
 } from '@shikijs/transformers'
+import { getHighlighterCore } from 'shiki/core'
+import getWasm from 'shiki/wasm'
 
 const {
 	markedConfig: {
 		loadmarkedExtensions,
 		highlighterConfig: {
 			highlighter: selectedHighlighter,
-			shikiConfig: { theme: shikiTheme },
+			shikiConfig: { 
+				theme: shikiTheme,
+				loadThemes: shikiLoadThemes,
+				loadLangs: shikiLoadLangs
+			},
 		},
 		includedExtensions: {
 			markedAlert: mAlertExt,
@@ -68,16 +73,58 @@ export async function markdown(input: string): Promise<string> {
 
 	// Setup Marked Highlighter
 	if (selectedHighlighter === 'shiki') {
-	  
-		const highlighter = await getHighlighter({ 
-			themes: [shikiTheme],
-			langs: Object.keys(bundledLanguages)
+
+		// Create Shiki Highlighter
+
+		// Load Shiki Themes
+		const shikiThemeConfig = [];
+
+		// Set the Default Bundle Themes
+		const studioCMSDefaultThemes = [
+			import('shiki/themes/houston.mjs'),
+			import('shiki/themes/github-dark.mjs'),
+			import('shiki/themes/github-light.mjs'),
+			import('shiki/themes/night-owl.mjs'),
+		]
+
+		// Add the Default Themes to the Config
+		shikiThemeConfig.push(...studioCMSDefaultThemes)
+		
+		// Add any additional UserLoaded Themes to the Config
+		if (shikiLoadThemes) { shikiThemeConfig.push(...shikiLoadThemes); }
+
+		// Load Shiki Languages
+		const shikiLangsConfig = [];
+
+		// Set the Default Bundle Languages
+		const studioCMSDefaultLangs = [
+			import('shiki/langs/astro.mjs'),
+			import('shiki/langs/typescript.mjs'),
+			import('shiki/langs/json.mjs'),
+			import('shiki/langs/css.mjs'),
+			import('shiki/langs/html.mjs'),
+			import('shiki/langs/markdown.mjs'),
+			import('shiki/langs/yaml.mjs'),
+		];
+
+		// Add the Default Languages to the Config
+		shikiLangsConfig.push(...studioCMSDefaultLangs);
+
+		// Add any additional UserLoaded Languages to the Config
+		if (shikiLoadLangs) { shikiLangsConfig.push(...shikiLoadLangs); }
+
+		// Create Shiki Highlighter
+		const shikiHighlighter = await getHighlighterCore({
+			themes: shikiThemeConfig,
+			langs: shikiLangsConfig,
+			loadWasm: getWasm,
 		});
 
+		// Add Shiki to the Custom Marked Extensions
 		customMarkedExtList.push(
 			markedShiki({
 				highlight(code, lang, props) {
-					return highlighter.codeToHtml(code, { 
+					return shikiHighlighter.codeToHtml(code, { 
 						lang, 
 						theme: shikiTheme, 
 						meta: { __raw: props.join(' ') },// required by `transformerMeta*`
