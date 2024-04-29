@@ -5,7 +5,7 @@ import { defineConfig } from 'astro/config';
 
 // https://astro.build/config
 export default defineConfig({
-	site: 'https://wkcg0sk.astro-studiocms.xyz/',
+	site: 'https://demo.astro-studiocms.xyz/',
 	output: 'server',
 	adapter: node({ mode: "standalone" }),
 	integrations: [
