@@ -73,7 +73,7 @@ export default defineIntegration({
 							useAstroRobots, 
 							astroRobotsConfig 
 						},
-						imageService
+						imageService: ImageServiceConfig
 					} = options;
 
 					// Check for SSR Mode
@@ -233,10 +233,7 @@ export default defineIntegration({
 
 					// Add Image Service
 					addIntegration(params, { 
-						integration: imageHandler({
-							ImageServiceConfig: imageService, 
-							verbose
-						})
+						integration: imageHandler({ ImageServiceConfig, verbose })
 					})
 
 					// Robots.txt Integration
