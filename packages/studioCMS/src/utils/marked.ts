@@ -100,11 +100,16 @@ export async function markdown(input: string): Promise<string> {
 		const studioCMSDefaultLangs = [
 			import('shiki/langs/astro.mjs'),
 			import('shiki/langs/typescript.mjs'),
+			import('shiki/langs/javascript.mjs'),
 			import('shiki/langs/json.mjs'),
 			import('shiki/langs/css.mjs'),
 			import('shiki/langs/html.mjs'),
 			import('shiki/langs/markdown.mjs'),
+			import('shiki/langs/mdx.mjs'),
 			import('shiki/langs/yaml.mjs'),
+			import('shiki/langs/rust.mjs'),
+			import('shiki/langs/python.mjs'),
+			import('shiki/langs/go.mjs'),
 		];
 
 		// Add the Default Languages to the Config
