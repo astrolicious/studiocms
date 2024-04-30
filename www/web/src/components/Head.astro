@@ -1,0 +1,54 @@
+---
+import { AstroFont } from 'astro-font'
+import { SEO } from 'astro-seo'
+const OgBanner = new URL('/og.png', Astro.url)
+---
+
+<head>
+  <meta charset='utf-8' />
+  <link rel='icon' type='image/svg+xml' href='/favicon.svg' />
+  <meta name='viewport' content='width=device-width' />
+  <meta name='generator' content={Astro.generator} />
+  <script
+    is:inline
+    defer
+    src='https://analytics.astro-studiocms.xyz/script.js'
+    data-website-id='393a8616-9a0a-484b-ab3d-1ebc4039fb18'
+  ></script>
+  <title>Astro-StudioCMS</title>
+  <SEO
+    title='Astro StudioCMS'
+    description='A dedicated CMS for Astro Studio.'
+    openGraph={{
+      basic: {
+        title: 'Astro StudioCMS',
+        type: 'Website',
+        image: OgBanner.href,
+      },
+    }}
+  />
+  <AstroFont
+    config={[
+      {
+        src: [],
+        name: 'BalooChettan',
+        googleFontsURL:
+          'https://fonts.googleapis.com/css2?family=Baloo+Chettan+2:wght@400..800&display=swap',
+        preload: true,
+        display: 'swap',
+        selector: 'body',
+        fallback: 'sans-serif',
+      },
+      {
+        src: [],
+        name: 'zenkaku',
+        googleFontsURL:
+          'https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New&display=swap',
+        preload: true,
+        display: 'swap',
+        selector: 'body',
+        fallback: 'sans-serif',
+      },
+    ]}
+  />
+</head>

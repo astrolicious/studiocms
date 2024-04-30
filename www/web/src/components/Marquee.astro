@@ -1,0 +1,33 @@
+---
+import { marqueeKeywords } from '../constants'
+import { Icon } from 'astro-icon/components'
+---
+
+<div
+  class='relative flex w-full overflow-x-hidden bg-transparent py-8 text-white'
+>
+  <div class='animate-marquee infinite whitespace-nowrap'>
+    {
+      marqueeKeywords.map((keyword) => (
+        <div class='inline-block px-6 text-4xl font-bold'>
+          <span class='flex items-center gap-x-6'>
+            {keyword}
+            <Icon name='db' class='h-10 w-10' />
+          </span>
+        </div>
+      ))
+    }
+  </div>
+  <div class='animate-marquee2 infinite absolute top-8 whitespace-nowrap'>
+    {
+      marqueeKeywords.map((keyword) => (
+        <div class='inline-block px-6 text-4xl font-bold'>
+          <span class='flex items-center gap-x-6'>
+            {keyword}
+            <Icon name='db' class='h-10 w-10' />
+          </span>
+        </div>
+      ))
+    }
+  </div>
+</div>
