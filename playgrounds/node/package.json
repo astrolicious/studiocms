@@ -1,0 +1,22 @@
+{
+  "name": "node-playground",
+  "type": "module",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev --remote",
+    "start": "astro dev --remote",
+    "build": "astro build --remote",
+    "astro": "astro"
+  },
+  "devDependencies": {
+    "@types/node": "^20.12.7",
+    "typescript": "^5.4.5"
+  },
+  "dependencies": {
+    "@astrojs/db": "^0.10.6",
+    "@astrojs/node": "^8.2.5",
+    "astro": "^4.7.0",
+    "@astrolicious/studiocms": "workspace:*"
+  }
+}

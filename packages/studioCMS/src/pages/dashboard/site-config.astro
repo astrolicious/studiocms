@@ -6,6 +6,8 @@ import { SiteConfig as siteConfigTable } from '../../db/tables';
 import Default from '../../layouts/Default.astro';
 import { rankCheck } from '../../utils/rankcheck';
 import type { Locals } from './locals';
+import sitemap from 'sitemap-ext:config';
+sitemap(false); // opt-out
 
 const SiteConfigSafe = asDrizzleTable('SiteConfig', siteConfigTable);
 const ConfigArray = await db.select().from(SiteConfigSafe);

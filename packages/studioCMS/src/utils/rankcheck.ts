@@ -1,6 +1,6 @@
 // @ts-expect-error - Types are only available during runtime
 import { Permissions, db, eq } from 'astro:db';
-import type { Locals } from '../pages/dashboard/locals';
+import type { Locals } from '../schemas/locals';
 
 export const rankCheck = async (locals: Locals) => {
 	if (locals.isLoggedIn){

@@ -1,11 +1,10 @@
 ---
-// import sitemap from 'sitemap-ext:config';
 import Default from '../../layouts/Default.astro';
 import { lucia } from '../../lib/auth';
 import { rankCheck } from '../../utils/rankcheck';
 import type { Locals } from './locals';
-
-// sitemap(false); // opt-out
+import sitemap from 'sitemap-ext:config';
+sitemap(false); // opt-out
 
 const locals = Astro.locals as Locals;
 const currentUserRank = await rankCheck(locals);

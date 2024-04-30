@@ -2,15 +2,6 @@ import { z } from 'astro/zod';
 import type { CdnOptions, ImageCdn } from 'unpic';
 
 //
-// Custom Types used for `z.custom`
-//
-type UnpicFallbackServiceOptions = ImageCdn | 'sharp' | 'squoosh';
-type UnpicPlaceHolder = 'blurhash' | 'dominantColor' | 'lqip' | (string & {});
-type UnpicLayout = 'constrained' | 'fixed' | 'fullWidth';
-type AstroImageService = 'sharp' | 'squoosh' | 'no-op';
-type cdnImageServicePlugin = 'cloudinary-js';
-
-//
 // UNPIC CONFIG OPTIONS SCHEMA
 //
 export const unpicConfigSchema = z
@@ -25,12 +16,12 @@ export const unpicConfigSchema = z
 		 *
 		 * Falls back to the value of `astroImageServiceConfig` if not set here
 		 */
-		fallbackService: z.custom<UnpicFallbackServiceOptions>().optional(),
+		fallbackService: z.union([z.custom<ImageCdn>(), z.enum(['sharp','squoosh'])]).optional(),
 		/**
 		 * The default placeholder background to use for images.
-		 * Can be `"blurhash"`, `"dominantColor"`, `"lqip"`, a data URI or a CSS color string.
+		 * Can be `"blurhash"`, `"dominantColor"`, or `"lqip"`
 		 * Local images don't support `"blurhash"`, `"dominantColor"` or `"lqip"`, and will
-		 * not include a background unless a data URI or CSS color string is provided.
+		 * not include a background 
 		 * Default is no background.
 		 * Note that because the element uses no Javascript, the background will not
 		 * be removed when the image loads, so you should not use it for images that
@@ -39,13 +30,13 @@ export const unpicConfigSchema = z
 		 * @see https://unpic.pics/placeholder
 		 * @default "blurhash"
 		 */
-		placeholder: z.custom<UnpicPlaceHolder>().optional().default('blurhash'),
+		placeholder: z.enum(['blurhash', 'dominantColor', 'lqip']).optional().default('blurhash'),
 		/**
 		 * The default layout to use for images. Defaults to "constrained".
 		 * @see https://unpic.pics/img/learn/#layouts
 		 * @default "constrained"
 		 */
-		layout: z.custom<UnpicLayout>().optional().default('constrained'),
+		layout: z.enum(['constrained', 'fixed', 'fullWidth']).optional().default('constrained'),
 		/**
 		 * CDN-specific options.
 		 */
@@ -74,7 +65,7 @@ export const imageServiceSchema = z
 		 * Note: This option is only used if `useUnpic` is set to `false`
 		 * @default "squoosh"
 		 */
-		astroImageServiceConfig: z.custom<AstroImageService>().optional().default('squoosh'),
+		astroImageServiceConfig: z.enum(['sharp', 'squoosh', 'no-op']).optional().default('squoosh'),
 		/**
 		 * If the user wants to use a custom Supported CDN Plugin, they can specify it here.
 		 *
@@ -82,7 +73,7 @@ export const imageServiceSchema = z
 		 *
 		 * Note: Enabling this option will disable the use of the `@unpic/astro` image service for external images. For local images and Fallback, the `astroImageServiceConfig` will be used.
 		 */
-		cdnPlugin: z.custom<cdnImageServicePlugin>().optional(),
+		cdnPlugin: z.enum(['cloudinary-js']).optional(),
 	})
 	.optional()
 	.default({});

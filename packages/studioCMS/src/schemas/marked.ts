@@ -1,6 +1,6 @@
 import { z } from 'astro/zod';
 import type { MarkedExtension } from 'marked';
-import type { BundledTheme } from 'shiki';
+import type { LanguageInput, BundledTheme, ThemeInput } from 'shiki';
 
 //
 // MARKED EXTENSIONS SCHEMA
@@ -41,12 +41,42 @@ export const markedExtensionsSchema = z
 export const shikiConfigSchema = z
 	.object({
 		/**
-		 * Allows the user to choose a Shiki Theme
+		 * Allows the user to choose a Shiki Theme.
+		 * 
+		 * Note: The Only available themes are the ones listed below, and the user can import them from the `shiki` package. using loadTheme option.
+		 * 
+		 * ### Current Bundled Themes:
+		 * - `houston`
+		 * - `github-dark`
+		 * - `github-light`
+		 * - `night-owl`
 		 * 
 		 * Import the theme from the `shiki` package
-		 * @default theme: import('shiki/themes/houston.mjs') 
+		 * @default theme: "houston"
 		 */
 		theme: z.custom<BundledTheme>().optional().default("houston"),
+		/**
+		 * Allows the user to load additional Shiki Themes
+		 *
+		 * Note: This option is only used if the user wants to load additional Shiki Themes
+		 *
+		 * @example
+		 * ```ts
+		 * loadThemes: [ import('shiki/themes/github-dark-default.mjs'), import('shiki/themes/night-owl.mjs') ]
+		 * ```
+		 */
+		loadThemes: z.array(z.custom<ThemeInput>()).optional(),
+		/**
+		 * Allows the user to load additional Shiki Languages
+		 *
+		 * Note: This option is only used if the user wants to load additional Shiki Languages
+		 *
+		 * @example
+		 * ```ts
+		 * loadLangs: [ import('shiki/languages/rust.mjs'), import('shiki/languages/scala.mjs') ]
+		 * ```
+		 */
+		loadLangs: z.array(z.custom<LanguageInput>()).optional(),
 	})
 	.optional()
 	.default({});
@@ -61,9 +91,9 @@ export const markedHighlighterConfigSchema = z
 		 *
 		 * Note: The Shiki Highlighter is from the `astro` package.
 		 *
-		 * @default 'shiki'
+		 * @default 'disabled'
 		 */
-		highlighter: z.enum(['shiki']).optional().default('shiki'),
+		highlighter: z.enum(['shiki','disabled']).optional().default('disabled'),
 		/**
 		 * Allows the user to configure the Shiki Highlighter
 		 */

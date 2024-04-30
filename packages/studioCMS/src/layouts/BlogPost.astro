@@ -8,7 +8,7 @@ import FormattedDate from '../components/FormattedDate.astro';
 import Header from '../components/Header.astro';
 
 const ConfigArray = await db.select().from(SiteConfig);
-const contextConfig = ConfigArray[0];
+const contextConfig = ConfigArray.pop();
 
 type Props = {
 	title: string;

@@ -1,0 +1,18 @@
+---
+import '../styles/global.css'
+import Head from '../components/Head.astro'
+import Navbar from '../components/Navbar.astro'
+import Footer from '../components/Footer.astro'
+---
+
+<html
+  class='scrollbar scrollbar-thumb-white scrollbar-track-[#1a172e] h-32 overflow-y-scroll'
+  lang='en'
+>
+  <Head />
+  <body>
+    <Navbar />
+    <slot />
+    <Footer />
+  </body>
+</html>

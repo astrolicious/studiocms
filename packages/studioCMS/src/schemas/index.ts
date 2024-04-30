@@ -52,4 +52,4 @@ export const optionsSchema = z
 	.optional()
 	.default({});
 
-export type AstroStudioCMSOptions = z.infer<typeof optionsSchema>;
+export type StudioCMSOptions = z.infer<typeof optionsSchema>;

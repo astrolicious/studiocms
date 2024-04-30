@@ -18,7 +18,7 @@ tasks:
     command: moon
     platform: node
   dev:
-    command: 'pnpm --filter playground dev'
+    command: 'pnpm --filter node-playground dev'
     platform: node
   update:
     command: 'pnpm install'

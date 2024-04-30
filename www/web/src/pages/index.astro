@@ -1,0 +1,79 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro'
+import Hero from '../components/Hero.astro'
+import Marquee from '../components/Marquee.astro'
+import FeatureCard from '../components/FeatureCard.astro'
+import Separator from '../components/Separator.astro'
+import { Icon } from 'astro-icon/components'
+
+import { GITHUB_URL, SPONSOR_URL, features, testimonials } from '../constants'
+---
+
+<script>
+  import { PowerGlitch } from 'powerglitch'
+  import { animate, inView } from 'motion'
+
+  // DOM Nodes
+  const hero = document.getElementById('hero') as HTMLElement
+  inView(hero, () => {
+    animate(hero, { opacity: [0, 1], y: [60, 0] }, { duration: 2 })
+  })
+  PowerGlitch.glitch('.glitch')
+</script>
+
+<BaseLayout>
+  <Hero />
+  <span class='sr-only'>Features section</span>
+  <section class='container mx-auto px-4 pb-20'>
+    <h2 class='pb-20 text-center text-5xl font-bold'>Features</h2>
+    <div class='grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3'>
+      {features.map((feature) => <FeatureCard {...feature} />)}
+    </div>
+  </section>
+  <span class='sr-only'>Marquee with Keywords</span>
+  <Marquee />
+  <span class='sr-only'>Pricing section</span>
+  <section class='container mx-auto py-20'>
+    <div class='mx-auto flex flex-col items-center justify-center pb-10'>
+      <h2 class='glitch pb-8 text-5xl font-bold'>Pricing</h2>
+      <p class='w-3/5 text-center text-xl'>
+        Dive into our open-source adventure – it's totally free, no price tags
+        here! But hey, if you're feeling the vibe, jump in and contribute in
+        your own awesome way. Code, ideas, high-fives? We love it all!
+      </p>
+    </div>
+    <div
+      class='mx-auto flex h-[200px] flex-col items-center justify-center gap-x-16 gap-y-10 md:h-[400px] md:flex-row'
+    >
+      <a
+        class='flex items-center gap-x-4 transition-all duration-200 ease-in-out hover:scale-105 hover:cursor-pointer hover:text-yellow-400'
+        href={GITHUB_URL}
+      >
+        <h3 class='text-center text-4xl'>Star it</h3>
+        <Icon name='star' class='text-4xl' />
+      </a>
+      <!-- <Separator orientation='vertical' extraClasses='h-3/5' />
+      <a
+        class='flex items-center gap-x-4 transition-all duration-200 ease-in-out hover:scale-105 hover:cursor-pointer hover:text-green-400'
+        href={SPONSOR_URL}
+      >
+        <h3 class='text-center text-4xl'>Sponsor it</h3>
+        <Icon name='sponsor' class='text-4xl' />
+      </a> -->
+    </div>
+  </section>
+  <!-- TODO: Add this section when we have actual testimonials. -->
+  <span class='sr-only'>Testimonials section</span>
+  <!-- <section class='container mx-auto px-4 pb-20'>
+    <div class='mx-auto flex flex-col items-center justify-center pb-10'>
+      <h2 class='pb-8 text-5xl font-bold'>Testimonials</h2>
+      <p class='w-3/5 text-center text-xl'>
+        Look what our awesome community has to say about us. We're so grateful
+        for the love and support we've received. It's what keeps us going!
+      </p>
+    </div>
+    <div class='grid grid-cols-1 gap-8 pt-10 sm:grid-cols-2 md:grid-cols-3'>
+      {testimonials.map((testimonial) => <TestimonialCard {...testimonial} />)}
+    </div>
+  </section> -->
+</BaseLayout>

@@ -13,7 +13,7 @@ const {
 const locals = Astro.locals as Locals;
 
 const ConfigArray = await db.select().from(SiteConfig);
-const contextConfig = ConfigArray[0];
+const contextConfig = ConfigArray.pop();
 
 const isLoggedIn = locals.isLoggedIn;
 const userProfile = locals.dbUser;

@@ -5,7 +5,10 @@ projects:
   root: '.'
   studioCMS: 'packages/studioCMS'
   ghost-to-studio: 'packages/ghost-to-studio'
-  playground: 'playground'
+  playground: 'playgrounds/node'
+  cloudflare-playground: 'playgrounds/cloudflare'
+  web: 'www/web'
+  docs: 'www/docs'
 
 # https://moonrepo.dev/docs/config/workspace#constraints
 constraints:

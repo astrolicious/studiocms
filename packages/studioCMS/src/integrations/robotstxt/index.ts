@@ -4,7 +4,6 @@ import type { UsertAgentType } from './consts';
 import fs from "node:fs";
 import { fileURLToPath } from "node:url";
 
-import { packageName } from './data/pkg-name';
 import { generateContent, printInfo } from './core';
 import { measureExecutionTime } from './utils';
 
@@ -163,7 +162,7 @@ export default function createRobotsIntegration(astroConfig: RobotsConfig): Astr
   const megeredConfig = { ...defaultConfig, ...astroConfig };
 
   return {
-    name: packageName,
+    name: 'astrolicious/studioCMS:robotstxt',
     hooks: {
       'astro:config:setup': ({ config: cfg }) => {
         config = cfg;
