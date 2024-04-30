@@ -1,5 +1,7 @@
 # Astro Studio CMS
 
+![Readme's Banner](./packages/studioCMS/src/assets/banner-readme.png)
+
 This is a SSR Blog CMS built with AstroDB / Lucia Auth / Unpic Image handler for the Astro Ecosystem.
 
 To see how to get started, check out the [studioCMS README](./packages/studioCMS/README.md)
