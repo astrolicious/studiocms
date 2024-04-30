@@ -1,0 +1,44 @@
+---
+import Blob from './Blob.astro'
+---
+
+<section
+  id='hero'
+  class='h-hero grid place-items-center bg-slate-100 p-4 text-gray-900 dark:bg-[--purple-900] dark:text-slate-100'
+>
+  <div class='panel relative z-10 rounded-[30px]'>
+    <Blob />
+    <div class='panel-inner flex flex-col items-center px-4 py-8 md:p-16'>
+      <h1 class='mb-8 text-center text-5xl font-bold md:text-8xl'>
+        Astro StudioCMS
+      </h1>
+      <p class='mb-2 text-center text-lg font-bold md:text-xl'>
+        A dedicated CMS for Astro Studio.
+      </p>
+      <p class='mb-4 text-center text-lg md:text-xl'>
+        Built from the ground up by the Astro community.
+      </p>
+    </div>
+  </div>
+</section>
+
+<script>
+  const blob = document.getElementById('blob')!
+  const panel = document.querySelector('.panel')
+
+  document.addEventListener('mousemove', (event) => {
+    const blobWidth = blob.offsetWidth
+    const blobHeight = blob.offsetHeight
+
+    const rect = panel?.getBoundingClientRect()!
+    const mouseX = event.clientX - rect.left
+    const mouseY = event.clientY - rect.top
+
+    const blobX = mouseX - blobWidth / 2
+    const blobY = mouseY - blobHeight / 2
+
+    // Update the position of the blob element
+    blob.style.left = blobX + 'px'
+    blob.style.top = blobY + 'px'
+  })
+</script>
