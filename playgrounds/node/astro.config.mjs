@@ -13,6 +13,11 @@ export default defineConfig({
 		studioCMS({
 			dbStartPage: false,
 			contentRenderer: 'marked',
+			markedConfig: {
+				highlighterConfig: {
+					highlighter: 'shiki',
+				},
+			},
 			verbose: true,
 		}),
 	],
