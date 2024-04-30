@@ -51,6 +51,24 @@ To use the dev server the command is `moon run playground:dev`
 
 > Note: You can always fallback to standard pnpm, Please ensure your version matches our project, and run `pnpm i --frozen-lockfile` to install deps
 
+## How to use the playgrounds
+
+At the moment these are the current steps for setting up the main studioCMS playground.
+
+This is intended for testing and development, since we have not yet released a package to play with use these instruction *at your own risk* This project is still very experimental
+
+The primary playground is the [Node Playground](./playgrounds/node/)
+
+Steps to get a running playground should be the following:
+- clone repo
+- run `pnpm i --frozen-lockfile`
+- change line 14 of the [node playground's](https://github.com/astrolicious/studiocms/blob/fe6baf19301f1c6326ccf6d875c4c7349e15d849/playgrounds/node/astro.config.mjs#L14) config to `true` 
+- follow the first time setup instructions listed in the [main package readme](https://github.com/astrolicious/studiocms/blob/main/packages/studioCMS/README.md#first-start-and-setup)
+
+That will give you a running dev environment of what i work with daily... the only other thing to get the full functionality currently is to configure a gitub oAuth app for the [Dashboard and authentication](https://github.com/astrolicious/studiocms/blob/main/packages/studioCMS/README.md#authentication)
+
+To start the playground use the command `pnpm playground:dev`
+
 ## Licensing
 
 [MIT Licensed](./LICENSE).
