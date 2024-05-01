@@ -63,11 +63,21 @@ Steps to get a running playground should be the following:
 - clone repo
 - run `pnpm i --frozen-lockfile`
 - change line 14 of the [node playground's](https://github.com/astrolicious/studiocms/blob/fe6baf19301f1c6326ccf6d875c4c7349e15d849/playgrounds/node/astro.config.mjs#L14) config to `true` 
-- follow the first time setup instructions listed in the [main package readme](https://github.com/astrolicious/studiocms/blob/main/packages/studioCMS/README.md#first-start-and-setup)
+- read the first time setup instructions listed in the [main package readme](https://github.com/astrolicious/studiocms/blob/main/packages/studioCMS/README.md#first-start-and-setup) then replace the astro db commands with the following:
+
+    Commands to run:
+    - `pnpm playground:login` - Login your CLI to Astro Studio
+    - `pnpm playground:link` - Link to Astro Studio and Create a new DB for your CMS Installation
+    - `pnpm playground:push` - Creates the base tables on the remote database.
+    - `pnpm playground:dev` - Starts the Dev server connected to the linked database
+
+Once that process completes successfuly you are ready to navigate to http://localhost:4321/start and follow the instructions to get started.
+
+It will redirect and ask you to shutdown and change the above mentioned config option `dbStartPage` to `false` at which point that will enable full functionality of the CMS. you can now restart the dev server with `astro dev --remote` to continue viewing your new site!
 
 That will give you a running dev environment of what i work with daily... the only other thing to get the full functionality currently is to configure a gitub oAuth app for the [Dashboard and authentication](https://github.com/astrolicious/studiocms/blob/main/packages/studioCMS/README.md#authentication)
 
-To start the playground use the command `pnpm playground:dev`
+To start the playground again use the command `pnpm playground:dev`
 
 ## Licensing
 
