@@ -5,9 +5,16 @@
   "lockFileMaintenance": {
     "enabled": true
   },
+  "ignorePaths": [
+    "**/node_modules/**",
+    "**/bower_components/**",
+    "packages/ghost-to-studio/package.json"
+  ],
   "labels": ["dependencies"],
   "additionalBranchPrefix": "{{parentDir}}-",
 	"gitIgnoredAuthors": ["github+renovate@scharley.me"],
+  "prHourlyLimit": 0,
+  "reviewers": ["team:exalted"],
   "packageRules": [
     {
       "matchPackagePatterns": ["@biomejs/"],
