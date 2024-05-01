@@ -3,7 +3,7 @@
 import { Pages, db, eq } from 'astro:db';
 import sitemap from 'sitemap-ext:config';
 import Config from 'virtual:astro-studio-cms:config';
-import Layout from '../layouts/BlogPost.astro';
+import Layout from '../layouts/Default.astro';
 import { renderMarkDoc } from '../utils/markdoc';
 import { markdown } from '../utils/marked';
 
@@ -25,14 +25,10 @@ function contentRenderer() {
 }
 ---
 
-<Layout
-	title={post.title}
-	description={post.description}
-	publishedAt={post.publishedAt}
-	heroImage={post.heroImage}
->
-	<Fragment 
-		set:html={contentRenderer()} />
+<Layout title={post.title} description={post.description} heroImage={post.heroImage}>
+	<main>
+		<Fragment set:html={contentRenderer()} />
+	</main>
 </Layout>
 <style>
     .btn {

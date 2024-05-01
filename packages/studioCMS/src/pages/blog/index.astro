@@ -2,115 +2,33 @@
 // @ts-expect-error - This is a missing type definition for the `astro:db` import since its a virtual module during Astro Runtime
 import { SiteConfig, Blog, asc, db } from 'astro:db';
 import sitemap from 'sitemap-ext:config';
-import BaseHead from '../../components/BaseHead.astro';
 import CImage from '../../components/CImage.astro';
-import Footer from '../../components/Footer.astro';
 import FormattedDate from '../../components/FormattedDate.astro';
-import Header from '../../components/Header.astro';
+import BlogIndex from '../../layouts/BlogIndex.astro';
 
 sitemap(true);
-
-const ConfigArray = await db.select().from(SiteConfig);
-const contextConfig = ConfigArray.pop();
 
 const posts = await db.select().from(Blog).orderBy(asc(Blog.publishedAt));
 ---
 
-<!doctype html>
-<html lang="en">
-	<head>
-		<BaseHead title={"Blog | " + contextConfig.title} description={contextConfig.description} />
-		<style>
-			main {
-				width: 960px;
-			}
-			ul {
-				display: flex;
-				flex-wrap: wrap;
-				gap: 2rem;
-				list-style-type: none;
-				margin: 0;
-				padding: 0;
-			}
-			ul li {
-				width: calc(50% - 1rem);
-			}
-			ul li * {
-				text-decoration: none;
-				transition: 0.2s ease;
-			}
-			ul li:first-child {
-				width: 100%;
-				margin-bottom: 1rem;
-				text-align: center;
-			}
-			ul li:first-child img {
-				width: 100%;
-			}
-			ul li:first-child .title {
-				font-size: 2.369rem;
-			}
-			ul li img {
-				margin-bottom: 0.5rem;
-				border-radius: 12px;
-			}
-			ul li a {
-				display: block;
-			}
-			.title {
-				margin: 0;
-				color: rgb(var(--black));
-				line-height: 1;
-			}
-			.date {
-				margin: 0;
-				color: rgb(var(--gray));
-			}
-			ul li a:hover h4,
-			ul li a:hover .date {
-				color: rgb(var(--accent));
-			}
-			ul a:hover img {
-				box-shadow: var(--box-shadow);
-			}
-			@media (max-width: 720px) {
-				ul {
-					gap: 0.5em;
+<BlogIndex title='Blog' description='Blog Index'>
+	<main>
+		<section>
+			<ul>
+				{
+					posts.map(({ slug, heroImage, title, publishedAt }: typeof Blog.$inferSelect) => (
+						<li>
+							<a href={`${import.meta.env.BASE_URL}blog/${slug}/`}>
+								<CImage width={720} height={360} src={heroImage} alt={title} />
+								<h4 class="title">{title}</h4>
+								<p class="date">
+									<FormattedDate date={publishedAt} />
+								</p>
+							</a>
+						</li>
+					))
 				}
-				ul li {
-					width: 100%;
-					text-align: center;
-				}
-				ul li:first-child {
-					margin-bottom: 0;
-				}
-				ul li:first-child .title {
-					font-size: 1.563em;
-				}
-			}
-		</style>
-	</head>
-	<body>
-		<Header />
-		<main>
-			<section>
-				<ul>
-					{
-						posts.map(({ slug, heroImage, title, publishedAt }: typeof Blog.$inferSelect) => (
-							<li>
-								<a href={`${import.meta.env.BASE_URL}blog/${slug}/`}>
-									<CImage width={720} height={360} src={heroImage} alt={title} />
-									<h4 class="title">{title}</h4>
-									<p class="date">
-										<FormattedDate date={publishedAt} />
-									</p>
-								</a>
-							</li>
-						))
-					}
-				</ul>
-			</section>
-		</main>
-		<Footer />
-	</body>
-</html>
+			</ul>
+		</section>
+	</main>
+</BlogIndex>

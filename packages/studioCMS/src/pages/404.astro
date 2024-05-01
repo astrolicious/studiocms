@@ -1,9 +1,9 @@
 ---
-import Starter from '../layouts/Starter.astro';
+import Default from '../layouts/Default.astro';
 import sitemap from 'sitemap-ext:config';
 sitemap(false); // opt-out
 ---
-<Starter>
+<Default title='Error 404' description='Error 404 - Page Not Found'>
 	<center>
 		<h1>Error 404</h1>
 		<h2>Page not found</h2>
@@ -20,7 +20,7 @@ sitemap(false); // opt-out
 
 	</center>
 
-</Starter>
+</Default>
 
 <style>
 

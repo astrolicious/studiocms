@@ -1,0 +1,141 @@
+---
+// @ts-expect-error - This is a missing type definition for the `astro:db` import since its a virtual module during Astro Runtime
+import { SiteConfig, db } from 'astro:db';
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+
+const ConfigArray = await db.select().from(SiteConfig);
+const contextConfig = ConfigArray.pop();
+
+type Props = {
+	title: string;
+	heroImage?: string;
+	hideDashboardButton?: boolean;
+};
+
+const { title, heroImage, hideDashboardButton } = Astro.props;
+
+const pageTitle = `${title} | ${contextConfig.title}`;
+
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={pageTitle} description={contextConfig.description} image={heroImage}/>
+		<style>
+			.dash {
+				padding: 2rem;
+				border: 2px solid #ccc;
+				border-radius: 5rem;
+				background-color: #fff;
+				margin: 2rem;
+				
+			}
+			bold {
+				font-weight: bold;
+			}
+			.font-small {
+				font-size: 1rem;
+			}
+			.dash-header {
+				display: flex;
+				justify-content: space-between;
+			}
+			.right {
+				display: flex;
+				justify-content: flex-end;
+				padding-right: 4rem;
+			}
+			.left {
+				display: flex;
+				justify-content: flex-start;
+				padding-left: 4rem;
+			}
+			button {
+				padding: 1rem;
+				background-color: rgb(202, 0, 0);
+				font-weight: bold;
+				color: #fff;
+				border: none;
+				border-radius: 99rem;
+				cursor: pointer;
+			}
+			.btn {
+				padding: 1rem;
+				background-color: rgb(0, 37, 202);
+				font-weight: bold;
+				color: #fff;
+				border: none;
+				border-radius: 99rem;
+				cursor: pointer;
+			}
+			input {
+				background-color: #f4f4f4;
+				border-radius: 10px;
+				padding: 0.25rem;
+				border: rgb(124, 124, 124) 1px solid;
+				width: 35vmax;
+			}
+			textarea {
+				background-color: #f4f4f4;
+				border-radius: 10px;
+				padding: 0.25rem;
+				border: rgb(124, 124, 124) 1px solid;
+				width: 100%;
+			}
+			label {
+				font-size: large;
+				font-weight: bold;
+			}
+			.info-text {
+				font-size: small;
+				display: inline;
+				font-style: italic;
+			}
+			info {
+				font-size: small;
+				display: inline;
+				font-style: italic;
+			}
+			.btn-edit {
+				padding: 1rem;
+				background-color: rgb(169, 0, 211);
+				font-weight: bold;
+				color: #fff;
+				border: none;
+				border-radius: 99rem;
+				cursor: pointer;
+			}
+			form {
+				display: flex;
+				justify-content: flex-end;
+				padding-right: 4rem;
+			}
+		</style>
+	</head>
+	<body>
+		<Header title={contextConfig.title} />
+		
+        <div class="dash">
+            <div class="dash-header">
+				{hideDashboardButton ? <div></div> : (
+					<form class="left" method="post" action={import.meta.env.BASE_URL+"dashboard"}>
+						<button class="btn">Dashboard</button>
+					</form>
+				)}
+                <form class="right" method="post" action={import.meta.env.BASE_URL+"dashboard/logout"}>
+                    <button>Logout</button>
+                </form>
+            </div>
+            <center>
+                <h1>{title}</h1>
+            </center>
+
+			<slot />
+
+		</div>
+		<Footer />
+	</body>
+</html>

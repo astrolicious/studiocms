@@ -1,7 +1,7 @@
 ---
 // @ts-expect-error - This is a missing type definition for the `astro:db` import since its a virtual module during Astro Runtime
 import { Blog, Pages, Permissions, SiteConfig, db, eq } from 'astro:db';
-import Starter from '../layouts/Starter.astro';
+import SetupLayout from '../layouts/Setup.astro';
 import sitemap from 'sitemap-ext:config';
 sitemap(false); // opt-out
 
@@ -129,7 +129,7 @@ if (Astro.request.method === 'POST') {
 }
 ---
 
-<Starter>
+<SetupLayout>
             <center>
                 <h2>Welcome to StudioCMS</h2>
             </center>
@@ -181,7 +181,7 @@ if (Astro.request.method === 'POST') {
 
                 
             </div>
-</Starter>
+</SetupLayout>
 
 <style>
     bold {

@@ -25,7 +25,7 @@ function contentRenderer() {
 }
 ---
 
-<Default>
+<Default title={post.title} description={post.description} heroImage={post.heroImage}>
 		<main>
 		<Fragment 
 		set:html={contentRenderer()} />
