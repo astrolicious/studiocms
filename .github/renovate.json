@@ -12,7 +12,7 @@
   ],
   "labels": ["dependencies"],
   "additionalBranchPrefix": "{{parentDir}}-",
-	"gitIgnoredAuthors": ["github+renovate@scharley.me"],
+	"gitIgnoredAuthors": ["github+renovate@astro-studiocms.xyz"],
   "prHourlyLimit": 0,
   "reviewers": ["team:exalted"],
   "packageRules": [

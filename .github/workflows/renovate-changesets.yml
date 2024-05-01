@@ -17,4 +17,4 @@ jobs:
           token: ${{ secrets.DEPENDENCY_UPDATE_GITHUB_TOKEN }}
           use-conventional-commits: true
           author-name: Renovate Changesets
-          author-email: github+renovate@scharley.me
+          author-email: github+renovate@astro-studiocms.xyz
