@@ -6,7 +6,7 @@ import '../styles/global.css';
 interface Props {
 	title: string;
 	description: string;
-	image?: string;
+	image?: string | undefined;
 }
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);

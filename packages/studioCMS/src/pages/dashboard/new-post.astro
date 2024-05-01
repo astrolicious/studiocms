@@ -1,7 +1,7 @@
 ---
 // @ts-expect-error - This is a missing type definition for the `astro:db` import since its a virtual module during Astro Runtime
 import { Blog, db, eq } from 'astro:db';
-import Default from '../../layouts/Default.astro';
+import Dashboard from '../../layouts/Dashboard.astro';
 import { rankCheck } from '../../utils/rankcheck';
 import type { Locals } from './locals';
 import sitemap from 'sitemap-ext:config';
@@ -74,76 +74,63 @@ if (Astro.request.method === 'POST') {
 }
 ---
 
-<Default>
-        <div class="dash">
-            <div class="dash-header">
-                <form class="left" method="post" action={`/dashboard`}>
-                    <button class="btn">Dashboard</button>
-                </form>
-                <form class="right" method="post" action={`/dashboard/logout`}>
-                    <button>Logout</button>
-                </form>
-            </div>
-            <center>
-                <h1>Create a new post</h1>
-            </center>
-            <div>
-                <p class="font-small">
-                Currently logged in as: <bold>{getUserName}</bold> 
-                </p>
+<Dashboard title='Create New Post'>
+    <div>
+        <p class="font-small">
+        Currently logged in as: <bold>{getUserName}</bold> 
+        </p>
 
-                <form method="post" enctype="multipart/form-data" >
+        <form method="post" enctype="multipart/form-data" >
                 
-                    <label for="title">Post Title</label><br>
-                    <input 
-                        type="text" 
-                        id="title" 
-                        name="title" 
-                        placeholder="Your Post Title" 
-                        required><br>
-                    <label for="slug">Slug</label><br>
-                    <input 
-                        type="text" 
-                        id="slug" 
-                        name="slug" 
-                        placeholder="your-post-slug"
-                        required><br>
-                    <label for="description">Description</label><br>
-                    <input
-                        type="text" 
-                        id="description" 
-                        name="description" 
-                        placeholder="Your post's basic description"
-                        required><br>
-                    <label for="hero-image">Hero Image</label><br>
-                    <p class="info-text">To use images stored in your public/ folder use the following example: <pre>/my-image.png</pre></p><br>
-                    <input 
-                        type="text" 
-                        id="hero-image" 
-                        name="hero-image" 
-                        placeholder="Your post's hero image URL"
-                        value="https://images.unsplash.com/photo-1707345512638-997d31a10eaa?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                        required><br>
-                    <label for="content">Content</label><br>
-                    <div id="editor">
-                        <textarea 
-                            id="content" 
-                            name="content" 
-                            data-provide="markdown" 
-                            rows="10" 
-                            placeholder="Your post's content in markdown format."
-                            required></textarea>
-                        <div id="html-preview"></div>
-                    </div><br><br>
+            <label for="title">Post Title</label><br>
+            <input 
+                type="text" 
+                id="title" 
+                name="title" 
+                placeholder="Your Post Title" 
+                required><br>
+            <label for="slug">Slug</label><br>
+            <input 
+                type="text" 
+                id="slug" 
+                name="slug" 
+                placeholder="your-post-slug"
+                required><br>
+            <label for="description">Description</label><br>
+            <input
+                type="text" 
+                id="description" 
+                name="description" 
+                placeholder="Your post's basic description"
+                required><br>
+            <label for="hero-image">Hero Image</label><br>
+            <p class="info-text">To use images stored in your public/ folder use the following example: <pre>/my-image.png</pre></p><br>
+            <input 
+                type="text" 
+                id="hero-image" 
+                name="hero-image" 
+                placeholder="Your post's hero image URL"
+                value="https://images.unsplash.com/photo-1707345512638-997d31a10eaa?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                required><br>
+            <label for="content">Content</label><br>
+            <div id="editor">
+                <textarea 
+                    id="content" 
+                    name="content" 
+                    data-provide="markdown" 
+                    rows="10" 
+                    placeholder="Your post's content in markdown format."
+                    required></textarea>
+                <div id="html-preview"></div>
+            </div><br><br>
 
-                    <button class="btn" type="submit">Create!</button>
+            <button class="btn" type="submit">Create!</button>
 
-                </form>
+        </form>
 
                 
-            </div>
-        </div>
-</Default>
+    </div>
+</Dashboard>
 
 <script>
     import { markdown } from "../../utils/marked";

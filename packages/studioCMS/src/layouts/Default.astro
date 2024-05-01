@@ -7,12 +7,24 @@ import Header from '../components/Header.astro';
 
 const ConfigArray = await db.select().from(SiteConfig);
 const contextConfig = ConfigArray.pop();
+
+type Props = {
+	title: string;
+	description: string;
+	heroImage?: string;
+};
+
+const { title, description, heroImage } = Astro.props;
+
+const pageDescription = `${description} - ${contextConfig.description}`;
+const pageTitle = `${title} | ${contextConfig.title}`;
+
 ---
 
 <!doctype html>
 <html lang="en">
 	<head>
-		<BaseHead title={contextConfig.title} description={contextConfig.description} />
+		<BaseHead title={pageTitle} description={pageDescription} image={heroImage}/>
 	</head>
 	<body>
 		<Header title={contextConfig.title} />

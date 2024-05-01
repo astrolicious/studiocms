@@ -1,10 +1,10 @@
 ---
 import { Code } from 'astro:components';
-import Starter from '../layouts/Starter.astro';
+import SetupLayout from '../layouts/Setup.astro';
 import sitemap from 'sitemap-ext:config';
 sitemap(false); // opt-out
 ---
-<Starter>
+<SetupLayout>
 	<center>
 		<h1>Setup Done!</h1>
 	</center>
@@ -26,4 +26,4 @@ export default defineConfig({
 	],
 });`}/>
 
-</Starter>
+</SetupLayout>
