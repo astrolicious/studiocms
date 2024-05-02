@@ -6,7 +6,7 @@
   "scripts": {
     "db:login": "astro db login",
     "db:link": "astro db link",
-    "db:push": "astro db link",
+    "db:push": "astro db push",
     "dev": "astro dev --remote",
     "start": "astro dev --remote",
     "build": "astro build --remote",
