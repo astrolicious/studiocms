@@ -1,0 +1,48 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:best-practices"],
+  "dependencyDashboard": true,
+  "lockFileMaintenance": {
+    "enabled": true
+  },
+  "ignorePaths": [
+    "**/node_modules/**",
+    "**/bower_components/**",
+    "packages/ghost-to-studio/package.json"
+  ],
+  "labels": ["dependencies"],
+  "additionalBranchPrefix": "{{parentDir}}-",
+	"gitIgnoredAuthors": ["github+renovate@astro-studiocms.xyz"],
+  "prHourlyLimit": 0,
+  "reviewers": ["team:exalted"],
+  "packageRules": [
+    {
+      "matchPackagePatterns": ["@biomejs/"],
+      "labels": ["linting"]
+    },
+    {
+      "matchPackagePatterns": ["^astro"],
+      "labels": ["astroDependencies"]
+    },
+    {
+      "matchPackagePatterns": ["^@astrojs"],
+      "labels": ["astroDependencies"]
+    },
+    {
+      "matchDepTypes": ["packageManager", "engines"],
+      "enabled": false
+    },
+    {
+      "matchFileNames": ["www/**"],
+      "labels": ["websiteDeps"]
+    },
+    {
+      "matchFileNames": ["packages/**"],
+      "labels": ["packageDeps"]
+    },
+    {
+      "matchFileNames": ["playgrounds/**"],
+      "labels": ["playgroundDeps"]
+    }
+  ]
+}
