@@ -16,7 +16,9 @@
     "allowJs": true,
     "jsx": "preserve",
     "strict": true,
-    "outDir": "../.moon/cache/types/playground"
+    "outDir": "../../.moon/cache/types/playgrounds/node"
   },
-  "exclude": ["dist"]
+  "exclude": [
+    "dist"
+  ]
 }
