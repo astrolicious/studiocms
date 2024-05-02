@@ -3,7 +3,7 @@
   "private": true,
   "packageManager": "pnpm@8.15.4",
   "engines": {
-    "node": "20.11.1"
+    "node": "20.12.2"
   },
   "scripts": {
     "moon": "moon",

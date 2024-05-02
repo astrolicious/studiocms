@@ -3,7 +3,7 @@ node:
   
   # Defines the explicit Node.js version specification to use. If this field is not defined, the global node binary will be used.
   # Version can also be defined with .prototools or with the MOON_NODE_VERSION environment variable.
-  version: '20.11.1'
+  version: '20.12.2'
   
   # Defines which package manager to utilize. Supports npm (default), pnpm, yarn, or bun.
   packageManager: 'pnpm'
