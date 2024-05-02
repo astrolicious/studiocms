@@ -196,8 +196,8 @@ importers:
         specifier: ^4.5.12
         version: 4.7.0(@types/node@20.12.7)(typescript@5.4.5)
       astro-font:
-        specifier: ^0.0.78
-        version: 0.0.78
+        specifier: ^0.0.80
+        version: 0.0.80
       astro-icon:
         specifier: ^1.1.0
         version: 1.1.0
@@ -3651,8 +3651,8 @@ packages:
       remark-expressive-code: 0.33.5
     dev: false
 
-  /astro-font@0.0.78:
-    resolution: {integrity: sha512-4Wz1aTZRUsae1C6hbS/6eahsVlSlq8pNa6sbPUJLjU3XEf1pTBVuk+VRwtxE4uI4D1M7YgG8vYMC+HYXtarbyw==}
+  /astro-font@0.0.80:
+    resolution: {integrity: sha512-RjUANXSNdt0Yp2Tpyn7woBg67hCX2Gy1OiiA7B0NX501LcrzvFHoX98CoBgJC5af3tj3fznfLqqBmMr7wu6+fQ==}
     dev: false
 
   /astro-icon@1.1.0:
