@@ -13,5 +13,5 @@ jobs:
     if: ${{ github.event.issue.pull_request }}
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: kevinzunigacuellar/coauthor-action@v0.1.2
+      - uses: actions/checkout@0ad4b8fadaa221de15dcec353f45205ec38ea70b # v4
+      - uses: kevinzunigacuellar/coauthor-action@6545ffad7dcc18ae5d8340ea3f750bcd00f8ab11 # v0.1.2
