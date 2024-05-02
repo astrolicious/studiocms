@@ -157,11 +157,11 @@ importers:
         version: link:../../packages/studioCMS
       astro:
         specifier: ^4.7.0
-        version: 4.7.0(@types/node@20.12.7)(typescript@5.4.5)
+        version: 4.7.0(@types/node@20.12.8)(typescript@5.4.5)
     devDependencies:
       '@types/node':
-        specifier: 20.12.7
-        version: 20.12.7
+        specifier: 20.12.8
+        version: 20.12.8
       typescript:
         specifier: 5.4.5
         version: 5.4.5
@@ -518,7 +518,7 @@ packages:
     peerDependencies:
       astro: ^4.2.0
     dependencies:
-      astro: 4.7.0(@types/node@20.12.7)(typescript@5.4.5)
+      astro: 4.7.0(@types/node@20.12.8)(typescript@5.4.5)
       send: 0.18.0
       server-destroy: 1.0.1
     transitivePeerDependencies:
