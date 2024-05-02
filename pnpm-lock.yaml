@@ -221,7 +221,7 @@ importers:
         version: 5.4.5
     devDependencies:
       tailwind-scrollbar:
-        specifier: ^3.1.0
+        specifier: 3.1.0
         version: 3.1.0(tailwindcss@3.4.3)
 
 packages:
