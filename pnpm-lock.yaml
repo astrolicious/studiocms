@@ -160,10 +160,10 @@ importers:
         version: 4.7.0(@types/node@20.12.7)(typescript@5.4.5)
     devDependencies:
       '@types/node':
-        specifier: ^20.12.7
+        specifier: 20.12.7
         version: 20.12.7
       typescript:
-        specifier: ^5.4.5
+        specifier: 5.4.5
         version: 5.4.5
 
   www/docs:
