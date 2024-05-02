@@ -95,7 +95,7 @@ importers:
         version: 1.2.2(marked@12.0.2)
       marked-shiki:
         specifier: ^1.1.0
-        version: 1.1.0(marked@12.0.2)(shiki@1.3.0)
+        version: 1.1.0(marked@12.0.2)(shiki@1.4.0)
       marked-smartypants:
         specifier: ^1.1.6
         version: 1.1.6(marked@12.0.2)
@@ -107,7 +107,7 @@ importers:
         version: 0.23.6
       shiki:
         specifier: ^1.3.0
-        version: 1.3.0
+        version: 1.4.0
       typescript:
         specifier: ^5.4.5
         version: 5.4.5
@@ -465,7 +465,7 @@ packages:
       remark-parse: 11.0.0
       remark-rehype: 11.1.0
       remark-smartypants: 2.1.0
-      shiki: 1.3.0
+      shiki: 1.4.0
       unified: 11.0.4
       unist-util-remove-position: 5.0.0
       unist-util-visit: 5.0.0
@@ -3164,10 +3164,6 @@ packages:
     resolution: {integrity: sha512-KaIS0H4EQ3KI2d++TjYqRNgwp8E3M/68e9veR4QtInzA7kKFgcjeiJqb80fuXW+blDy5fmd11PN9g9soz/3ANQ==}
     dev: false
 
-  /@shikijs/core@1.3.0:
-    resolution: {integrity: sha512-7fedsBfuILDTBmrYZNFI8B6ATTxhQAasUHllHmjvSZPnoq4bULWoTpHwmuQvZ8Aq03/tAa2IGo6RXqWtHdWaCA==}
-    dev: false
-
   /@shikijs/core@1.4.0:
     resolution: {integrity: sha512-CxpKLntAi64h3j+TwWqVIQObPTED0FyXLHTTh3MKXtqiQNn2JGcMQQ362LftDbc9kYbDtrksNMNoVmVXzKFYUQ==}
     dev: false
@@ -3831,7 +3827,7 @@ packages:
       rehype: 13.0.1
       resolve: 1.22.8
       semver: 7.6.0
-      shiki: 1.3.0
+      shiki: 1.4.0
       string-width: 7.1.0
       strip-ansi: 7.1.0
       tsconfck: 3.0.3(typescript@5.4.5)
@@ -6479,14 +6475,14 @@ packages:
       marked: 12.0.2
     dev: false
 
-  /marked-shiki@1.1.0(marked@12.0.2)(shiki@1.3.0):
+  /marked-shiki@1.1.0(marked@12.0.2)(shiki@1.4.0):
     resolution: {integrity: sha512-PNiC0X4rYnzF63T6CDscwTxQB8l5Aur9XR7MRNBi/Y9nSxmPxasWT+V5OVam8Pj+NycWjzG6idO7fbc2bDD16w==}
     peerDependencies:
       marked: '>=7.0.0'
       shiki: '>=1.0.0'
     dependencies:
       marked: 12.0.2
-      shiki: 1.3.0
+      shiki: 1.4.0
     dev: false
 
   /marked-smartypants@1.1.6(marked@12.0.2):
@@ -8453,12 +8449,6 @@ packages:
     resolution: {integrity: sha512-u+XW6o0vCkUNlneZb914dLO+AayEIwK5tI62WeS//R5HIXBFiYaj/Hc5xcq27Yh83Grr4JbNtUBV8W6zyK4hWg==}
     dependencies:
       '@shikijs/core': 1.2.1
-    dev: false
-
-  /shiki@1.3.0:
-    resolution: {integrity: sha512-9aNdQy/etMXctnPzsje1h1XIGm9YfRcSksKOGqZWXA/qP9G18/8fpz5Bjpma8bOgz3tqIpjERAd6/lLjFyzoww==}
-    dependencies:
-      '@shikijs/core': 1.3.0
     dev: false
 
   /shiki@1.4.0:
