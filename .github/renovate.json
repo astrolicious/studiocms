@@ -31,6 +31,18 @@
     {
       "matchDepTypes": ["packageManager", "engines"],
       "enabled": false
+    },
+    {
+      "matchFileNames": ["www/**"],
+      "labels": ["websiteDeps"]
+    },
+    {
+      "matchFileNames": ["packages/**"],
+      "labels": ["packageDeps"]
+    },
+    {
+      "matchFileNames": ["playgrounds/**"],
+      "labels": ["playgroundDeps"]
     }
   ]
 }
