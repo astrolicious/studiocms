@@ -128,8 +128,8 @@ importers:
         specifier: ^10.0.0
         version: 10.2.4(astro@4.7.0)
       '@astrojs/db':
-        specifier: ^0.9.8
-        version: 0.9.8
+        specifier: ^0.10.0
+        version: 0.10.6
       '@astrolicious/studiocms':
         specifier: workspace:*
         version: link:../../packages/studioCMS
