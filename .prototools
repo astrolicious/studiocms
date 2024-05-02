@@ -1,7 +1,7 @@
-moon = "1.22.7"
+moon = "1.24.3"
 node = "20.11.1"
 pnpm = "8.15.4"
-biome = "1.7.1"
+biome = "1.7.2"
 
 [plugins]
 biome = "source:https://raw.githubusercontent.com/Phault/proto-toml-plugins/main/biome/plugin.toml"
