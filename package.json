@@ -27,7 +27,7 @@
     "docs:dev": "pnpm --filter docs dev"
   },
   "devDependencies": {
-    "@biomejs/biome": "1.7.1",
+    "@biomejs/biome": "1.7.2",
     "@moonrepo/cli": "1.22.7",
     "@changesets/cli": "2.27.1",
     "@changesets/config": "3.0.0",
