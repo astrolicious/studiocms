@@ -119,7 +119,7 @@ importers:
         version: 5.2.10(@types/node@20.12.7)
     devDependencies:
       '@types/node':
-        specifier: ^20.12.7
+        specifier: 20.12.7
         version: 20.12.7
 
   playgrounds/cloudflare:
