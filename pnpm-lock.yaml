@@ -56,7 +56,7 @@ importers:
         version: 1.19.0
       '@inox-tools/sitemap-ext':
         specifier: ^0.2.9
-        version: 0.2.9(@types/node@20.12.7)(astro@4.7.0)
+        version: 0.2.9(@astrojs/db@0.10.6)(@types/node@20.12.8)(astro@4.7.0)
       '@lucia-auth/adapter-drizzle':
         specifier: ^1.0.7
         version: 1.0.7(lucia@3.2.0)
@@ -74,10 +74,10 @@ importers:
         version: 1.8.0
       astro:
         specifier: '>=4.7.0'
-        version: 4.7.0(@types/node@20.12.7)(typescript@5.4.5)
+        version: 4.7.0(@types/node@20.12.8)(typescript@5.4.5)
       astro-integration-kit:
         specifier: ^0.13.1
-        version: 0.13.1(astro@4.7.0)
+        version: 0.13.1(@astrojs/db@0.10.6)(astro@4.7.0)
       lucia:
         specifier: ^3.2.0
         version: 3.2.0
@@ -116,11 +116,11 @@ importers:
         version: 3.18.0
       vite:
         specifier: ^5.2.10
-        version: 5.2.10(@types/node@20.12.7)
+        version: 5.2.10(@types/node@20.12.8)
     devDependencies:
       '@types/node':
-        specifier: 20.12.7
-        version: 20.12.7
+        specifier: 20.12.8
+        version: 20.12.8
 
   playgrounds/cloudflare:
     dependencies:
@@ -2242,16 +2242,16 @@ packages:
     dev: false
     optional: true
 
-  /@inox-tools/aik-route-config@0.5.0(@types/node@20.12.7)(astro-integration-kit@0.13.1)(astro@4.7.0):
+  /@inox-tools/aik-route-config@0.5.0(@types/node@20.12.8)(astro-integration-kit@0.13.1)(astro@4.7.0):
     resolution: {integrity: sha512-/jAGTiPFX2om8Pez5jWGUj/6aI/doVZflVRjNNP85VAy79gl5KwPhM99FYGH6JUPGeTLsDJOsLouyT+pJRBZfw==}
     peerDependencies:
       astro: ^4.3.5
       astro-integration-kit: ~0.13
     dependencies:
-      astro: 4.7.0(@types/node@20.12.7)(typescript@5.4.5)
-      astro-integration-kit: 0.13.1(astro@4.7.0)
+      astro: 4.7.0(@types/node@20.12.8)(typescript@5.4.5)
+      astro-integration-kit: 0.13.1(@astrojs/db@0.10.6)(astro@4.7.0)
       recast: 0.23.6
-      vite: 5.2.10(@types/node@20.12.7)
+      vite: 5.2.10(@types/node@20.12.8)
     transitivePeerDependencies:
       - '@types/node'
       - less
@@ -2262,15 +2262,15 @@ packages:
       - terser
     dev: false
 
-  /@inox-tools/sitemap-ext@0.2.9(@types/node@20.12.7)(astro@4.7.0):
+  /@inox-tools/sitemap-ext@0.2.9(@astrojs/db@0.10.6)(@types/node@20.12.8)(astro@4.7.0):
     resolution: {integrity: sha512-V0SQ89WzVuCiNQHsU7llCCY+MIOtFOCY8K3/dUhHM1iqfDM+vSOoVYOrO1RBJRANMu7V46x0ADI1H2fI6EP1XQ==}
     peerDependencies:
       astro: ^4.3.5
     dependencies:
       '@astrojs/sitemap': 3.1.4
-      '@inox-tools/aik-route-config': 0.5.0(@types/node@20.12.7)(astro-integration-kit@0.13.1)(astro@4.7.0)
-      astro: 4.7.0(@types/node@20.12.7)(typescript@5.4.5)
-      astro-integration-kit: 0.13.1(astro@4.7.0)
+      '@inox-tools/aik-route-config': 0.5.0(@types/node@20.12.8)(astro-integration-kit@0.13.1)(astro@4.7.0)
+      astro: 4.7.0(@types/node@20.12.8)(typescript@5.4.5)
+      astro-integration-kit: 0.13.1(@astrojs/db@0.10.6)(astro@4.7.0)
       sitemap: 7.1.1
     transitivePeerDependencies:
       - '@astrojs/db'
@@ -3391,7 +3391,7 @@ packages:
       '@unpic/core': 0.0.49
       '@unpic/pixels': 1.2.2
       '@unpic/placeholder': 0.1.2
-      astro: 4.7.0(@types/node@20.12.7)(typescript@5.4.5)
+      astro: 4.7.0(@types/node@20.12.8)(typescript@5.4.5)
       blurhash: 2.0.5
     dev: false
 
@@ -3673,7 +3673,7 @@ packages:
       - supports-color
     dev: false
 
-  /astro-integration-kit@0.13.1(astro@4.7.0):
+  /astro-integration-kit@0.13.1(@astrojs/db@0.10.6)(astro@4.7.0):
     resolution: {integrity: sha512-c/VEvRXJdnKa7/Y4s9CYr81L7Vvue7Bijtgp2TKuf9etCXiMDzEzQ3C5RdjMCzRI68VlKuVblfnLmY4iWizFdg==}
     peerDependencies:
       '@astrojs/db': ^0.9 || ^0.10
@@ -3682,7 +3682,8 @@ packages:
       '@astrojs/db':
         optional: true
     dependencies:
-      astro: 4.7.0(@types/node@20.12.7)(typescript@5.4.5)
+      '@astrojs/db': 0.10.6
+      astro: 4.7.0(@types/node@20.12.8)(typescript@5.4.5)
       pathe: 1.1.2
       recast: 0.23.6
     dev: false
@@ -9703,7 +9704,7 @@ packages:
       vite:
         optional: true
     dependencies:
-      vite: 5.2.10(@types/node@20.12.7)
+      vite: 5.2.10(@types/node@20.12.8)
     dev: false
 
   /volar-service-css@0.0.34(@volar/language-service@2.1.6):
