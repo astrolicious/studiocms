@@ -1,6 +1,6 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["config:best-practices"],
+  "extends": ["config:best-practices", "schedule:earlyMondays"],
   "dependencyDashboard": true,
   "lockFileMaintenance": {
     "enabled": true
@@ -18,31 +18,32 @@
   "packageRules": [
     {
       "matchPackagePatterns": ["@biomejs/"],
-      "labels": ["linting"]
+      "labels": ["linting","dependencies"]
     },
     {
       "matchPackagePatterns": ["^astro"],
-      "labels": ["astroDependencies"]
+      "labels": ["astroDependencies","dependencies"]
     },
     {
       "matchPackagePatterns": ["^@astrojs"],
-      "labels": ["astroDependencies"]
+      "labels": ["astroDependencies","dependencies"]
     },
     {
       "matchDepTypes": ["packageManager", "engines"],
+      "labels": ["dependencies"],
       "enabled": false
     },
     {
       "matchFileNames": ["www/**"],
-      "labels": ["websiteDeps"]
+      "labels": ["websiteDeps","dependencies"]
     },
     {
       "matchFileNames": ["packages/**"],
-      "labels": ["packageDeps"]
+      "labels": ["packageDeps","dependencies"]
     },
     {
       "matchFileNames": ["playgrounds/**"],
-      "labels": ["playgroundDeps"]
+      "labels": ["playgroundDeps","dependencies"]
     }
   ]
 }
