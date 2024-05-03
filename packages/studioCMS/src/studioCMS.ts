@@ -100,15 +100,18 @@ export default defineIntegration({
 					const { resolve: rootResolve } = createResolver(root.pathname)
 
 					// Renderer Override Path
-					let RendererComponentPath 
-					if (RendererOverride) { RendererComponentPath = rootResolve(RendererOverride) } 
-					else { RendererComponentPath = resolve('./components/exports/StudioCMSRenderer.astro') }
+					let RendererComponentPath: string;
+					if (RendererOverride) { 
+						RendererComponentPath = rootResolve(RendererOverride) 
+					} else { 
+						RendererComponentPath = resolve('./components/exports/StudioCMSRenderer.astro') 
+					}
 
 					// Virtual Resolver
 					const virtResolver = {
 						CImage: resolve('./components/exports/CImage.astro'),
 						FormattedDate: resolve('./components/exports/FormattedDate.astro'),
-						StudioCMSRenderer: RendererOverride,
+						StudioCMSRenderer: RendererComponentPath,
 					};
 
 					// Virtual Components
