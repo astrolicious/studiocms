@@ -1,17 +1,20 @@
 ---
 // @ts-expect-error - This is a missing type definition for the `astro:db` import since its a virtual module during Astro Runtime
 import { SiteConfig, Blog, asc, db } from 'astro:db';
-import sitemap from 'sitemap-ext:config';
-import CImage from '../../components/CImage.astro';
-import FormattedDate from '../../components/FormattedDate.astro';
+import { CImage, FormattedDate } from 'studiocms:components'
 import BlogIndex from '../../layouts/BlogIndex.astro';
+import Config from 'virtual:studiocms/config';
 
-sitemap(true);
+if (Config.includedIntegrations.useInoxSitemap) {
+    import('sitemap-ext:config').then((sitemap) => {
+        sitemap.default(true)
+    })
+}
 
 const posts = await db.select().from(Blog).orderBy(asc(Blog.publishedAt));
 ---
 
-<BlogIndex title='Blog' description='Blog Index'>
+<BlogIndex title='Blog' description='Blog Index' posts={posts}>
 	<main>
 		<section>
 			<ul>

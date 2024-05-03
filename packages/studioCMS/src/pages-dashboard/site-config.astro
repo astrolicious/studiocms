@@ -2,12 +2,17 @@
 // @ts-expect-error - This is a missing type definition for the `astro:db` import since its a virtual module during Astro Runtime
 import { db, eq } from 'astro:db';
 import { asDrizzleTable } from '@astrojs/db/utils';
-import { SiteConfig as siteConfigTable } from '../../db/tables';
-import Dashboard from '../../layouts/Dashboard.astro';
-import { rankCheck } from '../../utils/rankcheck';
-import type { Locals } from './locals';
-import sitemap from 'sitemap-ext:config';
-sitemap(false); // opt-out
+import { SiteConfig as siteConfigTable } from '../db/tables';
+import Dashboard from '../layouts/Dashboard.astro';
+import { rankCheck } from '../utils/rankcheck';
+import type { Locals } from '../schemas/locals';
+import Config from 'virtual:studiocms/config';
+
+if (Config.includedIntegrations.useInoxSitemap) {
+    import('sitemap-ext:config').then((sitemap) => {
+        sitemap.default(false)
+    })
+}
 
 const SiteConfigSafe = asDrizzleTable('SiteConfig', siteConfigTable);
 const ConfigArray = await db.select().from(SiteConfigSafe);

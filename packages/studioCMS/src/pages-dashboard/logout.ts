@@ -1,5 +1,5 @@
 import type { APIContext } from 'astro';
-import { lucia } from '../../lib/auth';
+import { lucia } from '../lib/auth';
 
 export async function GET(context: APIContext): Promise<Response> {
 	return context.redirect(import.meta.env.BASE_URL);

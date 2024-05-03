@@ -1,9 +1,9 @@
 ---
 import { Image } from 'astro:assets';
-import Config from 'virtual:astro-studio-cms:config';
+import Config from 'virtual:studiocms/config';
 import { Cloudinary } from '@cloudinary/url-gen';
 import { fill } from '@cloudinary/url-gen/actions/resize';
-import type { Locals } from '../pages/dashboard/locals';
+import type { Locals } from '../../schemas/locals';
 
 interface Props {
 	src: string;

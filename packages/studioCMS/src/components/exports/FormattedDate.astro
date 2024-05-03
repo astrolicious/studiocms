@@ -1,4 +1,8 @@
 ---
+import Config from 'virtual:studiocms/config';
+
+const { dateLocale: locales } = Config;
+
 interface Props {
 	date: Date;
 }
@@ -8,7 +12,7 @@ const { date } = Astro.props;
 
 <time datetime={date.toISOString()}>
 	{
-		date.toLocaleDateString('en-us', {
+		date.toLocaleDateString(locales, {
 			year: 'numeric',
 			month: 'short',
 			day: 'numeric',

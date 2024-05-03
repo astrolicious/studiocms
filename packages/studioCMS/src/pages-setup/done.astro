@@ -1,8 +1,13 @@
 ---
 import { Code } from 'astro:components';
 import SetupLayout from '../layouts/Setup.astro';
-import sitemap from 'sitemap-ext:config';
-sitemap(false); // opt-out
+import Config from 'virtual:studiocms/config';
+
+if (Config.includedIntegrations.useInoxSitemap) {
+    import('sitemap-ext:config').then((sitemap) => {
+        sitemap.default(false)
+    })
+}
 ---
 <SetupLayout>
 	<center>

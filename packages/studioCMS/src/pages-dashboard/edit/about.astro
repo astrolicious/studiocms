@@ -1,16 +1,20 @@
 ---
 // @ts-expect-error - This is a missing type definition for the `astro:db` import since its a virtual module during Astro Runtime
-import { Admins, Pages, db, eq } from 'astro:db';
-import Dashboard from '../../../layouts/Dashboard.astro';
-import { rankCheck } from '../../../utils/rankcheck';
-import type { Locals } from '../locals';
-import sitemap from 'sitemap-ext:config';
-sitemap(false); // opt-out
+import { Pages, db, eq } from 'astro:db';
+import Dashboard from '../../layouts/Dashboard.astro';
+import { rankCheck } from '../../utils/rankcheck';
+import type { Locals } from '../../schemas/locals';
+import Config from 'virtual:studiocms/config';
 
-const postArrayed = await db.select().from(Pages).where(eq(Pages.slug, 'index'));
+if (Config.includedIntegrations.useInoxSitemap) {
+    import('sitemap-ext:config').then((sitemap) => {
+        sitemap.default(false)
+    })
+}
+
+const postArrayed = await db.select().from(Pages).where(eq(Pages.slug, 'about'));
 const post = postArrayed[0];
 const locals = Astro.locals as Locals;
-
 function redirectToPath(path: string) {
 	return Astro.redirect(import.meta.env.BASE_URL + path);
 }
@@ -45,12 +49,12 @@ if (Astro.request.method === 'POST') {
 		.update(Pages)
 		.set({
 			title: title as string,
-			slug: 'index',
+			slug: 'about',
 			description: description as string,
 			heroImage: heroImage as string,
 			content: content as string,
 		})
-		.where(eq(Pages.slug, 'index'))
+		.where(eq(Pages.slug, 'about'))
 		.then(() => {
 			return new Response('Post updated', { status: 200 });
 		})
@@ -58,11 +62,11 @@ if (Astro.request.method === 'POST') {
 			return new Response('Error updating post', { status: 500 });
 		});
 
-    return redirectToPath('dashboard');
+    return redirectToPath('dashboard/');
 }
 ---
 
-<Dashboard title='Edit Home/Index Page'>
+<Dashboard title='Edit About Page'>
     <div>
         <p class="font-small">
         Currently logged in as: <bold>{getUserName}</bold> 
@@ -83,7 +87,7 @@ if (Astro.request.method === 'POST') {
                 type="text" 
                 id="slug" 
                 name="slug" 
-                placeholder="your-Page-slug"
+                placeholder="your-page-slug"
                 value={post.slug}
                 disabled
                 required><br>
@@ -92,7 +96,7 @@ if (Astro.request.method === 'POST') {
                 type="text" 
                 id="description" 
                 name="description" 
-                placeholder="Your Page's basic description"
+                placeholder="Your page's basic description"
                 value={post.description}
                 required><br>
             <label for="hero-image">Hero Image</label><br>
@@ -101,7 +105,7 @@ if (Astro.request.method === 'POST') {
                 type="text" 
                 id="hero-image" 
                 name="hero-image" 
-                placeholder="Your Page's hero image URL"
+                placeholder="Your pages's hero image URL"
                 value={post.heroImage}
                 required><br>
             <label for="content">Content</label><br>
@@ -125,19 +129,24 @@ if (Astro.request.method === 'POST') {
 </Dashboard>
 
 <script>
-    import { markdown } from "../../../utils/marked";
-    import Config from 'virtual:astro-studio-cms:config';
-    import { renderMarkDoc } from '../../../utils/markdoc';
+    import Config from 'virtual:studiocms/config';
+    import { renderMarked } from "../../utils/marked";
+    import { renderMarkDoc } from '../../utils/markdoc';
     
+            //@ts-ignore
             document.getElementById('content').addEventListener('input', async function () {
                 const markdownContent = document.getElementById('content');
                 const htmlPreview = document.getElementById('html-preview');
     
                 if (Config.contentRenderer === 'marked' ) {
-                    const htmlContent = await markdown(markdownContent.value);
+                    //@ts-ignore
+                    const htmlContent = await renderMarked(markdownContent.value);
+                    //@ts-ignore
                     htmlPreview.innerHTML = htmlContent;
                 } else if (Config.contentRenderer === 'markdoc') {
+                    //@ts-ignore
                     const htmlContent = await renderMarkDoc(markdownContent.value);
+                    //@ts-ignore
                     htmlPreview.innerHTML = htmlContent;
                 }
             });

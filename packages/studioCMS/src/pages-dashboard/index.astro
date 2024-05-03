@@ -1,9 +1,14 @@
 ---
-import Dashboard from '../../layouts/Dashboard.astro';
-import { rankCheck } from '../../utils/rankcheck';
-import type { Locals } from './locals';
-import sitemap from 'sitemap-ext:config';
-sitemap(false); // opt-out
+import Dashboard from '../layouts/Dashboard.astro';
+import { rankCheck } from '../utils/rankcheck';
+import type { Locals } from '../schemas/locals';
+import Config from 'virtual:studiocms/config';
+
+if (Config.includedIntegrations.useInoxSitemap) {
+    import('sitemap-ext:config').then((sitemap) => {
+        sitemap.default(false)
+    })
+}
 
 const locals = Astro.locals as Locals;
 

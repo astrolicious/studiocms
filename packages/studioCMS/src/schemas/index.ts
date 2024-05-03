@@ -44,6 +44,19 @@ export const optionsSchema = z
 		 */
 		includedIntegrations: includedIntegrationsSchema,
 		/**
+		 * Date Locale used for formatting dates
+		 */
+		dateLocale: z.string().optional().default('en-us'),
+		/**
+		 * Component Overrides - Allows for customizing the components used in StudioCMS
+		 */
+		overrides: z.object({
+			/**
+			 * Allows overriding the default content renderer
+			 */
+			RendererOverride: z.string().optional(),
+		}).optional().default({}),
+		/**
 		 * Whether to show verbose output
 		 * @default false
 		 */

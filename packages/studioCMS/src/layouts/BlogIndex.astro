@@ -1,6 +1,7 @@
 ---
 // @ts-expect-error - This is a missing type definition for the `astro:db` import since its a virtual module during Astro Runtime
-import { SiteConfig, Blog, asc, db } from 'astro:db';
+import { SiteConfig, asc, db } from 'astro:db';
+import Config from 'virtual:studiocms/config';
 import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
@@ -12,9 +13,31 @@ type Props = {
 	title: string;
 	description: string;
 	heroImage?: string;
+	posts: []
 };
 
-const { title, description, heroImage } = Astro.props;
+type BlogPost = {
+	slug: string;
+	title: string;
+	description: string;
+	heroImage: string;
+	publishedAt: Date;
+	updatedAt?: Date | null;
+}
+
+const { title, description, heroImage, posts } = Astro.props;
+
+if (Config.includedIntegrations.useInoxSitemap) {
+    import('sitemap-ext:config').then((sitemap) => {
+        sitemap.default(async ({ addToSitemap }) => {
+			addToSitemap(
+				posts.map((post: BlogPost) => ({
+					slug: post.slug,
+				}))
+			);
+		});
+    })
+}
 
 const pageDescription = `${description} - ${contextConfig.description}`;
 const pageTitle = `${title} | ${contextConfig.title}`;

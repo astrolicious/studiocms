@@ -1,7 +1,12 @@
 ---
 import Default from '../layouts/Default.astro';
-import sitemap from 'sitemap-ext:config';
-sitemap(false); // opt-out
+import Config from 'virtual:studiocms/config';
+
+if (Config.includedIntegrations.useInoxSitemap) {
+    import('sitemap-ext:config').then((sitemap) => {
+        sitemap.default(false)
+    })
+}
 ---
 <Default title='Error 404' description='Error 404 - Page Not Found'>
 	<center>
