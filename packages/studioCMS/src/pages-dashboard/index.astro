@@ -1,8 +1,8 @@
 ---
 import Dashboard from '../layouts/Dashboard.astro';
-import { rankCheck } from '../utils/rankcheck';
 import type { Locals } from '../schemas/locals';
 import Config from 'virtual:studiocms/config';
+import authHelper from '../utils/authhelper';
 
 if (Config.includedIntegrations.useInoxSitemap) {
     import('sitemap-ext:config').then((sitemap) => {
@@ -11,38 +11,35 @@ if (Config.includedIntegrations.useInoxSitemap) {
 }
 
 const locals = Astro.locals as Locals;
+const { permissionLevel, name } = await authHelper(locals);
 
 function redirectToPath(path: string) {
 	return Astro.redirect(import.meta.env.BASE_URL + path);
 }
 
-const currentUserRank = await rankCheck(locals);
-
 // If the user is not logged in, redirect to the login page
-if ( currentUserRank === "unknown" ) {
+if ( permissionLevel === "unknown" ) {
     console.log('User is not logged in. Redirecting to login page.');
     return redirectToPath('dashboard/login');
 }
-if ( currentUserRank !== 'admin' && currentUserRank !== 'editor' ) {
+if ( permissionLevel !== 'admin' && permissionLevel !== 'editor' ) {
     console.log('User is not an admin or editor. Redirecting to profile page.');
     return redirectToPath('dashboard/profile');
 }
-
-const getUserName = locals.dbUser.name ? locals.dbUser.name : locals.user.username;
 ---
 
 <Dashboard title='Dashboard' hideDashboardButton={true}>
         <p class="font-small">
-            Currently logged in user: <bold>{getUserName}</bold> | <a href={`/dashboard/profile`}>More info...</a>
+            Currently logged in user: <bold>{name}</bold> | <a href={`/dashboard/profile`}>More info...</a>
         </p>
 
-        { currentUserRank === "editor" ? (
+        { permissionLevel === "editor" ? (
             <a href={`/dashboard/new-post`}><button class="btn">Create a new post</button></a>
 
             <a href={`/dashboard/post-list`}><button class="btn-edit">Edit Posts</button></a>
         ) : ""}
 
-        { currentUserRank === "admin" ? (
+        { permissionLevel === "admin" ? (
             <a href={`/dashboard/new-post`}><button class="btn">Create a new post</button></a>
 
             <a href={`/dashboard/post-list`}><button class="btn-edit">Edit Posts</button></a>

@@ -1,7 +1,6 @@
 ---
 import Dashboard from '../layouts/Dashboard.astro';
-import { lucia } from '../lib/auth';
-import { rankCheck } from '../utils/rankcheck';
+import authHelper from '../utils/authhelper';
 import type { Locals } from '../schemas/locals';
 import Config from 'virtual:studiocms/config';
 
@@ -12,33 +11,38 @@ if (Config.includedIntegrations.useInoxSitemap) {
 }
 
 const locals = Astro.locals as Locals;
-const currentUserRank = await rankCheck(locals);
-const sessions = await lucia.getUserSessions(locals.dbUser.id);
+
+const { 
+    name, 
+    username, 
+    avatar, 
+    githubURL, 
+    permissionLevel, 
+    currentUserSession 
+} = await authHelper(locals);
 
 function redirectToPath(path: string) {
 	return Astro.redirect(import.meta.env.BASE_URL + path);
 }
 
-const getUserName = locals.dbUser.name ? locals.dbUser.name : locals.user.username;
-
 // If the user is not logged in, redirect to the login page
-if ( currentUserRank === "unknown" ) {
+if ( permissionLevel === "unknown" ) {
     console.log('User is not logged in. Redirecting to login page.');
     return redirectToPath('dashboard/login');
 }
 ---
 
 <Dashboard title='User Profile'>
-    <img src={locals.dbUser.avatar} alt={locals.dbUser.name} height="64px" width="64px">
-    <p><bold>{getUserName}</bold>'s Profile</p>
+    <img src={avatar} alt={name} height="64px" width="64px">
+    <p><bold>{username}</bold>'s Profile</p>
 
     <div>
 
-        <p><bold>Display Name:</bold> {locals.dbUser.name}</p>
-        <p><bold>Role:</bold> {currentUserRank.toUpperCase()}</p>
-        <p><bold>GitHub:</bold> <a href={locals.dbUser.githubURL}>{locals.user.username}</a> 
-        { sessions[0] && (
-            <p><bold>Session Expires:</bold> {new Date(sessions[0].expiresAt).toLocaleString()} </p>
+        <p><bold>Display Name:</bold> {name}</p>
+        <p><bold>Role:</bold> {permissionLevel.toUpperCase()}</p>
+        <p><bold>GitHub:</bold> <a href={githubURL}>{username}</a> 
+        { currentUserSession && (
+            <p><bold>Session Expires:</bold> {new Date(currentUserSession.expiresAt).toLocaleString()} </p>
         ) } 
         </p>
     </div>

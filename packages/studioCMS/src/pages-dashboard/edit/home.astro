@@ -2,9 +2,9 @@
 // @ts-expect-error - Some types can only be imported from the Astro runtime
 import { Admins, Pages, db, eq } from 'astro:db';
 import Dashboard from '../../layouts/Dashboard.astro';
-import { rankCheck } from '../../utils/rankcheck';
 import type { Locals } from '../../schemas/locals';
 import Config from 'virtual:studiocms/config';
+import authHelper from '../../utils/authhelper';
 
 if (Config.includedIntegrations.useInoxSitemap) {
     import('sitemap-ext:config').then((sitemap) => {
@@ -15,24 +15,21 @@ if (Config.includedIntegrations.useInoxSitemap) {
 const postArrayed = await db.select().from(Pages).where(eq(Pages.slug, 'index'));
 const post = postArrayed[0];
 const locals = Astro.locals as Locals;
+const { permissionLevel, name } = await authHelper(locals);
 
 function redirectToPath(path: string) {
 	return Astro.redirect(import.meta.env.BASE_URL + path);
 }
 
-const currentUserRank = await rankCheck(locals);
-
 // If the user is not logged in, redirect to the login page
-if ( currentUserRank === "unknown" ) {
+if ( permissionLevel === "unknown" ) {
     console.log('User is not logged in. Redirecting to login page.');
     return redirectToPath('dashboard/login');
 }
-if ( currentUserRank !== 'admin' && currentUserRank !== 'editor' ) {
+if ( permissionLevel !== 'admin' && permissionLevel !== 'editor' ) {
     console.log('User is not an admin or editor. Redirecting to profile page.');
     return redirectToPath('dashboard/profile');
 }
-
-const getUserName = locals.dbUser.name ? locals.dbUser.name : locals.user.username;
 
 if (Astro.request.method === 'POST') {
 	const formData = await new Request(Astro.request.url, {
@@ -70,7 +67,7 @@ if (Astro.request.method === 'POST') {
 <Dashboard title='Edit Home/Index Page'>
     <div>
         <p class="font-small">
-        Currently logged in as: <bold>{getUserName}</bold> 
+        Currently logged in as: <bold>{name}</bold> 
         </p>
 
         <form method="post" enctype="multipart/form-data" >
