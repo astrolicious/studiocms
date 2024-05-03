@@ -215,11 +215,11 @@ export default defineIntegration({
 							// Add Dashboard Routes
 							injectRoute({
 								pattern: 'dashboard/',
-								entrypoint: resolve('./pages/dashboard/index.astro'),
+								entrypoint: resolve('./pages-dashboard/index.astro'),
 							});
 							injectRoute({
 								pattern: 'dashboard/profile/',
-								entrypoint: resolve('./pages/dashboard/profile.astro'),
+								entrypoint: resolve('./pages-dashboard/profile.astro'),
 							});
 							injectRoute({
 								pattern: 'dashboard/new-post/',
