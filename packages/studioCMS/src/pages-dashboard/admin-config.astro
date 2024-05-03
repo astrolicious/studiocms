@@ -1,5 +1,5 @@
 ---
-// @ts-expect-error - This is a missing type definition for the `astro:db` import since its a virtual module during Astro Runtime
+// @ts-expect-error - Some types can only be imported from the Astro runtime
 import { Permissions, db, eq } from 'astro:db';
 import Dashboard from '../layouts/Dashboard.astro';
 import { rankCheck } from '../utils/rankcheck';
@@ -62,7 +62,7 @@ const adminList = await db.select().from(Permissions);
         <h4>Current Admins:</h4>
         <ul>
             {
-                adminList.map((admin: Permissions.$inferSelect) => {
+                adminList.map((admin: typeof Permissions.$inferSelect) => {
                     return (
                         <li>{admin.username} - {admin.rank}</li>
                     )

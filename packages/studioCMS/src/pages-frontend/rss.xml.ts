@@ -1,4 +1,4 @@
-// @ts-expect-error - Types are only available during runtime
+// @ts-expect-error - Some types can only be imported from the Astro runtime
 import { Blog, SiteConfig, db } from 'astro:db';
 import rss from '@astrojs/rss';
 import type { APIContext } from 'astro';

@@ -1,5 +1,5 @@
 ---
-// @ts-expect-error - This is a missing type definition for the `astro:db` import since its a virtual module during Astro Runtime
+// @ts-expect-error - Some types can only be imported from the Astro runtime
 import { Blog, asc, db, eq } from 'astro:db';
 import { FormattedDate } from 'studiocms:components'
 import Dashboard from '../layouts/Dashboard.astro';
@@ -40,7 +40,7 @@ const posts = await db.select().from(Blog).orderBy(asc(Blog.publishedAt));
         Currently logged in user: <bold>{getUserName}</bold> | <a href={"/dashboard/profile"}>More info...</a>
         </p>
 
-        { posts && posts.map((post: Blog.$inferSelect) => (
+        { posts && posts.map((post: typeof Blog.$inferSelect) => (
             <div>
                 <p>
                     <bold>{post.title}</bold> - <FormattedDate date={post.publishedAt} />
