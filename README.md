@@ -71,6 +71,7 @@ Steps to get a running playground should be the following:
 
   Commands to run:
 
+  - `pnpm playground:all` - Runs all the commands below in order
   - `pnpm playground:login` - Login your CLI to Astro Studio
   - `pnpm playground:link` - Link to Astro Studio and Create a new DB for your CMS Installation
   - `pnpm playground:push` - Creates the base tables on the remote database.
