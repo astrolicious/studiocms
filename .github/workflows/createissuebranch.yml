@@ -8,6 +8,10 @@ on:
   pull_request:
     types: [ opened, closed ]
 
+permissions:
+  issues: write
+  pull-requests: write
+
 jobs:
   create_issue_branch_job:
     runs-on: ubuntu-latest
