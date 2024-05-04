@@ -74,6 +74,7 @@ if (Astro.request.method === 'POST') {
 			.insert(Permissions)
 			.values({
 				username: admin as string,
+                rank: 'admin',
 			})
 			.then(() => {
 				return new Response('Success', { status: 200 });
