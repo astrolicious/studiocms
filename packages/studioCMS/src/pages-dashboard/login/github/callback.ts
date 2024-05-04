@@ -2,7 +2,8 @@
 import { User, db, eq } from 'astro:db';
 import { GitHub, OAuth2RequestError } from 'arctic';
 import type { APIContext } from 'astro';
-import { lucia } from '../../../lib/auth';
+// import { lucia } from '../../../lib/auth';
+import { lucia } from "studiocms-dashboard:auth";
 
 export async function GET(context: APIContext): Promise<Response> {
 	const {

@@ -3,7 +3,7 @@ import { db } from 'astro:db';
 import { asDrizzleTable } from '@astrojs/db/utils';
 import { DrizzleSQLiteAdapter } from '@lucia-auth/adapter-drizzle';
 import { Lucia, TimeSpan } from 'lucia';
-import { Session, User } from '../db/tables';
+import { Session, User } from '../../../db/tables';
 
 const typeSafeSession = asDrizzleTable('Session', Session);
 const typeSafeUser = asDrizzleTable('User', User);

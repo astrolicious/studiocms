@@ -8,33 +8,13 @@ import {
 } from 'astro-integration-kit';
 import 'astro-integration-kit/types/db';
 import { AstroError } from 'astro/errors';
-import { loadEnv } from 'vite';
 import { integrationLogger } from './utils';
 import { optionsSchema } from './schemas';
 import inoxsitemap from '@inox-tools/sitemap-ext';
 import studioCMSRobotsTXT from './integrations/robotstxt';
 import studioCMSImageHandler from './integrations/imageHandler';
+import studioCMSDashboard from './integrations/studioCMSDashboard';
 import { fileFactory } from './utils/fileFactory';
-
-// Environment Variables
-const env = loadEnv('all', process.cwd(), 'CMS');
-
-const AUTHKEYS = {
-	GITHUBCLIENTID: {
-		N: 'CMS_GITHUB_CLIENT_ID',
-		KEY:
-			env.CMS_GITHUB_CLIENT_ID ||
-			import.meta.env.CMS_GITHUB_CLIENT_ID ||
-			process.env.CMS_GITHUB_CLIENT_ID,
-	},
-	GITHUBCLIENTSECRET: {
-		N: 'CMS_GITHUB_CLIENT_SECRET',
-		KEY:
-			env.CMS_GITHUB_CLIENT_SECRET ||
-			import.meta.env.CMS_GITHUB_CLIENT_SECRET ||
-			process.env.CMS_GITHUB_CLIENT_SECRET,
-	}
-};
 
 // Main Integration
 export default defineIntegration({
@@ -57,10 +37,8 @@ export default defineIntegration({
 
 					// Destructure Params
 					const {
-						addMiddleware,
 						injectRoute,
 						logger,
-						command,
 						config: { output, site, root },
 					} = params;
 
@@ -213,22 +191,7 @@ export default defineIntegration({
 								'Authentication Disabled. The ENTIRE Internal dashboard for the Astro Studio CMS is disabled. This means you will need to manage your content via the Astro Studio Dashboard at http://studio.astro.build'
 							);
 						} else if (authMode) {
-							if (command === 'build') {
-								// Check for Authenication Environment Variables
-								if (!AUTHKEYS.GITHUBCLIENTID.KEY) {
-									integrationLogger(logger, verbose, 'error', `In order to use the Built-in Github Authentication, you must set the ${AUTHKEYS.GITHUBCLIENTID.N} environment variable.`);
-								}
-								if (!AUTHKEYS.GITHUBCLIENTSECRET.KEY) {
-									integrationLogger(logger, verbose, 'error', `In order to use the Built-in Github Authentication, you must set the ${AUTHKEYS.GITHUBCLIENTSECRET.N} environment variable.`);
-								}
-							}
 
-							// Add Authentication Middleware
-							integrationLogger(logger, verbose, 'info', 'Adding Authentication Middleware');
-							addMiddleware({
-								entrypoint: resolve('./middleware/index.ts'),
-								order: 'pre',
-							});
 							// Add Dashboard Routes
 							injectRoute({
 								pattern: 'dashboard/',
@@ -289,6 +252,11 @@ export default defineIntegration({
 						}
 					}
 
+					// Add Dashboard Integration
+					addIntegration(params, {
+						integration: studioCMSDashboard(options)
+					})
+
 					// Add Image Service Handler Integration
 					addIntegration(params, { 
 						integration: studioCMSImageHandler({ ImageServiceConfig, verbose })
@@ -304,7 +272,7 @@ export default defineIntegration({
 								logger,
 								verbose,
 								'info',
-								'No known robotstxt integration found. Adding `astro-robots` integration'
+								'No known robotstxt integration found. Adding `studioCMS:RobotsTXT` integration'
 							);
 							addIntegration(params, {
 								integration: studioCMSRobotsTXT({
@@ -336,7 +304,7 @@ export default defineIntegration({
 						}
 					}
 
-					integrationLogger(logger, verbose, 'info', 'Astro Studio CMS Setup Complete!');
+					integrationLogger(logger, verbose, 'info', 'StudioCMS Core Setup Complete.');
 				},
 				'astro:server:start': ({ logger }) => {
 

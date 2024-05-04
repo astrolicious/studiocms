@@ -15,6 +15,10 @@ declare module 'studiocms:helpers' {
 	export type Locals = import('./src/schemas/locals').Locals;
 }
 
+declare module 'studiocms-dashboard:auth' {
+	export const lucia: typeof import('./src/integrations/studioCMSDashboard/lib/auth').lucia;
+}
+
 interface ImportMetaEnv {
 	readonly CMS_GITHUB_CLIENT_ID: string;
 	readonly CMS_GITHUB_CLIENT_SECRET: string;
