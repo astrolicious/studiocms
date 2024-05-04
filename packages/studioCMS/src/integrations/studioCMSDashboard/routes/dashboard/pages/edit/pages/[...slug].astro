@@ -1,6 +1,6 @@
 ---
 // @ts-expect-error - Some types can only be imported from the Astro runtime
-import { Blog, SiteConfig, db, eq } from 'astro:db';
+import { Pages, SiteConfig, db, eq } from 'astro:db';
 import BaseLayout from "../../../layouts/Layout.astro";
 import Config from 'virtual:studiocms/config';
 import { authHelper, type Locals } from 'studiocms:helpers';
@@ -20,11 +20,11 @@ function redirectToPath(path: string) {
 const { slug } = Astro.params;
 
 const ConfigArray = await db.select().from(SiteConfig);
-const postArrayed = await db.select().from(Blog).where(eq(Blog.slug, slug));
+const pageArrayed = await db.select().from(Pages).where(eq(Pages.slug, slug));
 
-const post = postArrayed[0];
+const page = pageArrayed[0];
 
-if (!slug || !post) {
+if (!slug || !page) {
 	return redirectToPath('dashboard/');
 }
 
@@ -61,15 +61,15 @@ if (Astro.request.method === 'POST') {
 	const content = formData.get('content');
 
 	await db
-		.update(Blog)
+		.update(Pages)
 		.set({
 			title: title as string,
-			slug: post.slug,
+			slug: page.slug,
 			description: description as string,
 			heroImage: heroImage as string,
 			content: content as string,
 		})
-		.where(eq(Blog.slug, post.slug))
+		.where(eq(Pages.slug, page.slug))
 		.then(() => {
 			return new Response('Post updated', { status: 200 });
 		})
@@ -80,37 +80,37 @@ if (Astro.request.method === 'POST') {
     return redirectToPath('dashboard/');
 }
 
-const pageTitle = `Edit Post | ${contextConfig.title}`;
+const pageTitle = `Edit Page | ${contextConfig.title}`;
 ---
 
 <BaseLayout 
-    sideBarActiveItemID="edit-posts" 
+    sideBarActiveItemID="edit-pages" 
     title={pageTitle}
     description={contextConfig.description} >
     <div class="pb-12 mt-5">
 
-        <div class="text-5xl font-bold">Edit Post: {post.title}</div>
+        <div class="text-5xl font-bold">Edit Page: {page.title}</div>
 
         <div class="py-2">
 
             <center>
 
                 <form method="post" enctype="multipart/form-data" class="w-full">
-                    <label for="title" class="text-lg">Post Title</label><br>
+                    <label for="title" class="text-lg">Page Title</label><br>
                     <input 
                         type="text" 
                         id="title" 
                         name="title" 
                         class="border-solid border-2 border-gray-300 rounded-lg p-2 w-96"
                         placeholder="Your Post Title" 
-                        value={post.title}
+                        value={page.title}
                         required><br>
                     <label for="slug" class="text-lg">Slug</label><br>
                     <input 
                         type="text" 
                         id="slug" 
                         name="slug" 
-                        value={post.slug}
+                        value={page.slug}
                         disabled
                         class="border-solid border-2 border-gray-300 rounded-lg p-2 w-96"
                         placeholder="your-post-slug"
@@ -122,7 +122,7 @@ const pageTitle = `Edit Post | ${contextConfig.title}`;
                         name="description" 
                         class="border-solid border-2 border-gray-300 rounded-lg p-2 w-96"
                         placeholder="Your post's basic description"
-                        value={post.description}
+                        value={page.description}
                         required><br>
                     <label for="hero-image" class="text-lg">Hero Image</label><br>
                     <p class="text-sm">To use images stored in your public/ folder use the following example: <pre>/my-image.png</pre></p><br>
@@ -130,7 +130,7 @@ const pageTitle = `Edit Post | ${contextConfig.title}`;
                         type="text" 
                         id="hero-image" 
                         name="hero-image" 
-                        value={post.heroImage}
+                        value={page.heroImage}
                         class="border-solid border-2 border-gray-300 rounded-lg p-2 w-96"
                         placeholder="Your post's hero image URL"
                         value="https://images.unsplash.com/photo-1707345512638-997d31a10eaa?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
@@ -144,7 +144,7 @@ const pageTitle = `Edit Post | ${contextConfig.title}`;
                             data-provide="markdown" 
                             rows="10" 
                             placeholder="Your post's content in markdown format."
-                            required>{post.content}</textarea>
+                            required>{page.content}</textarea>
                     </div><br>
         
                     <button class="btn btn-outline ml-5 py-2" type="submit">Update Post!</button><br><br>

@@ -1,6 +1,6 @@
 ---
 // @ts-expect-error - Some types can only be imported from the Astro runtime
-import { Blog, SiteConfig, db, eq } from 'astro:db';
+import { Pages, SiteConfig, db, eq } from 'astro:db';
 import BaseLayout from "../../../layouts/Layout.astro";
 import Config from 'virtual:studiocms/config';
 import { authHelper, type Locals } from 'studiocms:helpers';
@@ -20,11 +20,11 @@ function redirectToPath(path: string) {
 const { slug } = Astro.params;
 
 const ConfigArray = await db.select().from(SiteConfig);
-const postArrayed = await db.select().from(Blog).where(eq(Blog.slug, slug));
+const pageArrayed = await db.select().from(Pages).where(eq(Pages.slug, slug));
 
-const post = postArrayed[0];
+const page = pageArrayed[0];
 
-if (!slug || !post) {
+if (!slug || !page) {
 	return redirectToPath('dashboard/');
 }
 
@@ -57,34 +57,37 @@ if (Astro.request.method === 'POST') {
 
 	const slug = formData.get('slug');
 
-	if (slug === post.slug) {
+	if (slug === page.slug) {
+        if ( slug === "index" || slug === "about" ) {
+            return new Response('Error: Cannot delete the index or about page.', { status: 500 })
+        }
 		await db
-			.delete(Blog)
-			.where(eq(Blog.slug, post.slug))
+			.delete(Pages)
+			.where(eq(Pages.slug, page.slug))
 			.then(() => {
-				return new Response('Post deleted', { status: 200 });
+				return new Response('Page deleted', { status: 200 });
 			})
 			.catch(() => {
-				return new Response('Error deleting post', { status: 500 });
+				return new Response('Error deleting page', { status: 500 });
 			});
 
         return redirectToPath('dashboard/');
 	}
 }
 
-const pageTitle = `Delete Post | ${contextConfig.title}`;
+const pageTitle = `Delete Page | ${contextConfig.title}`;
 ---
 <BaseLayout 
-    sideBarActiveItemID="edit-posts" 
+    sideBarActiveItemID="edit-pages" 
     title={pageTitle}
     description={contextConfig.description} >
     <div class="pb-12 mt-5">
 
-        <div class="text-5xl font-bold">Delete Post: {post.title}</div>
+        <div class="text-5xl font-bold">Delete Page: {page.title}</div>
 
         <div class="py-2">
             <text class="text-lg">
-                Slug: {post.slug}
+                Slug: {page.slug}
             </text>
         </div>
 
