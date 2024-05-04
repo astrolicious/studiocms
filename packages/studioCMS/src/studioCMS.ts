@@ -15,6 +15,7 @@ import studioCMSRobotsTXT from './integrations/robotstxt';
 import studioCMSImageHandler from './integrations/imageHandler';
 import studioCMSDashboard from './integrations/studioCMSDashboard';
 import { fileFactory } from './utils/fileFactory';
+import { DbErrors } from './strings';
 
 // Main Integration
 export default defineIntegration({
@@ -62,17 +63,13 @@ export default defineIntegration({
 
 					// Check for SSR Mode
 					if (output !== 'server') {
-						throw new AstroError("Astro Studio CMS is only supported in 'Output: server' SSR mode.");
+						throw new AstroError(DbErrors.AstroConfigOutput);
 					}
 
 					// Check for Site URL
 					if (!site) {
-						throw new AstroError(
-							"Astro Studio CMS requires a 'site' configuration in your Astro Config. This can be your domain ( 'https://example.com' ) or localhost ( 'http://localhost:4321' - localhost should only be used during development and should not be used in production)."
-						);
+						throw new AstroError(DbErrors.AstroConfigSiteURL);
 					}
-
-					// Setup Virtual Components
 
 					// Create Resolver for User-Defined Virtual Imports
 					const { resolve: rootResolve } = createResolver(root.pathname)
@@ -300,7 +297,9 @@ export default defineIntegration({
 								'info',
 								'No known sitemap integration found. Adding `@inox-tools/sitemap-ext` integration'
 							);
-							addIntegration(params, { integration: inoxsitemap() });
+							addIntegration(params, { 
+								integration: inoxsitemap() 
+							});
 						}
 					}
 
@@ -314,7 +313,7 @@ export default defineIntegration({
 							logger,
 							true,
 							'warn',
-							'Astro Studio CMS is running in Development Mode. To get started, visit http://localhost:4321/start in your browser to initialize your database. And Setup your installation.'
+							DbErrors.DbStartPage
 						);
 					}
 				},

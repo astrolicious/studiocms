@@ -37,8 +37,36 @@ export const optionsSchema = z
 		imageService: imageServiceSchema,
 		/**
 		 * Allows customization of the Authentication Configuration
+		 * 
+		 * to be removed.
 		 */
 		authConfig: authConfigSchema,
+		/**
+		 * Allows customization of the Dashboard Configuration
+		 * 
+		 * Coming soon....
+		 */
+		dashboardConfig: z.object({
+			/**
+			 * OPTIONAL - This allows the user to enable or disable the Astro Studio CMS Dashboard but still provide all the helper's and utilities to those who are customizing their setup, doing so will disable the dashboard and you will need to manage your content via the Astro Studio Dashboard at http://studio.astro.build
+			 * 
+			 * @default true
+			 */
+			dashboardEnabled: z.boolean().optional().default(true),
+			/**
+			 * Developer Options/Configuration
+			 */
+			developerConfig: z.object({
+				/**
+				 * Enable Testing and Demo Mode
+				 * 
+				 * This will enable the testing and demo mode for the Astro Studio CMS Dashboard, this will allow you to test the dashboard without having to authenticate. This is useful for testing and demo purposes as it will allow you to see how the dashboard works and looks but disable any changes to the database.
+				 * 
+				 * @default false
+				 */
+				testingAndDemoMode: z.boolean().optional().default(false),
+			})
+		}).optional().default({}),
 		/**
 		 * Allows enabling and disabling of the included integrations
 		 */
@@ -52,7 +80,11 @@ export const optionsSchema = z
 		 */
 		overrides: z.object({
 			/**
-			 * Allows overriding the default content renderer
+			 * Allows overriding the default content renderer component used in StudioCMS for rendering markdown content
+			 * 
+			 * *Tip: This is relative to the project root*
+			 * 
+			 * @example './src/components/MyCustomRenderer.astro'
 			 */
 			RendererOverride: z.string().optional(),
 		}).optional().default({}),
