@@ -158,6 +158,18 @@ export default defineIntegration({
 							pattern: 'dashboard/new/post/',
 							entrypoint: resolve('./routes/dashboard/pages/new/post.astro')
 						})
+						injectRoute({
+							pattern: 'dashboard/post-list/',
+							entrypoint: resolve('./routes/dashboard/pages/post-list.astro')
+						})
+						injectRoute({
+							pattern: 'dashboard/edit/posts/[...slug]',
+							entrypoint: resolve('./routes/dashboard/pages/edit/posts/[...slug].astro')
+						})
+						injectRoute({
+							pattern: 'dashboard/delete/posts/[...slug]',
+							entrypoint: resolve('./routes/dashboard/pages/delete/posts/[...slug].astro')
+						})
 
 						// Setup The Dashboard Authentication
 						if ( AuthConfig.enabled ) {

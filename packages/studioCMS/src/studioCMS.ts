@@ -180,10 +180,10 @@ export default defineIntegration({
 							// 	pattern: 'dashboard/new-post/',
 							// 	entrypoint: resolve('./pages-dashboard/new-post.astro'),
 							// });
-							injectRoute({
-								pattern: 'dashboard/post-list/',
-								entrypoint: resolve('./pages-dashboard/post-list.astro'),
-							});
+							// injectRoute({
+							// 	pattern: 'dashboard/post-list/',
+							// 	entrypoint: resolve('./pages-dashboard/post-list.astro'),
+							// });
 							// injectRoute({
 							// 	pattern: 'dashboard/site-config/',
 							// 	entrypoint: resolve('./pages-dashboard/site-config.astro'),
@@ -200,14 +200,14 @@ export default defineIntegration({
 								pattern: 'dashboard/edit/about/',
 								entrypoint: resolve('./pages-dashboard/edit/about.astro'),
 							});
-							injectRoute({
-								pattern: 'dashboard/edit/[...slug]',
-								entrypoint: resolve('./pages-dashboard/edit/[...slug].astro'),
-							});
-							injectRoute({
-								pattern: 'dashboard/delete/[...slug]',
-								entrypoint: resolve('./pages-dashboard/delete/[...slug].astro'),
-							});
+							// injectRoute({
+							// 	pattern: 'dashboard/edit/[...slug]',
+							// 	entrypoint: resolve('./pages-dashboard/edit/[...slug].astro'),
+							// });
+							// injectRoute({
+							// 	pattern: 'dashboard/delete/[...slug]',
+							// 	entrypoint: resolve('./pages-dashboard/delete/[...slug].astro'),
+							// });
 						}
 					}
 
