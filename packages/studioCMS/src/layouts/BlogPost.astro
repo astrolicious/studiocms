@@ -1,24 +1,27 @@
 ---
-// @ts-expect-error - This is a missing type definition for the `astro:db` import since its a virtual module during Astro Runtime
+// @ts-expect-error - Some types can only be imported from the Astro runtime
 import { SiteConfig, db } from 'astro:db';
 import BaseHead from '../components/BaseHead.astro';
-import CImage from '../components/CImage.astro';
+import { CImage, FormattedDate } from 'studiocms:components';
 import Footer from '../components/Footer.astro';
-import FormattedDate from '../components/FormattedDate.astro';
 import Header from '../components/Header.astro';
 
 const ConfigArray = await db.select().from(SiteConfig);
 const contextConfig = ConfigArray.pop();
 
 type Props = {
-	title: string;
-	description: string;
-	heroImage: string;
-	publishedAt: Date;
-	updatedAt?: Date | null;
+	post: {
+		title: string;
+		description: string;
+		heroImage: string;
+		publishedAt: Date;
+		updatedAt?: Date | null;
+	}
 };
 
-const { title, description, publishedAt, updatedAt, heroImage } = Astro.props;
+const { post } = Astro.props;
+const { title, description, publishedAt, updatedAt, heroImage } = post;
+
 ---
 
 <html lang="en">

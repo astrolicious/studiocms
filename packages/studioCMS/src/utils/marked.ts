@@ -1,4 +1,4 @@
-import Config from 'virtual:astro-studio-cms:config';
+import Config from 'virtual:studiocms/config';
 import { type MarkedExtension, marked } from 'marked';
 import markedAlert from 'marked-alert';
 import { markedEmoji } from 'marked-emoji';
@@ -48,7 +48,7 @@ export const emojiMap = Object.entries(emojiList).reduce(
 	{} as Record<string, string>
 );
 
-export async function markdown(input: string): Promise<string> {
+export async function renderMarked(input: string): Promise<string> {
 	const customMarkedExtList: MarkedExtension[] = [];
 
 	// MarkedAlert Extension

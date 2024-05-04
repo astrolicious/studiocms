@@ -1,0 +1,146 @@
+---
+import Dashboard from '../layouts/Dashboard.astro';
+import type { Locals } from '../schemas/locals';
+import Config from 'virtual:studiocms/config';
+import authHelper from '../utils/authhelper';
+
+if (Config.includedIntegrations.useInoxSitemap) {
+    import('sitemap-ext:config').then((sitemap) => {
+        sitemap.default(false)
+    })
+}
+
+const locals = Astro.locals as Locals;
+const { permissionLevel, name } = await authHelper(locals);
+
+function redirectToPath(path: string) {
+	return Astro.redirect(import.meta.env.BASE_URL + path);
+}
+
+// If the user is not logged in, redirect to the login page
+if ( permissionLevel === "unknown" ) {
+    console.log('User is not logged in. Redirecting to login page.');
+    return redirectToPath('dashboard/login');
+}
+if ( permissionLevel !== 'admin' && permissionLevel !== 'editor' ) {
+    console.log('User is not an admin or editor. Redirecting to profile page.');
+    return redirectToPath('dashboard/profile');
+}
+---
+
+<Dashboard title='Dashboard' hideDashboardButton={true}>
+        <p class="font-small">
+            Currently logged in user: <bold>{name}</bold> | <a href={`/dashboard/profile`}>More info...</a>
+        </p>
+
+        { permissionLevel === "editor" ? (
+            <a href={`/dashboard/new-post`}><button class="btn">Create a new post</button></a>
+
+            <a href={`/dashboard/post-list`}><button class="btn-edit">Edit Posts</button></a>
+        ) : ""}
+
+        { permissionLevel === "admin" ? (
+            <a href={`/dashboard/new-post`}><button class="btn">Create a new post</button></a>
+
+            <a href={`/dashboard/post-list`}><button class="btn-edit">Edit Posts</button></a>
+
+            <a href={`/dashboard/edit/home`}><button class="btn-edit">Edit Home Page</button></a>
+            
+            <a href={`/dashboard/edit/about`}><button class="btn-edit">Edit About Page</button></a>
+            
+            <a href={`/dashboard/site-config`}><button class="btn-edit">Edit Site Configuration</button></a>
+            
+            <a href={`/dashboard/admin-config`}><button class="btn-edit">Edit Admins</button></a>
+        ) : ""}
+</Dashboard>
+
+<style>
+    .dash {
+        padding: 2rem;
+        border: 2px solid #ccc;
+        border-radius: 5rem;
+        background-color: #fff;
+        margin: 2rem;
+        
+    }
+    bold {
+        font-weight: bold;
+    }
+    .font-small {
+        font-size: 1rem;
+    }
+    .dash-header {
+        display: flex;
+        justify-content: space-between;
+    }
+    .right {
+        display: flex;
+        justify-content: flex-end;
+        padding-right: 4rem;
+    }
+    .left {
+        display: flex;
+        justify-content: flex-start;
+        padding-left: 4rem;
+    }
+    button {
+        padding: 1rem;
+        background-color: rgb(202, 0, 0);
+        font-weight: bold;
+        color: #fff;
+        border: none;
+        border-radius: 99rem;
+        cursor: pointer;
+    }
+    .btn {
+        padding: 1rem;
+        background-color: rgb(0, 37, 202);
+        font-weight: bold;
+        color: #fff;
+        border: none;
+        border-radius: 99rem;
+        cursor: pointer;
+    }
+    input {
+        background-color: #f4f4f4;
+        border-radius: 10px;
+        padding: 0.25rem;
+        border: rgb(124, 124, 124) 1px solid;
+        width: 35vmax;
+    }
+    textarea {
+        background-color: #f4f4f4;
+        border-radius: 10px;
+        padding: 0.25rem;
+        border: rgb(124, 124, 124) 1px solid;
+        width: 100%;
+    }
+    label {
+        font-size: large;
+        font-weight: bold;
+    }
+    .info-text {
+        font-size: small;
+        display: inline;
+        font-style: italic;
+    }
+    info {
+        font-size: small;
+        display: inline;
+        font-style: italic;
+    }
+    .btn-edit {
+        padding: 1rem;
+        background-color: rgb(169, 0, 211);
+        font-weight: bold;
+        color: #fff;
+        border: none;
+        border-radius: 99rem;
+        cursor: pointer;
+    }
+    form {
+        display: flex;
+        justify-content: flex-end;
+        padding-right: 4rem;
+    }
+</style>

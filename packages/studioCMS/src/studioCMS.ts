@@ -1,4 +1,5 @@
 import {
+	addDts,
 	addIntegration,
 	addVirtualImports,
 	createResolver,
@@ -13,6 +14,7 @@ import { optionsSchema } from './schemas';
 import inoxsitemap from '@inox-tools/sitemap-ext';
 import studioCMSRobotsTXT from './integrations/robotstxt';
 import studioCMSImageHandler from './integrations/imageHandler';
+import { fileFactory } from './utils/fileFactory';
 
 // Environment Variables
 const env = loadEnv('all', process.cwd(), 'CMS');
@@ -59,13 +61,14 @@ export default defineIntegration({
 						injectRoute,
 						logger,
 						command,
-						config: { base, output, site },
+						config: { output, site, root },
 					} = params;
 
 					// Destructure Options
 					const {
 						verbose,
 						dbStartPage,
+						imageService: ImageServiceConfig,
 						authConfig: { 
 							mode: authMode 
 						},
@@ -74,7 +77,9 @@ export default defineIntegration({
 							astroRobotsConfig,
 							useInoxSitemap
 						},
-						imageService: ImageServiceConfig
+						overrides: {
+							RendererOverride
+						}
 					} = options;
 
 					// Check for SSR Mode
@@ -89,13 +94,55 @@ export default defineIntegration({
 						);
 					}
 
+					// Setup Virtual Components
+
+					// Create Resolver for User-Defined Virtual Imports
+					const { resolve: rootResolve } = createResolver(root.pathname)
+
+					// Renderer Override Path
+					let RendererComponentPath: string;
+					if (RendererOverride) { 
+						RendererComponentPath = rootResolve(RendererOverride) 
+					} else { 
+						RendererComponentPath = resolve('./components/exports/StudioCMSRenderer.astro') 
+					}
+
+					// Virtual Resolver
+					const virtResolver = {
+						CImage: resolve('./components/exports/CImage.astro'),
+						FormattedDate: resolve('./components/exports/FormattedDate.astro'),
+						StudioCMSRenderer: RendererComponentPath,
+					};
+
+					// Virtual Components
+					const virtualComponentMap = `
+					export { default as CImage } from '${virtResolver.CImage}';
+					export { default as FormattedDate } from '${virtResolver.FormattedDate}';
+					export { default as StudioCMSRenderer } from '${virtResolver.StudioCMSRenderer}';`;
+
 					// Add Virtual Imports
 					integrationLogger(logger, verbose, 'info', 'Adding Virtual Imports...');
 					addVirtualImports(params, {
 						name,
 						imports: {
-							'virtual:astro-studio-cms:config': `export default ${JSON.stringify(options)}`,
+							'virtual:studiocms/config': `export default ${JSON.stringify(options)}`,
+							'studiocms:components': virtualComponentMap,
 						},
+					});
+
+					// Create Virtual DTS File
+					const studioCMSDTS = fileFactory();
+
+					studioCMSDTS.addLines(`declare module 'studiocms:components' {
+						export const CImage: typeof import('${virtResolver.CImage}').default;
+						export const FormattedDate: typeof import('${virtResolver.FormattedDate}').default;
+						export const StudioCMSRenderer: typeof import('${virtResolver.StudioCMSRenderer}').default;
+					}`);
+
+					// Add Virtual DTS File
+					addDts(params, {
+						name,
+						content: studioCMSDTS.text(),
 					});
 
 					// dbStartPage - Choose whether to run the Start Page or Inject the Integration
@@ -107,39 +154,39 @@ export default defineIntegration({
 							'Start Page Enabled.  This will be the only page available until you initialize your database and disable the config option forcing this page to be displayed. To get started, visit http://localhost:4321/start/ in your browser to initialize your database. And Setup your installation.'
 						);
 						injectRoute({
-							pattern: `${base}start/`,
-							entrypoint: resolve('./pages/start.astro'),
+							pattern: 'start/',
+							entrypoint: resolve('./pages-setup/start.astro'),
 						});
 						injectRoute({
-							pattern: `${base}done/`,
-							entrypoint: resolve('./pages/done.astro'),
+							pattern: 'done/',
+							entrypoint: resolve('./pages-setup/done.astro'),
 						});
 					} else {
 						// If dbStartPage is disabled, inject the routes to allow the CMS to function
 						integrationLogger(logger, verbose, 'info', 'Adding Page Routes...');
 						injectRoute({
-							pattern: base,
-							entrypoint: resolve('./pages/index.astro'),
+							pattern: "/",
+							entrypoint: resolve('./pages-frontend/index.astro'),
 						});
 						injectRoute({
 							pattern: '404',
-							entrypoint: resolve('./pages/404.astro'),
+							entrypoint: resolve('./pages-frontend/404.astro'),
 						});
 						injectRoute({
-							pattern: `${base}about/`,
-							entrypoint: resolve('./pages/about.astro'),
+							pattern: 'about/',
+							entrypoint: resolve('./pages-frontend/about.astro'),
 						});
 						injectRoute({
-							pattern: `${base}blog/`,
-							entrypoint: resolve('./pages/blog/index.astro'),
+							pattern: 'blog/',
+							entrypoint: resolve('./pages-frontend/blog/index.astro'),
 						});
 						injectRoute({
-							pattern: `${base}blog/[slug]`,
-							entrypoint: resolve('./pages/blog/[...slug].astro'),
+							pattern: 'blog/[slug]',
+							entrypoint: resolve('./pages-frontend/blog/[...slug].astro'),
 						});
 						injectRoute({
-							pattern: `${base}rss.xml`,
-							entrypoint: resolve('./pages/rss.xml.ts'),
+							pattern: 'rss.xml',
+							entrypoint: resolve('./pages-frontend/rss.xml.ts'),
 						});
 
 						// Authentication and Dashboard Setup
@@ -170,60 +217,60 @@ export default defineIntegration({
 							});
 							// Add Dashboard Routes
 							injectRoute({
-								pattern: `${base}dashboard/`,
-								entrypoint: resolve('./pages/dashboard/index.astro'),
+								pattern: 'dashboard/',
+								entrypoint: resolve('./pages-dashboard/index.astro'),
 							});
 							injectRoute({
-								pattern: `${base}dashboard/profile/`,
-								entrypoint: resolve('./pages/dashboard/profile.astro'),
+								pattern: 'dashboard/profile/',
+								entrypoint: resolve('./pages-dashboard/profile.astro'),
 							});
 							injectRoute({
-								pattern: `${base}dashboard/new-post/`,
-								entrypoint: resolve('./pages/dashboard/new-post.astro'),
+								pattern: 'dashboard/new-post/',
+								entrypoint: resolve('./pages-dashboard/new-post.astro'),
 							});
 							injectRoute({
-								pattern: `${base}dashboard/post-list/`,
-								entrypoint: resolve('./pages/dashboard/post-list.astro'),
+								pattern: 'dashboard/post-list/',
+								entrypoint: resolve('./pages-dashboard/post-list.astro'),
 							});
 							injectRoute({
-								pattern: `${base}dashboard/site-config/`,
-								entrypoint: resolve('./pages/dashboard/site-config.astro'),
+								pattern: 'dashboard/site-config/',
+								entrypoint: resolve('./pages-dashboard/site-config.astro'),
 							});
 							injectRoute({
-								pattern: `${base}dashboard/admin-config/`,
-								entrypoint: resolve('./pages/dashboard/admin-config.astro'),
+								pattern: 'dashboard/admin-config/',
+								entrypoint: resolve('./pages-dashboard/admin-config.astro'),
 							});
 							injectRoute({
-								pattern: `${base}dashboard/login/`,
-								entrypoint: resolve('./pages/dashboard/login/index.astro'),
+								pattern: 'dashboard/login/',
+								entrypoint: resolve('./pages-dashboard/login/index.astro'),
 							});
 							injectRoute({
-								pattern: `${base}dashboard/edit/home/`,
-								entrypoint: resolve('./pages/dashboard/edit/home.astro'),
+								pattern: 'dashboard/edit/home/',
+								entrypoint: resolve('./pages-dashboard/edit/home.astro'),
 							});
 							injectRoute({
-								pattern: `${base}dashboard/edit/about/`,
-								entrypoint: resolve('./pages/dashboard/edit/about.astro'),
+								pattern: 'dashboard/edit/about/',
+								entrypoint: resolve('./pages-dashboard/edit/about.astro'),
 							});
 							injectRoute({
-								pattern: `${base}dashboard/edit/[...slug]`,
-								entrypoint: resolve('./pages/dashboard/edit/[...slug].astro'),
+								pattern: 'dashboard/edit/[...slug]',
+								entrypoint: resolve('./pages-dashboard/edit/[...slug].astro'),
 							});
 							injectRoute({
-								pattern: `${base}dashboard/delete/[...slug]`,
-								entrypoint: resolve('./pages/dashboard/delete/[...slug].astro'),
+								pattern: 'dashboard/delete/[...slug]',
+								entrypoint: resolve('./pages-dashboard/delete/[...slug].astro'),
 							});
 							injectRoute({
-								pattern: `${base}dashboard/login/github`,
-								entrypoint: resolve('./pages/dashboard/login/github/index.ts'),
+								pattern: 'dashboard/login/github',
+								entrypoint: resolve('./pages-dashboard/login/github/index.ts'),
 							});
 							injectRoute({
-								pattern: `${base}dashboard/login/github/callback`,
-								entrypoint: resolve('./pages/dashboard/login/github/callback.ts'),
+								pattern: 'dashboard/login/github/callback',
+								entrypoint: resolve('./pages-dashboard/login/github/callback.ts'),
 							});
 							injectRoute({
-								pattern: `${base}dashboard/logout`,
-								entrypoint: resolve('./pages/dashboard/logout.ts'),
+								pattern: 'dashboard/logout',
+								entrypoint: resolve('./pages-dashboard/logout.ts'),
 							});
 						} else if (authMode === 'plugin') {
 							integrationLogger(

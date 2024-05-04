@@ -1,9 +1,9 @@
 ---
-// @ts-expect-error - This is a missing type definition for the `astro:db` import since its a virtual module during Astro Runtime
+// @ts-expect-error - Some types can only be imported from the Astro runtime
 import { SiteConfig, db } from 'astro:db';
-import Config from 'virtual:astro-studio-cms:config';
+import Config from 'virtual:studiocms/config';
 import profileImg from '../assets/profile.webp';
-import type { Locals } from '../pages/dashboard/locals';
+import type { Locals } from '../schemas/locals';
 import HeaderLink from './HeaderLink.astro';
 
 const {

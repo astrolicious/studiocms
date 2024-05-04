@@ -1,0 +1,34 @@
+---
+import { Code } from 'astro:components';
+import SetupLayout from '../layouts/Setup.astro';
+import Config from 'virtual:studiocms/config';
+
+if (Config.includedIntegrations.useInoxSitemap) {
+    import('sitemap-ext:config').then((sitemap) => {
+        sitemap.default(false)
+    })
+}
+---
+<SetupLayout>
+	<center>
+		<h1>Setup Done!</h1>
+	</center>
+
+	<p>You can now stop your dev server and add the following option in your astro.config to start using StudioCMS then start back up to see your new CMS data</p>
+
+	<Code lang="diff" code={`import { defineConfig } from "astro/config";
+import astroStudioCMS from "@astrolicious/studiocms";
+import db from '@astrojs/db';
+
+// https://astro.build/config
+export default defineConfig({
+    // other config options,
+	integrations: [
+		db(),
+		astroStudioCMS({ 
++			dbStartPage: false,
+		}),
+	],
+});`}/>
+
+</SetupLayout>
