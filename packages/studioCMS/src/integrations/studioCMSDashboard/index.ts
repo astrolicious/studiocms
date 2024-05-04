@@ -1,9 +1,12 @@
-import { addDts, addVirtualImports, createResolver, defineIntegration } from "astro-integration-kit";
+import { addDts, addIntegration, addVirtualImports, createResolver, defineIntegration } from "astro-integration-kit";
 import { optionsSchema } from "../../schemas";
 import { CheckENV, integrationLogger } from "../../utils";
 import { loadEnv } from "vite";
 import { fileFactory } from "../../utils/fileFactory";
 import { DashboardStrings } from "../../strings";
+import { presetTypography, presetWind, presetUno, transformerDirectives } from "unocss";
+import UnoCSSAstroIntegration from "@unocss/astro";
+import { presetDaisy } from "@yangyang20240403/unocss-preset-daisyui";
 
 // Environment Variables
 const env = loadEnv('all', process.cwd(), 'CMS');
@@ -110,7 +113,51 @@ export default defineIntegration({
 						// Log that the Dashboard is enabled
 						integrationLogger(logger, verbose, 'info', 'Dashboard is Enabled');
 
+						// Add Dashboard Integrations
+						integrationLogger(logger, verbose, 'info', 'Adding Dashboard Integrations');
+
+						// CSS Management
+						addIntegration(params, {
+							integration: UnoCSSAstroIntegration({
+								configFile: false,
+								injectReset: false,
+								injectEntry: false,
+								presets: [
+									presetUno(),
+									presetDaisy({
+										themes: ['light', 'dark'],
+										darkTheme: 'dark',
+									}),
+									presetWind(), 
+									presetTypography()
+								],
+								transformers: [
+									transformerDirectives()
+								],
+							}),
+						});
+
 						// Setup the Dashboard Routes
+						injectRoute({
+							pattern: 'dashboard/',
+							entrypoint: resolve('./routes/dashboard/pages/index.astro')
+						})
+						injectRoute({
+							pattern: 'dashboard/profile/',
+							entrypoint: resolve('./routes/dashboard/pages/profile.astro')
+						})
+						injectRoute({
+							pattern: 'dashboard/configuration/',
+							entrypoint: resolve('./routes/dashboard/pages/configuration/index.astro')
+						})
+						injectRoute({
+							pattern: 'dashboard/configuration/admins/',
+							entrypoint: resolve('./routes/dashboard/pages/configuration/admins.astro')
+						})
+						injectRoute({
+							pattern: 'dashboard/new/post/',
+							entrypoint: resolve('./routes/dashboard/pages/new/post.astro')
+						})
 
 						// Setup The Dashboard Authentication
 						if ( AuthConfig.enabled ) {

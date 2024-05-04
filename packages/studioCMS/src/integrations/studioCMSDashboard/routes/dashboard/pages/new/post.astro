@@ -1,0 +1,180 @@
+---
+// @ts-expect-error - Some types can only be imported from the Astro runtime
+import { Blog, SiteConfig, db, eq } from 'astro:db';
+import BaseLayout from "../../layouts/Layout.astro";
+import Config from 'virtual:studiocms/config';
+import { authHelper, type Locals } from 'studiocms:helpers';
+
+if (Config.includedIntegrations.useInoxSitemap) {
+    import('sitemap-ext:config').then((sitemap) => {
+        sitemap.default(false)
+    })
+}
+
+const { dashboardConfig: { developerConfig } } = Config;
+
+const ConfigArray = await db.select().from(SiteConfig);
+const contextConfig = ConfigArray.pop();
+
+const locals = Astro.locals as Locals;
+const { permissionLevel } = await authHelper(locals);
+
+function redirectToPath(path: string) {
+	return Astro.redirect(import.meta.env.BASE_URL + path);
+}
+
+// If the user is not logged in, redirect to the login page
+if ( !developerConfig.testingAndDemoMode ) {
+    if ( permissionLevel === "unknown" ) {
+        console.log('User is not logged in. Redirecting to login page.');
+        return redirectToPath('dashboard/login');
+    }
+    if ( permissionLevel !== 'admin' ) {
+        console.log('User is not an admin or editor. Redirecting to profile page.');
+        return redirectToPath('dashboard/profile');
+    }
+}
+
+if (Astro.request.method === 'POST') {
+	const formData = await new Request(Astro.request.url, {
+		method: Astro.request.method,
+		headers: Astro.request.headers,
+		body: Buffer.from(await Astro.request.arrayBuffer()),
+	}).formData();
+
+	const title = formData.get('title');
+	const slug = formData.get('slug');
+	const description = formData.get('description');
+	const heroImage = formData.get('hero-image');
+	const content = formData.get('content');
+
+	const postArrayed = await db
+		.select()
+		.from(Blog)
+		.where(eq(Blog.slug, slug as string));
+	const existingPost = postArrayed[0];
+
+	function makeResponse(message: string, status: number) {
+		return new Response(message, { status: status });
+	}
+
+	if (existingPost) {
+		return makeResponse('Post with that slug already exists', 400);
+	}
+
+	await db
+		.insert(Blog)
+		.values({
+			title: title as string,
+			slug: slug as string,
+			description: description as string,
+			heroImage: heroImage as string,
+			content: content as string,
+		})
+		.then(() => {
+			return new Response('Post created', { status: 200 });
+		})
+		.catch(() => {
+			return new Response('Error creating post', { status: 500 });
+		});
+
+    return redirectToPath('dashboard');
+}
+
+const pageTitle = `New Post | ${contextConfig.title}`;
+---
+
+<BaseLayout 
+    sideBarActiveItemID="new-post" 
+    title={pageTitle}
+    description={contextConfig.description} >
+    <div class="pb-12 mt-5">
+
+        <div class="text-5xl font-bold">Create New Post</div>
+
+        <div class="py-2">
+
+            <center>
+
+                <form method="post" enctype="multipart/form-data" >
+                    <label for="title" class="text-lg">Post Title</label><br>
+                    <input 
+                        type="text" 
+                        id="title" 
+                        name="title" 
+                        class="border-solid border-2 border-gray-300 rounded-lg p-2 w-96"
+                        placeholder="Your Post Title" 
+                        required><br>
+                    <label for="slug" class="text-lg">Slug</label><br>
+                    <input 
+                        type="text" 
+                        id="slug" 
+                        name="slug" 
+                        class="border-solid border-2 border-gray-300 rounded-lg p-2 w-96"
+                        placeholder="your-post-slug"
+                        required><br>
+                    <label for="description" class="text-lg">Description</label><br>
+                    <input
+                        type="text" 
+                        id="description" 
+                        name="description" 
+                        class="border-solid border-2 border-gray-300 rounded-lg p-2 w-96"
+                        placeholder="Your post's basic description"
+                        required><br>
+                    <label for="hero-image" class="text-lg">Hero Image</label><br>
+                    <p class="text-sm">To use images stored in your public/ folder use the following example: <pre>/my-image.png</pre></p><br>
+                    <input 
+                        type="text" 
+                        id="hero-image" 
+                        name="hero-image" 
+                        class="border-solid border-2 border-gray-300 rounded-lg p-2 w-96"
+                        placeholder="Your post's hero image URL"
+                        value="https://images.unsplash.com/photo-1707345512638-997d31a10eaa?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                        required><br>
+                    <label for="content" class="text-lg">Content</label><br>
+                    <div id="editor">
+                        <textarea 
+                            id="content" 
+                            name="content" 
+                            class="border-solid border-2 border-gray-300 rounded-lg p-2 w-96"
+                            data-provide="markdown" 
+                            rows="10" 
+                            placeholder="Your post's content in markdown format."
+                            required></textarea>
+                    </div><br>
+        
+                    <button class="btn btn-outline ml-5 py-2" type="submit">Create!</button><br><br>
+        
+                </form>
+
+            </center>
+
+            <div class="text-xl font-bold">Live Preview</div>
+            <div id="html-preview" class="border-solid border-2 border-gray-300 rounded-lg p-2 max-w-[100vw] lg:max-w-[1800px] prose"></div><br><br>
+        </div>
+
+    </div>
+</BaseLayout>
+
+<script>
+    import Config from 'virtual:studiocms/config';
+    import { renderMarked } from '../../../../../../utils/marked';
+    import { renderMarkDoc } from '../../../../../../utils/markdoc';
+    
+            document.getElementById('content')?.addEventListener('input', async function () {
+                const markdownContent = document.getElementById('content');
+                const htmlPreview = document.getElementById('html-preview');
+
+                if (Config.contentRenderer === 'marked' ) {
+                    //@ts-ignore
+                    const htmlContent = await renderMarked(markdownContent.value);
+                    //@ts-ignore
+                    htmlPreview.innerHTML = htmlContent;
+                } else if (Config.contentRenderer === 'markdoc') {
+                    //@ts-ignore
+                    const htmlContent = await renderMarkDoc(markdownContent.value);
+                    //@ts-ignore
+                    htmlPreview.innerHTML = htmlContent;
+                }
+            });
+</script>

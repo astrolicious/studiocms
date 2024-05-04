@@ -1,0 +1,66 @@
+---
+// @ts-expect-error - Some types can only be imported from the Astro runtime
+import { SiteConfig, db } from 'astro:db';
+import BaseLayout from "../layouts/Layout.astro";
+import Config from 'virtual:studiocms/config';
+import { authHelper, type Locals } from 'studiocms:helpers';
+
+if (Config.includedIntegrations.useInoxSitemap) {
+    import('sitemap-ext:config').then((sitemap) => {
+        sitemap.default(false)
+    })
+}
+
+const { dashboardConfig: { developerConfig } } = Config;
+
+const ConfigArray = await db.select().from(SiteConfig);
+const contextConfig = ConfigArray.pop();
+
+const locals = Astro.locals as Locals;
+const { permissionLevel, name, username, currentUserSession, githubURL } = await authHelper(locals);
+
+function redirectToPath(path: string) {
+	return Astro.redirect(import.meta.env.BASE_URL + path);
+}
+
+// If the user is not logged in, redirect to the login page
+if ( !developerConfig.testingAndDemoMode ) {
+    if ( permissionLevel === "unknown" ) {
+        console.log('User is not logged in. Redirecting to login page.');
+        return redirectToPath('dashboard/login');
+    }
+}
+
+const pageTitle = `User profile | ${contextConfig.title}`;
+---
+
+<BaseLayout 
+    sideBarActiveItemID="profile" 
+    title={pageTitle}
+    description={contextConfig.description} >
+    <div class="pb-12 mt-5">
+
+        <div class="text-5xl font-bold">{username}'s Profile</div>
+
+        <div class="py-2">
+            <text class="text-lg">
+                <bold>Display Name:</bold> {name}
+            </text>
+            <br />
+            <text class="text-lg">
+                <bold>Role:</bold> {permissionLevel.toUpperCase()}
+            </text>
+            <br />
+            <text class="text-lg">
+                <bold>GitHub:</bold> <a href={githubURL}>{username}
+            </text>
+            <br />
+            <text class="text-lg">
+                { currentUserSession && (
+                    <p><bold>Session Expires:</bold> {new Date(currentUserSession.expiresAt).toLocaleString()} </p>
+                ) } 
+            </text>
+        </div>
+
+    </div>
+</BaseLayout>

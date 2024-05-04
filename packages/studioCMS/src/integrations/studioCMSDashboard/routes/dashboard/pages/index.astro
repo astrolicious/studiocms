@@ -1,0 +1,74 @@
+---
+// @ts-expect-error - Some types can only be imported from the Astro runtime
+import { SiteConfig, db } from 'astro:db';
+import BaseLayout from "../layouts/Layout.astro";
+import Config from 'virtual:studiocms/config';
+import { authHelper, type Locals } from 'studiocms:helpers';
+
+if (Config.includedIntegrations.useInoxSitemap) {
+    import('sitemap-ext:config').then((sitemap) => {
+        sitemap.default(false)
+    })
+}
+
+const { dashboardConfig: { developerConfig } } = Config;
+
+const ConfigArray = await db.select().from(SiteConfig);
+const contextConfig = ConfigArray.pop();
+
+const locals = Astro.locals as Locals;
+const { permissionLevel } = await authHelper(locals);
+
+function redirectToPath(path: string) {
+	return Astro.redirect(import.meta.env.BASE_URL + path);
+}
+
+// If the user is not logged in, redirect to the login page
+if ( !developerConfig.testingAndDemoMode ) {
+    if ( permissionLevel === "unknown" ) {
+        console.log('User is not logged in. Redirecting to login page.');
+        return redirectToPath('dashboard/login');
+    }
+    if ( permissionLevel !== 'admin' && permissionLevel !== 'editor' ) {
+        console.log('User is not an admin or editor. Redirecting to profile page.');
+        return redirectToPath('dashboard/profile');
+    }
+}
+
+const pageTitle = `Dashboard | ${contextConfig.title}`;
+---
+
+<BaseLayout 
+    sideBarActiveItemID="dashboard" 
+    title={pageTitle}
+    description={contextConfig.description} >
+    <div class="pb-12 mt-5">
+
+        <div class="text-5xl font-bold">Dashboard</div>
+
+        <div class="py-2">
+            <text class="text-lg">
+                This is <b>StudioCMS</b> a free and open-source CMS built from the ground up by the Astro Community.
+            </text>
+            <text class="text-lg">
+                To get started, click on the sidebar to navigate to the different sections of the CMS.
+            </text>
+        </div>
+
+        <div class="py-1">
+            <text class="text-xl">
+                This project is <b>Experimental</b> and should not be used in production at this time.
+            </text>
+        </div>
+
+        <div class="mt-8">
+            <a class="btn" href="https://github.com/astrolicious/studiocms" target="_blank">
+                Star us on Github
+            </a>
+            <a href="https://chat.astrolicious.dev" target="_blank" class="btn btn-outline ml-5">
+                Join our Discord
+            </a>
+        </div>
+
+    </div>
+</BaseLayout>

@@ -1,0 +1,32 @@
+---
+import { authHelper, type Locals } from "studiocms:helpers";
+
+const { sideBarActiveItemID } = Astro.props;
+const activeClass = "bg-base-300"; // For primary color replace with `active` class
+
+const locals = Astro.locals as Locals;
+const { permissionLevel } = await authHelper(locals);
+
+
+---
+
+<ul class="menu grow shrink menu-md overflow-y-auto">
+    <li><a class="py-3 text-base" id="home" href="/">Back to Site</a></li>
+    <li><a class="py-3 text-base" id="dashboard" href="/dashboard/">Dashboard</a></li>
+    <li><a class="py-3 text-base" id="profile" href="/dashboard/profile/">User Profile</a></li>
+    { permissionLevel === "editor" || permissionLevel === "admin" ? (
+        <li><a class="py-3 text-base" id="new-page" href="/dashboard/new/page/">Create New Page <br> (Not yet Implemented) </a></li>
+        <li><a class="py-3 text-base" id="new-post" href="/dashboard/new/post/">Create New Post</a></li>
+        <li><a class="py-3 text-base" id="edit-pages" href="/dashboard/edit-pages/">Edit Pages</a></li>
+        <li><a class="py-3 text-base" id="edit-posts" href="/dashboard/edit-posts/">Edit Posts</a></li>
+    ) : "" }
+    { permissionLevel === "admin" ? (
+        <li><a class="py-3 text-base" id="site-config" href="/dashboard/configuration/">Site Configuration</a></li>
+    ) : "" }
+    <li><a class="py-3 text-base" id="logout" href="/dashboard/logout/">Logout</a></li>
+</ul>
+
+<script define:vars={{ sideBarActiveItemID: sideBarActiveItemID, activeClass: activeClass }}>
+const activeItemElem = document.getElementById(sideBarActiveItemID);
+activeItemElem && activeItemElem.classList.add(activeClass);
+</script>

@@ -168,30 +168,30 @@ export default defineIntegration({
 						// To be moved to studioCMSDashboard integration
 						if (dashboardEnabled) {
 							// Add Dashboard Routes
-							injectRoute({
-								pattern: 'dashboard/',
-								entrypoint: resolve('./pages-dashboard/index.astro'),
-							});
-							injectRoute({
-								pattern: 'dashboard/profile/',
-								entrypoint: resolve('./pages-dashboard/profile.astro'),
-							});
-							injectRoute({
-								pattern: 'dashboard/new-post/',
-								entrypoint: resolve('./pages-dashboard/new-post.astro'),
-							});
+							// injectRoute({
+							// 	pattern: 'dashboard/',
+							// 	entrypoint: resolve('./pages-dashboard/index.astro'),
+							// });
+							// injectRoute({
+							// 	pattern: 'dashboard/profile/',
+							// 	entrypoint: resolve('./pages-dashboard/profile.astro'),
+							// });
+							// injectRoute({
+							// 	pattern: 'dashboard/new-post/',
+							// 	entrypoint: resolve('./pages-dashboard/new-post.astro'),
+							// });
 							injectRoute({
 								pattern: 'dashboard/post-list/',
 								entrypoint: resolve('./pages-dashboard/post-list.astro'),
 							});
-							injectRoute({
-								pattern: 'dashboard/site-config/',
-								entrypoint: resolve('./pages-dashboard/site-config.astro'),
-							});
-							injectRoute({
-								pattern: 'dashboard/admin-config/',
-								entrypoint: resolve('./pages-dashboard/admin-config.astro'),
-							});
+							// injectRoute({
+							// 	pattern: 'dashboard/site-config/',
+							// 	entrypoint: resolve('./pages-dashboard/site-config.astro'),
+							// });
+							// injectRoute({
+							// 	pattern: 'dashboard/admin-config/',
+							// 	entrypoint: resolve('./pages-dashboard/admin-config.astro'),
+							// });
 							injectRoute({
 								pattern: 'dashboard/edit/home/',
 								entrypoint: resolve('./pages-dashboard/edit/home.astro'),

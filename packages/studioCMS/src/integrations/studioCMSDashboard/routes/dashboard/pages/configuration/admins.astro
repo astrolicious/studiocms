@@ -1,0 +1,145 @@
+---
+// @ts-expect-error - Some types can only be imported from the Astro runtime
+import { Permissions, SiteConfig, db, eq } from 'astro:db';
+import BaseLayout from "../../layouts/Layout.astro";
+import Config from 'virtual:studiocms/config';
+import { authHelper, type Locals } from 'studiocms:helpers';
+
+if (Config.includedIntegrations.useInoxSitemap) {
+    import('sitemap-ext:config').then((sitemap) => {
+        sitemap.default(false)
+    })
+}
+
+const { dashboardConfig: { developerConfig } } = Config;
+
+const ConfigArray = await db.select().from(SiteConfig);
+const adminList = await db.select().from(Permissions);
+
+const contextConfig = ConfigArray.pop();
+
+const locals = Astro.locals as Locals;
+const { permissionLevel } = await authHelper(locals);
+
+function redirectToPath(path: string) {
+	return Astro.redirect(import.meta.env.BASE_URL + path);
+}
+
+// If the user is not logged in, redirect to the login page
+if ( !developerConfig.testingAndDemoMode ) {
+    if ( permissionLevel === "unknown" ) {
+        console.log('User is not logged in. Redirecting to login page.');
+        return redirectToPath('dashboard/login');
+    }
+    if ( permissionLevel !== 'admin' ) {
+        console.log('User is not an admin or editor. Redirecting to profile page.');
+        return redirectToPath('dashboard/profile');
+    }
+}
+
+if (Astro.request.method === 'POST') {
+    // If the site is in testing and demo mode, do not allow the site configuration to be updated
+    if ( developerConfig.testingAndDemoMode ) {
+        return new Response('Error: Site configuration cannot be updated in testing and demo mode.', { status: 500 })
+    }
+
+    // Get the form data
+	const formData = await new Request(Astro.request.url, {
+		method: Astro.request.method,
+		headers: Astro.request.headers,
+		body: Buffer.from(await Astro.request.arrayBuffer()),
+	}).formData();
+
+	const admin = formData.get('admins');
+	const rank = formData.get('rank');
+
+	await db
+		.insert(Permissions)
+		.values({
+			username: admin as string,
+			rank: rank as string,
+		})
+		.then(() => {
+			return new Response('Success', { status: 200 });
+		})
+		.catch(() => {
+			return new Response('Error', { status: 500 });
+		});
+
+	redirectToPath('dashboard/');
+}
+
+const pageTitle = `Site Config | ${contextConfig.title}`;
+---
+
+<BaseLayout 
+    sideBarActiveItemID="site-config" 
+    title={pageTitle}
+    description={contextConfig.description} >
+    <div class="pb-4 mt-5">
+
+        <div class="text-5xl font-bold">Site Admins</div>
+
+        <div class="py-2">
+            <div class="text-xl">Current Admins:</div>
+
+            <div class="relative overflow-x-auto">
+                <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                        <tr>
+                            <th scope="col" class="px-6 py-3">Username</th>
+                            <th scope="col" class="px-6 py-3">Rank</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {
+                            adminList.map((admin: typeof Permissions.$inferSelect) => {
+                                return (
+                                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{admin.username}</td>
+                                        <td class="px-6 py-4">{admin.rank}</td>
+                                    </tr>
+                                )
+                            })
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="py-2">
+            <text>
+                Note: To delete admins you can do this from your Astro Studio Dashboard.
+            </text>
+        </div>
+
+        <div class="py-2">
+            <form method="post" enctype="multipart/form-data" >
+                    
+                <label for="admins" class="text-lg">Add New Admin or Editor</label><br>
+                <input 
+                    type="text" 
+                    id="admins" 
+                    name="admins" 
+                    class="border-solid border-2 border-gray-300 rounded-lg p-2 w-96"
+                    placeholder="GitHubUsername"
+                    required><br>
+                <label for="rank" class="text-lg">User Rank ("admin" or "editor")</label><br>
+                <input 
+                    type="text" 
+                    id="rank" 
+                    name="rank" 
+                    class="border-solid border-2 border-gray-300 rounded-lg p-2 w-96"
+                    placeholder="admin / editor"
+                    value="editor"
+                    required><br>
+                <center class="py-2">
+                    <button class="btn btn-outline ml-5" type="submit">Add!</button>
+                </center>
+        
+            </form>
+        </div>
+
+    </div>
+</BaseLayout>
+

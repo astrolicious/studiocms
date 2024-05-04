@@ -1,0 +1,32 @@
+---
+import SideBarFooter from "./SideBarFooter.astro";
+import SideBarMenu from "./SideBarMenu.astro";
+const { sideBarActiveItemID } = Astro.props;
+import defaultAvatar from './avatar.webp';
+import type { Locals } from "studiocms:helpers";
+
+const locals = Astro.locals as Locals;
+const userProfile = locals.dbUser;
+
+const useAvatar = userProfile.avatar ? userProfile.avatar : defaultAvatar.src;
+
+---
+
+<div class="z-40">
+  <aside class="px-2 pt-2 h-auto min-h-full w-[19rem] bg-base-200 text-base-content flex flex-col">
+    <div class="w-fit mx-auto mt-5 mb-6">
+      <a href="/dashboard/">
+        <div class="avatar transition ease-in-out hover:scale-[102%] block m-auto">
+          <div class="w-[8.5rem] rounded-full">
+            <img width={300} height={300} src={useAvatar} alt="Profile image" />
+          </div>
+        </div>
+      </a>
+    </div>
+    <div class="text-center">
+      Current User: <b>{userProfile.name}</b>
+    </div>
+    <SideBarMenu sideBarActiveItemID={sideBarActiveItemID} />
+    <SideBarFooter />
+  </aside>
+</div>

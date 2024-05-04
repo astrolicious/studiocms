@@ -1,0 +1,118 @@
+---
+// @ts-expect-error - Some types can only be imported from the Astro runtime
+import { SiteConfig, db, eq } from 'astro:db';
+import BaseLayout from "../../layouts/Layout.astro";
+import Config from 'virtual:studiocms/config';
+import { authHelper, type Locals } from 'studiocms:helpers';
+
+if (Config.includedIntegrations.useInoxSitemap) {
+    import('sitemap-ext:config').then((sitemap) => {
+        sitemap.default(false)
+    })
+}
+
+const { dashboardConfig: { developerConfig } } = Config;
+
+const ConfigArray = await db.select().from(SiteConfig);
+const contextConfig = ConfigArray.pop();
+
+const locals = Astro.locals as Locals;
+const { permissionLevel } = await authHelper(locals);
+
+function redirectToPath(path: string) {
+	return Astro.redirect(import.meta.env.BASE_URL + path);
+}
+
+// If the user is not logged in, redirect to the login page
+if ( !developerConfig.testingAndDemoMode ) {
+    if ( permissionLevel === "unknown" ) {
+        console.log('User is not logged in. Redirecting to login page.');
+        return redirectToPath('dashboard/login');
+    }
+    if ( permissionLevel !== 'admin' ) {
+        console.log('User is not an admin or editor. Redirecting to profile page.');
+        return redirectToPath('dashboard/profile');
+    }
+}
+
+if (Astro.request.method === 'POST') {
+    // If the site is in testing and demo mode, do not allow the site configuration to be updated
+    if ( developerConfig.testingAndDemoMode ) {
+        return new Response('Error: Site configuration cannot be updated in testing and demo mode.', { status: 500 })
+    }
+
+    // Get the form data
+	const formData = await new Request(Astro.request.url, {
+		method: Astro.request.method,
+		headers: Astro.request.headers,
+		body: Buffer.from(await Astro.request.arrayBuffer()),
+	}).formData();
+
+	const title = formData.get('title');
+	const description = formData.get('description');
+
+    // Update the site configuration
+	await db
+		.update(SiteConfig)
+		.set({
+			title: title as string,
+			description: description as string,
+		})
+		.where(eq(SiteConfig.id, '1'))
+		.then(() => {
+			return new Response('Success', { status: 200 });
+		})
+		.catch(() => {
+			return new Response('Error', { status: 500 });
+		});
+
+    return redirectToPath('dashboard');
+}
+
+const pageTitle = `Site Config | ${contextConfig.title}`;
+---
+
+<BaseLayout 
+    sideBarActiveItemID="site-config" 
+    title={pageTitle}
+    description={contextConfig.description} >
+    <div class="mt-5">
+
+        <div class="text-5xl font-bold">Site Configuration</div>
+
+        <div class="py-4">
+            <a 
+                href={import.meta.env.BASE_URL + 'dashboard/configuration/admins/'} 
+                class="btn btn-outline ml-5" 
+                type="submit" >
+                Manage Admins
+            </a>
+        </div>
+
+        <div class="py-2">
+            <form method="post" enctype="multipart/form-data" >
+                <label for="title" class="text-lg">Site Title</label><br />
+                <input 
+                    type="text" 
+                    id="title" 
+                    name="title" 
+                    class="border-solid border-2 border-gray-300 rounded-lg p-2 w-96"
+                    value={contextConfig.title} 
+                    required><br /><br />
+                <label for="description" class="text-lg">Description</label><br />
+                <input
+                    type="text" 
+                    id="description" 
+                    name="description" 
+                    class="border-solid border-2 border-gray-300 rounded-lg p-2 w-96"
+                    value={contextConfig.description}
+                    required><br /><br />
+    
+                <center class="py-2">
+                    <button class="btn btn-outline ml-5" type="submit">Update!</button>
+                </center>
+    
+            </form>
+        </div>
+    </div>
+</BaseLayout>
