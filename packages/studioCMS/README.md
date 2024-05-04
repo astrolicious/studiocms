@@ -110,10 +110,11 @@ export default defineConfig({
 	output: "server",
 	adapter: node({ mode: 'standalone' }),
 	integrations: [
-        db(),
-        astroStudioCMS({
-            dbStartPage: true // DEFAULT - This injects a start page to setup your DB data.
-        })],
+	        db(),
+	        astroStudioCMS({
+	            dbStartPage: true // DEFAULT - This injects a start page to setup your DB data.
+	        })
+	],
 });
 ```
 
