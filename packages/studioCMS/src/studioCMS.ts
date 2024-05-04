@@ -165,10 +165,8 @@ export default defineIntegration({
 							entrypoint: resolve('./pages-frontend/rss.xml.ts'),
 						});
 
-						// Authentication and Dashboard Setup
-						// If Authentication is disabled it will disable the entire back-end dashboard allowing editing only via the Astro Studio Dashboard at https://studio.astro.build
+						// To be moved to studioCMSDashboard integration
 						if (dashboardEnabled) {
-
 							// Add Dashboard Routes
 							injectRoute({
 								pattern: 'dashboard/',

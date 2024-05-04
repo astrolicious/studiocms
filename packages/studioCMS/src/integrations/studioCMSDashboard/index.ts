@@ -3,6 +3,7 @@ import { optionsSchema } from "../../schemas";
 import { CheckENV, integrationLogger } from "../../utils";
 import { loadEnv } from "vite";
 import { fileFactory } from "../../utils/fileFactory";
+import { DashboardStrings } from "../../strings";
 
 // Environment Variables
 const env = loadEnv('all', process.cwd(), 'CMS');
@@ -93,12 +94,6 @@ export default defineIntegration({
 
 					// In the case of First time Setup run the Start Pages
 					if ( dbStartPage ) {
-						integrationLogger(
-							logger,
-							true,
-							'warn',
-							'Start Page Enabled.  This will be the only page available until you initialize your database and disable the config option forcing this page to be displayed. To get started, visit http://localhost:4321/start/ in your browser to initialize your database. And Setup your installation.'
-						);
 						injectRoute({
 							pattern: 'start/',
 							entrypoint: resolve('./routes/databaseSetup/start.astro'),
@@ -165,10 +160,10 @@ export default defineIntegration({
 						} else if ( testingAndDemoMode ) {
 							
 							// Log that the Auth is disabled
-							integrationLogger(logger, verbose, 'info', 'Testing and Demo Mode is Enabled, Authentication will not be required for dashboard pages.  But you will only be able to edit the database from the Astro Studio Dashboard, https://studio.astro.build/');
+							integrationLogger(logger, verbose, 'info', DashboardStrings.TestAndDemo);
 						} else if ( !AuthConfig.enabled ) {
 							// Log that the Auth is disabled
-							integrationLogger(logger, verbose, 'info', 'Auth is Disabled by the User Configuration.  You will only be able to edit the database from the Astro Studio Dashboard, https://studio.astro.build/');
+							integrationLogger(logger, verbose, 'info', DashboardStrings.AuthDisabled);
 						}
 
 						// Log that the setup is complete
@@ -176,7 +171,7 @@ export default defineIntegration({
 						
 					} else {
 						// Log that the Dashboard is disabled
-						integrationLogger(logger, verbose, 'info', 'Dashboard is Disabled, Some tools and Utilities are still available for developers who are customizing their setup!');
+						integrationLogger(logger, verbose, 'info', DashboardStrings.DashboardDisabled);
 					}
 
 
