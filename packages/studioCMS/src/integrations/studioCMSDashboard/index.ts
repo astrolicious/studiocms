@@ -204,11 +204,11 @@ export default defineIntegration({
 
 							// Inject Login and Logout Routes
 							injectRoute({
-								pattern: 'dashboard/login/',
+								pattern: 'dashboard/login',
 								entrypoint: resolve('./routes/authroutes/login/index.astro'),
 							})
 							injectRoute({
-								pattern: 'dashboard/logout/',
+								pattern: 'dashboard/logout',
 								entrypoint: resolve('./routes/authroutes/logout.ts'),
 							})
 

@@ -1,29 +1,47 @@
 ---
-import { authHelper, type Locals } from "studiocms:helpers";
+import { authHelper, urlGenFactory, type Locals } from "studiocms:helpers";
 
-const { sideBarActiveItemID } = Astro.props;
+type Props = {
+    sideBarActiveItemID: string;
+    DashboardRouteOverride?: string;
+}
+
+const { sideBarActiveItemID, DashboardRouteOverride } = Astro.props;
 const activeClass = "bg-base-300"; // For primary color replace with `active` class
 
 const locals = Astro.locals as Locals;
 const { permissionLevel } = await authHelper(locals);
 
+const URLS = {
+    backToSite: await urlGenFactory(false, undefined),
+    dashboard: await urlGenFactory(true, undefined, DashboardRouteOverride),
+    profile: await urlGenFactory(true, "profile/", DashboardRouteOverride),
+    newPage: await urlGenFactory(true, "new/page/", DashboardRouteOverride),
+    newPost: await urlGenFactory(true, "new/post/", DashboardRouteOverride),
+    editPages: await urlGenFactory(true, "page-list/", DashboardRouteOverride),
+    editPosts: await urlGenFactory(true, "post-list/", DashboardRouteOverride),
+    siteConfig: await urlGenFactory(true, "configuration/", DashboardRouteOverride),
+    logout: await urlGenFactory(true, "logout", DashboardRouteOverride)
+}
 
 ---
 
 <ul class="menu grow shrink menu-md overflow-y-auto">
-    <li><a class="py-3 text-base" id="home" href="/">Back to Site</a></li>
-    <li><a class="py-3 text-base" id="dashboard" href="/dashboard/">Dashboard</a></li>
-    <li><a class="py-3 text-base" id="profile" href="/dashboard/profile/">User Profile</a></li>
+    <li><a class="py-3 text-base" id="home" href={URLS.backToSite}>Back to Site</a></li>
+    <li><a class="py-3 text-base" id="dashboard" href={URLS.dashboard}>Dashboard</a></li>
+    <li><a class="py-3 text-base" id="profile" href={URLS.profile}>User Profile</a></li>
     { permissionLevel === "editor" || permissionLevel === "admin" ? (
-        <li><a class="py-3 text-base" id="new-page" href="/dashboard/new/page/">Create New Page</a></li>
-        <li><a class="py-3 text-base" id="new-post" href="/dashboard/new/post/">Create New Post</a></li>
-        <li><a class="py-3 text-base" id="edit-pages" href="/dashboard/page-list/">Edit Pages</a></li>
-        <li><a class="py-3 text-base" id="edit-posts" href="/dashboard/post-list/">Edit Posts</a></li>
+        <li><a class="py-3 text-base" id="new-page" href={URLS.newPage}>Create New Page</a></li>
+        <li><a class="py-3 text-base" id="new-post" href={URLS.newPost}>Create New Post</a></li>
+        <li><a class="py-3 text-base" id="edit-pages" href={URLS.editPages}>Edit Pages</a></li>
+        <li><a class="py-3 text-base" id="edit-posts" href={URLS.editPosts}>Edit Posts</a></li>
     ) : "" }
     { permissionLevel === "admin" ? (
-        <li><a class="py-3 text-base" id="site-config" href="/dashboard/configuration/">Site Configuration</a></li>
+        <li><a class="py-3 text-base" id="site-config" href={URLS.siteConfig}>Site Configuration</a></li>
     ) : "" }
-    <li><a class="py-3 text-base" id="logout" href="/dashboard/logout/">Logout</a></li>
+    <form method="post" action={URLS.logout}>
+        <button class="btn">Sign out</button>
+    </form>
 </ul>
 
 <script define:vars={{ sideBarActiveItemID: sideBarActiveItemID, activeClass: activeClass }}>

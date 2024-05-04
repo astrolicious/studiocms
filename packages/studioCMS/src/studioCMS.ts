@@ -89,6 +89,7 @@ export default defineIntegration({
 						StudioCMSRenderer: RendererComponentPath,
 						AuthHelper: resolve('./utils/authhelper.ts'),
 						StudioCSMLocalsMap: resolve('./schemas/locals.ts'),
+						UrlGenHelper: resolve('./utils/urlGen.ts'),
 					};
 
 					// Virtual Components
@@ -100,7 +101,8 @@ export default defineIntegration({
 					// Virtual Helpers
 					const virtualHelperMap = `
 					export { default as authHelper } from '${virtResolver.AuthHelper}';
-					export * from '${virtResolver.StudioCSMLocalsMap}'`;
+					export * from '${virtResolver.StudioCSMLocalsMap}';
+					export { default as urlGenFactory } from '${virtResolver.UrlGenHelper}';`;
 
 					// Add Virtual Imports
 					integrationLogger(logger, verbose, 'info', 'Adding Virtual Imports...');
@@ -126,6 +128,7 @@ export default defineIntegration({
 						export const authHelper: typeof import('${virtResolver.AuthHelper}').default;
 						export type Locals = import('${virtResolver.StudioCSMLocalsMap}').Locals;
 						export const LocalsSchema: typeof import('${virtResolver.StudioCSMLocalsMap}').LocalsSchema;
+						export const urlGenFactory: typeof import('${virtResolver.UrlGenHelper}').default;
 					}`);
 
 					// Add Virtual DTS File

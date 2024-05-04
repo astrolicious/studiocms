@@ -13,6 +13,7 @@ declare module 'studiocms:helpers' {
 	export const authHelper: typeof import('./src/utils/authhelper').default;
 	export const LocalsSchema: typeof import('./src/schemas/locals').LocalsSchema;
 	export type Locals = import('./src/schemas/locals').Locals;
+	export const urlGenFactory: typeof import('./src/utils/urlGen').default;
 }
 
 declare module 'studiocms-dashboard:auth' {
