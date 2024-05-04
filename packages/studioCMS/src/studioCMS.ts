@@ -112,6 +112,8 @@ export default defineIntegration({
 						CImage: resolve('./components/exports/CImage.astro'),
 						FormattedDate: resolve('./components/exports/FormattedDate.astro'),
 						StudioCMSRenderer: RendererComponentPath,
+						AuthHelper: resolve('./utils/authhelper.ts'),
+						StudioCSMLocalsMap: resolve('./schemas/locals.ts'),
 					};
 
 					// Virtual Components
@@ -120,6 +122,11 @@ export default defineIntegration({
 					export { default as FormattedDate } from '${virtResolver.FormattedDate}';
 					export { default as StudioCMSRenderer } from '${virtResolver.StudioCMSRenderer}';`;
 
+					// Virtual Helpers
+					const virtualHelperMap = `
+					export { default as authHelper } from '${virtResolver.AuthHelper}';
+					export * from '${virtResolver.StudioCSMLocalsMap}'`;
+
 					// Add Virtual Imports
 					integrationLogger(logger, verbose, 'info', 'Adding Virtual Imports...');
 					addVirtualImports(params, {
@@ -127,6 +134,7 @@ export default defineIntegration({
 						imports: {
 							'virtual:studiocms/config': `export default ${JSON.stringify(options)}`,
 							'studiocms:components': virtualComponentMap,
+							'studiocms:helpers': virtualHelperMap,
 						},
 					});
 
@@ -137,6 +145,12 @@ export default defineIntegration({
 						export const CImage: typeof import('${virtResolver.CImage}').default;
 						export const FormattedDate: typeof import('${virtResolver.FormattedDate}').default;
 						export const StudioCMSRenderer: typeof import('${virtResolver.StudioCMSRenderer}').default;
+					}`);
+
+					studioCMSDTS.addLines(`declare module 'studiocms:helpers' {
+						export const authHelper: typeof import('${virtResolver.AuthHelper}').default;
+						export type Locals = import('${virtResolver.StudioCSMLocalsMap}').Locals;
+						export const LocalsSchema: typeof import('${virtResolver.StudioCSMLocalsMap}').LocalsSchema;
 					}`);
 
 					// Add Virtual DTS File
@@ -191,14 +205,14 @@ export default defineIntegration({
 
 						// Authentication and Dashboard Setup
 						// If Authentication is disabled it will disable the entire back-end dashboard allowing editing only via the Astro Studio Dashboard at https://studio.astro.build
-						if (authMode === 'disable') {
+						if (!authMode) {
 							integrationLogger(
 								logger,
 								verbose,
 								'warn',
 								'Authentication Disabled. The ENTIRE Internal dashboard for the Astro Studio CMS is disabled. This means you will need to manage your content via the Astro Studio Dashboard at http://studio.astro.build'
 							);
-						} else if (authMode === 'built-in') {
+						} else if (authMode) {
 							if (command === 'build') {
 								// Check for Authenication Environment Variables
 								if (!AUTHKEYS.GITHUBCLIENTID.KEY) {
@@ -272,13 +286,6 @@ export default defineIntegration({
 								pattern: 'dashboard/logout',
 								entrypoint: resolve('./pages-dashboard/logout.ts'),
 							});
-						} else if (authMode === 'plugin') {
-							integrationLogger(
-								logger,
-								verbose,
-								'warn',
-								'Authentication Plugins are not supported. Please use the built-in Astro Studio CMS authentication. or Disable Authentication in your Astro Config, to manage your content via the Astro Studio Dashboard at http://studio.astro.build'
-							);
 						}
 					}
 

@@ -1,7 +1,7 @@
 ---
 import Layout from '../../layouts/Default.astro';
-import type { Locals } from '../../schemas/locals';
 import Config from 'virtual:studiocms/config';
+import type { Locals } from 'studiocms:helpers';
 
 if (Config.includedIntegrations.useInoxSitemap) {
     import('sitemap-ext:config').then((sitemap) => {

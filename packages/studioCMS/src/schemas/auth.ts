@@ -10,16 +10,11 @@ export const authConfigSchema = z
 		 *
 		 * Disable - Disables authentication & the ENTIRE dashboard for the Astro Studio CMS This means you will need to manage your content via the Astro Studio Dashboard at http://studio.astro.build
 		 *
-		 * @default "built-in"
-		 * @param `"plugin"` - Enables authentication via a plugin
-		 * @param `"built-in"` - Enables authentication via the built-in Astro Studio CMS authentication (Lucia Auth)
-		 * @param `"disable"` - Disables authentication & the Internal dashboard and the user will need to manage their content via the Astro Studio Dashboard at http://studio.astro.build
+		 * @default "true"
+		 * @param `"true"` - Enables authentication via the built-in Astro Studio CMS authentication (Lucia Auth)
+		 * @param `"false"` - Disables authentication & the Internal dashboard and the user will need to manage their content via the Astro Studio Dashboard at http://studio.astro.build
 		 */
-		mode: z.enum(['plugin', 'built-in', 'disable']).optional().default('built-in'),
-		/**
-		 * Not yet implemented
-		 */
-		plugins: z.boolean().optional().default(false),
+		mode: z.boolean().optional().default(true),
 	})
 	.optional()
 	.default({});

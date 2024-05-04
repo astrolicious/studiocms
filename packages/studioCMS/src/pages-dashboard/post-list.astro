@@ -3,9 +3,8 @@
 import { Blog, asc, db, eq } from 'astro:db';
 import { FormattedDate } from 'studiocms:components'
 import Dashboard from '../layouts/Dashboard.astro';
-import type { Locals } from '../schemas/locals';
 import Config from 'virtual:studiocms/config';
-import authHelper from '../utils/authhelper';
+import { authHelper, type Locals } from 'studiocms:helpers';
 
 if (Config.includedIntegrations.useInoxSitemap) {
     import('sitemap-ext:config').then((sitemap) => {

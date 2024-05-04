@@ -2,9 +2,8 @@
 // @ts-expect-error - Some types can only be imported from the Astro runtime
 import { Admins, Pages, db, eq } from 'astro:db';
 import Dashboard from '../../layouts/Dashboard.astro';
-import type { Locals } from '../../schemas/locals';
 import Config from 'virtual:studiocms/config';
-import authHelper from '../../utils/authhelper';
+import { authHelper, type Locals } from 'studiocms:helpers';
 
 if (Config.includedIntegrations.useInoxSitemap) {
     import('sitemap-ext:config').then((sitemap) => {
