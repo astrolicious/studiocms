@@ -15,7 +15,7 @@ const { permissionLevel } = await authHelper(locals);
     <li><a class="py-3 text-base" id="dashboard" href="/dashboard/">Dashboard</a></li>
     <li><a class="py-3 text-base" id="profile" href="/dashboard/profile/">User Profile</a></li>
     { permissionLevel === "editor" || permissionLevel === "admin" ? (
-        <li><a class="py-3 text-base" id="new-page" href="/dashboard/new/page/">Create New Page<br />Not yet Implemented</a></li>
+        <li><a class="py-3 text-base" id="new-page" href="/dashboard/new/page/">Create New Page</a></li>
         <li><a class="py-3 text-base" id="new-post" href="/dashboard/new/post/">Create New Post</a></li>
         <li><a class="py-3 text-base" id="edit-pages" href="/dashboard/page-list/">Edit Pages</a></li>
         <li><a class="py-3 text-base" id="edit-posts" href="/dashboard/post-list/">Edit Posts</a></li>

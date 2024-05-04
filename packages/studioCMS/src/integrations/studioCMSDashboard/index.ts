@@ -159,6 +159,10 @@ export default defineIntegration({
 							entrypoint: resolve('./routes/dashboard/pages/new/post.astro')
 						})
 						injectRoute({
+							pattern: 'dashboard/new/page/',
+							entrypoint: resolve('./routes/dashboard/pages/new/page.astro')
+						})
+						injectRoute({
 							pattern: 'dashboard/post-list/',
 							entrypoint: resolve('./routes/dashboard/pages/post-list.astro')
 						})
