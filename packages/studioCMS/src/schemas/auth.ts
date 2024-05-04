@@ -1,20 +1,37 @@
 import { z } from 'astro/zod';
 
 //
+// AUTH PROVIDER SCHEMA
+//
+export const authProviderSchema = z.object({
+	/**
+	 * GitHub Auth Provider - Powered by Lucia
+	 * 
+	 * Requires a GitHub OAuth App to be created and configured using ENV Variables
+	 * 
+	 * @default true
+	 */
+	github: z.boolean().optional().default(true),
+	/**
+	 * Username and Password Auth Provider - Powered by Lucia
+	 * 
+	 * **NOT YET IMPLEMENTED**
+	 */
+	usernameAndPassword: z.boolean().optional().default(false),
+}).optional().default({});
+
+//
 // AUTH CONFIG SCHEMA
 //
-export const authConfigSchema = z
-	.object({
-		/**
-		 * OPTIONAL - Allows the user to customize the authentication mode for the Astro Studio CMS
-		 *
-		 * Disable - Disables authentication & the ENTIRE dashboard for the Astro Studio CMS This means you will need to manage your content via the Astro Studio Dashboard at http://studio.astro.build
-		 *
-		 * @default "true"
-		 * @param `"true"` - Enables authentication via the built-in Astro Studio CMS authentication (Lucia Auth)
-		 * @param `"false"` - Disables authentication & the Internal dashboard and the user will need to manage their content via the Astro Studio Dashboard at http://studio.astro.build
-		 */
-		mode: z.boolean().optional().default(true),
-	})
-	.optional()
-	.default({});
+export const authConfigSchema = z.object({
+	/**
+	 * Auth Providers - Allows enabling or disabling of the Authentication Providers
+	 */
+	providers: authProviderSchema,
+	/**
+	 * Auth Enabled - Allows enabling or disabling of the Authentication Configuration
+	 * 
+	 * @default true
+	 */
+	enabled: z.boolean().optional().default(true),
+}).optional().default({});

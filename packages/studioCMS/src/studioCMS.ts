@@ -48,8 +48,8 @@ export default defineIntegration({
 						verbose,
 						dbStartPage,
 						imageService: ImageServiceConfig,
-						authConfig: { 
-							mode: authMode 
+						dashboardConfig: {
+							dashboardEnabled,
 						},
 						includedIntegrations: { 
 							useAstroRobots, 
@@ -136,20 +136,7 @@ export default defineIntegration({
 
 					// dbStartPage - Choose whether to run the Start Page or Inject the Integration
 					if (dbStartPage) {
-						integrationLogger(
-							logger,
-							true,
-							'warn',
-							'Start Page Enabled.  This will be the only page available until you initialize your database and disable the config option forcing this page to be displayed. To get started, visit http://localhost:4321/start/ in your browser to initialize your database. And Setup your installation.'
-						);
-						injectRoute({
-							pattern: 'start/',
-							entrypoint: resolve('./pages-setup/start.astro'),
-						});
-						injectRoute({
-							pattern: 'done/',
-							entrypoint: resolve('./pages-setup/done.astro'),
-						});
+
 					} else {
 						// If dbStartPage is disabled, inject the routes to allow the CMS to function
 						integrationLogger(logger, verbose, 'info', 'Adding Page Routes...');
@@ -180,14 +167,7 @@ export default defineIntegration({
 
 						// Authentication and Dashboard Setup
 						// If Authentication is disabled it will disable the entire back-end dashboard allowing editing only via the Astro Studio Dashboard at https://studio.astro.build
-						if (!authMode) {
-							integrationLogger(
-								logger,
-								verbose,
-								'warn',
-								'Authentication Disabled. The ENTIRE Internal dashboard for the Astro Studio CMS is disabled. This means you will need to manage your content via the Astro Studio Dashboard at http://studio.astro.build'
-							);
-						} else if (authMode) {
+						if (dashboardEnabled) {
 
 							// Add Dashboard Routes
 							injectRoute({
@@ -215,10 +195,6 @@ export default defineIntegration({
 								entrypoint: resolve('./pages-dashboard/admin-config.astro'),
 							});
 							injectRoute({
-								pattern: 'dashboard/login/',
-								entrypoint: resolve('./pages-dashboard/login/index.astro'),
-							});
-							injectRoute({
 								pattern: 'dashboard/edit/home/',
 								entrypoint: resolve('./pages-dashboard/edit/home.astro'),
 							});
@@ -233,18 +209,6 @@ export default defineIntegration({
 							injectRoute({
 								pattern: 'dashboard/delete/[...slug]',
 								entrypoint: resolve('./pages-dashboard/delete/[...slug].astro'),
-							});
-							injectRoute({
-								pattern: 'dashboard/login/github',
-								entrypoint: resolve('./pages-dashboard/login/github/index.ts'),
-							});
-							injectRoute({
-								pattern: 'dashboard/login/github/callback',
-								entrypoint: resolve('./pages-dashboard/login/github/callback.ts'),
-							});
-							injectRoute({
-								pattern: 'dashboard/logout',
-								entrypoint: resolve('./pages-dashboard/logout.ts'),
 							});
 						}
 					}
