@@ -135,7 +135,7 @@ export default defineIntegration({
 							// Inject Login and Logout Routes
 							injectRoute({
 								pattern: 'dashboard/login/',
-								entrypoint: resolve('./routes/authroutes/index.astro'),
+								entrypoint: resolve('./routes/authroutes/login/index.astro'),
 							})
 							injectRoute({
 								pattern: 'dashboard/logout/',
@@ -148,11 +148,11 @@ export default defineIntegration({
 								integrationLogger(logger, verbose, 'info', 'GitHub Auth Provider is Enabled');
 								injectRoute({
 									pattern: 'dashboard/login/github',
-									entrypoint: resolve('./routes/authroutes/github/index.ts'),
+									entrypoint: resolve('./routes/authroutes/login/github/index.ts'),
 								});
 								injectRoute({
 									pattern: 'dashboard/login/github/callback',
-									entrypoint: resolve('./routes/authroutes/github/callback.ts'),
+									entrypoint: resolve('./routes/authroutes/login/github/callback.ts'),
 								});
 							} else {
 								// Log that the GitHub Auth Provider is disabled
