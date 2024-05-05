@@ -48,9 +48,6 @@ export default defineIntegration({
 						verbose,
 						dbStartPage,
 						imageService: ImageServiceConfig,
-						dashboardConfig: {
-							dashboardEnabled,
-						},
 						includedIntegrations: { 
 							useAstroRobots, 
 							astroRobotsConfig,
@@ -61,7 +58,8 @@ export default defineIntegration({
 						}
 					} = options;
 
-					// Check for SSR Mode
+					// Check for SSR Mode (output: "server")
+					// TODO: Add support for "hybrid" mode
 					if (output !== 'server') {
 						throw new AstroError(DbErrors.AstroConfigOutput);
 					}

@@ -1,5 +1,8 @@
 ---
 import { authHelper, urlGenFactory, type Locals } from "studiocms:helpers";
+import Config from "virtual:studiocms/config";
+
+const { dashboardConfig: { developerConfig: { testingAndDemoMode } } } = Config;
 
 type Props = {
     sideBarActiveItemID: string;
@@ -24,24 +27,69 @@ const URLS = {
     logout: await urlGenFactory(true, "logout", DashboardRouteOverride)
 }
 
+const siteLinks = [
+    { id: "home", href: URLS.backToSite, text: "View Site", minPermissionLevel: "unknown" },
+    { id: "dashboard", href: URLS.dashboard, text: "Dashboard", minPermissionLevel: "unknown" },
+    { id: "profile", href: URLS.profile, text: "User Profile", minPermissionLevel: "unknown" },
+    { id: "new-page", href: URLS.newPage, text: "Create New Page", minPermissionLevel: "editor" },
+    { id: "new-post", href: URLS.newPost, text: "Create New Post", minPermissionLevel: "editor" },
+    { id: "edit-pages", href: URLS.editPages, text: "Edit Pages", minPermissionLevel: "editor" },
+    { id: "edit-posts", href: URLS.editPosts, text: "Edit Posts", minPermissionLevel: "editor" },
+    { id: "site-config", href: URLS.siteConfig, text: "Site Configuration", minPermissionLevel: "editor" }
+];
+
 ---
 
 <ul class="menu grow shrink menu-md overflow-y-auto">
-    <li><a class="py-3 text-base" id="home" href={URLS.backToSite}>Back to Site</a></li>
-    <li><a class="py-3 text-base" id="dashboard" href={URLS.dashboard}>Dashboard</a></li>
-    <li><a class="py-3 text-base" id="profile" href={URLS.profile}>User Profile</a></li>
-    { permissionLevel === "editor" || permissionLevel === "admin" ? (
-        <li><a class="py-3 text-base" id="new-page" href={URLS.newPage}>Create New Page</a></li>
-        <li><a class="py-3 text-base" id="new-post" href={URLS.newPost}>Create New Post</a></li>
-        <li><a class="py-3 text-base" id="edit-pages" href={URLS.editPages}>Edit Pages</a></li>
-        <li><a class="py-3 text-base" id="edit-posts" href={URLS.editPosts}>Edit Posts</a></li>
+
+    { siteLinks.map(({ id, href, text, minPermissionLevel }) => {
+        if ( minPermissionLevel === "unknown" && ( 
+            permissionLevel === "unknown" || 
+            permissionLevel === "admin" || 
+            permissionLevel === "editor" || 
+            permissionLevel === "visitor" ) ) {
+            return (
+            <li>
+                <a class="py-3 text-base" id={id} href={href}>{text}</a>
+            </li>
+            );
+        }
+        if ((
+            testingAndDemoMode || 
+            minPermissionLevel === "editor"
+            ) && (
+            permissionLevel === "editor" || 
+            permissionLevel === "admin" || 
+            testingAndDemoMode )) {
+            return (
+            <li>
+                <a class="py-3 text-base" id={id} href={href}>{text}</a>
+            </li>
+            );
+        }
+        if (( 
+            testingAndDemoMode || 
+            minPermissionLevel === "admin" 
+            ) && ( 
+            permissionLevel === "admin" || 
+            testingAndDemoMode )) {
+            return (
+            <li>
+                <a class="py-3 text-base" id={id} href={href}>{text}</a>
+            </li>
+            );
+        }
+
+
+
+    }) }
+
+    { ( testingAndDemoMode || permissionLevel !== "unknown" ) ? (
+        <form method="post" action={URLS.logout}>
+            <button class="btn">Sign out</button>
+        </form>
     ) : "" }
-    { permissionLevel === "admin" ? (
-        <li><a class="py-3 text-base" id="site-config" href={URLS.siteConfig}>Site Configuration</a></li>
-    ) : "" }
-    <form method="post" action={URLS.logout}>
-        <button class="btn">Sign out</button>
-    </form>
+
 </ul>
 
 <script define:vars={{ sideBarActiveItemID: sideBarActiveItemID, activeClass: activeClass }}>

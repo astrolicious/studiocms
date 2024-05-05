@@ -9,7 +9,7 @@ export default async function urlGenFactory(
     let dashboardRoute = "dashboard";
 
     if (DashboardRouteOverride) {
-        dashboardRoute = DashboardRouteOverride;
+        dashboardRoute = DashboardRouteOverride.replace(/^\//, '');
     }
 
     if (path) {

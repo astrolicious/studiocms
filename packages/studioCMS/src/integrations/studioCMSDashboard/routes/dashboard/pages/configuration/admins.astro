@@ -3,7 +3,7 @@
 import { Permissions, SiteConfig, db, eq } from 'astro:db';
 import BaseLayout from "../../layouts/Layout.astro";
 import Config from 'virtual:studiocms/config';
-import { authHelper, type Locals } from 'studiocms:helpers';
+import { authHelper, urlGenFactory, type Locals } from 'studiocms:helpers';
 
 if (Config.includedIntegrations.useInoxSitemap) {
     import('sitemap-ext:config').then((sitemap) => {
@@ -11,7 +11,9 @@ if (Config.includedIntegrations.useInoxSitemap) {
     })
 }
 
-const { dashboardConfig: { developerConfig } } = Config;
+const { dashboardConfig: { developerConfig, dashboardRouteOverride } } = Config;
+
+const dashboardURL = dashboardRouteOverride || 'dashboard';
 
 const ConfigArray = await db.select().from(SiteConfig);
 const adminList = await db.select().from(Permissions);
@@ -21,19 +23,15 @@ const contextConfig = ConfigArray.pop();
 const locals = Astro.locals as Locals;
 const { permissionLevel } = await authHelper(locals);
 
-function redirectToPath(path: string) {
-	return Astro.redirect(import.meta.env.BASE_URL + path);
-}
-
 // If the user is not logged in, redirect to the login page
 if ( !developerConfig.testingAndDemoMode ) {
     if ( permissionLevel === "unknown" ) {
         console.log('User is not logged in. Redirecting to login page.');
-        return redirectToPath('dashboard/login');
+        return Astro.redirect(await urlGenFactory(true, "login", dashboardURL));
     }
     if ( permissionLevel !== 'admin' ) {
-        console.log('User is not an admin or editor. Redirecting to profile page.');
-        return redirectToPath('dashboard/profile');
+        console.log('User is not an admin. Redirecting to profile page.');
+        return Astro.redirect(await urlGenFactory(true, "profile", dashboardURL));
     }
 }
 
@@ -66,7 +64,7 @@ if (Astro.request.method === 'POST') {
 			return new Response('Error', { status: 500 });
 		});
 
-	redirectToPath('dashboard/');
+        return Astro.redirect(await urlGenFactory(true, undefined, dashboardURL));
 }
 
 const pageTitle = `Site Config | ${contextConfig.title}`;

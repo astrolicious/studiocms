@@ -5,7 +5,7 @@ export const DbErrors = {
 }
 
 export const DashboardStrings = {
-    TestAndDemo: 'Testing and Demo Mode is Enabled, Authentication will not be required for dashboard pages.  But you will only be able to edit the database from the Astro Studio Dashboard, https://studio.astro.build/',
+    TestAndDemo: 'Testing and Demo Mode is Enabled, Authentication will not be required to access dashboard pages.  But you will only be able to edit the database from the Astro Studio Dashboard, https://studio.astro.build/',
     AuthDisabled: 'Auth is Disabled by the User Configuration.  You will only be able to edit the database from the Astro Studio Dashboard, https://studio.astro.build/',
     DashboardDisabled: 'Dashboard is Disabled, Some tools and Utilities are still available for developers who are customizing their setup!',
 }

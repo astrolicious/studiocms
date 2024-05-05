@@ -3,7 +3,7 @@
 import { Pages, SiteConfig, db, eq } from 'astro:db';
 import BaseLayout from "../../../layouts/Layout.astro";
 import Config from 'virtual:studiocms/config';
-import { authHelper, type Locals } from 'studiocms:helpers';
+import { authHelper, urlGenFactory, type Locals } from 'studiocms:helpers';
 
 if (Config.includedIntegrations.useInoxSitemap) {
     import('sitemap-ext:config').then((sitemap) => {
@@ -11,11 +11,9 @@ if (Config.includedIntegrations.useInoxSitemap) {
     })
 }
 
-const { dashboardConfig: { developerConfig } } = Config;
+const { dashboardConfig: { developerConfig, dashboardRouteOverride } } = Config;
 
-function redirectToPath(path: string) {
-	return Astro.redirect(import.meta.env.BASE_URL + path);
-}
+const dashboardURL = dashboardRouteOverride || 'dashboard';
 
 const { slug } = Astro.params;
 
@@ -25,7 +23,7 @@ const pageArrayed = await db.select().from(Pages).where(eq(Pages.slug, slug));
 const page = pageArrayed[0];
 
 if (!slug || !page) {
-	return redirectToPath('dashboard/');
+	return Astro.redirect(await urlGenFactory(true, undefined, dashboardURL));
 }
 
 const contextConfig = ConfigArray.pop();
@@ -37,11 +35,11 @@ const { permissionLevel } = await authHelper(locals);
 if ( !developerConfig.testingAndDemoMode ) {
     if ( permissionLevel === "unknown" ) {
         console.log('User is not logged in. Redirecting to login page.');
-        return redirectToPath('dashboard/login');
+        return Astro.redirect(`${import.meta.env.BASE_URL}${dashboardURL}/login`);
     }
     if ( permissionLevel !== 'admin' && permissionLevel !== 'editor' ) {
         console.log('User is not an admin or editor. Redirecting to profile page.');
-        return redirectToPath('dashboard/profile');
+        return Astro.redirect(`${import.meta.env.BASE_URL}${dashboardURL}/profile`);
     }
 }
 
@@ -77,7 +75,7 @@ if (Astro.request.method === 'POST') {
 			return new Response('Error updating post', { status: 500 });
 		});
 
-    return redirectToPath('dashboard/');
+        return Astro.redirect(`${import.meta.env.BASE_URL}${dashboardURL}/`);
 }
 
 const pageTitle = `Edit Page | ${contextConfig.title}`;

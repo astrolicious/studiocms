@@ -49,6 +49,7 @@ export default defineIntegration({
 						dashboardConfig: { 
 							dashboardEnabled,
 							AuthConfig,
+							dashboardRouteOverride,
 							AuthConfig: {
 								providers,
 							},
@@ -109,6 +110,17 @@ export default defineIntegration({
 
 					// Check if the Dashboard is enabled
 					if ( dashboardEnabled && !dbStartPage ) {
+
+						let defaultDashboardRoute = "dashboard";
+
+						if (dashboardRouteOverride) {
+							defaultDashboardRoute = dashboardRouteOverride.replace(/^\//, '');
+						}
+
+						const makeRoute = (path?: string) => {
+							const output = `${defaultDashboardRoute}/${path}`;
+							return output;
+						}
 						
 						// Log that the Dashboard is enabled
 						integrationLogger(logger, verbose, 'info', 'Dashboard is Enabled');
@@ -139,56 +151,60 @@ export default defineIntegration({
 
 						// Setup the Dashboard Routes
 						injectRoute({
-							pattern: 'dashboard/',
+							pattern: makeRoute("/"),
 							entrypoint: resolve('./routes/dashboard/pages/index.astro')
 						})
 						injectRoute({
-							pattern: 'dashboard/profile/',
+							pattern: makeRoute('profile/'),
 							entrypoint: resolve('./routes/dashboard/pages/profile.astro')
 						})
 						injectRoute({
-							pattern: 'dashboard/configuration/',
+							pattern: makeRoute('configuration/'),
 							entrypoint: resolve('./routes/dashboard/pages/configuration/index.astro')
 						})
 						injectRoute({
-							pattern: 'dashboard/configuration/admins/',
+							pattern: makeRoute('configuration/admins/'),
 							entrypoint: resolve('./routes/dashboard/pages/configuration/admins.astro')
 						})
 						injectRoute({
-							pattern: 'dashboard/new/post/',
+							pattern: makeRoute('new/post/'),
 							entrypoint: resolve('./routes/dashboard/pages/new/post.astro')
 						})
 						injectRoute({
-							pattern: 'dashboard/new/page/',
+							pattern: makeRoute('new/page/'),
 							entrypoint: resolve('./routes/dashboard/pages/new/page.astro')
 						})
 						injectRoute({
-							pattern: 'dashboard/post-list/',
+							pattern: makeRoute('post-list/'),
 							entrypoint: resolve('./routes/dashboard/pages/post-list.astro')
 						})
 						injectRoute({
-							pattern: 'dashboard/page-list/',
+							pattern: makeRoute('page-list/'),
 							entrypoint: resolve('./routes/dashboard/pages/page-list.astro')
 						})
 						injectRoute({
-							pattern: 'dashboard/edit/posts/[...slug]',
+							pattern: makeRoute('edit/posts/[...slug]'),
 							entrypoint: resolve('./routes/dashboard/pages/edit/posts/[...slug].astro')
 						})
 						injectRoute({
-							pattern: 'dashboard/delete/posts/[...slug]',
+							pattern: makeRoute('delete/posts/[...slug]'),
 							entrypoint: resolve('./routes/dashboard/pages/delete/posts/[...slug].astro')
 						})
 						injectRoute({
-							pattern: 'dashboard/edit/pages/[...slug]',
+							pattern: makeRoute('edit/pages/[...slug]'),
 							entrypoint: resolve('./routes/dashboard/pages/edit/pages/[...slug].astro')
 						})
 						injectRoute({
-							pattern: 'dashboard/delete/pages/[...slug]',
+							pattern: makeRoute('delete/pages/[...slug]'),
 							entrypoint: resolve('./routes/dashboard/pages/delete/pages/[...slug].astro')
 						})
 
 						// Setup The Dashboard Authentication
 						if ( AuthConfig.enabled ) {
+							if ( testingAndDemoMode ) {
+								// Log that the Auth is bypassed in Test and Demo Mode
+								integrationLogger(logger, verbose, 'info', DashboardStrings.TestAndDemo);
+							}
 
 							// Log that the Auth is enabled
 							integrationLogger(logger, verbose, 'info', 'Auth is Enabled');
@@ -204,11 +220,11 @@ export default defineIntegration({
 
 							// Inject Login and Logout Routes
 							injectRoute({
-								pattern: 'dashboard/login',
+								pattern: makeRoute('login'),
 								entrypoint: resolve('./routes/authroutes/login/index.astro'),
 							})
 							injectRoute({
-								pattern: 'dashboard/logout',
+								pattern: makeRoute('logout'),
 								entrypoint: resolve('./routes/authroutes/logout.ts'),
 							})
 
@@ -217,11 +233,11 @@ export default defineIntegration({
 								// Log that the GitHub Auth Provider is enabled
 								integrationLogger(logger, verbose, 'info', 'GitHub Auth Provider is Enabled');
 								injectRoute({
-									pattern: 'dashboard/login/github',
+									pattern: makeRoute('login/github'),
 									entrypoint: resolve('./routes/authroutes/login/github/index.ts'),
 								});
 								injectRoute({
-									pattern: 'dashboard/login/github/callback',
+									pattern: makeRoute('login/github/callback'),
 									entrypoint: resolve('./routes/authroutes/login/github/callback.ts'),
 								});
 							} else {
@@ -232,10 +248,6 @@ export default defineIntegration({
 							// Username and Password Auth Provider
 							// **NOT YET IMPLEMENTED**
 
-						} else if ( testingAndDemoMode ) {
-							
-							// Log that the Auth is disabled
-							integrationLogger(logger, verbose, 'info', DashboardStrings.TestAndDemo);
 						} else if ( !AuthConfig.enabled ) {
 							// Log that the Auth is disabled
 							integrationLogger(logger, verbose, 'info', DashboardStrings.AuthDisabled);

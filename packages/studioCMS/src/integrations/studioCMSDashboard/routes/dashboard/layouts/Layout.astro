@@ -5,11 +5,10 @@ import Footer from "../components/Footer.astro";
 import SideBar from "../components/SideBar.astro";
 import { ViewTransitions } from "astro:transitions";
 import ThemeManager from "../components/ThemeManager.astro";
+import Config from "virtual:studiocms/config";
 
-// TO BE ENABLED AT LATER DATE
-// import Config from "virtual:studiocms/config";
-// const { dashboardConfig: { dashboardRouteOverride } } = Config;
-// const DashboardRouteOverride = dashboardRouteOverride;
+const { dashboardConfig: { dashboardRouteOverride, developerConfig: { viewTransitionAPI } } } = Config;
+const DashboardRouteOverride = dashboardRouteOverride || "dashboard";
 
 type Props = {
   title: string;
@@ -21,11 +20,9 @@ type Props = {
 const {
   title,
   description,
+  includeSidebar = true,
   sideBarActiveItemID,
 } = Astro.props;
-
-const TRANSITION_API = false;
-const DashboardRouteOverride = undefined; // TO BE ENABLED AT LATER DATE
 
 ---
 
@@ -34,7 +31,7 @@ const DashboardRouteOverride = undefined; // TO BE ENABLED AT LATER DATE
   <head>
     <ThemeManager defaultTheme="auto" />
     <BaseHead title={title} description={description} />
-    {TRANSITION_API && <ViewTransitions />}
+    {viewTransitionAPI && <ViewTransitions />}
   </head>
   <body>
     <div class="bg-base-100 drawer">
@@ -47,7 +44,7 @@ const DashboardRouteOverride = undefined; // TO BE ENABLED AT LATER DATE
         </div>
         <Footer />
       </div>
-      <SideBar sideBarActiveItemID={sideBarActiveItemID} DashboardRouteOverride={DashboardRouteOverride}/>
+      { includeSidebar && <SideBar sideBarActiveItemID={sideBarActiveItemID} DashboardRouteOverride={DashboardRouteOverride}/>}
     </div>
   </body>
 </html>

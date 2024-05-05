@@ -1,13 +1,7 @@
 ---
 import { urlGenFactory } from "studiocms:helpers"
 
-type Props = {
-    DashboardRouteOverride: string|undefined;
-}
-
-const { DashboardRouteOverride } = Astro.props;
-
-const siteURL = await urlGenFactory(false, undefined, DashboardRouteOverride)
+const siteURL = await urlGenFactory(false, undefined)
 ---
 <div
   class="sticky lg:hidden top-0 z-30 flex h-16 w-full justify-center bg-opacity-90 backdrop-blur transition-all duration-100 bg-base-100 text-base-content shadow-sm"
