@@ -1,6 +1,7 @@
 ---
 import SideBarFooter from "./SideBarFooter.astro";
 import SideBarMenu from "./SideBarMenu.astro";
+import ThemeToggleButton from "./ThemeToggleButton.astro";
 import defaultAvatar from './avatar.webp';
 import { urlGenFactory, type Locals } from "studiocms:helpers";
 
@@ -30,9 +31,10 @@ const dashURL = await urlGenFactory(true, undefined, DashboardRouteOverride)
         </div>
       </a>
     </div>
-    <div class="text-center">
+    <div class="text-center pb-2">
       Current User: <b>{userProfile.name}</b>
     </div>
+    <ThemeToggleButton />
     <SideBarMenu sideBarActiveItemID={sideBarActiveItemID} />
     <SideBarFooter />
   </aside>
