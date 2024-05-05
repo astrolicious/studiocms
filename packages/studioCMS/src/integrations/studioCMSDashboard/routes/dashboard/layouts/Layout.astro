@@ -4,12 +4,18 @@ import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import SideBar from "../components/SideBar.astro";
 import { ViewTransitions } from "astro:transitions";
+import ThemeManager from "../components/ThemeManager.astro";
+
+// TO BE ENABLED AT LATER DATE
+// import Config from "virtual:studiocms/config";
+// const { dashboardConfig: { dashboardRouteOverride } } = Config;
+// const DashboardRouteOverride = dashboardRouteOverride;
 
 type Props = {
   title: string;
   description: string;
   includeSidebar?: boolean;
-  sideBarActiveItemID?: string;
+  sideBarActiveItemID: string;
 };
 
 const {
@@ -19,12 +25,14 @@ const {
 } = Astro.props;
 
 const TRANSITION_API = false;
+const DashboardRouteOverride = undefined; // TO BE ENABLED AT LATER DATE
 
 ---
 
 <!doctype html>
 <html lang="en" data-theme="light">
   <head>
+    <ThemeManager defaultTheme="auto" />
     <BaseHead title={title} description={description} />
     {TRANSITION_API && <ViewTransitions />}
   </head>
@@ -32,7 +40,7 @@ const TRANSITION_API = false;
     <div class="bg-base-100 drawer lg:drawer-open">
       <!-- <input id="my-drawer" type="checkbox" class="drawer-toggle" /> -->
       <div class="drawer-content bg-base-100">
-        <Header title={title} />
+        <Header DashboardRouteOverride={DashboardRouteOverride}/>
         <div class="md:flex md:justify-center">
           <main class="p-6 pt-10 lg:max-w-[1800px] max-w-[100vw]">
             <slot />
@@ -40,7 +48,7 @@ const TRANSITION_API = false;
         </div>
         <Footer />
       </div>
-      <SideBar sideBarActiveItemID={sideBarActiveItemID} />
+      <SideBar sideBarActiveItemID={sideBarActiveItemID} DashboardRouteOverride={DashboardRouteOverride}/>
     </div>
   </body>
 </html>

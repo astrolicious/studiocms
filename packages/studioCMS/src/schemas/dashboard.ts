@@ -10,6 +10,14 @@ export const dashboardConfigSchema = z.object({
      */
     dashboardEnabled: z.boolean().optional().default(true),
     /**
+     * OPTIONAL - This allows the user to override the default dashboard route 
+     * 
+     * **Note: THIS IS NOT CURRENTLY IMPLEMENTED**
+     * 
+     * @default "dashboard"
+     */
+    dashboardRouteOverride: z.string().optional(),
+    /**
      * Auth Configuration - Allows customization of the Authentication Configuration
      */
     AuthConfig: authConfigSchema,
