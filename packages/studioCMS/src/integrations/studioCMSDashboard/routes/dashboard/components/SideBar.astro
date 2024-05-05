@@ -3,7 +3,7 @@ import SideBarFooter from "./SideBarFooter.astro";
 import SideBarMenu from "./SideBarMenu.astro";
 import ThemeToggleButton from "./ThemeToggleButton.astro";
 import defaultAvatar from './avatar.webp';
-import { urlGenFactory, type Locals } from "studiocms:helpers";
+import { authHelper, urlGenFactory, type Locals } from "studiocms:helpers";
 
 type Props = {
     sideBarActiveItemID: string;
@@ -12,9 +12,27 @@ type Props = {
 
 const { sideBarActiveItemID, DashboardRouteOverride } = Astro.props;
 const locals = Astro.locals as Locals;
-const userProfile = locals.dbUser;
+const { avatar, name, permissionLevel } = await authHelper(locals);
 
-const useAvatar = userProfile.avatar ? userProfile.avatar : defaultAvatar.src;
+let useAvatar: string;
+let useName: string;
+
+if ( permissionLevel === "unknown" ) {
+  useAvatar = defaultAvatar.src;
+  useName = "Guest";
+} else {
+  if ( !avatar ) {
+    useAvatar = defaultAvatar.src;
+  } else {
+    useAvatar = avatar;
+  }
+  if ( !name ) {
+    useName = "User";
+  } else {
+  useName = name;
+  }
+}
+
 
 const dashURL = await urlGenFactory(true, undefined, DashboardRouteOverride)
 
@@ -32,7 +50,7 @@ const dashURL = await urlGenFactory(true, undefined, DashboardRouteOverride)
       </a>
     </div>
     <div class="text-center pb-2">
-      Current User: <b>{userProfile.name}</b>
+      Current User: <b>{useName}</b>
     </div>
     <ThemeToggleButton />
     <SideBarMenu sideBarActiveItemID={sideBarActiveItemID} />
