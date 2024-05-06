@@ -56,7 +56,7 @@ importers:
         version: 1.19.0
       '@inox-tools/sitemap-ext':
         specifier: ^0.2.9
-        version: 0.2.9(@astrojs/db@0.10.6)(@types/node@20.12.8)(astro@4.7.0)
+        version: 0.2.11(@types/node@20.12.8)(astro@4.7.0)
       '@lucia-auth/adapter-drizzle':
         specifier: ^1.0.7
         version: 1.0.7(lucia@3.2.0)
@@ -77,7 +77,7 @@ importers:
         version: 4.7.0(@types/node@20.12.8)(typescript@5.4.5)
       astro-integration-kit:
         specifier: ^0.13.1
-        version: 0.13.1(@astrojs/db@0.10.6)(astro@4.7.0)
+        version: 0.13.1(astro@4.7.0)
       lucia:
         specifier: ^3.2.0
         version: 3.2.0
@@ -504,7 +504,7 @@ packages:
     dependencies:
       sitemap: 7.1.1
       stream-replace-string: 2.0.0
-      zod: 3.23.5
+      zod: 3.23.6
     dev: false
 
   /@astrojs/starlight@0.22.1(astro@4.7.0):
@@ -2083,14 +2083,15 @@ packages:
     dev: false
     optional: true
 
-  /@inox-tools/aik-route-config@0.5.0(@types/node@20.12.8)(astro-integration-kit@0.13.1)(astro@4.7.0):
-    resolution: {integrity: sha512-/jAGTiPFX2om8Pez5jWGUj/6aI/doVZflVRjNNP85VAy79gl5KwPhM99FYGH6JUPGeTLsDJOsLouyT+pJRBZfw==}
+  /@inox-tools/aik-route-config@0.5.2(@types/node@20.12.8)(astro-integration-kit@0.13.1)(astro@4.7.0):
+    resolution: {integrity: sha512-67DFZlI+chMjc0dbCB3gy3Gc7SZ/SSxz2EpZfjEVBuWw2yzeI0zhHS5exz/V9MbuxSMY9ZQ3SR0ZeWoFki9UBw==}
     peerDependencies:
       astro: ^4.3.5
       astro-integration-kit: ~0.13
     dependencies:
+      '@inox-tools/utils': 0.1.1
       astro: 4.7.0(@types/node@20.12.8)(typescript@5.4.5)
-      astro-integration-kit: 0.13.1(@astrojs/db@0.10.6)(astro@4.7.0)
+      astro-integration-kit: 0.13.1(astro@4.7.0)
       recast: 0.23.6
       vite: 5.2.11(@types/node@20.12.8)
     transitivePeerDependencies:
@@ -2103,15 +2104,15 @@ packages:
       - terser
     dev: false
 
-  /@inox-tools/sitemap-ext@0.2.9(@astrojs/db@0.10.6)(@types/node@20.12.8)(astro@4.7.0):
-    resolution: {integrity: sha512-V0SQ89WzVuCiNQHsU7llCCY+MIOtFOCY8K3/dUhHM1iqfDM+vSOoVYOrO1RBJRANMu7V46x0ADI1H2fI6EP1XQ==}
+  /@inox-tools/sitemap-ext@0.2.11(@types/node@20.12.8)(astro@4.7.0):
+    resolution: {integrity: sha512-6Ma70vJ6+acew5Moqmia6ey9Os9b6VywJwNChtlsLuEEJ0rRFizYpRzWfvD6RP6vU1d//AQLSv0fgg9GjbPOLg==}
     peerDependencies:
       astro: ^4.3.5
     dependencies:
       '@astrojs/sitemap': 3.1.4
-      '@inox-tools/aik-route-config': 0.5.0(@types/node@20.12.8)(astro-integration-kit@0.13.1)(astro@4.7.0)
+      '@inox-tools/aik-route-config': 0.5.2(@types/node@20.12.8)(astro-integration-kit@0.13.1)(astro@4.7.0)
       astro: 4.7.0(@types/node@20.12.8)(typescript@5.4.5)
-      astro-integration-kit: 0.13.1(@astrojs/db@0.10.6)(astro@4.7.0)
+      astro-integration-kit: 0.13.1(astro@4.7.0)
       sitemap: 7.1.1
     transitivePeerDependencies:
       - '@astrojs/db'
@@ -2122,6 +2123,10 @@ packages:
       - stylus
       - sugarss
       - terser
+    dev: false
+
+  /@inox-tools/utils@0.1.1:
+    resolution: {integrity: sha512-RXtCDrY4YR86WkC+B2ihXlNT+lK4yqZ3x48Ub4Mq1oR/fOK9rvWGRcQaXO5OPRyi7lB9hisNQvzys7gJmMYivg==}
     dev: false
 
   /@isaacs/cliui@8.0.2:
@@ -3497,7 +3502,7 @@ packages:
       - supports-color
     dev: false
 
-  /astro-integration-kit@0.13.1(@astrojs/db@0.10.6)(astro@4.7.0):
+  /astro-integration-kit@0.13.1(astro@4.7.0):
     resolution: {integrity: sha512-c/VEvRXJdnKa7/Y4s9CYr81L7Vvue7Bijtgp2TKuf9etCXiMDzEzQ3C5RdjMCzRI68VlKuVblfnLmY4iWizFdg==}
     peerDependencies:
       '@astrojs/db': ^0.9 || ^0.10
@@ -3506,7 +3511,6 @@ packages:
       '@astrojs/db':
         optional: true
     dependencies:
-      '@astrojs/db': 0.10.6
       astro: 4.7.0(@types/node@20.12.8)(typescript@5.4.5)
       pathe: 1.1.2
       recast: 0.23.6
@@ -9184,6 +9188,10 @@ packages:
 
   /zod@3.23.5:
     resolution: {integrity: sha512-fkwiq0VIQTksNNA131rDOsVJcns0pfVUjHzLrNBiF/O/Xxb5lQyEXkhZWcJ7npWsYlvs+h0jFWXXy4X46Em1JA==}
+    dev: false
+
+  /zod@3.23.6:
+    resolution: {integrity: sha512-RTHJlZhsRbuA8Hmp/iNL7jnfc4nZishjsanDAfEY1QpDQZCahUp3xDzl+zfweE9BklxMUcgBgS1b7Lvie/ZVwA==}
     dev: false
 
   /zwitch@2.0.4:
