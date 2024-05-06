@@ -1,0 +1,127 @@
+---
+// @ts-expect-error - Some types can only be imported from the Astro runtime
+import { SiteConfig, db, eq } from 'astro:db';
+import BaseLayout from "../../layouts/Layout.astro";
+import Config from 'virtual:studiocms/config';
+import { authHelper, urlGenFactory, type Locals } from 'studiocms:helpers';
+
+if (Config.includedIntegrations.useInoxSitemap) {
+    import('sitemap-ext:config').then((sitemap) => {
+        sitemap.default(false)
+    })
+}
+
+const { dashboardConfig: { developerConfig, dashboardRouteOverride } } = Config;
+
+const dashboardURL = dashboardRouteOverride || 'dashboard';
+
+const ConfigArray = await db.select().from(SiteConfig);
+const contextConfig = ConfigArray.pop();
+
+const locals = Astro.locals as Locals;
+const { permissionLevel } = await authHelper(locals);
+
+// If the user is not logged in, redirect to the login page
+if ( !developerConfig.testingAndDemoMode ) {
+    if ( permissionLevel === "unknown" ) {
+        console.log('User is not logged in. Redirecting to login page.');
+        return Astro.redirect(await urlGenFactory(true, "login", dashboardURL));
+    }
+    if ( permissionLevel !== 'admin' ) {
+        console.log('User is not an admin. Redirecting to profile page.');
+        return Astro.redirect(await urlGenFactory(true, "profile", dashboardURL));
+    }
+}
+
+let showSuccessToast = false;
+let showErrorToast = false;
+
+if (Astro.request.method === 'POST' && !developerConfig.testingAndDemoMode) {
+    try {
+        const data = await Astro.request.formData();
+        const title = data.get('title');
+        const description = data.get('description');
+        // Update the site configuration
+        await db
+            .update(SiteConfig)
+            .set({
+                title: title as string,
+                description: description as string,
+            })
+            .where(eq(SiteConfig.id, '1'))
+            .then(() => {
+                showSuccessToast = true;
+            })
+            .catch(() => {
+                showErrorToast = true;
+            });
+    } catch (error) {
+        if (error instanceof Error) {
+            showErrorToast = true;
+        }
+    }
+}
+
+const pageTitle = `Site Config | ${contextConfig.title}`;
+---
+
+<BaseLayout 
+    sideBarActiveItemID="site-config" 
+    title={pageTitle}
+    description={contextConfig.description} >
+    <div class="alert-toast">
+        { showSuccessToast && (
+        <sl-alert variant="success" duration="3000" open closable>
+            <sl-icon slot="icon" name="check2-circle"></sl-icon>
+            <strong>Site Config Updated!</strong><br />
+            You can safely leave this page now.
+        </sl-alert>
+        )}
+        { showErrorToast && (
+        <sl-alert variant="danger" duration="3000" open closable>
+            <sl-icon slot="icon" name="exclamation-octagon"></sl-icon>
+            <strong>Error Updating Site Config</strong><br />
+            There was an Error editing the site config. Please try again.
+        </sl-alert>
+        )}
+    </div>
+    <div class="mt-5">
+
+        <div class="text-5xl font-bold">Site Configuration</div>
+
+        <div class="py-4">
+            <a 
+                href={import.meta.env.BASE_URL + 'dashboard/configuration/admins/'} 
+                class="btn btn-outline ml-5" 
+                type="submit" >
+                Manage Admins
+            </a>
+        </div>
+
+        <div class="py-2">
+            <form method="post" enctype="multipart/form-data" >
+                <label for="title" class="text-lg">Site Title</label><br />
+                <input 
+                    type="text" 
+                    id="title" 
+                    name="title" 
+                    class="border-solid border-2 border-gray-300 rounded-lg p-2 w-96"
+                    value={contextConfig.title} 
+                    required><br /><br />
+                <label for="description" class="text-lg">Description</label><br />
+                <input
+                    type="text" 
+                    id="description" 
+                    name="description" 
+                    class="border-solid border-2 border-gray-300 rounded-lg p-2 w-96"
+                    value={contextConfig.description}
+                    required><br /><br />
+    
+                <center class="py-2">
+                    <button class="btn btn-outline ml-5" type="submit">Update!</button>
+                </center>
+    
+            </form>
+        </div>
+    </div>
+</BaseLayout>

@@ -1,0 +1,260 @@
+---
+// @ts-expect-error - Some types can only be imported from the Astro runtime
+import { Blog, Pages, Permissions, SiteConfig, db, eq } from 'astro:db';
+import SetupLayout from './Setup.astro';
+import Config from 'virtual:studiocms/config';
+
+if (Config.includedIntegrations.useInoxSitemap) {
+    import('sitemap-ext:config').then((sitemap) => {
+        sitemap.default(false)
+    })
+}
+
+function redirectToPath(path: string) {
+	return Astro.redirect(import.meta.env.BASE_URL + path);
+}
+
+const LOREM_IPSUM =
+	'## Hello World \nLorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.';
+
+export const getAstroBaseURL = () => {
+	return import.meta.env.BASE_URL;
+};
+
+if (Astro.request.method === 'POST') {
+	const formData = await new Request(Astro.request.url, {
+		method: Astro.request.method,
+		headers: Astro.request.headers,
+		body: Buffer.from(await Astro.request.arrayBuffer()),
+	}).formData();
+
+	const title = formData.get('title');
+	const description = formData.get('description');
+	const admin = formData.get('admin');
+	const ConfigArrayed = await db.select().from(SiteConfig).where(eq(SiteConfig.id, 1));
+	const AdminExistCheck = await db
+		.select()
+		.from(Permissions)
+		.where(eq(Permissions.username, admin as string));
+	const existingConfig = ConfigArrayed[0];
+
+	if (existingConfig) {
+		await db
+			.update(SiteConfig)
+			.set({
+				title: title as string,
+				description: description as string,
+			})
+			.where(eq(SiteConfig.id, 1))
+			.then(() => {
+				return new Response('Success', { status: 200 });
+			})
+			.catch(() => {
+				return new Response('Error setting SiteConfig', { status: 500 });
+			});
+	} else {
+		await db
+			.insert(SiteConfig)
+			.values({
+				title: title as string,
+				description: description as string,
+			})
+			.then(() => {
+				return new Response('Success', { status: 200 });
+			})
+			.catch(() => {
+				return new Response('Error setting SiteConfig', { status: 500 });
+			});
+	}
+
+	if (AdminExistCheck) {
+		console.log(`Admin ${admin} already exists, continuing without adding`);
+	} else {
+		await db
+			.insert(Permissions)
+			.values({
+				username: admin as string,
+                rank: 'admin',
+			})
+			.then(() => {
+				return new Response('Success', { status: 200 });
+			})
+			.catch(() => {
+				return new Response('Error setting Admin', { status: 500 });
+			});
+	}
+
+	await db
+		.insert(Pages)
+		.values([
+			{
+				title: 'Home',
+				slug: 'index',
+				description: 'Index page',
+				heroImage:
+					'https://images.unsplash.com/photo-1707343843982-f8275f3994c5?q=80&w=1032&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+				content: LOREM_IPSUM,
+			},
+			{
+				title: 'About',
+				slug: 'about',
+				description: 'About page',
+				heroImage:
+					'https://images.unsplash.com/photo-1661174585122-83a2909163ad?q=80&w=1169&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+				content: LOREM_IPSUM,
+			},
+		])
+		.then(() => {
+			return new Response('Success', { status: 200 });
+		})
+		.catch(() => {
+			return new Response('Error Adding Pages data', { status: 500 });
+		});
+
+	await db
+		.insert(Blog)
+		.values([
+			{
+				title: 'Hello, World!',
+				slug: 'hello-world',
+				description: 'Lorem ipsum dolor sit amet',
+				publishedAt: new Date('2024-03-12T07:00:00Z'),
+				heroImage:
+					'https://images.unsplash.com/photo-1707343843982-f8275f3994c5?q=80&w=1032&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+				content: LOREM_IPSUM,
+			},
+		])
+		.then(() => {
+			return new Response('Success', { status: 200 });
+		})
+		.catch(() => {
+			return new Response('Error Adding Blog Data', { status: 500 });
+		});
+
+	return redirectToPath('done/');
+}
+---
+
+<SetupLayout>
+            <center>
+                <h2>Welcome to StudioCMS</h2>
+            </center>
+
+            <p>
+                <bold>What is StudioCMS?</bold> <br>
+                StudioCMS is a simple, easy to use, and fast CMS for Astro. It's built with the latest technologies and is designed to be as simple as possible. It's also open source and free to use. <br>
+                <bold>How do I use it?</bold> <br>
+                To use StudioCMS, you need to have a basic understanding of Astro and how it works. As well as StudioCMS. You can use the CMS to create, edit, and delete posts. You can also use it to manage your site's settings and more. <br>
+                <bold>What's next?</bold> <br>
+                The next step is to start by filling in your site details below!<br>
+            </p>
+
+            <div>
+
+                <center>
+                    <h4>Site Configuration</h4>
+                </center>
+
+                <form method="post" enctype="multipart/form-data" >
+                
+                    <label for="title">Site Title</label><br>
+                    <input 
+                        type="text" 
+                        id="title" 
+                        name="title" 
+                        placeholder="Astro Studio Blog" 
+                        required><br>
+                    <label for="description">Description</label><br>
+                    <input
+                        type="text" 
+                        id="description" 
+                        name="description" 
+                        placeholder="My Awesome Blog"
+                        required><br>
+                    <label for="admin">Default Site Admin <info>( Just set one, You can add more later )</info> </label><br>
+                    <input
+                        type="text" 
+                        id="admin" 
+                        name="admin" 
+                        placeholder="YourGitHubUsername"
+                        required><br>
+
+                    <center>
+                        <button class="btn" type="submit">Initialize Database!</button>
+                    </center>
+
+                </form>
+
+                
+            </div>
+</SetupLayout>
+
+<style>
+    bold {
+        font-weight: bold;
+    }
+    .font-small {
+        font-size: 1rem;
+    }
+    .dash-header {
+        display: flex;
+        justify-content: space-between;
+    }
+    .right {
+        display: flex;
+        justify-content: flex-end;
+        padding-right: 4rem;
+    }
+    .left {
+        display: flex;
+        justify-content: flex-start;
+        padding-left: 4rem;
+    }
+    button {
+        padding: 1rem;
+        background-color: rgb(202, 0, 0);
+        font-weight: bold;
+        color: #fff;
+        border: none;
+        border-radius: 99rem;
+        cursor: pointer;
+    }
+    .btn {
+        padding: 1rem;
+        background-color: rgb(0, 37, 202);
+        font-weight: bold;
+        color: #fff;
+        border: none;
+        border-radius: 99rem;
+        cursor: pointer;
+    }
+    input {
+        background-color: #f4f4f4;
+        border-radius: 10px;
+        padding: 0.25rem;
+        border: rgb(124, 124, 124) 1px solid;
+        width: 35vmax;
+    }
+    textarea {
+        background-color: #f4f4f4;
+        border-radius: 10px;
+        padding: 0.25rem;
+        border: rgb(124, 124, 124) 1px solid;
+        width: 100%;
+    }
+    label {
+        font-size: large;
+        font-weight: bold;
+    }
+    .info-text {
+        font-size: small;
+        display: inline;
+        font-style: italic;
+    }
+    info {
+        font-size: small;
+        display: inline;
+        font-style: italic;
+    }
+
+</style>

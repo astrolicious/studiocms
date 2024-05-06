@@ -1,7 +1,7 @@
 // @ts-expect-error - Types are only available during runtime
 import { Permissions, db, eq } from 'astro:db';
 import type { Locals } from '../schemas/locals';
-import { lucia } from '../lib/auth';
+import { lucia } from 'studiocms-dashboard:auth';
 import type { Session } from 'lucia';
 
 type authHelperResponse = {

@@ -1,8 +1,9 @@
 import { z } from 'astro/zod';
-import { authConfigSchema } from './auth';
 import { imageServiceSchema } from './imageService';
 import { includedIntegrationsSchema } from './integrations';
 import { markedConfigSchema } from './marked';
+import { dashboardConfigSchema } from './dashboard';
+import { overridesSchema } from './componentoverrides';
 
 //
 // MAIN SCHEMA
@@ -36,9 +37,11 @@ export const optionsSchema = z
 		 */
 		imageService: imageServiceSchema,
 		/**
-		 * Allows customization of the Authentication Configuration
+		 * Allows customization of the Dashboard Configuration
+		 * 
+		 * Coming soon....
 		 */
-		authConfig: authConfigSchema,
+		dashboardConfig: dashboardConfigSchema,
 		/**
 		 * Allows enabling and disabling of the included integrations
 		 */
@@ -50,12 +53,7 @@ export const optionsSchema = z
 		/**
 		 * Component Overrides - Allows for customizing the components used in StudioCMS
 		 */
-		overrides: z.object({
-			/**
-			 * Allows overriding the default content renderer
-			 */
-			RendererOverride: z.string().optional(),
-		}).optional().default({}),
+		overrides: overridesSchema,
 		/**
 		 * Whether to show verbose output
 		 * @default false

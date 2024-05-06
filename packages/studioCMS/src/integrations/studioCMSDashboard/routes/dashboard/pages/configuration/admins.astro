@@ -1,0 +1,155 @@
+---
+// @ts-expect-error - Some types can only be imported from the Astro runtime
+import { Permissions, SiteConfig, db, eq } from 'astro:db';
+import BaseLayout from "../../layouts/Layout.astro";
+import Config from 'virtual:studiocms/config';
+import { authHelper, urlGenFactory, type Locals } from 'studiocms:helpers';
+
+if (Config.includedIntegrations.useInoxSitemap) {
+    import('sitemap-ext:config').then((sitemap) => {
+        sitemap.default(false)
+    })
+}
+
+const { dashboardConfig: { developerConfig, dashboardRouteOverride } } = Config;
+
+const dashboardURL = dashboardRouteOverride || 'dashboard';
+
+const ConfigArray = await db.select().from(SiteConfig);
+const adminList = await db.select().from(Permissions);
+
+const contextConfig = ConfigArray.pop();
+
+const locals = Astro.locals as Locals;
+const { permissionLevel } = await authHelper(locals);
+
+// If the user is not logged in, redirect to the login page
+if ( !developerConfig.testingAndDemoMode ) {
+    if ( permissionLevel === "unknown" ) {
+        console.log('User is not logged in. Redirecting to login page.');
+        return Astro.redirect(await urlGenFactory(true, "login", dashboardURL));
+    }
+    if ( permissionLevel !== 'admin' ) {
+        console.log('User is not an admin. Redirecting to profile page.');
+        return Astro.redirect(await urlGenFactory(true, "profile", dashboardURL));
+    }
+}
+
+let showSuccessToast = false;
+let showErrorToast = false;
+
+if (Astro.request.method === 'POST' && !developerConfig.testingAndDemoMode) {
+    try {
+        const data = await Astro.request.formData();
+        const admin = data.get('admins');
+        const rank = data.get('rank');
+
+        await db
+            .insert(Permissions)
+            .values({
+                username: admin as string,
+                rank: rank as string,
+            })
+            .then(() => {
+                showSuccessToast = true;
+            })
+            .catch(() => {
+                showErrorToast = true;
+            });
+    } catch (error) {
+        if (error instanceof Error) {
+            showErrorToast = true;
+        }
+    }
+}
+
+const pageTitle = `Site Config | ${contextConfig.title}`;
+---
+
+<BaseLayout 
+    sideBarActiveItemID="site-config" 
+    title={pageTitle}
+    description={contextConfig.description} >
+    <div class="alert-toast">
+        { showSuccessToast && (
+        <sl-alert variant="success" duration="3000" open closable>
+            <sl-icon slot="icon" name="check2-circle"></sl-icon>
+            <strong>New Admin Added!</strong><br />
+            You can safely leave this page now.
+        </sl-alert>
+        )}
+        { showErrorToast && (
+        <sl-alert variant="danger" duration="3000" open closable>
+            <sl-icon slot="icon" name="exclamation-octagon"></sl-icon>
+            <strong>Error adding Admin!</strong><br />
+            There was an Error adding the new Admin. Please try again.
+        </sl-alert>
+        )}
+    </div>
+    <div class="pb-4 mt-5">
+
+        <div class="text-5xl font-bold">Site Admins</div>
+
+        <div class="py-2">
+            <div class="text-xl">Current Admins:</div>
+
+            <div class="relative overflow-x-auto">
+                <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                        <tr>
+                            <th scope="col" class="px-6 py-3">Username</th>
+                            <th scope="col" class="px-6 py-3">Rank</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {
+                            adminList.map((admin: typeof Permissions.$inferSelect) => {
+                                return (
+                                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{admin.username}</th>
+                                        <td class="px-6 py-4">{admin.rank}</td>
+                                    </tr>
+                                )
+                            })
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="py-2">
+            <text>
+                Note: To delete admins you can do this from your Astro Studio Dashboard.
+            </text>
+        </div>
+
+        <div class="py-2">
+            <form method="post" enctype="multipart/form-data" >
+                    
+                <label for="admins" class="text-lg">Add New Admin or Editor</label><br>
+                <input 
+                    type="text" 
+                    id="admins" 
+                    name="admins" 
+                    class="border-solid border-2 border-gray-300 rounded-lg p-2 w-96"
+                    placeholder="GitHubUsername"
+                    required><br>
+                <label for="rank" class="text-lg">User Rank ("admin" or "editor")</label><br>
+                <input 
+                    type="text" 
+                    id="rank" 
+                    name="rank" 
+                    class="border-solid border-2 border-gray-300 rounded-lg p-2 w-96"
+                    placeholder="admin / editor"
+                    value="editor"
+                    required><br>
+                <center class="py-2">
+                    <button class="btn btn-outline ml-5" type="submit">Add!</button>
+                </center>
+        
+            </form>
+        </div>
+
+    </div>
+</BaseLayout>
+

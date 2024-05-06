@@ -7,7 +7,11 @@ import type { Locals } from '../schemas/locals';
 import HeaderLink from './HeaderLink.astro';
 
 const {
-	authConfig: { mode },
+	dashboardConfig: { 
+		AuthConfig: {
+			enabled,
+		}, 
+	},
 } = Config;
 
 const locals = Astro.locals as Locals;
@@ -30,7 +34,7 @@ const baseURL = import.meta.env.BASE_URL;
 			<HeaderLink href=`${baseURL}about`>About</HeaderLink>
 		</div>
 		<div class="profile-link">
-			{ mode !== "disable" && (isLoggedIn ? (
+			{ enabled !== false && (isLoggedIn ? (
 					<a href={`${baseURL}dashboard`} title="User Dashboard">
 					<img
 						src={userProfile.avatar}
@@ -48,7 +52,7 @@ const baseURL = import.meta.env.BASE_URL;
 					</a>
 				))
 			}
-			{ mode === "disable" && (
+			{ enabled === false && (
 				<a href="#" aria-disabled="true" title="Please Edit your Database through your Studio Dashboard">
 					<img 
 						src={profileImg.src} 

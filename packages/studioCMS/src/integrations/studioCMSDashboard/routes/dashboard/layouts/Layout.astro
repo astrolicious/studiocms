@@ -1,0 +1,67 @@
+---
+import BaseHead from "../components/BaseHead.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import SideBar from "../components/SideBar.astro";
+// import { ViewTransitions } from "astro:transitions";
+import ThemeManager from "../components/ThemeManager.astro";
+import Config from "virtual:studiocms/config";
+
+const { 
+  dashboardConfig: { 
+    dashboardRouteOverride,
+    // developerConfig: {
+    //   viewTransitionAPI
+    // },
+    UnoCSSConfigOverride: {
+      presetsConfig: {
+        presetDaisyUI: {
+          lightTheme,
+        }
+      }
+    }
+  } 
+} = Config;
+
+const DashboardRouteOverride = dashboardRouteOverride || "dashboard";
+
+type Props = {
+  title: string;
+  description: string;
+  includeSidebar?: boolean;
+  sideBarActiveItemID: string;
+};
+
+const {
+  title,
+  description,
+  includeSidebar = true,
+  sideBarActiveItemID,
+} = Astro.props;
+
+// const includeViewTransitions = false;
+
+---
+
+<!doctype html>
+<html lang="en" data-theme={lightTheme}>
+  <head>
+    <ThemeManager defaultTheme="auto" />
+    <BaseHead title={title} description={description} />
+    <!-- { includeViewTransitions && <ViewTransitions />} -->
+  </head>
+  <body>
+    <div class="bg-base-100 drawer">
+      <div class="drawer-content bg-base-100">
+        <Header DashboardRouteOverride={DashboardRouteOverride}/>
+        <div class="md:flex md:justify-center">
+          <main class="p-6 pt-10 lg:max-w-[1800px] max-w-[100vw]">
+            <slot />
+          </main>
+        </div>
+        <Footer />
+      </div>
+      { includeSidebar && <SideBar sideBarActiveItemID={sideBarActiveItemID} DashboardRouteOverride={DashboardRouteOverride}/>}
+    </div>
+  </body>
+</html>

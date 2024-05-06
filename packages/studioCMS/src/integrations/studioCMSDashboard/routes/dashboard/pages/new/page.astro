@@ -1,0 +1,200 @@
+---
+// @ts-expect-error - Some types can only be imported from the Astro runtime
+import { Pages, SiteConfig, db, eq } from 'astro:db';
+import BaseLayout from "../../layouts/Layout.astro";
+import Config from 'virtual:studiocms/config';
+import { authHelper, urlGenFactory, type Locals } from 'studiocms:helpers';
+
+if (Config.includedIntegrations.useInoxSitemap) {
+    import('sitemap-ext:config').then((sitemap) => {
+        sitemap.default(false)
+    })
+}
+
+const { dashboardConfig: { developerConfig, dashboardRouteOverride } } = Config;
+
+const dashboardURL = dashboardRouteOverride || 'dashboard';
+
+const ConfigArray = await db.select().from(SiteConfig);
+const contextConfig = ConfigArray.pop();
+
+const locals = Astro.locals as Locals;
+const { permissionLevel } = await authHelper(locals);
+
+// If the user is not logged in, redirect to the login page
+if ( !developerConfig.testingAndDemoMode ) {
+    if ( permissionLevel === "unknown" ) {
+        console.log('User is not logged in. Redirecting to login page.');
+        return Astro.redirect(await urlGenFactory(true, "login", dashboardURL));
+    }
+    if ( permissionLevel !== 'admin' && permissionLevel !== 'editor' ) {
+        console.log('User is not an admin or editor. Redirecting to profile page.');
+        return Astro.redirect(await urlGenFactory(true, "profile", dashboardURL));
+    }
+}
+
+let showSuccessToast = false;
+let showErrorToast = false;
+let showSlugErrorToast = false;
+
+if (Astro.request.method === 'POST' && !developerConfig.testingAndDemoMode) {
+  try {
+    const data = await Astro.request.formData();
+	const title = data.get('title');
+	const slug = data.get('slug');
+	const description = data.get('description');
+	const heroImage = data.get('hero-image');
+	const content = data.get('content');
+
+	const postArrayed = await db
+		.select()
+		.from(Pages)
+		.where(eq(Pages.slug, slug as string));
+	const existingPost = postArrayed[0];
+
+	if (existingPost) {
+        showSlugErrorToast = true;
+	} else {
+        await db
+            .insert(Pages)
+            .values({
+                title: title as string,
+                slug: slug as string,
+                description: description as string,
+                heroImage: heroImage as string,
+                content: content as string,
+            })
+            .then(() => {
+                showSuccessToast = true;
+            })
+            .catch(() => {
+                showErrorToast = true;
+            });
+    }
+    } catch (error) {
+    if (error instanceof Error) {
+        showErrorToast = true;
+    }
+  }
+}
+
+const pageTitle = `New Page | ${contextConfig.title}`;
+---
+
+<BaseLayout 
+    sideBarActiveItemID="new-page" 
+    title={pageTitle}
+    description={contextConfig.description} >
+    <div class="alert-toast">
+        { showSuccessToast && (
+        <sl-alert variant="success" duration="3000" open closable>
+            <sl-icon slot="icon" name="check2-circle"></sl-icon>
+            <strong>New Page Created!</strong><br />
+            You can safely leave this page now.
+        </sl-alert>
+        )}
+        { showErrorToast && (
+        <sl-alert variant="danger" duration="3000" open closable>
+            <sl-icon slot="icon" name="exclamation-octagon"></sl-icon>
+            <strong>Error Creating Page</strong><br />
+            There was an Error Creating the Page. Please try again.
+        </sl-alert>
+        )}
+        { showSlugErrorToast && (
+        <sl-alert variant="warning" duration="3000" open closable>
+            <sl-icon slot="icon" name="exclamation-triangle"></sl-icon>
+            <strong>Page With Slug Already Exists!</strong><br />
+            A page with that slug already exists. Please choose a different slug.
+        </sl-alert>
+        )}
+    </div>
+    <div class="pb-12 mt-5">
+
+        <div class="text-5xl font-bold">Create New Page</div>
+
+        <div class="py-2">
+
+            <center>
+
+                <form method="post" enctype="multipart/form-data" >
+                    <label for="title" class="text-lg">Page Title</label><br>
+                    <input 
+                        type="text" 
+                        id="title" 
+                        name="title" 
+                        class="border-solid border-2 border-gray-300 rounded-lg p-2 w-96"
+                        placeholder="Your Page Title" 
+                        required><br>
+                    <label for="slug" class="text-lg">Slug</label><br>
+                    <input 
+                        type="text" 
+                        id="slug" 
+                        name="slug" 
+                        class="border-solid border-2 border-gray-300 rounded-lg p-2 w-96"
+                        placeholder="your-page-slug"
+                        required><br>
+                    <label for="description" class="text-lg">Description</label><br>
+                    <input
+                        type="text" 
+                        id="description" 
+                        name="description" 
+                        class="border-solid border-2 border-gray-300 rounded-lg p-2 w-96"
+                        placeholder="Your Page's basic description"
+                        required><br>
+                    <label for="hero-image" class="text-lg">Hero Image</label><br>
+                    <p class="text-sm">To use images stored in your public/ folder use the following example: <pre>/my-image.png</pre></p><br>
+                    <input 
+                        type="text" 
+                        id="hero-image" 
+                        name="hero-image" 
+                        class="border-solid border-2 border-gray-300 rounded-lg p-2 w-96"
+                        placeholder="Your post's hero image URL"
+                        value="https://images.unsplash.com/photo-1707345512638-997d31a10eaa?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                        required><br>
+                    <label for="content" class="text-lg">Content</label><br>
+                    <div id="editor">
+                        <textarea 
+                            id="content" 
+                            name="content" 
+                            class="border-solid border-2 border-gray-300 rounded-lg p-2 w-full"
+                            data-provide="markdown" 
+                            rows="10" 
+                            placeholder="Your post's content in markdown format."
+                            required></textarea>
+                    </div><br>
+        
+                    <button class="btn btn-outline ml-5 py-2" type="submit">Create!</button><br><br>
+        
+                </form>
+
+            </center>
+
+            <div class="text-xl font-bold">Live Preview</div>
+            <div id="html-preview" class="border-solid border-2 border-gray-300 rounded-lg p-2 max-w-[100vw] lg:max-w-[1800px] prose"></div><br><br>
+        </div>
+
+    </div>
+</BaseLayout>
+
+<script>
+    import Config from 'virtual:studiocms/config';
+    import { renderMarked } from '../../../../../../utils/marked';
+    import { renderMarkDoc } from '../../../../../../utils/markdoc';
+    
+            document.getElementById('content')?.addEventListener('input', async function () {
+                const markdownContent = document.getElementById('content');
+                const htmlPreview = document.getElementById('html-preview');
+
+                if (Config.contentRenderer === 'marked' ) {
+                    //@ts-ignore
+                    const htmlContent = await renderMarked(markdownContent.value);
+                    //@ts-ignore
+                    htmlPreview.innerHTML = htmlContent;
+                } else if (Config.contentRenderer === 'markdoc') {
+                    //@ts-ignore
+                    const htmlContent = await renderMarkDoc(markdownContent.value);
+                    //@ts-ignore
+                    htmlPreview.innerHTML = htmlContent;
+                }
+            });
+</script>

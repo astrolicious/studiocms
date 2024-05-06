@@ -1,0 +1,57 @@
+---
+import SideBarFooter from "./SideBarFooter.astro";
+import SideBarMenu from "./SideBarMenu.astro";
+import ThemeToggleButton from "./ThemeToggleButton.astro";
+import defaultAvatar from './avatar.webp';
+import { authHelper, urlGenFactory, type Locals } from "studiocms:helpers";
+
+type Props = {
+    sideBarActiveItemID: string;
+    DashboardRouteOverride?: string|undefined;
+}
+
+const { sideBarActiveItemID, DashboardRouteOverride } = Astro.props;
+const locals = Astro.locals as Locals;
+const { avatar, name, permissionLevel } = await authHelper(locals);
+
+let useAvatar: string;
+let useName: string;
+
+if ( permissionLevel === "unknown" ) {
+  useAvatar = defaultAvatar.src;
+  useName = "Guest";
+} else {
+  if ( !avatar ) {
+    useAvatar = defaultAvatar.src;
+  } else {
+    useAvatar = avatar;
+  }
+  if ( !name ) {
+    useName = "User";
+  } else {
+  useName = name;
+  }
+}
+
+const dashURL = await urlGenFactory(true, undefined, DashboardRouteOverride)
+---
+
+<div class="z-40">
+  <aside class="px-2 pt-2 h-auto min-h-full w-[19rem] bg-base-200 text-base-content flex flex-col">
+    <div class="w-fit mx-auto mt-5 mb-6">
+      <a href={dashURL}>
+        <div class="avatar transition ease-in-out hover:scale-[102%] block m-auto">
+          <div class="w-[8.5rem] rounded-full">
+            <img width={300} height={300} src={useAvatar} alt={useName} />
+          </div>
+        </div>
+      </a>
+    </div>
+    <div class="text-center pb-2">
+      Current User: <b>{useName}</b>
+    </div>
+    <ThemeToggleButton />
+    <SideBarMenu sideBarActiveItemID={sideBarActiveItemID} />
+    <SideBarFooter />
+  </aside>
+</div>

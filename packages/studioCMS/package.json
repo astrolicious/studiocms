@@ -41,13 +41,22 @@
   "dependencies": {
     "@astrojs/rss": "^4.0.5",
     "@cloudinary/url-gen": "^1.19.0",
-    "@inox-tools/sitemap-ext": "^0.2.9",
+    "@iconify-json/mdi": "^1.1.66",
+    "@inox-tools/sitemap-ext": "^0.2.11",
     "@lucia-auth/adapter-drizzle": "^1.0.7",
     "@markdoc/markdoc": "^0.4.0",
     "@shikijs/transformers": "^1.3.0",
+    "@unocss/astro": "0.59.4",
+    "@unocss/reset": "0.59.4",
+    "@unocss/preset-uno": "0.59.4",
+    "@unocss/preset-wind": "0.59.4",
+    "@unocss/preset-typography": "0.59.4",
+    "@unocss/transformer-directives": "0.59.4",
     "@unpic/astro": "^0.0.46",
+    "@yangyang20240403/unocss-preset-daisyui": "^1.0.0",
     "arctic": "^1.8.0",
-    "astro-integration-kit": "^0.13.1",
+    "astro-integration-kit": "^0.13.2",
+    "daisyui": "^4.4.23",
     "lucia": "^3.2.0",
     "marked": "^12.0.2",
     "marked-alert": "^2.0.1",
@@ -58,13 +67,14 @@
     "shiki": "^1.3.0",
     "typescript": "^5.4.5",
     "unpic": "^3.18.0",
+    "unocss": "^0.59.4",
     "vite": "^5.2.10",
     "pathe": "^1.1.2",
     "recast": "^0.23.5"
   },
   "peerDependencies": {
-    "@astrojs/db": ">=0.10.6",
-    "astro": ">=4.7.0"
+    "@astrojs/db": ">=0.11.0",
+    "astro": ">=4.7.1"
   },
   "devDependencies": {
     "@types/node": "20.12.8"
