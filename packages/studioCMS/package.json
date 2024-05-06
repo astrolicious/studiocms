@@ -41,6 +41,7 @@
   "dependencies": {
     "@astrojs/rss": "^4.0.5",
     "@cloudinary/url-gen": "^1.19.0",
+    "@iconify-json/mdi": "^1.1.66",
     "@inox-tools/sitemap-ext": "^0.2.11",
     "@lucia-auth/adapter-drizzle": "^1.0.7",
     "@markdoc/markdoc": "^0.4.0",

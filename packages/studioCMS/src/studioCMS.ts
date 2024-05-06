@@ -139,10 +139,9 @@ export default defineIntegration({
 						content: studioCMSDTS.text(),
 					});
 
+					// TODO: Migrate to ATP
 					// dbStartPage - Choose whether to run the Start Page or Inject the Integration
-					if (dbStartPage) {
-
-					} else {
+					if (dbStartPage) { } else {
 						// If dbStartPage is disabled, inject the routes to allow the CMS to function
 						integrationLogger(logger, verbose, 'info', 'Adding Page Routes...');
 						injectRoute({

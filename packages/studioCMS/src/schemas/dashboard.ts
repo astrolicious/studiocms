@@ -11,9 +11,11 @@ export const dashboardConfigSchema = z.object({
      */
     dashboardEnabled: z.boolean().optional().default(true),
     /**
-     * OPTIONAL - This allows the user to override the default dashboard route 
+     * OPTIONAL - This allows the user to override the default dashboard route to a custom route
      * 
-     * **Note: THIS IS NOT CURRENTLY IMPLEMENTED**
+     * **Note: Use with caution, this is an advanced feature**
+     * 
+     * @usage - The default route is `dashboard` without any `/` or `\` characters. If you want to override the route to `/admin` you would set this value to `admin`
      * 
      * @default "dashboard"
      */

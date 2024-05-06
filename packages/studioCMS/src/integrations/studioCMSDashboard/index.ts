@@ -4,7 +4,7 @@ import { CheckENV, integrationLogger } from "../../utils";
 import { loadEnv } from "vite";
 import { fileFactory } from "../../utils/fileFactory";
 import { DashboardStrings } from "../../strings";
-import { presetTypography, presetWind, presetUno, transformerDirectives } from "unocss";
+import { presetTypography, presetWind, presetUno, transformerDirectives, presetIcons } from "unocss";
 import UnoCSSAstroIntegration from "@unocss/astro";
 import { presetDaisy } from "@yangyang20240403/unocss-preset-daisyui";
 
@@ -153,7 +153,12 @@ export default defineIntegration({
 										darkTheme: darkTheme,
 									}),
 									presetWind(), 
-									presetTypography()
+									presetTypography(),
+									presetIcons({
+										collections: {
+											mdi: () => import('@iconify-json/mdi/icons.json').then(i => i.default),
+										}
+									}),
 								],
 								transformers: [
 									transformerDirectives()

@@ -3,6 +3,17 @@ import { User, db, eq } from 'astro:db';
 import { GitHub, OAuth2RequestError } from 'arctic';
 import type { APIContext } from 'astro';
 import { lucia } from "studiocms-dashboard:auth";
+import { urlGenFactory } from 'studiocms:helpers';
+import Config from 'virtual:studiocms/config';
+
+const { 
+	dashboardConfig: { 
+	  dashboardRouteOverride,
+	} 
+  } = Config;
+  
+  const dashboardURL = dashboardRouteOverride || 'dashboard';
+
 
 export async function GET(context: APIContext): Promise<Response> {
 	const {
@@ -24,7 +35,7 @@ export async function GET(context: APIContext): Promise<Response> {
 		// return new Response(null, {
 		// 	status: 403,
 		// });
-		return redirect('/dashboard/login');
+		return redirect(await urlGenFactory(true, "login", dashboardURL));
 	}
 
 	try {
@@ -51,7 +62,7 @@ export async function GET(context: APIContext): Promise<Response> {
 			const session = await lucia.createSession(existingUser.id.toString(), {});
 			const sessionCookie = lucia.createSessionCookie(session.id);
 			cookies.set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
-			return redirect('/dashboard/');
+			return redirect(await urlGenFactory(true, undefined, dashboardURL));
 		}
 
 		const createdUser = await db
@@ -72,7 +83,7 @@ export async function GET(context: APIContext): Promise<Response> {
 		const sessionCookie = lucia.createSessionCookie(session.id);
 
 		cookies.set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
-		return redirect('/dashboard/');
+		return redirect(await urlGenFactory(true, undefined, dashboardURL));
 	} catch (e) {
 		// the specific error message depends on the provider
 		if (e instanceof OAuth2RequestError) {

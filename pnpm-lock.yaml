@@ -54,6 +54,9 @@ importers:
       '@cloudinary/url-gen':
         specifier: ^1.19.0
         version: 1.19.0
+      '@iconify-json/mdi':
+        specifier: ^1.1.66
+        version: 1.1.66
       '@inox-tools/sitemap-ext':
         specifier: ^0.2.11
         version: 0.2.11(@astrojs/db@0.11.0)(@types/node@20.12.8)(astro@4.7.1)
@@ -2120,6 +2123,12 @@ packages:
   /@fastify/busboy@2.1.1:
     resolution: {integrity: sha512-vBZP4NlzfOlerQTnba4aqZoMhE/a9HY7HRqoOPaETQcSQuWEIyZMHGfVu6w9wGtGK5fED5qRs2DteVCjOH60sA==}
     engines: {node: '>=14'}
+    dev: false
+
+  /@iconify-json/mdi@1.1.66:
+    resolution: {integrity: sha512-7KPF2RVUUWav/hXCM8Ti/smqu3cmgePJpiX9CSkldiL+80+eBRBeKlc4vPOc9jhAItlqIU1vKsbKoPP0JIfgbg==}
+    dependencies:
+      '@iconify/types': 2.0.0
     dev: false
 
   /@iconify/tools@3.0.7:

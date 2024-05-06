@@ -10,6 +10,9 @@ import Config from "virtual:studiocms/config";
 const { 
   dashboardConfig: { 
     dashboardRouteOverride,
+    // developerConfig: {
+    //   viewTransitionAPI
+    // },
     UnoCSSConfigOverride: {
       presetsConfig: {
         presetDaisyUI: {
@@ -36,6 +39,8 @@ const {
   sideBarActiveItemID,
 } = Astro.props;
 
+// const includeViewTransitions = false;
+
 ---
 
 <!doctype html>
@@ -43,7 +48,7 @@ const {
   <head>
     <ThemeManager defaultTheme="auto" />
     <BaseHead title={title} description={description} />
-    <!-- {viewTransitionAPI && <ViewTransitions />} -->
+    <!-- { includeViewTransitions && <ViewTransitions />} -->
   </head>
   <body>
     <div class="bg-base-100 drawer">

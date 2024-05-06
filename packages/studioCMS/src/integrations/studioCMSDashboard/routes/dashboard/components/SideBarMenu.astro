@@ -28,21 +28,21 @@ const URLS = {
 }
 
 const siteLinks = [
-    { id: "home", href: URLS.backToSite, text: "View Site", minPermissionLevel: "unknown" },
-    { id: "dashboard", href: URLS.dashboard, text: "Dashboard", minPermissionLevel: "unknown" },
-    { id: "profile", href: URLS.profile, text: "User Profile", minPermissionLevel: "unknown" },
-    { id: "new-page", href: URLS.newPage, text: "Create New Page", minPermissionLevel: "editor" },
-    { id: "new-post", href: URLS.newPost, text: "Create New Post", minPermissionLevel: "editor" },
-    { id: "edit-pages", href: URLS.editPages, text: "Edit Pages", minPermissionLevel: "editor" },
-    { id: "edit-posts", href: URLS.editPosts, text: "Edit Posts", minPermissionLevel: "editor" },
-    { id: "site-config", href: URLS.siteConfig, text: "Site Configuration", minPermissionLevel: "editor" }
+    { id: "home", href: URLS.backToSite, text: "View Site", minPermissionLevel: "unknown", icon: "i-mdi:globe-arrow-left" },
+    { id: "dashboard", href: URLS.dashboard, text: "Dashboard", minPermissionLevel: "unknown", icon: "i-mdi:view-dashboard-outline" },
+    { id: "profile", href: URLS.profile, text: "User Profile", minPermissionLevel: "unknown", icon: "i-mdi:account-box" },
+    { id: "new-page", href: URLS.newPage, text: "Create New Page", minPermissionLevel: "editor", icon: "i-mdi:page-next" },
+    { id: "new-post", href: URLS.newPost, text: "Create New Post", minPermissionLevel: "editor", icon: "i-mdi:post-it-note-add" },
+    { id: "edit-pages", href: URLS.editPages, text: "Edit Pages", minPermissionLevel: "editor", icon: "i-mdi:file-document-edit" },
+    { id: "edit-posts", href: URLS.editPosts, text: "Edit Posts", minPermissionLevel: "editor", icon: "i-mdi:post-it-note-edit" },
+    { id: "site-config", href: URLS.siteConfig, text: "Site Configuration", minPermissionLevel: "editor", icon: "i-mdi:hammer-wrench" }
 ];
 
 ---
 
 <ul class="menu grow shrink menu-md overflow-y-auto">
 
-    { siteLinks.map(({ id, href, text, minPermissionLevel }) => {
+    { siteLinks.map(({ id, href, text, minPermissionLevel, icon }) => {
         if ( minPermissionLevel === "unknown" && ( 
             permissionLevel === "unknown" || 
             permissionLevel === "admin" || 
@@ -50,7 +50,7 @@ const siteLinks = [
             permissionLevel === "visitor" ) ) {
             return (
             <li>
-                <a class="py-3 text-base" id={id} href={href}>{text}</a>
+                <a class="py-3 text-base" id={id} href={href}><div class={`${icon} inline`}></div>{text}</a>
             </li>
             );
         }
@@ -63,7 +63,7 @@ const siteLinks = [
             testingAndDemoMode )) {
             return (
             <li>
-                <a class="py-3 text-base" id={id} href={href}>{text}</a>
+                <a class="py-3 text-base" id={id} href={href}><div class={`${icon} inline`}></div>{text}</a>
             </li>
             );
         }
@@ -75,7 +75,7 @@ const siteLinks = [
             testingAndDemoMode )) {
             return (
             <li>
-                <a class="py-3 text-base" id={id} href={href}>{text}</a>
+                <a class="py-3 text-base" id={id} href={href}><div class={`${icon} inline`}></div>{text}</a>
             </li>
             );
         }
@@ -86,7 +86,7 @@ const siteLinks = [
 
     { ( testingAndDemoMode || permissionLevel !== "unknown" ) ? (
         <form method="post" action={URLS.logout}>
-            <button class="btn">Sign out</button>
+            <button class="btn"><div class="i-mdi:logout"></div>Sign out</button>
         </form>
     ) : "" }
 
