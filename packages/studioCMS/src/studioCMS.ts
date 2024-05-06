@@ -54,7 +54,9 @@ export default defineIntegration({
 							useInoxSitemap
 						},
 						overrides: {
-							RendererOverride
+							RendererOverride,
+							CustomImageOverride,
+							FormattedDateOverride
 						}
 					} = options;
 
@@ -80,10 +82,26 @@ export default defineIntegration({
 						RendererComponentPath = resolve('./components/exports/StudioCMSRenderer.astro') 
 					}
 
+					// Custom Image Override Path
+					let CustomImageComponentPath: string;
+					if (CustomImageOverride) {
+						CustomImageComponentPath = rootResolve(CustomImageOverride)
+					} else {
+						CustomImageComponentPath = resolve('./components/exports/CImage.astro')
+					}
+
+					// Formatted Date Override Path
+					let FormattedDateComponentPath: string;
+					if (FormattedDateOverride) {
+						FormattedDateComponentPath = rootResolve(FormattedDateOverride)
+					} else {
+						FormattedDateComponentPath = resolve('./components/exports/FormattedDate.astro')
+					}
+
 					// Virtual Resolver
 					const virtResolver = {
-						CImage: resolve('./components/exports/CImage.astro'),
-						FormattedDate: resolve('./components/exports/FormattedDate.astro'),
+						CImage: CustomImageComponentPath,
+						FormattedDate: FormattedDateComponentPath,
 						StudioCMSRenderer: RendererComponentPath,
 						AuthHelper: resolve('./utils/authhelper.ts'),
 						StudioCSMLocalsMap: resolve('./schemas/locals.ts'),
@@ -118,12 +136,14 @@ export default defineIntegration({
 					// Create Virtual DTS File
 					const studioCMSDTS = fileFactory();
 
+					// Add Virtual DTS Lines - Components
 					studioCMSDTS.addLines(`declare module 'studiocms:components' {
 						export const CImage: typeof import('${virtResolver.CImage}').default;
 						export const FormattedDate: typeof import('${virtResolver.FormattedDate}').default;
 						export const StudioCMSRenderer: typeof import('${virtResolver.StudioCMSRenderer}').default;
 					}`);
 
+					// Add Virtual DTS Lines - Helpers
 					studioCMSDTS.addLines(`declare module 'studiocms:helpers' {
 						export const authHelper: typeof import('${virtResolver.AuthHelper}').default;
 						export type Locals = import('${virtResolver.StudioCSMLocalsMap}').Locals;

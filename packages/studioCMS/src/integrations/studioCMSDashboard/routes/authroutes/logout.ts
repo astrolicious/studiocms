@@ -30,5 +30,5 @@ export async function POST(context: APIContext): Promise<Response> {
 	context.locals.user = null;
 	context.locals.dbUser = null;
 
-	return context.redirect('/');
+	return context.redirect(import.meta.env.BASE_URL);
 }

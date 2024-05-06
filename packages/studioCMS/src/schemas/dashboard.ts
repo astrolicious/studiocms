@@ -11,6 +11,10 @@ export const dashboardConfigSchema = z.object({
      */
     dashboardEnabled: z.boolean().optional().default(true),
     /**
+     * OPTIONAL - This allows the user to override the default Favicon URL to a custom URL
+     */
+    faviconURL: z.string().optional().default("/favicon.svg"),
+    /**
      * OPTIONAL - This allows the user to override the default dashboard route to a custom route
      * 
      * **Note: Use with caution, this is an advanced feature**
