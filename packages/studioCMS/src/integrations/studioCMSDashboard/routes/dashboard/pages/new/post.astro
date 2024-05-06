@@ -33,6 +33,10 @@ if ( !developerConfig.testingAndDemoMode ) {
     }
 }
 
+let showSuccessToast = false;
+let showErrorToast = false;
+let showSlugErrorToast = false;
+
 if (Astro.request.method === 'POST' && !developerConfig.testingAndDemoMode) {
   try {
     const data = await Astro.request.formData();
@@ -48,36 +52,29 @@ if (Astro.request.method === 'POST' && !developerConfig.testingAndDemoMode) {
 		.where(eq(Blog.slug, slug as string));
 	const existingPost = postArrayed[0];
 
-	function makeResponse(message: string, status: number) {
-		return new Response(message, { status: status });
-	}
-
 	if (existingPost) {
-		return makeResponse('Post with that slug already exists', 400);
-	}
+        showSlugErrorToast = true;
+	} else {
+        await db
+            .insert(Blog)
+            .values({
+                title: title as string,
+                slug: slug as string,
+                description: description as string,
+                heroImage: heroImage as string,
+                content: content as string,
+            })
+            .then(() => {
+                showSuccessToast = true;
+            })
+            .catch(() => {
+                showErrorToast = true;
+            });
+    }
 
-	await db
-		.insert(Blog)
-		.values({
-			title: title as string,
-			slug: slug as string,
-			description: description as string,
-			heroImage: heroImage as string,
-			content: content as string,
-		})
-		.then(() => {
-            console.log('Post created');
-			return new Response('Post created', { status: 200 });
-		})
-		.catch(() => {
-            console.log('Error creating post');
-			return new Response('Error creating post', { status: 500 });
-		});
-
-        return Astro.redirect(await urlGenFactory(true, undefined, dashboardURL));
     } catch (error) {
     if (error instanceof Error) {
-      console.error(error.message);
+        showErrorToast = true;
     }
   }
 }
@@ -89,6 +86,29 @@ const pageTitle = `New Post | ${contextConfig.title}`;
     sideBarActiveItemID="new-post" 
     title={pageTitle}
     description={contextConfig.description} >
+        <div class="alert-toast">
+            { showSuccessToast && (
+            <sl-alert variant="success" duration="3000" open closable>
+                <sl-icon slot="icon" name="check2-circle"></sl-icon>
+                <strong>New Post Created!</strong><br />
+                You can safely leave this page now.
+            </sl-alert>
+            )}
+            { showErrorToast && (
+            <sl-alert variant="danger" duration="3000" open closable>
+                <sl-icon slot="icon" name="exclamation-octagon"></sl-icon>
+                <strong>Error Creating Post</strong><br />
+                There was an Error Creating the Post. Please try again.
+            </sl-alert>
+            )}
+            { showSlugErrorToast && (
+            <sl-alert variant="warning" duration="3000" open closable>
+                <sl-icon slot="icon" name="exclamation-triangle"></sl-icon>
+                <strong>Post With Slug Already Exists!</strong><br />
+                A post with that slug already exists. Please choose a different slug.
+            </sl-alert>
+            )}
+        </div>
     <div class="pb-12 mt-5">
 
         <div class="text-5xl font-bold">Create New Post</div>

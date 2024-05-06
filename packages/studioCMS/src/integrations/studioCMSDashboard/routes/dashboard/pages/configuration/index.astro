@@ -33,6 +33,9 @@ if ( !developerConfig.testingAndDemoMode ) {
     }
 }
 
+let showSuccessToast = false;
+let showErrorToast = false;
+
 if (Astro.request.method === 'POST' && !developerConfig.testingAndDemoMode) {
     try {
         const data = await Astro.request.formData();
@@ -47,17 +50,14 @@ if (Astro.request.method === 'POST' && !developerConfig.testingAndDemoMode) {
             })
             .where(eq(SiteConfig.id, '1'))
             .then(() => {
-                console.log('Site configuration updated successfully.');
-                return new Response('Site configuration updated successfully.', { status: 200 });
+                showSuccessToast = true;
             })
             .catch(() => {
-                console.error('Error updating site configuration.');
-                return new Response('Error', { status: 500 });
+                showErrorToast = true;
             });
-        return Astro.redirect(await urlGenFactory(true, undefined, dashboardURL));
     } catch (error) {
         if (error instanceof Error) {
-        console.error(error.message);
+            showErrorToast = true;
         }
     }
 }
@@ -69,6 +69,22 @@ const pageTitle = `Site Config | ${contextConfig.title}`;
     sideBarActiveItemID="site-config" 
     title={pageTitle}
     description={contextConfig.description} >
+    <div class="alert-toast">
+        { showSuccessToast && (
+        <sl-alert variant="success" duration="3000" open closable>
+            <sl-icon slot="icon" name="check2-circle"></sl-icon>
+            <strong>Site Config Updated!</strong><br />
+            You can safely leave this page now.
+        </sl-alert>
+        )}
+        { showErrorToast && (
+        <sl-alert variant="danger" duration="3000" open closable>
+            <sl-icon slot="icon" name="exclamation-octagon"></sl-icon>
+            <strong>Error Updating Site Config</strong><br />
+            There was an Error editing the site config. Please try again.
+        </sl-alert>
+        )}
+    </div>
     <div class="mt-5">
 
         <div class="text-5xl font-bold">Site Configuration</div>

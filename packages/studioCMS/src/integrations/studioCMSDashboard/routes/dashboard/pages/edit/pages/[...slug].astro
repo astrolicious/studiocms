@@ -43,6 +43,9 @@ if ( !developerConfig.testingAndDemoMode ) {
     }
 }
 
+let showSuccessToast = false;
+let showErrorToast = false;
+
 if (Astro.request.method === 'POST' && !developerConfig.testingAndDemoMode) {
   try {
     const data = await Astro.request.formData();
@@ -60,18 +63,14 @@ if (Astro.request.method === 'POST' && !developerConfig.testingAndDemoMode) {
 		})
 		.where(eq(Pages.slug, page.slug))
 		.then(() => {
-            console.log('Post updated');
-			return new Response('Post updated', { status: 200 });
+            showSuccessToast = true;
 		})
 		.catch(() => {
-            console.log('Error updating post');
-			return new Response('Error updating post', { status: 500 });
+            showErrorToast = true;
 		});
-
-        return Astro.redirect(`${import.meta.env.BASE_URL}${dashboardURL}/`);
     } catch (error) {
     if (error instanceof Error) {
-      console.error(error.message);
+        showErrorToast = true;
     }
   }
 }
@@ -83,6 +82,22 @@ const pageTitle = `Edit Page | ${contextConfig.title}`;
     sideBarActiveItemID="edit-pages" 
     title={pageTitle}
     description={contextConfig.description} >
+    <div class="alert-toast">
+        { showSuccessToast && (
+        <sl-alert variant="success" duration="3000" open closable>
+            <sl-icon slot="icon" name="check2-circle"></sl-icon>
+            <strong>Page Edited!</strong><br />
+            You can safely leave this page now.
+        </sl-alert>
+        )}
+        { showErrorToast && (
+        <sl-alert variant="danger" duration="3000" open closable>
+            <sl-icon slot="icon" name="exclamation-octagon"></sl-icon>
+            <strong>Error Editing Page</strong><br />
+            There was an Error Editing the Page. Please try again.
+        </sl-alert>
+        )}
+    </div>
     <div class="pb-12 mt-5">
 
         <div class="text-5xl font-bold">Edit Page: {page.title}</div>
