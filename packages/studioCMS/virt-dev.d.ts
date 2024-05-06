@@ -14,6 +14,8 @@ declare module 'studiocms:helpers' {
 	export const LocalsSchema: typeof import('./src/schemas/locals').LocalsSchema;
 	export type Locals = import('./src/schemas/locals').Locals;
 	export const urlGenFactory: typeof import('./src/utils/urlGen').default;
+	export const toCamelCase: typeof import('./src/utils/textFormatter').toCamelCase;
+	export const toPascalCase: typeof import('./src/utils/textFormatter').toPascalCase;
 }
 
 declare module 'studiocms-dashboard:auth' {

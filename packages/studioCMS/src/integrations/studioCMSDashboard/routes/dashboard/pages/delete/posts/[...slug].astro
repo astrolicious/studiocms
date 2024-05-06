@@ -43,33 +43,33 @@ if ( !developerConfig.testingAndDemoMode ) {
     }
 }
 
-if (Astro.request.method === 'POST') {
-    if ( developerConfig.testingAndDemoMode ) {
-        return new Response('Error: Site configuration cannot be updated in testing and demo mode.', { status: 500 })
+if (Astro.request.method === 'POST' && !developerConfig.testingAndDemoMode) {
+    try {
+        const data = await Astro.request.formData();
+        const slug = data.get('slug');
+        if (slug === post.slug) {
+            await db
+                .delete(Blog)
+                .where(eq(Blog.slug, post.slug))
+                .then(() => {
+                    console.log('Post deleted');
+                    return new Response('Post deleted', { status: 200 });
+                })
+                .catch(() => {
+                    console.log('Error deleting post');
+                    return new Response('Error deleting post', { status: 500 });
+                });
+
+                return Astro.redirect(await urlGenFactory(true, undefined, dashboardURL));
+        }
+        console.log('Slug does not match');
+        return new Response('Slug does not match', { status: 400 });
+    } catch (error) {
+        if (error instanceof Error) {
+        console.error(error.message);
+        }
     }
-	const formData = await new Request(Astro.request.url, {
-		method: Astro.request.method,
-		headers: Astro.request.headers,
-		body: Buffer.from(await Astro.request.arrayBuffer()),
-	}).formData();
-
-	const slug = formData.get('slug');
-
-	if (slug === post.slug) {
-		await db
-			.delete(Blog)
-			.where(eq(Blog.slug, post.slug))
-			.then(() => {
-				return new Response('Post deleted', { status: 200 });
-			})
-			.catch(() => {
-				return new Response('Error deleting post', { status: 500 });
-			});
-
-            return Astro.redirect(await urlGenFactory(true, undefined, dashboardURL));
-	}
 }
-
 const pageTitle = `Delete Post | ${contextConfig.title}`;
 ---
 <BaseLayout 

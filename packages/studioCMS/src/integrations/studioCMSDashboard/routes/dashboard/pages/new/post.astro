@@ -33,18 +33,14 @@ if ( !developerConfig.testingAndDemoMode ) {
     }
 }
 
-if (Astro.request.method === 'POST') {
-	const formData = await new Request(Astro.request.url, {
-		method: Astro.request.method,
-		headers: Astro.request.headers,
-		body: Buffer.from(await Astro.request.arrayBuffer()),
-	}).formData();
-
-	const title = formData.get('title');
-	const slug = formData.get('slug');
-	const description = formData.get('description');
-	const heroImage = formData.get('hero-image');
-	const content = formData.get('content');
+if (Astro.request.method === 'POST' && !developerConfig.testingAndDemoMode) {
+  try {
+    const data = await Astro.request.formData();
+	const title = data.get('title');
+	const slug = data.get('slug');
+	const description = data.get('description');
+	const heroImage = data.get('hero-image');
+	const content = data.get('content');
 
 	const postArrayed = await db
 		.select()
@@ -70,13 +66,20 @@ if (Astro.request.method === 'POST') {
 			content: content as string,
 		})
 		.then(() => {
+            console.log('Post created');
 			return new Response('Post created', { status: 200 });
 		})
 		.catch(() => {
+            console.log('Error creating post');
 			return new Response('Error creating post', { status: 500 });
 		});
 
         return Astro.redirect(await urlGenFactory(true, undefined, dashboardURL));
+    } catch (error) {
+    if (error instanceof Error) {
+      console.error(error.message);
+    }
+  }
 }
 
 const pageTitle = `New Post | ${contextConfig.title}`;

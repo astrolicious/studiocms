@@ -43,39 +43,37 @@ if ( !developerConfig.testingAndDemoMode ) {
     }
 }
 
-if (Astro.request.method === 'POST') {
-    if ( developerConfig.testingAndDemoMode ) {
-        return new Response('Error: Site configuration cannot be updated in testing and demo mode.', { status: 500 })
-    }
-	const formData = await new Request(Astro.request.url, {
-		method: Astro.request.method,
-		headers: Astro.request.headers,
-		body: Buffer.from(await Astro.request.arrayBuffer()),
-	}).formData();
-
-	const title = formData.get('title');
-	const description = formData.get('description');
-	const heroImage = formData.get('hero-image');
-	const content = formData.get('content');
-
+if (Astro.request.method === 'POST' && !developerConfig.testingAndDemoMode) {
+  try {
+    const data = await Astro.request.formData();
+    const title = data.get("title");
+    const description = data.get("description");
+    const heroImage = data.get("hero-image");
+    const content = data.get("content");
 	await db
 		.update(Blog)
 		.set({
 			title: title as string,
-			slug: post.slug,
 			description: description as string,
 			heroImage: heroImage as string,
 			content: content as string,
 		})
 		.where(eq(Blog.slug, post.slug))
 		.then(() => {
+            console.log('Post updated');
 			return new Response('Post updated', { status: 200 });
 		})
 		.catch(() => {
+            console.log('Error updating post');
 			return new Response('Error updating post', { status: 500 });
 		});
 
         return Astro.redirect(await urlGenFactory(true, undefined, dashboardURL));
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error(error.message);
+    }
+  }
 }
 
 const pageTitle = `Edit Post | ${contextConfig.title}`;
@@ -93,7 +91,7 @@ const pageTitle = `Edit Post | ${contextConfig.title}`;
 
             <center>
 
-                <form method="post" enctype="multipart/form-data" class="w-full">
+                <form method="POST">
                     <label for="title" class="text-lg">Post Title</label><br>
                     <input 
                         type="text" 
@@ -145,14 +143,13 @@ const pageTitle = `Edit Post | ${contextConfig.title}`;
                             required>{post.content}</textarea>
                     </div><br>
         
-                    <button class="btn btn-outline ml-5 py-2" type="submit">Update Post!</button><br><br>
-        
+                    <button class="btn btn-outline ml-5 py-2">Update Post!</button><br><br>
+
                 </form>
+                <div class="text-xl font-bold">Live Preview</div>
+                <div id="html-preview" class="border-solid border-2 border-gray-300 rounded-lg p-2 max-w-[100vw] lg:max-w-[1800px] prose"></div><br><br>
 
             </center>
-
-            <div class="text-xl font-bold">Live Preview</div>
-            <div id="html-preview" class="border-solid border-2 border-gray-300 rounded-lg p-2 max-w-[100vw] lg:max-w-[1800px] prose"></div><br><br>
         </div>
 
     </div>

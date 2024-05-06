@@ -3,7 +3,7 @@
 import { SiteConfig, db } from 'astro:db';
 import BaseLayout from "../layouts/Layout.astro";
 import Config from 'virtual:studiocms/config';
-import { urlGenFactory, authHelper, type Locals } from 'studiocms:helpers';
+import { urlGenFactory, authHelper, toPascalCase, type Locals } from 'studiocms:helpers';
 
 if (Config.includedIntegrations.useInoxSitemap) {
     import('sitemap-ext:config').then((sitemap) => {
@@ -46,11 +46,11 @@ const pageTitle = `User profile | ${contextConfig.title}`;
             </text>
             <br />
             <text class="text-lg">
-                <bold>Role:</bold> {permissionLevel.toUpperCase()}
+                <bold>Role:</bold> {toPascalCase(permissionLevel)}
             </text>
             <br />
             <text class="text-lg">
-                <bold>GitHub:</bold> <a href={githubURL}>{username}
+                <bold>GitHub:</bold> <a class="text-blue" href={githubURL}>{username}
             </text>
             <br />
             <text class="text-lg">

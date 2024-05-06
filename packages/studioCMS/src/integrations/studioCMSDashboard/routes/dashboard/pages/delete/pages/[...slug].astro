@@ -43,34 +43,33 @@ if ( !developerConfig.testingAndDemoMode ) {
     }
 }
 
-if (Astro.request.method === 'POST') {
-    if ( developerConfig.testingAndDemoMode ) {
-        return new Response('Error: Site configuration cannot be updated in testing and demo mode.', { status: 500 })
-    }
-	const formData = await new Request(Astro.request.url, {
-		method: Astro.request.method,
-		headers: Astro.request.headers,
-		body: Buffer.from(await Astro.request.arrayBuffer()),
-	}).formData();
+if (Astro.request.method === 'POST' && !developerConfig.testingAndDemoMode) {
+    try {
+        const data = await Astro.request.formData();
+        const slug = data.get('slug');
+        if (slug === page.slug) {
+            if ( slug === "index" || slug === "about" ) {
+                return new Response('Error: Cannot delete the index or about page.', { status: 500 })
+            }
+            await db
+                .delete(Pages)
+                .where(eq(Pages.slug, page.slug))
+                .then(() => {
+                    return new Response('Page deleted', { status: 200 });
+                })
+                .catch(() => {
+                    return new Response('Error deleting page', { status: 500 });
+                });
 
-	const slug = formData.get('slug');
-
-	if (slug === page.slug) {
-        if ( slug === "index" || slug === "about" ) {
-            return new Response('Error: Cannot delete the index or about page.', { status: 500 })
+                return Astro.redirect(await urlGenFactory(true, undefined, dashboardURL));
         }
-		await db
-			.delete(Pages)
-			.where(eq(Pages.slug, page.slug))
-			.then(() => {
-				return new Response('Page deleted', { status: 200 });
-			})
-			.catch(() => {
-				return new Response('Error deleting page', { status: 500 });
-			});
-
-            return Astro.redirect(await urlGenFactory(true, undefined, dashboardURL));
-	}
+        console.log('Slug does not match');
+        return new Response('Slug does not match', { status: 400 });
+    } catch (error) {
+        if (error instanceof Error) {
+        console.error(error.message);
+        }
+    }
 }
 
 const pageTitle = `Delete Page | ${contextConfig.title}`;

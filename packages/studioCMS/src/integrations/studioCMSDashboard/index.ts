@@ -50,6 +50,7 @@ export default defineIntegration({
 							dashboardEnabled,
 							AuthConfig,
 							dashboardRouteOverride,
+							UnoCSSConfigOverride,
 							AuthConfig: {
 								providers,
 							},
@@ -128,17 +129,28 @@ export default defineIntegration({
 						// Add Dashboard Integrations
 						integrationLogger(logger, verbose, 'info', 'Adding Dashboard Integrations');
 
+						const { 
+							injectEntry, 
+							injectReset, 
+							presetsConfig: {
+								presetDaisyUI: {
+									themes,
+									darkTheme
+								}
+							} 
+						} = UnoCSSConfigOverride;
+
 						// CSS Management
 						addIntegration(params, {
 							integration: UnoCSSAstroIntegration({
 								configFile: false,
-								injectReset: false,
-								injectEntry: false,
+								injectReset: injectReset,
+								injectEntry: injectEntry,
 								presets: [
 									presetUno(),
 									presetDaisy({
-										themes: ['light', 'dark'],
-										darkTheme: 'dark',
+										themes: themes,
+										darkTheme: darkTheme,
 									}),
 									presetWind(), 
 									presetTypography()

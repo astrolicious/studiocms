@@ -35,36 +35,33 @@ if ( !developerConfig.testingAndDemoMode ) {
     }
 }
 
-if (Astro.request.method === 'POST') {
-    // If the site is in testing and demo mode, do not allow the site configuration to be updated
-    if ( developerConfig.testingAndDemoMode ) {
-        return new Response('Error: Site configuration cannot be updated in testing and demo mode.', { status: 500 })
-    }
+if (Astro.request.method === 'POST' && !developerConfig.testingAndDemoMode) {
+    try {
+        const data = await Astro.request.formData();
+        const admin = data.get('admins');
+        const rank = data.get('rank');
 
-    // Get the form data
-	const formData = await new Request(Astro.request.url, {
-		method: Astro.request.method,
-		headers: Astro.request.headers,
-		body: Buffer.from(await Astro.request.arrayBuffer()),
-	}).formData();
-
-	const admin = formData.get('admins');
-	const rank = formData.get('rank');
-
-	await db
-		.insert(Permissions)
-		.values({
-			username: admin as string,
-			rank: rank as string,
-		})
-		.then(() => {
-			return new Response('Success', { status: 200 });
-		})
-		.catch(() => {
-			return new Response('Error', { status: 500 });
-		});
+        await db
+            .insert(Permissions)
+            .values({
+                username: admin as string,
+                rank: rank as string,
+            })
+            .then(() => {
+                console.log('Admin added successfully');
+                return new Response('Admin added successfully', { status: 200 });
+            })
+            .catch(() => {
+                console.log('Error adding admin');
+                return new Response('Error adding admin', { status: 500 });
+            });
 
         return Astro.redirect(await urlGenFactory(true, undefined, dashboardURL));
+    } catch (error) {
+        if (error instanceof Error) {
+        console.error(error.message);
+        }
+    }
 }
 
 const pageTitle = `Site Config | ${contextConfig.title}`;

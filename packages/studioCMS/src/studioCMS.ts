@@ -88,6 +88,7 @@ export default defineIntegration({
 						AuthHelper: resolve('./utils/authhelper.ts'),
 						StudioCSMLocalsMap: resolve('./schemas/locals.ts'),
 						UrlGenHelper: resolve('./utils/urlGen.ts'),
+						textFormatterHelper: resolve('./utils/textFormatter.ts'),
 					};
 
 					// Virtual Components
@@ -100,7 +101,8 @@ export default defineIntegration({
 					const virtualHelperMap = `
 					export { default as authHelper } from '${virtResolver.AuthHelper}';
 					export * from '${virtResolver.StudioCSMLocalsMap}';
-					export { default as urlGenFactory } from '${virtResolver.UrlGenHelper}';`;
+					export { default as urlGenFactory } from '${virtResolver.UrlGenHelper}';
+					export * from '${virtResolver.textFormatterHelper}';`;
 
 					// Add Virtual Imports
 					integrationLogger(logger, verbose, 'info', 'Adding Virtual Imports...');
@@ -127,6 +129,8 @@ export default defineIntegration({
 						export type Locals = import('${virtResolver.StudioCSMLocalsMap}').Locals;
 						export const LocalsSchema: typeof import('${virtResolver.StudioCSMLocalsMap}').LocalsSchema;
 						export const urlGenFactory: typeof import('${virtResolver.UrlGenHelper}').default;
+						export const toCamelCase: typeof import('${virtResolver.textFormatterHelper}').toCamelCase;
+						export const toPascalCase: typeof import('${virtResolver.textFormatterHelper}').toPascalCase;
 					}`);
 
 					// Add Virtual DTS File
