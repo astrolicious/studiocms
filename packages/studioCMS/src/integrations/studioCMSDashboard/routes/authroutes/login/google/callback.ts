@@ -36,8 +36,10 @@ export async function GET(context: APIContext): Promise<Response> {
 	const storedCodeVerifier = cookies.get("google_oauth_code_verifier")?.value ?? null;
 	const storedState = cookies.get('google_oauth_state')?.value ?? null;
 	if (!code || !storedState || !storedCodeVerifier || state !== storedState) {
-		// 400
-		throw new Error("Invalid request");
+		// return new Response(null, {
+		// 	status: 403,
+		// });
+		return redirect(await urlGenFactory(true, "login", dashboardURL));
 	}
 
 	try {
