@@ -263,7 +263,24 @@ export default defineIntegration({
 							}
 
 							// Username and Password Auth Provider
-							// **NOT YET IMPLEMENTED**
+							if ( providers.usernameAndPassword) {
+								// Log that the Username and Password Auth Provider is enabled
+								integrationLogger(logger, verbose, 'info', 'Username and Password Auth Provider is Enabled');
+								injectRoute({
+									pattern: makeRoute('login/api/login'),
+									entrypoint: resolve('./routes/authroutes/login/api/login.ts'),
+								})
+								if ( providers.usernameAndPasswordConfig.allowUserRegistration ) {
+									injectRoute({
+										pattern: makeRoute('signup/'),
+										entrypoint: resolve('./routes/authroutes/login/signup.astro'),
+									})
+									injectRoute({
+										pattern: makeRoute('login/api/register'),
+										entrypoint: resolve('./routes/authroutes/login/api/register.ts'),
+									})
+								}
+							}
 
 						} else if ( !AuthConfig.enabled ) {
 							// Log that the Auth is disabled

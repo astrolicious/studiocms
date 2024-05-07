@@ -30,7 +30,7 @@ export default async function authHelper(locals: Locals): Promise<authHelperResp
             .select()
             .from(Permissions)
             .where(eq(Permissions.username, username))
-            .catch(() => { return false; });
+            .catch(() => { permissionLevel = 'visitor'; });
 
         if (permissions[0] && permissions[0].username === username) {
             if (permissions[0].rank === 'admin') {
@@ -42,6 +42,8 @@ export default async function authHelper(locals: Locals): Promise<authHelperResp
             if (permissions[0].rank === 'visitor') {
                 permissionLevel = 'visitor';
             }
+        } else {
+            permissionLevel = 'visitor';
         }
         return {
             username,

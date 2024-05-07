@@ -1,5 +1,14 @@
 import { z } from 'astro/zod';
 
+const localUsernameAndPasswordConfig = z.object({
+	/**
+	 * Allow User Registration - Allows users to register an account
+	 * 
+	 * @default false - Temporarily set to true for testing
+	 */
+	allowUserRegistration: z.boolean().optional().default(true),
+}).optional().default({});
+
 //
 // AUTH PROVIDER SCHEMA
 //
@@ -17,7 +26,8 @@ export const authProviderSchema = z.object({
 	 * 
 	 * **NOT YET IMPLEMENTED**
 	 */
-	usernameAndPassword: z.boolean().optional().default(false),
+	usernameAndPassword: z.boolean().optional().default(true),
+	usernameAndPasswordConfig: localUsernameAndPasswordConfig,
 }).optional().default({});
 
 //

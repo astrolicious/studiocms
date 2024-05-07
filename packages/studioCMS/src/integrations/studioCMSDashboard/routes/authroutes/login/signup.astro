@@ -15,10 +15,6 @@ const {
     AuthConfig: { 
       providers: { 
         github,
-        usernameAndPassword,
-        usernameAndPasswordConfig: {
-          allowUserRegistration,
-        }
       } 
     } 
   } 
@@ -28,22 +24,22 @@ const dashboardURL = dashboardRouteOverride || 'dashboard';
 
 const locals = Astro.locals as Locals;
 
+const LoginURL = await urlGenFactory(true, 'login/', dashboardURL)
 const githubLoginURL = await urlGenFactory(true, 'login/github', dashboardURL)
-const UserPassLoginURL = await urlGenFactory(true, 'login/api/login', dashboardURL)
-const RegisterURL = await urlGenFactory(true, 'signup/', dashboardURL)
+const UserPassRegisterURL = await urlGenFactory(true, 'login/api/register', dashboardURL)
 
 if (locals.isLoggedIn) {
 	return Astro.redirect(await urlGenFactory(true, undefined, dashboardURL));
 }
 ---
 
-<Layout title='Login Page' description="Login Page" sideBarActiveItemID='login' includeSidebar={false}>
+<Layout title='Registration Page' description="Registration Page" sideBarActiveItemID='login' includeSidebar={false}>
   <div class="pb-12 mt-5">
 
-      <center><div class="text-5xl font-bold">Login Page</div>
+      <center><div class="text-5xl font-bold">Registration Page</div>
       <div class="py-2">
           <text class="text-lg">
-            To access this site, you need to log in!
+            Create an account or sign in to continue.
           </text>
       </div>
     </center><br />
@@ -66,16 +62,18 @@ if (locals.isLoggedIn) {
       <!-- End of oAUTH Providers -->
 
       <!-- Username and Password Provider-->
-      { usernameAndPassword && (
         <div class="py-8">
           <div class="bg-base-300 p-8 rounded-lg">
 
-          <form method="post" action={UserPassLoginURL}>
+          <form method="post" action={UserPassRegisterURL}>
 
-            <label for="username" class="text-xl font-bold">Username</label><br />
+            <label for="username" class="text-xl font-bold">New Username</label><br />
             <input name="username" id="username" class="border-solid border-2 border-gray-300 rounded-lg p-2 w-96"/><br /><br />
 
-            <label for="password" class="text-xl font-bold">Password</label><br />
+            <label for="displayname" class="text-xl font-bold">New Display Name</label><br />
+            <input name="displayname" id="displayname" class="border-solid border-2 border-gray-300 rounded-lg p-2 w-96"/><br /><br />
+
+            <label for="password" class="text-xl font-bold">New Password</label><br />
             <input type="password" name="password" id="password" class="border-solid border-2 border-gray-300 rounded-lg p-2 w-96" /><br /><br />
 
             <center>
@@ -84,17 +82,14 @@ if (locals.isLoggedIn) {
 
           </form>
 
-          {allowUserRegistration && (
-            <div class="py-4">
-              <center>
-                <a href={RegisterURL} class="text-lg">Don't have an account? Register here!</a>
-              </center>
-            </div>
-          )}
+          <div class="py-4">
+            <center>
+              <a href={LoginURL} class="text-lg">Already have an account? Sign in!</a>
+            </center>
+          </div>
 
           </div>
         </div> 
-      )}
       <!-- End of Username and Password Provider-->
 
       <sl-alert id="form-error" variant="danger" duration="4000" closable>
