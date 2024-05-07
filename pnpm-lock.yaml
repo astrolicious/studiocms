@@ -57,6 +57,9 @@ importers:
       '@iconify-json/mdi':
         specifier: ^1.1.66
         version: 1.1.66
+      '@iconify/utils':
+        specifier: ^2.1.23
+        version: 2.1.23
       '@inox-tools/sitemap-ext':
         specifier: ^0.2.11
         version: 0.2.11(@astrojs/db@0.11.0)(@types/node@20.12.8)(astro@4.7.1)
@@ -76,6 +79,9 @@ importers:
         specifier: 0.59.4
         version: 0.59.4
       '@unocss/preset-uno':
+        specifier: 0.59.4
+        version: 0.59.4
+      '@unocss/preset-web-fonts':
         specifier: 0.59.4
         version: 0.59.4
       '@unocss/preset-wind':

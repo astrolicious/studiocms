@@ -4,9 +4,10 @@ import { CheckENV, integrationLogger } from "../../utils";
 import { loadEnv } from "vite";
 import { fileFactory } from "../../utils/fileFactory";
 import { DashboardStrings } from "../../strings";
-import { presetTypography, presetWind, presetUno, transformerDirectives, presetIcons } from "unocss";
+import { presetTypography, presetWind, presetUno, transformerDirectives, presetIcons, presetWebFonts } from "unocss";
 import UnoCSSAstroIntegration from "@unocss/astro";
 import { presetDaisy } from "@yangyang20240403/unocss-preset-daisyui";
+import { FileSystemIconLoader } from '@iconify/utils/lib/loader/node-loaders'
 
 // Environment Variables
 const env = loadEnv('all', process.cwd(), 'CMS');
@@ -210,6 +211,17 @@ export default defineIntegration({
 									presetIcons({
 										collections: {
 											mdi: () => import('@iconify-json/mdi/icons.json').then(i => i.default),
+											google: FileSystemIconLoader(resolve('./icons/google')),
+											discord: FileSystemIconLoader(resolve('./icons/discord')),
+											github: FileSystemIconLoader(resolve('./icons/github')),
+										}
+									}),
+									presetWebFonts({
+										provider: 'google', // default provider
+										fonts: {
+										  // these will extend the default theme
+										  sans: 'Roboto',
+										  mono: ['Fira Code', 'Fira Mono:400,700'],
 										}
 									}),
 								],

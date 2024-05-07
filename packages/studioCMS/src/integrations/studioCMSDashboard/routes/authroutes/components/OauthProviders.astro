@@ -59,44 +59,44 @@ if (!isThereAnyOAuthProvider && !usernameAndPassword) {
     <center>
         <div class="bg-base-300 rounded-lg p-4 grid grid-cols-2 gap-2">
     
-            <!-- GitHub Provider -->
+            {/* <!-- GitHub Provider --> */}
             { githubEnabled && (
                 <sl-button 
                     variant="default" 
                     href={githubLoginURL} 
                     outline 
                     pill>
-                    <div slot="prefix" class="i-mdi:github w-32px h-32px inline"></div>
+                    <div slot="prefix" class="dark:i-github-dark i-github-light w-32px h-32px inline"></div>
                     <span class="font-bold text-base text-lg">Sign in with GitHub</span>
                 </sl-button>
             )}
-            <!-- End of GitHub Provider -->
+            {/* <!-- End of GitHub Provider --> */}
 
-            <!-- Discord Provider -->
+            {/* <!-- Discord Provider --> */}
             { discordEnabled && (
                 <sl-button 
                     variant="default" 
                     href={discordLoginURL}
                     outline 
                     pill>
-                    <div slot="prefix" class="i-mdi:discord w-32px h-32px inline"></div>
+                    <div slot="prefix" class="i-discord-iconblue w-32px h-32px inline"></div>
                     <span class="font-bold text-base text-lg">Sign in with Discord</span>
                 </sl-button>
             )}
-            <!-- End of Discord Provider -->
+            {/* <!-- End of Discord Provider --> */}
 
-            <!-- Google Provider -->
+            {/* <!-- Google Provider --> */}
             { googleEnabled && (
                 <sl-button 
                     variant="default" 
                     href={googleLoginURL} 
                     outline 
                     pill>
-                    <div slot="prefix" class="i-mdi:google w-32px h-32px inline"></div>
+                    <div slot="prefix" class="dark:i-google-icondark i-google-iconlight w-32px h-32px inline"></div>
                     <span class="font-bold text-base text-lg">Sign in with Google</span>
                 </sl-button>
             )}
-            <!-- End of Google Provider -->
+            {/* <!-- End of Google Provider --> */}
     
         </div>
     </center>
