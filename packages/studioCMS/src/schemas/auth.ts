@@ -22,9 +22,24 @@ export const authProviderSchema = z.object({
 	 */
 	github: z.boolean().optional().default(true),
 	/**
+	 * Discord Auth Provider - Powered by Lucia
+	 * 
+	 * Requires a Discord OAuth App to be created and configured using ENV Variables
+	 * 
+	 * @default false - Temporarily set to true for testing
+	 */
+	discord: z.boolean().optional().default(true),
+	/**
+	 * Google Auth Provider - Powered by Lucia
+	 * 
+	 * Requires a Google OAuth App to be created and configured using ENV Variables
+	 * 
+	 * @default false - Temporarily set to true for testing
+	 */
+	google: z.boolean().optional().default(true),
+	/**
 	 * Username and Password Auth Provider - Powered by Lucia
 	 * 
-	 * **NOT YET IMPLEMENTED**
 	 */
 	usernameAndPassword: z.boolean().optional().default(true),
 	usernameAndPasswordConfig: localUsernameAndPasswordConfig,

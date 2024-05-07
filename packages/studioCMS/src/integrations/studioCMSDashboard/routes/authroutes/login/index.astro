@@ -59,14 +59,23 @@ if (locals.isLoggedIn) {
 
           <form method="post" action={UserPassLoginURL}>
 
-            <label for="username" class="text-xl font-bold">Username</label><br />
-            <input name="username" id="username" class="border-solid border-2 border-gray-300 rounded-lg p-2 w-96"/><br /><br />
+              <sl-input 
+                name="username" 
+                id="username" 
+                >
+                  <div class="text-xl font-bold" slot="label">Username</div>
+              </sl-input><br />
 
-            <label for="password" class="text-xl font-bold">Password</label><br />
-            <input type="password" name="password" id="password" class="border-solid border-2 border-gray-300 rounded-lg p-2 w-96" /><br /><br />
+              <sl-input 
+                type="password" 
+                name="password"
+                id="password"
+                password-toggle>
+                  <div class="text-xl font-bold" slot="label">Password</div>
+                </sl-input><br />
 
             <center>
-              <button class="btn btn-outline ml-5">Continue <div class="i-mdi:login"></div></button>
+              <sl-button variant="primary" type="submit" outline>Continue <div slot="suffix" class="i-mdi:login"></div></sl-button>
             </center>
 
           </form>

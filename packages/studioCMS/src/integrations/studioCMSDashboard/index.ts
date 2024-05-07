@@ -25,7 +25,49 @@ const AUTHKEYS = {
 			env.CMS_GITHUB_CLIENT_SECRET ||
 			import.meta.env.CMS_GITHUB_CLIENT_SECRET ||
 			process.env.CMS_GITHUB_CLIENT_SECRET,
-	}
+	},
+	DISCORDCLIENTID: {
+		N: 'CMS_DISCORD_CLIENT_ID',
+		KEY:
+			env.CMS_DISCORD_CLIENT_ID ||
+			import.meta.env.CMS_DISCORD_CLIENT_ID ||
+			process.env.CMS_DISCORD_CLIENT_ID,
+	},
+	DISCORDCLIENTSECRET: {
+		N: 'CMS_DISCORD_CLIENT_SECRET',
+		KEY:
+			env.CMS_DISCORD_CLIENT_SECRET ||
+			import.meta.env.CMS_DISCORD_CLIENT_SECRET ||
+			process.env.CMS_DISCORD_CLIENT_SECRET,
+	},
+	DISCORDREDIRECTURI: {
+		N: 'CMS_DISCORD_REDIRECT_URL',
+		KEY:
+			env.CMS_DISCORD_REDIRECT_URI ||
+			import.meta.env.CMS_DISCORD_REDIRECT_URI ||
+			process.env.CMS_DISCORD_REDIRECT_URI,
+	},
+	GOOGLECLIENTID: {
+		N: 'CMS_GOOGLE_CLIENT_ID',
+		KEY:
+			env.CMS_GOOGLE_CLIENT_ID ||
+			import.meta.env.CMS_GOOGLE_CLIENT_ID ||
+			process.env.CMS_GOOGLE_CLIENT_ID,
+	},
+	GOOGLECLIENTSECRET: {
+		N: 'CMS_GOOGLE_CLIENT_SECRET',
+		KEY:
+			env.CMS_GOOGLE_CLIENT_SECRET ||
+			import.meta.env.CMS_GOOGLE_CLIENT_SECRET ||
+			process.env.CMS_GOOGLE_CLIENT_SECRET,
+	},
+	GOOGLEREDIRECTURI: {
+		N: 'CMS_GOOGLE_REDIRECT_URL',
+		KEY:
+			env.CMS_GOOGLE_REDIRECT_URI ||
+			import.meta.env.CMS_GOOGLE_REDIRECT_URI ||
+			process.env.CMS_GOOGLE_REDIRECT_URI,
+	},
 };
 
 export default defineIntegration({
@@ -66,6 +108,8 @@ export default defineIntegration({
 										allowUserRegistration
 									},
 									github,
+									discord,
+									google,
 									usernameAndPassword
 								}
 							},
@@ -84,11 +128,15 @@ export default defineIntegration({
 					const { resolve } = createResolver(import.meta.url);
 
 					// Virtual Resolver
-					const virtResolver = { Auth: resolve('./lib/auth.ts'), };
+					const virtResolver = { 
+						Auth: resolve('./lib/auth.ts'), 
+						AuthENVChecker: resolve("./utils/authEnvCheck.ts"),
+					};
 
 					// Virtual Components
 					const virtualComponentMap = `
-					export * from '${virtResolver.Auth}';`;
+					export * from '${virtResolver.Auth}';
+					export * from '${virtResolver.AuthENVChecker}';`;
 
 					// Add Virtual Imports
 					integrationLogger(logger, verbose, 'info', 'Adding Virtual Imports...');
@@ -104,6 +152,7 @@ export default defineIntegration({
 
 					studioCMSDTS.addLines(`declare module 'studiocms-dashboard:auth' {
                         export const lucia: typeof import('${virtResolver.Auth}').lucia;
+						export const authEnvCheck: typeof import('${virtResolver.AuthENVChecker}').authEnvCheck;
 					}`);
 
 					// Add Virtual DTS File
@@ -264,6 +313,34 @@ export default defineIntegration({
 							} else {
 								// Log that the GitHub Auth Provider is disabled
 								integrationLogger(logger, verbose, 'info', 'GitHub Auth Provider is Disabled');
+							}
+
+							// Discord Auth Provider
+							if (discord){
+								// Log that the Discord Auth Provider is enabled
+								integrationLogger(logger, verbose, 'info', 'Discord Auth Provider is Enabled');
+								injectRoute({
+									pattern: makeRoute('login/discord'),
+									entrypoint: resolve('./routes/authroutes/login/discord/index.ts'),
+								});
+								injectRoute({
+									pattern: makeRoute('login/discord/callback'),
+									entrypoint: resolve('./routes/authroutes/login/discord/callback.ts'),
+								});
+							}
+
+							// Google Auth Provider
+							if (google){
+								// Log that the Google Auth Provider is enabled
+								integrationLogger(logger, verbose, 'info', 'Google Auth Provider is Enabled');
+								injectRoute({
+									pattern: makeRoute('login/google'),
+									entrypoint: resolve('./routes/authroutes/login/google/index.ts'),
+								});
+								injectRoute({
+									pattern: makeRoute('login/google/callback'),
+									entrypoint: resolve('./routes/authroutes/login/google/callback.ts'),
+								});
 							}
 
 							// Username and Password Auth Provider

@@ -33,6 +33,30 @@ type AUTHKEYS = {
         N: string;
         KEY: string | undefined;
     };
+	DISCORDCLIENTID: {
+		N: string;
+		KEY: string | undefined;
+	};
+	DISCORDCLIENTSECRET: {
+		N: string;
+		KEY: string | undefined;
+	};
+	DISCORDREDIRECTURI: {
+		N: string;
+		KEY: string | undefined;
+	};
+	GOOGLECLIENTID: {
+		N: string;
+		KEY: string | undefined;
+	};
+	GOOGLECLIENTSECRET: {
+		N: string;
+		KEY: string | undefined;
+	};
+	GOOGLEREDIRECTURI: {
+		N: string;
+		KEY: string | undefined;
+	};
 };
 
 export const CheckENV = async (logger: AstroIntegrationLogger, verbose: boolean, AUTHKEYS: AUTHKEYS) => {
@@ -42,6 +66,8 @@ export const CheckENV = async (logger: AstroIntegrationLogger, verbose: boolean,
 	}
 
 	// Check for Authenication Environment Variables
+
+	// Check for Github Environment Variables
 	if (!AUTHKEYS.GITHUBCLIENTID.KEY) {
 		integrationLogger(logger, verbose, 'error', `In order to use the Built-in Github Authentication, you must set the ${AUTHKEYS.GITHUBCLIENTID.N} environment variable.`);
 	}
@@ -51,6 +77,34 @@ export const CheckENV = async (logger: AstroIntegrationLogger, verbose: boolean,
     if ( !AUTHKEYS.GITHUBCLIENTID.KEY || !AUTHKEYS.GITHUBCLIENTSECRET.KEY ) {
         integrationLogger(logger, verbose, "warn", "Github Environment Variables are not set. The built in Github Login Page will be disabled.")
     }
+
+	// Check for Discord Environment Variables
+	if (!AUTHKEYS.DISCORDCLIENTID.KEY) {
+		integrationLogger(logger, verbose, 'error', `In order to use the Built-in Discord Authentication, you must set the ${AUTHKEYS.DISCORDCLIENTID.N} environment variable.`);
+	}
+	if (!AUTHKEYS.DISCORDCLIENTSECRET.KEY) {
+		integrationLogger(logger, verbose, 'error', `In order to use the Built-in Discord Authentication, you must set the ${AUTHKEYS.DISCORDCLIENTSECRET.N} environment variable.`);
+	}
+	if (!AUTHKEYS.DISCORDREDIRECTURI.KEY) {
+		integrationLogger(logger, verbose, 'error', `In order to use the Built-in Discord Authentication, you must set the ${AUTHKEYS.DISCORDREDIRECTURI.N} environment variable.`);
+	}
+	if ( !AUTHKEYS.DISCORDCLIENTID.KEY || !AUTHKEYS.DISCORDCLIENTSECRET.KEY || !AUTHKEYS.DISCORDREDIRECTURI.KEY ) {
+		integrationLogger(logger, verbose, "warn", "Discord Environment Variables are not set. The built in Discord Login Page will be disabled.")
+	}
+
+	// Check for Google Environment Variables
+	if (!AUTHKEYS.GOOGLECLIENTID.KEY) {
+		integrationLogger(logger, verbose, 'error', `In order to use the Built-in Google Authentication, you must set the ${AUTHKEYS.GOOGLECLIENTID.N} environment variable.`);
+	}
+	if (!AUTHKEYS.GOOGLECLIENTSECRET.KEY) {
+		integrationLogger(logger, verbose, 'error', `In order to use the Built-in Google Authentication, you must set the ${AUTHKEYS.GOOGLECLIENTSECRET.N} environment variable.`);
+	}
+	if (!AUTHKEYS.GOOGLEREDIRECTURI.KEY) {
+		integrationLogger(logger, verbose, 'error', `In order to use the Built-in Google Authentication, you must set the ${AUTHKEYS.GOOGLEREDIRECTURI.N} environment variable.`);
+	}
+	if ( !AUTHKEYS.GOOGLECLIENTID.KEY || !AUTHKEYS.GOOGLECLIENTSECRET.KEY || !AUTHKEYS.GOOGLEREDIRECTURI.KEY ) {
+		integrationLogger(logger, verbose, "warn", "Google Environment Variables are not set. The built in Google Login Page will be disabled.")
+	}
 
 	if ( verbose ) {
 		integrationLogger(logger, verbose, 'info', 'Done Checking Environment Variables...');

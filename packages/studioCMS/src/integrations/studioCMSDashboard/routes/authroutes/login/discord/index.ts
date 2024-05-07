@@ -1,25 +1,25 @@
 import { generateState } from 'arctic';
-import { GitHub } from 'arctic';
+import { Discord } from 'arctic';
 import type { APIRoute } from 'astro';
 import { authEnvCheck } from 'studiocms-dashboard:auth';
 import Config from 'virtual:studiocms/config';
 
-const { GITHUB: { CLIENT_ID, CLIENT_SECRET } } = await authEnvCheck(Config.dashboardConfig.AuthConfig.providers);
-
+const { DISCORD: { CLIENT_ID, CLIENT_SECRET, REDIRECT_URI } } = await authEnvCheck(Config.dashboardConfig.AuthConfig.providers);
 export const GET: APIRoute = async ({ redirect, cookies }) => {
-	const github = new GitHub(
+	const discord = new Discord(
 		CLIENT_ID?CLIENT_ID:"",
-		CLIENT_SECRET?CLIENT_SECRET:""
+		CLIENT_SECRET?CLIENT_SECRET:"",
+		REDIRECT_URI?REDIRECT_URI:""
 	);
-	const state = generateState();
-	const url = await github.createAuthorizationURL(state);
 
-	cookies.set('github_oauth_state', state, {
+	const state = generateState();
+	const url: URL = await discord.createAuthorizationURL(state, { scopes: ['identify', 'email'], });
+
+	cookies.set('discord_oauth_state', state, {
 		path: import.meta.env.BASE_URL,
 		secure: import.meta.env.PROD,
 		httpOnly: true,
 		maxAge: 60 * 10,
-		sameSite: 'lax',
 	});
 
 	return redirect(url.toString());

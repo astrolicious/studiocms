@@ -1,9 +1,12 @@
 ---
 import { urlGenFactory } from 'studiocms:helpers';
+import { authEnvCheck } from "studiocms-dashboard:auth";
 
 type Props = {
     providers: {
         github: boolean;
+        discord: boolean;
+        google: boolean;
         usernameAndPassword: boolean;
     }
     dashboardURL: string;
@@ -11,19 +14,38 @@ type Props = {
 
 const { 
     dashboardURL,
+    providers,
     providers: { 
         github, 
+        discord,
+        google,
         usernameAndPassword
     }, 
 } = Astro.props;
 
 const githubLoginURL = await urlGenFactory(true, 'login/github', dashboardURL)
+const discordLoginURL = await urlGenFactory(true, 'login/discord', dashboardURL)
+const googleLoginURL = await urlGenFactory(true, 'login/google', dashboardURL)
+
+const authENV = await authEnvCheck(providers);
+
+const { 
+    DISCORD: {
+        ENABLED: discordEnabled
+    }, 
+    GITHUB: {
+        ENABLED: githubEnabled
+    },
+    GOOGLE: {
+        ENABLED: googleEnabled
+    }
+} = authENV;
 
 let isThereAnyOAuthProvider = false;
 let noProviderConfigured = false;
 
 // Check if there is any OAuth provider configured
-if (github) {
+if (github || discord || google) {
     isThereAnyOAuthProvider = true;
 }
 
@@ -35,15 +57,46 @@ if (!isThereAnyOAuthProvider && !usernameAndPassword) {
 ---
 {isThereAnyOAuthProvider && ( 
     <center>
-        <div class="bg-base-300 rounded-lg p-4">
+        <div class="bg-base-300 rounded-lg p-4 grid grid-cols-2 gap-2">
     
             <!-- GitHub Provider -->
-            { github && (
-                <a href={githubLoginURL} class="inline flex flex-row btn btn-outline ml-5 p-2 w-64">
-                <div class="i-mdi:github w-32px h-32px inline"></div><span class="font-bold text-lg">Sign in with GitHub</span>
-                </a>
+            { githubEnabled && (
+                <sl-button 
+                    variant="default" 
+                    href={githubLoginURL} 
+                    outline 
+                    pill>
+                    <div slot="prefix" class="i-mdi:github w-32px h-32px inline"></div>
+                    <span class="font-bold text-base text-lg">Sign in with GitHub</span>
+                </sl-button>
             )}
             <!-- End of GitHub Provider -->
+
+            <!-- Discord Provider -->
+            { discordEnabled && (
+                <sl-button 
+                    variant="default" 
+                    href={discordLoginURL}
+                    outline 
+                    pill>
+                    <div slot="prefix" class="i-mdi:discord w-32px h-32px inline"></div>
+                    <span class="font-bold text-base text-lg">Sign in with Discord</span>
+                </sl-button>
+            )}
+            <!-- End of Discord Provider -->
+
+            <!-- Google Provider -->
+            { googleEnabled && (
+                <sl-button 
+                    variant="default" 
+                    href={googleLoginURL} 
+                    outline 
+                    pill>
+                    <div slot="prefix" class="i-mdi:google w-32px h-32px inline"></div>
+                    <span class="font-bold text-base text-lg">Sign in with Google</span>
+                </sl-button>
+            )}
+            <!-- End of Google Provider -->
     
         </div>
     </center>
@@ -52,7 +105,7 @@ if (!isThereAnyOAuthProvider && !usernameAndPassword) {
 {noProviderConfigured && (
     <center>
         <div class="bg-base-300 rounded-lg p-4">
-            <p class="text-center">No OAuth provider configured. Please contact your administrator.</p>
+            <p class="text-center">No Login provider configured. Please contact your administrator.</p>
         </div>
     </center>
 )}

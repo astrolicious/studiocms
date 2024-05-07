@@ -18,6 +18,8 @@ export const User = defineTable({
 		avatar: column.text({ optional: true }),
 		githubId: column.number({ unique: true, optional: true, nullable: true }),
 		githubURL: column.text({ optional: true }),
+		discordId: column.text({ unique: true, optional: true, nullable: true }),
+		googleId: column.text({ unique: true, optional: true, nullable: true }),
 		username: column.text(),
 		password: column.text({ optional: true }),
 		updatedAt: column.date({ default: NOW, nullable: true }),
