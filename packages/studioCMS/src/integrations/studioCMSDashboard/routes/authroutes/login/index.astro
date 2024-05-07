@@ -2,6 +2,7 @@
 import Layout from '../../dashboard/layouts/Layout.astro';
 import Config from 'virtual:studiocms/config';
 import { urlGenFactory, type Locals } from 'studiocms:helpers';
+import OauthProviders from '../components/OauthProviders.astro';
 
 if (Config.includedIntegrations.useInoxSitemap) {
     import('sitemap-ext:config').then((sitemap) => {
@@ -13,8 +14,8 @@ const {
   dashboardConfig: { 
     dashboardRouteOverride,
     AuthConfig: { 
-      providers: { 
-        github,
+      providers,
+      providers: {
         usernameAndPassword,
         usernameAndPasswordConfig: {
           allowUserRegistration,
@@ -28,7 +29,6 @@ const dashboardURL = dashboardRouteOverride || 'dashboard';
 
 const locals = Astro.locals as Locals;
 
-const githubLoginURL = await urlGenFactory(true, 'login/github', dashboardURL)
 const UserPassLoginURL = await urlGenFactory(true, 'login/api/login', dashboardURL)
 const RegisterURL = await urlGenFactory(true, 'signup/', dashboardURL)
 
@@ -48,21 +48,8 @@ if (locals.isLoggedIn) {
       </div>
     </center><br />
 
-
       <!-- oAUTH Providers -->
-
-      <!-- GitHub Provider -->
-      { github && (
-        <div class="inline flex flex-row bg-base-300 justify-center py-2 rounded-lg">
-          <a href={githubLoginURL} class="flex">
-            <div class="i-mdi:github w-32px h-32px inline"></div><span class="font-bold text-lg">Sign in with GitHub</span>
-          </a>
-        </div>
-      )}
-      <!-- End of GitHub Provider -->
-
-
-
+      <OauthProviders providers={providers} dashboardURL={dashboardURL} />
       <!-- End of oAUTH Providers -->
 
       <!-- Username and Password Provider-->
@@ -102,6 +89,11 @@ if (locals.isLoggedIn) {
         <strong>Something went wrong!</strong><br />
         <div id = "form-error-message"></div>
       </sl-alert>
+      <sl-alert id="form-success" variant="success" duration="4000" closable>
+        <sl-icon slot="icon" name="check2-circle"></sl-icon>
+        <strong>Success!</strong><br />
+        <div id = "form-success-message"></div>
+      </sl-alert>
 
   </div>
 </Layout>
@@ -109,6 +101,8 @@ if (locals.isLoggedIn) {
 <script>
 	const alertElement = document.getElementById("form-error")!;
   const errorMessageElement = document.getElementById("form-error-message")!;
+	const successAlertElement = document.getElementById("form-success")!;
+  const successMessageElement = document.getElementById("form-success-message")!;
 
 	document.forms[0]?.addEventListener("submit", async (e) => {
 		e.preventDefault();
@@ -119,7 +113,12 @@ if (locals.isLoggedIn) {
 			body: new FormData(formElement)
 		});
 		if (response.ok) {
-			window.location.href = "/";
+      successMessageElement.innerText = "Login successful! Redirecting...";
+      //@ts-expect-error - toast is not a standard method on HTMLElement it comes from `Shoelace.syle`
+      successAlertElement.toast();
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000)
 		} else {
 			errorMessageElement.innerText = (await response.json()).error;
       //@ts-expect-error - toast is not a standard method on HTMLElement it comes from `Shoelace.syle`

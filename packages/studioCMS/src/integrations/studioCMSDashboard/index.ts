@@ -50,9 +50,24 @@ export default defineIntegration({
 							dashboardEnabled,
 							AuthConfig,
 							dashboardRouteOverride,
-							UnoCSSConfigOverride,
+							UnoCSSConfigOverride: {
+								injectEntry,
+								injectReset,
+								presetsConfig: {
+									presetDaisyUI: {
+										themes,
+										darkTheme
+									}
+								},
+							},
 							AuthConfig: {
-								providers,
+								providers: {
+									usernameAndPasswordConfig: {
+										allowUserRegistration
+									},
+									github,
+									usernameAndPassword
+								}
 							},
 							developerConfig: {
 								testingAndDemoMode
@@ -128,17 +143,6 @@ export default defineIntegration({
 
 						// Add Dashboard Integrations
 						integrationLogger(logger, verbose, 'info', 'Adding Dashboard Integrations');
-
-						const { 
-							injectEntry, 
-							injectReset, 
-							presetsConfig: {
-								presetDaisyUI: {
-									themes,
-									darkTheme
-								}
-							} 
-						} = UnoCSSConfigOverride;
 
 						// CSS Management
 						addIntegration(params, {
@@ -246,7 +250,7 @@ export default defineIntegration({
 							})
 
 							// GitHub Auth Provider
-							if ( providers.github ) {
+							if ( github ) {
 								// Log that the GitHub Auth Provider is enabled
 								integrationLogger(logger, verbose, 'info', 'GitHub Auth Provider is Enabled');
 								injectRoute({
@@ -263,14 +267,14 @@ export default defineIntegration({
 							}
 
 							// Username and Password Auth Provider
-							if ( providers.usernameAndPassword) {
+							if ( usernameAndPassword) {
 								// Log that the Username and Password Auth Provider is enabled
 								integrationLogger(logger, verbose, 'info', 'Username and Password Auth Provider is Enabled');
 								injectRoute({
 									pattern: makeRoute('login/api/login'),
 									entrypoint: resolve('./routes/authroutes/login/api/login.ts'),
 								})
-								if ( providers.usernameAndPasswordConfig.allowUserRegistration ) {
+								if ( allowUserRegistration ) {
 									injectRoute({
 										pattern: makeRoute('signup/'),
 										entrypoint: resolve('./routes/authroutes/login/signup.astro'),

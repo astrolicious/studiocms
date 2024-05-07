@@ -1,0 +1,58 @@
+---
+import { urlGenFactory } from 'studiocms:helpers';
+
+type Props = {
+    providers: {
+        github: boolean;
+        usernameAndPassword: boolean;
+    }
+    dashboardURL: string;
+};
+
+const { 
+    dashboardURL,
+    providers: { 
+        github, 
+        usernameAndPassword
+    }, 
+} = Astro.props;
+
+const githubLoginURL = await urlGenFactory(true, 'login/github', dashboardURL)
+
+let isThereAnyOAuthProvider = false;
+let noProviderConfigured = false;
+
+// Check if there is any OAuth provider configured
+if (github) {
+    isThereAnyOAuthProvider = true;
+}
+
+// Check if there is any OAuth or username and password provider configured
+if (!isThereAnyOAuthProvider && !usernameAndPassword) {
+    noProviderConfigured = true;
+}
+
+---
+{isThereAnyOAuthProvider && ( 
+    <center>
+        <div class="bg-base-300 rounded-lg p-4">
+    
+            <!-- GitHub Provider -->
+            { github && (
+                <a href={githubLoginURL} class="inline flex flex-row btn btn-outline ml-5 p-2 w-64">
+                <div class="i-mdi:github w-32px h-32px inline"></div><span class="font-bold text-lg">Sign in with GitHub</span>
+                </a>
+            )}
+            <!-- End of GitHub Provider -->
+    
+        </div>
+    </center>
+)}
+
+{noProviderConfigured && (
+    <center>
+        <div class="bg-base-300 rounded-lg p-4">
+            <p class="text-center">No OAuth provider configured. Please contact your administrator.</p>
+        </div>
+    </center>
+)}
