@@ -1,16 +1,111 @@
 ---
-import { urlGenFactory } from "studiocms:helpers"
+import { authHelper, urlGenFactory, type Locals } from "studiocms:helpers"
+import ThemeToggleButton from "./ThemeToggleButton.astro"
+import Config from "virtual:studiocms/config"
+import defaultAvatar from './avatar.webp';
+import SideBarMenu from "./SideBarMenu.astro";
 
-const siteURL = await urlGenFactory(false, undefined)
+const { dashboardConfig: { dashboardRouteOverride } } = Config;
+
+type Props = {
+    sideBarActiveItemID: string;
+    DashboardRouteOverride?: string|undefined;
+}
+
+const { sideBarActiveItemID } = Astro.props;
+const locals = Astro.locals as Locals;
+const { avatar, name, permissionLevel } = await authHelper(locals);
+
+let useAvatar: string;
+let useName: string;
+
+if ( permissionLevel === "unknown" ) {
+  useAvatar = defaultAvatar.src;
+  useName = "Guest";
+} else {
+  if ( !avatar ) {
+    useAvatar = defaultAvatar.src;
+  } else {
+    useAvatar = avatar;
+  }
+  if ( !name ) {
+    useName = "User";
+  } else {
+  useName = name;
+  }
+}
+
+const siteURL = await urlGenFactory(true, undefined, dashboardRouteOverride)
 ---
+
+<sl-drawer placement="start" class="drawer-placement-start">
+  <div slot="label" class="flex items-center gap-4">
+    <sl-avatar
+      image={useAvatar}
+      class=""
+      label={"Avatar of " + useName}
+    ></sl-avatar> 
+    <div>
+      Current User: <br />
+      <b>{useName}</b>
+    </div>
+  </div>
+
+  <SideBarMenu sideBarActiveItemID={sideBarActiveItemID} />
+
+  <div class="navbar" slot="footer">
+    <div class="navbar-start"> </div>
+
+    <div class="navbar-center"> 
+
+      <sl-icon-button 
+        name="github" 
+        style="font-size: 1.5rem;" 
+        class="flex-center"
+        label="StudioCMS Github" 
+        href="https://github.com/astrolicious/studiocms" 
+        target="_blank"></sl-icon-button>
+
+    </div>
+    <div class="navbar-end"> 
+
+      <sl-button class="flex-end" variant="primary">Close</sl-button>
+
+    </div>
+  </div>
+</sl-drawer>
+
 <div
-  class="sticky lg:hidden top-0 z-30 flex h-16 w-full justify-center bg-opacity-90 backdrop-blur transition-all duration-100 bg-base-100 text-base-content shadow-sm"
+  class="sticky top-0 z-30 flex h-16 w-full justify-center bg-opacity-90 backdrop-blur transition-all duration-100 bg-base-100 text-base-content shadow-sm"
 >
   <div class="navbar">
-    <div class="navbar-start"> </div>
+    <div class="navbar-start"> 
+
+      { permissionLevel !== "unknown" && (
+        <sl-icon-button 
+          name="list"
+          style="font-size: 2rem;" 
+          size="medium" 
+          label="Open Menu"
+          class="md:hidden drawer-header-button">
+        </sl-icon-button> 
+      )}
+      <ThemeToggleButton /> 
+    </div>
     <div class="navbar-center">
-      <a class="btn btn-ghost normal-case text-xl" href={siteURL}>Back to site</a>
+      <a class="btn btn-ghost normal-case text-xl" href={siteURL}>StudioCMS Dashboard</a>
     </div>
     <div class="navbar-end"> </div>
   </div>
 </div>
+
+<script>
+  const drawer = document.querySelector('.drawer-placement-start');
+  const openButton = document.querySelector('.drawer-header-button');
+  const closeButton = drawer?.querySelector('sl-button[variant="primary"]');
+
+  // @ts-expect-error - TS doesn't know that these elements exist because they are from Shoelace.style
+  openButton?.addEventListener('click', () => drawer?.show());
+  // @ts-expect-error - TS doesn't know that these elements exist because they are from Shoelace.style
+  closeButton?.addEventListener('click', () => drawer?.hide());
+</script>

@@ -22,8 +22,6 @@ const contextConfig = ConfigArray.pop();
 const locals = Astro.locals as Locals;
 const { permissionLevel } = await authHelper(locals);
 
-const dashboardURL = dashboardRouteOverride || 'dashboard';
-
 // If the user is not logged in, redirect to the login page
 if ( !developerConfig.testingAndDemoMode ) {
     if ( permissionLevel === "unknown" ) {
@@ -60,7 +58,7 @@ const pageTitle = `Existing Posts | ${contextConfig.title}`;
                     </thead>
                     <tbody>
                         { 
-                            posts.map((post: typeof Blog.$inferSelect) => {
+                            posts.map(async (post: typeof Blog.$inferSelect) => {
                                 return (
                                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
@@ -70,10 +68,10 @@ const pageTitle = `Existing Posts | ${contextConfig.title}`;
                                             <FormattedDate date={post.publishedAt}/>
                                         </td>
                                         <td class="px-6 py-4 bg-gray-100 dark:bg-gray-900">
-                                            <a href={`${import.meta.env.BASE_URL}${dashboardURL}/edit/posts/${post.slug}`} class="text-green font-bold">Edit</a>
+                                            <a href={await urlGenFactory(true, `edit/posts/${post.slug}`, dashboardRouteOverride)} class="text-green font-bold">Edit</a>
                                         </td>
                                         <td class="px-6 py-4 bg-gray-100 dark:bg-gray-900">
-                                            { permissionLevel === 'admin' && <a href={`${import.meta.env.BASE_URL}${dashboardURL}/delete/posts/${post.slug}`} class="text-red font-bold">Delete</a> }
+                                            { permissionLevel === 'admin' && <a href={await urlGenFactory(true, `delete/posts/${post.slug}`, dashboardRouteOverride)} class="text-red font-bold">Delete</a> }
                                         </td>
                                     </tr>
                                 )

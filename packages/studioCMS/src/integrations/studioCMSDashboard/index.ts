@@ -225,12 +225,12 @@ export default defineIntegration({
 										}
 									}),
 									presetWebFonts({
-										provider: 'google', // default provider
+										provider: 'google',
 										fonts: {
-										  // these will extend the default theme
-										  sans: 'Roboto',
-										  mono: ['Fira Code', 'Fira Mono:400,700'],
-										}
+											// Required Fonts for Google Icons
+										  	sans: 'Roboto',
+										  	mono: ['Fira Code', 'Fira Mono:400,700'],
+										},
 									}),
 								],
 								transformers: [

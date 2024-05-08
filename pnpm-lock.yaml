@@ -70,28 +70,28 @@ importers:
         specifier: ^0.4.0
         version: 0.4.0
       '@shikijs/transformers':
-        specifier: ^1.3.0
+        specifier: ^1.4.0
         version: 1.4.0
       '@unocss/astro':
-        specifier: 0.59.4
+        specifier: ^0.59.4
         version: 0.59.4(vite@5.2.11)
       '@unocss/preset-typography':
-        specifier: 0.59.4
+        specifier: ^0.59.4
         version: 0.59.4
       '@unocss/preset-uno':
-        specifier: 0.59.4
+        specifier: ^0.59.4
         version: 0.59.4
       '@unocss/preset-web-fonts':
-        specifier: 0.59.4
+        specifier: ^0.59.4
         version: 0.59.4
       '@unocss/preset-wind':
-        specifier: 0.59.4
+        specifier: ^0.59.4
         version: 0.59.4
       '@unocss/reset':
-        specifier: 0.59.4
+        specifier: ^0.59.4
         version: 0.59.4
       '@unocss/transformer-directives':
-        specifier: 0.59.4
+        specifier: ^0.59.4
         version: 0.59.4
       '@unpic/astro':
         specifier: ^0.0.46
@@ -100,8 +100,8 @@ importers:
         specifier: ^1.0.0
         version: 1.0.0(daisyui@4.10.5)(unocss@0.59.4)
       arctic:
-        specifier: ^1.8.0
-        version: 1.8.0
+        specifier: ^1.8.1
+        version: 1.8.1
       astro:
         specifier: '>=4.7.1'
         version: 4.7.1(@types/node@20.12.8)(typescript@5.4.5)
@@ -139,10 +139,10 @@ importers:
         specifier: ^1.1.2
         version: 1.1.2
       recast:
-        specifier: ^0.23.5
+        specifier: ^0.23.6
         version: 0.23.6
       shiki:
-        specifier: ^1.3.0
+        specifier: ^1.4.0
         version: 1.4.0
       typescript:
         specifier: ^5.4.5
@@ -154,7 +154,7 @@ importers:
         specifier: ^3.18.0
         version: 3.18.0
       vite:
-        specifier: ^5.2.10
+        specifier: ^5.2.11
         version: 5.2.11(@types/node@20.12.8)
     devDependencies:
       '@types/node':
@@ -3918,8 +3918,8 @@ packages:
       normalize-path: 3.0.0
       picomatch: 2.3.1
 
-  /arctic@1.8.0:
-    resolution: {integrity: sha512-gFzu67CMG7PvBrxv5E1FetiG+OeDAgc3dRDY+xTus+qnH+ip1qJVMRaJ4OSiYRx54/LWVR/B7Bdym0uPhrmIzg==}
+  /arctic@1.8.1:
+    resolution: {integrity: sha512-YmTcSfk8+NDSZt7qWYBX4HrikHZA3EQgmfFYlS4BwtYzPrji2VjAFrCFMElnjp72zmx3J3mz1ldjaXvjxmiW4Q==}
     dependencies:
       oslo: 1.2.0
     dev: false
