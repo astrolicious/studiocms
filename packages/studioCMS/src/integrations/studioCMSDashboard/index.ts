@@ -132,12 +132,15 @@ export default defineIntegration({
 					const virtResolver = { 
 						Auth: resolve('./lib/auth.ts'), 
 						AuthENVChecker: resolve("./utils/authEnvCheck.ts"),
+						DashboardLayout: resolve('./routes/dashboard/layouts/Layout.astro'),
 					};
 
 					// Virtual Components
 					const virtualComponentMap = `
 					export * from '${virtResolver.Auth}';
 					export * from '${virtResolver.AuthENVChecker}';`;
+					const VirtualAstroComponents = `
+					export {default as Layout} from '${virtResolver.DashboardLayout}';`;
 
 					// Add Virtual Imports
 					integrationLogger(logger, verbose, 'info', 'Adding Virtual Imports...');
@@ -145,6 +148,7 @@ export default defineIntegration({
 						name,
 						imports: {
 							'studiocms-dashboard:auth': virtualComponentMap,
+							'studiocms-dashboard:components': VirtualAstroComponents,
 						},
 					});
 
@@ -154,6 +158,10 @@ export default defineIntegration({
 					studioCMSDTS.addLines(`declare module 'studiocms-dashboard:auth' {
                         export const lucia: typeof import('${virtResolver.Auth}').lucia;
 						export const authEnvCheck: typeof import('${virtResolver.AuthENVChecker}').authEnvCheck;
+					}`);
+
+					studioCMSDTS.addLines(`declare module 'studiocms-dashboard:components' {
+						export const Layout: typeof import('${virtResolver.DashboardLayout}').default;
 					}`);
 
 					// Add Virtual DTS File

@@ -1,7 +1,7 @@
 ---
 // @ts-expect-error - Some types can only be imported from the Astro runtime
 import { SiteConfig, db, eq } from 'astro:db';
-import BaseLayout from "../../layouts/Layout.astro";
+import { Layout } from 'studiocms-dashboard:components';
 import Config from 'virtual:studiocms/config';
 import { authHelper, urlGenFactory, type Locals } from 'studiocms:helpers';
 
@@ -13,23 +13,23 @@ if (Config.includedIntegrations.useInoxSitemap) {
 
 const { dashboardConfig: { developerConfig, dashboardRouteOverride } } = Config;
 
-const dashboardURL = dashboardRouteOverride || 'dashboard';
-
 const ConfigArray = await db.select().from(SiteConfig);
 const contextConfig = ConfigArray.pop();
 
 const locals = Astro.locals as Locals;
 const { permissionLevel } = await authHelper(locals);
 
+const manageAdmins = await urlGenFactory(true, "configuration/admins/", dashboardRouteOverride);
+
 // If the user is not logged in, redirect to the login page
 if ( !developerConfig.testingAndDemoMode ) {
     if ( permissionLevel === "unknown" ) {
         console.log('User is not logged in. Redirecting to login page.');
-        return Astro.redirect(await urlGenFactory(true, "login", dashboardURL));
+        return Astro.redirect(await urlGenFactory(true, "login", dashboardRouteOverride));
     }
     if ( permissionLevel !== 'admin' ) {
         console.log('User is not an admin. Redirecting to profile page.');
-        return Astro.redirect(await urlGenFactory(true, "profile", dashboardURL));
+        return Astro.redirect(await urlGenFactory(true, "profile", dashboardRouteOverride));
     }
 }
 
@@ -65,7 +65,7 @@ if (Astro.request.method === 'POST' && !developerConfig.testingAndDemoMode) {
 const pageTitle = `Site Config | ${contextConfig.title}`;
 ---
 
-<BaseLayout 
+<Layout 
     sideBarActiveItemID="site-config" 
     title={pageTitle}
     description={contextConfig.description} >
@@ -91,7 +91,7 @@ const pageTitle = `Site Config | ${contextConfig.title}`;
 
         <div class="py-4">
             <a 
-                href={import.meta.env.BASE_URL + 'dashboard/configuration/admins/'} 
+                href={manageAdmins} 
                 class="btn btn-outline ml-5" 
                 type="submit" >
                 Manage Admins
@@ -124,4 +124,4 @@ const pageTitle = `Site Config | ${contextConfig.title}`;
             </form>
         </div>
     </div>
-</BaseLayout>
+</Layout>

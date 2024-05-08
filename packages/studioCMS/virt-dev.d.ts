@@ -23,6 +23,10 @@ declare module 'studiocms-dashboard:auth' {
 	export const authEnvCheck: typeof import('./src/integrations/studioCMSDashboard/utils/authEnvCheck').authEnvCheck;
 }
 
+declare module 'studiocms-dashboard:components' {
+	export const Layout: typeof import('./src/integrations/studioCMSDashboard/routes/dashboard/layouts/Layout.astro').default;
+}
+
 interface ImportMetaEnv {
 	readonly CMS_GITHUB_CLIENT_ID: string;
 	readonly CMS_GITHUB_CLIENT_SECRET: string;

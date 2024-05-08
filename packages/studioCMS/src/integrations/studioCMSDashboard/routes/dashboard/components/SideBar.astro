@@ -40,11 +40,13 @@ const dashURL = await urlGenFactory(true, undefined, DashboardRouteOverride)
   <aside class="px-2 pt-2 h-auto min-h-full w-[19rem] bg-base-200 text-base-content flex flex-col">
     <div class="w-fit mx-auto mt-5 mb-6">
       <a href={dashURL}>
-        <div class="avatar transition ease-in-out hover:scale-[102%] block m-auto">
-          <div class="w-[8.5rem] rounded-full">
-            <img width={300} height={300} src={useAvatar} alt={useName} />
-          </div>
-        </div>
+        <sl-tooltip content={"Avatar of " + useName}>
+          <sl-avatar
+            image={useAvatar}
+            class="m-auto ease-in-out hover:scale-[102%] transition"
+            label={"Avatar of " + useName}
+          ></sl-avatar> 
+        </sl-tooltip>
       </a>
     </div>
     <div class="text-center pb-2">
@@ -55,3 +57,9 @@ const dashURL = await urlGenFactory(true, undefined, DashboardRouteOverride)
     <SideBarFooter />
   </aside>
 </div>
+
+<style>
+  sl-avatar {
+    --size: 8.5rem;
+  }
+</style>

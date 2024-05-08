@@ -1,7 +1,7 @@
 ---
 // @ts-expect-error - Some types can only be imported from the Astro runtime
 import { SiteConfig, Blog, db, asc } from 'astro:db';
-import BaseLayout from "../layouts/Layout.astro";
+import { Layout } from 'studiocms-dashboard:components';
 import Config from 'virtual:studiocms/config';
 import { authHelper, urlGenFactory, type Locals } from 'studiocms:helpers';
 import { FormattedDate } from 'studiocms:components';
@@ -14,8 +14,6 @@ if (Config.includedIntegrations.useInoxSitemap) {
 
 const { dashboardConfig: { developerConfig, dashboardRouteOverride } } = Config;
 
-const dashboardURL = dashboardRouteOverride || 'dashboard';
-
 const ConfigArray = await db.select().from(SiteConfig);
 const posts = await db.select().from(Blog).orderBy(asc(Blog.publishedAt));
 
@@ -24,23 +22,24 @@ const contextConfig = ConfigArray.pop();
 const locals = Astro.locals as Locals;
 const { permissionLevel } = await authHelper(locals);
 
+const dashboardURL = dashboardRouteOverride || 'dashboard';
 
 // If the user is not logged in, redirect to the login page
 if ( !developerConfig.testingAndDemoMode ) {
     if ( permissionLevel === "unknown" ) {
         console.log('User is not logged in. Redirecting to login page.');
-        return Astro.redirect(await urlGenFactory(true, "login", dashboardURL))
+        return Astro.redirect(await urlGenFactory(true, "login", dashboardRouteOverride))
     }
     if ( permissionLevel !== 'admin' && permissionLevel !== 'editor' ) {
         console.log('User is not an admin or editor. Redirecting to profile page.');
-        return Astro.redirect(await urlGenFactory(true, "profile", dashboardURL))
+        return Astro.redirect(await urlGenFactory(true, "profile", dashboardRouteOverride))
     }
 }
 
 const pageTitle = `Existing Posts | ${contextConfig.title}`;
 ---
 
-<BaseLayout 
+<Layout 
     sideBarActiveItemID="edit-posts" 
     title={pageTitle}
     description={contextConfig.description} >
@@ -86,5 +85,5 @@ const pageTitle = `Existing Posts | ${contextConfig.title}`;
         </div>
 
     </div>
-</BaseLayout>
+</Layout>
 

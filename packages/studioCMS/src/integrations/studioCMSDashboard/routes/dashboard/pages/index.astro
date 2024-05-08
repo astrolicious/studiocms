@@ -1,7 +1,7 @@
 ---
 // @ts-expect-error - Some types can only be imported from the Astro runtime
 import { SiteConfig, db } from 'astro:db';
-import BaseLayout from "../layouts/Layout.astro";
+import { Layout } from 'studiocms-dashboard:components';
 import Config from 'virtual:studiocms/config';
 import { authHelper, urlGenFactory, type Locals } from 'studiocms:helpers';
 
@@ -13,8 +13,6 @@ if (Config.includedIntegrations.useInoxSitemap) {
 
 const { dashboardConfig: { developerConfig, dashboardRouteOverride } } = Config;
 
-const dashboardURL = dashboardRouteOverride || 'dashboard';
-
 const ConfigArray = await db.select().from(SiteConfig);
 const contextConfig = ConfigArray.pop();
 
@@ -25,18 +23,18 @@ const { permissionLevel } = await authHelper(locals);
 if ( !developerConfig.testingAndDemoMode ) {
     if ( permissionLevel === "unknown" ) {
         console.log('User is not logged in. Redirecting to login page.');
-        return Astro.redirect(await urlGenFactory(true, "login", dashboardURL));
+        return Astro.redirect(await urlGenFactory(true, "login", dashboardRouteOverride));
     }
     if ( permissionLevel !== 'admin' && permissionLevel !== 'editor' ) {
         console.log('User is not an admin or editor. Redirecting to profile page.');
-        return Astro.redirect(await urlGenFactory(true, "profile", dashboardURL));
+        return Astro.redirect(await urlGenFactory(true, "profile", dashboardRouteOverride));
     }
 }
 
 const pageTitle = `Dashboard | ${contextConfig.title}`;
 ---
 
-<BaseLayout 
+<Layout 
     sideBarActiveItemID="dashboard" 
     title={pageTitle}
     description={contextConfig.description} >
@@ -71,4 +69,4 @@ const pageTitle = `Dashboard | ${contextConfig.title}`;
         </div>
 
     </div>
-</BaseLayout>
+</Layout>

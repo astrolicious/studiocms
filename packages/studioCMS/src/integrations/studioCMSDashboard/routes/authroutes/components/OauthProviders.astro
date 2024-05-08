@@ -1,61 +1,41 @@
 ---
 import { urlGenFactory } from 'studiocms:helpers';
 import { authEnvCheck } from "studiocms-dashboard:auth";
+import type Config from 'virtual:studiocms/config';
 
 type Props = {
-    providers: {
-        github: boolean;
-        discord: boolean;
-        google: boolean;
-        usernameAndPassword: boolean;
-    }
-    dashboardURL: string;
+    dashboardConfig: typeof Config.dashboardConfig;
 };
 
 const { 
-    dashboardURL,
-    providers,
-    providers: { 
-        github, 
-        discord,
-        google,
-        usernameAndPassword
-    }, 
+    dashboardConfig: {
+        AuthConfig: {
+            providers
+        },
+        dashboardRouteOverride
+    },
 } = Astro.props;
 
-const githubLoginURL = await urlGenFactory(true, 'login/github', dashboardURL)
-const discordLoginURL = await urlGenFactory(true, 'login/discord', dashboardURL)
-const googleLoginURL = await urlGenFactory(true, 'login/google', dashboardURL)
-
-const authENV = await authEnvCheck(providers);
+const githubLoginURL = await urlGenFactory(true, 'login/github', dashboardRouteOverride)
+const discordLoginURL = await urlGenFactory(true, 'login/discord', dashboardRouteOverride)
+const googleLoginURL = await urlGenFactory(true, 'login/google', dashboardRouteOverride)
 
 const { 
     DISCORD: {
         ENABLED: discordEnabled
-    }, 
+    },
     GITHUB: {
         ENABLED: githubEnabled
     },
     GOOGLE: {
         ENABLED: googleEnabled
-    }
-} = authENV;
-
-let isThereAnyOAuthProvider = false;
-let noProviderConfigured = false;
-
-// Check if there is any OAuth provider configured
-if (github || discord || google) {
-    isThereAnyOAuthProvider = true;
-}
-
-// Check if there is any OAuth or username and password provider configured
-if (!isThereAnyOAuthProvider && !usernameAndPassword) {
-    noProviderConfigured = true;
-}
+    },
+    SHOW_OAUTH,
+    SHOW_PROVIDER_ERROR
+ } = await authEnvCheck(providers);
 
 ---
-{isThereAnyOAuthProvider && ( 
+{SHOW_OAUTH && ( 
     <center>
         <div class="bg-base-300 rounded-lg p-4 grid grid-cols-2 gap-2">
     
@@ -66,7 +46,7 @@ if (!isThereAnyOAuthProvider && !usernameAndPassword) {
                     href={githubLoginURL} 
                     outline 
                     pill>
-                    <div slot="prefix" class="dark:i-github-dark i-github-light w-32px h-32px inline"></div>
+                    <div slot="prefix" class="i-mdi-github w-32px h-32px inline"></div>
                     <span class="font-bold text-base text-lg">Sign in with GitHub</span>
                 </sl-button>
             )}
@@ -102,7 +82,7 @@ if (!isThereAnyOAuthProvider && !usernameAndPassword) {
     </center>
 )}
 
-{noProviderConfigured && (
+{SHOW_PROVIDER_ERROR && (
     <center>
         <div class="bg-base-300 rounded-lg p-4">
             <p class="text-center">No Login provider configured. Please contact your administrator.</p>

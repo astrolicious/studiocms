@@ -16,8 +16,6 @@ const {
 	  	dashboardRouteOverride,
 	} 
   } = Config;
-  
-  const dashboardURL = dashboardRouteOverride || 'dashboard';
 
 const { DISCORD: { CLIENT_ID, CLIENT_SECRET, REDIRECT_URI } } = await authEnvCheck(providers);
 
@@ -41,7 +39,7 @@ export async function GET(context: APIContext): Promise<Response> {
 		// return new Response(null, {
 		// 	status: 403,
 		// });
-		return redirect(await urlGenFactory(true, "login", dashboardURL));
+		return redirect(await urlGenFactory(true, "login", dashboardRouteOverride));
 	}
 
 	try {
@@ -70,7 +68,7 @@ export async function GET(context: APIContext): Promise<Response> {
 			const session = await lucia.createSession(existingUserById.id.toString(), {});
 			const sessionCookie = lucia.createSessionCookie(session.id);
 			cookies.set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
-			return redirect(await urlGenFactory(true, undefined, dashboardURL));
+			return redirect(await urlGenFactory(true, undefined, dashboardRouteOverride));
 		}
 		
 		const existingUserByUsername = await db.select().from(User).where(eq(User.username, username)).get();
@@ -97,7 +95,7 @@ export async function GET(context: APIContext): Promise<Response> {
 		const sessionCookie = lucia.createSessionCookie(session.id);
 
 		cookies.set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
-		return redirect(await urlGenFactory(true, undefined, dashboardURL));
+		return redirect(await urlGenFactory(true, undefined, dashboardRouteOverride));
 	} catch (e) {
 		// the specific error message depends on the provider
 		if (e instanceof OAuth2RequestError) {

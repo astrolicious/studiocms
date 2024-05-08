@@ -1,5 +1,5 @@
 ---
-import Layout from '../../dashboard/layouts/Layout.astro';
+import { Layout } from 'studiocms-dashboard:components';
 import Config from 'virtual:studiocms/config';
 import { urlGenFactory, type Locals } from 'studiocms:helpers';
 import OauthProviders from '../components/OauthProviders.astro';
@@ -11,23 +11,19 @@ if (Config.includedIntegrations.useInoxSitemap) {
 }
 
 const { 
+  dashboardConfig,
   dashboardConfig: { 
     dashboardRouteOverride,
-    AuthConfig: { 
-      providers
-    } 
   } 
 } = Config;
 
-const dashboardURL = dashboardRouteOverride || 'dashboard';
-
 const locals = Astro.locals as Locals;
 
-const LoginURL = await urlGenFactory(true, 'login/', dashboardURL)
-const UserPassRegisterURL = await urlGenFactory(true, 'login/api/register', dashboardURL)
+const LoginURL = await urlGenFactory(true, 'login/', dashboardRouteOverride)
+const UserPassRegisterURL = await urlGenFactory(true, 'login/api/register', dashboardRouteOverride)
 
 if (locals.isLoggedIn) {
-	return Astro.redirect(await urlGenFactory(true, undefined, dashboardURL));
+	return Astro.redirect(await urlGenFactory(true, undefined, dashboardRouteOverride));
 }
 ---
 
@@ -43,7 +39,7 @@ if (locals.isLoggedIn) {
     </center><br />
 
       <!-- oAUTH Providers -->
-      <OauthProviders providers={providers} dashboardURL={dashboardURL} />
+      <OauthProviders dashboardConfig={dashboardConfig} />
       <!-- End of oAUTH Providers -->
 
       <!-- Username and Password Provider-->

@@ -2,6 +2,7 @@ type Providers = {
     github: boolean;
     discord: boolean;
     google: boolean;
+    usernameAndPassword: boolean;
 }
 
 const AUTHKEYS = {
@@ -39,10 +40,14 @@ type AuthEnvCheckReponse = {
         CLIENT_SECRET: string|undefined;
         REDIRECT_URI: string|undefined;
     };
+    SHOW_OAUTH: boolean;
+    SHOW_PROVIDER_ERROR: boolean;
 }
 let GITHUBENABLED: boolean
 let DISCORDENABLED: boolean
 let GOOGLEENABLED: boolean
+let isThereAnyOAuthProvider: boolean;
+let noProviderConfigured: boolean;
 
 export async function authEnvCheck(providers: Providers): Promise<AuthEnvCheckReponse> {
 
@@ -70,6 +75,20 @@ export async function authEnvCheck(providers: Providers): Promise<AuthEnvCheckRe
         }
     }
 
+    // Check if there is any OAuth provider configured
+    if (providers.github || providers.discord || providers.google) {
+        isThereAnyOAuthProvider = true;
+    } else {
+        isThereAnyOAuthProvider = false;
+    }
+
+    // Check if there is any OAuth or username and password provider configured
+    if (!isThereAnyOAuthProvider && !providers.usernameAndPassword) {
+        noProviderConfigured = true;
+    } else {
+        noProviderConfigured = false;
+    }
+
     return {
         GITHUB: {
             ENABLED: GITHUBENABLED,
@@ -88,6 +107,8 @@ export async function authEnvCheck(providers: Providers): Promise<AuthEnvCheckRe
             CLIENT_SECRET: AUTHKEYS.GOOGLE.CLIENT_SECRET,
             REDIRECT_URI: AUTHKEYS.GOOGLE.REDIRECT_URI,
         },
+        SHOW_OAUTH: isThereAnyOAuthProvider,
+        SHOW_PROVIDER_ERROR: noProviderConfigured,
     }
 
 }
