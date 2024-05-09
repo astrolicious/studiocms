@@ -159,7 +159,7 @@ export default defineIntegration({
 					const { resolve } = createResolver(import.meta.url);
 
 					// Virtual Resolver
-					const virtResolver = { 
+					const virtualResolver = { 
 						Auth: resolve('./lib/auth.ts'), 
 						AuthENVChecker: resolve("./utils/authEnvCheck.ts"),
 						DashboardLayout: resolve('./routes/dashboard/layouts/Layout.astro'),
@@ -167,10 +167,10 @@ export default defineIntegration({
 
 					// Virtual Components
 					const virtualComponentMap = `
-					export * from '${virtResolver.Auth}';
-					export * from '${virtResolver.AuthENVChecker}';`;
+					export * from '${virtualResolver.Auth}';
+					export * from '${virtualResolver.AuthENVChecker}';`;
 					const VirtualAstroComponents = `
-					export {default as Layout} from '${virtResolver.DashboardLayout}';`;
+					export {default as Layout} from '${virtualResolver.DashboardLayout}';`;
 
 					// Add Virtual Imports
 					integrationLogger(logger, verbose, 'info', 'Adding Virtual Imports...');
@@ -186,12 +186,12 @@ export default defineIntegration({
 					const studioCMSDTS = fileFactory();
 
 					studioCMSDTS.addLines(`declare module 'studiocms-dashboard:auth' {
-                        export const lucia: typeof import('${virtResolver.Auth}').lucia;
-						export const authEnvCheck: typeof import('${virtResolver.AuthENVChecker}').authEnvCheck;
+                        export const lucia: typeof import('${virtualResolver.Auth}').lucia;
+						export const authEnvCheck: typeof import('${virtualResolver.AuthENVChecker}').authEnvCheck;
 					}`);
 
 					studioCMSDTS.addLines(`declare module 'studiocms-dashboard:components' {
-						export const Layout: typeof import('${virtResolver.DashboardLayout}').default;
+						export const Layout: typeof import('${virtualResolver.DashboardLayout}').default;
 					}`);
 
 					// Add Virtual DTS File
