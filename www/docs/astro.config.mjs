@@ -2,8 +2,11 @@ import { defineConfig } from "astro/config";
 import starlight from "@astrojs/starlight";
 
 // https://astro.build/config
+
+const site = "https://docs.astro-studiocms.xyz/";
+
 export default defineConfig({
-  site: "https://docs.astro-studiocms.xyz/",
+  site,
   integrations: [
     starlight({
       title: "Astro StudioCMS",
