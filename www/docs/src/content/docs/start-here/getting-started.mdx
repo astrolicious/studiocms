@@ -24,11 +24,9 @@ Once created, you'll be able to access the Astro Studio dashboard and manage you
 
 There are two ways to create a project in Astro Studio:
 
-1. [**Use the Astro Studio web UI**](https://studio.astro.build) to create from a new or existing GitHub repository.
+To get started go to your personal dashboard within Studio and click the "Start a Project" button and follow the instructions. Astro Studio will connect to your GitHub repository and create a new hosted database for your project.
 
-    To get started, click the "Start a Project" button and follow the instructions. Astro Studio will connect to your GitHub repository and create a new hosted database for your project.
-
-2. **Use the Astro Studio CLI** to create from any local Astro project. You can run the following commands to get started:
+**Use the Astro Studio CLI** to create from any local Astro project. You can run the following commands to get started:
 
     <PackageManagerTabs>
         <Fragment slot="npm">
@@ -113,17 +111,17 @@ To add the Astro StudioCMS integration to your project, you'll need to install t
 <PackageManagerTabs>
   <Fragment slot="npm">
   ```shell
-  npm astro add @astrolicious/studiocms
+  npm astro add @astrolicious/studiocms db node
   ```
   </Fragment>
   <Fragment slot="pnpm">
   ```shell
-  pnpm astro add @astrolicious/studiocms
+  pnpm astro add @astrolicious/studiocms db node
   ```
   </Fragment>
   <Fragment slot="yarn">
   ```shell
-  yarn astro add @astrolicious/studiocms
+  yarn astro add @astrolicious/studiocms db node
   ```
   </Fragment>
 </PackageManagerTabs>
