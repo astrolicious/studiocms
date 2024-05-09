@@ -8,6 +8,7 @@ import { presetTypography, presetWind, presetUno, transformerDirectives, presetI
 import UnoCSSAstroIntegration from "@unocss/astro";
 import { presetDaisy } from "@yangyang20240403/unocss-preset-daisyui";
 import { FileSystemIconLoader } from '@iconify/utils/lib/loader/node-loaders'
+import { presetScrollbar } from 'unocss-preset-scrollbar'
 
 // Environment Variables
 const env = loadEnv('all', process.cwd(), 'CMS');
@@ -111,6 +112,7 @@ export default defineIntegration({
 									github,
 									discord,
 									google,
+									auth0,
 									usernameAndPassword
 								}
 							},
@@ -222,7 +224,10 @@ export default defineIntegration({
 											google: FileSystemIconLoader(resolve('./icons/google')),
 											discord: FileSystemIconLoader(resolve('./icons/discord')),
 											github: FileSystemIconLoader(resolve('./icons/github')),
+											auth0: FileSystemIconLoader(resolve('./icons/auth0')),
 										}
+									}),
+									presetScrollbar({
 									}),
 									presetWebFonts({
 										provider: 'google',
@@ -360,6 +365,20 @@ export default defineIntegration({
 								injectRoute({
 									pattern: makeRoute('login/google/callback'),
 									entrypoint: resolve('./routes/authroutes/login/google/callback.ts'),
+								});
+							}
+
+							// Auth0 Auth Provider
+							if (auth0){
+								// Log that the Auth0 Auth Provider is enabled
+								integrationLogger(logger, verbose, 'info', 'Auth0 Auth Provider is Enabled');
+								injectRoute({
+									pattern: makeRoute('login/auth0'),
+									entrypoint: resolve('./routes/authroutes/login/auth0/index.ts'),
+								});
+								injectRoute({
+									pattern: makeRoute('login/auth0/callback'),
+									entrypoint: resolve('./routes/authroutes/login/auth0/callback.ts'),
 								});
 							}
 

@@ -38,6 +38,14 @@ export const authProviderSchema = z.object({
 	 */
 	google: z.boolean().optional().default(true),
 	/**
+	 * Auth0 Auth Provider - Powered by Lucia
+	 * 
+	 * Requires an Auth0 Application to be created and configured using ENV Variables
+	 * 
+	 * @default false - Temporarily set to true for testing
+	 */
+	auth0: z.boolean().optional().default(true),
+	/**
 	 * Username and Password Auth Provider - Powered by Lucia
 	 * 
 	 */

@@ -38,10 +38,10 @@ if ( permissionLevel === "unknown" ) {
 const siteURL = await urlGenFactory(true, undefined, dashboardRouteOverride)
 ---
 
-<sl-drawer placement="start" class="drawer-placement-start">
+<sl-drawer placement="start" class="drawer-scrolling overflow-y-scroll">
   <div slot="label" class="flex items-center gap-4">
     <sl-avatar
-      image={useAvatar}
+      image={avatar?.toString()}
       class=""
       label={"Avatar of " + useName}
     ></sl-avatar> 
@@ -51,7 +51,10 @@ const siteURL = await urlGenFactory(true, undefined, dashboardRouteOverride)
     </div>
   </div>
 
-  <SideBarMenu sideBarActiveItemID={sideBarActiveItemID} />
+  <div class="h-full scrollbar overflow-y-scroll">
+    <SideBarMenu sideBarActiveItemID={sideBarActiveItemID} />
+  </div>
+
 
   <div class="navbar" slot="footer">
     <div class="navbar-start"> </div>
@@ -60,7 +63,7 @@ const siteURL = await urlGenFactory(true, undefined, dashboardRouteOverride)
 
       <sl-icon-button 
         name="github" 
-        style="font-size: 1.5rem;" 
+        style="font-size: 1rem;" 
         class="flex-center"
         label="StudioCMS Github" 
         href="https://github.com/astrolicious/studiocms" 
@@ -100,7 +103,7 @@ const siteURL = await urlGenFactory(true, undefined, dashboardRouteOverride)
 </div>
 
 <script>
-  const drawer = document.querySelector('.drawer-placement-start');
+  const drawer = document.querySelector('.drawer-scrolling');
   const openButton = document.querySelector('.drawer-header-button');
   const closeButton = drawer?.querySelector('sl-button[variant="primary"]');
 

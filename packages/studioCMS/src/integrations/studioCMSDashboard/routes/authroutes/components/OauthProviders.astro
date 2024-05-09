@@ -19,6 +19,7 @@ const {
 const githubLoginURL = await urlGenFactory(true, 'login/github', dashboardRouteOverride)
 const discordLoginURL = await urlGenFactory(true, 'login/discord', dashboardRouteOverride)
 const googleLoginURL = await urlGenFactory(true, 'login/google', dashboardRouteOverride)
+const auth0LoginURL = await urlGenFactory(true, 'login/auth0', dashboardRouteOverride)
 
 const { 
     DISCORD: {
@@ -30,6 +31,9 @@ const {
     GOOGLE: {
         ENABLED: googleEnabled
     },
+    AUTH0: {
+        ENABLED: auth0Enabled
+    },
     SHOW_OAUTH,
     SHOW_PROVIDER_ERROR
  } = await authEnvCheck(providers);
@@ -37,7 +41,7 @@ const {
 ---
 {SHOW_OAUTH && ( 
     <center>
-        <div class="bg-base-300 rounded-lg p-4 grid grid-cols-2 gap-2">
+        <div class="bg-base-300 rounded-lg p-6 grid grid-cols-1 gap-4">
     
             {/* <!-- GitHub Provider --> */}
             { githubEnabled && (
@@ -77,6 +81,19 @@ const {
                 </sl-button>
             )}
             {/* <!-- End of Google Provider --> */}
+
+            {/* <!-- Auth0 Provider --> */}
+            { auth0Enabled && (
+                <sl-button 
+                    variant="default" 
+                    href={auth0LoginURL} 
+                    outline 
+                    pill>
+                    <div slot="prefix" class="i-auth0-logo w-32px h-32px inline"></div>
+                    <span class="font-bold text-base text-lg">Sign in with Auth0</span>
+                </sl-button>
+            )}
+            {/* <!-- End of Auth0 Provider --> */}
     
         </div>
     </center>

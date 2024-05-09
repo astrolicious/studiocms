@@ -1,6 +1,6 @@
 // @ts-expect-error - Some types can only be imported from the Astro runtime
 import { User, db, eq } from 'astro:db';
-import { Google, OAuth2RequestError } from 'arctic';
+import { Auth0, OAuth2RequestError, type Auth0Tokens } from 'arctic';
 import type { APIContext } from 'astro';
 import { authEnvCheck, lucia } from "studiocms-dashboard:auth";
 import { urlGenFactory } from 'studiocms:helpers';
@@ -15,7 +15,7 @@ const {
 	} 
   } = Config;
 
-const { GOOGLE: { CLIENT_ID, CLIENT_SECRET, REDIRECT_URI } } = await authEnvCheck(providers);
+const { AUTH0: { CLIENT_ID, CLIENT_SECRET, DOMAIN, REDIRECT_URI } } = await authEnvCheck(providers);
 
 export async function GET(context: APIContext): Promise<Response> {
 	const {
@@ -23,17 +23,21 @@ export async function GET(context: APIContext): Promise<Response> {
 		cookies,
 		redirect,
 	} = context;
+	const cleanDomainslash = DOMAIN?.replace(/^\//, '');
+	const NoHTTPDOMAIN = cleanDomainslash?.replace(/http:\/\//, '').replace(/https:\/\//, '');
+	const clientDomain = `https://${NoHTTPDOMAIN}`;
 
-	const google = new Google(
+	const auth0 = new Auth0(
+		clientDomain, 
 		CLIENT_ID?CLIENT_ID:"", 
 		CLIENT_SECRET?CLIENT_SECRET:"", 
-		REDIRECT_URI?REDIRECT_URI:"");
-		
+		REDIRECT_URI?REDIRECT_URI:""
+	);
+
 	const code = url.searchParams.get('code');
 	const state = url.searchParams.get('state');
-	const storedCodeVerifier = cookies.get("google_oauth_code_verifier")?.value ?? null;
-	const storedState = cookies.get('google_oauth_state')?.value ?? null;
-	if (!code || !storedState || !storedCodeVerifier || state !== storedState) {
+	const storedState = cookies.get('auth0_oauth_state')?.value ?? null;
+	if (!code || !state || !storedState || state !== storedState) {
 		// return new Response(null, {
 		// 	status: 403,
 		// });
@@ -41,22 +45,23 @@ export async function GET(context: APIContext): Promise<Response> {
 	}
 
 	try {
-		const tokens = await google.validateAuthorizationCode(code, storedCodeVerifier);
-
-		const response = await fetch("https://openidconnect.googleapis.com/v1/userinfo", {
+		const tokens: Auth0Tokens = await auth0.validateAuthorizationCode(code);
+		const auth0Response = await fetch(`${clientDomain}/userinfo`, {
 			headers: {
 				Authorization: `Bearer ${tokens.accessToken}`
 			}
 		});
-		const googleUser: GoogleUser = await response.json();
-		const {
-			sub: googleId,
-			picture: avatar,
-			name,
-			email,
-		} = googleUser;
 
-		const existingUser = await db.select().from(User).where(eq(User.googleId, googleId)).get();
+		const auth0User: Auth0User = await auth0Response.json();
+		const {
+			sub: auth0Id,
+			name,
+			nickname: username,
+			email,
+			picture: avatar,
+		} = auth0User;
+
+		const existingUser = await db.select().from(User).where(eq(User.auth0Id, auth0Id)).get();
 
 		if (existingUser) {
 			const session = await lucia.createSession(existingUser.id.toString(), {});
@@ -64,10 +69,6 @@ export async function GET(context: APIContext): Promise<Response> {
 			cookies.set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
 			return redirect(await urlGenFactory(true, undefined, dashboardRouteOverride));
 		}
-
-		// Google does not provide a username, so we create one based on the name
-		const fixname = name.replace(/\s/g, "").toLowerCase();
-		const username = `g_${fixname}`
 
 		const existingUserName = await db.select().from(User).where(eq(User.username, username)).get();
 
@@ -79,9 +80,9 @@ export async function GET(context: APIContext): Promise<Response> {
 		const createdUser = await db
 			.insert(User)
 			.values({
-				googleId,
+				auth0Id,
 				username,
-				name,
+				name: name ?? username,
 				email,
 				avatar,
 			})
@@ -109,9 +110,10 @@ export async function GET(context: APIContext): Promise<Response> {
 	}
 }
 
-interface GoogleUser {
+interface Auth0User {
 	sub: string;
-	picture: string;
 	name: string;
 	email: string;
+	picture: string;
+	nickname: string;
 }

@@ -41,7 +41,7 @@ const dashURL = await urlGenFactory(true, undefined, DashboardRouteOverride)
       <a href={dashURL}>
         <sl-tooltip content={"Avatar of " + useName}>
           <sl-avatar
-            image={useAvatar}
+            image={avatar?.toString()}
             class="m-auto ease-in-out hover:scale-[102%] transition"
             label={"Avatar of " + useName}
           ></sl-avatar> 
