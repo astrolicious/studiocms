@@ -93,12 +93,13 @@ const siteURL = await urlGenFactory(true, undefined, dashboardRouteOverride)
           class="md:hidden drawer-header-button">
         </sl-icon-button> 
       )}
-      <ThemeToggleButton /> 
     </div>
     <div class="navbar-center">
       <a class="btn btn-ghost normal-case text-xl" href={siteURL}>StudioCMS Dashboard</a>
     </div>
-    <div class="navbar-end"> </div>
+    <div class="navbar-end"> 
+      <ThemeToggleButton /> 
+    </div>
   </div>
 </div>
 

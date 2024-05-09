@@ -70,6 +70,34 @@ const AUTHKEYS = {
 			import.meta.env.CMS_GOOGLE_REDIRECT_URI ||
 			process.env.CMS_GOOGLE_REDIRECT_URI,
 	},
+	AUTH0CLIENTID: {
+		N: 'CMS_AUTH0_CLIENT_ID',
+		KEY:
+			env.CMS_AUTH0_CLIENT_ID ||
+			import.meta.env.CMS_AUTH0_CLIENT_ID ||
+			process.env.CMS_AUTH0_CLIENT_ID,
+	},
+	AUTH0CLIENTSECRET: {
+		N: 'CMS_AUTH0_CLIENT_SECRET',
+		KEY:
+			env.CMS_AUTH0_CLIENT_SECRET ||
+			import.meta.env.CMS_AUTH0_CLIENT_SECRET ||
+			process.env.CMS_AUTH0_CLIENT_SECRET,
+	},
+	AUTH0DOMAIN: {
+		N: 'CMS_AUTH0_DOMAIN',
+		KEY:
+			env.CMS_AUTH0_DOMAIN ||
+			import.meta.env.CMS_AUTH0_DOMAIN ||
+			process.env.CMS_AUTH0_DOMAIN,
+	},
+	AUTH0REDIRECTURI: {
+		N: 'CMS_AUTH0_REDIRECT_URL',
+		KEY:
+			env.CMS_AUTH0_REDIRECT_URI ||
+			import.meta.env.CMS_AUTH0_REDIRECT_URI ||
+			process.env.CMS_AUTH0_REDIRECT_URI,
+	},
 };
 
 export default defineIntegration({

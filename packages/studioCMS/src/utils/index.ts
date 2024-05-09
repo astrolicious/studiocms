@@ -57,6 +57,22 @@ type AUTHKEYS = {
 		N: string;
 		KEY: string | undefined;
 	};
+	AUTH0CLIENTID: {
+		N: string;
+		KEY: string | undefined;
+	};
+	AUTH0CLIENTSECRET: {
+		N: string;
+		KEY: string | undefined;
+	};
+	AUTH0DOMAIN: {
+		N: string;
+		KEY: string | undefined;
+	};
+	AUTH0REDIRECTURI: {
+		N: string;
+		KEY: string | undefined;
+	};
 };
 
 export const CheckENV = async (logger: AstroIntegrationLogger, verbose: boolean, AUTHKEYS: AUTHKEYS) => {
@@ -104,6 +120,23 @@ export const CheckENV = async (logger: AstroIntegrationLogger, verbose: boolean,
 	}
 	if ( !AUTHKEYS.GOOGLECLIENTID.KEY || !AUTHKEYS.GOOGLECLIENTSECRET.KEY || !AUTHKEYS.GOOGLEREDIRECTURI.KEY ) {
 		integrationLogger(logger, verbose, "warn", "Google Environment Variables are not set. The built in Google Login Page will be disabled.")
+	}
+
+	// Check for Auth0 Environment Variables
+	if (!AUTHKEYS.AUTH0CLIENTID.KEY) {
+		integrationLogger(logger, verbose, 'error', `In order to use the Built-in Auth0 Authentication, you must set the ${AUTHKEYS.AUTH0CLIENTID.N} environment variable.`);
+	}
+	if (!AUTHKEYS.AUTH0CLIENTSECRET.KEY) {
+		integrationLogger(logger, verbose, 'error', `In order to use the Built-in Auth0 Authentication, you must set the ${AUTHKEYS.AUTH0CLIENTSECRET.N} environment variable.`);
+	}
+	if (!AUTHKEYS.AUTH0DOMAIN.KEY) {
+		integrationLogger(logger, verbose, 'error', `In order to use the Built-in Auth0 Authentication, you must set the ${AUTHKEYS.AUTH0DOMAIN.N} environment variable.`);
+	}
+	if (!AUTHKEYS.AUTH0REDIRECTURI.KEY) {
+		integrationLogger(logger, verbose, 'error', `In order to use the Built-in Auth0 Authentication, you must set the ${AUTHKEYS.AUTH0REDIRECTURI.N} environment variable.`);
+	}
+	if ( !AUTHKEYS.AUTH0CLIENTID.KEY || !AUTHKEYS.AUTH0CLIENTSECRET.KEY || !AUTHKEYS.AUTH0DOMAIN.KEY || !AUTHKEYS.AUTH0REDIRECTURI.KEY ) {
+		integrationLogger(logger, verbose, "warn", "Auth0 Environment Variables are not set. The built in Auth0 Login Page will be disabled.")
 	}
 
 	if ( verbose ) {

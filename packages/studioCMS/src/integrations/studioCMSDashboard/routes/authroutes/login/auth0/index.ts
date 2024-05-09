@@ -5,12 +5,17 @@ import { authEnvCheck } from 'studiocms-dashboard:auth';
 import Config from 'virtual:studiocms/config';
 
 const { AUTH0: { CLIENT_ID, CLIENT_SECRET, DOMAIN, REDIRECT_URI } } = await authEnvCheck(Config.dashboardConfig.AuthConfig.providers);
-const cleanDomainslash = DOMAIN?.replace(/^\//, '');
-const clientDomain = cleanDomainslash?.replace(/http:\/\//, '').replace(/https:\/\//, '');
+
+const cleanDomainslash = DOMAIN ?
+						DOMAIN.replace(/^\//, '') : "";
+const NoHTTPDOMAIN = cleanDomainslash
+						.replace(/http:\/\//, '')
+						.replace(/https:\/\//, '');
+const clientDomain = `https://${NoHTTPDOMAIN}`;
 
 export const GET: APIRoute = async ({ redirect, cookies }) => {
 	const auth0 = new Auth0(
-		`https://${clientDomain}`, 
+		clientDomain, 
 		CLIENT_ID?CLIENT_ID:"", 
 		CLIENT_SECRET?CLIENT_SECRET:"", 
 		REDIRECT_URI?REDIRECT_URI:""

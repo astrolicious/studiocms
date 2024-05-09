@@ -23,9 +23,14 @@ export async function GET(context: APIContext): Promise<Response> {
 		cookies,
 		redirect,
 	} = context;
-	const cleanDomainslash = DOMAIN?.replace(/^\//, '');
-	const NoHTTPDOMAIN = cleanDomainslash?.replace(/http:\/\//, '').replace(/https:\/\//, '');
-	const clientDomain = `https://${NoHTTPDOMAIN}`;
+	
+
+const cleanDomainslash = DOMAIN ?
+						DOMAIN.replace(/^\//, '') : "";
+const NoHTTPDOMAIN = cleanDomainslash
+						.replace(/http:\/\//, '')
+						.replace(/https:\/\//, '');
+const clientDomain = `https://${NoHTTPDOMAIN}`;
 
 	const auth0 = new Auth0(
 		clientDomain, 
