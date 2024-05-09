@@ -57,58 +57,39 @@ type AuthEnvCheckReponse = {
     SHOW_OAUTH: boolean;
     SHOW_PROVIDER_ERROR: boolean;
 }
-let GITHUBENABLED: boolean
-let DISCORDENABLED: boolean
-let GOOGLEENABLED: boolean
-let isThereAnyOAuthProvider: boolean;
-let noProviderConfigured: boolean;
 
 export async function authEnvCheck(providers: Providers): Promise<AuthEnvCheckReponse> {
+    let GITHUBENABLED = false
+    let DISCORDENABLED = false
+    let GOOGLEENABLED = false
+    let AUTH0ENABLED = false
+    let isThereAnyOAuthProvider = false;
+    let noProviderConfigured = false;
 
-    if (providers.github) {
-        if (!AUTHKEYS.GITHUB.CLIENT_ID || !AUTHKEYS.GITHUB.CLIENT_SECRET) {
-            GITHUBENABLED = false
-        } else {
-            GITHUBENABLED = true
-        }
+    if (providers.github && (AUTHKEYS.GITHUB.CLIENT_ID && AUTHKEYS.GITHUB.CLIENT_SECRET)) {
+        GITHUBENABLED = true
     }
 
-    if (providers.discord) {
-        if (!AUTHKEYS.DISCORD.CLIENT_ID || !AUTHKEYS.DISCORD.CLIENT_SECRET || !AUTHKEYS.DISCORD.REDIRECT_URI) {
-            DISCORDENABLED = false
-        } else {
-            DISCORDENABLED = true
-        }
+    if (providers.discord && (AUTHKEYS.DISCORD.CLIENT_ID && AUTHKEYS.DISCORD.CLIENT_SECRET && AUTHKEYS.DISCORD.REDIRECT_URI)) {
+        DISCORDENABLED = true
     }
 
-    if (providers.google) {
-        if (!AUTHKEYS.GOOGLE.CLIENT_ID || !AUTHKEYS.GOOGLE.CLIENT_SECRET || !AUTHKEYS.GOOGLE.REDIRECT_URI) {
-            GOOGLEENABLED = false
-        } else {
-            GOOGLEENABLED = true
-        }
+    if (providers.google && (AUTHKEYS.GOOGLE.CLIENT_ID && AUTHKEYS.GOOGLE.CLIENT_SECRET && AUTHKEYS.GOOGLE.REDIRECT_URI)) {
+        GOOGLEENABLED = true
     }
 
-    if (providers.auth0) {
-        if (!AUTHKEYS.AUTH0.CLIENT_ID || !AUTHKEYS.AUTH0.CLIENT_SECRET || !AUTHKEYS.AUTH0.DOMAIN || !AUTHKEYS.AUTH0.REDIRECT_URI) {
-            providers.auth0 = false
-        } else {
-            providers.auth0 = true
-        }
+    if (providers.auth0 && (AUTHKEYS.AUTH0.CLIENT_ID && AUTHKEYS.AUTH0.CLIENT_SECRET && AUTHKEYS.AUTH0.DOMAIN && AUTHKEYS.AUTH0.REDIRECT_URI)) {
+            AUTH0ENABLED = true
     }
 
     // Check if there is any OAuth provider configured
-    if (providers.github || providers.discord || providers.google || providers.auth0) {
+    if (GITHUBENABLED || DISCORDENABLED || GOOGLEENABLED || AUTH0ENABLED) {
         isThereAnyOAuthProvider = true;
-    } else {
-        isThereAnyOAuthProvider = false;
     }
 
     // Check if there is any OAuth or username and password provider configured
     if (!isThereAnyOAuthProvider && !providers.usernameAndPassword) {
         noProviderConfigured = true;
-    } else {
-        noProviderConfigured = false;
     }
 
     return {
@@ -130,7 +111,7 @@ export async function authEnvCheck(providers: Providers): Promise<AuthEnvCheckRe
             REDIRECT_URI: AUTHKEYS.GOOGLE.REDIRECT_URI,
         },
         AUTH0: {
-            ENABLED: providers.auth0,
+            ENABLED: AUTH0ENABLED,
             CLIENT_ID: AUTHKEYS.AUTH0.CLIENT_ID,
             CLIENT_SECRET: AUTHKEYS.AUTH0.CLIENT_SECRET,
             DOMAIN: AUTHKEYS.AUTH0.DOMAIN,
