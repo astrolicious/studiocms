@@ -34,8 +34,8 @@ export default defineConfig({
       ],
       sidebar: [
         {
-          label: "Guides",
-          autogenerate: { directory: "guides" },
+          label: "Start Here",
+          autogenerate: { directory: "start-here" },
         },
         {
           label: "Reference",
