@@ -72,8 +72,9 @@ export async function GET(context: APIContext): Promise<Response> {
 		}
 		
 		const existingUserByUsername = await db.select().from(User).where(eq(User.username, username)).get();
+		const existingUserByEmail = await db.select().from(User).where(eq(User.email, email)).get();
 
-		if (existingUserByUsername) {
+		if (existingUserByUsername || existingUserByEmail) {
 			return new Response("User already exists", {
 				status: 400,
 			});

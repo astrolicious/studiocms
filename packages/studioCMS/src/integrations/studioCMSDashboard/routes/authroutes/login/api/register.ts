@@ -45,7 +45,7 @@ export async function POST(context: APIContext): Promise<Response> {
     if (existingUser) {
         return new Response(
             JSON.stringify({
-                error: "Username already used"
+                error: "Username/Email already used"
             }),
             {
                 status: 400
