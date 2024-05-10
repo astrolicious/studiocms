@@ -24,6 +24,7 @@ jobs:
             awaiting review(s)
             in progress
             question
+            help wanted
 
   remove-closed-pr-labels:
     name: Remove closed pull request labels
@@ -33,7 +34,9 @@ jobs:
       - uses: mondeja/remove-labels-gh-action@v2
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          labels: in discussion
+          labels: |
+            in discussion
+            help wanted
 
   remove-closed-issue-labels:
     name: Remove closed issue labels
@@ -46,3 +49,4 @@ jobs:
           labels: |
             in discussion
             in progress
+            help wanted
