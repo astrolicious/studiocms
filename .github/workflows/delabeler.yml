@@ -1,0 +1,22 @@
+name: Remove labels from merged PRs
+on:
+  pull_request_target:
+    types:
+      - closed
+      
+permissions:
+  pull-requests: write
+  
+jobs:
+  remove-merged-pr-labels:
+    name: Remove merged pull request labels
+    if: github.event.pull_request.merged
+    runs-on: ubuntu-latest
+    steps:
+      - uses: mondeja/remove-labels-gh-action@v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          labels: |
+            awaiting review(s)
+            in progress
+            question
