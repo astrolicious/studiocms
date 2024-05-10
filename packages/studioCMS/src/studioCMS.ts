@@ -248,7 +248,7 @@ export default defineIntegration({
 					updateConfig({
 						vite: {
 							optimizeDeps: {
-						  		exclude: ["oslo"]
+						  		exclude: ["oslo", "@node-rs/argon2", "@node-rs/bcrypt"]
 							}
 						}
 					})
