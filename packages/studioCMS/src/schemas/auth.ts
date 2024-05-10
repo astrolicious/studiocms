@@ -49,7 +49,7 @@ export const authProviderSchema = z.object({
 	 * Username and Password Auth Provider - Powered by Lucia
 	 * 
 	 */
-	usernameAndPassword: z.boolean().optional().default(false),
+	usernameAndPassword: z.boolean().optional().default(true),
 	usernameAndPasswordConfig: localUsernameAndPasswordConfig,
 }).optional().default({});
 

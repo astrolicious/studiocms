@@ -65,7 +65,7 @@ export async function GET(context: APIContext): Promise<Response> {
 		const existingUserById = await db.select().from(User).where(eq(User.discordId, discordId)).get();
 
 		if (existingUserById) {
-			const session = await lucia.createSession(existingUserById.id.toString(), {});
+			const session = await lucia.createSession(existingUserById.id, {});
 			const sessionCookie = lucia.createSessionCookie(session.id);
 			cookies.set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
 			return redirect(await urlGenFactory(true, undefined, dashboardRouteOverride));
@@ -91,7 +91,7 @@ export async function GET(context: APIContext): Promise<Response> {
 			.returning()
 			.get();
 
-		const session = await lucia.createSession(createdUser.id.toString(), {});
+		const session = await lucia.createSession(createdUser.id, {});
 
 		const sessionCookie = lucia.createSessionCookie(session.id);
 

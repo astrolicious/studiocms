@@ -1,7 +1,8 @@
 // @ts-expect-error - Some types can only be imported from the Astro runtime
 import { User, db, eq } from 'astro:db';
 import { lucia } from "studiocms-dashboard:auth";
-import { Argon2id } from "oslo/password";
+// import { Argon2id } from "oslo/password";
+import { scryptAsync } from "@noble/hashes/scrypt";
 
 import type { APIContext } from "astro";
 
@@ -37,7 +38,7 @@ export async function POST(context: APIContext): Promise<Response> {
 		);
 	}
 
-	const hashedPassword = await new Argon2id().hash(password);
+	// const hashedPassword = await new Argon2id().hash(password);
 	const name = formData.get("displayname");
 
     const existingUser = await db.select().from(User).where(eq(User.username, username)).get()
@@ -58,11 +59,19 @@ export async function POST(context: APIContext): Promise<Response> {
         .values({
             name: name as string,
             username,
-            password: hashedPassword,
         })
 
     const newUser = await db.select().from(User).where(eq(User.username, username)).get();
-    const session = await lucia.createSession(newUser.id.toString(), {});
+	const hashedPassword = await scryptAsync(password, newUser.id, { N: 2 ** 12, r: 8, p: 1, dkLen: 32 })
+	const hashedPasswordString = Buffer.from(hashedPassword.buffer).toString();
+	await db
+		.update(User)
+		.set({ 
+			password: hashedPasswordString
+		})
+		.where(eq(User.id, newUser.id))
+
+    const session = await lucia.createSession(newUser.id, {});
     const sessionCookie = lucia.createSessionCookie(session.id);
     context.cookies.set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
     
