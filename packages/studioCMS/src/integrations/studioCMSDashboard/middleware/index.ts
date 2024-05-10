@@ -42,7 +42,7 @@ export const onRequest = defineMiddleware(async (context, next) => {
 		const [dbUser] = await db
 			.select()
 			.from(User)
-			.where(eq(User.id, Number(user.id)));
+			.where(eq(User.id, user.id));
 
 		context.locals.dbUser = dbUser;
 		context.locals.isLoggedIn = true;

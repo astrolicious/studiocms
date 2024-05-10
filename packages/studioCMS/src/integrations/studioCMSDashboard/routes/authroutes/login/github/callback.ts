@@ -60,7 +60,7 @@ export async function GET(context: APIContext): Promise<Response> {
 		const existingUser = await db.select().from(User).where(eq(User.githubId, githubId)).get();
 
 		if (existingUser) {
-			const session = await lucia.createSession(existingUser.id.toString(), {});
+			const session = await lucia.createSession(existingUser.id, {});
 			const sessionCookie = lucia.createSessionCookie(session.id);
 			cookies.set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
 			return redirect(await urlGenFactory(true, undefined, dashboardRouteOverride));
@@ -87,7 +87,7 @@ export async function GET(context: APIContext): Promise<Response> {
 			.returning()
 			.get();
 
-		const session = await lucia.createSession(createdUser.id.toString(), {});
+		const session = await lucia.createSession(createdUser.id, {});
 
 		const sessionCookie = lucia.createSessionCookie(session.id);
 

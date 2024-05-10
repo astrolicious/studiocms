@@ -69,7 +69,7 @@ const clientDomain = `https://${NoHTTPDOMAIN}`;
 		const existingUser = await db.select().from(User).where(eq(User.auth0Id, auth0Id)).get();
 
 		if (existingUser) {
-			const session = await lucia.createSession(existingUser.id.toString(), {});
+			const session = await lucia.createSession(existingUser.id, {});
 			const sessionCookie = lucia.createSessionCookie(session.id);
 			cookies.set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
 			return redirect(await urlGenFactory(true, undefined, dashboardRouteOverride));
@@ -95,7 +95,7 @@ const clientDomain = `https://${NoHTTPDOMAIN}`;
 			.returning()
 			.get();
 
-		const session = await lucia.createSession(createdUser.id.toString(), {});
+		const session = await lucia.createSession(createdUser.id, {});
 
 		const sessionCookie = lucia.createSessionCookie(session.id);
 
