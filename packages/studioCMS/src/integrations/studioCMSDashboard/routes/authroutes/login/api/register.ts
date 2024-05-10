@@ -1,7 +1,6 @@
 // @ts-expect-error - Some types can only be imported from the Astro runtime
 import { User, db, eq } from 'astro:db';
 import { lucia } from "studiocms-dashboard:auth";
-// import { Argon2id } from "oslo/password";
 import { scryptAsync } from "@noble/hashes/scrypt";
 
 import type { APIContext } from "astro";
@@ -38,7 +37,6 @@ export async function POST(context: APIContext): Promise<Response> {
 		);
 	}
 
-	// const hashedPassword = await new Argon2id().hash(password);
 	const name = formData.get("displayname");
 
     const existingUser = await db.select().from(User).where(eq(User.username, username)).get()
