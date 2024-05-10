@@ -1,6 +1,6 @@
 // @ts-expect-error - Some types can only be imported from the Astro runtime
 import { User, db, eq } from 'astro:db';
-import { GitHub, OAuth2RequestError } from 'arctic';
+import { Auth0, OAuth2RequestError, type Auth0Tokens } from 'arctic';
 import type { APIContext } from 'astro';
 import { authEnvCheck, lucia } from "studiocms-dashboard:auth";
 import { urlGenFactory } from 'studiocms:helpers';
@@ -15,7 +15,7 @@ const {
 	} 
   } = Config;
 
-const { GITHUB: { CLIENT_ID, CLIENT_SECRET } } = await authEnvCheck(providers);
+const { AUTH0: { CLIENT_ID, CLIENT_SECRET, DOMAIN, REDIRECT_URI } } = await authEnvCheck(providers);
 
 export async function GET(context: APIContext): Promise<Response> {
 	const {
@@ -23,15 +23,25 @@ export async function GET(context: APIContext): Promise<Response> {
 		cookies,
 		redirect,
 	} = context;
+	
 
-	const github = new GitHub(
-		CLIENT_ID?CLIENT_ID:"",
-		CLIENT_SECRET?CLIENT_SECRET:""
+const cleanDomainslash = DOMAIN ?
+						DOMAIN.replace(/^\//, '') : "";
+const NoHTTPDOMAIN = cleanDomainslash
+						.replace(/http:\/\//, '')
+						.replace(/https:\/\//, '');
+const clientDomain = `https://${NoHTTPDOMAIN}`;
+
+	const auth0 = new Auth0(
+		clientDomain, 
+		CLIENT_ID?CLIENT_ID:"", 
+		CLIENT_SECRET?CLIENT_SECRET:"", 
+		REDIRECT_URI?REDIRECT_URI:""
 	);
 
 	const code = url.searchParams.get('code');
 	const state = url.searchParams.get('state');
-	const storedState = cookies.get('github_oauth_state')?.value ?? null;
+	const storedState = cookies.get('auth0_oauth_state')?.value ?? null;
 	if (!code || !state || !storedState || state !== storedState) {
 		// return new Response(null, {
 		// 	status: 403,
@@ -40,24 +50,23 @@ export async function GET(context: APIContext): Promise<Response> {
 	}
 
 	try {
-		const tokens = await github.validateAuthorizationCode(code);
-		const githubUserResponse = await fetch('https://api.github.com/user', {
+		const tokens: Auth0Tokens = await auth0.validateAuthorizationCode(code);
+		const auth0Response = await fetch(`${clientDomain}/userinfo`, {
 			headers: {
-				Authorization: `Bearer ${tokens.accessToken}`,
-			},
+				Authorization: `Bearer ${tokens.accessToken}`
+			}
 		});
 
-		const githubUser: GitHubUser = await githubUserResponse.json();
+		const auth0User: Auth0User = await auth0Response.json();
 		const {
-			id: githubId,
-			html_url: githubURL,
-			login: username,
+			sub: auth0Id,
 			name,
+			nickname: username,
 			email,
-			avatar_url: avatar,
-		} = githubUser;
+			picture: avatar,
+		} = auth0User;
 
-		const existingUser = await db.select().from(User).where(eq(User.githubId, githubId)).get();
+		const existingUser = await db.select().from(User).where(eq(User.auth0Id, auth0Id)).get();
 
 		if (existingUser) {
 			const session = await lucia.createSession(existingUser.id.toString(), {});
@@ -77,8 +86,7 @@ export async function GET(context: APIContext): Promise<Response> {
 		const createdUser = await db
 			.insert(User)
 			.values({
-				githubId,
-				githubURL,
+				auth0Id,
 				username,
 				name: name ?? username,
 				email,
@@ -108,12 +116,10 @@ export async function GET(context: APIContext): Promise<Response> {
 	}
 }
 
-interface GitHubUser {
-	id: number;
-	html_url: string;
-	login: string;
-	avatar_url: string;
+interface Auth0User {
+	sub: string;
 	name: string;
-	blog: string;
 	email: string;
+	picture: string;
+	nickname: string;
 }

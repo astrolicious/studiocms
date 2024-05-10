@@ -1,0 +1,104 @@
+---
+import { urlGenFactory } from 'studiocms:helpers';
+import { authEnvCheck } from "studiocms-dashboard:auth";
+import type Config from 'virtual:studiocms/config';
+
+type Props = {
+    dashboardConfig: typeof Config.dashboardConfig;
+};
+
+const { 
+    dashboardConfig: {
+        AuthConfig: {
+            providers
+        },
+        dashboardRouteOverride
+    },
+} = Astro.props;
+
+const githubLoginURL = await urlGenFactory(true, 'login/github', dashboardRouteOverride)
+const discordLoginURL = await urlGenFactory(true, 'login/discord', dashboardRouteOverride)
+const googleLoginURL = await urlGenFactory(true, 'login/google', dashboardRouteOverride)
+const auth0LoginURL = await urlGenFactory(true, 'login/auth0', dashboardRouteOverride)
+
+const { 
+    DISCORD: {
+        ENABLED: discordEnabled
+    },
+    GITHUB: {
+        ENABLED: githubEnabled
+    },
+    GOOGLE: {
+        ENABLED: googleEnabled
+    },
+    AUTH0: {
+        ENABLED: auth0Enabled
+    },
+    SHOW_OAUTH,
+    SHOW_PROVIDER_ERROR
+ } = await authEnvCheck(providers);
+
+---
+{SHOW_OAUTH && ( 
+        <div class="bg-base-300 rounded-lg p-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+    
+            {/* <!-- GitHub Provider --> */}
+            { githubEnabled && (
+                <sl-button 
+                    variant="default" 
+                    href={githubLoginURL} 
+                    outline 
+                    pill>
+                    <div slot="prefix" class="i-mdi-github w-32px h-32px inline"></div>
+                    <span class="font-bold text-base text-lg">Sign in with GitHub</span>
+                </sl-button>
+            )}
+            {/* <!-- End of GitHub Provider --> */}
+
+            {/* <!-- Discord Provider --> */}
+            { discordEnabled && (
+                <sl-button 
+                    variant="default" 
+                    href={discordLoginURL}
+                    outline 
+                    pill>
+                    <div slot="prefix" class="i-discord-iconblue w-32px h-32px inline"></div>
+                    <span class="font-bold text-base text-lg">Sign in with Discord</span>
+                </sl-button>
+            )}
+            {/* <!-- End of Discord Provider --> */}
+
+            {/* <!-- Google Provider --> */}
+            { googleEnabled && (
+                <sl-button 
+                    variant="default" 
+                    href={googleLoginURL} 
+                    outline 
+                    pill>
+                    <div slot="prefix" class="dark:i-google-icondark i-google-iconlight w-32px h-32px inline"></div>
+                    <span class="font-bold text-base text-lg">Sign in with Google</span>
+                </sl-button>
+            )}
+            {/* <!-- End of Google Provider --> */}
+
+            {/* <!-- Auth0 Provider --> */}
+            { auth0Enabled && (
+                <sl-button 
+                    variant="default" 
+                    href={auth0LoginURL} 
+                    outline 
+                    pill>
+                    <div slot="prefix" class="i-auth0-logo w-32px h-32px inline"></div>
+                    <span class="font-bold text-base text-lg">Sign in with Auth0</span>
+                </sl-button>
+            )}
+            {/* <!-- End of Auth0 Provider --> */}
+    
+        </div>
+)}
+
+{SHOW_PROVIDER_ERROR && (
+        <div class="bg-base-300 rounded-lg p-4">
+            <p class="text-center">No Login provider configured. Please contact your administrator.</p>
+        </div>
+)}

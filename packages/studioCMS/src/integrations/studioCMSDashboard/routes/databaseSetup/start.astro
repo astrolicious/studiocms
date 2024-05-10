@@ -32,10 +32,6 @@ if (Astro.request.method === 'POST') {
 	const description = formData.get('description');
 	const admin = formData.get('admin');
 	const ConfigArrayed = await db.select().from(SiteConfig).where(eq(SiteConfig.id, 1));
-	const AdminExistCheck = await db
-		.select()
-		.from(Permissions)
-		.where(eq(Permissions.username, admin as string));
 	const existingConfig = ConfigArrayed[0];
 
 	if (existingConfig) {
@@ -67,22 +63,19 @@ if (Astro.request.method === 'POST') {
 			});
 	}
 
-	if (AdminExistCheck) {
-		console.log(`Admin ${admin} already exists, continuing without adding`);
-	} else {
-		await db
-			.insert(Permissions)
-			.values({
-				username: admin as string,
-                rank: 'admin',
-			})
-			.then(() => {
-				return new Response('Success', { status: 200 });
-			})
-			.catch(() => {
-				return new Response('Error setting Admin', { status: 500 });
-			});
-	}
+	await db
+		.insert(Permissions)
+		.values({
+			username: admin as string,
+            rank: 'admin',
+		})
+		.then(() => {
+			return new Response('Success', { status: 200 });
+		})
+		.catch(() => {
+		    console.log(`Admin ${admin} may already exist... continuing without adding`);
+			return new Response('Error setting Admin', { status: 500 });
+		});
 
 	await db
 		.insert(Pages)

@@ -1,6 +1,6 @@
 // @ts-expect-error - Some types can only be imported from the Astro runtime
 import { User, db, eq } from 'astro:db';
-import { GitHub, OAuth2RequestError } from 'arctic';
+import { Google, OAuth2RequestError } from 'arctic';
 import type { APIContext } from 'astro';
 import { authEnvCheck, lucia } from "studiocms-dashboard:auth";
 import { urlGenFactory } from 'studiocms:helpers';
@@ -15,7 +15,7 @@ const {
 	} 
   } = Config;
 
-const { GITHUB: { CLIENT_ID, CLIENT_SECRET } } = await authEnvCheck(providers);
+const { GOOGLE: { CLIENT_ID, CLIENT_SECRET, REDIRECT_URI } } = await authEnvCheck(providers);
 
 export async function GET(context: APIContext): Promise<Response> {
 	const {
@@ -24,15 +24,16 @@ export async function GET(context: APIContext): Promise<Response> {
 		redirect,
 	} = context;
 
-	const github = new GitHub(
-		CLIENT_ID?CLIENT_ID:"",
-		CLIENT_SECRET?CLIENT_SECRET:""
-	);
-
+	const google = new Google(
+		CLIENT_ID?CLIENT_ID:"", 
+		CLIENT_SECRET?CLIENT_SECRET:"", 
+		REDIRECT_URI?REDIRECT_URI:"");
+		
 	const code = url.searchParams.get('code');
 	const state = url.searchParams.get('state');
-	const storedState = cookies.get('github_oauth_state')?.value ?? null;
-	if (!code || !state || !storedState || state !== storedState) {
+	const storedCodeVerifier = cookies.get("google_oauth_code_verifier")?.value ?? null;
+	const storedState = cookies.get('google_oauth_state')?.value ?? null;
+	if (!code || !storedState || !storedCodeVerifier || state !== storedState) {
 		// return new Response(null, {
 		// 	status: 403,
 		// });
@@ -40,24 +41,22 @@ export async function GET(context: APIContext): Promise<Response> {
 	}
 
 	try {
-		const tokens = await github.validateAuthorizationCode(code);
-		const githubUserResponse = await fetch('https://api.github.com/user', {
-			headers: {
-				Authorization: `Bearer ${tokens.accessToken}`,
-			},
-		});
+		const tokens = await google.validateAuthorizationCode(code, storedCodeVerifier);
 
-		const githubUser: GitHubUser = await githubUserResponse.json();
+		const response = await fetch("https://openidconnect.googleapis.com/v1/userinfo", {
+			headers: {
+				Authorization: `Bearer ${tokens.accessToken}`
+			}
+		});
+		const googleUser: GoogleUser = await response.json();
 		const {
-			id: githubId,
-			html_url: githubURL,
-			login: username,
+			sub: googleId,
+			picture: avatar,
 			name,
 			email,
-			avatar_url: avatar,
-		} = githubUser;
+		} = googleUser;
 
-		const existingUser = await db.select().from(User).where(eq(User.githubId, githubId)).get();
+		const existingUser = await db.select().from(User).where(eq(User.googleId, googleId)).get();
 
 		if (existingUser) {
 			const session = await lucia.createSession(existingUser.id.toString(), {});
@@ -65,6 +64,10 @@ export async function GET(context: APIContext): Promise<Response> {
 			cookies.set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
 			return redirect(await urlGenFactory(true, undefined, dashboardRouteOverride));
 		}
+
+		// Google does not provide a username, so we create one based on the name
+		const fixname = name.replace(/\s/g, "").toLowerCase();
+		const username = `g_${fixname}`
 
 		const existingUserName = await db.select().from(User).where(eq(User.username, username)).get();
 		const existingUserByEmail = await db.select().from(User).where(eq(User.email, email)).get();
@@ -77,10 +80,9 @@ export async function GET(context: APIContext): Promise<Response> {
 		const createdUser = await db
 			.insert(User)
 			.values({
-				githubId,
-				githubURL,
+				googleId,
 				username,
-				name: name ?? username,
+				name,
 				email,
 				avatar,
 			})
@@ -108,12 +110,9 @@ export async function GET(context: APIContext): Promise<Response> {
 	}
 }
 
-interface GitHubUser {
-	id: number;
-	html_url: string;
-	login: string;
-	avatar_url: string;
+interface GoogleUser {
+	sub: string;
+	picture: string;
 	name: string;
-	blog: string;
 	email: string;
 }

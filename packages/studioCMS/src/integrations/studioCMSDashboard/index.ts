@@ -4,9 +4,11 @@ import { CheckENV, integrationLogger } from "../../utils";
 import { loadEnv } from "vite";
 import { fileFactory } from "../../utils/fileFactory";
 import { DashboardStrings } from "../../strings";
-import { presetTypography, presetWind, presetUno, transformerDirectives, presetIcons } from "unocss";
+import { presetTypography, presetWind, presetUno, transformerDirectives, presetIcons, presetWebFonts } from "unocss";
 import UnoCSSAstroIntegration from "@unocss/astro";
 import { presetDaisy } from "@yangyang20240403/unocss-preset-daisyui";
+import { FileSystemIconLoader } from '@iconify/utils/lib/loader/node-loaders'
+import { presetScrollbar } from 'unocss-preset-scrollbar'
 
 // Environment Variables
 const env = loadEnv('all', process.cwd(), 'CMS');
@@ -25,7 +27,77 @@ const AUTHKEYS = {
 			env.CMS_GITHUB_CLIENT_SECRET ||
 			import.meta.env.CMS_GITHUB_CLIENT_SECRET ||
 			process.env.CMS_GITHUB_CLIENT_SECRET,
-	}
+	},
+	DISCORDCLIENTID: {
+		N: 'CMS_DISCORD_CLIENT_ID',
+		KEY:
+			env.CMS_DISCORD_CLIENT_ID ||
+			import.meta.env.CMS_DISCORD_CLIENT_ID ||
+			process.env.CMS_DISCORD_CLIENT_ID,
+	},
+	DISCORDCLIENTSECRET: {
+		N: 'CMS_DISCORD_CLIENT_SECRET',
+		KEY:
+			env.CMS_DISCORD_CLIENT_SECRET ||
+			import.meta.env.CMS_DISCORD_CLIENT_SECRET ||
+			process.env.CMS_DISCORD_CLIENT_SECRET,
+	},
+	DISCORDREDIRECTURI: {
+		N: 'CMS_DISCORD_REDIRECT_URL',
+		KEY:
+			env.CMS_DISCORD_REDIRECT_URI ||
+			import.meta.env.CMS_DISCORD_REDIRECT_URI ||
+			process.env.CMS_DISCORD_REDIRECT_URI,
+	},
+	GOOGLECLIENTID: {
+		N: 'CMS_GOOGLE_CLIENT_ID',
+		KEY:
+			env.CMS_GOOGLE_CLIENT_ID ||
+			import.meta.env.CMS_GOOGLE_CLIENT_ID ||
+			process.env.CMS_GOOGLE_CLIENT_ID,
+	},
+	GOOGLECLIENTSECRET: {
+		N: 'CMS_GOOGLE_CLIENT_SECRET',
+		KEY:
+			env.CMS_GOOGLE_CLIENT_SECRET ||
+			import.meta.env.CMS_GOOGLE_CLIENT_SECRET ||
+			process.env.CMS_GOOGLE_CLIENT_SECRET,
+	},
+	GOOGLEREDIRECTURI: {
+		N: 'CMS_GOOGLE_REDIRECT_URL',
+		KEY:
+			env.CMS_GOOGLE_REDIRECT_URI ||
+			import.meta.env.CMS_GOOGLE_REDIRECT_URI ||
+			process.env.CMS_GOOGLE_REDIRECT_URI,
+	},
+	AUTH0CLIENTID: {
+		N: 'CMS_AUTH0_CLIENT_ID',
+		KEY:
+			env.CMS_AUTH0_CLIENT_ID ||
+			import.meta.env.CMS_AUTH0_CLIENT_ID ||
+			process.env.CMS_AUTH0_CLIENT_ID,
+	},
+	AUTH0CLIENTSECRET: {
+		N: 'CMS_AUTH0_CLIENT_SECRET',
+		KEY:
+			env.CMS_AUTH0_CLIENT_SECRET ||
+			import.meta.env.CMS_AUTH0_CLIENT_SECRET ||
+			process.env.CMS_AUTH0_CLIENT_SECRET,
+	},
+	AUTH0DOMAIN: {
+		N: 'CMS_AUTH0_DOMAIN',
+		KEY:
+			env.CMS_AUTH0_DOMAIN ||
+			import.meta.env.CMS_AUTH0_DOMAIN ||
+			process.env.CMS_AUTH0_DOMAIN,
+	},
+	AUTH0REDIRECTURI: {
+		N: 'CMS_AUTH0_REDIRECT_URL',
+		KEY:
+			env.CMS_AUTH0_REDIRECT_URI ||
+			import.meta.env.CMS_AUTH0_REDIRECT_URI ||
+			process.env.CMS_AUTH0_REDIRECT_URI,
+	},
 };
 
 export default defineIntegration({
@@ -50,9 +122,27 @@ export default defineIntegration({
 							dashboardEnabled,
 							AuthConfig,
 							dashboardRouteOverride,
-							UnoCSSConfigOverride,
+							UnoCSSConfigOverride: {
+								injectEntry,
+								injectReset,
+								presetsConfig: {
+									presetDaisyUI: {
+										themes,
+										darkTheme
+									}
+								},
+							},
 							AuthConfig: {
-								providers,
+								providers: {
+									usernameAndPasswordConfig: {
+										allowUserRegistration
+									},
+									github,
+									discord,
+									google,
+									auth0,
+									usernameAndPassword
+								}
 							},
 							developerConfig: {
 								testingAndDemoMode
@@ -69,11 +159,18 @@ export default defineIntegration({
 					const { resolve } = createResolver(import.meta.url);
 
 					// Virtual Resolver
-					const virtResolver = { Auth: resolve('./lib/auth.ts'), };
+					const virtualResolver = { 
+						Auth: resolve('./lib/auth.ts'), 
+						AuthENVChecker: resolve("./utils/authEnvCheck.ts"),
+						DashboardLayout: resolve('./routes/dashboard/layouts/Layout.astro'),
+					};
 
 					// Virtual Components
 					const virtualComponentMap = `
-					export * from '${virtResolver.Auth}';`;
+					export * from '${virtualResolver.Auth}';
+					export * from '${virtualResolver.AuthENVChecker}';`;
+					const VirtualAstroComponents = `
+					export {default as Layout} from '${virtualResolver.DashboardLayout}';`;
 
 					// Add Virtual Imports
 					integrationLogger(logger, verbose, 'info', 'Adding Virtual Imports...');
@@ -81,6 +178,7 @@ export default defineIntegration({
 						name,
 						imports: {
 							'studiocms-dashboard:auth': virtualComponentMap,
+							'studiocms-dashboard:components': VirtualAstroComponents,
 						},
 					});
 
@@ -88,7 +186,12 @@ export default defineIntegration({
 					const studioCMSDTS = fileFactory();
 
 					studioCMSDTS.addLines(`declare module 'studiocms-dashboard:auth' {
-                        export const lucia: typeof import('${virtResolver.Auth}').lucia;
+                        export const lucia: typeof import('${virtualResolver.Auth}').lucia;
+						export const authEnvCheck: typeof import('${virtualResolver.AuthENVChecker}').authEnvCheck;
+					}`);
+
+					studioCMSDTS.addLines(`declare module 'studiocms-dashboard:components' {
+						export const Layout: typeof import('${virtualResolver.DashboardLayout}').default;
 					}`);
 
 					// Add Virtual DTS File
@@ -129,17 +232,6 @@ export default defineIntegration({
 						// Add Dashboard Integrations
 						integrationLogger(logger, verbose, 'info', 'Adding Dashboard Integrations');
 
-						const { 
-							injectEntry, 
-							injectReset, 
-							presetsConfig: {
-								presetDaisyUI: {
-									themes,
-									darkTheme
-								}
-							} 
-						} = UnoCSSConfigOverride;
-
 						// CSS Management
 						addIntegration(params, {
 							integration: UnoCSSAstroIntegration({
@@ -157,7 +249,21 @@ export default defineIntegration({
 									presetIcons({
 										collections: {
 											mdi: () => import('@iconify-json/mdi/icons.json').then(i => i.default),
+											google: FileSystemIconLoader(resolve('./icons/google')),
+											discord: FileSystemIconLoader(resolve('./icons/discord')),
+											github: FileSystemIconLoader(resolve('./icons/github')),
+											auth0: FileSystemIconLoader(resolve('./icons/auth0')),
 										}
+									}),
+									presetScrollbar({
+									}),
+									presetWebFonts({
+										provider: 'google',
+										fonts: {
+											// Required Fonts for Google Icons
+										  	sans: 'Roboto',
+										  	mono: ['Fira Code', 'Fira Mono:400,700'],
+										},
 									}),
 								],
 								transformers: [
@@ -246,7 +352,7 @@ export default defineIntegration({
 							})
 
 							// GitHub Auth Provider
-							if ( providers.github ) {
+							if ( github ) {
 								// Log that the GitHub Auth Provider is enabled
 								integrationLogger(logger, verbose, 'info', 'GitHub Auth Provider is Enabled');
 								injectRoute({
@@ -262,8 +368,67 @@ export default defineIntegration({
 								integrationLogger(logger, verbose, 'info', 'GitHub Auth Provider is Disabled');
 							}
 
+							// Discord Auth Provider
+							if (discord){
+								// Log that the Discord Auth Provider is enabled
+								integrationLogger(logger, verbose, 'info', 'Discord Auth Provider is Enabled');
+								injectRoute({
+									pattern: makeRoute('login/discord'),
+									entrypoint: resolve('./routes/authroutes/login/discord/index.ts'),
+								});
+								injectRoute({
+									pattern: makeRoute('login/discord/callback'),
+									entrypoint: resolve('./routes/authroutes/login/discord/callback.ts'),
+								});
+							}
+
+							// Google Auth Provider
+							if (google){
+								// Log that the Google Auth Provider is enabled
+								integrationLogger(logger, verbose, 'info', 'Google Auth Provider is Enabled');
+								injectRoute({
+									pattern: makeRoute('login/google'),
+									entrypoint: resolve('./routes/authroutes/login/google/index.ts'),
+								});
+								injectRoute({
+									pattern: makeRoute('login/google/callback'),
+									entrypoint: resolve('./routes/authroutes/login/google/callback.ts'),
+								});
+							}
+
+							// Auth0 Auth Provider
+							if (auth0){
+								// Log that the Auth0 Auth Provider is enabled
+								integrationLogger(logger, verbose, 'info', 'Auth0 Auth Provider is Enabled');
+								injectRoute({
+									pattern: makeRoute('login/auth0'),
+									entrypoint: resolve('./routes/authroutes/login/auth0/index.ts'),
+								});
+								injectRoute({
+									pattern: makeRoute('login/auth0/callback'),
+									entrypoint: resolve('./routes/authroutes/login/auth0/callback.ts'),
+								});
+							}
+
 							// Username and Password Auth Provider
-							// **NOT YET IMPLEMENTED**
+							if ( usernameAndPassword) {
+								// Log that the Username and Password Auth Provider is enabled
+								integrationLogger(logger, verbose, 'info', 'Username and Password Auth Provider is Enabled');
+								injectRoute({
+									pattern: makeRoute('login/api/login'),
+									entrypoint: resolve('./routes/authroutes/login/api/login.ts'),
+								})
+								if ( allowUserRegistration ) {
+									injectRoute({
+										pattern: makeRoute('signup/'),
+										entrypoint: resolve('./routes/authroutes/login/signup.astro'),
+									})
+									injectRoute({
+										pattern: makeRoute('login/api/register'),
+										entrypoint: resolve('./routes/authroutes/login/api/register.ts'),
+									})
+								}
+							}
 
 						} else if ( !AuthConfig.enabled ) {
 							// Log that the Auth is disabled

@@ -23,8 +23,6 @@ const {
   } 
 } = Config;
 
-const DashboardRouteOverride = dashboardRouteOverride || "dashboard";
-
 type Props = {
   title: string;
   description: string;
@@ -44,7 +42,7 @@ const {
 ---
 
 <!doctype html>
-<html lang="en" data-theme={lightTheme}>
+<html lang="en" data-theme={lightTheme} class="scrollbar scrollbar-thumb-white scrollbar-track-[#1a172e] h-32 overflow-y-scroll">
   <head>
     <ThemeManager defaultTheme="auto" />
     <BaseHead title={title} description={description} />
@@ -53,15 +51,15 @@ const {
   <body>
     <div class="bg-base-100 drawer">
       <div class="drawer-content bg-base-100">
-        <Header DashboardRouteOverride={DashboardRouteOverride}/>
+        <Header DashboardRouteOverride={dashboardRouteOverride} sideBarActiveItemID={sideBarActiveItemID}/>
         <div class="md:flex md:justify-center">
-          <main class="p-6 pt-10 lg:max-w-[1800px] max-w-[100vw]">
+          <main class="p-6 pt-10 lg:max-w-[1800px] max-w-[100vw] min-h-[100vh]">
             <slot />
           </main>
         </div>
         <Footer />
       </div>
-      { includeSidebar && <SideBar sideBarActiveItemID={sideBarActiveItemID} DashboardRouteOverride={DashboardRouteOverride}/>}
+      { includeSidebar && <SideBar sideBarActiveItemID={sideBarActiveItemID} DashboardRouteOverride={dashboardRouteOverride}/>}
     </div>
   </body>
 </html>

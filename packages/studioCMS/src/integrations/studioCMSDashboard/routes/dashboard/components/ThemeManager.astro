@@ -11,7 +11,7 @@ const { defaultTheme = "auto" } = Astro.props;
   window.theme ??= (() => {
     const defaultTheme =
       document.currentScript.getAttribute("data-default-theme");
-    const storageKey = "theme";
+    const storageKey = "studioCMS-Dashboard";
     const store =
       typeof localStorage !== "undefined"
         ? localStorage
@@ -27,6 +27,8 @@ const { defaultTheme = "auto" } = Astro.props;
     function applyTheme(theme) {
       document.documentElement.dataset.theme =
         theme === "auto" ? systemTheme : theme;
+      document.documentElement.dataset.theme === "dark" && document.documentElement.classList.add('sl-theme-dark');
+      document.documentElement.dataset.theme === "light" && document.documentElement.classList.remove('sl-theme-dark');
       document.dispatchEvent(
         new CustomEvent("theme-changed", {
           detail: { theme, systemTheme, defaultTheme },

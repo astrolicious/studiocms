@@ -8,8 +8,6 @@ const {
 	  dashboardRouteOverride,
 	} 
   } = Config;
-  
-  const dashboardURL = dashboardRouteOverride || 'dashboard';
 
 export async function GET(context: APIContext): Promise<Response> {
 	return context.redirect(import.meta.env.BASE_URL);
@@ -17,7 +15,7 @@ export async function GET(context: APIContext): Promise<Response> {
 
 export async function POST(context: APIContext): Promise<Response> {
 	if (!context.locals.session) {
-		return context.redirect(await urlGenFactory(true, "login", dashboardURL));
+		return context.redirect(await urlGenFactory(true, "login", dashboardRouteOverride));
 	}
 
 	await lucia.invalidateSession(context.locals.session.id);

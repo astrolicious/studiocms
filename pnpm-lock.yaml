@@ -57,6 +57,9 @@ importers:
       '@iconify-json/mdi':
         specifier: ^1.1.66
         version: 1.1.66
+      '@iconify/utils':
+        specifier: ^2.1.23
+        version: 2.1.23
       '@inox-tools/sitemap-ext':
         specifier: ^0.2.11
         version: 0.2.11(@astrojs/db@0.11.0)(@types/node@20.12.8)(astro@4.7.1)
@@ -67,25 +70,28 @@ importers:
         specifier: ^0.4.0
         version: 0.4.0
       '@shikijs/transformers':
-        specifier: ^1.3.0
+        specifier: ^1.4.0
         version: 1.4.0
       '@unocss/astro':
-        specifier: 0.59.4
+        specifier: ^0.59.4
         version: 0.59.4(vite@5.2.11)
       '@unocss/preset-typography':
-        specifier: 0.59.4
+        specifier: ^0.59.4
         version: 0.59.4
       '@unocss/preset-uno':
-        specifier: 0.59.4
+        specifier: ^0.59.4
+        version: 0.59.4
+      '@unocss/preset-web-fonts':
+        specifier: ^0.59.4
         version: 0.59.4
       '@unocss/preset-wind':
-        specifier: 0.59.4
+        specifier: ^0.59.4
         version: 0.59.4
       '@unocss/reset':
-        specifier: 0.59.4
+        specifier: ^0.59.4
         version: 0.59.4
       '@unocss/transformer-directives':
-        specifier: 0.59.4
+        specifier: ^0.59.4
         version: 0.59.4
       '@unpic/astro':
         specifier: ^0.0.46
@@ -94,8 +100,8 @@ importers:
         specifier: ^1.0.0
         version: 1.0.0(daisyui@4.10.5)(unocss@0.59.4)
       arctic:
-        specifier: ^1.8.0
-        version: 1.8.0
+        specifier: ^1.8.1
+        version: 1.8.1
       astro:
         specifier: '>=4.7.1'
         version: 4.7.1(@types/node@20.12.8)(typescript@5.4.5)
@@ -126,14 +132,17 @@ importers:
       marked-smartypants:
         specifier: ^1.1.6
         version: 1.1.6(marked@12.0.2)
+      oslo:
+        specifier: ^1.2.0
+        version: 1.2.0
       pathe:
         specifier: ^1.1.2
         version: 1.1.2
       recast:
-        specifier: ^0.23.5
+        specifier: ^0.23.6
         version: 0.23.6
       shiki:
-        specifier: ^1.3.0
+        specifier: ^1.4.0
         version: 1.4.0
       typescript:
         specifier: ^5.4.5
@@ -141,11 +150,14 @@ importers:
       unocss:
         specifier: ^0.59.4
         version: 0.59.4(postcss@8.4.38)(vite@5.2.11)
+      unocss-preset-scrollbar:
+        specifier: ^0.3.1
+        version: 0.3.1(unocss@0.59.4)
       unpic:
         specifier: ^3.18.0
         version: 3.18.0
       vite:
-        specifier: ^5.2.10
+        specifier: ^5.2.11
         version: 5.2.11(@types/node@20.12.8)
     devDependencies:
       '@types/node':
@@ -3548,8 +3560,18 @@ packages:
       unconfig: 0.3.13
     dev: false
 
+  /@unocss/core@0.56.5:
+    resolution: {integrity: sha512-fx5VhOjSHn0HdV2D34pEwFMAHJcJQRTCp1xEE4GzxY1irXzaa+m2aYf5PZjmDxehiOC16IH7TO9FOWANXk1E0w==}
+    dev: false
+
   /@unocss/core@0.59.4:
     resolution: {integrity: sha512-bBZ1sgcAtezQVZ1BST9IS3jqcsTLyqKNjiIf7FTnX3DHpfpYuMDFzSOtmkZDzBleOLO/CtcRWjT0HwTSQAmV0A==}
+    dev: false
+
+  /@unocss/extractor-arbitrary-variants@0.56.5:
+    resolution: {integrity: sha512-p2pyzz/ONvc5CGcaB9OZvWE8qkRSgyuhaQqFQLdBFeUhveHC0CGP0iSnXwBgAFHWM7DJo4/JpWeZ+mBt0ogVLA==}
+    dependencies:
+      '@unocss/core': 0.56.5
     dev: false
 
   /@unocss/extractor-arbitrary-variants@0.59.4:
@@ -3596,6 +3618,14 @@ packages:
       ofetch: 1.3.4
     transitivePeerDependencies:
       - supports-color
+    dev: false
+
+  /@unocss/preset-mini@0.56.5:
+    resolution: {integrity: sha512-/KhlThhs1ilauM7MwRSpahLbIPZ5VGeGvaUsU8+ZlNT3sis4yoVYkPtR14tL2IT6jhOU05N/uu3aBj+1bP8GjQ==}
+    dependencies:
+      '@unocss/core': 0.56.5
+      '@unocss/extractor-arbitrary-variants': 0.56.5
+      '@unocss/rule-utils': 0.56.5
     dev: false
 
   /@unocss/preset-mini@0.59.4:
@@ -3645,6 +3675,13 @@ packages:
 
   /@unocss/reset@0.59.4:
     resolution: {integrity: sha512-Upy4xzdWl4RChbLAXBq1BoR4WqxXMoIfjvtcwSZcZK2sylXCFAseSWnyzJFdSiXPqNfmMuNgPXgiSxiQB+cmNA==}
+    dev: false
+
+  /@unocss/rule-utils@0.56.5:
+    resolution: {integrity: sha512-CXIGHCIC9B8WUl9KbbFMSZHcsIgfmI/+X0bjBv6xrgBVC1EQ2Acq4PYnJIbaRGBRAhl9wYjNL7Zq2UWOdowHAw==}
+    engines: {node: '>=14'}
+    dependencies:
+      '@unocss/core': 0.56.5
     dev: false
 
   /@unocss/rule-utils@0.59.4:
@@ -3909,8 +3946,8 @@ packages:
       normalize-path: 3.0.0
       picomatch: 2.3.1
 
-  /arctic@1.8.0:
-    resolution: {integrity: sha512-gFzu67CMG7PvBrxv5E1FetiG+OeDAgc3dRDY+xTus+qnH+ip1qJVMRaJ4OSiYRx54/LWVR/B7Bdym0uPhrmIzg==}
+  /arctic@1.8.1:
+    resolution: {integrity: sha512-YmTcSfk8+NDSZt7qWYBX4HrikHZA3EQgmfFYlS4BwtYzPrji2VjAFrCFMElnjp72zmx3J3mz1ldjaXvjxmiW4Q==}
     dependencies:
       oslo: 1.2.0
     dev: false
@@ -9367,6 +9404,15 @@ packages:
     resolution: {integrity: sha512-rBJeI5CXAlmy1pV+617WB9J63U6XcazHHF2f2dbJix4XzpUF0RS3Zbj0FGIOCAva5P/d/GBOYaACQ1w+0azUkg==}
     engines: {node: '>= 4.0.0'}
     dev: true
+
+  /unocss-preset-scrollbar@0.3.1(unocss@0.59.4):
+    resolution: {integrity: sha512-LhvcQA1cfwq06sqAZY++1crrLsOf/IfOPdyCkMHVyywI9WCvMhxCJlCcrySlQI8/Y2VUjOpLBDWB0w3DXS5qRA==}
+    peerDependencies:
+      unocss: '>= 0.31.13 < 1'
+    dependencies:
+      '@unocss/preset-mini': 0.56.5
+      unocss: 0.59.4(postcss@8.4.38)(vite@5.2.11)
+    dev: false
 
   /unocss@0.59.4(postcss@8.4.38)(vite@5.2.11):
     resolution: {integrity: sha512-QmCVjRObvVu/gsGrJGVt0NnrdhFFn314BUZn2WQyXV9rIvHLRmG5bIu0j5vibJkj7ZhFchTrnTM1pTFXP1xt5g==}

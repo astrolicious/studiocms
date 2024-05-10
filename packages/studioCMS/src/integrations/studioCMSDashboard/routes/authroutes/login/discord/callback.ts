@@ -1,21 +1,23 @@
 // @ts-expect-error - Some types can only be imported from the Astro runtime
 import { User, db, eq } from 'astro:db';
-import { GitHub, OAuth2RequestError } from 'arctic';
+import { Discord, OAuth2RequestError, type DiscordTokens } from 'arctic';
 import type { APIContext } from 'astro';
-import { authEnvCheck, lucia } from "studiocms-dashboard:auth";
+import { lucia } from "studiocms-dashboard:auth";
 import { urlGenFactory } from 'studiocms:helpers';
 import Config from 'virtual:studiocms/config';
+import { authEnvCheck } from 'studiocms-dashboard:auth';
+
 
 const { 
 	dashboardConfig: { 
 		AuthConfig: {
 			providers
 		},
-	  dashboardRouteOverride,
+	  	dashboardRouteOverride,
 	} 
   } = Config;
 
-const { GITHUB: { CLIENT_ID, CLIENT_SECRET } } = await authEnvCheck(providers);
+const { DISCORD: { CLIENT_ID, CLIENT_SECRET, REDIRECT_URI } } = await authEnvCheck(providers);
 
 export async function GET(context: APIContext): Promise<Response> {
 	const {
@@ -24,14 +26,15 @@ export async function GET(context: APIContext): Promise<Response> {
 		redirect,
 	} = context;
 
-	const github = new GitHub(
+	const discord = new Discord(
 		CLIENT_ID?CLIENT_ID:"",
-		CLIENT_SECRET?CLIENT_SECRET:""
+		CLIENT_SECRET?CLIENT_SECRET:"",
+		REDIRECT_URI?REDIRECT_URI:""
 	);
 
 	const code = url.searchParams.get('code');
 	const state = url.searchParams.get('state');
-	const storedState = cookies.get('github_oauth_state')?.value ?? null;
+	const storedState = cookies.get('discord_oauth_state')?.value ?? null;
 	if (!code || !state || !storedState || state !== storedState) {
 		// return new Response(null, {
 		// 	status: 403,
@@ -40,36 +43,38 @@ export async function GET(context: APIContext): Promise<Response> {
 	}
 
 	try {
-		const tokens = await github.validateAuthorizationCode(code);
-		const githubUserResponse = await fetch('https://api.github.com/user', {
+		const tokens: DiscordTokens = await discord.validateAuthorizationCode(code);
+		const discordResponse = await fetch("https://discord.com/api/users/@me", {
 			headers: {
-				Authorization: `Bearer ${tokens.accessToken}`,
-			},
+				Authorization: `Bearer ${tokens.accessToken}`
+			}
 		});
 
-		const githubUser: GitHubUser = await githubUserResponse.json();
+		const discordUser: DiscordUser = await discordResponse.json();
+
 		const {
-			id: githubId,
-			html_url: githubURL,
-			login: username,
-			name,
-			email,
-			avatar_url: avatar,
-		} = githubUser;
+			id: discordId,
+			avatar: avatarHash,
+			username,
+			global_name,
+			email
+		} = discordUser;
 
-		const existingUser = await db.select().from(User).where(eq(User.githubId, githubId)).get();
+		const avatar = `https://cdn.discordapp.com/avatars/${discordId}/${avatarHash}.png`;
 
-		if (existingUser) {
-			const session = await lucia.createSession(existingUser.id.toString(), {});
+		const existingUserById = await db.select().from(User).where(eq(User.discordId, discordId)).get();
+
+		if (existingUserById) {
+			const session = await lucia.createSession(existingUserById.id.toString(), {});
 			const sessionCookie = lucia.createSessionCookie(session.id);
 			cookies.set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
 			return redirect(await urlGenFactory(true, undefined, dashboardRouteOverride));
 		}
-
-		const existingUserName = await db.select().from(User).where(eq(User.username, username)).get();
+		
+		const existingUserByUsername = await db.select().from(User).where(eq(User.username, username)).get();
 		const existingUserByEmail = await db.select().from(User).where(eq(User.email, email)).get();
 
-		if (existingUserName || existingUserByEmail) {
+		if (existingUserByUsername || existingUserByEmail) {
 			return new Response("User already exists", {
 				status: 400,
 			});
@@ -77,10 +82,9 @@ export async function GET(context: APIContext): Promise<Response> {
 		const createdUser = await db
 			.insert(User)
 			.values({
-				githubId,
-				githubURL,
+				discordId,
 				username,
-				name: name ?? username,
+				name: global_name ?? username,
 				email,
 				avatar,
 			})
@@ -108,12 +112,10 @@ export async function GET(context: APIContext): Promise<Response> {
 	}
 }
 
-interface GitHubUser {
-	id: number;
-	html_url: string;
-	login: string;
-	avatar_url: string;
-	name: string;
-	blog: string;
+interface DiscordUser {
+	id: string;
+	avatar: string;
+	username: string;
+	global_name: string;
 	email: string;
 }

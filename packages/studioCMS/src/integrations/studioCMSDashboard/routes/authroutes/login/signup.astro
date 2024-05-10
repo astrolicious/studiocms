@@ -14,34 +14,26 @@ const {
   dashboardConfig,
   dashboardConfig: { 
     dashboardRouteOverride,
-    AuthConfig: { 
-      providers: {
-        usernameAndPassword,
-        usernameAndPasswordConfig: {
-          allowUserRegistration,
-        }
-      } 
-    } 
   } 
 } = Config;
 
 const locals = Astro.locals as Locals;
 
-const UserPassLoginURL = await urlGenFactory(true, 'login/api/login', dashboardRouteOverride)
-const RegisterURL = await urlGenFactory(true, 'signup/', dashboardRouteOverride)
+const LoginURL = await urlGenFactory(true, 'login/', dashboardRouteOverride)
+const UserPassRegisterURL = await urlGenFactory(true, 'login/api/register', dashboardRouteOverride)
 
 if (locals.isLoggedIn) {
 	return Astro.redirect(await urlGenFactory(true, undefined, dashboardRouteOverride));
 }
 ---
 
-<Layout title='Login Page' description="Login Page" sideBarActiveItemID='login' includeSidebar={false}>
+<Layout title='Registration Page' description="Registration Page" sideBarActiveItemID='login' includeSidebar={false}>
   <div class="pb-12 mt-5">
 
-      <center><div class="text-5xl font-bold">Login</div>
+      <center><div class="text-5xl font-bold">Registration Page</div>
       <div class="py-2">
           <text class="text-lg">
-            To access this site, you need to log in!
+            Create an account or sign in to continue.
           </text>
       </div>
     </center><br />
@@ -51,44 +43,48 @@ if (locals.isLoggedIn) {
       <!-- End of oAUTH Providers -->
 
       <!-- Username and Password Provider-->
-      { usernameAndPassword && (
         <div class="py-8">
           <div class="bg-base-300 p-8 rounded-lg">
 
-          <form method="post" action={UserPassLoginURL}>
+          <form method="post" action={UserPassRegisterURL}>
 
-              <sl-input 
-                name="username" 
-                id="username" 
-                >
-                  <div class="text-xl font-bold" slot="label">Username</div>
-              </sl-input><br />
+            <sl-input 
+            name="username" 
+            id="username" 
+            class="w-96">
+              <div class="text-xl font-bold" slot="label">Username</div>
+            </sl-input><br />
 
-              <sl-input 
-                type="password" 
-                name="password"
-                id="password"
-                password-toggle>
-                  <div class="text-xl font-bold" slot="label">Password</div>
-                </sl-input><br />
+            <sl-input 
+            name="displayname" 
+            id="displayname" 
+            class="w-96">
+              <div class="text-xl font-bold" slot="label">Display Name</div>
+            </sl-input><br />
+
+            <sl-input 
+            type="password" 
+            name="password"
+            id="password"
+            class="w-96" 
+            password-toggle>
+              <div class="text-xl font-bold" slot="label">Password</div>
+            </sl-input><br />
 
             <center>
-              <sl-button variant="primary" type="submit" outline>Continue <div slot="suffix" class="i-mdi:login"></div></sl-button>
+              <sl-button variant="success" type="submit" outline>Continue <div slot="suffix" class="i-mdi:login"></div></sl-button>
             </center>
 
           </form>
 
-          {allowUserRegistration && (
-            <div class="py-4">
-              <center>
-                <a href={RegisterURL} class="text-lg">Don't have an account? Register here!</a>
-              </center>
-            </div>
-          )}
+          <div class="py-4">
+            <center>
+              <a href={LoginURL} class="text-lg">Already have an account? Sign in!</a>
+            </center>
+          </div>
 
           </div>
         </div> 
-      )}
       <!-- End of Username and Password Provider-->
 
       <sl-alert id="form-error" variant="danger" duration="4000" closable>
@@ -101,6 +97,7 @@ if (locals.isLoggedIn) {
         <strong>Success!</strong><br />
         <div id = "form-success-message"></div>
       </sl-alert>
+
 
   </div>
 </Layout>
@@ -120,7 +117,7 @@ if (locals.isLoggedIn) {
 			body: new FormData(formElement)
 		});
 		if (response.ok) {
-      successMessageElement.innerText = "Login successful! Redirecting...";
+      successMessageElement.innerText = "Account Creation Successful! Redirecting...";
       //@ts-expect-error - toast is not a standard method on HTMLElement it comes from `Shoelace.syle`
       successAlertElement.toast();
       setTimeout(() => {
