@@ -13,7 +13,7 @@
   "labels": ["dependencies"],
   "additionalBranchPrefix": "{{parentDir}}-",
 	"gitIgnoredAuthors": ["github+renovate@astro-studiocms.xyz"],
-  "prHourlyLimit": 0,
+  "prHourlyLimit": 3,
   "reviewers": ["team:exalted"],
   "packageRules": [
     {
