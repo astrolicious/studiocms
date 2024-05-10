@@ -36,7 +36,7 @@ export const authProviderSchema = z.object({
 	 * 
 	 * @default false - Temporarily set to true for testing
 	 */
-	google: z.boolean().optional().default(true),
+	google: z.boolean().optional().default(false),
 	/**
 	 * Auth0 Auth Provider - Powered by Lucia
 	 * 
@@ -44,12 +44,12 @@ export const authProviderSchema = z.object({
 	 * 
 	 * @default false - Temporarily set to true for testing
 	 */
-	auth0: z.boolean().optional().default(true),
+	auth0: z.boolean().optional().default(false),
 	/**
 	 * Username and Password Auth Provider - Powered by Lucia
 	 * 
 	 */
-	usernameAndPassword: z.boolean().optional().default(true),
+	usernameAndPassword: z.boolean().optional().default(false),
 	usernameAndPasswordConfig: localUsernameAndPasswordConfig,
 }).optional().default({});
 
