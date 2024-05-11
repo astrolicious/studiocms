@@ -54,7 +54,11 @@ export default defineConfig({
       sidebar: [
         {
           label: "Start Here",
-          autogenerate: { directory: "start-here" },
+          items: [
+            { label: 'Getting Started with Astro StudioCMS', link: '/start-here/getting-started' },
+            { label: 'Environment Variables', link: '/start-here/environment-variables' },
+            { label: 'Why Astro StudioCMS?', link: '/start-here/why-studiocms' },
+          ]
         },
         {
           label: "Reference",
