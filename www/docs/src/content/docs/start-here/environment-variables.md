@@ -27,8 +27,8 @@ To authenticate with GitHub, you need to add the following environment variables
 
 ```bash
 # credentials for GitHub OAuth
-CMS-GITHUB_CLIENT_ID=
-CMS-GITHUB_CLIENT_SECRET=
+CMS-GITHUB_CLIENT_ID=your_client_id
+CMS-GITHUB_CLIENT_SECRET=your_client_secret
 ```
 
 ### Username and Password
