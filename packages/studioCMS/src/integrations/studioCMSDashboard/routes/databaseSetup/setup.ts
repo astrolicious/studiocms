@@ -10,7 +10,7 @@ export async function POST(context: APIContext): Promise<Response> {
 	const setupLocalAdmin = formData.get("local-setup")
 
 	if (setupLocalAdmin === "1") {
-		const username = formData.get("localadminname")?.toString();
+		const username = formData.get("local-admin-name")?.toString();
 		// username must be between 3 ~ 31 characters, and only consists of lowercase letters, 0-9, -, and _
 		// keep in mind some database (e.g. mysql) are case insensitive
 		if (
