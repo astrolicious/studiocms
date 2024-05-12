@@ -145,7 +145,7 @@ if (Config.includedIntegrations.useInoxSitemap) {
   checkbox.addEventListener('sl-change', () => {
       //@ts-expect-error - checkbox comes from sl-checkbox from `Shoelace.syle`
     if (checkbox.checked) {
-      localadmin.removeAttribute("disabled")
+      localAdmin.removeAttribute("disabled")
       //@ts-expect-error - show is not a standard method on HTMLElement it comes from `Shoelace.syle`
       localadmin.show();
       //@ts-expect-error - hide is not a standard method on HTMLElement it comes from `Shoelace.syle`
