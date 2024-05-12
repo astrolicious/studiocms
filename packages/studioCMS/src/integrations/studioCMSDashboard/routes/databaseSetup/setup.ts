@@ -28,7 +28,7 @@ export async function POST(context: APIContext): Promise<Response> {
 				}
 			);
 		}
-		const password = formData.get("localadminpassword");
+		const password = formData.get("local-admin-password");
 		if (typeof password !== "string" || password.length < 6 || password.length > 255) {
 			return new Response(
 				JSON.stringify({
