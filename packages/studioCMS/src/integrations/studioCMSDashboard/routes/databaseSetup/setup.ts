@@ -80,7 +80,7 @@ export async function POST(context: APIContext): Promise<Response> {
 			})
 		
 	} else {
-		const oAuthAdmin = formData.get("oauthadminname");
+		const oAuthAdmin = formData.get("oauth-admin-name");
 
 		await db
 			.insert(Permissions)
