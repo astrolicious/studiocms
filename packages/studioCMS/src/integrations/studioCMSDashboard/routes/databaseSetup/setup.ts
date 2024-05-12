@@ -7,7 +7,7 @@ import type { APIContext } from "astro";
 export async function POST(context: APIContext): Promise<Response> {
 	const formData = await context.request.formData();
 
-	const setupLocalAdmin = formData.get("localsetup")
+	const setupLocalAdmin = formData.get("local-setup")
 
 	if (setupLocalAdmin === "1") {
 		const username = formData.get("localadminname")?.toString();
