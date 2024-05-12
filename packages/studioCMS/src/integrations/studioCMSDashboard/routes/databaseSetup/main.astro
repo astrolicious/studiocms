@@ -141,7 +141,7 @@ if (Config.includedIntegrations.useInoxSitemap) {
   const localAdmin = document.getElementById('local-admin')!;
   const oauthAdmin = document.getElementById('oauth-admin')!;
 
-  // Update the disabled state of the localadmin and oauthadmin details based on the checkbox state
+  // Update the disabled state of the local-admin and oauth-admin details based on the checkbox state
   checkbox.addEventListener('sl-change', () => {
       //@ts-expect-error - checkbox comes from sl-checkbox from `Shoelace.syle`
     if (checkbox.checked) {
