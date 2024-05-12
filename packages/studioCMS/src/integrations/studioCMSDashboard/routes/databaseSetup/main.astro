@@ -153,7 +153,7 @@ if (Config.includedIntegrations.useInoxSitemap) {
       oauthAdmin.setAttribute("disabled", "true")
     } else {
       //@ts-expect-error - hide is not a standard method on HTMLElement it comes from `Shoelace.syle`
-      localadmin.hide();
+      localAdmin.hide();
       localadmin.setAttribute("disabled", "true")
       oauthadmin.removeAttribute("disabled")
       //@ts-expect-error - show is not a standard method on HTMLElement it comes from `Shoelace.syle`
