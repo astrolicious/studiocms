@@ -39,7 +39,7 @@ export async function POST(context: APIContext): Promise<Response> {
 				}
 			);
 		}
-		const name = formData.get("localadmindisplayname");
+		const name = formData.get("local-admin-display-name");
 
 
 		const existingUser = await db.select().from(User).where(eq(User.username, username)).get()
