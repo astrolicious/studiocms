@@ -1,3 +1,5 @@
+name: First time PR merged Check
+
 on: 
   pull_request:
     types: [closed]
