@@ -41,7 +41,6 @@ export default defineIntegration({
 						injectRoute,
 						logger,
 						config: { output, site, root },
-						updateConfig,
 					} = params;
 
 					// Destructure Options
@@ -244,14 +243,6 @@ export default defineIntegration({
 							});
 						}
 					}
-
-					updateConfig({
-						vite: {
-							optimizeDeps: {
-						  		exclude: ["oslo", "@node-rs/argon2", "@node-rs/bcrypt"]
-							}
-						}
-					})
 
 					integrationLogger(logger, verbose, 'info', 'StudioCMS Core Setup Complete.');
 				},

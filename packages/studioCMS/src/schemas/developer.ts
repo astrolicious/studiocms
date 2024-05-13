@@ -5,6 +5,8 @@ export const developerConfigSchema = z.object({
      * Allows the user to enable Astro's View Transition API for the Astro Studio CMS Dashboard
      * 
      * Disabled do to the fact that the View Transition API is still in development and is not ready for production use.
+     * 
+     * **NOT YET IMPLEMENTED** - There is a bug with the View Transition API that causes this feature to not work as expected.
      */
     viewTransitionAPI: z.boolean().optional().default(false),
     /**
