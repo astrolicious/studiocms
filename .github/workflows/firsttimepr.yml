@@ -45,7 +45,7 @@ jobs:
                     workflow_id: 'send-ftpr-welcome.yml',
                     ref: 'main',
                     inputs: {
-                      creator: creator
+                      creator: creator,
                       mergedPR: context.payload.pull_request.number
                     }
                   })
