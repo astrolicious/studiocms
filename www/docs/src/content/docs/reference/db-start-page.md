@@ -10,18 +10,19 @@ description: A reference page for dbStartPage
 ```js title="astro.config.mjs"  {14}
 import { defineConfig } from "astro/config";
 import astroStudioCMS from "@astrolicious/studiocms";
-import db from '@astrojs/db';
+import db from "@astrojs/db";
 import node from "@astrojs/node";
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://example.com',
+  site: "https://example.com",
   output: "server",
-  adapter: node({ mode: 'standalone' }),
+  adapter: node({ mode: "standalone" }),
   integrations: [
-          db(),
-          astroStudioCMS({
-              dbStartPage: true // DEFAULT - This injects a start page to setup your DB data.
-          })
+    db(),
+    astroStudioCMS({
+      dbStartPage: true, // DEFAULT - This injects a start page to setup your DB data.
+    }),
   ],
 });
+```
