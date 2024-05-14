@@ -60,6 +60,32 @@ export const Pages = defineTable({
 	},
 });
 
+export const PageData = defineTable({
+	columns: {
+		id: column.text({ primaryKey: true, default: randomUUID() }),
+		package: column.text({ default: '@astrolicious/studiocms' }),
+		title: column.text(),
+		description: column.text(),
+		publishedAt: column.date({ default: NOW }),
+		updatedAt: column.date({ optional: true }),
+		slug: column.text(),
+		contentLang: column.text({ default: 'default' }),
+		heroImage: column.text({
+			default:
+				'https://images.unsplash.com/photo-1707343843982-f8275f3994c5?q=80&w=1032&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+		}),
+	},
+});
+
+export const PageContent = defineTable({
+	columns: {
+		id: column.text({ primaryKey: true, default: randomUUID() }),
+		contentId: column.text({ references: () => PageData.columns.id }),
+		contentLang: column.text({ default: 'default' }),
+		content: column.text({ multiline: true, optional: true }),
+	},
+});
+
 
 export const SiteConfig = defineTable({
 	columns: {

@@ -1,6 +1,6 @@
 ---
 // @ts-expect-error - Some types can only be imported from the Astro runtime
-import { SiteConfig, Pages, db, asc } from 'astro:db';
+import { SiteConfig, Pages, db, asc, PageData } from 'astro:db';
 import { Layout } from 'studiocms-dashboard:components';
 import Config from 'virtual:studiocms/config';
 import { authHelper, urlGenFactory, type Locals } from 'studiocms:helpers';
@@ -15,7 +15,7 @@ if (Config.includedIntegrations.useInoxSitemap) {
 const { dashboardConfig: { developerConfig, dashboardRouteOverride } } = Config;
 
 const ConfigArray = await db.select().from(SiteConfig);
-const posts = await db.select().from(Pages).orderBy(asc(Pages.id));
+const posts = await db.select().from(PageData).orderBy(asc(PageData.id));
 
 const contextConfig = ConfigArray.pop();
 

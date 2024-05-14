@@ -1,6 +1,6 @@
 ---
 // @ts-expect-error - Some types can only be imported from the Astro runtime
-import { Pages, SiteConfig, db, eq } from 'astro:db';
+import { PageData, PageContent, SiteConfig, db, eq } from 'astro:db';
 import { Layout } from 'studiocms-dashboard:components';
 import Config from 'virtual:studiocms/config';
 import { authHelper, urlGenFactory, type Locals } from 'studiocms:helpers';
@@ -16,11 +16,10 @@ const { dashboardConfig: { developerConfig, dashboardRouteOverride } } = Config;
 const { slug } = Astro.params;
 
 const ConfigArray = await db.select().from(SiteConfig);
-const pageArrayed = await db.select().from(Pages).where(eq(Pages.slug, slug));
+const currentPageContent = await db.select().from(PageContent).innerJoin(PageData, eq(PageContent.contentId, PageData.id)).get();
+const { PageContent: PC, PageData: PD } = currentPageContent;
 
-const page = pageArrayed[0];
-
-if (!slug || !page) {
+if (!slug || !PD.id) {
 	return Astro.redirect(await urlGenFactory(true, undefined, dashboardRouteOverride));
 }
 
@@ -48,24 +47,25 @@ if (Astro.request.method === 'POST' && !developerConfig.testingAndDemoMode) {
   try {
     const data = await Astro.request.formData();
     const title = data.get("title");
+    const pack = data.get("package");
     const description = data.get("description");
     const heroImage = data.get("hero-image");
     const content = data.get("content");
-	await db
-		.update(Pages)
-		.set({
-			title: title as string,
-			description: description as string,
-			heroImage: heroImage as string,
-			content: content as string,
-		})
-		.where(eq(Pages.slug, page.slug))
-		.then(() => {
-            showSuccessToast = true;
-		})
-		.catch(() => {
-            showErrorToast = true;
-		});
+
+    await db.update(PageData).set({ 
+        title: title as string,
+        package: pack as string,
+        description: description as string,
+        heroImage: heroImage as string,
+    }).where(eq(PageData.slug, slug)).then(async () => {
+        const currentPageContent = await db.select().from(PageContent).innerJoin(PageData, eq(PageContent.contentId, PageData.id)).get();
+        await db.update(PageContent).set({ 
+            content: content as string 
+        }).where(eq(PageContent.contentId, currentPageContent.PageContent.contentId));
+    }).catch(() => {
+        showErrorToast = true;
+    });
+    showSuccessToast = true;
   } catch (error) {
     if (error instanceof Error) {
         showErrorToast = true;
@@ -101,7 +101,7 @@ const pageTitle = `Edit Page | ${contextConfig.title}`;
 
     <div class="container max-w-[100vw] lg:max-w-[1800px] min-w-[75vw]">
 
-        <div class="text-5xl font-bold">Edit Page: {page.title}</div>
+        <div class="text-5xl font-bold">Edit Page: {PD.title}</div>
 
         <div class="py-2 flex justify-center">
 
@@ -109,7 +109,7 @@ const pageTitle = `Edit Page | ${contextConfig.title}`;
                     <sl-input
                         id="title"
                         name="title"
-                        value={page.title}
+                        value={PD.title}
                         placeholder="Your post title"
                         size="medium"
                         required>
@@ -117,10 +117,16 @@ const pageTitle = `Edit Page | ${contextConfig.title}`;
                         <sl-icon name="card-heading" slot="prefix"></sl-icon>
                     </sl-input>
 
+                    <sl-select id="package" name="package" value="@astrolicious/studiocms">
+                        <div slot="label" class="text-lg inline">Package</div>
+                        <sl-option value="@astrolicious/studiocms">@astrolicious/studiocms</sl-option>
+                        <sl-option value="not-yet-implemented" disabled>Not Yet Implemented</sl-option>
+                      </sl-select>
+
                     <sl-input
                         id="slug"
                         name="slug"
-                        value={page.slug}
+                        value={PD.slug}
                         disabled="true"
                         placeholder="your-post-slug"
                         size="medium"
@@ -132,7 +138,7 @@ const pageTitle = `Edit Page | ${contextConfig.title}`;
                     <sl-input
                         id="description"
                         name="description"
-                        value={page.description}
+                        value={PD.description}
                         placeholder="Your post's basic description"
                         size="medium"
                         required>
@@ -143,7 +149,7 @@ const pageTitle = `Edit Page | ${contextConfig.title}`;
                     <sl-input 
                         id="hero-image" 
                         name="hero-image" 
-                        value={page.heroImage}
+                        value={PD.heroImage}
                         placeholder="Your Page's Hero Image URL (Also the OGImage)" 
                         size="medium"
                         required>
@@ -156,7 +162,7 @@ const pageTitle = `Edit Page | ${contextConfig.title}`;
                         resize="auto"
                         id="content"
                         name="content"
-                        value={page.content}
+                        value={PC.content}
                         size="large"
                         rows="10"
                         hx-get={LivePreviewPage}
@@ -165,7 +171,7 @@ const pageTitle = `Edit Page | ${contextConfig.title}`;
                         placeholder="Your post's content in markdown format."
                         required>
                         <div slot="label" class="text-lg inline">Content</div>
-                        {page.content}
+                        {PC.content}
                     </sl-textarea>
                     <br />
 
