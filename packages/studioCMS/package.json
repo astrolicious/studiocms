@@ -50,16 +50,12 @@
     "@shikijs/transformers": "^1.4.0",
     "@unocss/astro": "^0.59.4",
     "@unocss/reset": "^0.59.4",
-    "@unocss/preset-uno": "^0.59.4",
-    "@unocss/preset-wind": "^0.59.4",
-    "@unocss/preset-typography": "^0.59.4",
-    "@unocss/preset-web-fonts": "^0.59.4",
-    "@unocss/transformer-directives": "^0.59.4",
     "@unpic/astro": "^0.0.46",
     "@yangyang20240403/unocss-preset-daisyui": "^1.0.0",
     "arctic": "^1.8.1",
     "astro-integration-kit": "^0.13.2",
     "daisyui": "^4.4.23",
+    "fs-extra": "^11.2.0",
     "lucia": "^3.2.0",
     "marked": "^12.0.2",
     "marked-alert": "^2.0.1",
@@ -82,6 +78,7 @@
     "astro": ">=4.7.1"
   },
   "devDependencies": {
-    "@types/node": "20.12.8"
+    "@types/node": "20.12.8",
+    "@types/fs-extra": "^11.0.4"
   }
 }

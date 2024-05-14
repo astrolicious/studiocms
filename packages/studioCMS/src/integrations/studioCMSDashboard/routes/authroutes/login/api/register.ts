@@ -2,6 +2,9 @@
 import { User, db, eq } from 'astro:db';
 import { lucia } from "studiocms-dashboard:auth";
 import { scryptAsync } from "@noble/hashes/scrypt";
+import AuthSec from 'virtual:studiocms-dashboard/auth-sec';
+
+const { salt: ScryptSalt, opts: ScryptOpts } = AuthSec;
 
 import type { APIContext } from "astro";
 
@@ -59,8 +62,9 @@ export async function POST(context: APIContext): Promise<Response> {
             username,
         })
 
+	const serverToken = await scryptAsync(existingUser.id, ScryptSalt, ScryptOpts);
     const newUser = await db.select().from(User).where(eq(User.username, username)).get();
-	const hashedPassword = await scryptAsync(password, newUser.id, { N: 2 ** 12, r: 8, p: 1, dkLen: 32 })
+	const hashedPassword = await scryptAsync(password, serverToken, ScryptOpts)
 	const hashedPasswordString = Buffer.from(hashedPassword.buffer).toString();
 	await db
 		.update(User)

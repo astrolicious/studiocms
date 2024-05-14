@@ -3,6 +3,16 @@ declare module 'virtual:studiocms/config' {
 	export default Config;
 }
 
+type usernameAndPasswordConfig = {
+	salt: Input;
+	opts: ScryptOpts;
+}
+
+declare module 'virtual:studiocms-dashboard/auth-sec' {
+	const AuthSec: usernameAndPasswordConfig;
+	export default AuthSec;
+}
+
 declare module 'studiocms:components' {
 	export const CImage: typeof import('./src/components/exports/CImage.astro').default;
 	export const FormattedDate: typeof import('./src/components/exports/FormattedDate.astro').default;

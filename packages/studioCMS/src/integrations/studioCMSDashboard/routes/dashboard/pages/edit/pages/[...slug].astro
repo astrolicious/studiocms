@@ -41,17 +41,16 @@ if ( !developerConfig.testingAndDemoMode ) {
     }
 }
 
-
 let showSuccessToast = false;
 let showErrorToast = false;
 
 if (Astro.request.method === 'POST' && !developerConfig.testingAndDemoMode) {
   try {
     const data = await Astro.request.formData();
-	const title = data.get('title');
-	const description = data.get('description');
-	const heroImage = data.get('hero-image');
-	const content = data.get('content');
+    const title = data.get("title");
+    const description = data.get("description");
+    const heroImage = data.get("hero-image");
+    const content = data.get("content");
 	await db
 		.update(Pages)
 		.set({
@@ -67,12 +66,14 @@ if (Astro.request.method === 'POST' && !developerConfig.testingAndDemoMode) {
 		.catch(() => {
             showErrorToast = true;
 		});
-    } catch (error) {
+  } catch (error) {
     if (error instanceof Error) {
         showErrorToast = true;
     }
   }
 }
+
+const LivePreviewPage = await urlGenFactory(true, "api/liverender", dashboardRouteOverride);
 
 const pageTitle = `Edit Page | ${contextConfig.title}`;
 ---
@@ -85,110 +86,99 @@ const pageTitle = `Edit Page | ${contextConfig.title}`;
         { showSuccessToast && (
         <sl-alert variant="success" duration="3000" open closable>
             <sl-icon slot="icon" name="check2-circle"></sl-icon>
-            <strong>Page Edited!</strong><br />
+            <strong>Post Edited!</strong><br />
             You can safely leave this page now.
         </sl-alert>
         )}
         { showErrorToast && (
         <sl-alert variant="danger" duration="3000" open closable>
             <sl-icon slot="icon" name="exclamation-octagon"></sl-icon>
-            <strong>Error Editing Page</strong><br />
-            There was an Error Editing the Page. Please try again.
+            <strong>Error Editing Post</strong><br />
+            There was an Error editing the Post. Please try again.
         </sl-alert>
         )}
     </div>
-    <div class="pb-12 mt-5">
+
+    <div class="container max-w-[100vw] lg:max-w-[1800px] min-w-[75vw]">
 
         <div class="text-5xl font-bold">Edit Page: {page.title}</div>
 
-        <div class="py-2">
+        <div class="py-2 flex justify-center">
 
-            <center>
-
-                <form method="post" enctype="multipart/form-data" class="w-full">
-                    <label for="title" class="text-lg">Page Title</label><br>
-                    <input 
-                        type="text" 
-                        id="title" 
-                        name="title" 
-                        class="border-solid border-2 border-gray-300 rounded-lg p-2 w-96"
-                        placeholder="Your Post Title" 
+                <form method="POST" class="w-full">
+                    <sl-input
+                        id="title"
+                        name="title"
                         value={page.title}
-                        required><br>
-                    <label for="slug" class="text-lg">Slug</label><br>
-                    <input 
-                        type="text" 
-                        id="slug" 
-                        name="slug" 
+                        placeholder="Your post title"
+                        size="medium"
+                        required>
+                        <div slot="label" class="text-lg inline">Page Title</div>
+                        <sl-icon name="card-heading" slot="prefix"></sl-icon>
+                    </sl-input>
+
+                    <sl-input
+                        id="slug"
+                        name="slug"
                         value={page.slug}
-                        disabled
-                        class="border-solid border-2 border-gray-300 rounded-lg p-2 w-96"
+                        disabled="true"
                         placeholder="your-post-slug"
-                        required><br>
-                    <label for="description" class="text-lg">Description</label><br>
-                    <input
-                        type="text" 
-                        id="description" 
-                        name="description" 
-                        class="border-solid border-2 border-gray-300 rounded-lg p-2 w-96"
-                        placeholder="Your post's basic description"
+                        size="medium"
+                        required>
+                        <div slot="label" class="text-lg inline">Slug</div>
+                        <sl-icon name="link" slot="prefix"></sl-icon>
+                    </sl-input>
+                    
+                    <sl-input
+                        id="description"
+                        name="description"
                         value={page.description}
-                        required><br>
-                    <label for="hero-image" class="text-lg">Hero Image</label><br>
-                    <p class="text-sm">To use images stored in your public/ folder use the following example: <pre>/my-image.png</pre></p><br>
-                    <input 
-                        type="text" 
+                        placeholder="Your post's basic description"
+                        size="medium"
+                        required>
+                        <div slot="label" class="text-lg inline">Description</div>
+                        <sl-icon name="info-circle" slot="prefix"></sl-icon>
+                    </sl-input>
+
+                    <sl-input 
                         id="hero-image" 
                         name="hero-image" 
                         value={page.heroImage}
-                        class="border-solid border-2 border-gray-300 rounded-lg p-2 w-96"
-                        placeholder="Your post's hero image URL"
-                        value="https://images.unsplash.com/photo-1707345512638-997d31a10eaa?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                        required><br>
-                    <label for="content" class="text-lg">Content</label><br>
-                    <div id="editor">
-                        <textarea 
-                            id="content" 
-                            name="content" 
-                            class="border-solid border-2 border-gray-300 rounded-lg p-2 w-full"
-                            data-provide="markdown" 
-                            rows="10" 
-                            placeholder="Your post's content in markdown format."
-                            required>{page.content}</textarea>
-                    </div><br>
-        
-                    <button class="btn btn-outline ml-5 py-2" type="submit">Update Post!</button><br><br>
+                        placeholder="Your Page's Hero Image URL (Also the OGImage)" 
+                        size="medium"
+                        required>
+                        <p slot="help-text" class="text-sm">To use images stored in your public/ folder use the following example: <i>/my-image.png</i></p><br>
+                        <div slot="label" class="text-lg inline">Hero Image</div>
+                        <sl-icon name="image" slot="prefix"></sl-icon>
+                    </sl-input>
+
+                    <sl-textarea 
+                        resize="auto"
+                        id="content"
+                        name="content"
+                        value={page.content}
+                        size="large"
+                        rows="10"
+                        hx-get={LivePreviewPage}
+                        hx-trigger="keyup changed delay:500ms"
+                        hx-target="#html-preview"
+                        placeholder="Your post's content in markdown format."
+                        required>
+                        <div slot="label" class="text-lg inline">Content</div>
+                        {page.content}
+                    </sl-textarea>
+                    <br />
+
+                    <sl-button variant="success" type="submit" outline>Update Page!<sl-icon slot="suffix" name="pencil-square"></sl-icon></sl-button>
         
                 </form>
-
-            </center>
-
-            <div class="text-xl font-bold">Live Preview</div>
-            <div id="html-preview" class="border-solid border-2 border-gray-300 rounded-lg p-2 max-w-[100vw] lg:max-w-[1800px] prose"></div><br><br>
         </div>
 
+        <div class="text-xl font-bold">Live Preview</div>
+        <div id="html-preview" class="border-solid border-2 border-gray-300 rounded-lg p-2 max-w-[100vw] lg:max-w-[1800px] prose">
+            <p>
+                Click in the box above to start editing the content. As you type, the preview will update automatically.
+            </p>
+        </div>
     </div>
 </Layout>
-
-<script>
-    import Config from 'virtual:studiocms/config';
-    import { renderMarked } from '../../../../../../../utils/marked';
-    import { renderMarkDoc } from '../../../../../../../utils/markdoc';
-    
-            document.getElementById('content')?.addEventListener('input', async function () {
-                const markdownContent = document.getElementById('content');
-                const htmlPreview = document.getElementById('html-preview');
-
-                if (Config.contentRenderer === 'marked' ) {
-                    //@ts-ignore
-                    const htmlContent = await renderMarked(markdownContent.value);
-                    //@ts-ignore
-                    htmlPreview.innerHTML = htmlContent;
-                } else if (Config.contentRenderer === 'markdoc') {
-                    //@ts-ignore
-                    const htmlContent = await renderMarkDoc(markdownContent.value);
-                    //@ts-ignore
-                    htmlPreview.innerHTML = htmlContent;
-                }
-            });
-</script>

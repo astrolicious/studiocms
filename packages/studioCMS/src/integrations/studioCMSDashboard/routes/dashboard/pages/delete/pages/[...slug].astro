@@ -123,6 +123,8 @@ const pageTitle = `Delete Page | ${contextConfig.title}`;
                     class="border-solid border-2 border-gray-300 rounded-lg p-2 w-96"
                     placeholder="Your Post Slug (THIS WILL DELETE THE POST)"
                     required><br><br>
+
+                <input type="hidden" name="to-delete" id="to-delete" value={page.slug} />
     
                 <button class="btn btn-outline ml-5 py-2" type="submit">DELETE!</button>
     

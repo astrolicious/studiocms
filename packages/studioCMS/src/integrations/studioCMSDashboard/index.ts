@@ -9,6 +9,10 @@ import UnoCSSAstroIntegration from "@unocss/astro";
 import { presetDaisy } from "@yangyang20240403/unocss-preset-daisyui";
 import { FileSystemIconLoader } from '@iconify/utils/lib/loader/node-loaders'
 import { presetScrollbar } from 'unocss-preset-scrollbar'
+import { type Input } from "@noble/hashes/utils";
+import type { ScryptOpts } from "@noble/hashes/scrypt";
+import * as fs from "fs";
+import { randomUUID } from "node:crypto";
 
 // Environment Variables
 const env = loadEnv('all', process.cwd(), 'CMS');
@@ -100,17 +104,23 @@ const AUTHKEYS = {
 	},
 };
 
+type usernameAndPasswordConfig = {
+	salt: Input;
+	opts: ScryptOpts;
+}
+
 export default defineIntegration({
     name: 'astrolicious/studioCMS:adminDashboard',
     optionsSchema,
     setup({ name, options }) {
         return {
             hooks: {
-                "astro:config:setup": ( params ) => {
+                "astro:config:setup": async ( params ) => {
 
                     // Destructure the params and options
                     const { 
 						logger, 
+						config,
 						addMiddleware,
 						injectRoute,
 					} = params;
@@ -157,13 +167,72 @@ export default defineIntegration({
 
 					// Create Resolvers
 					const { resolve } = createResolver(import.meta.url);
+					const { resolve: rootResolve } = createResolver(config.root.pathname);
 
 					// Virtual Resolver
 					const virtualResolver = { 
 						Auth: resolve('./lib/auth.ts'), 
 						AuthENVChecker: resolve("./utils/authEnvCheck.ts"),
 						DashboardLayout: resolve('./routes/dashboard/layouts/Layout.astro'),
+						StudioAuthConfig: rootResolve('./studiocms-auth.config.json'),
 					};
+
+					// Username and Password Config
+					/**
+					 * Check if the salt is defined in the studiocms-auth.config.json file
+					 * 
+					 * File is stored in the root of the user's project as studiocms-auth.config.json
+ 					 * 
+					 * @see https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html#scrypt
+					 * @see https://words.filippo.io/the-scrypt-parameters/
+					 * 
+					 * @example
+					 * {
+					 * 	"salt": "salt", //Uint8Array | string
+					 * 	"opts": {
+					 * 		"N": 2 ** 12, //NUMBER
+					 * 		"r": 8, //NUMBER
+					 * 		"p": 1, //NUMBER
+					 * 		"dkLen": 32 //NUMBER
+					 *   },
+					 * }
+					 */
+					let VirtualAuthSecurity: usernameAndPasswordConfig
+
+					if ( usernameAndPassword ) {
+						try {
+							const authConfigFileJson = fs.readFileSync(virtualResolver.StudioAuthConfig, { encoding: 'utf-8' });
+							const authConfigFile: usernameAndPasswordConfig = JSON.parse(authConfigFileJson);
+							let { salt, opts: { N = 2 ** 12, r = 8, p = 1, dkLen = 32 } } = authConfigFile;
+
+							if ( !salt ) {
+								// Make sure the salt is defined
+								const newSalt = randomUUID();
+								salt = newSalt;
+							}
+
+							VirtualAuthSecurity = { salt, opts: { N, r, p, dkLen }};
+						} catch (error) {
+							// Log that the file does not exist
+							integrationLogger(logger, verbose, 'error', 'studiocms-auth.config.json file does not exist. Creating...');
+
+							// Create a new salt
+							const newSalt = randomUUID();
+							VirtualAuthSecurity = { salt: newSalt, opts: { N: 2 ** 12, r: 8, p: 1, dkLen: 32 }};
+
+							fs.writeFile(virtualResolver.StudioAuthConfig, JSON.stringify(VirtualAuthSecurity), (err) => {
+								if (err) {
+									// Log that the file could not be created
+									integrationLogger(logger, verbose, 'error', 'studiocms-auth.config.json file could not be created');
+								}
+							});
+						}
+
+						// Create Virtual Config
+						const VirtualAuthConfig = `export default ${JSON.stringify(VirtualAuthSecurity)}`;
+						addVirtualImports(params, { name, imports: { 'virtual:studiocms-dashboard/auth-sec': VirtualAuthConfig } });
+
+					}
 
 					// Virtual Components
 					const virtualComponentMap = `
@@ -211,11 +280,11 @@ export default defineIntegration({
 							injectEntry: injectEntry,
 							presets: [
 								presetUno(),
+								presetWind(), 
 								presetDaisy({
 									themes: themes,
 									darkTheme: darkTheme,
 								}),
-								presetWind(), 
 								presetTypography(),
 								presetIcons({
 									collections: {
@@ -226,8 +295,7 @@ export default defineIntegration({
 										auth0: FileSystemIconLoader(resolve('./icons/auth0')),
 									}
 								}),
-								presetScrollbar({
-								}),
+								presetScrollbar( ),
 								presetWebFonts({
 									provider: 'google',
 									fonts: {
@@ -277,6 +345,12 @@ export default defineIntegration({
 						// Log that the Dashboard is enabled
 						integrationLogger(logger, verbose, 'info', 'Dashboard is Enabled');
 
+						// Add Dashboard API Routes
+						injectRoute({
+							pattern: makeRoute('api/liverender'),
+							entrypoint: resolve('./routes/dashboard/partials/LivePreview.astro'),
+						})
+						
 						// Setup the Dashboard Routes
 						injectRoute({
 							pattern: makeRoute("/"),

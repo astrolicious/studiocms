@@ -1,0 +1,11 @@
+---
+import { StudioCMSRenderer } from "studiocms:components";
+
+export const partial = true;
+
+const query = Astro.url.searchParams.get("content");
+
+const content = query ? query : `# No content found, Either your Page content is empty or you have not updated the entry.`;
+
+---
+<StudioCMSRenderer content={content} />
