@@ -1,10 +1,11 @@
 ---
 // @ts-expect-error - Some types can only be imported from the Astro runtime
-import { SiteConfig, Blog, db, asc } from 'astro:db';
+import { SiteConfig, Pages, db, asc, PageData } from 'astro:db';
 import { Layout } from 'studiocms-dashboard:components';
 import Config from 'virtual:studiocms/config';
 import { authHelper, urlGenFactory, type Locals } from 'studiocms:helpers';
 import { FormattedDate } from 'studiocms:components';
+import Dashboard from '../../../../../../layouts/Dashboard.astro';
 
 if (Config.includedIntegrations.useInoxSitemap) {
     import('sitemap-ext:config').then((sitemap) => {
@@ -15,7 +16,7 @@ if (Config.includedIntegrations.useInoxSitemap) {
 const { dashboardConfig: { developerConfig, dashboardRouteOverride } } = Config;
 
 const ConfigArray = await db.select().from(SiteConfig);
-const posts = await db.select().from(Blog).orderBy(asc(Blog.publishedAt));
+const posts = await db.select().from(PageData).orderBy(asc(PageData.id));
 
 const contextConfig = ConfigArray.pop();
 
@@ -26,29 +27,45 @@ const { permissionLevel } = await authHelper(locals);
 if ( !developerConfig.testingAndDemoMode ) {
     if ( permissionLevel === "unknown" ) {
         console.log('User is not logged in. Redirecting to login page.');
-        return Astro.redirect(await urlGenFactory(true, "login", dashboardRouteOverride))
+        return Astro.redirect(await urlGenFactory(true, "login", dashboardRouteOverride));
     }
     if ( permissionLevel !== 'admin' && permissionLevel !== 'editor' ) {
         console.log('User is not an admin or editor. Redirecting to profile page.');
-        return Astro.redirect(await urlGenFactory(true, "profile", dashboardRouteOverride))
+        return Astro.redirect(await urlGenFactory(true, "profile", dashboardRouteOverride));
     }
 }
 
-const pageTitle = `Existing Posts | ${contextConfig.title}`;
+const breadcrumbs = {
+    Dashboard: await urlGenFactory(true, '', dashboardRouteOverride),
+    ExistingPages: await urlGenFactory(true, 'page-list', dashboardRouteOverride)
+}
+
+const pageTitle = `Existing Pages | ${contextConfig.title}`;
 ---
 
 <Layout 
-    sideBarActiveItemID="edit-posts" 
+    sideBarActiveItemID="edit-pages" 
     title={pageTitle}
     description={contextConfig.description} >
-    <div class="pb-4 mt-5">
 
-        <div class="text-5xl font-bold">Existing Posts</div>
+    <div class="flex grow w-full pb-4">
+        <sl-breadcrumb>
+            <span slot="separator">/</span>
+            <sl-breadcrumb-item href={breadcrumbs.Dashboard}>Dashboard
+                <div slot="prefix" class='i-mdi:view-dashboard-outline inline'></div>
+            </sl-breadcrumb-item>
+            <sl-breadcrumb-item href={breadcrumbs.ExistingPages}>Existing Pages</sl-breadcrumb-item>
+        </sl-breadcrumb>
+    </div>
+
+    <div class="container max-w-[100vw] lg:max-w-[1800px] min-w-[75vw]">
+
+        <div class="text-5xl font-bold">Existing Pages</div>
 
         <div class="py-2">
-            <div class="relative max-w-[100vw] lg:max-w-[1800px] ">
-                <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <div class="relative">
+                <table class="w-full text-left rtl:text-right">
+                    <thead class="uppercase bg-base-300 text-inherit">
                         <tr>
                             <th scope="col" class="px-6 py-3">Post Title</th>
                             <th scope="col" class="px-6 py-3">Publish Date</th>
@@ -58,20 +75,20 @@ const pageTitle = `Existing Posts | ${contextConfig.title}`;
                     </thead>
                     <tbody>
                         { 
-                            posts.map(async (post: typeof Blog.$inferSelect) => {
+                            posts.map(async (post: typeof Pages.$inferSelect) => {
                                 return (
-                                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                    <tr class="bg-base-200 text-inherit">
+                                        <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap">
                                             {post.title}
                                         </th>
                                         <td class="px-6 py-4">
                                             <FormattedDate date={post.publishedAt}/>
                                         </td>
-                                        <td class="px-6 py-4 bg-gray-100 dark:bg-gray-900">
-                                            <a href={await urlGenFactory(true, `edit/posts/${post.slug}`, dashboardRouteOverride)} class="text-green font-bold">Edit</a>
+                                        <td class="px-6 py-4">
+                                            <a href={await urlGenFactory(true, `edit/pages/${post.slug}`, dashboardRouteOverride)} class="text-green font-bold">Edit</a>
                                         </td>
-                                        <td class="px-6 py-4 bg-gray-100 dark:bg-gray-900">
-                                            { permissionLevel === 'admin' && <a href={await urlGenFactory(true, `delete/posts/${post.slug}`, dashboardRouteOverride)} class="text-red font-bold">Delete</a> }
+                                        <td class="px-6 py-4">
+                                            { permissionLevel === 'admin' && <a href={await urlGenFactory(true, `delete/pages/${post.slug}`, dashboardRouteOverride)} class="text-red font-bold">Delete</a> }
                                         </td>
                                     </tr>
                                 )

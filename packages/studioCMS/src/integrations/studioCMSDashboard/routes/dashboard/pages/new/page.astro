@@ -75,6 +75,10 @@ if (Astro.request.method === 'POST' && !developerConfig.testingAndDemoMode) {
     }
   }
 }
+const breadcrumbs = {
+    Dashboard: await urlGenFactory(true, '', dashboardRouteOverride),
+    CreateNewPage: await urlGenFactory(true, 'new/page', dashboardRouteOverride)
+}
 
 const pageTitle = `New Page | ${contextConfig.title}`;
 ---
@@ -83,6 +87,17 @@ const pageTitle = `New Page | ${contextConfig.title}`;
     sideBarActiveItemID="new-page" 
     title={pageTitle}
     description={contextConfig.description} >
+
+    <div class="flex grow w-full pb-4">
+        <sl-breadcrumb>
+            <span slot="separator">/</span>
+            <sl-breadcrumb-item href={breadcrumbs.Dashboard}>Dashboard
+                <div slot="prefix" class='i-mdi:view-dashboard-outline inline'></div>
+            </sl-breadcrumb-item>
+            <sl-breadcrumb-item href={breadcrumbs.CreateNewPage}>Create New Page</sl-breadcrumb-item>
+        </sl-breadcrumb>
+    </div>
+
     <div class="alert-toast">
         { showSuccessToast && (
         <sl-alert variant="success" duration="3000" open closable>
@@ -106,7 +121,7 @@ const pageTitle = `New Page | ${contextConfig.title}`;
         </sl-alert>
         )}
     </div>
-    <div class="pb-12 mt-5">
+    <div class="container max-w-[100vw] lg:max-w-[1800px] min-w-[75vw]">
 
         <div class="text-5xl font-bold">Create New Page</div>
 

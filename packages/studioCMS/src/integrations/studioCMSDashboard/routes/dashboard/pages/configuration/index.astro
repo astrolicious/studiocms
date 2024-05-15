@@ -61,6 +61,11 @@ if (Astro.request.method === 'POST' && !developerConfig.testingAndDemoMode) {
         }
     }
 }
+const breadcrumbs = {
+    Dashboard: await urlGenFactory(true, '', dashboardRouteOverride),
+    SiteConfiguration: await urlGenFactory(true, 'configuration', dashboardRouteOverride),
+}
+
 
 const pageTitle = `Site Config | ${contextConfig.title}`;
 ---
@@ -69,6 +74,15 @@ const pageTitle = `Site Config | ${contextConfig.title}`;
     sideBarActiveItemID="site-config" 
     title={pageTitle}
     description={contextConfig.description} >
+    <div class="flex grow w-full pb-4">
+        <sl-breadcrumb>
+            <span slot="separator">/</span>
+            <sl-breadcrumb-item href={breadcrumbs.Dashboard}>Dashboard
+                <div slot="prefix" class='i-mdi:view-dashboard-outline inline'></div>
+            </sl-breadcrumb-item>
+            <sl-breadcrumb-item href={breadcrumbs.SiteConfiguration}>Site Configuration</sl-breadcrumb-item>
+        </sl-breadcrumb>
+    </div>
     <div class="alert-toast">
         { showSuccessToast && (
         <sl-alert variant="success" duration="3000" open closable>
@@ -85,11 +99,11 @@ const pageTitle = `Site Config | ${contextConfig.title}`;
         </sl-alert>
         )}
     </div>
-    <div class="mt-5">
+    <div class="container max-w-[100vw] lg:max-w-[1800px] min-w-[75vw] flex flex-col">
 
-        <div class="text-5xl font-bold">Site Configuration</div>
+        <div class="text-5xl font-bold grow place-self-center">Site Configuration</div>
 
-        <div class="py-4">
+        <div class="py-4 grow place-self-center">
             <a 
                 href={manageAdmins} 
                 class="btn btn-outline ml-5" 
@@ -98,7 +112,7 @@ const pageTitle = `Site Config | ${contextConfig.title}`;
             </a>
         </div>
 
-        <div class="py-2">
+        <div class="py-2 grow place-self-center">
             <form method="post" enctype="multipart/form-data" >
                 <label for="title" class="text-lg">Site Title</label><br />
                 <input 

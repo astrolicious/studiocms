@@ -3,7 +3,8 @@
 import { PageData, PageContent, SiteConfig, db, eq } from 'astro:db';
 import { Layout } from 'studiocms-dashboard:components';
 import Config from 'virtual:studiocms/config';
-import { authHelper, urlGenFactory, type Locals } from 'studiocms:helpers';
+import { authHelper, urlGenFactory, type Locals, type PageDataAndContent } from 'studiocms:helpers';
+import { StudioCMSRenderer } from 'studiocms:components';
 
 if (Config.includedIntegrations.useInoxSitemap) {
     import('sitemap-ext:config').then((sitemap) => {
@@ -15,15 +16,23 @@ const { dashboardConfig: { developerConfig, dashboardRouteOverride } } = Config;
 
 const { slug } = Astro.params;
 
-const ConfigArray = await db.select().from(SiteConfig);
-const currentPageContent = await db.select().from(PageContent).innerJoin(PageData, eq(PageContent.contentId, PageData.id)).get();
-const { PageContent: PC, PageData: PD } = currentPageContent;
+const contextConfig = await db.select().from(SiteConfig).where(eq(SiteConfig.id, 1)).get();
+const currentPageContent: PageDataAndContent = await db
+                                .select()
+                                .from(PageContent)
+                                .innerJoin(
+                                    PageData, 
+                                    eq(
+                                        PageContent.contentId, 
+                                        PageData.id
+                                    ))
+                                .get();
 
-if (!slug || !PD.id) {
+const { PageContent: pageContent, PageData: pageData } = currentPageContent;
+
+if (!slug || !pageData.id) {
 	return Astro.redirect(await urlGenFactory(true, undefined, dashboardRouteOverride));
 }
-
-const contextConfig = ConfigArray.pop();
 
 const locals = Astro.locals as Locals;
 const { permissionLevel } = await authHelper(locals);
@@ -51,6 +60,7 @@ if (Astro.request.method === 'POST' && !developerConfig.testingAndDemoMode) {
     const description = data.get("description");
     const heroImage = data.get("hero-image");
     const content = data.get("content");
+    // const contentLang = data.get("content-lang");
 
     await db.update(PageData).set({ 
         title: title as string,
@@ -74,6 +84,11 @@ if (Astro.request.method === 'POST' && !developerConfig.testingAndDemoMode) {
 }
 
 const LivePreviewPage = await urlGenFactory(true, "api/liverender", dashboardRouteOverride);
+const breadcrumbs = {
+    Dashboard: await urlGenFactory(true, '', dashboardRouteOverride),
+    ExistingPages: await urlGenFactory(true, 'page-list', dashboardRouteOverride),
+    CurrentPageLink: await urlGenFactory(true, `edit/pages/${slug}`, dashboardRouteOverride)
+}
 
 const pageTitle = `Edit Page | ${contextConfig.title}`;
 ---
@@ -99,17 +114,28 @@ const pageTitle = `Edit Page | ${contextConfig.title}`;
         )}
     </div>
 
+    <div class="flex grow w-full pb-4">
+        <sl-breadcrumb>
+            <span slot="separator">/</span>
+            <sl-breadcrumb-item href={breadcrumbs.Dashboard}>Dashboard
+                <div slot="prefix" class='i-mdi:view-dashboard-outline inline'></div>
+            </sl-breadcrumb-item>
+            <sl-breadcrumb-item href={breadcrumbs.ExistingPages}>Existing Pages</sl-breadcrumb-item>
+            <sl-breadcrumb-item href={breadcrumbs.CurrentPageLink}>Edit Page: {pageData.title}</sl-breadcrumb-item>
+        </sl-breadcrumb>
+    </div>
+
     <div class="container max-w-[100vw] lg:max-w-[1800px] min-w-[75vw]">
 
-        <div class="text-5xl font-bold">Edit Page: {PD.title}</div>
+        <div class="text-5xl font-bold">Edit Page: {pageData.title}</div>
 
         <div class="py-2 flex justify-center">
 
-                <form method="POST" class="w-full">
+                <form method="POST" class="w-full flex flex-col gap-2">
                     <sl-input
                         id="title"
                         name="title"
-                        value={PD.title}
+                        value={pageData.title}
                         placeholder="Your post title"
                         size="medium"
                         required>
@@ -117,28 +143,42 @@ const pageTitle = `Edit Page | ${contextConfig.title}`;
                         <sl-icon name="card-heading" slot="prefix"></sl-icon>
                     </sl-input>
 
-                    <sl-select id="package" name="package" value="@astrolicious/studiocms">
+                    <sl-select id="package" name="package" value="@astrolicious/studiocms" help-text="This feature has not yet implemented">
                         <div slot="label" class="text-lg inline">Package</div>
                         <sl-option value="@astrolicious/studiocms">@astrolicious/studiocms</sl-option>
                         <sl-option value="not-yet-implemented" disabled>Not Yet Implemented</sl-option>
-                      </sl-select>
+                    </sl-select>
 
-                    <sl-input
-                        id="slug"
-                        name="slug"
-                        value={PD.slug}
-                        disabled="true"
-                        placeholder="your-post-slug"
-                        size="medium"
-                        required>
-                        <div slot="label" class="text-lg inline">Slug</div>
-                        <sl-icon name="link" slot="prefix"></sl-icon>
-                    </sl-input>
+                    <sl-select id="content-lang" name="content-lang" value="default" help-text="This feature has not yet implemented">
+                        <div slot="label" class="text-lg inline">Content Language</div>
+                        <sl-option value="default">Default</sl-option>
+                        <sl-option value="not-yet-implemented" disabled>Not Yet Implemented</sl-option>
+                    </sl-select>
+
+                    <sl-tooltip 
+                        placement='top'
+                        style="--sl-tooltip-arrow-size: 0; --max-width: 100%;"
+                        distance=1
+                        hoist>
+                        <div slot="content">Page <i>slug</i>'s currently can not be edited after creation.</div>
+                        <sl-input
+                            id="slug"
+                            name="slug"
+                            value={pageData.slug}
+                            disabled="true"
+                            readonly="true"
+                            placeholder="your-post-slug"
+                            size="medium"
+                            required>
+                            <div slot="label" class="text-lg inline">Slug</div>
+                            <sl-icon name="link" slot="prefix"></sl-icon>
+                        </sl-input>
+                    </sl-tooltip>
                     
                     <sl-input
                         id="description"
                         name="description"
-                        value={PD.description}
+                        value={pageData.description}
                         placeholder="Your post's basic description"
                         size="medium"
                         required>
@@ -149,7 +189,7 @@ const pageTitle = `Edit Page | ${contextConfig.title}`;
                     <sl-input 
                         id="hero-image" 
                         name="hero-image" 
-                        value={PD.heroImage}
+                        value={pageData.heroImage}
                         placeholder="Your Page's Hero Image URL (Also the OGImage)" 
                         size="medium"
                         required>
@@ -162,7 +202,7 @@ const pageTitle = `Edit Page | ${contextConfig.title}`;
                         resize="auto"
                         id="content"
                         name="content"
-                        value={PC.content}
+                        value={pageContent.content}
                         size="large"
                         rows="10"
                         hx-get={LivePreviewPage}
@@ -171,20 +211,44 @@ const pageTitle = `Edit Page | ${contextConfig.title}`;
                         placeholder="Your post's content in markdown format."
                         required>
                         <div slot="label" class="text-lg inline">Content</div>
-                        {PC.content}
+                        {pageContent.content}
                     </sl-textarea>
                     <br />
 
-                    <sl-button variant="success" type="submit" outline>Update Page!<sl-icon slot="suffix" name="pencil-square"></sl-icon></sl-button>
+                    <sl-button 
+                        variant="success" 
+                        type="submit" 
+                        class="grow-0 w-48 place-self-center"
+                        outline>Update Page!
+                        <sl-icon slot="suffix" name="pencil-square"></sl-icon>
+                    </sl-button>
         
                 </form>
         </div>
-
-        <div class="text-xl font-bold">Live Preview</div>
-        <div id="html-preview" class="border-solid border-2 border-gray-300 rounded-lg p-2 max-w-[100vw] lg:max-w-[1800px] prose">
-            <p>
-                Click in the box above to start editing the content. As you type, the preview will update automatically.
-            </p>
-        </div>
+        <br />
+        <sl-card class="card-header max-w-[100vw] lg:max-w-[1800px] w-full">
+            <div slot="header" class="text-xl font-bold">Live Preview</div>
+            <div id="html-preview" class="w-full max-w-[100vw] lg:max-w-[1800px] prose md:prose-lg lg:prose-xl">
+                <StudioCMSRenderer content={
+                    pageContent.content || 
+                    `Click in the box above to start editing the content. As you type, the preview will update automatically.`
+                    } />
+            </div>
+          </sl-card>
     </div>
 </Layout>
+
+
+<style>
+  
+    .card-header [slot='header'] {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+  
+    .card-header h3 {
+      margin: 0;
+    }
+  
+  </style>

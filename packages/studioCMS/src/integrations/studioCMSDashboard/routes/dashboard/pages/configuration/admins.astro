@@ -60,6 +60,11 @@ if (Astro.request.method === 'POST' && !developerConfig.testingAndDemoMode) {
         }
     }
 }
+const breadcrumbs = {
+    Dashboard: await urlGenFactory(true, '', dashboardRouteOverride),
+    SiteConfiguration: await urlGenFactory(true, 'configuration', dashboardRouteOverride),
+    SiteAdminConfiguration: await urlGenFactory(true, 'configuration/admins', dashboardRouteOverride),
+}
 
 const pageTitle = `Site Config | ${contextConfig.title}`;
 ---
@@ -68,6 +73,16 @@ const pageTitle = `Site Config | ${contextConfig.title}`;
     sideBarActiveItemID="site-config" 
     title={pageTitle}
     description={contextConfig.description} >
+    <div class="flex grow w-full pb-4">
+        <sl-breadcrumb>
+            <span slot="separator">/</span>
+            <sl-breadcrumb-item href={breadcrumbs.Dashboard}>Dashboard
+                <div slot="prefix" class='i-mdi:view-dashboard-outline inline'></div>
+            </sl-breadcrumb-item>
+            <sl-breadcrumb-item href={breadcrumbs.SiteConfiguration}>Site Configuration</sl-breadcrumb-item>
+            <sl-breadcrumb-item href={breadcrumbs.SiteAdminConfiguration}>Site Admins</sl-breadcrumb-item>
+        </sl-breadcrumb>
+    </div>
     <div class="alert-toast">
         { showSuccessToast && (
         <sl-alert variant="success" duration="3000" open closable>
@@ -84,16 +99,16 @@ const pageTitle = `Site Config | ${contextConfig.title}`;
         </sl-alert>
         )}
     </div>
-    <div class="pb-4 mt-5">
+    <div class="container max-w-[100vw] lg:max-w-[1800px] min-w-[75vw] flex flex-col">
 
         <div class="text-5xl font-bold">Site Admins</div>
 
         <div class="py-2">
             <div class="text-xl">Current Admins:</div>
 
-            <div class="relative overflow-x-auto">
-                <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <div class="relative">
+                <table class="w-full text-left rtl:text-right">
+                    <thead class="uppercase bg-base-300 text-inherit">
                         <tr>
                             <th scope="col" class="px-6 py-3">Username</th>
                             <th scope="col" class="px-6 py-3">Rank</th>
@@ -103,8 +118,8 @@ const pageTitle = `Site Config | ${contextConfig.title}`;
                         {
                             adminList.map((admin: typeof Permissions.$inferSelect) => {
                                 return (
-                                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{admin.username}</th>
+                                    <tr class="bg-base-200 text-inherit">
+                                        <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap">{admin.username}</th>
                                         <td class="px-6 py-4">{admin.rank}</td>
                                     </tr>
                                 )
@@ -121,7 +136,7 @@ const pageTitle = `Site Config | ${contextConfig.title}`;
             </text>
         </div>
 
-        <div class="py-2">
+        <div class="py-2 grow place-self-center">
             <form method="post" enctype="multipart/form-data" >
                     
                 <label for="admins" class="text-lg">Add New Admin or Editor</label><br>

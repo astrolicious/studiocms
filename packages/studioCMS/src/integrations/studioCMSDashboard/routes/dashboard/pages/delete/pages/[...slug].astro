@@ -71,6 +71,11 @@ if (Astro.request.method === 'POST' && !developerConfig.testingAndDemoMode) {
         }
     }
 }
+const breadcrumbs = {
+    Dashboard: await urlGenFactory(true, '', dashboardRouteOverride),
+    ExistingPages: await urlGenFactory(true, 'page-list', dashboardRouteOverride),
+    CurrentPageLink: await urlGenFactory(true, `delete/pages/${slug}`, dashboardRouteOverride)
+}
 
 const pageTitle = `Delete Page | ${contextConfig.title}`;
 ---
@@ -78,6 +83,16 @@ const pageTitle = `Delete Page | ${contextConfig.title}`;
     sideBarActiveItemID="edit-pages" 
     title={pageTitle}
     description={contextConfig.description} >
+    <div class="flex grow w-full pb-4">
+        <sl-breadcrumb>
+            <span slot="separator">/</span>
+            <sl-breadcrumb-item href={breadcrumbs.Dashboard}>Dashboard
+                <div slot="prefix" class='i-mdi:view-dashboard-outline inline'></div>
+            </sl-breadcrumb-item>
+            <sl-breadcrumb-item href={breadcrumbs.ExistingPages}>Existing Pages</sl-breadcrumb-item>
+            <sl-breadcrumb-item href={breadcrumbs.CurrentPageLink}>Delete Page: {page.slug}</sl-breadcrumb-item>
+        </sl-breadcrumb>
+    </div>
     <div class="alert-toast">
         { showSuccessToast && (
         <sl-alert variant="success" duration="3000" open closable>

@@ -30,6 +30,9 @@ if ( !developerConfig.testingAndDemoMode ) {
         return Astro.redirect(await urlGenFactory(true, "profile", dashboardRouteOverride));
     }
 }
+const breadcrumbs = {
+    Dashboard: await urlGenFactory(true, '', dashboardRouteOverride),
+}
 
 const pageTitle = `Dashboard | ${contextConfig.title}`;
 ---
@@ -38,6 +41,16 @@ const pageTitle = `Dashboard | ${contextConfig.title}`;
     sideBarActiveItemID="dashboard" 
     title={pageTitle}
     description={contextConfig.description} >
+
+    <div class="flex grow w-full pb-4">
+        <sl-breadcrumb>
+            <span slot="separator">/</span>
+            <sl-breadcrumb-item href={breadcrumbs.Dashboard}>Dashboard
+                <div slot="prefix" class='i-mdi:view-dashboard-outline inline'></div>
+            </sl-breadcrumb-item>
+        </sl-breadcrumb>
+    </div>
+
     <div class="pb-12 mt-5">
 
         <div class="text-5xl font-bold">Dashboard</div>

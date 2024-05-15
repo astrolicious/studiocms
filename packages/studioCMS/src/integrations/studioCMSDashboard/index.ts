@@ -3,15 +3,15 @@ import { optionsSchema } from "../../schemas";
 import { CheckENV, integrationLogger } from "../../utils";
 import { loadEnv } from "vite";
 import { fileFactory } from "../../utils/fileFactory";
-import { DashboardStrings } from "../../strings";
+import { DashboardStrings, DbErrors } from "../../strings";
 import { presetTypography, presetWind, presetUno, transformerDirectives, presetIcons, presetWebFonts } from "unocss";
 import UnoCSSAstroIntegration from "@unocss/astro";
 import { presetDaisy } from "@yangyang20240403/unocss-preset-daisyui";
 import { FileSystemIconLoader } from '@iconify/utils/lib/loader/node-loaders'
 import { presetScrollbar } from 'unocss-preset-scrollbar'
-import { type Input } from "@noble/hashes/utils";
+import type { Input } from "@noble/hashes/utils";
 import type { ScryptOpts } from "@noble/hashes/scrypt";
-import * as fs from "fs";
+import * as fs from "node:fs";
 import { randomUUID } from "node:crypto";
 
 // Environment Variables
@@ -369,28 +369,12 @@ export default defineIntegration({
 							entrypoint: resolve('./routes/dashboard/pages/configuration/admins.astro')
 						})
 						injectRoute({
-							pattern: makeRoute('new/post/'),
-							entrypoint: resolve('./routes/dashboard/pages/new/post.astro')
-						})
-						injectRoute({
 							pattern: makeRoute('new/page/'),
 							entrypoint: resolve('./routes/dashboard/pages/new/page.astro')
 						})
 						injectRoute({
-							pattern: makeRoute('post-list/'),
-							entrypoint: resolve('./routes/dashboard/pages/post-list.astro')
-						})
-						injectRoute({
 							pattern: makeRoute('page-list/'),
-							entrypoint: resolve('./routes/dashboard/pages/page-list.astro')
-						})
-						injectRoute({
-							pattern: makeRoute('edit/posts/[...slug]'),
-							entrypoint: resolve('./routes/dashboard/pages/edit/posts/[...slug].astro')
-						})
-						injectRoute({
-							pattern: makeRoute('delete/posts/[...slug]'),
-							entrypoint: resolve('./routes/dashboard/pages/delete/posts/[...slug].astro')
+							entrypoint: resolve('./routes/dashboard/pages/edit/page-list.astro')
 						})
 						injectRoute({
 							pattern: makeRoute('edit/pages/[...slug]'),
@@ -523,7 +507,18 @@ export default defineIntegration({
 					}
 
 
-                }
+                },
+				'astro:server:start': ({ logger }) => {
+					// Display Console Message if dbStartPage(First Time DB Initialization) is enabled
+					if (options.dbStartPage) {
+						integrationLogger(
+							logger,
+							true,
+							'warn',
+							DbErrors.DbStartPage
+						);
+					}
+				},
             }
         }
 }});

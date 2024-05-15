@@ -2,47 +2,59 @@
 import { authHelper, urlGenFactory, type Locals } from "studiocms:helpers";
 import Config from "virtual:studiocms/config";
 
+// Desctructure config
 const { dashboardConfig: { developerConfig: { testingAndDemoMode } } } = Config;
 
+// Get Astro props
 type Props = {
     sideBarActiveItemID: string;
     DashboardRouteOverride?: string;
 }
 
+// Make Astro props available
 const { sideBarActiveItemID, DashboardRouteOverride } = Astro.props;
+
+// Active class for sidebar
 const activeClass = "bg-base-300"; // For primary color replace with `active` class
 
-const locals = Astro.locals as Locals;
-const { permissionLevel } = await authHelper(locals);
+// Get permission level
+const { permissionLevel } = await authHelper(Astro.locals as Locals);
 
-const URLS = {
-    backToSite: await urlGenFactory(false, undefined),
-    dashboard: await urlGenFactory(true, undefined, DashboardRouteOverride),
-    profile: await urlGenFactory(true, "profile/", DashboardRouteOverride),
-    newPage: await urlGenFactory(true, "new/page/", DashboardRouteOverride),
-    newPost: await urlGenFactory(true, "new/post/", DashboardRouteOverride),
-    editPages: await urlGenFactory(true, "page-list/", DashboardRouteOverride),
-    editPosts: await urlGenFactory(true, "post-list/", DashboardRouteOverride),
-    siteConfig: await urlGenFactory(true, "configuration/", DashboardRouteOverride),
-    logout: await urlGenFactory(true, "logout", DashboardRouteOverride)
+// Sidebar link type
+export type SideBarLink = {
+    id: string;
+    href: string;
+    text: string;
+    minPermissionLevel: string;
+    icon: string;
 }
 
-const siteLinks = [
-    { id: "home", href: URLS.backToSite, text: "View Site", minPermissionLevel: "unknown", icon: "i-mdi:globe-arrow-left" },
-    { id: "dashboard", href: URLS.dashboard, text: "Dashboard", minPermissionLevel: "unknown", icon: "i-mdi:view-dashboard-outline" },
-    { id: "profile", href: URLS.profile, text: "User Profile", minPermissionLevel: "unknown", icon: "i-mdi:account-box" },
-    { id: "new-page", href: URLS.newPage, text: "Create New Page", minPermissionLevel: "editor", icon: "i-mdi:page-next" },
-    { id: "new-post", href: URLS.newPost, text: "Create New Post", minPermissionLevel: "editor", icon: "i-mdi:post-it-note-add" },
-    { id: "edit-pages", href: URLS.editPages, text: "Edit Pages", minPermissionLevel: "editor", icon: "i-mdi:file-document-edit" },
-    { id: "edit-posts", href: URLS.editPosts, text: "Edit Posts", minPermissionLevel: "editor", icon: "i-mdi:post-it-note-edit" },
-    { id: "site-config", href: URLS.siteConfig, text: "Site Configuration", minPermissionLevel: "editor", icon: "i-mdi:hammer-wrench" }
-];
+// Side bar links map
+const sideBarLinkMap: SideBarLink[] = [];
+
+// Add default dashboard page links
+const defaultDashboardPageLinks: SideBarLink[] = [
+    { id: "home", href: await urlGenFactory(false, undefined), text: "View Site", minPermissionLevel: "unknown", icon: "i-mdi:globe-arrow-left" },
+    { id: "dashboard", href: await urlGenFactory(true, undefined, DashboardRouteOverride), text: "Dashboard", minPermissionLevel: "unknown", icon: "i-mdi:view-dashboard-outline" },
+    { id: "profile", href: await urlGenFactory(true, "profile/", DashboardRouteOverride), text: "User Profile", minPermissionLevel: "unknown", icon: "i-mdi:account-box" },
+    { id: "new-page", href: await urlGenFactory(true, "new/page/", DashboardRouteOverride), text: "Create New Page", minPermissionLevel: "editor", icon: "i-mdi:page-next" },
+    { id: "edit-pages", href: await urlGenFactory(true, "page-list/", DashboardRouteOverride), text: "Edit Pages", minPermissionLevel: "editor", icon: "i-mdi:file-document-edit" },
+    { id: "site-config", href: await urlGenFactory(true, "configuration/", DashboardRouteOverride), text: "Site Configuration", minPermissionLevel: "editor", icon: "i-mdi:hammer-wrench" }
+]
+
+// Add default dashboard page links to sidebar link map
+sideBarLinkMap.push(...defaultDashboardPageLinks);
+
+// TODO: Add custom dashboard page links here
+
+// Logout link
+const logoutLink = await urlGenFactory(true, "logout", DashboardRouteOverride);
 
 ---
 
 <ul class="menu grow shrink menu-md ">
 
-    { siteLinks.map(({ id, href, text, minPermissionLevel, icon }) => {
+    { sideBarLinkMap.map(({ id, href, text, minPermissionLevel, icon }) => {
         if ( minPermissionLevel === "unknown" && ( 
             permissionLevel === "unknown" || 
             permissionLevel === "admin" || 
@@ -85,7 +97,7 @@ const siteLinks = [
     }) }
 
     { ( testingAndDemoMode || permissionLevel !== "unknown" ) ? (
-        <form method="post" action={URLS.logout}>
+        <form method="post" action={logoutLink}>
             <button class="btn"><div class="i-mdi:logout"></div>Sign out</button>
         </form>
     ) : "" }
