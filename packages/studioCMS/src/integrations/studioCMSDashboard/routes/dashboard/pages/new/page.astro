@@ -149,7 +149,7 @@ const pageTitle = `New Page | ${contextConfig.title}`;
                     <sl-input
                         id="title"
                         name="title"
-                        placeholder="Your post title"
+                        placeholder="Your page title"
                         size="medium"
                         required>
                         <div slot="label" class="text-lg inline">Page Title</div>
@@ -171,7 +171,7 @@ const pageTitle = `New Page | ${contextConfig.title}`;
                     <sl-input
                         id="slug"
                         name="slug"
-                        placeholder="your-post-slug"
+                        placeholder="your-page-slug"
                         size="medium"
                         required>
                         <div slot="label" class="text-lg inline">Slug</div>
@@ -181,7 +181,7 @@ const pageTitle = `New Page | ${contextConfig.title}`;
                     <sl-input
                         id="description"
                         name="description"
-                        placeholder="Your post's basic description"
+                        placeholder="Your page's basic description"
                         size="medium"
                         required>
                         <div slot="label" class="text-lg inline">Description</div>
@@ -209,7 +209,7 @@ const pageTitle = `New Page | ${contextConfig.title}`;
                         hx-get={LivePreviewPage}
                         hx-trigger="keyup changed delay:500ms"
                         hx-target="#html-preview"
-                        placeholder="Your post's content in markdown format."
+                        placeholder="Your page's content in markdown format."
                         required>
                         <div slot="label" class="text-lg inline">Content</div>
                     </sl-textarea>

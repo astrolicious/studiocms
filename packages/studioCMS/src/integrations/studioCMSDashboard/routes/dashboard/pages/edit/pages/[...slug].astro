@@ -167,7 +167,7 @@ const pageTitle = `Edit Page | ${contextConfig.title}`;
                             value={pageData.slug}
                             disabled="true"
                             readonly="true"
-                            placeholder="your-post-slug"
+                            placeholder="your-page-slug"
                             size="medium"
                             required>
                             <div slot="label" class="text-lg inline">Slug</div>
@@ -179,7 +179,7 @@ const pageTitle = `Edit Page | ${contextConfig.title}`;
                         id="description"
                         name="description"
                         value={pageData.description}
-                        placeholder="Your post's basic description"
+                        placeholder="Your pages's basic description"
                         size="medium"
                         required>
                         <div slot="label" class="text-lg inline">Description</div>
@@ -208,7 +208,7 @@ const pageTitle = `Edit Page | ${contextConfig.title}`;
                         hx-get={LivePreviewPage}
                         hx-trigger="keyup changed delay:500ms"
                         hx-target="#html-preview"
-                        placeholder="Your post's content in markdown format."
+                        placeholder="Your pages's content in markdown format."
                         required>
                         <div slot="label" class="text-lg inline">Content</div>
                         {pageContent.content}
