@@ -3,7 +3,7 @@
 import { PageData, PageContent, SiteConfig, db, eq } from 'astro:db';
 import { Layout } from 'studiocms-dashboard:components';
 import Config from 'virtual:studiocms/config';
-import { authHelper, urlGenFactory, type Locals, type PageDataAndContent } from 'studiocms:helpers';
+import { authHelper, urlGenFactory, type Locals } from 'studiocms:helpers';
 import { StudioCMSRenderer } from 'studiocms:components';
 
 if (Config.includedIntegrations.useInoxSitemap) {
@@ -114,7 +114,7 @@ const pageTitle = `Edit Page | ${contextConfig.title}`;
         )}
     </div>
 
-    <div class="flex grow w-full pb-4">
+    <div class="flex grow w-full">
         <sl-breadcrumb>
             <span slot="separator">/</span>
             <sl-breadcrumb-item href={breadcrumbs.Dashboard}>Dashboard
@@ -127,7 +127,7 @@ const pageTitle = `Edit Page | ${contextConfig.title}`;
 
     <div class="container max-w-[100vw] lg:max-w-[1800px] min-w-[75vw]">
 
-        <div class="text-5xl font-bold">Edit Page: {pageData.title}</div>
+        <div class="text-5xl font-bold py-8">Edit Page: {pageData.title}</div>
 
         <div class="py-2 flex justify-center">
 
@@ -143,13 +143,13 @@ const pageTitle = `Edit Page | ${contextConfig.title}`;
                         <sl-icon name="card-heading" slot="prefix"></sl-icon>
                     </sl-input>
 
-                    <sl-select id="package" name="package" value="@astrolicious/studiocms" help-text="This feature has not yet implemented">
+                    <sl-select id="package" name="package" value="@astrolicious/studiocms" help-text="This feature has not yet been implemented">
                         <div slot="label" class="text-lg inline">Package</div>
                         <sl-option value="@astrolicious/studiocms">@astrolicious/studiocms</sl-option>
                         <sl-option value="not-yet-implemented" disabled>Not Yet Implemented</sl-option>
                     </sl-select>
 
-                    <sl-select id="content-lang" name="content-lang" value="default" help-text="This feature has not yet implemented">
+                    <sl-select id="content-lang" name="content-lang" value="default" help-text="This feature has not yet been implemented">
                         <div slot="label" class="text-lg inline">Content Language</div>
                         <sl-option value="default">Default</sl-option>
                         <sl-option value="not-yet-implemented" disabled>Not Yet Implemented</sl-option>

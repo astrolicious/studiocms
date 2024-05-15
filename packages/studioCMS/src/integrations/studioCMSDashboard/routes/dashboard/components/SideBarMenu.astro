@@ -12,10 +12,7 @@ type Props = {
 }
 
 // Make Astro props available
-const { sideBarActiveItemID, DashboardRouteOverride } = Astro.props;
-
-// Active class for sidebar
-const activeClass = "bg-base-300"; // For primary color replace with `active` class
+const { DashboardRouteOverride } = Astro.props;
 
 // Get permission level
 const { permissionLevel } = await authHelper(Astro.locals as Locals);
@@ -122,7 +119,7 @@ const logoutLink = await urlGenFactory(true, "logout", DashboardRouteOverride);
                 permissionLevel === "editor" || 
                 permissionLevel === "visitor" ) ) {
                 return (
-                    <sl-button variant="default" size="medium" class="py-1" style="width: 100%; padding-right: 1rem; padding-left: 1rem;" id={id} href={href} outline>
+                    <sl-button variant="default" size="medium" class="py-1" style="width: 100%; padding-right: 1rem; padding-left: 1rem;" id={id} href={href} outline >
                         <sl-icon slot="prefix" name={icon}></sl-icon>
                         {text}
                     </sl-button>
@@ -133,7 +130,7 @@ const logoutLink = await urlGenFactory(true, "logout", DashboardRouteOverride);
                 permissionLevel === "editor" || 
                 permissionLevel === "visitor" ) ) {
                 return (
-                    <sl-button variant="success" size="medium" class="py-1" style="width: 100%; padding-right: 1rem; padding-left: 1rem;" id={id} href={href} outline>
+                    <sl-button variant="success" size="medium" class="py-1" style="width: 100%; padding-right: 1rem; padding-left: 1rem;" id={id} href={href} outline >
                         <sl-icon slot="prefix" name={icon}></sl-icon>
                         {text}
                     </sl-button>
@@ -147,7 +144,7 @@ const logoutLink = await urlGenFactory(true, "logout", DashboardRouteOverride);
                 permissionLevel === "admin" || 
                 testingAndDemoMode )) {
                 return (
-                    <sl-button variant="primary" size="medium" class="py-1" style="width: 100%; padding-right: 1rem; padding-left: 1rem;" id={id} href={href} outline>
+                    <sl-button variant="primary" size="medium" class="py-1" style="width: 100%; padding-right: 1rem; padding-left: 1rem;" id={id} href={href} outline >
                         <sl-icon slot="prefix" name={icon}></sl-icon>
                         {text}
                     </sl-button>
@@ -160,7 +157,7 @@ const logoutLink = await urlGenFactory(true, "logout", DashboardRouteOverride);
                 permissionLevel === "admin" || 
                 testingAndDemoMode )) {
                 return (
-                    <sl-button variant="warning" size="medium" class="py-1" style="width: 100%; padding-right: 1rem; padding-left: 1rem;" id={id} href={href} outline>
+                    <sl-button variant="warning" size="medium" class="py-1" style="width: 100%; padding-right: 1rem; padding-left: 1rem;" id={id} href={href} outline >
                         <sl-icon slot="prefix" name={icon}></sl-icon>
                         {text}
                     </sl-button>
@@ -188,7 +185,14 @@ const logoutLink = await urlGenFactory(true, "logout", DashboardRouteOverride);
                                         permissionLevel === "editor" || 
                                         permissionLevel === "visitor" ) ) {
                                         return (
-                                            <sl-button variant="default" size="medium" class="py-1" style="width: 100%; padding-right: 1rem; padding-left: 1rem;" id={id} href={href}>
+                                            <sl-button 
+                                                variant="default" 
+                                                size="medium" 
+                                                class="py-1" 
+                                                style="width: 100%; padding-right: 1rem; padding-left: 1rem;" 
+                                                id={id} 
+                                                name={id}
+                                                href={href}>
                                                 <sl-icon slot="prefix" name={icon}></sl-icon>
                                                 {text}
                                             </sl-button>
@@ -202,7 +206,14 @@ const logoutLink = await urlGenFactory(true, "logout", DashboardRouteOverride);
                                         permissionLevel === "admin" || 
                                         testingAndDemoMode )) {
                                         return (
-                                            <sl-button variant="default" size="medium" class="py-1" style="width: 100%; padding-right: 1rem; padding-left: 1rem;" id={id} href={href}>
+                                            <sl-button 
+                                                variant="default" 
+                                                size="medium" 
+                                                class="py-1" 
+                                                style="width: 100%; padding-right: 1rem; padding-left: 1rem;" 
+                                                id={id} 
+                                                name={id}
+                                                href={href}>
                                                 <sl-icon slot="prefix" name={icon}></sl-icon>
                                                 {text}
                                             </sl-button>
@@ -215,7 +226,14 @@ const logoutLink = await urlGenFactory(true, "logout", DashboardRouteOverride);
                                         permissionLevel === "admin" || 
                                         testingAndDemoMode )) {
                                         return (
-                                            <sl-button variant="default" size="medium" class="py-1" style="width: 100%; padding-right: 1rem; padding-left: 1rem;" id={id} href={href}>
+                                            <sl-button 
+                                                variant="default" 
+                                                size="medium" 
+                                                class="py-1" 
+                                                style="width: 100%; padding-right: 1rem; padding-left: 1rem;" 
+                                                id={id} 
+                                                name={id}
+                                                href={href}>
                                                 <sl-icon slot="prefix" name={icon}></sl-icon>
                                                 {text}
                                             </sl-button>
@@ -351,6 +369,8 @@ const logoutLink = await urlGenFactory(true, "logout", DashboardRouteOverride);
 
     }) }
 
+    <sl-divider style="--width: 4px;"></sl-divider>
+
     { ( testingAndDemoMode || permissionLevel !== "unknown" ) ? (
         <form method="post" action={logoutLink}>
             <sl-button variant="danger" size="medium" class="py-1" style="width: 100%; padding-right: 1rem; padding-left: 1rem;" type="submit" outline>
@@ -361,8 +381,3 @@ const logoutLink = await urlGenFactory(true, "logout", DashboardRouteOverride);
     ) : "" }
 
     </div>
-
-<script define:vars={{ sideBarActiveItemID: sideBarActiveItemID, activeClass: activeClass }}>
-const activeItemElem = document.getElementById(sideBarActiveItemID);
-activeItemElem && activeItemElem.classList.add(activeClass);
-</script>

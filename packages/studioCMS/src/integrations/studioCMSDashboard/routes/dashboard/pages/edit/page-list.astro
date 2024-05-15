@@ -57,7 +57,7 @@ const pageTitle = `Existing Pages | ${contextConfig.title}`;
 
     <div class="container max-w-[100vw] lg:max-w-[1800px] min-w-[75vw]">
 
-        <div class="text-5xl font-bold">Existing Pages</div>
+        <div class="text-5xl font-bold py-8">Existing Pages</div>
 
         <div class="py-2">
             <div class="relative">
@@ -82,10 +82,16 @@ const pageTitle = `Existing Pages | ${contextConfig.title}`;
                                             <FormattedDate date={page.publishedAt}/>
                                         </td>
                                         <td class="px-6 py-4">
-                                            <a href={await urlGenFactory(true, `edit/pages/${page.slug}`, dashboardRouteOverride)} class="text-green font-bold">Edit</a>
+                                            <sl-button variant="success" href={await urlGenFactory(true, `edit/pages/${page.slug}`, dashboardRouteOverride)} size="small" type="primary" pill outline>
+                                                Edit
+                                            </sl-button>
                                         </td>
                                         <td class="px-6 py-4">
-                                            { permissionLevel === 'admin' && <a href={await urlGenFactory(true, `delete/pages/${page.slug}`, dashboardRouteOverride)} class="text-red font-bold">Delete</a> }
+                                            { permissionLevel === 'admin' ? <sl-button variant="danger" href={await urlGenFactory(true, `delete/pages/${page.slug}`, dashboardRouteOverride)} size="small" type="primary" pill outline>
+                                                Delete
+                                            </sl-button> : <sl-button variant="danger" href={await urlGenFactory(true, `delete/pages/${page.slug}`, dashboardRouteOverride)} size="small" type="primary" pill outline disabled>
+                                                Delete
+                                            </sl-button> }
                                         </td>
                                     </tr>
                                 )

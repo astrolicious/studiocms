@@ -53,7 +53,7 @@ const pageTitle = `Dashboard | ${contextConfig.title}`;
 
     <div class="pb-12 mt-5">
 
-        <div class="text-5xl font-bold">Dashboard</div>
+        <div class="text-5xl font-bold py-8">Dashboard</div>
 
         <div class="py-2">
             <text class="text-lg">
@@ -75,7 +75,7 @@ const pageTitle = `Dashboard | ${contextConfig.title}`;
                 <sl-icon slot="prefix" name="star"></sl-icon>
                 <div>Star us on Github</div>
             </sl-button>
-            <sl-button class="discord" size="large" href="https://chat.astrolicious.dev" target="_blank">
+            <sl-button variant="primary" size="large" href="https://chat.astrolicious.dev" target="_blank" outline>
                 <sl-icon slot="prefix" name="discord"></sl-icon>
                 Join the Community
             </sl-button>
@@ -83,9 +83,3 @@ const pageTitle = `Dashboard | ${contextConfig.title}`;
 
     </div>
 </Layout>
-<style>
-sl-button.discord::part(base) {
-          background-color:	#9656ce;
-          color: var(--sl-color-gray-950);
-      },
-</style>
