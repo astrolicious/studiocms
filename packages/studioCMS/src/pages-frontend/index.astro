@@ -1,29 +1,14 @@
 ---
-// @ts-expect-error - Some types can only be imported from the Astro runtime
-import { Pages, db, eq } from 'astro:db';
 import Default from '../layouts/Default.astro';
-import { StudioCMSRenderer } from 'studiocms:components'
-import Config from 'virtual:studiocms/config';
+import { StudioCMSRenderer, contentHelper } from 'studiocms:components'
 
-if (Config.includedIntegrations.useInoxSitemap) {
-    import('sitemap-ext:config').then((sitemap) => {
-        sitemap.default(true)
-    })
-}
-
-const pageArrayed = await db.select().from(Pages).where(eq(Pages.slug, 'index'));
-
-const page = pageArrayed.pop();
-
-type Props = {
-	page: typeof Pages.$inferSelect;
-};
+const { title, description, heroImage, content } = await contentHelper("index")
 
 ---
 
-<Default title={page.title} description={page.description} heroImage={page.heroImage}>
+<Default title={title} description={description} heroImage={heroImage}>
 	<main>
-		<StudioCMSRenderer content={page.content} />
+		<StudioCMSRenderer content={content||"No Content"} />
 	</main>
 </Default>
 <style>

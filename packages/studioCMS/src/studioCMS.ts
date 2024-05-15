@@ -132,13 +132,16 @@ export default defineIntegration({
 						StudioCMSDBTypeHelpers: resolve('./schemas/dbtypehelpers.ts'),
 						UrlGenHelper: resolve('./utils/urlGen.ts'),
 						textFormatterHelper: resolve('./utils/textFormatter.ts'),
+						contentHelper: resolve('./utils/contentHelper.ts'),
 					};
 
 					// Virtual Components
 					const virtualComponentMap = `
 					export { default as CImage } from '${virtResolver.CImage}';
 					export { default as FormattedDate } from '${virtResolver.FormattedDate}';
-					export { default as StudioCMSRenderer } from '${virtResolver.StudioCMSRenderer}';`;
+					export { default as StudioCMSRenderer } from '${virtResolver.StudioCMSRenderer}';
+					export * from '${virtResolver.contentHelper}';
+					`;
 
 					// Virtual Helpers
 					const virtualHelperMap = `
@@ -167,6 +170,8 @@ export default defineIntegration({
 						export const CImage: typeof import('${virtResolver.CImage}').default;
 						export const FormattedDate: typeof import('${virtResolver.FormattedDate}').default;
 						export const StudioCMSRenderer: typeof import('${virtResolver.StudioCMSRenderer}').default;
+						export type ContentHelperTempResponse = import('${virtResolver.contentHelper}').ContentHelperTempResponse;
+						export const contentHelper: typeof import('${virtResolver.contentHelper}').contentHelper;
 					}`);
 
 					// Add Virtual DTS Lines - Helpers

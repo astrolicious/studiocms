@@ -17,6 +17,8 @@ declare module 'studiocms:components' {
 	export const CImage: typeof import('./src/components/exports/CImage.astro').default;
 	export const FormattedDate: typeof import('./src/components/exports/FormattedDate.astro').default;
 	export const StudioCMSRenderer: typeof import('./src/components/exports/StudioCMSRenderer.astro').default;
+	export const contentHelper: typeof import('./src/utils/contentHelper').contentHelper;
+	export const ContentHelperTempResponse: typeof import('./src/utils/contentHelper').ContentHelperTempResponse;
 }
 
 declare module 'studiocms:helpers' {
