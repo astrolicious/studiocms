@@ -29,10 +29,8 @@ export default defineIntegration({
 
 		return {
 			hooks: {
-				'astro:db:setup': ({ extendDb }) => {
-					extendDb({
-						configEntrypoint: resolve('./db/config.ts'),
-					});
+				'astro:db:setup': ({ extendDb }) => { 
+					extendDb({ configEntrypoint: resolve('./db/config.ts') }) 
 				},
 				'astro:config:setup': async ( params ) => {
 
