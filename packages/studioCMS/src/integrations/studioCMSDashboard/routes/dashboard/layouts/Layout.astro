@@ -13,13 +13,6 @@ const {
     // developerConfig: {
     //   viewTransitionAPI
     // },
-    UnoCSSConfigOverride: {
-      presetsConfig: {
-        presetDaisyUI: {
-          lightTheme,
-        }
-      }
-    }
   } 
 } = Config;
 
@@ -42,7 +35,7 @@ const {
 ---
 
 <!doctype html>
-<html lang="en" data-theme={lightTheme} class="scrollbar scrollbar-thumb-white scrollbar-track-[#1a172e] h-32 overflow-y-scroll">
+<html lang="en" data-theme="light" class="scrollbar scrollbar-thumb-white scrollbar-track-[#1a172e] h-32 overflow-y-scroll">
   <head>
     <ThemeManager defaultTheme="auto" />
     <BaseHead title={title} description={description} />

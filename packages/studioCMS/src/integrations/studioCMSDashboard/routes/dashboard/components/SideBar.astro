@@ -52,7 +52,9 @@ const dashURL = await urlGenFactory(true, undefined, DashboardRouteOverride)
       Current User: <b>{useName}</b>
     </div>
     <SideBarMenu sideBarActiveItemID={sideBarActiveItemID} />
-    <SideBarFooter />
+    <div class="flex-none flex-end">
+      <SideBarFooter />
+    </div>
   </aside>
 </div>
 

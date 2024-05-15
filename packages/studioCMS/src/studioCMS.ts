@@ -41,24 +41,25 @@ export default defineIntegration({
 					const {
 						injectRoute,
 						logger,
-						config: { output, site, root },
+						config: astroConfig,
 						addWatchFile,
 					} = params;
 
 					// Watch the StudioCMS Config File for changes (including creation/deletion)
-					addWatchFile(getStudioConfigFileUrl(root))
+					addWatchFile(getStudioConfigFileUrl(astroConfig.root))
 
 					// Merge the given options with the ones from a potential StudioCMS config file
-					const studioCMSConfigFile = await loadStudioCMSConfigFile(root);
-					const mergedOptions: StudioCMSOptions = { ...options }
-					if (Object.keys(studioCMSConfigFile).length > 0) {
-						Object.assign(mergedOptions, studioCMSConfigFile);
-					}
+					const studioCMSConfigFile = await loadStudioCMSConfigFile(astroConfig.root);
+					let mergedOptions: StudioCMSOptions = { ...options };
+					if (studioCMSConfigFile && Object.keys(studioCMSConfigFile).length > 0) {
+						const parsedOptions = optionsSchema.safeParse(studioCMSConfigFile);
 
-					// Validate the merged options
-					const forwardenIntegrationOptions = { ...options }
-					if (Object.keys(studioCMSConfigFile).length > 0 && Object.keys(forwardenIntegrationOptions).length > 0) {
-						integrationLogger(logger, mergedOptions.verbose, 'warn', `Your project includes a StudioCMS config file ('studiocms.config.mjs'). To avoid unexpected results from merging multiple config sources, move all StudioCMS options to the StudioCMS config file.`);
+						// If the StudioCMS config file is invalid, throw an error
+						if (!parsedOptions.success) {
+							throw new AstroError("`zod` was unable to parse the StudioCMS config file.");
+						}
+
+						mergedOptions = { ...optionsSchema._def.defaultValue, ...parsedOptions.data}
 					}
 
 					// Destructure Options
@@ -78,19 +79,24 @@ export default defineIntegration({
 						}
 					} = mergedOptions;
 
+					// Log that the StudioCMS config file is being used
+					if (studioCMSConfigFile && Object.keys(studioCMSConfigFile).length > 0) {
+						integrationLogger(logger, verbose, 'warn', `Your project includes a StudioCMS config file ('studiocms.config.mjs'). To avoid unexpected results from merging multiple config sources, move all StudioCMS options to the StudioCMS config file. Or remove the file to use only the options provided in the Astro config.`);
+					}
+
 					// Check for SSR Mode (output: "server")
 					// TODO: Add support for "hybrid" mode
-					if (output !== 'server') {
+					if (astroConfig.output !== 'server') {
 						throw new AstroError(DbErrors.AstroConfigOutput);
 					}
 
 					// Check for Site URL
-					if (!site) {
+					if (!astroConfig.site) {
 						throw new AstroError(DbErrors.AstroConfigSiteURL);
 					}
 
 					// Create Resolver for User-Defined Virtual Imports
-					const { resolve: rootResolve } = createResolver(root.pathname)
+					const { resolve: rootResolve } = createResolver(astroConfig.root.pathname)
 
 					// Renderer Override Path
 					let RendererComponentPath: string;
@@ -147,7 +153,7 @@ export default defineIntegration({
 					addVirtualImports(params, {
 						name,
 						imports: {
-							'virtual:studiocms/config': `export default ${JSON.stringify(options)}`,
+							'virtual:studiocms/config': `export default ${JSON.stringify(mergedOptions)}`,
 							'studiocms:components': virtualComponentMap,
 							'studiocms:helpers': virtualHelperMap,
 						},

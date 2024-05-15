@@ -1,11 +1,10 @@
 ---
 // @ts-expect-error - Some types can only be imported from the Astro runtime
-import { SiteConfig, Pages, db, asc, PageData } from 'astro:db';
+import { SiteConfig, Pages, db, eq, asc, PageData } from 'astro:db';
 import { Layout } from 'studiocms-dashboard:components';
 import Config from 'virtual:studiocms/config';
 import { authHelper, urlGenFactory, type Locals } from 'studiocms:helpers';
 import { FormattedDate } from 'studiocms:components';
-import Dashboard from '../../../../../../layouts/Dashboard.astro';
 
 if (Config.includedIntegrations.useInoxSitemap) {
     import('sitemap-ext:config').then((sitemap) => {
@@ -15,10 +14,8 @@ if (Config.includedIntegrations.useInoxSitemap) {
 
 const { dashboardConfig: { developerConfig, dashboardRouteOverride } } = Config;
 
-const ConfigArray = await db.select().from(SiteConfig);
-const posts = await db.select().from(PageData).orderBy(asc(PageData.id));
-
-const contextConfig = ConfigArray.pop();
+const contextConfig = await db.select().from(SiteConfig).where(eq(SiteConfig.id, 1)).get();
+const pages = await db.select().from(PageData).orderBy(asc(PageData.id));
 
 const locals = Astro.locals as Locals;
 const { permissionLevel } = await authHelper(locals);
@@ -52,7 +49,7 @@ const pageTitle = `Existing Pages | ${contextConfig.title}`;
         <sl-breadcrumb>
             <span slot="separator">/</span>
             <sl-breadcrumb-item href={breadcrumbs.Dashboard}>Dashboard
-                <div slot="prefix" class='i-mdi:view-dashboard-outline inline'></div>
+                <sl-icon slot="prefix" name="columns-gap"></sl-icon>
             </sl-breadcrumb-item>
             <sl-breadcrumb-item href={breadcrumbs.ExistingPages}>Existing Pages</sl-breadcrumb-item>
         </sl-breadcrumb>
@@ -67,7 +64,7 @@ const pageTitle = `Existing Pages | ${contextConfig.title}`;
                 <table class="w-full text-left rtl:text-right">
                     <thead class="uppercase bg-base-300 text-inherit">
                         <tr>
-                            <th scope="col" class="px-6 py-3">Post Title</th>
+                            <th scope="col" class="px-6 py-3">Page Title</th>
                             <th scope="col" class="px-6 py-3">Publish Date</th>
                             <th scope="col" class="px-6 py-3">Edit</th>
                             <th scope="col" class="px-6 py-3">Delete</th>
@@ -75,20 +72,20 @@ const pageTitle = `Existing Pages | ${contextConfig.title}`;
                     </thead>
                     <tbody>
                         { 
-                            posts.map(async (post: typeof Pages.$inferSelect) => {
+                            pages.map(async (page: typeof Pages.$inferSelect) => {
                                 return (
                                     <tr class="bg-base-200 text-inherit">
                                         <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap">
-                                            {post.title}
+                                            {page.title}
                                         </th>
                                         <td class="px-6 py-4">
-                                            <FormattedDate date={post.publishedAt}/>
+                                            <FormattedDate date={page.publishedAt}/>
                                         </td>
                                         <td class="px-6 py-4">
-                                            <a href={await urlGenFactory(true, `edit/pages/${post.slug}`, dashboardRouteOverride)} class="text-green font-bold">Edit</a>
+                                            <a href={await urlGenFactory(true, `edit/pages/${page.slug}`, dashboardRouteOverride)} class="text-green font-bold">Edit</a>
                                         </td>
                                         <td class="px-6 py-4">
-                                            { permissionLevel === 'admin' && <a href={await urlGenFactory(true, `delete/pages/${post.slug}`, dashboardRouteOverride)} class="text-red font-bold">Delete</a> }
+                                            { permissionLevel === 'admin' && <a href={await urlGenFactory(true, `delete/pages/${page.slug}`, dashboardRouteOverride)} class="text-red font-bold">Delete</a> }
                                         </td>
                                     </tr>
                                 )

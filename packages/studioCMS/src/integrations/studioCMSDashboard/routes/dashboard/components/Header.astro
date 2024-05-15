@@ -38,7 +38,7 @@ if ( permissionLevel === "unknown" ) {
 const siteURL = await urlGenFactory(true, undefined, dashboardRouteOverride)
 ---
 
-<sl-drawer placement="start" class="drawer-scrolling overflow-y-scroll">
+<sl-drawer placement="start" class="drawer-scrolling">
   <div slot="label" class="flex items-center gap-4">
     <sl-avatar
       image={avatar?.toString()}
@@ -51,7 +51,7 @@ const siteURL = await urlGenFactory(true, undefined, dashboardRouteOverride)
     </div>
   </div>
 
-  <div class="h-full scrollbar overflow-y-scroll">
+  <div class="h-full scrollbar overflow-y-auto overflow-y-scroll">
     <SideBarMenu sideBarActiveItemID={sideBarActiveItemID} />
   </div>
 

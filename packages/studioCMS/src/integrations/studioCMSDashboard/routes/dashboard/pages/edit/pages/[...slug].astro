@@ -17,18 +17,18 @@ const { dashboardConfig: { developerConfig, dashboardRouteOverride } } = Config;
 const { slug } = Astro.params;
 
 const contextConfig = await db.select().from(SiteConfig).where(eq(SiteConfig.id, 1)).get();
-const currentPageContent: PageDataAndContent = await db
-                                .select()
-                                .from(PageContent)
-                                .innerJoin(
-                                    PageData, 
-                                    eq(
-                                        PageContent.contentId, 
-                                        PageData.id
-                                    ))
-                                .get();
 
-const { PageContent: pageContent, PageData: pageData } = currentPageContent;
+const pageData = await db
+                        .select()
+                        .from(PageData)
+                        .where(eq(PageData.slug, slug))
+                        .get();
+
+const pageContent = await db
+                        .select()
+                        .from(PageContent)
+                        .where(eq(PageContent.contentId, pageData.id))
+                        .get();
 
 if (!slug || !pageData.id) {
 	return Astro.redirect(await urlGenFactory(true, undefined, dashboardRouteOverride));
@@ -66,12 +66,12 @@ if (Astro.request.method === 'POST' && !developerConfig.testingAndDemoMode) {
         title: title as string,
         package: pack as string,
         description: description as string,
+        updatedAt: new Date(),
         heroImage: heroImage as string,
     }).where(eq(PageData.slug, slug)).then(async () => {
-        const currentPageContent = await db.select().from(PageContent).innerJoin(PageData, eq(PageContent.contentId, PageData.id)).get();
         await db.update(PageContent).set({ 
             content: content as string 
-        }).where(eq(PageContent.contentId, currentPageContent.PageContent.contentId));
+        }).where(eq(PageContent.contentId, pageData.id));
     }).catch(() => {
         showErrorToast = true;
     });
@@ -118,7 +118,7 @@ const pageTitle = `Edit Page | ${contextConfig.title}`;
         <sl-breadcrumb>
             <span slot="separator">/</span>
             <sl-breadcrumb-item href={breadcrumbs.Dashboard}>Dashboard
-                <div slot="prefix" class='i-mdi:view-dashboard-outline inline'></div>
+                <sl-icon slot="prefix" name="columns-gap"></sl-icon>
             </sl-breadcrumb-item>
             <sl-breadcrumb-item href={breadcrumbs.ExistingPages}>Existing Pages</sl-breadcrumb-item>
             <sl-breadcrumb-item href={breadcrumbs.CurrentPageLink}>Edit Page: {pageData.title}</sl-breadcrumb-item>
@@ -234,7 +234,7 @@ const pageTitle = `Edit Page | ${contextConfig.title}`;
                     `Click in the box above to start editing the content. As you type, the preview will update automatically.`
                     } />
             </div>
-          </sl-card>
+        </sl-card>
     </div>
 </Layout>
 

@@ -1,6 +1,6 @@
 ---
 // @ts-expect-error - Some types can only be imported from the Astro runtime
-import { Pages, SiteConfig, db, eq } from 'astro:db';
+import { PageData, PageContent, SiteConfig, db, eq } from 'astro:db';
 import { Layout } from 'studiocms-dashboard:components';
 import Config from 'virtual:studiocms/config';
 import { authHelper, urlGenFactory, type Locals } from 'studiocms:helpers';
@@ -16,9 +16,7 @@ const { dashboardConfig: { developerConfig, dashboardRouteOverride } } = Config;
 const { slug } = Astro.params;
 
 const ConfigArray = await db.select().from(SiteConfig);
-const pageArrayed = await db.select().from(Pages).where(eq(Pages.slug, slug));
-
-const page = pageArrayed[0];
+const page = await db.select().from(PageData).where(eq(PageData.slug, slug)).get();
 
 if (!slug || !page) {
 	return Astro.redirect(await urlGenFactory(true, undefined, dashboardRouteOverride));
@@ -51,22 +49,35 @@ if (Astro.request.method === 'POST' && !developerConfig.testingAndDemoMode) {
         const slug = data.get('slug');
         if (slug === page.slug) {
             if ( slug === "index" || slug === "about" ) {
+                showErrorToast = true;
                 return new Response('Error: Cannot delete the index or about page.', { status: 500 })
             }
+
             await db
-                .delete(Pages)
-                .where(eq(Pages.slug, page.slug))
+                .delete(PageData)
+                .where(eq(PageData.slug, page.slug as string))
                 .then(() => {
                     showSuccessToast = true;
                 })
-                .catch(() => {
+                .catch((e: any) => {
+                    console.error(e);
                     showErrorToast = true;
                 });
-        } else {
-            showSlugErrorToast = true;
-        }
+
+            await db
+                .delete(PageContent)
+                .where(eq(PageContent.contentId, page.id))
+                .then(() => {
+                    showSuccessToast = true;
+                })
+                .catch((e: any) => {
+                    console.error(e);
+                    showErrorToast = true;
+                });
+        } 
     } catch (error) {
         if (error instanceof Error) {
+            console.error(error);
             showErrorToast = true;
         }
     }
@@ -87,7 +98,7 @@ const pageTitle = `Delete Page | ${contextConfig.title}`;
         <sl-breadcrumb>
             <span slot="separator">/</span>
             <sl-breadcrumb-item href={breadcrumbs.Dashboard}>Dashboard
-                <div slot="prefix" class='i-mdi:view-dashboard-outline inline'></div>
+                <sl-icon slot="prefix" name="columns-gap"></sl-icon>
             </sl-breadcrumb-item>
             <sl-breadcrumb-item href={breadcrumbs.ExistingPages}>Existing Pages</sl-breadcrumb-item>
             <sl-breadcrumb-item href={breadcrumbs.CurrentPageLink}>Delete Page: {page.slug}</sl-breadcrumb-item>
