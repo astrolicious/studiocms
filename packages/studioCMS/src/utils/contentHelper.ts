@@ -73,8 +73,8 @@ export async function contentHelper( slug:string ): Promise<ContentHelperTempRes
         .get();
 
     if(!pageData) {
-        throw new AstroError(`Page not found: ${slug}`, 
-        `studioCMS contentHelper Failed to get page data for page ${slug}` );
+        // @ts-expect-error - I am returning an empty object here to allow a 404 page to be shown
+        return {}
     }
 
     const LangToGet = "default";

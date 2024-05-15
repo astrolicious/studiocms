@@ -32,7 +32,6 @@ export default defineIntegration({
 				'astro:db:setup': ({ extendDb }) => {
 					extendDb({
 						configEntrypoint: resolve('./db/config.ts'),
-						seedEntrypoint: resolve('./db/seed.ts'),
 					});
 				},
 				'astro:config:setup': async ( params ) => {
@@ -208,10 +207,6 @@ export default defineIntegration({
 						injectRoute({
 							pattern: '404',
 							entrypoint: resolve('./pages-frontend/404.astro'),
-						});
-						injectRoute({
-							pattern: 'rss.xml',
-							entrypoint: resolve('./pages-frontend/rss.xml.ts'),
 						});
 					}
 
