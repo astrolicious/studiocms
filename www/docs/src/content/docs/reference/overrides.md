@@ -7,26 +7,26 @@ description: A reference page for overrides
 
 ## Usage
 
-```js title="astro.config.mjs"  {14}
+```js title="astro.config.mjs"  {14-18}
 import { defineConfig } from "astro/config";
 import astroStudioCMS from "@astrolicious/studiocms";
-import db from '@astrojs/db';
+import db from "@astrojs/db";
 import node from "@astrojs/node";
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://example.com',
+  site: "https://example.com",
   output: "server",
-  adapter: node({ mode: 'standalone' }),
+  adapter: node({ mode: "standalone" }),
   integrations: [
-        db(),
-        astroStudioCMS({
-            overrides: {
-                RendererOverride: './src/components/MyCustomRenderer.astro',
-                CustomImageOverride: './src/components/MyCustomImage.astro',
-                FormattedDateOverride: './src/components/MyCustomFormattedDate.astro',
-            },
-        }),
+    db(),
+    astroStudioCMS({
+      overrides: {
+        RendererOverride: "./src/components/MyCustomRenderer.astro",
+        CustomImageOverride: "./src/components/MyCustomImage.astro",
+        FormattedDateOverride: "./src/components/MyCustomFormattedDate.astro",
+      },
+    }),
   ],
 });
 ```

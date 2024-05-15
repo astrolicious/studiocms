@@ -210,6 +210,9 @@ importers:
       sharp:
         specifier: ^0.33.0
         version: 0.33.3
+      starlight-image-zoom:
+        specifier: ^0.4.0
+        version: 0.4.0(@astrojs/starlight@0.22.1)
       typescript:
         specifier: ^5.4.3
         version: 5.4.5
@@ -8765,6 +8768,18 @@ packages:
     dependencies:
       as-table: 1.0.55
       get-source: 2.0.12
+    dev: false
+
+  /starlight-image-zoom@0.4.0(@astrojs/starlight@0.22.1):
+    resolution: {integrity: sha512-ATSW/X2QzG+XbxrGAIhzVgqGd08jLh443InNMHRijIeU+Y1aS4jZjs358yVNTlns8uLflz8VaI8/9PVVaYN6LQ==}
+    engines: {node: '>=18'}
+    peerDependencies:
+      '@astrojs/starlight': '>=0.20.0'
+    dependencies:
+      '@astrojs/starlight': 0.22.1(astro@4.7.0)
+      rehype-raw: 7.0.0
+      unist-util-visit: 5.0.0
+      unist-util-visit-parents: 6.0.1
     dev: false
 
   /statuses@2.0.1:

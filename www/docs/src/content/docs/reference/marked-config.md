@@ -10,23 +10,23 @@ description: A reference page for markedConfig
 ```js title="astro.config.mjs"  {14-18}
 import { defineConfig } from "astro/config";
 import astroStudioCMS from "@astrolicious/studiocms";
-import db from '@astrojs/db';
+import db from "@astrojs/db";
 import node from "@astrojs/node";
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://example.com',
+  site: "https://example.com",
   output: "server",
-  adapter: node({ mode: 'standalone' }),
+  adapter: node({ mode: "standalone" }),
   integrations: [
-        db(),
-        astroStudioCMS({
-        markedConfig: {
-            highlighterConfig: {
-                highlighter: 'disabled',
-            },
+    db(),
+    astroStudioCMS({
+      markedConfig: {
+        highlighterConfig: {
+          highlighter: "disabled",
         },
-        }),
+      },
+    }),
   ],
 });
 ```
@@ -112,7 +112,10 @@ Allows you to load additional Shiki Themes. This option is only used if you want
 For example if you want to load the `material-theme-palenight` theme, you would set the `loadTheme` option to `['material-theme-palenight']`.
 
 ```ts
-loadThemes: [ import('shiki/themes/material-theme-palenight'), ...asManyOtherThemesAsYouWant ]
+loadThemes: [
+  import("shiki/themes/material-theme-palenight"),
+  ...asManyOtherThemesAsYouWant,
+];
 ```
 
 ##### `loadLang`
@@ -138,7 +141,7 @@ Allows you to load additional Marked Extensions. This is only used if the user w
 For example if you want to load Admonitions, you would need to install the `npm package`, import it in your config and then declare it.
 
 ```ts
-import markedAlert from 'marked-alert'
+import markedAlert from "marked-alert";
 
-loadMarkedExtensions: [markedAlert()]
+loadMarkedExtensions: [markedAlert()];
 ```

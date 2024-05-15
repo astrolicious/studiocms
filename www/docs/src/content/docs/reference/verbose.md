@@ -10,19 +10,19 @@ description: A reference page for verbose
 ```js title="astro.config.mjs"  {14}
 import { defineConfig } from "astro/config";
 import astroStudioCMS from "@astrolicious/studiocms";
-import db from '@astrojs/db';
+import db from "@astrojs/db";
 import node from "@astrojs/node";
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://example.com',
+  site: "https://example.com",
   output: "server",
-  adapter: node({ mode: 'standalone' }),
+  adapter: node({ mode: "standalone" }),
   integrations: [
-        db(),
-        astroStudioCMS({
-            verbose: true, // DEFAULT - This enables verbose logging in the Astro-Studio-CMS.
-        }),
+    db(),
+    astroStudioCMS({
+      verbose: true, // DEFAULT - This enables verbose logging in the Astro-Studio-CMS.
+    }),
   ],
 });
 ```

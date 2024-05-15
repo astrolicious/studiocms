@@ -1,5 +1,6 @@
 import { defineConfig } from "astro/config";
 import starlight from "@astrojs/starlight";
+import starlightImageZoom from 'starlight-image-zoom'
 
 // https://astro.build/config
 
@@ -9,6 +10,7 @@ export default defineConfig({
   site,
   integrations: [
     starlight({
+      plugins: [starlightImageZoom()],
       title: "Astro StudioCMS",
       description:
         "A dedicated CMS for Astro Studio. Built from the ground up by the Astro community.",
@@ -58,6 +60,7 @@ export default defineConfig({
             { label: 'Getting Started with Astro StudioCMS', link: '/start-here/getting-started' },
             { label: 'Environment Variables', link: '/start-here/environment-variables' },
             { label: 'Why Astro StudioCMS?', link: '/start-here/why-studiocms' },
+            { label: 'Gallery', link: '/start-here/gallery' },
           ]
         },
         {

@@ -7,7 +7,7 @@ description: A reference page for Image Service
 
 ## Usage
 
-```js title="astro.config.mjs"  {14-18}
+```js title="astro.config.mjs"  {14-23}
 import { defineConfig } from "astro/config";
 import astroStudioCMS from "@astrolicious/studiocms";
 import db from "@astrojs/db";
