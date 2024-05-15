@@ -18,6 +18,15 @@ export const PageDataAndContentSchema = z.object({
         contentLang: z.string(),
         content: z.string().nullable(),
     }),
+    SiteConfig: z.object({
+        id: z.number(),
+        title: z.string(),
+        description: z.string(),
+    }),
+    Permissions: z.object({
+        username: z.string(),
+        rank: z.string(),
+    }),
 });
 
 export type PageDataAndContent = z.infer<typeof PageDataAndContentSchema>;

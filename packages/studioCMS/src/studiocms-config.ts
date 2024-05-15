@@ -1,5 +1,10 @@
 import type { StudioCMSOptions } from "./schemas";
 
+
+// This File was created based on Expressive Code's Astro Integration by Hippotastic on github
+// see: https://expressive-code.com/ & https://github.com/expressive-code/expressive-code
+
+
 /**
  * Returns a URL to the optional StudioCMS config file in the Astro project root.
  */

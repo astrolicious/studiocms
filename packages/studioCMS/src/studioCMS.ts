@@ -199,23 +199,15 @@ export default defineIntegration({
 						integrationLogger(logger, verbose, 'info', 'Adding Page Routes...');
 						injectRoute({
 							pattern: "/",
-							entrypoint: resolve('./pages-frontend/index.astro'),
+							entrypoint: resolve('./pages-frontend/[...slug].astro'),
+						});
+						injectRoute({
+							pattern: "[slug]",
+							entrypoint: resolve('./pages-frontend/[...slug].astro'),
 						});
 						injectRoute({
 							pattern: '404',
 							entrypoint: resolve('./pages-frontend/404.astro'),
-						});
-						injectRoute({
-							pattern: 'about/',
-							entrypoint: resolve('./pages-frontend/about.astro'),
-						});
-						injectRoute({
-							pattern: 'blog/',
-							entrypoint: resolve('./pages-frontend/blog/index.astro'),
-						});
-						injectRoute({
-							pattern: 'blog/[slug]',
-							entrypoint: resolve('./pages-frontend/blog/[...slug].astro'),
 						});
 						injectRoute({
 							pattern: 'rss.xml',

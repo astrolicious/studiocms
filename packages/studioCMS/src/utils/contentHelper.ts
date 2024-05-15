@@ -1,5 +1,6 @@
 // @ts-expect-error - Some types can only be imported from the Astro runtime
-import { PageData, PageContent, SiteConfig, db, eq } from 'astro:db';
+import { PageData, PageContent, db, eq } from 'astro:db';
+import { AstroError } from 'astro/errors';
 
 export type pageDataReponse = {
     id: string;
@@ -36,7 +37,7 @@ export type ContentHelperTempResponse = {
     updatedAt: Date | null;
     slug: string;
     heroImage: string;
-    content: string | null;
+    content: string;
 }
 
 /**
@@ -46,39 +47,45 @@ export type ContentHelperTempResponse = {
  * @param lang **Not implemented yet.** The language to get the content in. Default is 'default'. 
  * @returns The data and content of the page.
  * 
- * @example Get the content of the index page:
+ * @example 
  * ```astro
- * --- 
+ * ---
+ * // Get the content of the index page:
  * import { StudioCMSRenderer, contentHelper } from 'studiocms:components'
  * 
- * const {page} = await contentHelper("index")
- * --- 
- * <Default 
- *     title={title} 
- *     description={description} 
- *     heroImage={heroImage}>
- * <main>
- *    <StudioCMSRenderer content={content||"No Content"}
- * </main>
- * </Default>
+ * const { title, description, heroImage, content } = await contentHelper("index")
+ * ---
+ * 
+ * <h1>{title}</h1>
+ * <p>{description}</p>
+ * <img src={heroImage} alt={title} />
+ * <StudioCMSRenderer content={content} />
+ * 
  * ```
  */
 export async function contentHelper( slug:string ): Promise<ContentHelperTempResponse>{
 
+    let slugTouse = slug;
+
     const pageData: pageDataReponse = await db
         .select().from(PageData)
-        .where(eq(PageData.slug, slug))
+        .where(eq(PageData.slug, slugTouse))
         .get();
 
     if(!pageData) {
-        throw new Error('Page not found');
+        throw new AstroError(`Page not found: ${slug}`, 
+        `studioCMS contentHelper Failed to get page data for page ${slug}` );
     }
 
     const LangToGet = "default";
 
     const pageContent: pageContentReponse = await db
         .select().from(PageContent)
-        .where(eq(PageContent.contentId, pageData.id) && eq(PageContent.contentLang, LangToGet)).get();
+        .where(eq(PageContent.contentId, pageData.id)).get();
 
+    if(!pageContent.content) {
+        throw new AstroError(`Page Content not found: ${slug} with language ${LangToGet}`, 
+        `studioCMS contentHelper Failed to get page content for page ${slug} with language ${LangToGet}` );
+    }
     return { ...pageData, content: pageContent.content };
 }

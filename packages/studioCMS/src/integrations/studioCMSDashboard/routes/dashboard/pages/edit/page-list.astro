@@ -3,7 +3,7 @@
 import { SiteConfig, Pages, db, eq, asc, PageData } from 'astro:db';
 import { Layout } from 'studiocms-dashboard:components';
 import Config from 'virtual:studiocms/config';
-import { authHelper, urlGenFactory, type Locals } from 'studiocms:helpers';
+import { authHelper, urlGenFactory, type Locals, type PageDataAndContent } from 'studiocms:helpers';
 import { FormattedDate } from 'studiocms:components';
 
 if (Config.includedIntegrations.useInoxSitemap) {
@@ -15,7 +15,7 @@ if (Config.includedIntegrations.useInoxSitemap) {
 const { dashboardConfig: { developerConfig, dashboardRouteOverride } } = Config;
 
 const contextConfig = await db.select().from(SiteConfig).where(eq(SiteConfig.id, 1)).get();
-const pages = await db.select().from(PageData).orderBy(asc(PageData.id));
+const pages: PageDataAndContent["PageData"][] = await db.select().from(PageData).orderBy(asc(PageData.id));
 
 const locals = Astro.locals as Locals;
 const { permissionLevel } = await authHelper(locals);
@@ -72,7 +72,7 @@ const pageTitle = `Existing Pages | ${contextConfig.title}`;
                     </thead>
                     <tbody>
                         { 
-                            pages.map(async (page: typeof Pages.$inferSelect) => {
+                            pages.map(async (page) => {
                                 return (
                                     <tr class="bg-base-200 text-inherit">
                                         <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap">

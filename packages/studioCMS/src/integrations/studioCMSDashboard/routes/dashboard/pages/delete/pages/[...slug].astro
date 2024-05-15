@@ -3,7 +3,7 @@
 import { PageData, PageContent, SiteConfig, db, eq } from 'astro:db';
 import { Layout } from 'studiocms-dashboard:components';
 import Config from 'virtual:studiocms/config';
-import { authHelper, urlGenFactory, type Locals } from 'studiocms:helpers';
+import { authHelper, urlGenFactory, type Locals, type PageDataAndContent } from 'studiocms:helpers';
 
 if (Config.includedIntegrations.useInoxSitemap) {
     import('sitemap-ext:config').then((sitemap) => {
@@ -15,14 +15,14 @@ const { dashboardConfig: { developerConfig, dashboardRouteOverride } } = Config;
 
 const { slug } = Astro.params;
 
-const ConfigArray = await db.select().from(SiteConfig);
-const page = await db.select().from(PageData).where(eq(PageData.slug, slug)).get();
+const contextConfig: PageDataAndContent["SiteConfig"] = await db.select().from(SiteConfig).where(eq(SiteConfig.id, 1)).get();
+
+const page: PageDataAndContent["PageData"] = await db.select().from(PageData).where(eq(PageData.slug, slug)).get();
 
 if (!slug || !page) {
 	return Astro.redirect(await urlGenFactory(true, undefined, dashboardRouteOverride));
 }
 
-const contextConfig = ConfigArray.pop();
 
 const locals = Astro.locals as Locals;
 const { permissionLevel } = await authHelper(locals);
