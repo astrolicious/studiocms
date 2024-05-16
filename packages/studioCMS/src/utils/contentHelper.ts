@@ -1,7 +1,24 @@
 // @ts-expect-error - Some types can only be imported from the Astro runtime
-import { PageData, PageContent, db, eq, asc, SiteConfig } from 'astro:db';
+import { PageData, PageContent, db, eq, asc, desc, SiteConfig, User } from 'astro:db';
 import { AstroError } from 'astro/errors';
 import type { PageDataAndContent } from 'studiocms:helpers';
+
+export type UserResponse = {
+    id: string;
+    url: string | null;
+    name: string;
+    email: string | null;
+    avatar: string | null;
+    githubId: number | null;
+    githubURL: string | null;
+    discordId: string | null;
+    googleId: string | null;
+    auth0Id: string | null;
+    username: string;
+    password: string | null;
+    updatedAt: Date | null;
+    createdAt: Date | null;
+};
 
 export type pageDataReponse = {
     id: string;
@@ -134,4 +151,42 @@ export async function getSiteConfig(): Promise<SiteConfigResponse> {
         siteTitle: config.title,
         siteDescription: config.description,
     };
+}
+
+/**
+ * Get user by ID helper function to get a user by their ID from Astro Studio's Database.
+ * 
+ * @param userId The ID of the user to get. You can get this from `Astro.locals.dbUser.id` when StudioCMS Auth middleware is used.
+ * @returns The user data.
+ */
+export async function getUserById(userId: string): Promise<UserResponse> {
+    const user: UserResponse = await db
+            .select()
+            .from(User)
+            .where(eq(User.id, userId))
+            .get();
+
+    if(!user) {
+        return {} as UserResponse;
+    }
+
+    return user;
+}
+
+/**
+ * Get user list helper function to get a list of all users from Astro Studio's Database.
+ * 
+ * @returns A Array of all users in the database.
+ */
+export async function getUserList(): Promise<UserResponse[]> {
+    const users: UserResponse[] = await db
+            .select()
+            .from(User)
+            .orderBy(desc(User.name));
+
+    if(!users) {
+        return [] as UserResponse[];
+    }
+
+    return users;
 }

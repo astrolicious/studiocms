@@ -52,12 +52,16 @@ export default defineIntegration({
 						const parsedOptions = optionsSchema.safeParse(studioCMSConfigFile);
 
 						// If the StudioCMS config file is invalid, throw an error
-						if (!parsedOptions.success) {
-							throw new AstroError("`zod` was unable to parse the StudioCMS config file.");
+						if ( !parsedOptions.success || parsedOptions.error || !parsedOptions.data ) {
+							const parsedErrors = parsedOptions.error.errors;
+							const parsedErrorMap = parsedErrors.map((e) => ` - ${e.message}`).join('\n');
+							const parsedErrorString = `The StudioCMS config file ('studiocms.config.mjs') was found but the following errors where encountered while parsing it:\n${parsedErrorMap}`;
+
+							integrationLogger(logger, true, 'error', parsedErrorString);
+							throw new AstroError("Invalid StudioCMS Config File", parsedErrorString);
 						}
-
 						mergedOptions = { ...optionsSchema._def.defaultValue, ...parsedOptions.data}
-
+						
 					}
 
 					// Destructure Options
@@ -142,9 +146,9 @@ export default defineIntegration({
 					// Virtual Helpers
 					const virtualHelperMap = `
 					export { default as authHelper } from '${virtResolver.AuthHelper}';
+					export { default as urlGenFactory } from '${virtResolver.UrlGenHelper}';
 					export * from '${virtResolver.StudioCMSLocalsMap}';
 					export * from '${virtResolver.StudioCMSDBTypeHelpers}';
-					export { default as urlGenFactory } from '${virtResolver.UrlGenHelper}';
 					export * from '${virtResolver.textFormatterHelper}';`;
 
 					// Add Virtual Imports
@@ -163,24 +167,27 @@ export default defineIntegration({
 
 					// Add Virtual DTS Lines - Components
 					studioCMSDTS.addLines(`declare module 'studiocms:components' {
+						export type ContentHelperTempResponse = import('${virtResolver.contentHelper}').ContentHelperTempResponse;
+						export type SiteConfigResponse = import('${virtResolver.contentHelper}').SiteConfigResponse;
+						export type pageDataReponse = import('${virtResolver.contentHelper}').pageDataReponse;
+						export type UserResponse = import('${virtResolver.contentHelper}').UserResponse;
 						export const CImage: typeof import('${virtResolver.CImage}').default;
 						export const FormattedDate: typeof import('${virtResolver.FormattedDate}').default;
 						export const StudioCMSRenderer: typeof import('${virtResolver.StudioCMSRenderer}').default;
-						export type ContentHelperTempResponse = import('${virtResolver.contentHelper}').ContentHelperTempResponse;
 						export const contentHelper: typeof import('${virtResolver.contentHelper}').contentHelper;
-						export type SiteConfigResponse = import('${virtResolver.contentHelper}').SiteConfigResponse;
 						export const getSiteConfig: typeof import('${virtResolver.contentHelper}').getSiteConfig;
-						export type pageDataReponse = import('${virtResolver.contentHelper}').pageDataReponse;
 						export const getPageList: typeof import('${virtResolver.contentHelper}').getPageList;
+						export const getUserList: typeof import('${virtResolver.contentHelper}').getUserList;
+						export const getUserById: typeof import('${virtResolver.contentHelper}').getUserById;
 					}`);
 
 					// Add Virtual DTS Lines - Helpers
 					studioCMSDTS.addLines(`declare module 'studiocms:helpers' {
-						export const authHelper: typeof import('${virtResolver.AuthHelper}').default;
 						export type Locals = import('${virtResolver.StudioCMSLocalsMap}').Locals;
+						export type PageDataAndContent = import('${virtResolver.StudioCMSDBTypeHelpers}').PageDataAndContent;
+						export const authHelper: typeof import('${virtResolver.AuthHelper}').default;
 						export const LocalsSchema: typeof import('${virtResolver.StudioCMSLocalsMap}').LocalsSchema;
 						export const PageDataAndContentSchema: typeof import('${virtResolver.StudioCMSDBTypeHelpers}').PageDataAndContentSchema;
-						export type PageDataAndContent = import('${virtResolver.StudioCMSDBTypeHelpers}').PageDataAndContent;
 						export const urlGenFactory: typeof import('${virtResolver.UrlGenHelper}').default;
 						export const toCamelCase: typeof import('${virtResolver.textFormatterHelper}').toCamelCase;
 						export const toPascalCase: typeof import('${virtResolver.textFormatterHelper}').toPascalCase;

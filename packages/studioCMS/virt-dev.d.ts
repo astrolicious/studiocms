@@ -22,7 +22,10 @@ declare module 'studiocms:components' {
 	export type SiteConfigResponse = import('./src/utils/contentHelper').SiteConfigResponse;
 	export const getSiteConfig: typeof import('./src/utils/contentHelper').getSiteConfig;
 	export type pageDataReponse = import('./src/utils/contentHelper').pageDataReponse;
-	export const getPageList: typeof import('./src/utils/contentHelper').getPageList; 
+	export const getPageList: typeof import('./src/utils/contentHelper').getPageList;
+	export type UserResponse = import('./src/utils/contentHelper').UserResponse;
+	export const getUserById: typeof import('./src/utils/contentHelper').getUserById;
+	export const getUserList: typeof import('./src/utils/contentHelper').getUserList;
 }
 
 declare module 'studiocms:helpers' {

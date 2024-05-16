@@ -5,6 +5,7 @@ import { lucia } from 'studiocms-dashboard:auth';
 import type { Session } from 'lucia';
 
 type authHelperResponse = {
+    id: string;
     username: string|null;
     name: string|null;
     email: string|null;
@@ -19,6 +20,7 @@ export default async function authHelper(locals: Locals): Promise<authHelperResp
     
     if (isLoggedIn) {
         const sessionArray = await lucia.getUserSessions(locals.dbUser.id);
+        const id = locals.dbUser.id;
         const username = locals.dbUser.username;
         const name = locals.dbUser.name;
         const email = locals.dbUser.email;
@@ -46,6 +48,7 @@ export default async function authHelper(locals: Locals): Promise<authHelperResp
             permissionLevel = 'visitor';
         }
         return {
+            id,
             username,
             name,
             email,
@@ -56,6 +59,7 @@ export default async function authHelper(locals: Locals): Promise<authHelperResp
         }
     }
     return {
+        id: '',
         username: null,
         name: null,
         email: null,
