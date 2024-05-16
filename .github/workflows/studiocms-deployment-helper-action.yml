@@ -3,9 +3,8 @@ permissions:
     pull-requests: write
     
 on:
-    pull_request:
-      types:
-        - created
+  pull_request:
+    types: [opened]
         
 jobs:
     comment:
