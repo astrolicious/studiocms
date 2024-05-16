@@ -44,15 +44,19 @@ if (locals.isLoggedIn) {
 
             <sl-input 
             name="username" 
-            id="username" 
-            class="w-96">
+            id="username">
               <div class="text-xl font-bold" slot="label">Username</div>
             </sl-input><br />
 
             <sl-input 
+            name="email" 
+            id="email">
+              <div class="text-xl font-bold" slot="label">Email address</div>
+            </sl-input><br />
+
+            <sl-input 
             name="displayname" 
-            id="displayname" 
-            class="w-96">
+            id="displayname">
               <div class="text-xl font-bold" slot="label">Display Name</div>
             </sl-input><br />
 
@@ -60,7 +64,6 @@ if (locals.isLoggedIn) {
             type="password" 
             name="password"
             id="password"
-            class="w-96" 
             password-toggle>
               <div class="text-xl font-bold" slot="label">Password</div>
             </sl-input><br />

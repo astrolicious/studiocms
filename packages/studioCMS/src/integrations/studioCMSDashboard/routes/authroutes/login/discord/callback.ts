@@ -89,7 +89,7 @@ export async function GET(context: APIContext): Promise<Response> {
 				email,
 				avatar,
 			})
-			.returning()
+			.returning({ id: User.id })
 			.get();
 
 		const session = await lucia.createSession(createdUser.id, {});

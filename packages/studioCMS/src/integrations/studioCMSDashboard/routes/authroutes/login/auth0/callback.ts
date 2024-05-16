@@ -94,7 +94,7 @@ const clientDomain = `https://${NoHTTPDOMAIN}`;
 				email,
 				avatar,
 			})
-			.returning()
+			.returning({ id: User.id })
 			.get();
 
 		const session = await lucia.createSession(createdUser.id, {});
