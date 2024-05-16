@@ -28,9 +28,7 @@ const {
 
 const contextConfig: PageDataAndContent["SiteConfig"] = await db.select().from(SiteConfig).where(eq(SiteConfig.id, 1)).get();
 const pages: PageDataAndContent["PageData"][] = await db.select().from(PageData).orderBy(asc(PageData.id));
-
-const locals = Astro.locals as Locals;
-const { permissionLevel } = await authHelper(locals);
+const { permissionLevel } = await authHelper(Astro.locals as Locals);
 
 // If the user is not logged in, redirect to the login page
 if ( !testingAndDemoMode ) {

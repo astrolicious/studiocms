@@ -1,68 +1,18 @@
 ---
 import { authHelper, type Locals } from "studiocms:helpers";
 import Config from "virtual:studiocms/config";
-import { StudioCMSRoutes } from "studiocms-dashboard:routeMap"
+import { StudioCMSRoutes, sideBarLinkMap } from "studiocms-dashboard:routeMap"
 
-// Desctructure config
 const { dashboardConfig: { developerConfig: { testingAndDemoMode } } } = Config;
-
-// Get Routes
-const { 
-    mainLinks: { 
-        baseSiteURL, 
-        dashboardIndex, 
-        pageEdit, 
-        pageNew, 
-        siteConfiguration, 
-        userProfile 
-    },
-    authLinks: { logoutURL },
-} = StudioCMSRoutes;
-
-// Get permission level
+const { authLinks: { logoutURL } } = StudioCMSRoutes;
+const sideBarLinks = sideBarLinkMap;
 const { permissionLevel } = await authHelper(Astro.locals as Locals);
-
-// Sidebar link type
-export type SideBarLink = {
-    id: string;
-    href: string;
-    text: string;
-    minPermissionLevel: string;
-    icon: string;
-    type: "link" | "dropdown";
-    dropdownItems?: SideBarLink[];
-}
-
-// Add default dashboard page links
-const defaultDashboardPageLinks: SideBarLink[] = [
-    { id: "home", href: baseSiteURL, text: "View Site", minPermissionLevel: "unknown", icon: "globe-americas", type: "link" },
-    { id: "dashboard", href: dashboardIndex, text: "Dashboard", minPermissionLevel: "visitor", icon: "columns-gap", type: "link" },
-    { id: "profile", href: userProfile, text: "User Profile", minPermissionLevel: "visitor", icon: "person-square", type: "link" },
-    { id: "new-page", href: pageNew, text: "Create New Page", minPermissionLevel: "editor", icon: "pencil-square", type: "link" },
-    { id: "edit-pages", href: pageEdit, text: "Edit Pages", minPermissionLevel: "editor", icon: "pencil", type: "link" },
-    { id: "site-config", href: siteConfiguration, text: "Site Configuration", minPermissionLevel: "admin", icon: "gear-wide-connected", type: "link" }
-]
-
-// Side bar links map
-const sideBarLinkMap: SideBarLink[] = [ ...defaultDashboardPageLinks ];
-
-// Add custom dashboard page links
-const customDashboardPageLinks: SideBarLink[] = [];
-
-const customDashboardDropdown: SideBarLink[] = [
-    { id: "integrations", href: "", text: "Integration Configs", minPermissionLevel: "editor", icon: "puzzle", type: "dropdown", dropdownItems: [ ...customDashboardPageLinks ], },
-];
-
-// Merge custom dashboard page links
-if (customDashboardPageLinks.length > 0 ) {
-    sideBarLinkMap.push(...customDashboardDropdown);
-}
 
 ---
 
 <div class="menu menu-md grow shrink">
 
-    { sideBarLinkMap.map(({ id, href, text, minPermissionLevel, icon, type, dropdownItems }) => {
+    { sideBarLinks.map(({ id, href, text, minPermissionLevel, icon, type, dropdownItems }) => {
         if ( type === "link" ) {
             if ( minPermissionLevel === "unknown" && ( 
                 permissionLevel === "unknown" || 

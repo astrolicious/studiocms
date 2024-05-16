@@ -30,27 +30,15 @@ const {
 const { slug } = Astro.params;
 
 const contextConfig: PageDataAndContent["SiteConfig"] = await db.select().from(SiteConfig).where(eq(SiteConfig.id, 1)).get();
-
-const pageData: PageDataAndContent["PageData"] = await db
-                        .select()
-                        .from(PageData)
-                        .where(eq(PageData.slug, slug))
-                        .get();
-
-const pageContent: PageDataAndContent["PageContent"] = await db
-                        .select()
-                        .from(PageContent)
-                        .where(eq(PageContent.contentId, pageData.id))
-                        .get();
+const pageData: PageDataAndContent["PageData"] = await db.select().from(PageData).where(eq(PageData.slug, slug)).get();
+const pageContent: PageDataAndContent["PageContent"] = await db.select().from(PageContent).where(eq(PageContent.contentId, pageData.id)).get();
 
 if (!slug || !pageData.id) {
 	return Astro.redirect(dashboardIndex);
 }
 
 const editRoute = getEditRoute(slug);
-
-const locals = Astro.locals as Locals;
-const { permissionLevel } = await authHelper(locals);
+const { permissionLevel } = await authHelper(Astro.locals as Locals);
 
 // If the user is not logged in, redirect to the login page
 if ( !developerConfig.testingAndDemoMode ) {

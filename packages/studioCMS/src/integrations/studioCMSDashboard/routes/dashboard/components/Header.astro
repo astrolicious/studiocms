@@ -2,14 +2,13 @@
 import { authHelper, type Locals } from "studiocms:helpers"
 import { StudioCMSRoutes } from "studiocms-dashboard:routeMap"
 import ThemeToggleButton from "./ThemeToggleButton.astro"
-import Config from "virtual:studiocms/config"
 import SideBarMenu from "./SideBarMenu.astro";
+import type { StudioCMSSocials } from "../layouts/studiocms-socials";
 
-const { dashboardConfig: { dashboardRouteOverride } } = Config;
+type Props = { studioCMSSocials: StudioCMSSocials };
+const { studioCMSSocials: { github: githubURL } } = Astro.props;
 const { mainLinks: { dashboardIndex } } = StudioCMSRoutes;
-
-const locals = Astro.locals as Locals;
-const { avatar, name, permissionLevel } = await authHelper(locals);
+const { avatar, name, permissionLevel } = await authHelper(Astro.locals as Locals);
 
 let useName: string;
 
@@ -37,7 +36,7 @@ if ( !name ) {
   </div>
 
   <div class="h-full scrollbar overflow-y-auto overflow-y-scroll">
-    <SideBarMenu DashboardRouteOverride={dashboardRouteOverride}/>
+    <SideBarMenu />
   </div>
 
 
@@ -51,7 +50,7 @@ if ( !name ) {
         style="font-size: 1rem;" 
         class="flex-center"
         label="StudioCMS Github" 
-        href="https://github.com/astrolicious/studiocms" 
+        href={githubURL} 
         target="_blank"></sl-icon-button>
 
     </div>

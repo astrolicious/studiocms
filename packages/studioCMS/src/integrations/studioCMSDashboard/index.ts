@@ -310,6 +310,8 @@ export default defineIntegration({
 						export const getEditRoute: typeof import('${virtualResolver.RouteMap}').getEditRoute;
 						export const getDeleteRoute: typeof import('${virtualResolver.RouteMap}').getDeleteRoute;
 						export const StudioCMSRoutes: typeof import('${virtualResolver.RouteMap}').StudioCMSRoutes;
+						export type SideBarLink = import('${virtualResolver.RouteMap}').SideBarLink;
+						export const sideBarLinkMap: import('${virtualResolver.RouteMap}').sideBarLinkMap;
 					}`);
 
 					// Add Virtual DTS File

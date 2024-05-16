@@ -53,6 +53,8 @@ declare module 'studiocms-dashboard:routeMap' {
 	export const getEditRoute: typeof import('./src/integrations/studioCMSDashboard/utils/routemap').getEditRoute;
 	export const getDeleteRoute: typeof import('./src/integrations/studioCMSDashboard/utils/routemap').getDeleteRoute;
 	export const StudioCMSRoutes: typeof import('./src/integrations/studioCMSDashboard/utils/routemap').StudioCMSRoutes;
+	export type SideBarLink = import('./src/integrations/studioCMSDashboard/utils/routemap').SideBarLink;
+	export const sideBarLinkMap: typeof import('./src/integrations/studioCMSDashboard/utils/routemap').sideBarLinkMap;
 }
 
 interface ImportMetaEnv {

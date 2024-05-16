@@ -5,6 +5,7 @@ import { Layout } from 'studiocms-dashboard:components';
 import Config from 'virtual:studiocms/config';
 import { authHelper, type Locals, type PageDataAndContent } from 'studiocms:helpers';
 import { StudioCMSRoutes } from 'studiocms-dashboard:routeMap';
+import { studioCMSSocials } from "../layouts/studiocms-socials"
 
 if (Config.includedIntegrations.useInoxSitemap) {
     import('sitemap-ext:config').then((sitemap) => {
@@ -22,12 +23,10 @@ const {
     }
 } = StudioCMSRoutes;
 
+const { github, discord } = studioCMSSocials;
 const { dashboardConfig: { developerConfig } } = Config;
-
 const contextConfig: PageDataAndContent["SiteConfig"] = await db.select().from(SiteConfig).where(eq(SiteConfig.id, 1)).get();
-
-const locals = Astro.locals as Locals;
-const { permissionLevel } = await authHelper(locals);
+const { permissionLevel } = await authHelper(Astro.locals as Locals);
 
 // If the user is not logged in, redirect to the login page
 if ( !developerConfig.testingAndDemoMode ) {
@@ -78,11 +77,11 @@ const pageTitle = `Dashboard | ${contextConfig.title}`;
         </div>
 
         <div class="mt-8 flex gap-4">
-            <sl-button variant="warning" size="large" href="https://github.com/astrolicious/studiocms" target="_blank" outline>
+            <sl-button variant="warning" size="large" href={github} target="_blank" outline>
                 <sl-icon slot="prefix" name="star"></sl-icon>
                 <div>Star us on Github</div>
             </sl-button>
-            <sl-button variant="primary" size="large" href="https://chat.astrolicious.dev" target="_blank" outline>
+            <sl-button variant="primary" size="large" href={discord} target="_blank" outline>
                 <sl-icon slot="prefix" name="discord"></sl-icon>
                 Join the Community
             </sl-button>

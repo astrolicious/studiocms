@@ -49,3 +49,91 @@ export const StudioCMSRoutes = {
         auth0Callback: await urlGenFactory(true, "login/auth0/callback", dashboardRouteOverride),
     },
 }
+
+// Sidebar link type
+/**
+ * @param id - The unique identifier for the link
+ * @param href - The URL to redirect to
+ * @param text - The text to display for the link
+ * @param minPermissionLevel - The minimum permission level required to view the link (unknown, visitor, editor, admin)
+ * @param icon - The icon to display for the link ( see https://shoelace.style/components/icon )
+ */
+export type SideBarLink = {
+    id: string;
+    href: string;
+    text: string;
+    minPermissionLevel: string;
+    icon: string;
+    type: "link" | "dropdown";
+    dropdownItems?: SideBarLink[];
+}
+
+// Add default dashboard page links
+const defaultDashboardPageLinks: SideBarLink[] = [
+    { 
+        id: "home", 
+        href: StudioCMSRoutes.mainLinks.baseSiteURL, 
+        text: "View Site", 
+        minPermissionLevel: "unknown", 
+        icon: "globe-americas", 
+        type: "link" 
+    }, { 
+        id: "dashboard", 
+        href: StudioCMSRoutes.mainLinks.dashboardIndex, 
+        text: "Dashboard", 
+        minPermissionLevel: "visitor", 
+        icon: "columns-gap", 
+        type: "link" 
+    }, { 
+        id: "profile", 
+        href: StudioCMSRoutes.mainLinks.userProfile, 
+        text: "User Profile", 
+        minPermissionLevel: "visitor", 
+        icon: "person-square", 
+        type: "link" 
+    }, { 
+        id: "new-page", 
+        href: StudioCMSRoutes.mainLinks.pageNew, 
+        text: "Create New Page", 
+        minPermissionLevel: "editor", 
+        icon: "pencil-square", 
+        type: "link" 
+    }, { 
+        id: "edit-pages", 
+        href: StudioCMSRoutes.mainLinks.pageEdit, 
+        text: "Edit Pages", 
+        minPermissionLevel: "editor", 
+        icon: "pencil", 
+        type: "link" 
+    }, { 
+        id: "site-config", 
+        href: StudioCMSRoutes.mainLinks.siteConfiguration, 
+        text: "Site Configuration", 
+        minPermissionLevel: "admin", 
+        icon: "gear-wide-connected", 
+        type: "link" 
+    }
+]
+
+// Add custom dashboard page links
+const customDashboardPageLinks: SideBarLink[] = [];
+
+const customDashboardDropdown = { 
+        id: "integrations", 
+        href: "", 
+        text: "Integration Configs", 
+        minPermissionLevel: "editor", 
+        icon: "puzzle", 
+        type: "dropdown", 
+        dropdownItems: [ ...customDashboardPageLinks ], 
+    } satisfies SideBarLink;
+
+// Side bar links map
+const finalSideBarLinkMap: SideBarLink[] = [ ...defaultDashboardPageLinks ];
+
+// Merge custom dashboard page links
+if (customDashboardDropdown.dropdownItems.length > 0 ) {
+    finalSideBarLinkMap.push(customDashboardDropdown);
+}
+
+export const sideBarLinkMap = finalSideBarLinkMap;

@@ -3,9 +3,11 @@ import SideBarFooter from "./SideBarFooter.astro";
 import SideBarMenu from "./SideBarMenu.astro";
 import { authHelper, type Locals } from "studiocms:helpers";
 import { StudioCMSRoutes } from "studiocms-dashboard:routeMap"
+import type { StudioCMSSocials } from "../layouts/studiocms-socials";
 
-const locals = Astro.locals as Locals;
-const { avatar, name, permissionLevel } = await authHelper(locals);
+type Props = { studioCMSSocials: StudioCMSSocials };
+const { studioCMSSocials } = Astro.props as Props;
+const { avatar, name, permissionLevel } = await authHelper(Astro.locals as Locals);
 const { mainLinks: { dashboardIndex } } = StudioCMSRoutes;
 
 let useName: string;
@@ -40,7 +42,7 @@ if ( permissionLevel === "unknown" ) {
     </div>
     <SideBarMenu />
     <div class="flex-none flex-end">
-      <SideBarFooter />
+      <SideBarFooter studioCMSSocials={studioCMSSocials}/>
     </div>
   </aside>
 </div>
