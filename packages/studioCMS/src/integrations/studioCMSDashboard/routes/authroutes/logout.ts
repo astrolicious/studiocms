@@ -1,21 +1,16 @@
 import type { APIContext } from 'astro';
 import { lucia } from 'studiocms-dashboard:auth';
-import { urlGenFactory } from 'studiocms:helpers';
-import Config from 'virtual:studiocms/config';
+import { StudioCMSRoutes } from "studiocms-dashboard:routeMap"
 
-const { 
-	dashboardConfig: { 
-	  dashboardRouteOverride,
-	} 
-  } = Config;
+const { authLinks: { loginURL }, mainLinks: { baseSiteURL } } = StudioCMSRoutes;
 
 export async function GET(context: APIContext): Promise<Response> {
-	return context.redirect(import.meta.env.BASE_URL);
+	return context.redirect(baseSiteURL);
 }
 
 export async function POST(context: APIContext): Promise<Response> {
 	if (!context.locals.session) {
-		return context.redirect(await urlGenFactory(true, "login", dashboardRouteOverride));
+		return context.redirect(loginURL);
 	}
 
 	await lucia.invalidateSession(context.locals.session.id);
@@ -28,5 +23,5 @@ export async function POST(context: APIContext): Promise<Response> {
 	context.locals.user = null;
 	context.locals.dbUser = null;
 
-	return context.redirect(import.meta.env.BASE_URL);
+	return context.redirect(baseSiteURL);
 }

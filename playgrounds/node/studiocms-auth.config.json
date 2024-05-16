@@ -1,1 +1,11 @@
-{"salt":"78e09dbe-684b-41cc-b391-5d8028172003","opts":{"N":4096,"r":8,"p":1,"dkLen":32}}
+{
+  "salt": "77304539-0a90-4af9-8d5f-f19a72c3aa83",
+  "opts": {
+    "cpu_mem": 4096,
+    "block_size": 8,
+    "parallelization": 1,
+    "output_key_length": 32,
+    "asyncTick": 10,
+    "max_mem": 1073742848
+  }
+}

@@ -9,7 +9,13 @@ import Config from "virtual:studiocms/config";
 
 const { 
   dashboardConfig: { 
-    dashboardRouteOverride,
+    UnoCSSConfigOverride: {
+      presetsConfig: {
+        presetDaisyUI: {
+          lightTheme,
+        }
+      }
+    },
     // developerConfig: {
     //   viewTransitionAPI
     // },
@@ -27,7 +33,6 @@ const {
   title,
   description,
   includeSidebar = true,
-  sideBarActiveItemID,
 } = Astro.props;
 
 // const includeViewTransitions = false;
@@ -35,7 +40,7 @@ const {
 ---
 
 <!doctype html>
-<html lang="en" data-theme="light" class="scrollbar scrollbar-thumb-white scrollbar-track-[#1a172e] h-32 overflow-y-scroll">
+<html lang="en" data-theme={lightTheme} class="scrollbar scrollbar-thumb-white scrollbar-track-[#1a172e] h-32 overflow-y-scroll">
   <head>
     <ThemeManager defaultTheme="auto" />
     <BaseHead title={title} description={description} />
@@ -44,7 +49,7 @@ const {
   <body>
     <div class="bg-base-100 drawer">
       <div class="drawer-content bg-base-100">
-        <Header DashboardRouteOverride={dashboardRouteOverride} sideBarActiveItemID={sideBarActiveItemID}/>
+        <Header />
         <div class="md:flex md:justify-center">
           <main class="p-6 pt-10 lg:max-w-[1800px] max-w-[100vw] min-h-[100vh]">
             <slot />
@@ -52,7 +57,7 @@ const {
         </div>
         <Footer />
       </div>
-      { includeSidebar && <SideBar sideBarActiveItemID={sideBarActiveItemID} DashboardRouteOverride={dashboardRouteOverride}/>}
+      { includeSidebar && <SideBar />}
     </div>
   </body>
 </html>

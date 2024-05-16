@@ -8,14 +8,28 @@ import { presetTypography, presetWind, presetUno, transformerDirectives, presetI
 import UnoCSSAstroIntegration from "@unocss/astro";
 import { presetDaisy } from "@yangyang20240403/unocss-preset-daisyui";
 import { FileSystemIconLoader } from '@iconify/utils/lib/loader/node-loaders'
-import { presetScrollbar } from 'unocss-preset-scrollbar'
-import type { Input } from "@noble/hashes/utils";
+import { presetScrollbar } from 'unocss-preset-scrollbar';
 import type { ScryptOpts } from "@noble/hashes/scrypt";
 import * as fs from "node:fs";
 import { randomUUID } from "node:crypto";
+import type { Input } from "@noble/hashes/utils";
 
 // Environment Variables
 const env = loadEnv('all', process.cwd(), 'CMS');
+
+type ScryptOptsRemap = {
+	cpu_mem: number;
+	block_size: number;
+	parallelization: number;
+	output_key_length?: number;
+	asyncTick?: number;
+	max_mem?: number;
+}
+
+type AuthConfigMap = {
+	salt: string;
+	opts: ScryptOptsRemap;
+}
 
 const AUTHKEYS = {
 	GITHUBCLIENTID: {
@@ -104,11 +118,6 @@ const AUTHKEYS = {
 	},
 };
 
-type usernameAndPasswordConfig = {
-	salt: Input;
-	opts: ScryptOpts;
-}
-
 export default defineIntegration({
     name: 'astrolicious/studioCMS:adminDashboard',
     optionsSchema,
@@ -175,6 +184,7 @@ export default defineIntegration({
 						AuthENVChecker: resolve("./utils/authEnvCheck.ts"),
 						DashboardLayout: resolve('./routes/dashboard/layouts/Layout.astro'),
 						StudioAuthConfig: rootResolve('./studiocms-auth.config.json'),
+						RouteMap: resolve('./utils/routemap.ts'),
 					};
 
 					// Username and Password Config
@@ -190,28 +200,43 @@ export default defineIntegration({
 					 * {
 					 * 	"salt": "salt", //Uint8Array | string
 					 * 	"opts": {
-					 * 		"N": 2 ** 12, //NUMBER
-					 * 		"r": 8, //NUMBER
-					 * 		"p": 1, //NUMBER
-					 * 		"dkLen": 32 //NUMBER
+					 * 		"cpu_mem": 2 ** 12, //NUMBER
+					 * 		"block_size": 8, //NUMBER
+					 * 		"parallelization": 1, //NUMBER
+					 * 		"output_key_length": 32 //NUMBER
+					 *      "asyncTick": 10, //NUMBER
+					 * 		"max_mem": 1024 ** 3 + 1024 //NUMBER
 					 *   },
 					 * }
 					 */
-					let VirtualAuthSecurity: usernameAndPasswordConfig
+					let VirtualAuthSecurity: { salt: Input, opts: ScryptOpts }
 
 					if ( usernameAndPassword ) {
 						try {
 							const authConfigFileJson = fs.readFileSync(virtualResolver.StudioAuthConfig, { encoding: 'utf-8' });
-							const authConfigFile: usernameAndPasswordConfig = JSON.parse(authConfigFileJson);
-							let { salt, opts: { N = 2 ** 12, r = 8, p = 1, dkLen = 32 } } = authConfigFile;
+							const authConfigFile: AuthConfigMap = JSON.parse(authConfigFileJson);
 
-							if ( !salt ) {
-								// Make sure the salt is defined
-								const newSalt = randomUUID();
-								salt = newSalt;
+							let { salt: UserSalt, opts: { cpu_mem, block_size, parallelization, output_key_length, asyncTick, max_mem } } = authConfigFile;
+
+							const authConfigMap = {
+								salt: UserSalt,
+								opts: {
+									N: cpu_mem || 2 ** 12,
+									r: block_size || 8,
+									p: parallelization || 1,
+									dkLen: output_key_length || 32,
+									asyncTick: asyncTick || 10,
+									maxmem: max_mem || 1024 ** 3 + 1024,
+								} as ScryptOpts
 							}
 
-							VirtualAuthSecurity = { salt, opts: { N, r, p, dkLen }};
+							if ( !UserSalt ) {
+								// Make sure the salt is defined
+								const newSalt = randomUUID();
+								UserSalt = newSalt;
+							}
+
+							VirtualAuthSecurity = authConfigMap;
 						} catch (error) {
 							// Log that the file does not exist
 							integrationLogger(logger, verbose, 'error', 'studiocms-auth.config.json file does not exist. Creating...');
@@ -220,7 +245,19 @@ export default defineIntegration({
 							const newSalt = randomUUID();
 							VirtualAuthSecurity = { salt: newSalt, opts: { N: 2 ** 12, r: 8, p: 1, dkLen: 32 }};
 
-							fs.writeFile(virtualResolver.StudioAuthConfig, JSON.stringify(VirtualAuthSecurity), (err) => {
+							const outputMap: AuthConfigMap = {
+								salt: newSalt,
+								opts: {
+									cpu_mem: 2 ** 12,
+									block_size: 8,
+									parallelization: 1,
+									output_key_length: 32,
+									asyncTick: 10,
+									max_mem: 1024 ** 3 + 1024,
+								}
+							}
+
+							fs.writeFile(virtualResolver.StudioAuthConfig, JSON.stringify(outputMap, null, 2), (err) => {
 								if (err) {
 									// Log that the file could not be created
 									integrationLogger(logger, verbose, 'error', 'studiocms-auth.config.json file could not be created');
@@ -238,8 +275,12 @@ export default defineIntegration({
 					const virtualComponentMap = `
 					export * from '${virtualResolver.Auth}';
 					export * from '${virtualResolver.AuthENVChecker}';`;
+
 					const VirtualAstroComponents = `
 					export {default as Layout} from '${virtualResolver.DashboardLayout}';`;
+
+					const VirtualRouteMap = `
+					export * from '${virtualResolver.RouteMap}';`;
 
 					// Add Virtual Imports
 					integrationLogger(logger, verbose, 'info', 'Adding Virtual Imports...');
@@ -248,6 +289,7 @@ export default defineIntegration({
 						imports: {
 							'studiocms-dashboard:auth': virtualComponentMap,
 							'studiocms-dashboard:components': VirtualAstroComponents,
+							'studiocms-dashboard:routeMap': VirtualRouteMap,
 						},
 					});
 
@@ -261,6 +303,13 @@ export default defineIntegration({
 
 					studioCMSDTS.addLines(`declare module 'studiocms-dashboard:components' {
 						export const Layout: typeof import('${virtualResolver.DashboardLayout}').default;
+					}`);
+
+					studioCMSDTS.addLines(`declare module 'studiocms-dashboard:routeMap' {
+						export const getSluggedRoute: typeof import('${virtualResolver.RouteMap}').getSluggedRoute;
+						export const getEditRoute: typeof import('${virtualResolver.RouteMap}').getEditRoute;
+						export const getDeleteRoute: typeof import('${virtualResolver.RouteMap}').getDeleteRoute;
+						export const StudioCMSRoutes: typeof import('${virtualResolver.RouteMap}').StudioCMSRoutes;
 					}`);
 
 					// Add Virtual DTS File

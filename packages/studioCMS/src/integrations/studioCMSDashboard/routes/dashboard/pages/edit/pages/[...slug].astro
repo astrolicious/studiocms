@@ -3,8 +3,9 @@
 import { PageData, PageContent, SiteConfig, db, eq } from 'astro:db';
 import { Layout } from 'studiocms-dashboard:components';
 import Config from 'virtual:studiocms/config';
-import { authHelper, urlGenFactory, type Locals, type PageDataAndContent } from 'studiocms:helpers';
+import { authHelper, type Locals, type PageDataAndContent } from 'studiocms:helpers';
 import { StudioCMSRenderer } from 'studiocms:components';
+import { StudioCMSRoutes, getEditRoute } from 'studiocms-dashboard:routeMap';
 
 if (Config.includedIntegrations.useInoxSitemap) {
     import('sitemap-ext:config').then((sitemap) => {
@@ -12,7 +13,19 @@ if (Config.includedIntegrations.useInoxSitemap) {
     })
 }
 
-const { dashboardConfig: { developerConfig, dashboardRouteOverride } } = Config;
+const { dashboardConfig: { developerConfig } } = Config;
+
+const { 
+    authLinks: { 
+        loginURL 
+    }, 
+    mainLinks: { 
+        userProfile,
+        dashboardIndex,
+        pageEdit,
+        livePreviewBox
+    } 
+} = StudioCMSRoutes;
 
 const { slug } = Astro.params;
 
@@ -31,8 +44,10 @@ const pageContent: PageDataAndContent["PageContent"] = await db
                         .get();
 
 if (!slug || !pageData.id) {
-	return Astro.redirect(await urlGenFactory(true, undefined, dashboardRouteOverride));
+	return Astro.redirect(dashboardIndex);
 }
+
+const editRoute = getEditRoute(slug);
 
 const locals = Astro.locals as Locals;
 const { permissionLevel } = await authHelper(locals);
@@ -41,11 +56,11 @@ const { permissionLevel } = await authHelper(locals);
 if ( !developerConfig.testingAndDemoMode ) {
     if ( permissionLevel === "unknown" ) {
         console.log('User is not logged in. Redirecting to login page.');
-        return Astro.redirect(await urlGenFactory(true, "login", dashboardRouteOverride));
+        return Astro.redirect(loginURL);
     }
     if ( permissionLevel !== 'admin' && permissionLevel !== 'editor' ) {
         console.log('User is not an admin or editor. Redirecting to profile page.');
-        return Astro.redirect(await urlGenFactory(true, "profile", dashboardRouteOverride));
+        return Astro.redirect(userProfile);
     }
 }
 
@@ -83,13 +98,6 @@ if (Astro.request.method === 'POST' && !developerConfig.testingAndDemoMode) {
   }
 }
 
-const LivePreviewPage = await urlGenFactory(true, "api/liverender", dashboardRouteOverride);
-const breadcrumbs = {
-    Dashboard: await urlGenFactory(true, '', dashboardRouteOverride),
-    ExistingPages: await urlGenFactory(true, 'page-list', dashboardRouteOverride),
-    CurrentPageLink: await urlGenFactory(true, `edit/pages/${slug}`, dashboardRouteOverride)
-}
-
 const pageTitle = `Edit Page | ${contextConfig.title}`;
 ---
 
@@ -117,11 +125,11 @@ const pageTitle = `Edit Page | ${contextConfig.title}`;
     <div class="flex grow w-full">
         <sl-breadcrumb>
             <span slot="separator">/</span>
-            <sl-breadcrumb-item href={breadcrumbs.Dashboard}>Dashboard
+            <sl-breadcrumb-item href={dashboardIndex}>Dashboard
                 <sl-icon slot="prefix" name="columns-gap"></sl-icon>
             </sl-breadcrumb-item>
-            <sl-breadcrumb-item href={breadcrumbs.ExistingPages}>Existing Pages</sl-breadcrumb-item>
-            <sl-breadcrumb-item href={breadcrumbs.CurrentPageLink}>Edit Page: {pageData.title}</sl-breadcrumb-item>
+            <sl-breadcrumb-item href={pageEdit}>Existing Pages</sl-breadcrumb-item>
+            <sl-breadcrumb-item href={editRoute}>Edit Page: {pageData.title}</sl-breadcrumb-item>
         </sl-breadcrumb>
     </div>
 
@@ -205,7 +213,7 @@ const pageTitle = `Edit Page | ${contextConfig.title}`;
                         value={pageContent.content}
                         size="large"
                         rows="10"
-                        hx-get={LivePreviewPage}
+                        hx-get={livePreviewBox}
                         hx-trigger="keyup changed delay:500ms"
                         hx-target="#html-preview"
                         placeholder="Your pages's content in markdown format."

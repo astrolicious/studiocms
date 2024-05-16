@@ -3,7 +3,8 @@
 import { SiteConfig, db, eq } from 'astro:db';
 import { Layout } from 'studiocms-dashboard:components';
 import Config from 'virtual:studiocms/config';
-import { authHelper, urlGenFactory, type Locals, type PageDataAndContent } from 'studiocms:helpers';
+import { authHelper, type Locals, type PageDataAndContent } from 'studiocms:helpers';
+import { StudioCMSRoutes } from 'studiocms-dashboard:routeMap'
 
 if (Config.includedIntegrations.useInoxSitemap) {
     import('sitemap-ext:config').then((sitemap) => {
@@ -11,24 +12,34 @@ if (Config.includedIntegrations.useInoxSitemap) {
     })
 }
 
-const { dashboardConfig: { developerConfig, dashboardRouteOverride } } = Config;
+const { dashboardConfig: { developerConfig } } = Config;
+
+const { 
+    authLinks: { 
+        loginURL 
+    }, 
+    mainLinks: { 
+        userProfile,
+        dashboardIndex,
+        siteConfiguration,
+        configurationAdmins
+    } 
+} = StudioCMSRoutes;
 
 const contextConfig: PageDataAndContent["SiteConfig"] = await db.select().from(SiteConfig).where(eq(SiteConfig.id, 1)).get();
 
 const locals = Astro.locals as Locals;
 const { permissionLevel } = await authHelper(locals);
 
-const manageAdmins = await urlGenFactory(true, "configuration/admins/", dashboardRouteOverride);
-
 // If the user is not logged in, redirect to the login page
 if ( !developerConfig.testingAndDemoMode ) {
     if ( permissionLevel === "unknown" ) {
         console.log('User is not logged in. Redirecting to login page.');
-        return Astro.redirect(await urlGenFactory(true, "login", dashboardRouteOverride));
+        return Astro.redirect(loginURL);
     }
     if ( permissionLevel !== 'admin' ) {
         console.log('User is not an admin. Redirecting to profile page.');
-        return Astro.redirect(await urlGenFactory(true, "profile", dashboardRouteOverride));
+        return Astro.redirect(userProfile);
     }
 }
 
@@ -60,10 +71,6 @@ if (Astro.request.method === 'POST' && !developerConfig.testingAndDemoMode) {
         }
     }
 }
-const breadcrumbs = {
-    Dashboard: await urlGenFactory(true, '', dashboardRouteOverride),
-    SiteConfiguration: await urlGenFactory(true, 'configuration', dashboardRouteOverride),
-}
 
 
 const pageTitle = `Site Config | ${contextConfig.title}`;
@@ -76,10 +83,10 @@ const pageTitle = `Site Config | ${contextConfig.title}`;
     <div class="flex grow w-full pb-4">
         <sl-breadcrumb>
             <span slot="separator">/</span>
-            <sl-breadcrumb-item href={breadcrumbs.Dashboard}>Dashboard
+            <sl-breadcrumb-item href={dashboardIndex}>Dashboard
                 <sl-icon slot="prefix" name="columns-gap"></sl-icon>
             </sl-breadcrumb-item>
-            <sl-breadcrumb-item href={breadcrumbs.SiteConfiguration}>Site Configuration</sl-breadcrumb-item>
+            <sl-breadcrumb-item href={siteConfiguration}>Site Configuration</sl-breadcrumb-item>
         </sl-breadcrumb>
     </div>
     <div class="alert-toast">
@@ -104,7 +111,7 @@ const pageTitle = `Site Config | ${contextConfig.title}`;
 
         <div class="py-4 grow place-self-center">
             <a 
-                href={manageAdmins} 
+                href={configurationAdmins} 
                 class="btn btn-outline ml-5" 
                 type="submit" >
                 Manage Admins

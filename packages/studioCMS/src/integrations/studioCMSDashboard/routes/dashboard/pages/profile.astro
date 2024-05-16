@@ -3,7 +3,8 @@
 import { SiteConfig, db, eq } from 'astro:db';
 import { Layout } from 'studiocms-dashboard:components';
 import Config from 'virtual:studiocms/config';
-import { urlGenFactory, authHelper, toPascalCase, type Locals, type PageDataAndContent } from 'studiocms:helpers';
+import { authHelper, toPascalCase, type Locals, type PageDataAndContent } from 'studiocms:helpers';
+import { StudioCMSRoutes } from 'studiocms-dashboard:routeMap'
 
 if (Config.includedIntegrations.useInoxSitemap) {
     import('sitemap-ext:config').then((sitemap) => {
@@ -11,7 +12,17 @@ if (Config.includedIntegrations.useInoxSitemap) {
     })
 }
 
-const { dashboardConfig: { developerConfig, dashboardRouteOverride } } = Config;
+const { dashboardConfig: { developerConfig } } = Config;
+
+const { 
+    authLinks: {
+        loginURL
+    }, 
+    mainLinks: {
+        dashboardIndex,
+        userProfile
+    }
+} = StudioCMSRoutes
 
 const contextConfig: PageDataAndContent["SiteConfig"] = await db.select().from(SiteConfig).where(eq(SiteConfig.id, 1)).get();
 
@@ -22,13 +33,23 @@ const { permissionLevel, name, username, currentUserSession, githubURL } = await
 if ( !developerConfig.testingAndDemoMode ) {
     if ( permissionLevel === "unknown" ) {
         console.log('User is not logged in. Redirecting to login page.');
-        return Astro.redirect(await urlGenFactory(true, "login", dashboardRouteOverride))
+        return Astro.redirect(loginURL)
     }
 }
-const breadcrumbs = {
-    Dashboard: await urlGenFactory(true, '', dashboardRouteOverride),
-    UserProfile: await urlGenFactory(true, 'profile', dashboardRouteOverride),
-}
+
+// For later project for creating hash to use with gravatar
+// const testvar = locals.dbUser.email as string;
+// async function digestMessage(message: string) {
+//   const msgUint8 = new TextEncoder().encode(message); // encode as (utf-8) Uint8Array
+//   const hashBuffer = await crypto.subtle.digest("SHA-256", msgUint8); // hash the message
+//   const hashArray = Array.from(new Uint8Array(hashBuffer)); // convert buffer to byte array
+//   const hashHex = hashArray
+//     .map((b) => b.toString(16).padStart(2, "0"))
+//     .join(""); // convert bytes to hex string
+//   return hashHex;
+// }
+// const reponse = await digestMessage(testvar);
+// console.log(reponse);
 
 
 const pageTitle = `User profile | ${contextConfig.title}`;
@@ -42,10 +63,10 @@ const pageTitle = `User profile | ${contextConfig.title}`;
     <div class="flex grow w-full pb-4">
         <sl-breadcrumb>
             <span slot="separator">/</span>
-            <sl-breadcrumb-item href={breadcrumbs.Dashboard}>Dashboard
+            <sl-breadcrumb-item href={dashboardIndex}>Dashboard
                 <sl-icon slot="prefix" name="columns-gap"></sl-icon>
             </sl-breadcrumb-item>
-            <sl-breadcrumb-item href={breadcrumbs.UserProfile}>User Profile</sl-breadcrumb-item>
+            <sl-breadcrumb-item href={userProfile}>User Profile</sl-breadcrumb-item>
         </sl-breadcrumb>
     </div>
 

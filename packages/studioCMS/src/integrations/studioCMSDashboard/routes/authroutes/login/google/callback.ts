@@ -3,18 +3,19 @@ import { User, db, eq } from 'astro:db';
 import { Google, OAuth2RequestError } from 'arctic';
 import type { APIContext } from 'astro';
 import { authEnvCheck, lucia } from "studiocms-dashboard:auth";
-import { urlGenFactory } from 'studiocms:helpers';
 import Config from 'virtual:studiocms/config';
+import { StudioCMSRoutes } from 'studiocms-dashboard:routeMap';
+import { randomUUID } from 'node:crypto';
 
 const { 
 	dashboardConfig: { 
 		AuthConfig: {
 			providers
 		},
-	  dashboardRouteOverride,
 	} 
   } = Config;
 
+const { authLinks: { loginURL }, mainLinks: { dashboardIndex } } = StudioCMSRoutes;
 const { GOOGLE: { CLIENT_ID, CLIENT_SECRET, REDIRECT_URI } } = await authEnvCheck(providers);
 
 export async function GET(context: APIContext): Promise<Response> {
@@ -37,7 +38,7 @@ export async function GET(context: APIContext): Promise<Response> {
 		// return new Response(null, {
 		// 	status: 403,
 		// });
-		return redirect(await urlGenFactory(true, "login", dashboardRouteOverride));
+		return redirect(loginURL);
 	}
 
 	try {
@@ -62,7 +63,7 @@ export async function GET(context: APIContext): Promise<Response> {
 			const session = await lucia.createSession(existingUser.id, {});
 			const sessionCookie = lucia.createSessionCookie(session.id);
 			cookies.set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
-			return redirect(await urlGenFactory(true, undefined, dashboardRouteOverride));
+			return redirect(dashboardIndex);
 		}
 
 		// Google does not provide a username, so we create one based on the name
@@ -80,6 +81,7 @@ export async function GET(context: APIContext): Promise<Response> {
 		const createdUser = await db
 			.insert(User)
 			.values({
+				id: randomUUID(),
 				googleId,
 				username,
 				name,
@@ -94,7 +96,7 @@ export async function GET(context: APIContext): Promise<Response> {
 		const sessionCookie = lucia.createSessionCookie(session.id);
 
 		cookies.set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
-		return redirect(await urlGenFactory(true, undefined, dashboardRouteOverride));
+		return redirect(dashboardIndex);
 	} catch (e) {
 		// the specific error message depends on the provider
 		if (e instanceof OAuth2RequestError) {

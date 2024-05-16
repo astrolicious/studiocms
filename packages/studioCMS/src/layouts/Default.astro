@@ -1,12 +1,10 @@
 ---
-// @ts-expect-error - Some types can only be imported from the Astro runtime
-import { SiteConfig, db } from 'astro:db';
+import { getSiteConfig } from 'studiocms:components'
 import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
 
-const ConfigArray = await db.select().from(SiteConfig);
-const contextConfig = ConfigArray.pop();
+const { siteTitle, siteDescription } = await getSiteConfig();
 
 type Props = {
 	title: string;
@@ -16,8 +14,8 @@ type Props = {
 
 const { title, description, heroImage } = Astro.props;
 
-const pageDescription = `${description} - ${contextConfig.description}`;
-const pageTitle = `${title} | ${contextConfig.title}`;
+const pageDescription = `${description} - ${siteDescription}`;
+const pageTitle = `${title} | ${siteTitle}`;
 
 ---
 
@@ -27,7 +25,7 @@ const pageTitle = `${title} | ${contextConfig.title}`;
 		<BaseHead title={pageTitle} description={pageDescription} image={heroImage}/>
 	</head>
 	<body>
-		<Header title={contextConfig.title} />
+		<Header title={siteTitle} />
 		
 		<slot />
 

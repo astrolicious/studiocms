@@ -57,6 +57,7 @@ export default defineIntegration({
 						}
 
 						mergedOptions = { ...optionsSchema._def.defaultValue, ...parsedOptions.data}
+
 					}
 
 					// Destructure Options
@@ -76,10 +77,8 @@ export default defineIntegration({
 						}
 					} = mergedOptions;
 
-					// Log that the StudioCMS config file is being used
-					if (studioCMSConfigFile && Object.keys(studioCMSConfigFile).length > 0) {
-						integrationLogger(logger, verbose, 'warn', `Your project includes a StudioCMS config file ('studiocms.config.mjs'). To avoid unexpected results from merging multiple config sources, move all StudioCMS options to the StudioCMS config file. Or remove the file to use only the options provided in the Astro config.`);
-					}
+					// Log that the StudioCMS config file is being used if verbose
+					integrationLogger(logger, verbose, 'warn', `Your project includes a StudioCMS config file ('studiocms.config.mjs'). To avoid unexpected results from merging multiple config sources, move all StudioCMS options to the StudioCMS config file. Or remove the file to use only the options provided in the Astro config.`);
 
 					// Check for SSR Mode (output: "server")
 					// TODO: Add support for "hybrid" mode
@@ -169,6 +168,10 @@ export default defineIntegration({
 						export const StudioCMSRenderer: typeof import('${virtResolver.StudioCMSRenderer}').default;
 						export type ContentHelperTempResponse = import('${virtResolver.contentHelper}').ContentHelperTempResponse;
 						export const contentHelper: typeof import('${virtResolver.contentHelper}').contentHelper;
+						export type SiteConfigResponse = import('${virtResolver.contentHelper}').SiteConfigResponse;
+						export const getSiteConfig: typeof import('${virtResolver.contentHelper}').getSiteConfig;
+						export type pageDataReponse = import('${virtResolver.contentHelper}').pageDataReponse;
+						export const getPageList: typeof import('${virtResolver.contentHelper}').getPageList;
 					}`);
 
 					// Add Virtual DTS Lines - Helpers

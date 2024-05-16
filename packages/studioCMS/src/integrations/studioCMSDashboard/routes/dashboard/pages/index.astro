@@ -3,7 +3,8 @@
 import { SiteConfig, db, eq } from 'astro:db';
 import { Layout } from 'studiocms-dashboard:components';
 import Config from 'virtual:studiocms/config';
-import { authHelper, urlGenFactory, type Locals, type PageDataAndContent } from 'studiocms:helpers';
+import { authHelper, type Locals, type PageDataAndContent } from 'studiocms:helpers';
+import { StudioCMSRoutes } from 'studiocms-dashboard:routeMap';
 
 if (Config.includedIntegrations.useInoxSitemap) {
     import('sitemap-ext:config').then((sitemap) => {
@@ -11,7 +12,17 @@ if (Config.includedIntegrations.useInoxSitemap) {
     })
 }
 
-const { dashboardConfig: { developerConfig, dashboardRouteOverride } } = Config;
+const { 
+    mainLinks: {
+        userProfile,
+        dashboardIndex
+    },
+    authLinks: {
+        loginURL
+    }
+} = StudioCMSRoutes;
+
+const { dashboardConfig: { developerConfig } } = Config;
 
 const contextConfig: PageDataAndContent["SiteConfig"] = await db.select().from(SiteConfig).where(eq(SiteConfig.id, 1)).get();
 
@@ -22,15 +33,12 @@ const { permissionLevel } = await authHelper(locals);
 if ( !developerConfig.testingAndDemoMode ) {
     if ( permissionLevel === "unknown" ) {
         console.log('User is not logged in. Redirecting to login page.');
-        return Astro.redirect(await urlGenFactory(true, "login", dashboardRouteOverride));
+        return Astro.redirect(loginURL);
     }
     if ( permissionLevel !== 'admin' && permissionLevel !== 'editor' ) {
         console.log('User is not an admin or editor. Redirecting to profile page.');
-        return Astro.redirect(await urlGenFactory(true, "profile", dashboardRouteOverride));
+        return Astro.redirect(userProfile);
     }
-}
-const breadcrumbs = {
-    Dashboard: await urlGenFactory(true, '', dashboardRouteOverride),
 }
 
 const pageTitle = `Dashboard | ${contextConfig.title}`;
@@ -44,7 +52,7 @@ const pageTitle = `Dashboard | ${contextConfig.title}`;
     <div class="flex grow w-full pb-4">
         <sl-breadcrumb>
             <span slot="separator">/</span>
-            <sl-breadcrumb-item href={breadcrumbs.Dashboard}>Dashboard
+            <sl-breadcrumb-item href={dashboardIndex}>Dashboard
                 <sl-icon slot="prefix" name="columns-gap"></sl-icon>
             </sl-breadcrumb-item>
         </sl-breadcrumb>

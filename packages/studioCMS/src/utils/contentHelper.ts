@@ -1,6 +1,7 @@
 // @ts-expect-error - Some types can only be imported from the Astro runtime
-import { PageData, PageContent, db, eq } from 'astro:db';
+import { PageData, PageContent, db, eq, asc, SiteConfig } from 'astro:db';
 import { AstroError } from 'astro/errors';
+import type { PageDataAndContent } from 'studiocms:helpers';
 
 export type pageDataReponse = {
     id: string;
@@ -40,6 +41,11 @@ export type ContentHelperTempResponse = {
     content: string;
 }
 
+export type SiteConfigResponse = {
+    siteTitle: string;
+    siteDescription: string;
+}
+
 /**
  * A helper function to get the content of a page by its slug.
  * 
@@ -65,7 +71,7 @@ export type ContentHelperTempResponse = {
  */
 export async function contentHelper( slug:string ): Promise<ContentHelperTempResponse>{
 
-    let slugTouse = slug;
+    const slugTouse = slug;
 
     const pageData: pageDataReponse = await db
         .select().from(PageData)
@@ -73,8 +79,7 @@ export async function contentHelper( slug:string ): Promise<ContentHelperTempRes
         .get();
 
     if(!pageData) {
-        // @ts-expect-error - I am returning an empty object here to allow a 404 page to be shown
-        return {}
+        return {} as ContentHelperTempResponse;
     }
 
     const LangToGet = "default";
@@ -88,4 +93,45 @@ export async function contentHelper( slug:string ): Promise<ContentHelperTempRes
         `studioCMS contentHelper Failed to get page content for page ${slug} with language ${LangToGet}` );
     }
     return { ...pageData, content: pageContent.content };
+}
+
+/**
+ * Get page list helper function to get a list of all pages from Astro Studio's database.
+ * 
+ * @returns A Array of all pages in the database in ascending order of their published date.
+ */
+export async function getPageList(): Promise<pageDataReponse[]> {
+    const pageData: pageDataReponse[] = await db
+            .select()
+            .from(PageData)
+            .orderBy(asc(PageData.publishedAt));
+
+    if(!pageData) {
+        return [] as pageDataReponse[];
+    }
+
+
+    return pageData;
+}
+
+/**
+ * Site Configuration helper function to get the site configuration data from Astro Studio's Database.
+ * 
+ * @returns The site configuration data. (Title, Description)
+ */
+export async function getSiteConfig(): Promise<SiteConfigResponse> {
+    const config: PageDataAndContent["SiteConfig"] = await db
+            .select()
+            .from(SiteConfig)
+            .where(eq(SiteConfig.id, 1))
+            .get();
+    
+    if(!config) {
+        return {} as SiteConfigResponse;
+    }
+
+    return {
+        siteTitle: config.title,
+        siteDescription: config.description,
+    };
 }

@@ -29,22 +29,6 @@ export const User = defineTable({
 	},
 });
 
-export const Blog = defineTable({
-	columns: {
-		id: column.number({ primaryKey: true }),
-		title: column.text(),
-		description: column.text(),
-		slug: column.text(),
-		publishedAt: column.date({ default: NOW }),
-		updatedAt: column.date({ optional: true }),
-		heroImage: column.text({
-			default:
-				'https://images.unsplash.com/photo-1707343843982-f8275f3994c5?q=80&w=1032&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-		}),
-		content: column.text({ multiline: true }),
-	},
-});
-
 export const PageData = defineTable({
 	columns: {
 		id: column.text({ primaryKey: true, default: randomUUID() }),

@@ -1,8 +1,9 @@
 ---
 import { Layout } from 'studiocms-dashboard:components';
 import Config from 'virtual:studiocms/config';
-import { urlGenFactory, type Locals } from 'studiocms:helpers';
+import type { Locals } from 'studiocms:helpers';
 import OauthProviders from '../components/OauthProviders.astro';
+import { StudioCMSRoutes } from 'studiocms-dashboard:routeMap';
 
 if (Config.includedIntegrations.useInoxSitemap) {
     import('sitemap-ext:config').then((sitemap) => {
@@ -10,20 +11,13 @@ if (Config.includedIntegrations.useInoxSitemap) {
     })
 }
 
-const { 
-  dashboardConfig,
-  dashboardConfig: { 
-    dashboardRouteOverride,
-  } 
-} = Config;
+const {  dashboardConfig } = Config;
+const { authLinks: { loginURL, registerAPI }, mainLinks: { dashboardIndex } } = StudioCMSRoutes;
 
 const locals = Astro.locals as Locals;
 
-const LoginURL = await urlGenFactory(true, 'login/', dashboardRouteOverride)
-const UserPassRegisterURL = await urlGenFactory(true, 'login/api/register', dashboardRouteOverride)
-
 if (locals.isLoggedIn) {
-	return Astro.redirect(await urlGenFactory(true, undefined, dashboardRouteOverride));
+	return Astro.redirect(dashboardIndex);
 }
 ---
 
@@ -46,7 +40,7 @@ if (locals.isLoggedIn) {
         <div class="py-8">
           <div class="bg-base-300 p-8 rounded-lg">
 
-          <form method="post" action={UserPassRegisterURL}>
+          <form method="post" action={registerAPI}>
 
             <sl-input 
             name="username" 
@@ -79,7 +73,7 @@ if (locals.isLoggedIn) {
 
           <div class="py-4">
             <center>
-              <a href={LoginURL} class="text-lg">Already have an account? Sign in!</a>
+              <a href={loginURL} class="text-lg">Already have an account? Sign in!</a>
             </center>
           </div>
 

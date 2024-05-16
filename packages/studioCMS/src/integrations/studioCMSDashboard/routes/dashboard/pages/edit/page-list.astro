@@ -3,8 +3,9 @@
 import { SiteConfig, db, eq, asc, PageData } from 'astro:db';
 import { Layout } from 'studiocms-dashboard:components';
 import Config from 'virtual:studiocms/config';
-import { authHelper, urlGenFactory, type Locals, type PageDataAndContent } from 'studiocms:helpers';
+import { authHelper, type Locals, type PageDataAndContent } from 'studiocms:helpers';
 import { FormattedDate } from 'studiocms:components';
+import { StudioCMSRoutes, getEditRoute, getDeleteRoute } from 'studiocms-dashboard:routeMap';
 
 if (Config.includedIntegrations.useInoxSitemap) {
     import('sitemap-ext:config').then((sitemap) => {
@@ -12,29 +13,35 @@ if (Config.includedIntegrations.useInoxSitemap) {
     })
 }
 
-const { dashboardConfig: { developerConfig, dashboardRouteOverride } } = Config;
+const { dashboardConfig: { developerConfig: { testingAndDemoMode } } } = Config;
 
-const contextConfig = await db.select().from(SiteConfig).where(eq(SiteConfig.id, 1)).get();
+const { 
+    authLinks: { 
+        loginURL 
+    }, 
+    mainLinks: { 
+        userProfile,
+        dashboardIndex,
+        pageEdit,
+    } 
+} = StudioCMSRoutes;
+
+const contextConfig: PageDataAndContent["SiteConfig"] = await db.select().from(SiteConfig).where(eq(SiteConfig.id, 1)).get();
 const pages: PageDataAndContent["PageData"][] = await db.select().from(PageData).orderBy(asc(PageData.id));
 
 const locals = Astro.locals as Locals;
 const { permissionLevel } = await authHelper(locals);
 
 // If the user is not logged in, redirect to the login page
-if ( !developerConfig.testingAndDemoMode ) {
+if ( !testingAndDemoMode ) {
     if ( permissionLevel === "unknown" ) {
         console.log('User is not logged in. Redirecting to login page.');
-        return Astro.redirect(await urlGenFactory(true, "login", dashboardRouteOverride));
+        return Astro.redirect(loginURL);
     }
     if ( permissionLevel !== 'admin' && permissionLevel !== 'editor' ) {
         console.log('User is not an admin or editor. Redirecting to profile page.');
-        return Astro.redirect(await urlGenFactory(true, "profile", dashboardRouteOverride));
+        return Astro.redirect(userProfile);
     }
-}
-
-const breadcrumbs = {
-    Dashboard: await urlGenFactory(true, '', dashboardRouteOverride),
-    ExistingPages: await urlGenFactory(true, 'page-list', dashboardRouteOverride)
 }
 
 const pageTitle = `Existing Pages | ${contextConfig.title}`;
@@ -48,10 +55,10 @@ const pageTitle = `Existing Pages | ${contextConfig.title}`;
     <div class="flex grow w-full pb-4">
         <sl-breadcrumb>
             <span slot="separator">/</span>
-            <sl-breadcrumb-item href={breadcrumbs.Dashboard}>Dashboard
+            <sl-breadcrumb-item href={dashboardIndex}>Dashboard
                 <sl-icon slot="prefix" name="columns-gap"></sl-icon>
             </sl-breadcrumb-item>
-            <sl-breadcrumb-item href={breadcrumbs.ExistingPages}>Existing Pages</sl-breadcrumb-item>
+            <sl-breadcrumb-item href={pageEdit}>Existing Pages</sl-breadcrumb-item>
         </sl-breadcrumb>
     </div>
 
@@ -82,14 +89,14 @@ const pageTitle = `Existing Pages | ${contextConfig.title}`;
                                             <FormattedDate date={page.publishedAt}/>
                                         </td>
                                         <td class="px-6 py-4">
-                                            <sl-button variant="success" href={await urlGenFactory(true, `edit/pages/${page.slug}`, dashboardRouteOverride)} size="small" type="primary" pill outline>
+                                            <sl-button variant="success" href={await getEditRoute(page.slug)} size="small" type="primary" pill outline>
                                                 Edit
                                             </sl-button>
                                         </td>
                                         <td class="px-6 py-4">
-                                            { permissionLevel === 'admin' ? <sl-button variant="danger" href={await urlGenFactory(true, `delete/pages/${page.slug}`, dashboardRouteOverride)} size="small" type="primary" pill outline>
+                                            { permissionLevel === 'admin' ? <sl-button variant="danger" href={await getDeleteRoute(page.slug)} size="small" type="primary" pill outline>
                                                 Delete
-                                            </sl-button> : <sl-button variant="danger" href={await urlGenFactory(true, `delete/pages/${page.slug}`, dashboardRouteOverride)} size="small" type="primary" pill outline disabled>
+                                            </sl-button> : <sl-button variant="danger" href={await getDeleteRoute(page.slug)} size="small" type="primary" pill outline disabled>
                                                 Delete
                                             </sl-button> }
                                         </td>

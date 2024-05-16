@@ -18,7 +18,11 @@ declare module 'studiocms:components' {
 	export const FormattedDate: typeof import('./src/components/exports/FormattedDate.astro').default;
 	export const StudioCMSRenderer: typeof import('./src/components/exports/StudioCMSRenderer.astro').default;
 	export const contentHelper: typeof import('./src/utils/contentHelper').contentHelper;
-	export const ContentHelperTempResponse: typeof import('./src/utils/contentHelper').ContentHelperTempResponse;
+	export type ContentHelperTempResponse = import('./src/utils/contentHelper').ContentHelperTempResponse;
+	export type SiteConfigResponse = import('./src/utils/contentHelper').SiteConfigResponse;
+	export const getSiteConfig: typeof import('./src/utils/contentHelper').getSiteConfig;
+	export type pageDataReponse = import('./src/utils/contentHelper').pageDataReponse;
+	export const getPageList: typeof import('./src/utils/contentHelper').getPageList; 
 }
 
 declare module 'studiocms:helpers' {
@@ -39,6 +43,13 @@ declare module 'studiocms-dashboard:auth' {
 
 declare module 'studiocms-dashboard:components' {
 	export const Layout: typeof import('./src/integrations/studioCMSDashboard/routes/dashboard/layouts/Layout.astro').default;
+}
+
+declare module 'studiocms-dashboard:routeMap' {
+	export const getSluggedRoute: typeof import('./src/integrations/studioCMSDashboard/utils/routemap').getSluggedRoute;
+	export const getEditRoute: typeof import('./src/integrations/studioCMSDashboard/utils/routemap').getEditRoute;
+	export const getDeleteRoute: typeof import('./src/integrations/studioCMSDashboard/utils/routemap').getDeleteRoute;
+	export const StudioCMSRoutes: typeof import('./src/integrations/studioCMSDashboard/utils/routemap').StudioCMSRoutes;
 }
 
 interface ImportMetaEnv {

@@ -3,10 +3,11 @@ import { User, db, eq } from 'astro:db';
 import { lucia } from "studiocms-dashboard:auth";
 import { scryptAsync } from "@noble/hashes/scrypt";
 import AuthSec from 'virtual:studiocms-dashboard/auth-sec';
+import type { APIContext } from "astro";
+import { randomUUID } from 'node:crypto';
 
 const { salt: ScryptSalt, opts: ScryptOpts } = AuthSec;
 
-import type { APIContext } from "astro";
 
 export async function POST(context: APIContext): Promise<Response> {
 	const formData = await context.request.formData();
@@ -58,6 +59,7 @@ export async function POST(context: APIContext): Promise<Response> {
     await db
         .insert(User)
         .values({
+			id: randomUUID(),
             name: name as string,
             username,
         })
