@@ -3,7 +3,7 @@ permissions:
     pull-requests: write
     
 on:
-    issue_comment:
+    pull_request:
       types:
         - created
         
