@@ -15,7 +15,7 @@ import studioCMSRobotsTXT from './integrations/robotstxt';
 import studioCMSImageHandler from './integrations/imageHandler';
 import studioCMSDashboard from './integrations/studioCMSDashboard';
 import { fileFactory } from './utils/fileFactory';
-import { DbErrors } from './strings';
+import { DbErrors, studioErrors, warnings } from './strings';
 import { getStudioConfigFileUrl, loadStudioCMSConfigFile } from './studiocms-config';
 
 // Main Integration
@@ -55,10 +55,10 @@ export default defineIntegration({
 						if ( !parsedOptions.success || parsedOptions.error || !parsedOptions.data ) {
 							const parsedErrors = parsedOptions.error.errors;
 							const parsedErrorMap = parsedErrors.map((e) => ` - ${e.message}`).join('\n');
-							const parsedErrorString = `The StudioCMS config file ('studiocms.config.mjs') was found but the following errors where encountered while parsing it:\n${parsedErrorMap}`;
+							const parsedErrorString = `${studioErrors.failedToParseConfig}\n${parsedErrorMap}`;
 
 							integrationLogger(logger, true, 'error', parsedErrorString);
-							throw new AstroError("Invalid StudioCMS Config File", parsedErrorString);
+							throw new AstroError(studioErrors.invalidConfigFile, parsedErrorString);
 						}
 						mergedOptions = { ...optionsSchema._def.defaultValue, ...parsedOptions.data}
 						
@@ -82,7 +82,7 @@ export default defineIntegration({
 					} = mergedOptions;
 
 					// Log that the StudioCMS config file is being used if verbose
-					integrationLogger(logger, verbose, 'warn', `Your project includes a StudioCMS config file ('studiocms.config.mjs'). To avoid unexpected results from merging multiple config sources, move all StudioCMS options to the StudioCMS config file. Or remove the file to use only the options provided in the Astro config.`);
+					integrationLogger(logger, verbose, 'warn', warnings.StudioCMSConfigPresent);
 
 					// Check for SSR Mode (output: "server")
 					// TODO: Add support for "hybrid" mode

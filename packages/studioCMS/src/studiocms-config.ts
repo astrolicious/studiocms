@@ -64,5 +64,5 @@ export async function loadStudioCMSConfigFile(projectRootUrl: URL | string): Pro
 			)
 		}
 	}
-	return {}
+	return {} as StudioCMSOptions;
 }
