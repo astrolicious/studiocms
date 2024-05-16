@@ -91,3 +91,4 @@ If the `useUnpic` option is enabled, this option allows the user to choose betwe
 - **Default:** `'cloudinary-js'`
 
 Allows the user to use a custom Supported CDN Plugin, so it can be specified here.
+
