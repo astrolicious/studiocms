@@ -27,6 +27,22 @@ export const PageDataAndContentSchema = z.object({
         username: z.string(),
         rank: z.string(),
     }),
+    User: z.object({
+        id: z.string(),
+        name: z.string(),
+        username: z.string(),
+        url: z.string().nullable(),
+        email: z.string().nullable(),
+        avatar: z.string().nullable(),
+        githubId: z.number().nullable(),
+        githubURL: z.string().nullable(),
+        discordId: z.string().nullable(),
+        googleId: z.string().nullable(),
+        auth0Id: z.string().nullable(),
+        password: z.string().nullable(),
+        updatedAt: z.date().nullable(),
+        createdAt: z.date().nullable(),
+    }),
 });
 
 export type PageDataAndContent = z.infer<typeof PageDataAndContentSchema>;

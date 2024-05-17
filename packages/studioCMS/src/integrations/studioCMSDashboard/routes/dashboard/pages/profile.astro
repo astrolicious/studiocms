@@ -3,8 +3,9 @@
 import { SiteConfig, db, eq } from 'astro:db';
 import { Layout } from 'studiocms-dashboard:components';
 import Config from 'virtual:studiocms/config';
-import { authHelper, toPascalCase, type Locals, type PageDataAndContent } from 'studiocms:helpers';
-import { StudioCMSRoutes } from 'studiocms-dashboard:routeMap'
+import { authHelper, toPascalCase, type Locals } from 'studiocms:helpers';
+import { StudioCMSRoutes } from 'studiocms-dashboard:routeMap';
+import type { SiteConfigResponse } from 'studiocms:components';
 
 if (Config.includedIntegrations.useInoxSitemap) {
     import('sitemap-ext:config').then((sitemap) => {
@@ -24,7 +25,7 @@ const {
     }
 } = StudioCMSRoutes
 
-const contextConfig: PageDataAndContent["SiteConfig"] = await db.select().from(SiteConfig).where(eq(SiteConfig.id, 1)).get();
+const contextConfig: SiteConfigResponse = await db.select().from(SiteConfig).where(eq(SiteConfig.id, 1)).get();
 const { permissionLevel, name, username, currentUserSession, githubURL } = await authHelper(Astro.locals as Locals);
 
 // If the user is not logged in, redirect to the login page

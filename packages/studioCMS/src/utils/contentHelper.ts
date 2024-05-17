@@ -1,43 +1,12 @@
 // @ts-expect-error - Some types can only be imported from the Astro runtime
-import { PageData, PageContent, db, eq, asc, desc, SiteConfig, User } from 'astro:db';
+import { PageData, PageContent, SiteConfig, User, db, eq, asc, desc } from 'astro:db';
 import { AstroError } from 'astro/errors';
 import type { PageDataAndContent } from 'studiocms:helpers';
 
-export type UserResponse = {
-    id: string;
-    url: string | null;
-    name: string;
-    email: string | null;
-    avatar: string | null;
-    githubId: number | null;
-    githubURL: string | null;
-    discordId: string | null;
-    googleId: string | null;
-    auth0Id: string | null;
-    username: string;
-    password: string | null;
-    updatedAt: Date | null;
-    createdAt: Date | null;
-};
-
-export type pageDataReponse = {
-    id: string;
-    package: string;
-    title: string;
-    description: string;
-    publishedAt: Date;
-    updatedAt: Date | null;
-    slug: string;
-    contentLang: string;
-    heroImage: string;
-}
-
-export type pageContentReponse = {
-    id: string;
-    contentId: string;
-    contentLang: string;
-    content: string | null;
-}
+export type UserResponse = PageDataAndContent["User"];
+export type pageDataReponse = PageDataAndContent["PageData"];
+export type pageContentReponse = PageDataAndContent["PageContent"];
+export type SiteConfigResponse = PageDataAndContent["SiteConfig"];
 
 // To be used in the future
 //
@@ -56,11 +25,6 @@ export type ContentHelperTempResponse = {
     slug: string;
     heroImage: string;
     content: string;
-}
-
-export type SiteConfigResponse = {
-    siteTitle: string;
-    siteDescription: string;
 }
 
 /**
@@ -88,11 +52,11 @@ export type SiteConfigResponse = {
  */
 export async function contentHelper( slug:string ): Promise<ContentHelperTempResponse>{
 
-    const slugTouse = slug;
+    const slugToUse = slug;
 
     const pageData: pageDataReponse = await db
         .select().from(PageData)
-        .where(eq(PageData.slug, slugTouse))
+        .where(eq(PageData.slug, slugToUse))
         .get();
 
     if(!pageData) {
@@ -148,8 +112,9 @@ export async function getSiteConfig(): Promise<SiteConfigResponse> {
     }
 
     return {
-        siteTitle: config.title,
-        siteDescription: config.description,
+        id: config.id,
+        title: config.title,
+        description: config.description,
     };
 }
 
