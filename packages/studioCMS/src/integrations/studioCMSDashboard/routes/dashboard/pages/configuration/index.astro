@@ -105,39 +105,41 @@ const pageTitle = `Site Config | ${contextConfig.title}`;
     </div>
     <div class="container max-w-[100vw] lg:max-w-[1800px] min-w-[75vw] flex flex-col">
 
-        <div class="text-5xl font-bold grow place-self-center py-8">Site Configuration</div>
+        <div class="text-5xl font-bold grow py-8">Site Configuration</div>
 
-        <div class="py-4 grow place-self-center">
-            <a 
-                href={configurationAdmins} 
-                class="btn btn-outline ml-5" 
-                type="submit" >
-                Manage Admins
-            </a>
+        <div class="py-4 text-center">
+            <sl-button variant="warning" href={configurationAdmins} outline>Manage Admins</sl-button>
         </div>
 
-        <div class="py-2 grow place-self-center">
+        <div class="py-2 grow">
             <form method="post" enctype="multipart/form-data" >
-                <label for="title" class="text-lg">Site Title</label><br />
-                <input 
-                    type="text" 
-                    id="title" 
-                    name="title" 
-                    class="border-solid border-2 border-gray-300 rounded-lg p-2 w-96"
+
+                <sl-input
+                    id="title"
+                    name="title"
+                    placeholder="Site Title"
+                    size="medium"
+                    class="py-2"
                     value={contextConfig.title} 
-                    required><br /><br />
-                <label for="description" class="text-lg">Description</label><br />
-                <input
-                    type="text" 
-                    id="description" 
-                    name="description" 
-                    class="border-solid border-2 border-gray-300 rounded-lg p-2 w-96"
-                    value={contextConfig.description}
-                    required><br /><br />
+                    required>
+                    <div slot="label" class="text-lg inline">Site Title</div>
+                    <sl-icon name="globe2" slot="prefix"></sl-icon>
+                </sl-input>
+                <sl-input
+                    id="description"
+                    name="description"
+                    placeholder="Site Description"
+                    size="medium"
+                    class="py-2"
+                    value={contextConfig.description} 
+                    required>
+                    <div slot="label" class="text-lg inline">Description</div>
+                    <sl-icon name="line" slot="prefix"></sl-icon>
+                </sl-input>
     
-                <center class="py-2">
-                    <button class="btn btn-outline ml-5" type="submit">Update!</button>
-                </center>
+                <div class="py-4 text-center">
+                    <sl-button variant="success" type="submit" outline>Update!</sl-button>
+                </div>
     
             </form>
         </div>

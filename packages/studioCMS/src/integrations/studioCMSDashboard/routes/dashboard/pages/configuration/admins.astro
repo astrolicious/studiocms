@@ -3,7 +3,7 @@
 import { Permissions, SiteConfig, db, eq } from 'astro:db';
 import { Layout } from 'studiocms-dashboard:components';
 import Config from 'virtual:studiocms/config';
-import { authHelper, type Locals, type PageDataAndContent } from 'studiocms:helpers';
+import { authHelper, toPascalCase, type Locals, type PageDataAndContent } from 'studiocms:helpers';
 import { StudioCMSRoutes } from 'studiocms-dashboard:routeMap'
 
 if (Config.includedIntegrations.useInoxSitemap) {
@@ -48,13 +48,13 @@ let showErrorToast = false;
 if (Astro.request.method === 'POST' && !developerConfig.testingAndDemoMode) {
     try {
         const data = await Astro.request.formData();
-        const admin = data.get('admins');
+        const newUser = data.get('username');
         const rank = data.get('rank');
 
         await db
             .insert(Permissions)
             .values({
-                username: admin as string,
+                username: newUser as string,
                 rank: rank as string,
             })
             .then(() => {
@@ -124,7 +124,11 @@ const pageTitle = `Site Config | ${contextConfig.title}`;
                                 return (
                                     <tr class="bg-base-200 text-inherit">
                                         <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap">{admin.username}</th>
-                                        <td class="px-6 py-4">{admin.rank}</td>
+                                        {
+                                            admin.rank === 'admin' ? 
+                                            <td class="px-6 py-4 text-yellow font-bold drop-shadow-md">{toPascalCase(admin.rank)}</td> :
+                                            <td class="px-6 py-4 text-blue font-bold drop-shadow-md">{toPascalCase(admin.rank)}</td>
+                                        }
                                     </tr>
                                 )
                             })
@@ -140,30 +144,31 @@ const pageTitle = `Site Config | ${contextConfig.title}`;
             </text>
         </div>
 
-        <div class="py-2 grow place-self-center">
-            <form method="post" enctype="multipart/form-data" >
-                    
-                <label for="admins" class="text-lg">Add New Admin or Editor</label><br>
-                <input 
-                    type="text" 
-                    id="admins" 
-                    name="admins" 
-                    class="border-solid border-2 border-gray-300 rounded-lg p-2 w-96"
-                    placeholder="GitHubUsername"
-                    required><br>
-                <label for="rank" class="text-lg">User Rank ("admin" or "editor")</label><br>
-                <input 
-                    type="text" 
-                    id="rank" 
-                    name="rank" 
-                    class="border-solid border-2 border-gray-300 rounded-lg p-2 w-96"
-                    placeholder="admin / editor"
-                    value="editor"
-                    required><br>
-                <center class="py-2">
-                    <button class="btn btn-outline ml-5" type="submit">Add!</button>
-                </center>
+        <div class="py-2 grow">
+            <form method="POST">
         
+                <sl-input
+                    id="username"
+                    name="username"
+                    placeholder="Username"
+                    size="medium"
+                    class="py-2"
+                    required>
+                    <div slot="label" class="text-lg inline">Add New Admin or Editor</div>
+                    <sl-icon name="person-circle" slot="prefix"></sl-icon>
+                </sl-input>
+
+                <sl-radio-group name="rank" id="rank" value="editor">
+                    <div slot="label" class="text-lg inline">User Permission Level</div>
+                    <p slot="help-text">Valid Permission types are: "admin" or "editor"</p>
+                    <sl-radio value="editor">Editor</sl-radio>
+                    <sl-radio value="admin">Admin</sl-radio>
+                  </sl-radio-group>
+    
+                <div class="py-4 text-center">
+                    <sl-button variant="success" type="submit" outline>Add User!</sl-button>
+                </div>
+    
             </form>
         </div>
 
