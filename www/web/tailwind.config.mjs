@@ -2,6 +2,7 @@
 export default {
   content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
   theme: {
+    darkMode: ['selector', '[data-theme="dark"]'],
     extend: {
       animation: {
         marquee: 'marquee 60s linear infinite',

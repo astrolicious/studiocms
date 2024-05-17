@@ -2,6 +2,7 @@
 import { AstroFont } from 'astro-font'
 import { SEO } from 'astro-seo'
 const OgBanner = new URL('/og.png', Astro.url)
+import ThemeManager from './ThemeManager.astro'
 ---
 
 <head>
@@ -16,6 +17,7 @@ const OgBanner = new URL('/og.png', Astro.url)
     data-website-id='393a8616-9a0a-484b-ab3d-1ebc4039fb18'
   ></script>
   <title>Astro-StudioCMS</title>
+  <ThemeManager defaultTheme="dark" />
   <SEO
     title='Astro StudioCMS'
     description='A dedicated CMS for Astro Studio.'

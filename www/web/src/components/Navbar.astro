@@ -1,10 +1,11 @@
 ---
 import { Icon } from 'astro-icon/components'
 import { GITHUB_URL, DOCS_URL } from '../constants'
+import ThemeSelect from './ThemeSelect.astro'
 ---
 
 <nav
-  class='h-navbar flex w-full items-center justify-between border-b bg-slate-100 px-10 text-gray-900 dark:bg-[--purple-900] dark:text-slate-100'
+  class='h-navbar flex w-full items-center justify-between border-b border-[--purple-900] dark:border-white bg-slate-100 px-10 text-gray-900 dark:bg-[--purple-900] dark:text-slate-100'
 >
   <div class='flex w-fit items-center justify-center gap-x-4'>
     <Icon name='logo' class='h-8 w-8 stroke-slate-100 text-[--purple-900]' />
@@ -27,6 +28,9 @@ import { GITHUB_URL, DOCS_URL } from '../constants'
             class='h-8 w-8 transition duration-200 ease-in-out hover:scale-110'
           /></a
         >
+      </li>
+      <li>
+        <ThemeSelect />
       </li>
     </ul>
   </div>

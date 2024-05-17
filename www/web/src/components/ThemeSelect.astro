@@ -1,0 +1,31 @@
+<theme-selector></theme-selector>
+<script is:inline>
+  if (!customElements.get("theme-selector")) {
+    customElements.define(
+      "theme-selector",
+      class extends HTMLElement {
+        connectedCallback() {
+          this.innerHTML = `
+            <select>
+              <option value="auto">Auto</option>
+              <option value="light">Light</option>
+              <option value="dark">Dark</option>
+            </select>
+          `;
+          this.querySelector("select").onchange = (event) =>
+            theme.setTheme(event.target.value);
+          this.setAttribute("aria-label", "Select Theme");
+          this.updateSelectedTheme();
+
+          document.addEventListener("theme-changed", (event) => {
+            this.updateSelectedTheme(event.detail.theme);
+          });
+        }
+
+        updateSelectedTheme(newTheme = theme.getTheme()) {
+          this.querySelector("select").value = newTheme;
+        }
+      }
+    );
+  }
+</script>

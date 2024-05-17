@@ -10,7 +10,7 @@
   }
 
   body {
-    @apply bg-[--purple-900] text-white dark:bg-[--purple-900] dark:text-slate-100;
+    @apply bg-slate-100 text-[--purple-900] dark:bg-[--purple-900] dark:text-slate-100;
     font-family: 'zenkaku';
   }
 
