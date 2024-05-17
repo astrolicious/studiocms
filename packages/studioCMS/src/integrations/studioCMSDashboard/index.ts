@@ -9,27 +9,12 @@ import UnoCSSAstroIntegration from "@unocss/astro";
 import { presetDaisy } from "@yangyang20240403/unocss-preset-daisyui";
 import { FileSystemIconLoader } from '@iconify/utils/lib/loader/node-loaders'
 import { presetScrollbar } from 'unocss-preset-scrollbar';
-import type { ScryptOpts } from "@noble/hashes/scrypt";
 import * as fs from "node:fs";
 import { randomUUID } from "node:crypto";
-import type { Input } from "@noble/hashes/utils";
+import type { AuthConfigMap, usernameAndPasswordConfig } from "../../schemas/auth-types";
 
 // Environment Variables
 const env = loadEnv('all', process.cwd(), 'CMS');
-
-type ScryptOptsRemap = {
-	cpu_mem: number;
-	block_size: number;
-	parallelization: number;
-	output_key_length?: number;
-	asyncTick?: number;
-	max_mem?: number;
-}
-
-type AuthConfigMap = {
-	salt: string;
-	opts: ScryptOptsRemap;
-}
 
 const AUTHKEYS = {
 	GITHUBCLIENTID: {
@@ -209,32 +194,29 @@ export default defineIntegration({
 					 *   },
 					 * }
 					 */
-					let VirtualAuthSecurity: { salt: Input, opts: ScryptOpts }
+					let VirtualAuthSecurity: usernameAndPasswordConfig
 
 					if ( usernameAndPassword ) {
 						try {
 							const authConfigFileJson = fs.readFileSync(virtualResolver.StudioAuthConfig, { encoding: 'utf-8' });
 							const authConfigFile: AuthConfigMap = JSON.parse(authConfigFileJson);
 
-							let { salt: UserSalt, opts: { cpu_mem, block_size, parallelization, output_key_length, asyncTick, max_mem } } = authConfigFile;
+							if (!authConfigFile.salt) {
+								return integrationLogger(logger, true, 'error', 'studiocms-auth.config.json file does not contain a salt');
+							}
 
 							const authConfigMap = {
-								salt: UserSalt,
+								salt: authConfigFile.salt,
 								opts: {
-									N: cpu_mem || 2 ** 12,
-									r: block_size || 8,
-									p: parallelization || 1,
-									dkLen: output_key_length || 32,
-									asyncTick: asyncTick || 10,
-									maxmem: max_mem || 1024 ** 3 + 1024,
-								} as ScryptOpts
-							}
+									N: authConfigFile.opts.cpu_mem || 2 ** 12,
+									r: authConfigFile.opts.block_size || 8,
+									p: authConfigFile.opts.parallelization || 1,
+									dkLen: authConfigFile.opts.output_key_length || 32,
+									asyncTick: authConfigFile.opts.asyncTick || 10,
+									maxmem: authConfigFile.opts.max_mem || 1024 ** 3 + 1024,
+								}
+							};
 
-							if ( !UserSalt ) {
-								// Make sure the salt is defined
-								const newSalt = randomUUID();
-								UserSalt = newSalt;
-							}
 
 							VirtualAuthSecurity = authConfigMap;
 						} catch (error) {

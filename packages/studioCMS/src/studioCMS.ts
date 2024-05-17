@@ -133,6 +133,8 @@ export default defineIntegration({
 						UrlGenHelper: resolve('./utils/urlGen.ts'),
 						textFormatterHelper: resolve('./utils/textFormatter.ts'),
 						contentHelper: resolve('./utils/contentHelper.ts'),
+						NavigationBar: resolve('./components/exports/Navigation.astro'),
+						Avatar: resolve('./components/exports/Avatar.astro'),
 					};
 
 					// Virtual Components
@@ -140,6 +142,8 @@ export default defineIntegration({
 					export { default as CImage } from '${virtResolver.CImage}';
 					export { default as FormattedDate } from '${virtResolver.FormattedDate}';
 					export { default as StudioCMSRenderer } from '${virtResolver.StudioCMSRenderer}';
+					export { default as Navigation } from '${virtResolver.NavigationBar}';
+					export { default as Avatar } from '${virtResolver.Avatar}';
 					export * from '${virtResolver.contentHelper}';
 					`;
 
@@ -179,6 +183,8 @@ export default defineIntegration({
 						export const getPageList: typeof import('${virtResolver.contentHelper}').getPageList;
 						export const getUserList: typeof import('${virtResolver.contentHelper}').getUserList;
 						export const getUserById: typeof import('${virtResolver.contentHelper}').getUserById;
+						export const Navigation: typeof import('${virtResolver.NavigationBar}').default;
+						export const Avatar: typeof import('${virtResolver.Avatar}').default;
 					}`);
 
 					// Add Virtual DTS Lines - Helpers

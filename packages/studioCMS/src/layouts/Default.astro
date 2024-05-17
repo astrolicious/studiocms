@@ -1,10 +1,9 @@
 ---
-import { getSiteConfig } from 'studiocms:components'
+import { Navigation, getSiteConfig } from 'studiocms:components'
 import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
-import Header from '../components/Header.astro';
 
-const { siteTitle, siteDescription } = await getSiteConfig();
+const { title: siteTitle, description: siteDescription } = await getSiteConfig();
 
 type Props = {
 	title: string;
@@ -25,7 +24,7 @@ const pageTitle = `${title} | ${siteTitle}`;
 		<BaseHead title={pageTitle} description={pageDescription} image={heroImage}/>
 	</head>
 	<body>
-		<Header title={siteTitle} />
+		<Navigation />
 		
 		<slot />
 

@@ -6,6 +6,7 @@ export const PageDataAndContentSchema = z.object({
         package: z.string(),
         title: z.string(),
         description: z.string(),
+        showOnNav: z.boolean(),
         publishedAt: z.date(),
         updatedAt: z.date().nullable(),
         slug: z.string(),

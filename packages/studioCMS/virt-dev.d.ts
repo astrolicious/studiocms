@@ -3,13 +3,8 @@ declare module 'virtual:studiocms/config' {
 	export default Config;
 }
 
-type usernameAndPasswordConfig = {
-	salt: Input;
-	opts: ScryptOpts;
-}
-
 declare module 'virtual:studiocms-dashboard/auth-sec' {
-	const AuthSec: usernameAndPasswordConfig;
+	const AuthSec: import('./src/integrations/studioCMSDashboard/index.ts').usernameAndPasswordConfig;
 	export default AuthSec;
 }
 
@@ -26,6 +21,8 @@ declare module 'studiocms:components' {
 	export type UserResponse = import('./src/utils/contentHelper').UserResponse;
 	export const getUserById: typeof import('./src/utils/contentHelper').getUserById;
 	export const getUserList: typeof import('./src/utils/contentHelper').getUserList;
+	export const Navigation: typeof import('./src/components/exports/Navigation.astro').default;
+	export const Avatar: typeof import('./src/components/exports/Avatar.astro').default;
 }
 
 declare module 'studiocms:helpers' {

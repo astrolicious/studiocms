@@ -53,6 +53,7 @@ if (Astro.request.method === 'POST' && !developerConfig.testingAndDemoMode) {
 	const title = data.get('title');
 	const slug = data.get('slug');
 	const description = data.get('description');
+	const showOnNav = data.get('show-on-nav');
 	const heroImage = data.get('hero-image');
 	const content = data.get('content');
     // const contentLang = data.get("content-lang");
@@ -63,6 +64,8 @@ if (Astro.request.method === 'POST' && !developerConfig.testingAndDemoMode) {
 		.from(PageData)
 		.where(eq(PageData.slug, slug as string));
 	const existingPost = postArrayed[0];
+
+
 
 	if (existingPost) {
         showSlugErrorToast = true;
@@ -75,6 +78,7 @@ if (Astro.request.method === 'POST' && !developerConfig.testingAndDemoMode) {
                 package: pack as string,
                 slug: slug as string,
                 description: description as string,
+                showOnNav: showOnNav === "on" ? true : false,
                 heroImage: heroImage as string,
                 })
                 .returning({ id: PageData.id })
@@ -161,6 +165,12 @@ const pageTitle = `New Page | ${contextConfig.title}`;
                         <div slot="label" class="text-lg inline">Page Title</div>
                         <sl-icon name="card-heading" slot="prefix"></sl-icon>
                     </sl-input>
+
+                    <sl-select id="show-on-nav" name="show-on-nav" value="on">
+                        <div slot="label" class="text-lg inline">Show on Navbar?</div>
+                        <sl-option value="on">Yes, Show on the Navbar</sl-option>
+                        <sl-option value="off">No, Don't show on the Navbar</sl-option>
+                    </sl-select>
 
                     <sl-select id="package" name="package" value="@astrolicious/studiocms" help-text="This feature has not yet been implemented">
                         <div slot="label" class="text-lg inline">Package</div>

@@ -1,0 +1,77 @@
+.navigation {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    align-items: center;
+    background-color: hsl(0, 0%, 95%);
+    padding: 10px 20px;
+    box-shadow: 0 2px 5px hsla(0, 0%, 0%, 0.2);
+}
+
+.navigation .title {
+    font-size: xx-large;
+    font-weight: 500;
+    color: black;
+    text-decoration: none;
+    position: absolute;
+    left: 20px;
+}
+
+.navigation .avatar {
+    font-size: xx-large;
+    font-weight: 500;
+    color: black;
+    text-decoration: none;
+    position: absolute;
+    right: 20px;
+    top: 10px;
+}
+
+.navigation a {
+    font-size: larger;
+    font-weight: 500;
+    text-decoration: none;
+    color: black;
+    padding: 10px 15px;
+}
+
+.navigation a:hover {
+    background-color: hsl(0, 0%, 90%);
+}
+
+.navigation .dropdown {
+    display: inline-block;
+}
+
+.navigation .dropdown button {
+    background-color: hsl(0, 0%, 95%);
+    color: back;
+    font-size: larger;
+    font-weight: 500;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+}
+
+.navigation .dropdown a {
+    display: block;
+    padding: 10px 15px;
+    text-decoration: none;
+    color: black;
+}
+
+.navigation .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: hsl(0, 0%, 90%);
+    min-width: 160px;
+    box-shadow: 2px 2px 5px hsla(0, 0%, 0%, 0.8);
+}
+
+.navigation .dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.navigation .dropdown:hover button {
+    background-color: hsl(0, 0%, 80%);
+}

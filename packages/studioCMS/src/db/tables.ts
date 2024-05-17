@@ -35,6 +35,7 @@ export const PageData = defineTable({
 		package: column.text({ default: '@astrolicious/studiocms' }),
 		title: column.text(),
 		description: column.text(),
+		showOnNav: column.boolean({ default: false }),
 		publishedAt: column.date({ default: NOW }),
 		updatedAt: column.date({ optional: true }),
 		slug: column.text(),

@@ -1,0 +1,71 @@
+---
+import { getPageList, getSiteConfig } from "studiocms:components";
+import { StudioCMSRoutes } from "studiocms-dashboard:routeMap";
+import Avatar from "./Avatar.astro";
+import "./navigation.css";
+
+type Props = {
+    topLevelLinkCount?: number;
+    hideAvatar?: boolean;
+}
+
+const { hideAvatar, topLevelLinkCount = 3 } = Astro.props;
+
+const config = await getSiteConfig();
+const pageList = await getPageList();
+
+const { title } = config;
+const { mainLinks: { baseSiteURL } } = StudioCMSRoutes;
+
+type LinkProps = {
+    text: string;
+    href: string;
+};
+
+const tempLinks: LinkProps[] = [];
+
+const navPagesList = pageList.filter(page => page.showOnNav === true).sort((a, b) => Date.parse(b.publishedAt.toString()) - Date.parse(a.publishedAt.toString()));
+
+navPagesList.filter(page => page.slug === "index").forEach(page => {
+    tempLinks.push({
+        text: page.title,
+        href: page.slug,
+    });
+});
+
+navPagesList.filter(page => page.slug !== "index").forEach(page => {
+    tempLinks.push({
+        text: page.title,
+        href: page.slug,
+    });
+});
+
+---
+{ tempLinks.length > topLevelLinkCount && (
+    <div class="navigation">
+        <div class="title"><a href={baseSiteURL}>{title}</a></div>
+        { 
+            tempLinks.slice(0, topLevelLinkCount).map(({ text, href }) => (
+                    <a href={href}>{text}</a>
+            ))
+        }
+            <div class="dropdown">
+                <button>More ▼</button>
+                <div class="dropdown-content">
+                    { tempLinks.slice(topLevelLinkCount).map(({ text, href }) => (
+                        <a href={href}>{text}</a>
+                    )) }
+                </div>
+            </div>
+        { !hideAvatar && <div class="avatar"><Avatar /></div> }
+    </div>
+) }
+{ ( tempLinks.length < topLevelLinkCount || tempLinks.length === topLevelLinkCount ) && (
+    <div class="navigation">
+        <div class="title"><a href={baseSiteURL}>{title}</a></div>
+    { tempLinks.map(({ text, href }) => (
+            <a href={href}>{text}</a>
+    )) }
+        { !hideAvatar && <div class="avatar"><Avatar /></div> }
+    </div> 
+) }

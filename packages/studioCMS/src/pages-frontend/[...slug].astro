@@ -16,7 +16,17 @@ if(!id){
 <Default title={title} description={description} heroImage={heroImage}>
 	<main>
 		<StudioCMSRenderer content={content} />
-
-		{ JSON.stringify(pageList) }
+		{pageList && pageList.length > 0 && (
+			<nav>
+				<h2>Page List</h2>
+				<ul>
+					{pageList.map((page) => (
+						<li>
+							<a href={page.slug}>{page.title}</a>
+						</li>
+					))}
+				</ul>
+			</nav>
+		)}
 	</main>
 </Default>
