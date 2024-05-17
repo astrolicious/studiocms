@@ -10,11 +10,14 @@
 
 .navigation .title {
     font-size: xx-large;
-    font-weight: 500;
     color: black;
     text-decoration: none;
     position: absolute;
     left: 20px;
+}
+
+.navigation .title a {
+    font-weight: bold;
 }
 
 .navigation .avatar {
