@@ -27,9 +27,6 @@ jobs:
     
               if (mergedPRs.length === 0) {
                 try {
-                  const firstPRMerged = "Welcome to the StudioCMS Contributors! 🎉 Please join our discord community to stay in the loop https://chat.astrolicious.dev"
-
-                  
                   await github.rest.issues.createComment({
                     issue_number: context.issue.number,
                     owner: context.repo.owner,
