@@ -1,6 +1,6 @@
 ---
 import { Code } from 'astro:components';
-import SetupLayout from './Setup.astro';
+import { Layout } from 'studiocms-dashboard:components';
 import Config from 'virtual:studiocms/config';
 
 if (Config.includedIntegrations.useInoxSitemap) {
@@ -8,27 +8,40 @@ if (Config.includedIntegrations.useInoxSitemap) {
         sitemap.default(false)
     })
 }
----
-<SetupLayout>
-	<center>
-		<h1>Setup Done!</h1>
-	</center>
 
-	<p>You can now stop your dev server and add the following option in your astro.config to start using StudioCMS then start back up to see your new CMS data</p>
-
-	<Code lang="diff" code={`import { defineConfig } from "astro/config";
+const codeBlob = `import { defineConfig } from "astro/config";
 import astroStudioCMS from "@astrolicious/studiocms";
 import db from '@astrojs/db';
 
 // https://astro.build/config
 export default defineConfig({
-    // other config options,
+	// other config options,
 	integrations: [
 		db(),
 		astroStudioCMS({ 
 +			dbStartPage: false,
 		}),
 	],
-});`}/>
+});`
+---
+<Layout title='Setup Done | StudioCMS' description="Welcome to StudioCMS" sideBarActiveItemID='start' includeSidebar={false}>
+	<div class="container lg:max-w-[50vw]">
+        <div class="py-8">
+          <div class="bg-base-300 p-8 md:p-12 lg:p-16 rounded-lg">
+			<div class="text-5xl font-bold pb-4 text-center">Setup Done!</div>
+			<div class="py-4">
+				<text class="text-xl py-2">
+				  <text class="font-bold">Next Step</text> 
+				  <br />
+				  You can now stop your dev server and add the following option in your <strong>astro.config</strong> to start using StudioCMS then start back up to see your new CMS data
+				</text>
+			</div>
+	
 
-</SetupLayout>
+			<Code lang="diff" class="p-6" code={codeBlob} wrap/>
+		  </div>
+		</div>
+
+	</div>
+
+</Layout>

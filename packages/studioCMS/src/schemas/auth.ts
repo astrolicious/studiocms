@@ -4,9 +4,9 @@ const localUsernameAndPasswordConfig = z.object({
 	/**
 	 * Allow User Registration - Allows users to register an account
 	 * 
-	 * @default false - Temporarily set to true for testing
+	 * @default false
 	 */
-	allowUserRegistration: z.boolean().optional().default(true),
+	allowUserRegistration: z.boolean().optional().default(false),
 }).optional().default({});
 
 //
@@ -26,15 +26,15 @@ export const authProviderSchema = z.object({
 	 * 
 	 * Requires a Discord OAuth App to be created and configured using ENV Variables
 	 * 
-	 * @default false - Temporarily set to true for testing
+	 * @default false
 	 */
-	discord: z.boolean().optional().default(true),
+	discord: z.boolean().optional().default(false),
 	/**
 	 * Google Auth Provider - Powered by Lucia
 	 * 
 	 * Requires a Google OAuth App to be created and configured using ENV Variables
 	 * 
-	 * @default false - Temporarily set to true for testing
+	 * @default false
 	 */
 	google: z.boolean().optional().default(false),
 	/**
@@ -42,7 +42,7 @@ export const authProviderSchema = z.object({
 	 * 
 	 * Requires an Auth0 Application to be created and configured using ENV Variables
 	 * 
-	 * @default false - Temporarily set to true for testing
+	 * @default false
 	 */
 	auth0: z.boolean().optional().default(false),
 	/**

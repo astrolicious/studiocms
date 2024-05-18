@@ -1,0 +1,28 @@
+name: Deployment Helper Comment
+permissions:
+    pull-requests: write
+    
+on:
+  pull_request:
+    types: [opened]
+        
+jobs:
+    comment:
+      name: Generate Coauthor
+      if: ${{ github.event.issue.pull_request }}
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/github-script@v7
+          with:
+            script: |
+              github.rest.issues.createComment({
+                issue_number: context.issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body: `Deployments are available at the following URLS:
+                - [StudioCMS Package Demo](https://pr${{github.event.issue.number}}-demo.astro-studiocms.xyz)
+                - [StudioCMS Documentation](https://pr${{github.event.issue.number}}-docs.astro-studiocms.xyz)
+                - [StudioCMS Landing Page](https://pr${{github.event.issue.number}}-web.astro-studiocms.xyz)
+                `
+              })
+  

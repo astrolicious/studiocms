@@ -1,0 +1,27 @@
+name: Send First Time Contributor Welcome
+
+on: 
+  workflow_dispatch:
+    inputs:
+      creator:
+        description: 'The creator of the PR'
+        required: true
+      mergedPR:
+        description: 'The PR number that was merged'
+        required: true
+  
+jobs:
+ check-bats-version:
+   runs-on: ubuntu-latest
+   steps:
+     - run: |
+         curl --location --request POST '${{ secrets.DISCORD_FTPR }}' \
+           --header 'Accept: application/json' \
+           --header 'Content-Type: application/json' \
+           --data '{
+              "content": "FIRST TIME CONTRIBUTOR ${{ inputs.creator }} \n PR ${{ inputs.mergedPR }} MERGED! 🎉",
+              "tts": false,
+              "embeds": [],
+              "components": [],
+              "actions": {}
+            }'
