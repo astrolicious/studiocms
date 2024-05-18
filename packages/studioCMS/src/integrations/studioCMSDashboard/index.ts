@@ -328,7 +328,7 @@ export default defineIntegration({
 										auth0: FileSystemIconLoader(resolve('./icons/auth0')),
 									}
 								}),
-								presetScrollbar( ),
+								presetScrollbar(),
 								presetWebFonts({
 									provider: 'google',
 									fonts: {
