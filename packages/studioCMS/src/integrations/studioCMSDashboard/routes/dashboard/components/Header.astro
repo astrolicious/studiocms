@@ -56,7 +56,7 @@ if ( !name ) {
     </div>
     <div class="navbar-end"> 
 
-      <sl-button class="flex-end" variant="primary">Close</sl-button>
+      <sl-button id="close-button" class="flex-end" variant="primary">Close</sl-button>
 
     </div>
   </div>
@@ -90,7 +90,7 @@ if ( !name ) {
 <script>
   const drawer = document.querySelector('.drawer-scrolling');
   const openButton = document.querySelector('.drawer-header-button');
-  const closeButton = drawer?.querySelector('sl-button[variant="primary"]');
+  const closeButton = document.getElementById('close-button');
 
   // @ts-expect-error - TS doesn't know that these elements exist because they are from Shoelace.style
   openButton?.addEventListener('click', () => drawer?.show());
