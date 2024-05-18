@@ -21,7 +21,7 @@ import { getStudioConfigFileUrl, loadStudioCMSConfigFile } from './studiocms-con
 // Main Integration
 export default defineIntegration({
 	name: 'astrolicious/studioCMS',
-	optionsSchema,
+	optionsSchema, 
 	setup({ name, options }) {
 
 		// Create Resolver for Virtual Imports
