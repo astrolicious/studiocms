@@ -35,7 +35,7 @@ navPagesList.filter(page => page.slug === "index").forEach(page => {
 navPagesList.filter(page => page.slug !== "index").forEach(page => {
     links.push({
         text: page.title,
-        href: import.meta.env.BASE_URL+page.slug,
+        href: import.meta.env.BASE_URL + page.slug,
     });
 });
 
