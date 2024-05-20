@@ -1,0 +1,113 @@
+---
+//TODO: Make this component reusable
+import { Image } from "astro:assets";
+import DarkLogin from "../assets/login-1.png";
+import LightLogin from "../assets/login-2.png";
+---
+
+<sl-carousel class="carousel-thumbnails" navigation loop>
+  <sl-carousel-item>
+    <Image
+      alt="Login screen dark theme"
+      src={DarkLogin}
+      height="1900"
+    />
+  </sl-carousel-item>
+  <sl-carousel-item>
+    <Image
+      alt="Login screen light theme"
+      src={LightLogin}
+      height="1900"
+    />
+  </sl-carousel-item>
+</sl-carousel>
+
+<div class="thumbnails">
+  <div class="thumbnails__scroller">
+    <Image
+      alt="Thumbnail of Login screen dark theme"
+      class="thumbnails__image active"
+      src={DarkLogin}
+      width={64}
+      height={64}
+    />
+    <Image
+      alt="Login screen light theme"
+      class="thumbnails__image active"
+      src={LightLogin}
+      width={64}
+      height={64}
+    />
+  </div>
+</div>
+
+<script>
+  import type { SlCarousel} from '@shoelace-style/shoelace';
+  import "@shoelace-style/shoelace"
+
+  const carousel = document.querySelector('.carousel-thumbnails') as SlCarousel;
+  const scroller = document.querySelector('.thumbnails__scroller');
+  const thumbnails = document.querySelectorAll('.thumbnails__image');
+
+  scroller?.addEventListener('click', e => {
+    const target = e.target as HTMLElement;
+
+    if (target?.matches('.thumbnails__image')) {
+      const index = [...thumbnails].indexOf(target);
+      carousel.goToSlide(index);
+    }
+  });
+
+  carousel?.addEventListener('sl-slide-change', e => {
+    const slideIndex = e.detail.index;
+
+    [...thumbnails].forEach((thumb, i) => {
+      thumb.classList.toggle('active', i === slideIndex);
+      if (i === slideIndex) {
+        thumb.scrollIntoView({
+          block: 'nearest'
+        });
+      }
+    });
+  });
+</script>
+
+<style>
+  .carousel-thumbnails {
+    --slide-aspect-ratio: 3 / 2;
+  }
+
+  .thumbnails {
+    display: flex;
+    justify-content: center;
+  }
+
+  .thumbnails__scroller {
+    display: flex;
+    gap: var(--sl-spacing-small);
+    overflow-x: auto;
+    scrollbar-width: none;
+    scroll-behavior: smooth;
+    scroll-padding: var(--sl-spacing-small);
+  }
+
+  .thumbnails__scroller::-webkit-scrollbar {
+    display: none;
+  }
+
+  .thumbnails__image {
+    width: 64px;
+    height: 64px;
+    object-fit: cover;
+
+    opacity: 0.3;
+    will-change: opacity;
+    transition: 250ms opacity;
+
+    cursor: pointer;
+  }
+
+  .thumbnails__image.active {
+    opacity: 1;
+  }
+</style>
