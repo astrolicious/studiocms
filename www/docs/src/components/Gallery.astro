@@ -49,8 +49,8 @@ const galleryImagesMinusFirst = galleryImages.slice(1)
   import '@shoelace-style/shoelace/dist/components/carousel/carousel.js';
 
   const carousel = document.querySelector('.carousel-thumbnails') as SlCarousel;
-  const scroller = document.querySelector('.thumbnails__scroller');
-  const thumbnails = document.querySelectorAll('.thumbnails__image');
+  const scroller = document.querySelector('.thumbnails__scroller') as HTMLElement;
+  const thumbnails = document.querySelectorAll('.thumbnails__image') as NodeListOf<HTMLElement>;
 
   scroller?.addEventListener('click', e => {
     const target = e.target as HTMLElement;
