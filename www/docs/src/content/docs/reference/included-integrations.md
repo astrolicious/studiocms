@@ -3,7 +3,7 @@ title: includedIntegrations
 description: A reference page for includedIntegrations
 ---
 
-`includedIntegrations` is an object value that is used to determine which integrations should be included in the `Astro-Studio-CMS`. Currently there are three integrations that can be included: `useAstroRobots`, `astroRobotsConfig`, and `useInoxSitemap`.
+`includedIntegrations` is an object that is used to determine which Astro Integrations should be included in the `Astro-Studio-CMS`. Currently there are three Integrations that can be included: `useAstroRobots`, `astroRobotsConfig`, and `useInoxSitemap`.
 
 ## Usage
 
@@ -38,17 +38,17 @@ export default defineConfig({
 - **Type:** `boolean | undefined`
 - **Default:** `true`
 
-Allows the user to enable/disable the use of the Astro Robots Plugin.
+Allows the user to enable/disable the use of the Astro Robots Integration.
 
 ### `astroRobotsConfig`
 
 - **Type:** `RobotsConfig{} | undefined{}`
 
-Let's you modify the default behavior of the this plugin. For more information on this plugin please visit the [Astro Robots Plugin](https://www.npmjs.com/package/astro-robots).
+Allows you to modify the default behaviour of the this Integration. For more information on this Integration please visit the [Astro Robots Integration](https://www.npmjs.com/package/astro-robots).
 
 ### `useInoxSitemap`
 
 - **Type:** `boolean | undefined`
 - **Default:** `true`
 
-Allows the user to enable/disable the use of the Inox-tools Sitemap Plugin. For more information on this plugin please visit the [Inox-tools Sitemap Plugin](https://inox-tools.vercel.app/sitemap-ext).
+Allows the user to enable/disable the use of the Inox-tools Sitemap Plugin. For more information on this Integration please visit the [Inox-tools Sitemap Integration](https://inox-tools.vercel.app/sitemap-ext).

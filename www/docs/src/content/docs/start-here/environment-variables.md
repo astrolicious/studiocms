@@ -3,7 +3,7 @@ title: Environment Variables
 description: A brief overview of the environment variables used in Astro StudioCMS.
 ---
 
-To work properly with Astro StudioCMS, you must set up environment variables. These variables are essential for establishing a secure connection to the database and authenticating with the Astro StudioCMS API. Without correctly configuring these environment variables, the application will not function as intended.
+For Astro StudioCMS to work correctly, you must set up the correct environment variables. These variables are essential for establishing a secure connection to Astro DB and authenticating with the Astro StudioCMS API. Without correctly configuring these environment variables, the application will not function as intended.
 
 You can create a `.env` file in the root directory of your project and add the required environment variables. The `.env` file is a text file that contains key-value pairs of environment variables. The environment variables are read by the application at runtime.
 
@@ -11,7 +11,7 @@ For future reference on how to work with environment variables within Astro you 
 
 ## Required Environment Variables
 
-Initially you would need to set up the var `ASTRO_STUDIO_APP_TOKEN` to connect to the database.
+`ASTRO_STUDIO_APP_TOKEN` is required to connect to the database.
 
 ```bash
 ASTRO_STUDIO_APP_TOKEN=your_app_token
@@ -19,7 +19,7 @@ ASTRO_STUDIO_APP_TOKEN=your_app_token
 
 ## Authentication Environment Variables
 
-Currently we have 2 ways to authenticate with Astro StudioCMS:
+Currently there are 2 ways to authenticate with Astro StudioCMS:
 
 ### GitHub
 

@@ -4,7 +4,8 @@ description: A reference page for verbose
 ---
 
 `verbose` is a boolean value that is used to determine if verbose logging should be enabled in the `Astro-Studio-CMS`.
-
+- **Type:** `boolean| undefined`
+- **Default:** `true`
 ## Usage
 
 ```js title="astro.config.mjs"  {14}
