@@ -1,43 +1,46 @@
 ---
 //TODO: Make this component reusable
 import { Image } from "astro:assets";
-import DarkLogin from "../assets/login-1.png";
-import LightLogin from "../assets/login-2.png";
+
+import galleryImages from "../assets/index.ts"
+const galleryImagesMinusFirst = galleryImages.slice(1)
 ---
 
 <sl-carousel class="carousel-thumbnails" navigation loop>
-  <sl-carousel-item>
-    <Image
-      alt="Login screen dark theme"
-      src={DarkLogin}
-      height="1900"
-    />
-  </sl-carousel-item>
-  <sl-carousel-item>
-    <Image
-      alt="Login screen light theme"
-      src={LightLogin}
-      height="1900"
-    />
-  </sl-carousel-item>
+  {
+    galleryImages.map((image, index) => (
+      <sl-carousel-item id={index}>
+        <Image
+          src={image.imageMetadata}
+          alt={image.alt}
+          width="1280"
+          height="1900"
+        />
+      </sl-carousel-item>
+    ))
+  }
 </sl-carousel>
 
 <div class="thumbnails">
   <div class="thumbnails__scroller">
-    <Image
-      alt="Thumbnail of Login screen dark theme"
+    <Image 
+      src={galleryImages[0].imageMetadata}
+      alt={galleryImages[0].alt + ' ' + 'thumbnail'}
+      width="64"
+      height="64"
       class="thumbnails__image active"
-      src={DarkLogin}
-      width={64}
-      height={64}
     />
-    <Image
-      alt="Login screen light theme"
-      class="thumbnails__image active"
-      src={LightLogin}
-      width={64}
-      height={64}
-    />
+    {
+      galleryImagesMinusFirst.map((image) => (
+        <Image
+          class="thumbnails__image"
+          src={image.imageMetadata}
+          alt={image.alt + ' ' + 'thumbnail'}
+          width="64"
+          height="64"
+        />
+      ))
+    }
   </div>
 </div>
 
@@ -84,7 +87,8 @@ import LightLogin from "../assets/login-2.png";
 
   .thumbnails__scroller {
     display: flex;
-    gap: var(--sl-spacing-small);
+    /* gap: var(--sl-spacing-small); */
+    gap: 1rem;
     overflow-x: auto;
     scrollbar-width: none;
     scroll-behavior: smooth;
