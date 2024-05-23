@@ -3,34 +3,18 @@ title: includedIntegrations
 description: A reference page for includedIntegrations
 ---
 
-`includedIntegrations` is an object that is used to determine which Astro Integrations should be included in the `Astro-Studio-CMS`. Currently there are three Integrations that can be included: `useAstroRobots`, `astroRobotsConfig`, and `useInoxSitemap`.
+`includedIntegrations` is an object that is used to determine which Astro Integrations should be included in the `astroStudioCMS`. Currently there are three Integrations that can be included: `useAstroRobots`, `astroRobotsConfig`, and `useInoxSitemap`.
 
 ## Usage
 
-```js title="astro.config.mjs"  {14-18}
-
-import { defineConfig } from "astro/config";
-import astroStudioCMS from "@astrolicious/studiocms";
-import db from "@astrojs/db";
-import node from "@astrojs/node";
-
-// https://astro.build/config
-export default defineConfig({
-  site: "https://example.com",
-  output: "server",
-  adapter: node({ mode: "standalone" }),
-  integrations: [
-    db(),
-    astroStudioCMS({
-      includedIntegrations: {
-        useAstroRobots: true,
-        astroRobotsConfig: true,
-        useInoxSitemap: true,
-      },
-    }),
-  ],
-});
-
+```js title="astro.config.mjs"  {2-6}
+astroStudioCMS({
+  includedIntegrations: {
+    useAstroRobots: true,
+    astroRobotsConfig: true,
+    useInoxSitemap: true,
+  },
+}),
 ```
 
 ### `useAstroRobots`

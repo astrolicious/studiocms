@@ -3,32 +3,18 @@ title: overrides
 description: A reference page for overrides
 ---
 
-`overrides` is an object that is used to override the default configuration of the `Astro-Studio-CMS`.
+`overrides` is an object that is used to override the default configuration of the `astroStudioCMS`.
 
 ## Usage
 
-```js title="astro.config.mjs"  {14-18}
-import { defineConfig } from "astro/config";
-import astroStudioCMS from "@astrolicious/studiocms";
-import db from "@astrojs/db";
-import node from "@astrojs/node";
-
-// https://astro.build/config
-export default defineConfig({
-  site: "https://example.com",
-  output: "server",
-  adapter: node({ mode: "standalone" }),
-  integrations: [
-    db(),
-    astroStudioCMS({
-      overrides: {
-        RendererOverride: "./src/components/MyCustomRenderer.astro",
-        CustomImageOverride: "./src/components/MyCustomImage.astro",
-        FormattedDateOverride: "./src/components/MyCustomFormattedDate.astro",
-      },
-    }),
-  ],
-});
+```js title="astro.config.mjs"  {2-6}
+astroStudioCMS({
+  overrides: {
+    RendererOverride: "./src/components/MyCustomRenderer.astro",
+    CustomImageOverride: "./src/components/MyCustomImage.astro",
+    FormattedDateOverride: "./src/components/MyCustomFormattedDate.astro",
+  },
+}),
 ```
 
 ### `RendererOverride`

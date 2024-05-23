@@ -3,37 +3,23 @@ title: imageService
 description: A reference page for Image Service
 ---
 
-`imageService` is an object value that is used to determine how images should be rendered in the `Astro-Studio-CMS`. This is used to setup your image data.
+`imageService` is an object value that is used to determine how images should be rendered in the `astroStudioCMS`. This is used to setup your image data.
 
 ## Usage
 
-```js title="astro.config.mjs"  {14-23}
-import { defineConfig } from "astro/config";
-import astroStudioCMS from "@astrolicious/studiocms";
-import db from "@astrojs/db";
-import node from "@astrojs/node";
-
-// https://astro.build/config
-export default defineConfig({
-  site: "https://example.com",
-  output: "server",
-  adapter: node({ mode: "standalone" }),
-  integrations: [
-    db(),
-    astroStudioCMS({
-      imageService: {
-        useUnpic: false,
-        unpicConfig {
-            fallbackService: "unsplash",
-            placeholder: 'blurhash',
-            layout: 'constrained',
-        },
-        astroImageServiceConfig: "squoosh",
-        cdnPlugin: "cloudinary",
-      },
-    }),
-  ],
-});
+```js title="astro.config.mjs"  {2-11}
+astroStudioCMS({
+  imageService: {
+    useUnpic: false,
+    unpicConfig {
+        fallbackService: "unsplash",
+        placeholder: 'blurhash',
+        layout: 'constrained',
+    },
+    astroImageServiceConfig: "squoosh",
+    cdnPlugin: "cloudinary",
+  },
+}),
 ```
 
 ### `useUnpic`

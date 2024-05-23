@@ -3,50 +3,36 @@ title: dashboard
 description: A reference page for dashboard
 ---
 
-`dashboard` option let's customize the dashboard for the `Astro-Studio-CMS`. This is used to setup your dashboard data.
+`dashboard` option let's customize the dashboard for the `astroStudioCMS`. This is used to setup your dashboard data.
 
 ## Usage
 
-```js title="astro.config.mjs"  {14-35}
-import { defineConfig } from "astro/config";
-import astroStudioCMS from "@astrolicious/studiocms";
-import db from "@astrojs/db";
-import node from "@astrojs/node";
-
-// https://astro.build/config
-export default defineConfig({
-  site: "https://example.com",
-  output: "server",
-  adapter: node({ mode: "standalone" }),
-  integrations: [
-    db(),
-    astroStudioCMS({
-      dashboard: {
-        dashboardEnabled: true,
-        faviconURL: "/favicon.ico",
-        dashboardRouteOverride: "/components/dashboard",
-        AuthConfig: {
-            providers: {
-                github: true,
-                usernameAndPassword: true
-            },
-            enabled: true
+```js title="astro.config.mjs"  {2-24}
+astroStudioCMS({
+  dashboard: {
+    dashboardEnabled: true,
+    faviconURL: "/favicon.ico",
+    dashboardRouteOverride: "/components/dashboard",
+    AuthConfig: {
+        providers: {
+            github: true,
+            usernameAndPassword: true
         },
-        UnoCSSConfigOverride: {
-            injectReset: true,
-            injectEntry: true,
-            presetsConfig: {
-                presetDaisyUI: {
-                    themes: ['dark', 'light'],
-                    lightTheme: ['light'],
-                    darkTheme: ['dark'],
-                }
+        enabled: true
+    },
+    UnoCSSConfigOverride: {
+        injectReset: true,
+        injectEntry: true,
+        presetsConfig: {
+            presetDaisyUI: {
+                themes: ['dark', 'light'],
+                lightTheme: ['light'],
+                darkTheme: ['dark'],
             }
         }
-      }, // DEFAULT - This injects a dashboard to setup your dashboard data.
-    }),
-  ],
-});
+    }
+  }, // DEFAULT - This injects a dashboard to setup your dashboard data.
+})
 ```
 
 ### `dashboardEnabled`

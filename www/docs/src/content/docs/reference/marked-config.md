@@ -3,32 +3,18 @@ title: markedConfig
 description: A reference page for markedConfig
 ---
 
-`markedConfig` is an object that is used to determine how content should be rendered in the `Astro-Studio-CMS`. This is used to setup your content data.
+`markedConfig` is an object that is used to determine how content should be rendered in the `astroStudioCMS`. This is used to setup your content data.
 
 ## Usage
 
-```js title="astro.config.mjs"  {14-18}
-import { defineConfig } from "astro/config";
-import astroStudioCMS from "@astrolicious/studiocms";
-import db from "@astrojs/db";
-import node from "@astrojs/node";
-
-// https://astro.build/config
-export default defineConfig({
-  site: "https://example.com",
-  output: "server",
-  adapter: node({ mode: "standalone" }),
-  integrations: [
-    db(),
-    astroStudioCMS({
-      markedConfig: {
-        highlighterConfig: {
-          highlighter: "disabled",
-        },
-      },
-    }),
-  ],
-});
+```js title="astro.config.mjs"  {2-6}
+astroStudioCMS({
+  markedConfig: {
+    highlighterConfig: {
+      highlighter: "disabled",
+    },
+  },
+}),
 ```
 
 This property has the following options:
