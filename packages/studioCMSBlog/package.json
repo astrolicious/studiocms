@@ -1,0 +1,52 @@
+{
+    "name": "@astrolicious/studiocms-blog",
+    "version": "0.0.0-alpha.1",
+    "description": "Blog Theme components for Astro StudioCMS",
+    "author": {
+      "name": "Adam Matthiesen | Jacob Jenkins | Paul Valladares",
+      "url": "https://astro-studiocms.xyz"
+    },
+    "repository": {
+      "type": "git",
+      "url": "git+https://github.com/astrolicious/studiocms.git"
+    },
+    "contributors": ["Adammatthiesen", "jdtjenkins", "dreyfus92"],
+    "license": "MIT",
+    "keywords": [
+      "astro",
+      "astrocms",
+      "astrodb",
+      "astrolicious",
+      "astrostudio",
+      "astro-integration",
+      "astro-studio",
+      "astro-studiocms",
+      "cms",
+      "studiocms",
+      "withastro"
+    ],
+    "homepage": "https://astro-studiocms.xyz",
+    "publishConfig": {
+      "access": "public"
+    },
+    "sideEffects": false,
+    "files": [
+        "index.ts",
+        "src"
+    ],
+    "exports": {
+      ".": {
+        "import": "./index.ts"
+      }
+    },
+    "type": "module",
+    "dependencies": {
+        "astro-theme-provider": "^0.5.0"
+    },
+    "devDependencies": {
+      "@astrolicious/studiocms": "workspace:*",
+      "@types/node": "20.12.8",
+      "astro": "^4.9.1"
+    }
+  }
+  

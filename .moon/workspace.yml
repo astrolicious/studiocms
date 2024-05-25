@@ -4,6 +4,7 @@ $schema: 'https://moonrepo.dev/schemas/workspace.json'
 projects:
   root: '.'
   studioCMS: 'packages/studioCMS'
+  studioCMSBlog: 'packages/studioCMSBlog'
   ghost-to-studio: 'packages/ghost-to-studio'
   playground: 'playgrounds/node'
   cloudflare-playground: 'playgrounds/cloudflare'

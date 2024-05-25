@@ -31,7 +31,8 @@ export type ContentHelperTempResponse = {
  * A helper function to get the content of a page by its slug.
  * 
  * @param slug The slug of the page to get the content of. Defined in the PageData table.
- * @param lang **Not implemented yet.** The language to get the content in. Default is 'default'. 
+ * @param lang **Not implemented yet.** The language to get the content in. Default is 'default'.
+ * @param package **Not implemented yet.** The package to get the content from. Default is '@astrolicious/studiocms'. 
  * @returns The data and content of the page.
  * 
  * @example 

@@ -1,0 +1,30 @@
+---
+import Default from '../layouts/Default.astro';
+import { StudioCMSRenderer, contentHelper, getPageList } from 'studiocms:components'
+
+const { title, description, heroImage, content, id } = await contentHelper("index")
+
+const pageList = await getPageList()
+
+if(!id){
+	return Astro.redirect("/404")
+}
+---
+
+<Default title={title} description={description} heroImage={heroImage}>
+	<main>
+		<StudioCMSRenderer content={content} />
+		{pageList && pageList.length > 0 && (
+			<nav>
+				<h2>Page List</h2>
+				<ul>
+					{pageList.map((page) => (
+						<li>
+							<a href={page.slug}>{page.title}</a>
+						</li>
+					))}
+				</ul>
+			</nav>
+		)}
+	</main>
+</Default>

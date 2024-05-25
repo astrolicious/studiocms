@@ -45,3 +45,5 @@ export default function studioCMS(options?: StudioCMSOptions): AstroIntegration;
 export function defineStudioCMSConfig(config: StudioCMSOptions): StudioCMSOptions {
     return config;
 };
+
+export let studioCMSPluginList: Map<string, { name: string, label: string }>;

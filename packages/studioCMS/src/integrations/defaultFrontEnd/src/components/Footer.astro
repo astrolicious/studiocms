@@ -1,12 +1,12 @@
 ---
 import { getSiteConfig } from 'studiocms:components';
 
-const { siteTitle } = await getSiteConfig();
+const { title } = await getSiteConfig();
 const today = new Date();
 ---
 
 <footer>
-	&copy; {today.getFullYear()} {siteTitle}. All rights reserved.
+	&copy; {today.getFullYear()} {title}. All rights reserved.
 </footer>
 <style>
 	footer {

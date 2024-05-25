@@ -34,6 +34,7 @@ declare module 'studiocms:helpers' {
 	export const urlGenFactory: typeof import('./src/utils/urlGen').default;
 	export const toCamelCase: typeof import('./src/utils/textFormatter').toCamelCase;
 	export const toPascalCase: typeof import('./src/utils/textFormatter').toPascalCase;
+	export const pluginList: Map<string, { name: string, label: string }>;
 }
 
 declare module 'studiocms-dashboard:auth' {

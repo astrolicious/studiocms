@@ -3,7 +3,7 @@
 import { PageData, PageContent, SiteConfig, db, eq } from 'astro:db';
 import { Layout } from 'studiocms-dashboard:components';
 import Config from 'virtual:studiocms/config';
-import { authHelper, type Locals } from 'studiocms:helpers';
+import { authHelper, type Locals, pluginList } from 'studiocms:helpers';
 import { randomUUID } from 'node:crypto';
 import { StudioCMSRoutes } from 'studiocms-dashboard:routeMap';
 import type { SiteConfigResponse } from 'studiocms:components';
@@ -15,6 +15,8 @@ if (Config.includedIntegrations.useInoxSitemap) {
 }
 
 const { dashboardConfig: { developerConfig } } = Config;
+
+const studioCMSPluginList = pluginList;
 
 const { 
     authLinks: { 
@@ -174,8 +176,11 @@ const pageTitle = `New Page | ${contextConfig.title}`;
 
                     <sl-select id="package" name="package" value="@astrolicious/studiocms" help-text="This feature has not yet been implemented">
                         <div slot="label" class="text-lg inline">Package</div>
-                        <sl-option value="@astrolicious/studiocms">@astrolicious/studiocms</sl-option>
-                        <sl-option value="not-yet-implemented" disabled>Not Yet Implemented</sl-option>
+                        {
+                            Array.from(studioCMSPluginList.values()).map((plugin) => (
+                                <sl-option value={plugin.name}>{plugin.label}</sl-option>
+                            ))
+                        }
                     </sl-select>
 
                     <sl-select id="content-lang" name="content-lang" value="default" help-text="This feature has not yet been implemented">

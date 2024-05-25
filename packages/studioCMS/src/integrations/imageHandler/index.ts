@@ -7,7 +7,7 @@ import netlifyImageHandler from './adapters/netlify';
 import { ImageHandlerOptionsSchema } from './schemas';
 
 export default defineIntegration({
-    name: 'astrolicious/studioCMS:imageHandler',
+    name: '@astrolicious/studioCMS:imageHandler',
     optionsSchema: ImageHandlerOptionsSchema,
     setup({ options }) {
         return {

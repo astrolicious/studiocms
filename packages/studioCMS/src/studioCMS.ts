@@ -17,13 +17,17 @@ import studioCMSDashboard from './integrations/studioCMSDashboard';
 import { fileFactory } from './utils/fileFactory';
 import { DbErrors, studioErrors, warnings } from './strings';
 import { getStudioConfigFileUrl, loadStudioCMSConfigFile } from './studiocms-config';
+import { studioCMSPluginList } from '.';
+import studioCMSFrontEnd from './integrations/defaultFrontEnd';
+import type { AstroIntegration } from 'astro';
 
 // Main Integration
 export default defineIntegration({
-	name: 'astrolicious/studioCMS',
+	name: '@astrolicious/studiocms',
 	optionsSchema, 
 	setup({ name, options }) {
 
+		studioCMSPluginList.set('@astrolicious/studiocms', { name: '@astrolicious/studiocms', label: 'StudioCMS' });
 		// Create Resolver for Virtual Imports
 		const { resolve } = createResolver(import.meta.url);
 
@@ -36,7 +40,6 @@ export default defineIntegration({
 
 					// Destructure Params
 					const {
-						injectRoute,
 						logger,
 						config: astroConfig,
 						addWatchFile,
@@ -153,7 +156,8 @@ export default defineIntegration({
 					export { default as urlGenFactory } from '${virtResolver.UrlGenHelper}';
 					export * from '${virtResolver.StudioCMSLocalsMap}';
 					export * from '${virtResolver.StudioCMSDBTypeHelpers}';
-					export * from '${virtResolver.textFormatterHelper}';`;
+					export * from '${virtResolver.textFormatterHelper}';
+					export const pluginList = new Map(${JSON.stringify(Array.from(studioCMSPluginList.entries()))});`;
 
 					// Add Virtual Imports
 					integrationLogger(logger, verbose, 'info', 'Adding Virtual Imports...');
@@ -197,6 +201,7 @@ export default defineIntegration({
 						export const urlGenFactory: typeof import('${virtResolver.UrlGenHelper}').default;
 						export const toCamelCase: typeof import('${virtResolver.textFormatterHelper}').toCamelCase;
 						export const toPascalCase: typeof import('${virtResolver.textFormatterHelper}').toPascalCase;
+						export const pluginList: Map<string, { name: string, label: string }>;
 					}`);
 
 					// Add Virtual DTS File
@@ -205,23 +210,10 @@ export default defineIntegration({
 						content: studioCMSDTS.text(),
 					});
 
-					// TODO: Migrate to ATP
-					// dbStartPage - Choose whether to run the Start Page or Inject the Integration
-					if (dbStartPage) { } else {
-						// If dbStartPage is disabled, inject the routes to allow the CMS to function
-						integrationLogger(logger, verbose, 'info', 'Adding Page Routes...');
-						injectRoute({
-							pattern: "/",
-							entrypoint: resolve('./pages-frontend/[...slug].astro'),
-						});
-						injectRoute({
-							pattern: "[slug]",
-							entrypoint: resolve('./pages-frontend/[...slug].astro'),
-						});
-						injectRoute({
-							pattern: '404',
-							entrypoint: resolve('./pages-frontend/404.astro'),
-						});
+					if (!dbStartPage) {
+						addIntegration(params, {
+							integration: studioCMSFrontEnd() as unknown as AstroIntegration,
+						})
 					}
 
 					// Add Dashboard Integration

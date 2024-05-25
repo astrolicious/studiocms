@@ -12,6 +12,7 @@ import { presetScrollbar } from 'unocss-preset-scrollbar';
 import * as fs from "node:fs";
 import { randomUUID } from "node:crypto";
 import type { AuthConfigMap, usernameAndPasswordConfig } from "../../schemas/auth-types";
+import type { AstroIntegration } from "astro";
 
 // Environment Variables
 const env = loadEnv('all', process.cwd(), 'CMS');
@@ -104,7 +105,7 @@ const AUTHKEYS = {
 };
 
 export default defineIntegration({
-    name: 'astrolicious/studioCMS:adminDashboard',
+    name: '@astrolicious/studioCMS:adminDashboard',
     optionsSchema,
     setup({ name, options }) {
         return {
@@ -341,7 +342,7 @@ export default defineIntegration({
 							transformers: [
 								transformerDirectives()
 							],
-						}),
+						}) as unknown as AstroIntegration,
 					});
 
 					// In the case of First time Setup run the Start Pages
