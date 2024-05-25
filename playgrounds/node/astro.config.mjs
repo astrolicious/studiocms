@@ -8,44 +8,5 @@ export default defineConfig({
 	site: 'https://demo.astro-studiocms.xyz/',
 	output: 'server',
 	adapter: node({ mode: "standalone" }),
-	integrations: [
-		db(),
-		studioCMS({
-			dbStartPage: false,
-			contentRenderer: 'marked',
-			verbose: true,
-			dateLocale: 'en-us',
-			includedIntegrations: {
-				useAstroRobots: true,
-				useInoxSitemap: true,
-			},
-			imageService: {
-				useUnpic: true,
-			},
-			markedConfig: {
-				highlighterConfig: {
-					highlighter: 'disabled',
-				},
-			},
-			dashboardConfig: {
-				AuthConfig: {
-					enabled: true,
-					providers: {
-						auth0: false,
-						discord: true,
-						github: true,
-						google: false,
-						usernameAndPassword: true,
-						usernameAndPasswordConfig: {
-							allowUserRegistration: true,
-						},
-					},
-				},
-				dashboardEnabled: true,
-				developerConfig: {
-					testingAndDemoMode: false,
-				},
-			},
-		}),
-	],
+	integrations: [ db(), studioCMS() ], // StudioCMS Integration options can be found in `studiocms.config.mjs`
 });

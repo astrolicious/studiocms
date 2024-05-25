@@ -6,20 +6,22 @@ import SideBar from "../components/SideBar.astro";
 // import { ViewTransitions } from "astro:transitions";
 import ThemeManager from "../components/ThemeManager.astro";
 import Config from "virtual:studiocms/config";
+import { studioCMSSocials } from "./studiocms-socials";
+
+const socialLinks = studioCMSSocials;
 
 const { 
   dashboardConfig: { 
-    dashboardRouteOverride,
-    // developerConfig: {
-    //   viewTransitionAPI
-    // },
     UnoCSSConfigOverride: {
       presetsConfig: {
         presetDaisyUI: {
           lightTheme,
         }
       }
-    }
+    },
+    // developerConfig: {
+    //   viewTransitionAPI
+    // },
   } 
 } = Config;
 
@@ -34,7 +36,6 @@ const {
   title,
   description,
   includeSidebar = true,
-  sideBarActiveItemID,
 } = Astro.props;
 
 // const includeViewTransitions = false;
@@ -51,15 +52,15 @@ const {
   <body>
     <div class="bg-base-100 drawer">
       <div class="drawer-content bg-base-100">
-        <Header DashboardRouteOverride={dashboardRouteOverride} sideBarActiveItemID={sideBarActiveItemID}/>
+        <Header studioCMSSocials={socialLinks}/>
         <div class="md:flex md:justify-center">
           <main class="p-6 pt-10 lg:max-w-[1800px] max-w-[100vw] min-h-[100vh]">
             <slot />
           </main>
         </div>
-        <Footer />
+        <Footer studioCMSSocials={socialLinks}/>
       </div>
-      { includeSidebar && <SideBar sideBarActiveItemID={sideBarActiveItemID} DashboardRouteOverride={dashboardRouteOverride}/>}
+      { includeSidebar && <SideBar studioCMSSocials={socialLinks}/>}
     </div>
   </body>
 </html>

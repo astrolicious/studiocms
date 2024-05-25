@@ -1,0 +1,37 @@
+---
+import type { Locals } from "studiocms:helpers";
+import { StudioCMSRoutes } from "studiocms-dashboard:routeMap";
+import Config from "virtual:studiocms/config";
+import profileImg from '../../assets/profile.webp';
+
+const { dashboardConfig: { AuthConfig: { enabled } } } = Config;
+const { mainLinks: { dashboardIndex }, authLinks: { loginURL } } = StudioCMSRoutes;
+const { isLoggedIn, dbUser: userProfile } = Astro.locals as Locals;
+---
+{ enabled !== false && (isLoggedIn ? (
+    <a href={dashboardIndex} title="User Dashboard">
+        <img
+            src={userProfile.avatar}
+            alt={userProfile.name}
+            width="64"
+            height="64" />
+        </a>
+    ) : (
+        <a href={loginURL} title="Login">
+        <img 
+            src={profileImg.src} 
+            alt="Logged Out user" 
+            width="64" 
+            height="64" />
+        </a>
+    ))
+}
+{ enabled === false && (
+    <a href="#" aria-disabled="true" title="Please Edit your Database through your Studio Dashboard">
+        <img 
+            src={profileImg.src} 
+            alt="Authentication Disabled" 
+            width="64" 
+            height="64" />	
+    </a>
+)}

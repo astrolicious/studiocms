@@ -29,34 +29,30 @@ export const User = defineTable({
 	},
 });
 
-export const Blog = defineTable({
+export const PageData = defineTable({
 	columns: {
-		id: column.number({ primaryKey: true }),
+		id: column.text({ primaryKey: true, default: randomUUID() }),
+		package: column.text({ default: '@astrolicious/studiocms' }),
 		title: column.text(),
 		description: column.text(),
-		slug: column.text(),
+		showOnNav: column.boolean({ default: false }),
 		publishedAt: column.date({ default: NOW }),
 		updatedAt: column.date({ optional: true }),
+		slug: column.text(),
+		contentLang: column.text({ default: 'default' }),
 		heroImage: column.text({
 			default:
 				'https://images.unsplash.com/photo-1707343843982-f8275f3994c5?q=80&w=1032&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
 		}),
-		content: column.text({ multiline: true }),
 	},
 });
 
-export const Pages = defineTable({
+export const PageContent = defineTable({
 	columns: {
-		id: column.number({ primaryKey: true }),
-		content: column.text({ multiline: true }),
-		title: column.text(),
-		description: column.text(),
-		publishedAt: column.date({ default: NOW }),
-		slug: column.text(),
-		heroImage: column.text({
-			default:
-				'https://images.unsplash.com/photo-1707343843982-f8275f3994c5?q=80&w=1032&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-		}),
+		id: column.text({ primaryKey: true, default: randomUUID() }),
+		contentId: column.text({ references: () => PageData.columns.id }),
+		contentLang: column.text({ default: 'default' }),
+		content: column.text({ multiline: true, optional: true }),
 	},
 });
 

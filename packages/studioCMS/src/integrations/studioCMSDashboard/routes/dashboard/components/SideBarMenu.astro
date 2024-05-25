@@ -1,98 +1,284 @@
 ---
-import { authHelper, urlGenFactory, type Locals } from "studiocms:helpers";
+import { authHelper, type Locals } from "studiocms:helpers";
 import Config from "virtual:studiocms/config";
+import { StudioCMSRoutes, sideBarLinkMap } from "studiocms-dashboard:routeMap"
 
 const { dashboardConfig: { developerConfig: { testingAndDemoMode } } } = Config;
-
-type Props = {
-    sideBarActiveItemID: string;
-    DashboardRouteOverride?: string;
-}
-
-const { sideBarActiveItemID, DashboardRouteOverride } = Astro.props;
-const activeClass = "bg-base-300"; // For primary color replace with `active` class
-
-const locals = Astro.locals as Locals;
-const { permissionLevel } = await authHelper(locals);
-
-const URLS = {
-    backToSite: await urlGenFactory(false, undefined),
-    dashboard: await urlGenFactory(true, undefined, DashboardRouteOverride),
-    profile: await urlGenFactory(true, "profile/", DashboardRouteOverride),
-    newPage: await urlGenFactory(true, "new/page/", DashboardRouteOverride),
-    newPost: await urlGenFactory(true, "new/post/", DashboardRouteOverride),
-    editPages: await urlGenFactory(true, "page-list/", DashboardRouteOverride),
-    editPosts: await urlGenFactory(true, "post-list/", DashboardRouteOverride),
-    siteConfig: await urlGenFactory(true, "configuration/", DashboardRouteOverride),
-    logout: await urlGenFactory(true, "logout", DashboardRouteOverride)
-}
-
-const siteLinks = [
-    { id: "home", href: URLS.backToSite, text: "View Site", minPermissionLevel: "unknown", icon: "i-mdi:globe-arrow-left" },
-    { id: "dashboard", href: URLS.dashboard, text: "Dashboard", minPermissionLevel: "unknown", icon: "i-mdi:view-dashboard-outline" },
-    { id: "profile", href: URLS.profile, text: "User Profile", minPermissionLevel: "unknown", icon: "i-mdi:account-box" },
-    { id: "new-page", href: URLS.newPage, text: "Create New Page", minPermissionLevel: "editor", icon: "i-mdi:page-next" },
-    { id: "new-post", href: URLS.newPost, text: "Create New Post", minPermissionLevel: "editor", icon: "i-mdi:post-it-note-add" },
-    { id: "edit-pages", href: URLS.editPages, text: "Edit Pages", minPermissionLevel: "editor", icon: "i-mdi:file-document-edit" },
-    { id: "edit-posts", href: URLS.editPosts, text: "Edit Posts", minPermissionLevel: "editor", icon: "i-mdi:post-it-note-edit" },
-    { id: "site-config", href: URLS.siteConfig, text: "Site Configuration", minPermissionLevel: "editor", icon: "i-mdi:hammer-wrench" }
-];
+const { authLinks: { logoutURL } } = StudioCMSRoutes;
+const sideBarLinks = sideBarLinkMap;
+const { permissionLevel } = await authHelper(Astro.locals as Locals);
 
 ---
 
-<ul class="menu grow shrink menu-md ">
+<div class="menu menu-md grow shrink">
 
-    { siteLinks.map(({ id, href, text, minPermissionLevel, icon }) => {
-        if ( minPermissionLevel === "unknown" && ( 
-            permissionLevel === "unknown" || 
-            permissionLevel === "admin" || 
-            permissionLevel === "editor" || 
-            permissionLevel === "visitor" ) ) {
-            return (
-            <li>
-                <a class="py-3 text-base" id={id} href={href}><div class={`${icon} inline`}></div>{text}</a>
-            </li>
-            );
-        }
-        if ((
-            testingAndDemoMode || 
-            minPermissionLevel === "editor"
-            ) && (
-            permissionLevel === "editor" || 
-            permissionLevel === "admin" || 
-            testingAndDemoMode )) {
-            return (
-            <li>
-                <a class="py-3 text-base" id={id} href={href}><div class={`${icon} inline`}></div>{text}</a>
-            </li>
-            );
-        }
-        if (( 
-            testingAndDemoMode || 
-            minPermissionLevel === "admin" 
-            ) && ( 
-            permissionLevel === "admin" || 
-            testingAndDemoMode )) {
-            return (
-            <li>
-                <a class="py-3 text-base" id={id} href={href}><div class={`${icon} inline`}></div>{text}</a>
-            </li>
-            );
+    { sideBarLinks.map(({ id, href, text, minPermissionLevel, icon, type, dropdownItems }) => {
+        if ( type === "link" ) {
+            if ( minPermissionLevel === "unknown" && ( 
+                permissionLevel === "unknown" || 
+                permissionLevel === "admin" || 
+                permissionLevel === "editor" || 
+                permissionLevel === "visitor" ) ) {
+                return (
+                    <sl-button variant="default" size="medium" class="py-1" style="width: 100%; padding-right: 1rem; padding-left: 1rem;" id={id} href={href} outline >
+                        <sl-icon slot="prefix" name={icon}></sl-icon>
+                        {text}
+                    </sl-button>
+                );
+            }
+            if ( minPermissionLevel === "visitor" && ( 
+                permissionLevel === "admin" || 
+                permissionLevel === "editor" || 
+                permissionLevel === "visitor" ) ) {
+                return (
+                    <sl-button variant="success" size="medium" class="py-1" style="width: 100%; padding-right: 1rem; padding-left: 1rem;" id={id} href={href} outline >
+                        <sl-icon slot="prefix" name={icon}></sl-icon>
+                        {text}
+                    </sl-button>
+                );
+            }
+            if ((
+                testingAndDemoMode || 
+                minPermissionLevel === "editor"
+                ) && (
+                permissionLevel === "editor" || 
+                permissionLevel === "admin" || 
+                testingAndDemoMode )) {
+                return (
+                    <sl-button variant="primary" size="medium" class="py-1" style="width: 100%; padding-right: 1rem; padding-left: 1rem;" id={id} href={href} outline >
+                        <sl-icon slot="prefix" name={icon}></sl-icon>
+                        {text}
+                    </sl-button>
+                );
+            }
+            if (( 
+                testingAndDemoMode || 
+                minPermissionLevel === "admin" 
+                ) && ( 
+                permissionLevel === "admin" || 
+                testingAndDemoMode )) {
+                return (
+                    <sl-button variant="warning" size="medium" class="py-1" style="width: 100%; padding-right: 1rem; padding-left: 1rem;" id={id} href={href} outline >
+                        <sl-icon slot="prefix" name={icon}></sl-icon>
+                        {text}
+                    </sl-button>
+                );
+            }
         }
 
+        if ( type === "dropdown" ) {
+            if ( minPermissionLevel === "unknown" && ( 
+                permissionLevel === "unknown" || 
+                permissionLevel === "admin" || 
+                permissionLevel === "editor" || 
+                permissionLevel === "visitor" ) ) {
+                return (
+                    <sl-details style="width: 100%; padding-right: 1rem; padding-left: 1rem;">
+                        <div class="py-3 text-base" slot="summary" id={id}>
+                        <sl-icon slot="prefix" class="inline" name={icon}></sl-icon> {text}</div>
 
+                        { 
+                            dropdownItems && dropdownItems.length > 0 && dropdownItems.map(({ id, href, text, minPermissionLevel, icon, type, }) => {
+                                if ( type === "link" ) {
+                                    if ( minPermissionLevel === "unknown" && ( 
+                                        permissionLevel === "unknown" || 
+                                        permissionLevel === "admin" || 
+                                        permissionLevel === "editor" || 
+                                        permissionLevel === "visitor" ) ) {
+                                        return (
+                                            <sl-button 
+                                                variant="default" 
+                                                size="medium" 
+                                                class="py-1" 
+                                                style="width: 100%; padding-right: 1rem; padding-left: 1rem;" 
+                                                id={id} 
+                                                name={id}
+                                                href={href}>
+                                                <sl-icon slot="prefix" name={icon}></sl-icon>
+                                                {text}
+                                            </sl-button>
+                                        );
+                                    }
+                                    if ((
+                                        testingAndDemoMode || 
+                                        minPermissionLevel === "editor"
+                                        ) && (
+                                        permissionLevel === "editor" || 
+                                        permissionLevel === "admin" || 
+                                        testingAndDemoMode )) {
+                                        return (
+                                            <sl-button 
+                                                variant="default" 
+                                                size="medium" 
+                                                class="py-1" 
+                                                style="width: 100%; padding-right: 1rem; padding-left: 1rem;" 
+                                                id={id} 
+                                                name={id}
+                                                href={href}>
+                                                <sl-icon slot="prefix" name={icon}></sl-icon>
+                                                {text}
+                                            </sl-button>
+                                        );
+                                    }
+                                    if (( 
+                                        testingAndDemoMode || 
+                                        minPermissionLevel === "admin" 
+                                        ) && ( 
+                                        permissionLevel === "admin" || 
+                                        testingAndDemoMode )) {
+                                        return (
+                                            <sl-button 
+                                                variant="default" 
+                                                size="medium" 
+                                                class="py-1" 
+                                                style="width: 100%; padding-right: 1rem; padding-left: 1rem;" 
+                                                id={id} 
+                                                name={id}
+                                                href={href}>
+                                                <sl-icon slot="prefix" name={icon}></sl-icon>
+                                                {text}
+                                            </sl-button>
+                                        );
+                                    }
+                                }
+                            })
+                        }
+
+                    </sl-details>
+                );
+            }
+            if ((
+                testingAndDemoMode || 
+                minPermissionLevel === "editor"
+                ) && (
+                permissionLevel === "editor" || 
+                permissionLevel === "admin" || 
+                testingAndDemoMode )) {
+                return (
+                    <sl-details style="width: 100%; padding-right: 1rem; padding-left: 1rem;">
+                        <div class="py-3 text-base flex items-center" slot="summary" id={id}>
+                        <sl-icon class="px-2 object-center" name={icon}></sl-icon> {text}</div>
+                        { 
+                            dropdownItems && dropdownItems.length > 0 && dropdownItems.map(({ id, href, text, minPermissionLevel, icon, type, }) => {
+                                if ( type === "link" ) {
+                                    if ( minPermissionLevel === "unknown" && ( 
+                                        permissionLevel === "unknown" || 
+                                        permissionLevel === "admin" || 
+                                        permissionLevel === "editor" || 
+                                        permissionLevel === "visitor" ) ) {
+                                        return (
+                                            <sl-button variant="default" size="medium" class="py-1" style="width: 100%; padding-right: 1rem; padding-left: 1rem;" id={id} href={href}>
+                                                <sl-icon slot="prefix" name={icon}></sl-icon>
+                                                {text}
+                                            </sl-button>
+                                        );
+                                    }
+                                    if ((
+                                        testingAndDemoMode || 
+                                        minPermissionLevel === "editor"
+                                        ) && (
+                                        permissionLevel === "editor" || 
+                                        permissionLevel === "admin" || 
+                                        testingAndDemoMode )) {
+                                        return (
+                                            <sl-button variant="default" size="medium" class="py-1" style="width: 100%; padding-right: 1rem; padding-left: 1rem;" id={id} href={href}>
+                                                <sl-icon slot="prefix" name={icon}></sl-icon>
+                                                {text}
+                                            </sl-button>
+                                        );
+                                    }
+                                    if (( 
+                                        testingAndDemoMode || 
+                                        minPermissionLevel === "admin" 
+                                        ) && ( 
+                                        permissionLevel === "admin" || 
+                                        testingAndDemoMode )) {
+                                        return (
+                                            <sl-button variant="default" size="medium" class="py-1" style="width: 100%; padding-right: 1rem; padding-left: 1rem;" id={id} href={href}>
+                                                <sl-icon slot="prefix" name={icon}></sl-icon>
+                                                {text}
+                                            </sl-button>
+                                        );
+                                    }
+                                }
+                            })
+                        }
+
+                    </sl-details>
+                );
+            }
+            if (( 
+                testingAndDemoMode || 
+                minPermissionLevel === "admin" 
+                ) && ( 
+                permissionLevel === "admin" || 
+                testingAndDemoMode )) {
+                return (
+                    <sl-details style="width: 100%; padding-right: 1rem; padding-left: 1rem;">
+                        <div class="py-3 text-base flex items-center" slot="summary" id={id}>
+                        <sl-icon slot="prefix" class="align-text-center inline" name={icon}></sl-icon> {text}</div>
+                        { 
+                            dropdownItems && dropdownItems.length > 0 && dropdownItems.map(({ id, href, text, minPermissionLevel, icon, type, }) => {
+                                if ( type === "link" ) {
+                                    if ( minPermissionLevel === "unknown" && ( 
+                                        permissionLevel === "unknown" || 
+                                        permissionLevel === "admin" || 
+                                        permissionLevel === "editor" || 
+                                        permissionLevel === "visitor" ) ) {
+                                        return (
+                                            <sl-button variant="default" size="medium" class="py-1" style="width: 100%; padding-right: 1rem; padding-left: 1rem;" id={id} href={href}>
+                                                <sl-icon slot="prefix" name={icon}></sl-icon>
+                                                {text}
+                                            </sl-button>
+                                        );
+                                    }
+                                    if ((
+                                        testingAndDemoMode || 
+                                        minPermissionLevel === "editor"
+                                        ) && (
+                                        permissionLevel === "editor" || 
+                                        permissionLevel === "admin" || 
+                                        testingAndDemoMode )) {
+                                        return (
+                                            <sl-button variant="default" size="medium" class="py-1" style="width: 100%; padding-right: 1rem; padding-left: 1rem;" id={id} href={href}>
+                                                <sl-icon slot="prefix" name={icon}></sl-icon>
+                                                {text}
+                                            </sl-button>
+                                        );
+                                    }
+                                    if (( 
+                                        testingAndDemoMode || 
+                                        minPermissionLevel === "admin" 
+                                        ) && ( 
+                                        permissionLevel === "admin" || 
+                                        testingAndDemoMode )) {
+                                        return (
+                                            <sl-button variant="default" size="medium" class="py-1" style="width: 100%; padding-right: 1rem; padding-left: 1rem;" id={id} href={href}>
+                                                <sl-icon slot="prefix" name={icon}></sl-icon>
+                                                {text}
+                                            </sl-button>
+                                        );
+                                    }
+                                }
+                            })
+                        }
+
+                    </sl-details>
+                );
+            }
+        }
 
     }) }
 
+    <sl-divider style="--width: 4px;"></sl-divider>
+
     { ( testingAndDemoMode || permissionLevel !== "unknown" ) ? (
-        <form method="post" action={URLS.logout}>
-            <button class="btn"><div class="i-mdi:logout"></div>Sign out</button>
+        <form method="post" action={logoutURL}>
+            <sl-button variant="danger" size="medium" class="py-1" style="width: 100%; padding-right: 1rem; padding-left: 1rem;" type="submit" outline>
+                <sl-icon slot="prefix" name="box-arrow-left"></sl-icon>
+                Sign out
+            </sl-button>
         </form>
     ) : "" }
 
-</ul>
-
-<script define:vars={{ sideBarActiveItemID: sideBarActiveItemID, activeClass: activeClass }}>
-const activeItemElem = document.getElementById(sideBarActiveItemID);
-activeItemElem && activeItemElem.classList.add(activeClass);
-</script>
+    </div>

@@ -3,19 +3,20 @@ import { User, db, eq } from 'astro:db';
 import { Auth0, OAuth2RequestError, type Auth0Tokens } from 'arctic';
 import type { APIContext } from 'astro';
 import { authEnvCheck, lucia } from "studiocms-dashboard:auth";
-import { urlGenFactory } from 'studiocms:helpers';
 import Config from 'virtual:studiocms/config';
+import { StudioCMSRoutes } from 'studiocms-dashboard:routeMap';
+import { randomUUID } from 'node:crypto';
 
 const { 
 	dashboardConfig: { 
 		AuthConfig: {
 			providers
 		},
-	  dashboardRouteOverride,
 	} 
   } = Config;
 
 const { AUTH0: { CLIENT_ID, CLIENT_SECRET, DOMAIN, REDIRECT_URI } } = await authEnvCheck(providers);
+const { authLinks: { loginURL }, mainLinks: { dashboardIndex } } = StudioCMSRoutes;
 
 export async function GET(context: APIContext): Promise<Response> {
 	const {
@@ -46,7 +47,7 @@ const clientDomain = `https://${NoHTTPDOMAIN}`;
 		// return new Response(null, {
 		// 	status: 403,
 		// });
-		return redirect(await urlGenFactory(true, "login", dashboardRouteOverride));
+		return redirect(loginURL);
 	}
 
 	try {
@@ -72,7 +73,7 @@ const clientDomain = `https://${NoHTTPDOMAIN}`;
 			const session = await lucia.createSession(existingUser.id, {});
 			const sessionCookie = lucia.createSessionCookie(session.id);
 			cookies.set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
-			return redirect(await urlGenFactory(true, undefined, dashboardRouteOverride));
+			return redirect(dashboardIndex);
 		}
 
 		const existingUserName = await db.select().from(User).where(eq(User.username, username)).get();
@@ -86,13 +87,14 @@ const clientDomain = `https://${NoHTTPDOMAIN}`;
 		const createdUser = await db
 			.insert(User)
 			.values({
+				id: randomUUID(),
 				auth0Id,
 				username,
 				name: name ?? username,
 				email,
 				avatar,
 			})
-			.returning()
+			.returning({ id: User.id })
 			.get();
 
 		const session = await lucia.createSession(createdUser.id, {});
@@ -100,7 +102,7 @@ const clientDomain = `https://${NoHTTPDOMAIN}`;
 		const sessionCookie = lucia.createSessionCookie(session.id);
 
 		cookies.set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
-		return redirect(await urlGenFactory(true, undefined, dashboardRouteOverride));
+		return redirect(dashboardIndex);
 	} catch (e) {
 		// the specific error message depends on the provider
 		if (e instanceof OAuth2RequestError) {

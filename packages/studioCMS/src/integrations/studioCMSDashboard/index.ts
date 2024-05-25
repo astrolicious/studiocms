@@ -3,12 +3,15 @@ import { optionsSchema } from "../../schemas";
 import { CheckENV, integrationLogger } from "../../utils";
 import { loadEnv } from "vite";
 import { fileFactory } from "../../utils/fileFactory";
-import { DashboardStrings } from "../../strings";
+import { DashboardStrings, DbErrors } from "../../strings";
 import { presetTypography, presetWind, presetUno, transformerDirectives, presetIcons, presetWebFonts } from "unocss";
 import UnoCSSAstroIntegration from "@unocss/astro";
 import { presetDaisy } from "@yangyang20240403/unocss-preset-daisyui";
 import { FileSystemIconLoader } from '@iconify/utils/lib/loader/node-loaders'
-import { presetScrollbar } from 'unocss-preset-scrollbar'
+import { presetScrollbar } from 'unocss-preset-scrollbar';
+import * as fs from "node:fs";
+import { randomUUID } from "node:crypto";
+import type { AuthConfigMap, usernameAndPasswordConfig } from "../../schemas/auth-types";
 
 // Environment Variables
 const env = loadEnv('all', process.cwd(), 'CMS');
@@ -106,11 +109,12 @@ export default defineIntegration({
     setup({ name, options }) {
         return {
             hooks: {
-                "astro:config:setup": ( params ) => {
+                "astro:config:setup": async ( params ) => {
 
                     // Destructure the params and options
                     const { 
 						logger, 
+						config,
 						addMiddleware,
 						injectRoute,
 					} = params;
@@ -157,20 +161,108 @@ export default defineIntegration({
 
 					// Create Resolvers
 					const { resolve } = createResolver(import.meta.url);
+					const { resolve: rootResolve } = createResolver(config.root.pathname);
 
 					// Virtual Resolver
 					const virtualResolver = { 
 						Auth: resolve('./lib/auth.ts'), 
 						AuthENVChecker: resolve("./utils/authEnvCheck.ts"),
 						DashboardLayout: resolve('./routes/dashboard/layouts/Layout.astro'),
+						StudioAuthConfig: rootResolve('./studiocms-auth.config.json'),
+						RouteMap: resolve('./utils/routemap.ts'),
 					};
+
+					// Username and Password Config
+					/**
+					 * Check if the salt is defined in the studiocms-auth.config.json file
+					 * 
+					 * File is stored in the root of the user's project as studiocms-auth.config.json
+ 					 * 
+					 * @see https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html#scrypt
+					 * @see https://words.filippo.io/the-scrypt-parameters/
+					 * 
+					 * @example
+					 * {
+					 * 	"salt": "salt", //Uint8Array | string
+					 * 	"opts": {
+					 * 		"cpu_mem": 2 ** 12, //NUMBER
+					 * 		"block_size": 8, //NUMBER
+					 * 		"parallelization": 1, //NUMBER
+					 * 		"output_key_length": 32 //NUMBER
+					 *      "asyncTick": 10, //NUMBER
+					 * 		"max_mem": 1024 ** 3 + 1024 //NUMBER
+					 *   },
+					 * }
+					 */
+					let VirtualAuthSecurity: usernameAndPasswordConfig
+
+					if ( usernameAndPassword ) {
+						try {
+							const authConfigFileJson = fs.readFileSync(virtualResolver.StudioAuthConfig, { encoding: 'utf-8' });
+							const authConfigFile: AuthConfigMap = JSON.parse(authConfigFileJson);
+
+							if (!authConfigFile.salt) {
+								return integrationLogger(logger, true, 'error', 'studiocms-auth.config.json file does not contain a salt');
+							}
+
+							const authConfigMap = {
+								salt: authConfigFile.salt,
+								opts: {
+									N: authConfigFile.opts.cpu_mem || 2 ** 12,
+									r: authConfigFile.opts.block_size || 8,
+									p: authConfigFile.opts.parallelization || 1,
+									dkLen: authConfigFile.opts.output_key_length || 32,
+									asyncTick: authConfigFile.opts.asyncTick || 10,
+									maxmem: authConfigFile.opts.max_mem || 1024 ** 3 + 1024,
+								}
+							};
+
+
+							VirtualAuthSecurity = authConfigMap;
+						} catch (error) {
+							// Log that the file does not exist
+							integrationLogger(logger, verbose, 'error', 'studiocms-auth.config.json file does not exist. Creating...');
+
+							// Create a new salt
+							const newSalt = randomUUID();
+							VirtualAuthSecurity = { salt: newSalt, opts: { N: 2 ** 12, r: 8, p: 1, dkLen: 32 }};
+
+							const outputMap: AuthConfigMap = {
+								salt: newSalt,
+								opts: {
+									cpu_mem: 2 ** 12,
+									block_size: 8,
+									parallelization: 1,
+									output_key_length: 32,
+									asyncTick: 10,
+									max_mem: 1024 ** 3 + 1024,
+								}
+							}
+
+							fs.writeFile(virtualResolver.StudioAuthConfig, JSON.stringify(outputMap, null, 2), (err) => {
+								if (err) {
+									// Log that the file could not be created
+									integrationLogger(logger, verbose, 'error', 'studiocms-auth.config.json file could not be created');
+								}
+							});
+						}
+
+						// Create Virtual Config
+						const VirtualAuthConfig = `export default ${JSON.stringify(VirtualAuthSecurity)}`;
+						addVirtualImports(params, { name, imports: { 'virtual:studiocms-dashboard/auth-sec': VirtualAuthConfig } });
+
+					}
 
 					// Virtual Components
 					const virtualComponentMap = `
 					export * from '${virtualResolver.Auth}';
 					export * from '${virtualResolver.AuthENVChecker}';`;
+
 					const VirtualAstroComponents = `
 					export {default as Layout} from '${virtualResolver.DashboardLayout}';`;
+
+					const VirtualRouteMap = `
+					export * from '${virtualResolver.RouteMap}';`;
 
 					// Add Virtual Imports
 					integrationLogger(logger, verbose, 'info', 'Adding Virtual Imports...');
@@ -179,6 +271,7 @@ export default defineIntegration({
 						imports: {
 							'studiocms-dashboard:auth': virtualComponentMap,
 							'studiocms-dashboard:components': VirtualAstroComponents,
+							'studiocms-dashboard:routeMap': VirtualRouteMap,
 						},
 					});
 
@@ -192,6 +285,15 @@ export default defineIntegration({
 
 					studioCMSDTS.addLines(`declare module 'studiocms-dashboard:components' {
 						export const Layout: typeof import('${virtualResolver.DashboardLayout}').default;
+					}`);
+
+					studioCMSDTS.addLines(`declare module 'studiocms-dashboard:routeMap' {
+						export const getSluggedRoute: typeof import('${virtualResolver.RouteMap}').getSluggedRoute;
+						export const getEditRoute: typeof import('${virtualResolver.RouteMap}').getEditRoute;
+						export const getDeleteRoute: typeof import('${virtualResolver.RouteMap}').getDeleteRoute;
+						export const StudioCMSRoutes: typeof import('${virtualResolver.RouteMap}').StudioCMSRoutes;
+						export type SideBarLink = import('${virtualResolver.RouteMap}').SideBarLink;
+						export const sideBarLinkMap: import('${virtualResolver.RouteMap}').sideBarLinkMap;
 					}`);
 
 					// Add Virtual DTS File
@@ -211,11 +313,11 @@ export default defineIntegration({
 							injectEntry: injectEntry,
 							presets: [
 								presetUno(),
+								presetWind(), 
 								presetDaisy({
 									themes: themes,
 									darkTheme: darkTheme,
 								}),
-								presetWind(), 
 								presetTypography(),
 								presetIcons({
 									collections: {
@@ -226,8 +328,7 @@ export default defineIntegration({
 										auth0: FileSystemIconLoader(resolve('./icons/auth0')),
 									}
 								}),
-								presetScrollbar({
-								}),
+								presetScrollbar(),
 								presetWebFonts({
 									provider: 'google',
 									fonts: {
@@ -277,6 +378,12 @@ export default defineIntegration({
 						// Log that the Dashboard is enabled
 						integrationLogger(logger, verbose, 'info', 'Dashboard is Enabled');
 
+						// Add Dashboard API Routes
+						injectRoute({
+							pattern: makeRoute('api/liverender'),
+							entrypoint: resolve('./routes/dashboard/partials/LivePreview.astro'),
+						})
+						
 						// Setup the Dashboard Routes
 						injectRoute({
 							pattern: makeRoute("/"),
@@ -295,28 +402,12 @@ export default defineIntegration({
 							entrypoint: resolve('./routes/dashboard/pages/configuration/admins.astro')
 						})
 						injectRoute({
-							pattern: makeRoute('new/post/'),
-							entrypoint: resolve('./routes/dashboard/pages/new/post.astro')
-						})
-						injectRoute({
 							pattern: makeRoute('new/page/'),
 							entrypoint: resolve('./routes/dashboard/pages/new/page.astro')
 						})
 						injectRoute({
-							pattern: makeRoute('post-list/'),
-							entrypoint: resolve('./routes/dashboard/pages/post-list.astro')
-						})
-						injectRoute({
 							pattern: makeRoute('page-list/'),
-							entrypoint: resolve('./routes/dashboard/pages/page-list.astro')
-						})
-						injectRoute({
-							pattern: makeRoute('edit/posts/[...slug]'),
-							entrypoint: resolve('./routes/dashboard/pages/edit/posts/[...slug].astro')
-						})
-						injectRoute({
-							pattern: makeRoute('delete/posts/[...slug]'),
-							entrypoint: resolve('./routes/dashboard/pages/delete/posts/[...slug].astro')
+							entrypoint: resolve('./routes/dashboard/pages/edit/page-list.astro')
 						})
 						injectRoute({
 							pattern: makeRoute('edit/pages/[...slug]'),
@@ -449,7 +540,18 @@ export default defineIntegration({
 					}
 
 
-                }
+                },
+				'astro:server:start': ({ logger }) => {
+					// Display Console Message if dbStartPage(First Time DB Initialization) is enabled
+					if (options.dbStartPage) {
+						integrationLogger(
+							logger,
+							true,
+							'warn',
+							DbErrors.DbStartPage
+						);
+					}
+				},
             }
         }
 }});

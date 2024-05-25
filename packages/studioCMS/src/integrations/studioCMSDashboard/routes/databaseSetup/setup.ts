@@ -1,8 +1,12 @@
 // @ts-expect-error - Some types can only be imported from the Astro runtime
-import { Blog, Permissions, Pages, SiteConfig, User, db, eq } from 'astro:db';
+import { PageContent, PageData, Blog, Permissions, SiteConfig, User, db, eq } from 'astro:db';
 import { scryptAsync } from "@noble/hashes/scrypt";
+import AuthSec from 'virtual:studiocms-dashboard/auth-sec';
+
+const { salt: ScryptSalt, opts: ScryptOpts } = AuthSec;
 
 import type { APIContext } from "astro";
+import { randomUUID } from 'node:crypto';
 
 export async function POST(context: APIContext): Promise<Response> {
 	const formData = await context.request.formData();
@@ -62,8 +66,9 @@ export async function POST(context: APIContext): Promise<Response> {
 				username,
 			})
 
+		const serverToken = await scryptAsync(existingUser.id, ScryptSalt, ScryptOpts);
 		const newUser = await db.select().from(User).where(eq(User.username, username)).get();
-		const hashedPassword = await scryptAsync(password, newUser.id, { N: 2 ** 12, r: 8, p: 1, dkLen: 32 })
+		const hashedPassword = await scryptAsync(password, serverToken, ScryptOpts)
 		const hashedPasswordString = Buffer.from(hashedPassword.buffer).toString();
 		await db
 			.update(User)
@@ -119,43 +124,52 @@ export async function POST(context: APIContext): Promise<Response> {
 		})
 	);
 
+	const HERO_IMAGE = 'https://images.unsplash.com/photo-1707343843982-f8275f3994c5?q=80&w=1032&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
 	const LOREM_IPSUM =
 	'## Hello World \nLorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.';
 
-	// Insert Default Pages
-	dbBatchQueries.push(await db
-		.insert(Pages)
+	await db
+		.insert(PageData)
 		.values([
 			{
+				id: randomUUID(),
 				title: 'Home',
 				slug: 'index',
+				showOnNav: true,
+				contentLang: 'default',
 				description: 'Index page',
-				heroImage:
-					'https://images.unsplash.com/photo-1707343843982-f8275f3994c5?q=80&w=1032&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-				content: LOREM_IPSUM,
+				heroImage: HERO_IMAGE,
 			},
 			{
+				id: randomUUID(),
 				title: 'About',
 				slug: 'about',
+				showOnNav: true,
+				contentLang: 'default',
 				description: 'About page',
-				heroImage:
-					'https://images.unsplash.com/photo-1661174585122-83a2909163ad?q=80&w=1169&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-				content: LOREM_IPSUM,
+				heroImage: HERO_IMAGE,
 			},
 		])
-	);
 
-	// Insert Default Blog Post // TODO: Remove This
-	dbBatchQueries.push(await db
-		.insert(Blog)
+	const index = await db.select().from(PageData).where(eq(PageData.slug, 'index')).get();
+	const about = await db.select().from(PageData).where(eq(PageData.slug, 'about')).get();
+
+
+	// Insert Page Content
+	dbBatchQueries.push(
+		await db
+		.insert(PageContent)
 		.values([
 			{
-				title: 'Hello, World!',
-				slug: 'hello-world',
-				description: 'Lorem ipsum dolor sit amet',
-				publishedAt: new Date('2024-03-12T07:00:00Z'),
-				heroImage:
-					'https://images.unsplash.com/photo-1707343843982-f8275f3994c5?q=80&w=1032&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+				id: randomUUID(),
+				contentId: index.id,
+				contentLang: 'default',
+				content: LOREM_IPSUM,
+			},
+			{
+				id: randomUUID(),
+				contentId: about.id,
+				contentLang: 'default',
 				content: LOREM_IPSUM,
 			},
 		])

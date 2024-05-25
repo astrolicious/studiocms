@@ -3,16 +3,34 @@ declare module 'virtual:studiocms/config' {
 	export default Config;
 }
 
+declare module 'virtual:studiocms-dashboard/auth-sec' {
+	const AuthSec: import('./src/integrations/studioCMSDashboard/index.ts').usernameAndPasswordConfig;
+	export default AuthSec;
+}
+
 declare module 'studiocms:components' {
 	export const CImage: typeof import('./src/components/exports/CImage.astro').default;
 	export const FormattedDate: typeof import('./src/components/exports/FormattedDate.astro').default;
 	export const StudioCMSRenderer: typeof import('./src/components/exports/StudioCMSRenderer.astro').default;
+	export const contentHelper: typeof import('./src/utils/contentHelper').contentHelper;
+	export type ContentHelperTempResponse = import('./src/utils/contentHelper').ContentHelperTempResponse;
+	export type SiteConfigResponse = import('./src/utils/contentHelper').SiteConfigResponse;
+	export const getSiteConfig: typeof import('./src/utils/contentHelper').getSiteConfig;
+	export type pageDataReponse = import('./src/utils/contentHelper').pageDataReponse;
+	export const getPageList: typeof import('./src/utils/contentHelper').getPageList;
+	export type UserResponse = import('./src/utils/contentHelper').UserResponse;
+	export const getUserById: typeof import('./src/utils/contentHelper').getUserById;
+	export const getUserList: typeof import('./src/utils/contentHelper').getUserList;
+	export const Navigation: typeof import('./src/components/exports/Navigation.astro').default;
+	export const Avatar: typeof import('./src/components/exports/Avatar.astro').default;
 }
 
 declare module 'studiocms:helpers' {
 	export const authHelper: typeof import('./src/utils/authhelper').default;
 	export const LocalsSchema: typeof import('./src/schemas/locals').LocalsSchema;
 	export type Locals = import('./src/schemas/locals').Locals;
+	export const PageDataAndContentSchema: typeof import('./src/schemas/dbtypehelpers').PageDataAndContentSchema;
+	export type PageDataAndContent = import('./src/schemas/dbtypehelpers').PageDataAndContent;
 	export const urlGenFactory: typeof import('./src/utils/urlGen').default;
 	export const toCamelCase: typeof import('./src/utils/textFormatter').toCamelCase;
 	export const toPascalCase: typeof import('./src/utils/textFormatter').toPascalCase;
@@ -25,6 +43,15 @@ declare module 'studiocms-dashboard:auth' {
 
 declare module 'studiocms-dashboard:components' {
 	export const Layout: typeof import('./src/integrations/studioCMSDashboard/routes/dashboard/layouts/Layout.astro').default;
+}
+
+declare module 'studiocms-dashboard:routeMap' {
+	export const getSluggedRoute: typeof import('./src/integrations/studioCMSDashboard/utils/routemap').getSluggedRoute;
+	export const getEditRoute: typeof import('./src/integrations/studioCMSDashboard/utils/routemap').getEditRoute;
+	export const getDeleteRoute: typeof import('./src/integrations/studioCMSDashboard/utils/routemap').getDeleteRoute;
+	export const StudioCMSRoutes: typeof import('./src/integrations/studioCMSDashboard/utils/routemap').StudioCMSRoutes;
+	export type SideBarLink = import('./src/integrations/studioCMSDashboard/utils/routemap').SideBarLink;
+	export const sideBarLinkMap: typeof import('./src/integrations/studioCMSDashboard/utils/routemap').sideBarLinkMap;
 }
 
 interface ImportMetaEnv {

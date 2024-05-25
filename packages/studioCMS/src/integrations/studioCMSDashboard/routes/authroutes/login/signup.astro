@@ -1,8 +1,9 @@
 ---
 import { Layout } from 'studiocms-dashboard:components';
 import Config from 'virtual:studiocms/config';
-import { urlGenFactory, type Locals } from 'studiocms:helpers';
+import type { Locals } from 'studiocms:helpers';
 import OauthProviders from '../components/OauthProviders.astro';
+import { StudioCMSRoutes } from 'studiocms-dashboard:routeMap';
 
 if (Config.includedIntegrations.useInoxSitemap) {
     import('sitemap-ext:config').then((sitemap) => {
@@ -10,20 +11,13 @@ if (Config.includedIntegrations.useInoxSitemap) {
     })
 }
 
-const { 
-  dashboardConfig,
-  dashboardConfig: { 
-    dashboardRouteOverride,
-  } 
-} = Config;
+const {  dashboardConfig } = Config;
+const { authLinks: { loginURL, registerAPI }, mainLinks: { dashboardIndex } } = StudioCMSRoutes;
 
 const locals = Astro.locals as Locals;
 
-const LoginURL = await urlGenFactory(true, 'login/', dashboardRouteOverride)
-const UserPassRegisterURL = await urlGenFactory(true, 'login/api/register', dashboardRouteOverride)
-
 if (locals.isLoggedIn) {
-	return Astro.redirect(await urlGenFactory(true, undefined, dashboardRouteOverride));
+	return Astro.redirect(dashboardIndex);
 }
 ---
 
@@ -46,19 +40,23 @@ if (locals.isLoggedIn) {
         <div class="py-8">
           <div class="bg-base-300 p-8 rounded-lg">
 
-          <form method="post" action={UserPassRegisterURL}>
+          <form method="post" action={registerAPI}>
 
             <sl-input 
             name="username" 
-            id="username" 
-            class="w-96">
+            id="username">
               <div class="text-xl font-bold" slot="label">Username</div>
             </sl-input><br />
 
             <sl-input 
+            name="email" 
+            id="email">
+              <div class="text-xl font-bold" slot="label">Email address</div>
+            </sl-input><br />
+
+            <sl-input 
             name="displayname" 
-            id="displayname" 
-            class="w-96">
+            id="displayname">
               <div class="text-xl font-bold" slot="label">Display Name</div>
             </sl-input><br />
 
@@ -66,7 +64,6 @@ if (locals.isLoggedIn) {
             type="password" 
             name="password"
             id="password"
-            class="w-96" 
             password-toggle>
               <div class="text-xl font-bold" slot="label">Password</div>
             </sl-input><br />
@@ -79,7 +76,7 @@ if (locals.isLoggedIn) {
 
           <div class="py-4">
             <center>
-              <a href={LoginURL} class="text-lg">Already have an account? Sign in!</a>
+              <a href={loginURL} class="text-lg">Already have an account? Sign in!</a>
             </center>
           </div>
 

@@ -2,8 +2,13 @@
 import { User, db, eq } from 'astro:db';
 import { lucia } from "studiocms-dashboard:auth";
 import { scryptAsync } from "@noble/hashes/scrypt";
-
+import AuthSec from 'virtual:studiocms-dashboard/auth-sec';
 import type { APIContext } from "astro";
+import { randomUUID } from 'node:crypto';
+import { z } from 'astro/zod';
+
+const { salt: ScryptSalt, opts: ScryptOpts } = AuthSec;
+
 
 export async function POST(context: APIContext): Promise<Response> {
 	const formData = await context.request.formData();
@@ -37,11 +42,25 @@ export async function POST(context: APIContext): Promise<Response> {
 		);
 	}
 
+	const emailFormData = formData.get("email");
+	const checkemail = z.coerce.string().email({ message: "Email address is invalid" } ).safeParse(emailFormData);
+	if (!checkemail.success) {
+		return new Response(
+			JSON.stringify({
+				error: "Invalid email"
+			}),
+			{
+				status: 400
+			}
+		);
+	}
+
 	const name = formData.get("displayname");
 
-    const existingUser = await db.select().from(User).where(eq(User.username, username)).get()
+    const existingUsername = await db.select().from(User).where(eq(User.username, username)).get()
+	const existingEmail = await db.select().from(User).where(eq(User.email, checkemail.data)).get()
 
-    if (existingUser) {
+    if (existingUsername || existingEmail) {
         return new Response(
             JSON.stringify({
                 error: "Username/Email already used"
@@ -52,15 +71,40 @@ export async function POST(context: APIContext): Promise<Response> {
         );
     
     }
-    await db
+
+
+	// Make a gravatar Avatar from the email
+	async function createGravatar(email: string) {
+		// trim and lowercase the email
+		const safeemail = email.trim().toLowerCase();
+		// encode as (utf-8) Uint8Array
+		const msgUint8 = new TextEncoder().encode(safeemail); 
+		// hash the message
+		const hashBuffer = await crypto.subtle.digest("SHA-256", msgUint8); 
+		// convert buffer to byte array
+		const hashArray = Array.from(new Uint8Array(hashBuffer)); 
+		// convert bytes to hex string
+		const hashHex = hashArray
+			.map((b) => b.toString(16).padStart(2, "0"))
+			.join(""); 
+		// return the gravatar url
+		return `https://www.gravatar.com/avatar/${hashHex}?s=400&d=mp`;
+	}
+	const avatar = await createGravatar(checkemail.data);
+
+    const newUserId = await db
         .insert(User)
         .values({
+			id: randomUUID(),
             name: name as string,
+			email: checkemail.data,
             username,
-        })
+			avatar,
+        }).returning({ id: User.id }).get();
 
+	const serverToken = await scryptAsync(newUserId.id, ScryptSalt, ScryptOpts);
     const newUser = await db.select().from(User).where(eq(User.username, username)).get();
-	const hashedPassword = await scryptAsync(password, newUser.id, { N: 2 ** 12, r: 8, p: 1, dkLen: 32 })
+	const hashedPassword = await scryptAsync(password, serverToken, ScryptOpts)
 	const hashedPasswordString = Buffer.from(hashedPassword.buffer).toString();
 	await db
 		.update(User)

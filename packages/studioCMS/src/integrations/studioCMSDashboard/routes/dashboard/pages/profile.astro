@@ -1,9 +1,11 @@
 ---
 // @ts-expect-error - Some types can only be imported from the Astro runtime
-import { SiteConfig, db } from 'astro:db';
+import { SiteConfig, db, eq } from 'astro:db';
 import { Layout } from 'studiocms-dashboard:components';
 import Config from 'virtual:studiocms/config';
-import { urlGenFactory, authHelper, toPascalCase, type Locals } from 'studiocms:helpers';
+import { authHelper, toPascalCase, type Locals } from 'studiocms:helpers';
+import { StudioCMSRoutes } from 'studiocms-dashboard:routeMap';
+import type { SiteConfigResponse } from 'studiocms:components';
 
 if (Config.includedIntegrations.useInoxSitemap) {
     import('sitemap-ext:config').then((sitemap) => {
@@ -11,21 +13,29 @@ if (Config.includedIntegrations.useInoxSitemap) {
     })
 }
 
-const { dashboardConfig: { developerConfig, dashboardRouteOverride } } = Config;
+const { dashboardConfig: { developerConfig } } = Config;
 
-const ConfigArray = await db.select().from(SiteConfig);
-const contextConfig = ConfigArray.pop();
+const { 
+    authLinks: {
+        loginURL
+    }, 
+    mainLinks: {
+        dashboardIndex,
+        userProfile
+    }
+} = StudioCMSRoutes
 
-const locals = Astro.locals as Locals;
-const { permissionLevel, name, username, currentUserSession, githubURL } = await authHelper(locals);
+const contextConfig: SiteConfigResponse = await db.select().from(SiteConfig).where(eq(SiteConfig.id, 1)).get();
+const { permissionLevel, name, username, currentUserSession, githubURL } = await authHelper(Astro.locals as Locals);
 
 // If the user is not logged in, redirect to the login page
 if ( !developerConfig.testingAndDemoMode ) {
     if ( permissionLevel === "unknown" ) {
         console.log('User is not logged in. Redirecting to login page.');
-        return Astro.redirect(await urlGenFactory(true, "login", dashboardRouteOverride))
+        return Astro.redirect(loginURL)
     }
 }
+
 
 const pageTitle = `User profile | ${contextConfig.title}`;
 ---
@@ -34,31 +44,49 @@ const pageTitle = `User profile | ${contextConfig.title}`;
     sideBarActiveItemID="profile" 
     title={pageTitle}
     description={contextConfig.description} >
-    <div class="pb-12 mt-5">
 
-        <div class="text-5xl font-bold">{username}'s Profile</div>
+    <div class="flex grow w-full pb-4">
+        <sl-breadcrumb>
+            <span slot="separator">/</span>
+            <sl-breadcrumb-item href={dashboardIndex}>Dashboard
+                <sl-icon slot="prefix" name="columns-gap"></sl-icon>
+            </sl-breadcrumb-item>
+            <sl-breadcrumb-item href={userProfile}>User Profile</sl-breadcrumb-item>
+        </sl-breadcrumb>
+    </div>
 
-        <div class="py-2">
-            <text class="text-lg">
-                <bold>Display Name:</bold> {name}
-            </text>
-            <br />
-            <text class="text-lg">
-                <bold>Role:</bold> {toPascalCase(permissionLevel)}
-            </text>
-            <br />
-            { githubURL && (
+    <div class="container max-w-[100vw] lg:max-w-[1800px] min-w-[75vw]">
+
+        <div class="text-5xl font-bold py-8">User Profile</div>
+
+
+        <sl-card class="card-header">
+            <div slot="header" class="text-5xl font-bold">
+                {username}'s Profile
+            </div>
+            <div class="py-2">
                 <text class="text-lg">
-                    <bold>GitHub:</bold> <a class="text-blue" href={githubURL}>{username}</a>
+                    <bold>Display Name:</bold> {name}
                 </text>
                 <br />
-            )}
-            <text class="text-lg">
-                { currentUserSession && (
-                    <p><bold>Session Expires:</bold> {new Date(currentUserSession.expiresAt).toLocaleString()} </p>
-                ) } 
-            </text>
-        </div>
+                <text class="text-lg">
+                    <bold>Role:</bold> {toPascalCase(permissionLevel)}
+                </text>
+                <br />
+                { githubURL && (
+                    <text class="text-lg">
+                        <bold>GitHub:</bold> <a class="text-blue" href={githubURL}>{username}</a>
+                    </text>
+                    <br />
+                )}
+                <text class="text-lg">
+                    { currentUserSession && (
+                        <p><bold>Session Expires:</bold> {new Date(currentUserSession.expiresAt).toLocaleString()} </p>
+                    ) } 
+                </text>
+            </div>
+        </sl-card>
+
 
     </div>
 </Layout>

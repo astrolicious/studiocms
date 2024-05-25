@@ -3,7 +3,9 @@
 import { SiteConfig, db, eq } from 'astro:db';
 import { Layout } from 'studiocms-dashboard:components';
 import Config from 'virtual:studiocms/config';
-import { authHelper, urlGenFactory, type Locals } from 'studiocms:helpers';
+import { authHelper, type Locals } from 'studiocms:helpers';
+import { StudioCMSRoutes } from 'studiocms-dashboard:routeMap'
+import type { SiteConfigResponse } from 'studiocms:components';
 
 if (Config.includedIntegrations.useInoxSitemap) {
     import('sitemap-ext:config').then((sitemap) => {
@@ -11,25 +13,32 @@ if (Config.includedIntegrations.useInoxSitemap) {
     })
 }
 
-const { dashboardConfig: { developerConfig, dashboardRouteOverride } } = Config;
+const { dashboardConfig: { developerConfig } } = Config;
 
-const ConfigArray = await db.select().from(SiteConfig);
-const contextConfig = ConfigArray.pop();
+const { 
+    authLinks: { 
+        loginURL 
+    }, 
+    mainLinks: { 
+        userProfile,
+        dashboardIndex,
+        siteConfiguration,
+        configurationAdmins
+    } 
+} = StudioCMSRoutes;
 
-const locals = Astro.locals as Locals;
-const { permissionLevel } = await authHelper(locals);
-
-const manageAdmins = await urlGenFactory(true, "configuration/admins/", dashboardRouteOverride);
+const contextConfig: SiteConfigResponse = await db.select().from(SiteConfig).where(eq(SiteConfig.id, 1)).get();
+const { permissionLevel } = await authHelper(Astro.locals as Locals);
 
 // If the user is not logged in, redirect to the login page
 if ( !developerConfig.testingAndDemoMode ) {
     if ( permissionLevel === "unknown" ) {
         console.log('User is not logged in. Redirecting to login page.');
-        return Astro.redirect(await urlGenFactory(true, "login", dashboardRouteOverride));
+        return Astro.redirect(loginURL);
     }
     if ( permissionLevel !== 'admin' ) {
         console.log('User is not an admin. Redirecting to profile page.');
-        return Astro.redirect(await urlGenFactory(true, "profile", dashboardRouteOverride));
+        return Astro.redirect(userProfile);
     }
 }
 
@@ -48,7 +57,7 @@ if (Astro.request.method === 'POST' && !developerConfig.testingAndDemoMode) {
                 title: title as string,
                 description: description as string,
             })
-            .where(eq(SiteConfig.id, '1'))
+            .where(eq(SiteConfig.id, 1))
             .then(() => {
                 showSuccessToast = true;
             })
@@ -62,6 +71,7 @@ if (Astro.request.method === 'POST' && !developerConfig.testingAndDemoMode) {
     }
 }
 
+
 const pageTitle = `Site Config | ${contextConfig.title}`;
 ---
 
@@ -69,6 +79,15 @@ const pageTitle = `Site Config | ${contextConfig.title}`;
     sideBarActiveItemID="site-config" 
     title={pageTitle}
     description={contextConfig.description} >
+    <div class="flex grow w-full pb-4">
+        <sl-breadcrumb>
+            <span slot="separator">/</span>
+            <sl-breadcrumb-item href={dashboardIndex}>Dashboard
+                <sl-icon slot="prefix" name="columns-gap"></sl-icon>
+            </sl-breadcrumb-item>
+            <sl-breadcrumb-item href={siteConfiguration}>Site Configuration</sl-breadcrumb-item>
+        </sl-breadcrumb>
+    </div>
     <div class="alert-toast">
         { showSuccessToast && (
         <sl-alert variant="success" duration="3000" open closable>
@@ -85,41 +104,43 @@ const pageTitle = `Site Config | ${contextConfig.title}`;
         </sl-alert>
         )}
     </div>
-    <div class="mt-5">
+    <div class="container max-w-[100vw] lg:max-w-[1800px] min-w-[75vw] flex flex-col">
 
-        <div class="text-5xl font-bold">Site Configuration</div>
+        <div class="text-5xl font-bold grow py-8">Site Configuration</div>
 
-        <div class="py-4">
-            <a 
-                href={manageAdmins} 
-                class="btn btn-outline ml-5" 
-                type="submit" >
-                Manage Admins
-            </a>
+        <div class="py-4 text-center">
+            <sl-button variant="warning" href={configurationAdmins} outline>Manage Admins</sl-button>
         </div>
 
-        <div class="py-2">
+        <div class="py-2 grow">
             <form method="post" enctype="multipart/form-data" >
-                <label for="title" class="text-lg">Site Title</label><br />
-                <input 
-                    type="text" 
-                    id="title" 
-                    name="title" 
-                    class="border-solid border-2 border-gray-300 rounded-lg p-2 w-96"
+
+                <sl-input
+                    id="title"
+                    name="title"
+                    placeholder="Site Title"
+                    size="medium"
+                    class="py-2"
                     value={contextConfig.title} 
-                    required><br /><br />
-                <label for="description" class="text-lg">Description</label><br />
-                <input
-                    type="text" 
-                    id="description" 
-                    name="description" 
-                    class="border-solid border-2 border-gray-300 rounded-lg p-2 w-96"
-                    value={contextConfig.description}
-                    required><br /><br />
+                    required>
+                    <div slot="label" class="text-lg inline">Site Title</div>
+                    <sl-icon name="globe2" slot="prefix"></sl-icon>
+                </sl-input>
+                <sl-input
+                    id="description"
+                    name="description"
+                    placeholder="Site Description"
+                    size="medium"
+                    class="py-2"
+                    value={contextConfig.description} 
+                    required>
+                    <div slot="label" class="text-lg inline">Description</div>
+                    <sl-icon name="line" slot="prefix"></sl-icon>
+                </sl-input>
     
-                <center class="py-2">
-                    <button class="btn btn-outline ml-5" type="submit">Update!</button>
-                </center>
+                <div class="py-4 text-center">
+                    <sl-button variant="success" type="submit" outline>Update!</sl-button>
+                </div>
     
             </form>
         </div>
