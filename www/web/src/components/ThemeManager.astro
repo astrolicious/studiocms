@@ -26,10 +26,7 @@ const { defaultTheme = "auto" } = Astro.props;
     function applyTheme(theme) {
       const resolvedTheme = theme === "auto" ? systemTheme : theme;
       document.documentElement.dataset.theme = resolvedTheme;
-      if (resolvedTheme === "light") {
-        document.documentElement.classList.remove("dark");
-      } else
-      document.documentElement.classList.add("dark");
+      document.documentElement.style.colorScheme = resolvedTheme;
       document.dispatchEvent(
         new CustomEvent("theme-changed", {
           detail: { theme, systemTheme, defaultTheme },
