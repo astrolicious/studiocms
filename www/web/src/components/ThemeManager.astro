@@ -10,7 +10,7 @@ const { defaultTheme = "auto" } = Astro.props;
   window.theme ??= (() => {
     const defaultTheme =
       document.currentScript.getAttribute("data-default-theme");
-    const storageKey = "theme";
+    const storageKey = "studioCMS-LandingSite";
     const store =
       typeof localStorage !== "undefined"
         ? localStorage

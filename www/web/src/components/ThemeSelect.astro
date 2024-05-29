@@ -1,31 +1,112 @@
-<theme-selector></theme-selector>
-<script is:inline>
-  if (!customElements.get("theme-selector")) {
-    customElements.define(
-      "theme-selector",
-      class extends HTMLElement {
-        connectedCallback() {
-          this.innerHTML = `
-            <select>
-              <option value="auto">Auto</option>
-              <option value="light">Light</option>
-              <option value="dark">Dark</option>
-            </select>
-          `;
-          this.querySelector("select").onchange = (event) =>
-            theme.setTheme(event.target.value);
-          this.setAttribute("aria-label", "Select Theme");
-          this.updateSelectedTheme();
+---
+import { Icon } from 'astro-icon/components';
+---
 
-          document.addEventListener("theme-changed", (event) => {
-            this.updateSelectedTheme(event.detail.theme);
-          });
-        }
+<div class="dropdown relative select-none rounded-full">
+  <button id="themeselector" class="mt-2 rounded-full p-1" aria-label="Select Theme">
+    <Icon name={'sun'} class="h-8 w-8 text-black dark:hidden" />
+    <Icon name={'moon'} class="hidden h-8 w-8 text-white dark:block" />
+  </button>
 
-        updateSelectedTheme(newTheme = theme.getTheme()) {
-          this.querySelector("select").value = newTheme;
-        }
-      }
-    );
+  <div class="dropdown__window absolute top-11 right-5 z-10 focus-visible:outline-none overflow-hidden hidden min-w-40 shadow-[0_3px_10px_rgb(0,0,0,0.2)] rounded-md" tabindex="0">
+    <button class="bg-white w-full py-4 px-4 text-left flex gap-4 whitespace-nowrap focus-visible:outline-none text-[--purple-900] hover:bg-slate-100 focus:bg-slate-100 dark:text-white dark:bg-[--purple-900] dark:hover:bg-slate-900 dark:focus:bg-slate-900" id="deviceMode" value="auto">
+      <Icon name={'check'} class="checkmark invisible h-8 w-8 text-[--purple-900] dark:text-white" />
+      Use device default</button>
+    <button class="bg-white w-full py-4 px-4 text-left flex gap-4 whitespace-nowrap focus-visible:outline-none text-[--purple-900] hover:bg-slate-100 focus:bg-slate-100 dark:text-white dark:bg-[--purple-900] dark:hover:bg-slate-900 dark:focus:bg-slate-900" id="lightMode" value="light">
+      <Icon name={'check'} class="checkmark invisible h-8 w-8 text-[--purple-900] dark:text-white" />
+      Light Theme</button>
+    <button class="bg-white w-full py-4 px-4 text-left flex gap-4 whitespace-nowrap focus-visible:outline-none text-[--purple-900] hover:bg-slate-100 focus:bg-slate-100 dark:text-white dark:bg-[--purple-900] dark:hover:bg-slate-900 dark:focus:bg-slate-900" id="darkMode" value="dark">
+      <Icon name={'check'} class="checkmark invisible h-8 w-8 text-[--purple-900] dark:text-white" />
+      Dark Theme</button>
+    <span class="sr-only">Toggle theme</span>
+  </div>
+</div>
+
+<style>
+  .dropdown__window--active {
+    display: block;
+    visibility: visible;
   }
+</style>
+
+<script is:inline>
+  document.getElementById('themeselector').addEventListener('click', (event) => {
+    event.stopPropagation(); // Stop the propagation of the click event
+    const dropdownWindow = document.querySelector('.dropdown__window');
+    dropdownWindow.classList.toggle('hidden');
+    dropdownWindow.classList.toggle('dropdown__window--active');
+    if (!dropdownWindow.classList.contains('hidden')) {
+      dropdownWindow.focus(); // Focus the dropdown window when it becomes active
+    }
+  });
+
+  // Close dropdown window when clicking outside of it
+  document.body.addEventListener('click', (event) => {
+    const dropdownWindow = document.querySelector('.dropdown__window');
+    const themeSelect = document.getElementById('themeselector');
+    if (!dropdownWindow.contains(event.target) && event.target !== themeSelect) {
+      dropdownWindow.classList.add('hidden');
+      dropdownWindow.classList.remove('dropdown__window--active');
+    }
+  });
+  
+  // Close dropdown window when 'Esc' key is pressed
+  document.body.addEventListener('keydown', (event) => {
+    const dropdownWindow = document.querySelector('.dropdown__window');
+    const themeSelect = document.getElementById('themeselector');
+    if (!dropdownWindow.classList.contains('hidden') && event.key === 'Escape') {
+      dropdownWindow.classList.add('hidden');
+      dropdownWindow.classList.remove('dropdown__window--active');
+      themeSelect.focus();
+    }
+  });
+
+  // Allow navigating through dropdown options with arrow keys
+  document.querySelector('.dropdown__window').addEventListener('keydown', (event) => {
+    const dropdownWindow = document.querySelector('.dropdown__window');
+    if (event.key === 'ArrowDown') {
+      event.preventDefault();
+      const nextOption = dropdownWindow.querySelector('button:focus + button');
+      if (nextOption) {
+        nextOption.focus();
+      } else {
+        dropdownWindow.querySelector('button').focus();
+      }
+    } else if (event.key === 'ArrowUp') {
+      event.preventDefault();
+      const prevOption = dropdownWindow.querySelector('button:focus').previousElementSibling;
+      if (prevOption) {
+        prevOption.focus();
+      } else {
+        dropdownWindow.querySelector('button:last-child').focus();
+      }
+    }
+  });
+
+  // Handle theme selection
+  document.querySelectorAll('.dropdown__window button').forEach(button => {
+    button.addEventListener('click', (event) => {
+      theme.setTheme(event.target.value);
+      updateSelectedTheme(event.target.value);
+    });
+  });
+
+  document.addEventListener('theme-changed', (event) => {
+    updateSelectedTheme(event.detail.theme);
+  });
+
+  function updateSelectedTheme(newTheme = theme.getTheme()) {
+    const dropdownButtons = document.querySelectorAll('.dropdown__window button');
+    dropdownButtons.forEach(button => {
+      const checkmark = button.querySelector('.checkmark');
+      if (button.value === newTheme) {
+        checkmark.classList.replace('invisible', 'visible');
+      } else {
+        checkmark.classList.replace('visible', 'invisible');
+      }
+    });
+  }
+
+  // Initialize theme on page load
+  updateSelectedTheme();
 </script>
