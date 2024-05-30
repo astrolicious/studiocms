@@ -200,17 +200,65 @@ export default defineIntegration({
 						content: studioCMSDTS.text(),
 					});
 
+					// Add Dashboard Integrations
+					integrationLogger(logger, verbose, 'info', 'Adding Dashboard Integrations');
+
+					// CSS Management
+					addIntegration(params, {
+						integration: UnoCSSAstroIntegration({
+							configFile: false,
+							injectReset: injectReset,
+							injectEntry: injectEntry,
+							presets: [
+								presetUno(),
+								presetDaisy({
+									themes: themes,
+									darkTheme: darkTheme,
+								}),
+								presetWind(), 
+								presetTypography(),
+								presetIcons({
+									collections: {
+										mdi: () => import('@iconify-json/mdi/icons.json').then(i => i.default),
+										google: FileSystemIconLoader(resolve('./icons/google')),
+										discord: FileSystemIconLoader(resolve('./icons/discord')),
+										github: FileSystemIconLoader(resolve('./icons/github')),
+										auth0: FileSystemIconLoader(resolve('./icons/auth0')),
+									}
+								}),
+								presetScrollbar({
+								}),
+								presetWebFonts({
+									provider: 'google',
+									fonts: {
+										// Required Fonts for Google Icons
+										  sans: 'Roboto',
+										  mono: ['Fira Code', 'Fira Mono:400,700'],
+									},
+								}),
+							],
+							transformers: [
+								transformerDirectives()
+							],
+						}),
+					});
+
 					// In the case of First time Setup run the Start Pages
 					if ( dbStartPage ) {
 						injectRoute({
 							pattern: 'start/',
-							entrypoint: resolve('./routes/databaseSetup/start.astro'),
+							entrypoint: resolve('./routes/databaseSetup/main.astro'),
+						});
+						injectRoute({
+							pattern: 'api/setup',
+							entrypoint: resolve('./routes/databaseSetup/setup.ts'),
 						});
 						injectRoute({
 							pattern: 'done/',
 							entrypoint: resolve('./routes/databaseSetup/done.astro'),
 						});
 					}
+
 
 					// Check if the Dashboard is enabled
 					if ( dashboardEnabled && !dbStartPage ) {
@@ -228,49 +276,6 @@ export default defineIntegration({
 						
 						// Log that the Dashboard is enabled
 						integrationLogger(logger, verbose, 'info', 'Dashboard is Enabled');
-
-						// Add Dashboard Integrations
-						integrationLogger(logger, verbose, 'info', 'Adding Dashboard Integrations');
-
-						// CSS Management
-						addIntegration(params, {
-							integration: UnoCSSAstroIntegration({
-								configFile: false,
-								injectReset: injectReset,
-								injectEntry: injectEntry,
-								presets: [
-									presetUno(),
-									presetDaisy({
-										themes: themes,
-										darkTheme: darkTheme,
-									}),
-									presetWind(), 
-									presetTypography(),
-									presetIcons({
-										collections: {
-											mdi: () => import('@iconify-json/mdi/icons.json').then(i => i.default),
-											google: FileSystemIconLoader(resolve('./icons/google')),
-											discord: FileSystemIconLoader(resolve('./icons/discord')),
-											github: FileSystemIconLoader(resolve('./icons/github')),
-											auth0: FileSystemIconLoader(resolve('./icons/auth0')),
-										}
-									}),
-									presetScrollbar({
-									}),
-									presetWebFonts({
-										provider: 'google',
-										fonts: {
-											// Required Fonts for Google Icons
-										  	sans: 'Roboto',
-										  	mono: ['Fira Code', 'Fira Mono:400,700'],
-										},
-									}),
-								],
-								transformers: [
-									transformerDirectives()
-								],
-							}),
-						});
 
 						// Setup the Dashboard Routes
 						injectRoute({

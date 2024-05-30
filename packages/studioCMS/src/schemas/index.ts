@@ -11,7 +11,8 @@ import { overridesSchema } from './componentoverrides';
 export const optionsSchema = z
 	.object({
 		/**
-		 * Project Initialization Page - Used during First Time Setup
+		 * Project Initialization Page - Used during First Time Setup to initialize the database
+		 * 
 		 * @default true
 		 */
 		dbStartPage: z.boolean().optional().default(true),

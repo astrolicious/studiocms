@@ -13,10 +13,18 @@ import ThemeSelect from './ThemeSelect.astro'
   </div>
   <div>
     <ul class='flex items-center gap-x-4'>
-      <!-- TODO: Same deal as testimonials -->
-      <!-- <li>
-        <a href={DOCS_URL} class='underline-offset-4 hover:underline'>Docs</a>
-      </li> -->
+      <li>
+        <a 
+          href={DOCS_URL} 
+          class='underline-offset-4 hover:underline' 
+          rel='external nofollow' 
+          aria-label='Docs link'
+          >
+          <Icon
+            name='docs'
+            class='h-8 w-8 transition duration-200 ease-in-out hover:scale-110'
+          /></a>
+      </li>
       <li>
         <a
           class='hover:underline'

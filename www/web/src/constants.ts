@@ -13,7 +13,7 @@ export const marqueeKeywords = [
 export const GITHUB_URL = 'https://github.com/astrolicious/studiocms'
 export const SPONSOR_URL = 'https://github.com/astrolicious/studiocms'
 export const DISCORD_URL = 'https://chat.astrolicious.dev/'
-export const DOCS_URL = ''
+export const DOCS_URL = 'https://docs.astro-studiocms.xyz/'
 
 export const features = [
   {

@@ -1,0 +1,190 @@
+---
+import { Layout } from 'studiocms-dashboard:components';
+import Config from 'virtual:studiocms/config';
+
+if (Config.includedIntegrations.useInoxSitemap) {
+    import('sitemap-ext:config').then((sitemap) => {
+        sitemap.default(false)
+    })
+}
+
+---
+
+<Layout title='Welcome | StudioCMS' description="Welcome to StudioCMS" sideBarActiveItemID='start' includeSidebar={false}>
+  <div class="container">
+
+      <div class="text-5xl font-bold pb-4">Welcome to StudioCMS</div>
+      <div class="py-2">
+          <text class="text-lg py-2">
+            <text class="font-bold">What is StudioCMS?</text> 
+              <br />
+              StudioCMS is a simple, easy to use, and fast CMS for Astro. It's built with the latest technologies and is designed to be as simple as possible. It's also open source and free to use. 
+          </text> 
+          <div class="my-2 divider" />
+          <text class="text-lg py-2">
+            <text class="font-bold">How do I use it?</text> 
+              <br />
+              To use StudioCMS, you need to have a basic understanding of Astro and how it works. As well as StudioCMS. You can use the CMS to create, edit, and delete posts. You can also use it to manage your site's settings and more.
+          </text> 
+          <div class="my-2 divider" />
+          <text class="text-lg py-2">
+            <text class="font-bold">What's next?</text> 
+              <br />
+              The next step is to start by filling in your site details below!
+          </text> 
+          <div class="my-2 divider" />
+          <text class="text-lg py-2">
+            <text class="font-bold">Problems? or Need Help?</text> 
+              <br />
+              If you have any problems or need help, you can visit the <a href="https://github.com/astrolicious/studiocms" target="_blank" class="text-blue-500">GitHub Repository</a> or join the <a href="https://chat.astrolicious.dev" target="_blank" class="text-blue-500">Discord Server</a> for help.
+          </text> 
+      </div>
+      
+      <br />
+
+      <!-- Username and Password Provider-->
+        <div class="py-8">
+          <div class="bg-base-300 p-8 rounded-lg">
+
+          <form method="post" action="/api/setup">
+
+            <sl-input 
+            name="title" 
+            id="title">
+              <div class="textlabelinput" slot="label"><sl-icon name="globe2"></sl-icon> Site Title</div>
+            </sl-input><br />
+
+            <sl-input 
+            name="description" 
+            id="description" >
+              <div class="textlabelinput" slot="label"><sl-icon name="line"></sl-icon> Description</div>
+            </sl-input><br />
+
+            <sl-input 
+            name="og-image" 
+            id="og-image" placeholder="Coming Soon" disabled>
+              <div class="textlabelinput" slot="label"><sl-icon name="image"></sl-icon> OG Image URL</div>
+            </sl-input><br />
+
+            <sl-checkbox 
+              name="local-setup"
+              id="local-setup" 
+              value="1"
+              size="medium"
+              help-text="Would you like to setup a local Admin User or OAuth User?"
+              ><div class="textlabelinput"><sl-icon name="person-exclamation"></sl-icon> Setup Local Admin User?</div>
+            </sl-checkbox>
+
+            <sl-details id="local-admin" disabled="true">
+              <div class="textlabelinput" slot="summary"><sl-icon name="person-add"></sl-icon> Local Admin Setup</div>
+              <sl-input 
+              name="local-admin-name"
+              id="local-admin-name">
+                <div class="textlabelinput" slot="label">Username for Primary Admin <i>( Just set one, You can add more later )</i></div>
+              </sl-input><br />
+              <sl-input 
+              name="local-admin-display-name"
+              id="local-admin-display-name">
+                <div class="textlabelinput" slot="label">Display name for Primary Admin</div>
+              </sl-input><br />
+              <sl-input 
+              type="password" 
+              name="local-admin-password"
+              id="local-admin-password"
+              password-toggle>
+                <div class="textlabelinput" slot="label">Password</div>
+              </sl-input>
+            </sl-details>
+
+            <sl-details id="oauthadmin" open>
+              <div class="textlabelinput" slot="summary"><sl-icon name="person-rolodex"></sl-icon> oAuth Admin Setup</div>
+              <sl-input 
+              name="oauth-admin-name"
+              id="oauth-admin-name"
+              placeholder="Username of Primary Admin (ex. GithubUsername)">
+                <div class="textlabelinput" slot="label">Default Site Admin <i>( Just set one, You can add more later )</i></div>
+              </sl-input>
+            </sl-details><br />
+
+
+            <div style="text-align:center">
+              <sl-button variant="success" type="submit" outline>Initialize Database!<div slot="suffix" class="i-mdi:login"></div></sl-button>
+            </div>
+
+          </form>
+
+          </div>
+        </div> 
+
+      <sl-alert id="form-error" variant="danger" duration="4000" closable>
+        <sl-icon slot="icon" name="exclamation-octagon"></sl-icon>
+        <strong>Something went wrong!</strong><br />
+        <div id = "form-error-message"></div>
+      </sl-alert>
+      <sl-alert id="form-success" variant="success" duration="4000" closable>
+        <sl-icon slot="icon" name="check2-circle"></sl-icon>
+        <strong>Success!</strong><br />
+        <div id="form-success-message"></div>
+      </sl-alert>
+
+
+  </div>
+</Layout>
+
+<script>
+	const alertElement = document.getElementById("form-error")!;
+  const errorMessageElement = document.getElementById("form-error-message")!;
+	const successAlertElement = document.getElementById("form-success")!;
+  const successMessageElement = document.getElementById("form-success-message")!;
+  const checkbox = document.getElementById('local-setup')!;
+  const localAdmin = document.getElementById('local-admin')!;
+  const oauthAdmin = document.getElementById('oauth-admin')!;
+
+  // Update the disabled state of the local-admin and oauth-admin details based on the checkbox state
+  checkbox.addEventListener('sl-change', () => {
+      //@ts-expect-error - checkbox comes from sl-checkbox from `Shoelace.syle`
+    if (checkbox.checked) {
+      localAdmin.removeAttribute("disabled")
+      //@ts-expect-error - show is not a standard method on HTMLElement it comes from `Shoelace.syle`
+      localAdmin.show();
+      //@ts-expect-error - hide is not a standard method on HTMLElement it comes from `Shoelace.syle`
+      oauthAdmin.hide();
+      oauthAdmin.setAttribute("disabled", "true")
+    } else {
+      //@ts-expect-error - hide is not a standard method on HTMLElement it comes from `Shoelace.syle`
+      localAdmin.hide();
+      localAdmin.setAttribute("disabled", "true")
+      oauthadmin.removeAttribute("disabled")
+      //@ts-expect-error - show is not a standard method on HTMLElement it comes from `Shoelace.syle`
+      oauthAdmin.show();
+    }
+  });
+
+	document.forms[0]?.addEventListener("submit", async (e) => {
+		e.preventDefault();
+		errorMessageElement.innerText = "";
+		const formElement = e.target as HTMLFormElement;
+		const response = await fetch(formElement.action, {
+			method: formElement.method,
+			body: new FormData(formElement)
+		});
+		if (response.ok) {
+      successMessageElement.innerText = "Successfully Seeded Database! Redirecting...";
+      //@ts-expect-error - toast is not a standard method on HTMLElement it comes from `Shoelace.syle`
+      successAlertElement.toast();
+      setTimeout(() => {
+        window.location.href = "/done";
+      }, 1000)
+		} else {
+			errorMessageElement.innerText = (await response.json()).error;
+      //@ts-expect-error - toast is not a standard method on HTMLElement it comes from `Shoelace.syle`
+      alertElement.toast();
+		}
+	});
+</script>
+
+<style>
+  .textlabelinput {
+    @apply: text-xl font-bold flex items-center gap-2 pb-2;
+  }
+</style>

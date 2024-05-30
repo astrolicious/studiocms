@@ -14,6 +14,7 @@
   "additionalBranchPrefix": "{{parentDir}}-",
 	"gitIgnoredAuthors": ["github+renovate@astro-studiocms.xyz"],
   "prHourlyLimit": 3,
+  "rangeStrategy": "bump",
   "reviewers": ["team:exalted"],
   "packageRules": [
     {

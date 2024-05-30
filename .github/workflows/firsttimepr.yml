@@ -27,9 +27,6 @@ jobs:
     
               if (mergedPRs.length === 0) {
                 try {
-                  const firstPRMerged = "Welcome to the StudioCMS Contributors! 🎉 Please join our discord community to stay in the loop https://chat.astrolicious.dev"
-
-                  
                   await github.rest.issues.createComment({
                     issue_number: context.issue.number,
                     owner: context.repo.owner,
@@ -45,7 +42,7 @@ jobs:
                     workflow_id: 'send-ftpr-welcome.yml',
                     ref: 'main',
                     inputs: {
-                      creator: creator
+                      creator: creator,
                       mergedPR: context.payload.pull_request.number
                     }
                   })
