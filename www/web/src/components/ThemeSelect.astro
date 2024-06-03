@@ -8,17 +8,17 @@ import { Icon } from 'astro-icon/components';
     <Icon name={'moon'} class="hidden h-8 w-8 text-white dark:block" />
   </button>
 
-  <div class="dropdown__window absolute right-5 top-11 z-10 hidden min-w-40 overflow-hidden rounded-md shadow-[0_3px_10px_rgb(0,0,0,0.2)] focus-visible:outline-none dark:shadow-[0_3px_10px_rgb(255,255,255,0.2)]" tabindex="0">
-    <button class="flex w-full gap-4 whitespace-nowrap border-b border-slate-300 bg-white px-4 py-4 text-left text-[--purple-900] hover:bg-slate-100 focus:bg-slate-100 focus-visible:outline-none dark:border-slate-700 dark:bg-[--purple-900] dark:text-white dark:hover:bg-slate-900 dark:focus:bg-slate-900" id="deviceMode" value="auto">
-      <Icon name={'check'} class="checkmark invisible h-8 w-8 text-[--purple-900] dark:text-white" />
+  <div class="dropdown__window absolute right-8 top-16 z-10 hidden min-w-40 overflow-hidden rounded-md shadow-[0_3px_10px_rgb(0,0,0,0.2)] focus-visible:outline-none dark:shadow-[0_3px_10px_rgb(255,255,255,0.2)]" tabindex="0">
+    <button class="flex w-full gap-4 whitespace-nowrap border-b border-slate-300 p-4 text-left hover:bg-slate-200 focus:bg-slate-200 focus-visible:outline-none dark:border-slate-700 dark:hover:bg-slate-900 dark:focus:bg-slate-900" id="deviceMode" value="auto">
+      <Icon name={'check'} class="checkmark invisible h-8 w-8" />
       Use device default
     </button>
-    <button class="flex w-full gap-4 whitespace-nowrap border-b border-slate-300 bg-white px-4 py-4 text-left text-[--purple-900] hover:bg-slate-100 focus:bg-slate-100 focus-visible:outline-none dark:border-slate-700 dark:bg-[--purple-900] dark:text-white dark:hover:bg-slate-900 dark:focus:bg-slate-900" id="lightMode" value="light">
-      <Icon name={'check'} class="checkmark invisible h-8 w-8 text-[--purple-900] dark:text-white" />
+    <button class="flex w-full gap-4 whitespace-nowrap border-b border-slate-300 p-4 text-left hover:bg-slate-200 focus:bg-slate-200 focus-visible:outline-none dark:border-slate-700 dark:text-white dark:hover:bg-slate-900 dark:focus:bg-slate-900" id="lightMode" value="light">
+      <Icon name={'check'} class="checkmark invisible h-8 w-8" />
       Light Theme
     </button>
-    <button class="flex w-full gap-4 whitespace-nowrap border-b border-slate-300 bg-white px-4 py-4 text-left text-[--purple-900] hover:bg-slate-100 focus:bg-slate-100 focus-visible:outline-none dark:border-slate-700 dark:bg-[--purple-900] dark:text-white dark:hover:bg-slate-900 dark:focus:bg-slate-900" id="darkMode" value="dark">
-      <Icon name={'check'} class="checkmark invisible h-8 w-8 text-[--purple-900] dark:text-white" />
+    <button class="flex w-full gap-4 whitespace-nowrap border-b border-slate-300 p-4 text-left  hover:bg-slate-200 focus:bg-slate-200 focus-visible:outline-none dark:border-slate-700 dark:text-white dark:hover:bg-slate-900 dark:focus:bg-slate-900" id="darkMode" value="dark">
+      <Icon name={'check'} class="checkmark invisible h-8 w-8" />
       Dark Theme
     </button>
     <span class="sr-only">Change theme</span>
