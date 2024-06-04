@@ -17,7 +17,8 @@ jobs:
           script: |
             if (context.payload.pull_request.merged) {
               const creator = context.payload.sender.login
-              const { owner, repo } = context.repo()
+              const owner = context.repo.owner
+              const repo = context.repo.repo
               const res = await github.rest.search.issuesAndPullRequests({
                 q: `is:pr is:closed author:${creator} repo:${owner}/${repo}`
               })
