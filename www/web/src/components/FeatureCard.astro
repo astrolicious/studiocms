@@ -11,13 +11,13 @@ const { icon, description, feature } = Astro.props
 ---
 
 <div
-  class='animate-border rounded-lg border border-transparent [background:linear-gradient(45deg,#172033,theme(colors.slate.800)_50%,#172033)_padding-box,conic-gradient(from_var(--border-angle),theme(colors.slate.600/.48)_80%,_theme(colors.indigo.500)_86%,_theme(colors.indigo.300)_90%,_theme(colors.indigo.500)_94%,_theme(colors.slate.600/.48))_border-box]'
+  class='animate-border rounded-lg border border-transparent [background:linear-gradient(45deg,#e2e8f0,theme(colors.slate.400)_50%,#e2e8f0)_padding-box,conic-gradient(from_var(--border-angle),theme(colors.slate.400/.48)_80%,_theme(colors.indigo.600)_86%,_theme(colors.indigo.300)_90%,_theme(colors.indigo.600)_94%,_theme(colors.slate.400/.48))_border-box] dark:[background:linear-gradient(45deg,#172033,theme(colors.slate.800)_50%,#172033)_padding-box,conic-gradient(from_var(--border-angle),theme(colors.slate.600/.48)_80%,_theme(colors.indigo.500)_86%,_theme(colors.indigo.300)_90%,_theme(colors.indigo.500)_94%,_theme(colors.slate.600/.48))_border-box]'
 >
-  <div class='h-full place-self-center rounded-lg bg-[--purple-900] p-10'>
+  <div class='h-full place-self-center rounded-lg bg-slate-200 dark:bg-[--purple-900] p-10'>
     <div class='flex items-center justify-center gap-2 pb-6'>
       <Icon
         name={icon}
-        class='h-8 w-8 stroke-black stroke-[0.1px] text-white'
+        class='h-8 w-8 stroke-black stroke-[0.1px] text-[--purple-900] dark:text-white'
       />
       <p>{feature}</p>
     </div>
