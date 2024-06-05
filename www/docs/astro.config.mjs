@@ -24,6 +24,7 @@ export default defineConfig({
         // Relative path to your custom CSS file
         "./src/styles/custom.css",
       ],
+      credits: true,
       editLink: {
         baseUrl: "https://github.com/astrolicious/studiocms/tree/main/www/docs",
       },
