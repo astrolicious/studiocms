@@ -171,16 +171,16 @@ importers:
     dependencies:
       '@astrojs/cloudflare':
         specifier: ^10.2.5
-        version: 10.2.5(astro@4.7.1)
+        version: 10.2.5(astro@4.9.3)
       '@astrojs/db':
-        specifier: ^0.11.0
-        version: 0.11.0
+        specifier: ^0.11.4
+        version: 0.11.4
       '@astrolicious/studiocms':
         specifier: workspace:*
         version: link:../../packages/studioCMS
       astro:
-        specifier: ^4.7.1
-        version: 4.7.1(@types/node@20.12.8)(typescript@5.4.5)
+        specifier: ^4.9.3
+        version: 4.9.3(@types/node@20.12.8)(typescript@5.4.5)
     devDependencies:
       '@types/node':
         specifier: 20.12.8
@@ -224,7 +224,7 @@ importers:
         version: 2.15.0(@types/react@18.3.2)
       astro:
         specifier: ^4.9.3
-        version: 4.9.3(typescript@5.4.5)
+        version: 4.9.3(@types/node@20.12.8)(typescript@5.4.5)
       sharp:
         specifier: ^0.33.3
         version: 0.33.3
@@ -242,7 +242,7 @@ importers:
         version: 5.1.0(astro@4.9.3)(tailwindcss@3.4.3)
       astro:
         specifier: ^4.9.3
-        version: 4.9.3(typescript@5.4.5)
+        version: 4.9.3(@types/node@20.12.8)(typescript@5.4.5)
       astro-font:
         specifier: ^0.0.80
         version: 0.0.80
@@ -331,7 +331,7 @@ packages:
       - prettier-plugin-astro
     dev: false
 
-  /@astrojs/cloudflare@10.2.5(astro@4.7.1):
+  /@astrojs/cloudflare@10.2.5(astro@4.9.3):
     resolution: {integrity: sha512-5tKPU5m/zYwz2CU9vCSKo4tgWsdD7xwpUlDkVbKPwgSkfVB6ZuXb8ffLYnahtUc1Gvh7HgaBSaagPVHGCp73WQ==}
     peerDependencies:
       astro: ^4.2.0
@@ -339,7 +339,7 @@ packages:
       '@astrojs/internal-helpers': 0.3.0
       '@astrojs/underscore-redirects': 0.3.3
       '@cloudflare/workers-types': 4.20240423.0
-      astro: 4.7.1(@types/node@20.12.8)(typescript@5.4.5)
+      astro: 4.9.3(@types/node@20.12.8)(typescript@5.4.5)
       esbuild: 0.19.12
       estree-walker: 3.0.3
       magic-string: 0.30.10
@@ -377,6 +377,53 @@ packages:
       strip-ansi: 7.1.0
       yargs-parser: 21.1.1
       zod: 3.23.5
+    transitivePeerDependencies:
+      - '@aws-sdk/client-rds-data'
+      - '@cloudflare/workers-types'
+      - '@electric-sql/pglite'
+      - '@neondatabase/serverless'
+      - '@op-engineering/op-sqlite'
+      - '@opentelemetry/api'
+      - '@planetscale/database'
+      - '@types/better-sqlite3'
+      - '@types/pg'
+      - '@types/react'
+      - '@types/sql.js'
+      - '@vercel/postgres'
+      - '@xata.io/client'
+      - better-sqlite3
+      - bufferutil
+      - bun-types
+      - expo-sqlite
+      - knex
+      - kysely
+      - mysql2
+      - pg
+      - postgres
+      - react
+      - sql.js
+      - sqlite3
+      - utf-8-validate
+    dev: false
+
+  /@astrojs/db@0.11.4:
+    resolution: {integrity: sha512-PuVej9DNu5ZzlRGS0NUl3iH/5BRo/eG3XRywXbHIQvA0sdI7UZSFisbpUQYJU9iKK9Bxow/FWrqfw2jwqXaC8Q==}
+    dependencies:
+      '@astrojs/studio': 0.1.0
+      '@libsql/client': 0.6.0
+      async-listen: 3.0.1
+      ci-info: 4.0.0
+      deep-diff: 1.0.2
+      drizzle-orm: 0.30.10(@libsql/client@0.6.0)
+      github-slugger: 2.0.0
+      kleur: 4.1.5
+      nanoid: 5.0.7
+      open: 10.1.0
+      ora: 8.0.1
+      prompts: 2.4.2
+      strip-ansi: 7.1.0
+      yargs-parser: 21.1.1
+      zod: 3.23.8
     transitivePeerDependencies:
       - '@aws-sdk/client-rds-data'
       - '@cloudflare/workers-types'
@@ -558,7 +605,7 @@ packages:
       '@astrojs/markdown-remark': 5.1.0
       '@mdx-js/mdx': 3.0.1
       acorn: 8.11.3
-      astro: 4.9.3(typescript@5.4.5)
+      astro: 4.9.3(@types/node@20.12.8)(typescript@5.4.5)
       es-module-lexer: 1.5.3
       estree-util-visit: 2.0.0
       github-slugger: 2.0.0
@@ -631,7 +678,7 @@ packages:
       '@pagefind/default-ui': 1.1.0
       '@types/hast': 3.0.4
       '@types/mdast': 4.0.4
-      astro: 4.9.3(typescript@5.4.5)
+      astro: 4.9.3(@types/node@20.12.8)(typescript@5.4.5)
       astro-expressive-code: 0.35.3(astro@4.9.3)
       bcp-47: 2.1.0
       hast-util-from-html: 2.0.1
@@ -651,13 +698,21 @@ packages:
       - supports-color
     dev: false
 
+  /@astrojs/studio@0.1.0:
+    resolution: {integrity: sha512-pjggMFgtZHPem6RWall02DTa54VCQ4fjqj4bLV0CpQEi0ydgDlughb81PtLhpQPTV0IUtTFOnHbzx6rcKMBAzg==}
+    dependencies:
+      ci-info: 4.0.0
+      kleur: 4.1.5
+      ora: 8.0.1
+    dev: false
+
   /@astrojs/tailwind@5.1.0(astro@4.9.3)(tailwindcss@3.4.3):
     resolution: {integrity: sha512-BJoCDKuWhU9FT2qYg+fr6Nfb3qP4ShtyjXGHKA/4mHN94z7BGcmauQK23iy+YH5qWvTnhqkd6mQPQ1yTZTe9Ig==}
     peerDependencies:
       astro: ^3.0.0 || ^4.0.0
       tailwindcss: ^3.0.24
     dependencies:
-      astro: 4.9.3(typescript@5.4.5)
+      astro: 4.9.3(@types/node@20.12.8)(typescript@5.4.5)
       autoprefixer: 10.4.19(postcss@8.4.38)
       postcss: 8.4.38
       postcss-load-config: 4.0.2(postcss@8.4.38)
@@ -4585,7 +4640,7 @@ packages:
     peerDependencies:
       astro: ^4.0.0-beta || ^3.3.0
     dependencies:
-      astro: 4.9.3(typescript@5.4.5)
+      astro: 4.9.3(@types/node@20.12.8)(typescript@5.4.5)
       rehype-expressive-code: 0.35.3
     dev: false
 
@@ -4792,7 +4847,7 @@ packages:
       - typescript
     dev: false
 
-  /astro@4.9.3(typescript@5.4.5):
+  /astro@4.9.3(@types/node@20.12.8)(typescript@5.4.5):
     resolution: {integrity: sha512-LhiKZMee56GI7+zIt15bXZVX4JSnj4syTrQdkYNgE+Y0udMad0x8RgJGzc2NMOK31e6w/SL+NFSvnt/d1kgs5w==}
     engines: {node: ^18.17.1 || ^20.3.0 || >=21.0.0, npm: '>=9.6.5', pnpm: '>=7.1.0'}
     hasBin: true
@@ -4854,7 +4909,7 @@ packages:
       tsconfck: 3.1.0(typescript@5.4.5)
       unist-util-visit: 5.0.0
       vfile: 6.0.1
-      vite: 5.2.12
+      vite: 5.2.12(@types/node@20.12.8)
       vitefu: 0.2.5(vite@5.2.12)
       which-pm: 2.2.0
       yargs-parser: 21.1.1
@@ -5672,6 +5727,89 @@ packages:
       dom-serializer: 2.0.0
       domelementtype: 2.3.0
       domhandler: 5.0.3
+    dev: false
+
+  /drizzle-orm@0.30.10(@libsql/client@0.6.0):
+    resolution: {integrity: sha512-IRy/QmMWw9lAQHpwbUh1b8fcn27S/a9zMIzqea1WNOxK9/4EB8gIo+FZWLiPXzl2n9ixGSv8BhsLZiOppWEwBw==}
+    peerDependencies:
+      '@aws-sdk/client-rds-data': '>=3'
+      '@cloudflare/workers-types': '>=3'
+      '@electric-sql/pglite': '>=0.1.1'
+      '@libsql/client': '*'
+      '@neondatabase/serverless': '>=0.1'
+      '@op-engineering/op-sqlite': '>=2'
+      '@opentelemetry/api': ^1.4.1
+      '@planetscale/database': '>=1'
+      '@types/better-sqlite3': '*'
+      '@types/pg': '*'
+      '@types/react': '>=18'
+      '@types/sql.js': '*'
+      '@vercel/postgres': '>=0.8.0'
+      '@xata.io/client': '*'
+      better-sqlite3: '>=7'
+      bun-types: '*'
+      expo-sqlite: '>=13.2.0'
+      knex: '*'
+      kysely: '*'
+      mysql2: '>=2'
+      pg: '>=8'
+      postgres: '>=3'
+      react: '>=18'
+      sql.js: '>=1'
+      sqlite3: '>=5'
+    peerDependenciesMeta:
+      '@aws-sdk/client-rds-data':
+        optional: true
+      '@cloudflare/workers-types':
+        optional: true
+      '@electric-sql/pglite':
+        optional: true
+      '@libsql/client':
+        optional: true
+      '@neondatabase/serverless':
+        optional: true
+      '@op-engineering/op-sqlite':
+        optional: true
+      '@opentelemetry/api':
+        optional: true
+      '@planetscale/database':
+        optional: true
+      '@types/better-sqlite3':
+        optional: true
+      '@types/pg':
+        optional: true
+      '@types/react':
+        optional: true
+      '@types/sql.js':
+        optional: true
+      '@vercel/postgres':
+        optional: true
+      '@xata.io/client':
+        optional: true
+      better-sqlite3:
+        optional: true
+      bun-types:
+        optional: true
+      expo-sqlite:
+        optional: true
+      knex:
+        optional: true
+      kysely:
+        optional: true
+      mysql2:
+        optional: true
+      pg:
+        optional: true
+      postgres:
+        optional: true
+      react:
+        optional: true
+      sql.js:
+        optional: true
+      sqlite3:
+        optional: true
+    dependencies:
+      '@libsql/client': 0.6.0
     dev: false
 
   /drizzle-orm@0.30.9(@libsql/client@0.5.6):
@@ -10323,7 +10461,7 @@ packages:
       fsevents: 2.3.3
     dev: false
 
-  /vite@5.2.12:
+  /vite@5.2.12(@types/node@20.12.8):
     resolution: {integrity: sha512-/gC8GxzxMK5ntBwb48pR32GGhENnjtY30G4A0jemunsBkiEZFw60s8InGpN8gkhHEkjnRK1aSAxeQgwvFhUHAA==}
     engines: {node: ^18.0.0 || >=20.0.0}
     hasBin: true
@@ -10351,6 +10489,7 @@ packages:
       terser:
         optional: true
     dependencies:
+      '@types/node': 20.12.8
       esbuild: 0.20.2
       postcss: 8.4.38
       rollup: 4.17.2
@@ -10377,7 +10516,7 @@ packages:
       vite:
         optional: true
     dependencies:
-      vite: 5.2.12
+      vite: 5.2.12(@types/node@20.12.8)
     dev: false
 
   /volar-service-css@0.0.34(@volar/language-service@2.1.6):
