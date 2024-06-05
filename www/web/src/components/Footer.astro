@@ -4,32 +4,34 @@ import { DISCORD_URL, GITHUB_URL } from '../constants'
 ---
 
 <footer
-  class='h-footer mx-auto flex items-center justify-around gap-4 border-t border-slate-300 dark:border-white'
+  class='px-8 py-4 mx-auto flex items-center justify-between gap-4 border-t border-slate-300 dark:border-white'
 >
-  <p class='font-bold'>
-    {new Date().getFullYear()} - Astro StudioCMS
-  </p>
-  <nav aria-labelledby='footer-social-links' class='flex items-center gap-8'>
-    <a
-      class='hover:underline'
-      href={DISCORD_URL}
-      rel='external nofollow'
-      aria-label='Discord link'
-    >
-      <Icon
-        name='discord'
-        class='h-10 w-10 transition duration-200 ease-in-out hover:scale-110'
-      />
-    </a>
-    <a
-      class='hover:underline'
-      href={GITHUB_URL}
-      rel='external nofollow'
-      aria-label='GitHub link'
-      ><Icon
-        name='github'
-        class='h-10 w-10 transition duration-200 ease-in-out hover:scale-110'
-      /></a
-    >
-  </nav>
+  <div class="container mx-auto flex items-center justify-between">
+    <p class='font-bold text-sm md:text-lg'>
+      Astro StudioCMS - {new Date().getFullYear()}
+    </p>
+    <nav aria-labelledby='footer-social-links' class='flex items-center gap-2'>
+      <a
+        class='hover:underline'
+        href={DISCORD_URL}
+        rel='external nofollow'
+        aria-label='Discord link'
+      >
+        <Icon
+          name='discord'
+          class='h-10 w-10 transition duration-200 ease-in-out hover:scale-110'
+        />
+      </a>
+      <a
+        class='hover:underline'
+        href={GITHUB_URL}
+        rel='external nofollow'
+        aria-label='GitHub link'
+        ><Icon
+          name='github'
+          class='h-10 w-10 transition duration-200 ease-in-out hover:scale-110'
+        /></a
+      >
+    </nav>
+  </div>
 </footer>

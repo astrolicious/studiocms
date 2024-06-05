@@ -5,41 +5,43 @@ import ThemeSelect from './ThemeSelect.astro'
 ---
 
 <nav
-  class='h-navbar flex w-full items-center justify-between border-b border-[--purple-900] border-slate-300 dark:border-white bg-slate-100 px-10 text-gray-900 dark:bg-[--purple-900] dark:text-slate-100'
+  class='h-navbar flex w-full items-center justify-between border-b border-[--purple-900] border-slate-300 dark:border-white bg-slate-100 px-8 text-gray-900 dark:bg-[--purple-900] dark:text-slate-100'
 >
-  <div class='flex w-fit items-center justify-center gap-x-4'>
-    <Icon name='logo' class='h-8 w-8 stroke-slate-100 text-[--purple-900]' />
-    <p class="hidden md:block">Astro StudioCMS</p>
-  </div>
-  <div>
-    <ul class='flex items-center gap-x-4'>
-      <li>
-        <a 
-          href={DOCS_URL} 
-          class='underline-offset-4 hover:underline' 
-          rel='external nofollow' 
-          aria-label='Docs link'
+  <div class="container mx-auto flex flex-center justify-between">
+    <div class='flex w-fit items-center justify-center gap-x-4'>
+      <Icon name='logo' class='h-8 w-8 stroke-slate-100 text-[--purple-900]' />
+      <p class="hidden md:block">Astro StudioCMS</p>
+    </div>
+    <div>
+      <ul class='flex items-center gap-x-4'>
+        <li>
+          <a 
+            href={DOCS_URL} 
+            class='underline-offset-4 hover:underline' 
+            rel='external nofollow' 
+            aria-label='Docs link'
+            >
+            <Icon
+              name='docs'
+              class='h-8 w-8 transition duration-200 ease-in-out hover:scale-110'
+            /></a>
+        </li>
+        <li>
+          <a
+            class='hover:underline'
+            href={GITHUB_URL}
+            rel='external nofollow'
+            aria-label='GitHub link'
+            ><Icon
+              name='github'
+              class='h-8 w-8 transition duration-200 ease-in-out hover:scale-110'
+            /></a
           >
-          <Icon
-            name='docs'
-            class='h-8 w-8 transition duration-200 ease-in-out hover:scale-110'
-          /></a>
-      </li>
-      <li>
-        <a
-          class='hover:underline'
-          href={GITHUB_URL}
-          rel='external nofollow'
-          aria-label='GitHub link'
-          ><Icon
-            name='github'
-            class='h-8 w-8 transition duration-200 ease-in-out hover:scale-110'
-          /></a
-        >
-      </li>
-      <li>
-        <ThemeSelect />
-      </li>
-    </ul>
+        </li>
+        <li>
+          <ThemeSelect />
+        </li>
+      </ul>
+    </div>
   </div>
 </nav>
