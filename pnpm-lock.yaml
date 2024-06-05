@@ -192,7 +192,7 @@ importers:
   playgrounds/node:
     dependencies:
       '@astrojs/db':
-        specifier: ^0.11.0
+        specifier: ^0.11.4
         version: 0.11.4
       '@astrojs/node':
         specifier: ^8.2.5
@@ -201,7 +201,7 @@ importers:
         specifier: workspace:*
         version: link:../../packages/studioCMS
       astro:
-        specifier: ^4.7.1
+        specifier: ^4.9.3
         version: 4.9.3(@types/node@20.12.8)(typescript@5.4.5)
     devDependencies:
       '@types/node':
