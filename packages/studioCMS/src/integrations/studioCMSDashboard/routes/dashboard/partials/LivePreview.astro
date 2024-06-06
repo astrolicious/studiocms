@@ -1,5 +1,5 @@
 ---
-export const partial = true;
+// export const partial = true; - Disabled due to regression | See @ https://github.com/withastro/astro/issues/11103
 import { StudioCMSRenderer } from "studiocms:components";
 
 const query = Astro.url.searchParams.get("content");

@@ -17,6 +17,9 @@
   "references": [
     {
       "path": "packages/studioCMS"
+    },
+    {
+      "path": "packages/studioCMSBlog"
     }
   ]
 }

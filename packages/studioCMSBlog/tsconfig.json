@@ -1,6 +1,22 @@
 {
   "extends": "astro/tsconfigs/strictest",
   "compilerOptions": {
-    "outDir": "../../.moon/cache/types/packages/studioCMSBlog"
-  }
+    "outDir": "../../.moon/cache/types/packages/studioCMSBlog",
+    "paths": {
+      "@astrolicious/studiocms": [
+        "../studioCMS/src/index.ts"
+      ],
+      "@astrolicious/studiocms/*": [
+        "../studioCMS/src/*"
+      ]
+    }
+  },
+  "references": [
+    {
+      "path": "../studioCMS"
+    }
+  ],
+  "include": [
+    "../studioCMS/**/*"
+  ]
 }
