@@ -91,7 +91,7 @@ importers:
         specifier: ^1.8.1
         version: 1.8.1
       astro:
-        specifier: '>=4.7.0'
+        specifier: '>=4.10.0'
         version: 4.10.0(@types/node@20.12.8)(typescript@5.4.5)
       astro-integration-kit:
         specifier: ^0.13.2

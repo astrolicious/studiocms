@@ -13,6 +13,7 @@ import * as fs from "node:fs";
 import { randomUUID } from "node:crypto";
 import type { AuthConfigMap, usernameAndPasswordConfig } from "../../schemas/auth-types";
 import type { AstroIntegration } from "astro";
+import { envField } from "astro/config";
 
 // Environment Variables
 const env = loadEnv('all', process.cwd(), 'CMS');
@@ -118,6 +119,7 @@ export default defineIntegration({
 						config,
 						addMiddleware,
 						injectRoute,
+						updateConfig,
 					} = params;
 
                     const { 
@@ -159,6 +161,17 @@ export default defineIntegration({
 
                     // Check for Authenication Environment Variables
                     CheckENV(logger, verbose, AUTHKEYS);
+
+					updateConfig({
+						experimental: {
+							env: {
+								schema: {
+									CMS_GITHUB_CLIENT_ID: envField.string({ context: 'server', access: 'secret' }),
+									CMS_GITHUB_CLIENT_SECRET: envField.string({ context: 'server', access: 'secret' }),
+								}
+							}
+						}
+					})
 
 					// Create Resolvers
 					const { resolve } = createResolver(import.meta.url);

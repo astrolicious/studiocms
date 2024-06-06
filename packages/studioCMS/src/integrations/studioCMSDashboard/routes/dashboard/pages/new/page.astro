@@ -80,7 +80,7 @@ if (Astro.request.method === 'POST' && !developerConfig.testingAndDemoMode) {
                 package: pack as string,
                 slug: slug as string,
                 description: description as string,
-                showOnNav: showOnNav === "on" ? true : false,
+                showOnNav: showOnNav  === "on",
                 heroImage: heroImage as string,
                 })
                 .returning({ id: PageData.id })

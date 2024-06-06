@@ -1,10 +1,14 @@
 import { generateState } from 'arctic';
 import { GitHub } from 'arctic';
 import type { APIRoute } from 'astro';
-import { authEnvCheck } from 'studiocms-dashboard:auth';
-import Config from 'virtual:studiocms/config';
+// import { authEnvCheck } from 'studiocms-dashboard:auth';
+// import Config from 'virtual:studiocms/config';
+import { getSecret } from 'astro:env/server';
 
-const { GITHUB: { CLIENT_ID, CLIENT_SECRET } } = await authEnvCheck(Config.dashboardConfig.AuthConfig.providers);
+const CLIENT_ID = getSecret('CMS_GITHUB_CLIENT_ID');
+const CLIENT_SECRET = getSecret('CMS_GITHUB_CLIENT_SECRET');
+
+// const { GITHUB: { CLIENT_ID, CLIENT_SECRET } } = await authEnvCheck(Config.dashboardConfig.AuthConfig.providers);
 
 export const GET: APIRoute = async ({ redirect, cookies }) => {
 	const github = new GitHub(

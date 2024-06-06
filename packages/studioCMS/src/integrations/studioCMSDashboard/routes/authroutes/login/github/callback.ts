@@ -6,6 +6,10 @@ import { authEnvCheck, lucia } from "studiocms-dashboard:auth";
 import Config from 'virtual:studiocms/config';
 import { StudioCMSRoutes } from 'studiocms-dashboard:routeMap';
 import { randomUUID } from 'node:crypto';
+import { getSecret } from 'astro:env/server';
+
+const CLIENT_ID = getSecret('CMS_GITHUB_CLIENT_ID');
+const CLIENT_SECRET = getSecret('CMS_GITHUB_CLIENT_SECRET');
 
 const { 
 	dashboardConfig: { 
@@ -15,7 +19,7 @@ const {
 	} 
   } = Config;
 
-const { GITHUB: { CLIENT_ID, CLIENT_SECRET } } = await authEnvCheck(providers);
+// const { GITHUB: { CLIENT_ID, CLIENT_SECRET } } = await authEnvCheck(providers);
 const { authLinks: { loginURL }, mainLinks: { dashboardIndex } } = StudioCMSRoutes;
 
 export async function GET(context: APIContext): Promise<Response> {
