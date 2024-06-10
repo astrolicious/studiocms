@@ -43,7 +43,7 @@
     "@cloudinary/url-gen": "^1.19.0",
     "@iconify-json/mdi": "^1.1.66",
     "@iconify/utils": "^2.1.23",
-    "@inox-tools/sitemap-ext": "^0.2.11",
+    "@inox-tools/sitemap-ext": "^0.2.12",
     "@lucia-auth/adapter-drizzle": "^1.0.7",
     "@markdoc/markdoc": "^0.4.0",
     "@noble/hashes": "^1.4.0",
