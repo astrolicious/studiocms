@@ -19,9 +19,9 @@ jobs:
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 body: `Deployments are available at the following URLS:
-                - [StudioCMS Package Demo](https://pr${{context.issue.number}}-demo.astro-studiocms.xyz)
-                - [StudioCMS Documentation](https://pr${{context.issue.number}}-docs.astro-studiocms.xyz)
-                - [StudioCMS Landing Page](https://pr${{context.issue.number}}-web.astro-studiocms.xyz)
+                - [StudioCMS Package Demo](https://pr${{github.event.issue.number}}-demo.astro-studiocms.xyz)
+                - [StudioCMS Documentation](https://pr${{github.event.issue.number}}-docs.astro-studiocms.xyz)
+                - [StudioCMS Landing Page](https://pr${{github.event.issue.number}}-web.astro-studiocms.xyz)
                 `
               })
   
