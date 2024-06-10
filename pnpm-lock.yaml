@@ -217,8 +217,8 @@ importers:
         specifier: ^0.7.0
         version: 0.7.0(typescript@5.4.5)
       '@astrojs/starlight':
-        specifier: ^0.24.0
-        version: 0.24.0(astro@4.9.3)
+        specifier: ^0.24.1
+        version: 0.24.1(astro@4.9.3)
       '@shoelace-style/shoelace':
         specifier: ^2.15.0
         version: 2.15.1(@types/react@18.3.3)
@@ -574,8 +574,8 @@ packages:
       zod: 3.23.8
     dev: false
 
-  /@astrojs/starlight@0.24.0(astro@4.9.3):
-    resolution: {integrity: sha512-YUBf7TgDUMRcyoZ8S8hlnPuEvgqFuB5F7tQUwPK5GwkTC1E+gMW8zx9J/RgJAXNjQSi19s73nuF19zw/QSy5tw==}
+  /@astrojs/starlight@0.24.1(astro@4.9.3):
+    resolution: {integrity: sha512-5wuIdF8PfDpzEEjfNcmffDDLbi2GWT0XCJH9pk+Pw5+yftwC9QdGzYrY9Ui9kIaXcODlwvL62L04kHB50j4lhw==}
     peerDependencies:
       astro: ^4.8.6
     dependencies:
