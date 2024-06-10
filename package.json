@@ -30,7 +30,7 @@
     "@biomejs/biome": "1.7.2",
     "@moonrepo/cli": "1.25.2",
     "@changesets/cli": "2.27.5",
-    "@changesets/config": "3.0.0",
+    "@changesets/config": "3.0.1",
     "typescript": "5.4.5"
   }
 }
