@@ -1,0 +1,18 @@
+---
+import { Layout } from 'studiocms:components';
+import { StudioCMSRenderer, contentHelper } from 'studiocms:components'
+
+const { slug } = Astro.params;
+
+const { title, description, heroImage, content, id } = await contentHelper(slug||"index");
+
+if(!id){
+	return Astro.redirect("/404")
+}
+---
+
+<Layout title={title} description={description} heroImage={heroImage}>
+	<main>
+		<StudioCMSRenderer content={content} />
+	</main>
+</Layout>

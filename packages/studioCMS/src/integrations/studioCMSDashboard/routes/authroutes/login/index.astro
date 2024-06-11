@@ -5,12 +5,6 @@ import type { Locals } from 'studiocms:helpers';
 import OauthProviders from '../components/OauthProviders.astro';
 import { StudioCMSRoutes } from 'studiocms-dashboard:routeMap';
 
-if (Config.includedIntegrations.useInoxSitemap) {
-    import('sitemap-ext:config').then((sitemap) => {
-        sitemap.default(false)
-    })
-}
-
 const { 
   dashboardConfig,
   dashboardConfig: { 

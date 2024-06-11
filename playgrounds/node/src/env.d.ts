@@ -2,6 +2,7 @@
 /// <reference path="../.astro/types.d.ts" />
 /// <reference path="../.astro/db-types.d.ts" />
 /// <reference types="astro/client" />
+/// <reference types="../.astro/studiocms-blog.d.ts" />
 /// <reference types="../.astro/@astrolicious/studiocms-defaultfrontend.d.ts" />
 /// <reference types="../.astro/@astrolicious/studioCMS:adminDashboard.d.ts" />
 /// <reference types="../.astro/@astrolicious/studiocms.d.ts" />

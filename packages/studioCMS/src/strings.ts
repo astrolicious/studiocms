@@ -10,7 +10,8 @@ export const studioErrors = {
 }
 
 export const warnings = {
-    StudioCMSConfigPresent: 'Your project includes a StudioCMS config file ("studiocms.config.mjs"). To avoid unexpected results from merging multiple config sources, move all StudioCMS options to the StudioCMS config file. Or remove the file to use only the options provided in the Astro config.'
+    StudioCMSConfigPresent: 'Your project includes a StudioCMS config file ("studiocms.config.mjs"). To avoid unexpected results from merging multiple config sources, move all StudioCMS options to the StudioCMS config file. Or remove the file to use only the options provided in the Astro config.',
+    MultipleRendererPlugins: 'Multiple Renderer Plugins are Enabled.  Only one Renderer Plugin can be enabled at a time.  The first Renderer Plugin in the list will be used.',
 }
 
 export const DashboardStrings = {

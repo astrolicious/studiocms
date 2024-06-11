@@ -1,0 +1,12 @@
+---
+interface Props {
+	title: string;
+}
+
+const { title } = Astro.props;
+const today = new Date();
+---
+
+<footer>
+	&copy; {today.getFullYear()} {title}. All rights reserved.
+</footer>

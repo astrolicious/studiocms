@@ -7,12 +7,6 @@ import { authHelper, toPascalCase, type Locals } from 'studiocms:helpers';
 import { StudioCMSRoutes } from 'studiocms-dashboard:routeMap';
 import type { SiteConfigResponse } from 'studiocms:components';
 
-if (Config.includedIntegrations.useInoxSitemap) {
-    import('sitemap-ext:config').then((sitemap) => {
-        sitemap.default(false)
-    })
-}
-
 const { dashboardConfig: { developerConfig } } = Config;
 
 const { 

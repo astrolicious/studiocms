@@ -2,6 +2,7 @@
 import 'uno.css';
 import '@unocss/reset/tailwind.css';
 import Config from 'virtual:studiocms/config';
+import version from 'virtual:studiocms/version';
 
 const { dashboardConfig: { faviconURL } } = Config;
 
@@ -36,6 +37,7 @@ const { title, description } = Astro.props;
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <link rel="icon" type="image/svg+xml" href={faviconURL} />
 <meta name="generator" content={Astro.generator} />
+<meta name="generator" content=`StudioCMS v${version}` />
 
 <!-- Primary Meta Tags -->
 <title>{title}</title>

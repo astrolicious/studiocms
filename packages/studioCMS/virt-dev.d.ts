@@ -3,6 +3,11 @@ declare module 'virtual:studiocms/config' {
 	export default Config;
 }
 
+declare module 'virtual:studiocms/version' {
+	const Version: string;
+	export default Version;
+}
+
 declare module 'virtual:studiocms-dashboard/auth-sec' {
 	const AuthSec: import('./src/integrations/studioCMSDashboard/index.ts').usernameAndPasswordConfig;
 	export default AuthSec;
@@ -23,6 +28,7 @@ declare module 'studiocms:components' {
 	export const getUserList: typeof import('./src/utils/contentHelper').getUserList;
 	export const Navigation: typeof import('./src/components/exports/Navigation.astro').default;
 	export const Avatar: typeof import('./src/components/exports/Avatar.astro').default;
+	export const Layout: typeof import('./src/defaultRoutes/components/Layout.astro').default;
 }
 
 declare module 'studiocms:helpers' {
@@ -35,6 +41,10 @@ declare module 'studiocms:helpers' {
 	export const toCamelCase: typeof import('./src/utils/textFormatter').toCamelCase;
 	export const toPascalCase: typeof import('./src/utils/textFormatter').toPascalCase;
 	export const pluginList: Map<string, { name: string, label: string }>;
+}
+
+declare module 'virtual:studiocms/_nav' {
+	export const externalNav: Map<string, { text: string, slug: string }>;
 }
 
 declare module 'studiocms-dashboard:auth' {

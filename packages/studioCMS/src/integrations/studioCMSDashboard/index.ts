@@ -1,7 +1,6 @@
 import { addDts, addIntegration, addVirtualImports, createResolver, defineIntegration } from "astro-integration-kit";
 import { optionsSchema } from "../../schemas";
-import { CheckENV, integrationLogger } from "../../utils";
-import { loadEnv } from "vite";
+import { integrationLogger } from "../../utils";
 import { fileFactory } from "../../utils/fileFactory";
 import { DashboardStrings, DbErrors } from "../../strings";
 import { presetTypography, presetWind, presetUno, transformerDirectives, presetIcons, presetWebFonts } from "unocss";
@@ -13,97 +12,8 @@ import * as fs from "node:fs";
 import { randomUUID } from "node:crypto";
 import type { AuthConfigMap, usernameAndPasswordConfig } from "../../schemas/auth-types";
 import type { AstroIntegration } from "astro";
-import { envField } from "astro/config";
-
-// Environment Variables
-const env = loadEnv('all', process.cwd(), 'CMS');
-
-const AUTHKEYS = {
-	GITHUBCLIENTID: {
-		N: 'CMS_GITHUB_CLIENT_ID',
-		KEY:
-			env.CMS_GITHUB_CLIENT_ID ||
-			import.meta.env.CMS_GITHUB_CLIENT_ID ||
-			process.env.CMS_GITHUB_CLIENT_ID,
-	},
-	GITHUBCLIENTSECRET: {
-		N: 'CMS_GITHUB_CLIENT_SECRET',
-		KEY:
-			env.CMS_GITHUB_CLIENT_SECRET ||
-			import.meta.env.CMS_GITHUB_CLIENT_SECRET ||
-			process.env.CMS_GITHUB_CLIENT_SECRET,
-	},
-	DISCORDCLIENTID: {
-		N: 'CMS_DISCORD_CLIENT_ID',
-		KEY:
-			env.CMS_DISCORD_CLIENT_ID ||
-			import.meta.env.CMS_DISCORD_CLIENT_ID ||
-			process.env.CMS_DISCORD_CLIENT_ID,
-	},
-	DISCORDCLIENTSECRET: {
-		N: 'CMS_DISCORD_CLIENT_SECRET',
-		KEY:
-			env.CMS_DISCORD_CLIENT_SECRET ||
-			import.meta.env.CMS_DISCORD_CLIENT_SECRET ||
-			process.env.CMS_DISCORD_CLIENT_SECRET,
-	},
-	DISCORDREDIRECTURI: {
-		N: 'CMS_DISCORD_REDIRECT_URL',
-		KEY:
-			env.CMS_DISCORD_REDIRECT_URI ||
-			import.meta.env.CMS_DISCORD_REDIRECT_URI ||
-			process.env.CMS_DISCORD_REDIRECT_URI,
-	},
-	GOOGLECLIENTID: {
-		N: 'CMS_GOOGLE_CLIENT_ID',
-		KEY:
-			env.CMS_GOOGLE_CLIENT_ID ||
-			import.meta.env.CMS_GOOGLE_CLIENT_ID ||
-			process.env.CMS_GOOGLE_CLIENT_ID,
-	},
-	GOOGLECLIENTSECRET: {
-		N: 'CMS_GOOGLE_CLIENT_SECRET',
-		KEY:
-			env.CMS_GOOGLE_CLIENT_SECRET ||
-			import.meta.env.CMS_GOOGLE_CLIENT_SECRET ||
-			process.env.CMS_GOOGLE_CLIENT_SECRET,
-	},
-	GOOGLEREDIRECTURI: {
-		N: 'CMS_GOOGLE_REDIRECT_URL',
-		KEY:
-			env.CMS_GOOGLE_REDIRECT_URI ||
-			import.meta.env.CMS_GOOGLE_REDIRECT_URI ||
-			process.env.CMS_GOOGLE_REDIRECT_URI,
-	},
-	AUTH0CLIENTID: {
-		N: 'CMS_AUTH0_CLIENT_ID',
-		KEY:
-			env.CMS_AUTH0_CLIENT_ID ||
-			import.meta.env.CMS_AUTH0_CLIENT_ID ||
-			process.env.CMS_AUTH0_CLIENT_ID,
-	},
-	AUTH0CLIENTSECRET: {
-		N: 'CMS_AUTH0_CLIENT_SECRET',
-		KEY:
-			env.CMS_AUTH0_CLIENT_SECRET ||
-			import.meta.env.CMS_AUTH0_CLIENT_SECRET ||
-			process.env.CMS_AUTH0_CLIENT_SECRET,
-	},
-	AUTH0DOMAIN: {
-		N: 'CMS_AUTH0_DOMAIN',
-		KEY:
-			env.CMS_AUTH0_DOMAIN ||
-			import.meta.env.CMS_AUTH0_DOMAIN ||
-			process.env.CMS_AUTH0_DOMAIN,
-	},
-	AUTH0REDIRECTURI: {
-		N: 'CMS_AUTH0_REDIRECT_URL',
-		KEY:
-			env.CMS_AUTH0_REDIRECT_URI ||
-			import.meta.env.CMS_AUTH0_REDIRECT_URI ||
-			process.env.CMS_AUTH0_REDIRECT_URI,
-	},
-};
+import { loadKeys } from "./utils/checkENV";
+// import { envField } from "astro/config";
 
 export default defineIntegration({
     name: '@astrolicious/studioCMS:adminDashboard',
@@ -119,7 +29,7 @@ export default defineIntegration({
 						config,
 						addMiddleware,
 						injectRoute,
-						updateConfig,
+						// updateConfig,
 					} = params;
 
                     const { 
@@ -140,6 +50,7 @@ export default defineIntegration({
 								},
 							},
 							AuthConfig: {
+								providers,
 								providers: {
 									usernameAndPasswordConfig: {
 										allowUserRegistration
@@ -160,18 +71,18 @@ export default defineIntegration({
                     integrationLogger(logger, verbose, "info", "Dashboard Setup starting...");
 
                     // Check for Authenication Environment Variables
-                    CheckENV(logger, verbose, AUTHKEYS);
+					loadKeys(logger, verbose, providers);
 
-					updateConfig({
-						experimental: {
-							env: {
-								schema: {
-									CMS_GITHUB_CLIENT_ID: envField.string({ context: 'server', access: 'secret' }),
-									CMS_GITHUB_CLIENT_SECRET: envField.string({ context: 'server', access: 'secret' }),
-								}
-							}
-						}
-					})
+					// updateConfig({
+					// 	experimental: {
+					// 		env: {
+					// 			schema: {
+					// 				CMS_GITHUB_CLIENT_ID: envField.string({ context: 'server', access: 'secret' }),
+					// 				CMS_GITHUB_CLIENT_SECRET: envField.string({ context: 'server', access: 'secret' }),
+					// 			}
+					// 		}
+					// 	}
+					// })
 
 					// Create Resolvers
 					const { resolve } = createResolver(import.meta.url);

@@ -120,7 +120,25 @@ hr {
 		padding: 1em;
 	}
 }
-
+footer {
+	padding: 2em 1em 6em 1em;
+	background: linear-gradient(var(--gray-gradient)) no-repeat;
+	color: rgb(var(--gray));
+	text-align: center;
+}
+.social-links {
+	display: flex;
+	justify-content: center;
+	gap: 1em;
+	margin-top: 1em;
+}
+.social-links a {
+	text-decoration: none;
+	color: rgb(var(--gray));
+}
+.social-links a:hover {
+	color: rgb(var(--gray-dark));
+}
 .sr-only {
 	border: 0;
 	padding: 0;
@@ -137,4 +155,13 @@ hr {
 	clip-path: inset(50%);
 	/* added line to stop words getting smushed together (as they go onto seperate lines and some screen readers do not understand line feeds as a space */
 	white-space: nowrap;
+}
+.btn {
+	padding: 1rem;
+	background-color: rgb(0, 37, 202);
+	font-weight: bold;
+	color: #fff;
+	border: none;
+	border-radius: 99rem;
+	cursor: pointer;
 }

@@ -1,5 +1,5 @@
 {
-  "extends": "./.config/tsconfig.json",
+  "extends": "astro/tsconfigs/strict",
   "include": [
     "**/*"
   ],
@@ -20,6 +20,9 @@
     },
     {
       "path": "packages/studioCMSBlog"
+    },
+    {
+      "path": "playgrounds/node"
     }
   ]
 }

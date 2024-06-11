@@ -17,9 +17,8 @@ import studioCMSDashboard from './integrations/studioCMSDashboard';
 import { fileFactory } from './utils/fileFactory';
 import { DbErrors, studioErrors, warnings } from './strings';
 import { getStudioConfigFileUrl, loadStudioCMSConfigFile } from './studiocms-config';
-import { studioCMSPluginList } from '.';
-import studioCMSFrontEnd from './integrations/defaultFrontEnd';
-import type { AstroIntegration } from 'astro';
+import { studioCMSPluginList, externalNavigation, customRendererPlugin } from '.';
+import { version } from '../package.json';
 
 // Main Integration
 export default defineIntegration({
@@ -43,6 +42,7 @@ export default defineIntegration({
 						logger,
 						config: astroConfig,
 						addWatchFile,
+						injectRoute,
 					} = params;
 
 					// Watch the StudioCMS Config File for changes (including creation/deletion)
@@ -63,8 +63,8 @@ export default defineIntegration({
 							integrationLogger(logger, true, 'error', parsedErrorString);
 							throw new AstroError(studioErrors.invalidConfigFile, parsedErrorString);
 						}
-						mergedOptions = { ...optionsSchema._def.defaultValue, ...parsedOptions.data}
-						
+
+						mergedOptions = { ...optionsSchema._def.defaultValue, ...parsedOptions.data }
 					}
 
 					// Destructure Options
@@ -72,6 +72,11 @@ export default defineIntegration({
 						verbose,
 						dbStartPage,
 						imageService: ImageServiceConfig,
+						defaultFrontEndConfig: {
+							injectDefaultFrontEndRoutes,
+							inject404Route,
+							layoutOverride: defaultFrontEndLayoutConfig,
+						},
 						includedIntegrations: { 
 							useAstroRobots, 
 							astroRobotsConfig,
@@ -103,7 +108,21 @@ export default defineIntegration({
 
 					// Renderer Override Path
 					let RendererComponentPath: string;
-					if (RendererOverride) { 
+
+					const RendererOverridePlugin = customRendererPlugin.size > 0 ? Array.from(customRendererPlugin) : null;
+
+					// Check for Custom Renderer Plugin
+					if (RendererOverridePlugin) {
+						integrationLogger(logger, verbose, 'info', 'Custom Renderer Plugin Detected. Overriding Default Renderer.');
+						if (customRendererPlugin.size > 1 && RendererOverridePlugin[0]) {
+							integrationLogger(logger, verbose, 'warn', warnings.MultipleRendererPlugins);
+							RendererComponentPath = RendererOverridePlugin[0];
+						} else if (customRendererPlugin.size > 0 && RendererOverridePlugin[0]) {
+							integrationLogger(logger, verbose, 'info', `Using Custom Renderer Plugin: ${RendererOverridePlugin[0]}`);
+							RendererComponentPath = RendererOverridePlugin[0];
+						}
+					} 
+					if (RendererOverride && !RendererOverridePlugin) { 
 						RendererComponentPath = rootResolve(RendererOverride) 
 					} else { 
 						RendererComponentPath = resolve('./components/exports/StudioCMSRenderer.astro') 
@@ -125,6 +144,14 @@ export default defineIntegration({
 						FormattedDateComponentPath = resolve('./components/exports/FormattedDate.astro')
 					}
 
+					// Default Frontend Layout
+					let defaultFrontEndLayout: string;
+					if (defaultFrontEndLayoutConfig) {
+						defaultFrontEndLayout = rootResolve(defaultFrontEndLayoutConfig)
+					} else {
+						defaultFrontEndLayout = resolve('./defaultRoutes/components/Layout.astro')
+					}
+
 					// Virtual Resolver
 					const virtResolver = {
 						CImage: CustomImageComponentPath,
@@ -138,6 +165,7 @@ export default defineIntegration({
 						contentHelper: resolve('./utils/contentHelper.ts'),
 						NavigationBar: resolve('./components/exports/Navigation.astro'),
 						Avatar: resolve('./components/exports/Avatar.astro'),
+						defaultLayout: defaultFrontEndLayout,
 					};
 
 					// Virtual Components
@@ -147,6 +175,7 @@ export default defineIntegration({
 					export { default as StudioCMSRenderer } from '${virtResolver.StudioCMSRenderer}';
 					export { default as Navigation } from '${virtResolver.NavigationBar}';
 					export { default as Avatar } from '${virtResolver.Avatar}';
+					export { default as Layout } from '${virtResolver.defaultLayout}';
 					export * from '${virtResolver.contentHelper}';
 					`;
 
@@ -165,6 +194,8 @@ export default defineIntegration({
 						name,
 						imports: {
 							'virtual:studiocms/config': `export default ${JSON.stringify(mergedOptions)}`,
+							'virtual:studiocms/version': `export default '${version}'`,
+							'virtual:studiocms/_nav': `export const externalNav = new Map(${JSON.stringify(Array.from(externalNavigation.entries()))});`,
 							'studiocms:components': virtualComponentMap,
 							'studiocms:helpers': virtualHelperMap,
 						},
@@ -189,6 +220,7 @@ export default defineIntegration({
 						export const getUserById: typeof import('${virtResolver.contentHelper}').getUserById;
 						export const Navigation: typeof import('${virtResolver.NavigationBar}').default;
 						export const Avatar: typeof import('${virtResolver.Avatar}').default;
+						export const Layout: typeof import('${virtResolver.defaultLayout}').default;
 					}`);
 
 					// Add Virtual DTS Lines - Helpers
@@ -211,9 +243,29 @@ export default defineIntegration({
 					});
 
 					if (!dbStartPage) {
-						addIntegration(params, {
-							integration: studioCMSFrontEnd() as unknown as AstroIntegration,
-						})
+						integrationLogger(logger, verbose, 'info', "Database Start Page disabled. Skipping Database Setup.");
+
+						// Inject Default Frontend Routes
+						if (injectDefaultFrontEndRoutes) {
+							integrationLogger(logger, verbose, 'info', 'Injecting Default Frontend Routes...');
+							injectRoute({
+								pattern: '/',
+								entrypoint: resolve('./defaultRoutes/index.astro')
+							});
+							injectRoute({
+								pattern: '[...slug]',
+								entrypoint: resolve('./defaultRoutes/[...slug].astro')
+							})
+						}
+
+						// Inject 404 Route
+						if (inject404Route) {
+							integrationLogger(logger, verbose, 'info', 'Injecting 404 Route...');
+							injectRoute({
+								pattern: '404',
+								entrypoint: resolve('./defaultRoutes/404.astro')
+							})
+						}
 					}
 
 					// Add Dashboard Integration

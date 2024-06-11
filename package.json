@@ -31,6 +31,7 @@
     "@moonrepo/cli": "1.24.3",
     "@changesets/cli": "2.27.1",
     "@changesets/config": "3.0.0",
+    "astro": "^4.10.1",
     "typescript": "5.4.5"
   }
 }

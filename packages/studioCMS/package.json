@@ -30,7 +30,9 @@
     "access": "public"
   },
   "sideEffects": false,
-  "files": ["src"],
+  "files": [
+    "src"
+  ],
   "exports": {
     ".": {
       "types": "./src/index.d.ts",
@@ -39,21 +41,21 @@
   },
   "type": "module",
   "dependencies": {
-    "@astrojs/rss": "^4.0.5",
+    "@astrojs/rss": "^4.0.6",
     "@cloudinary/url-gen": "^1.19.0",
     "@iconify-json/mdi": "^1.1.66",
-    "@iconify/utils": "^2.1.23",
-    "@inox-tools/sitemap-ext": "^0.2.11",
+    "@iconify/utils": "^2.1.24",
+    "@inox-tools/sitemap-ext": "^0.2.12",
     "@lucia-auth/adapter-drizzle": "^1.0.7",
     "@markdoc/markdoc": "^0.4.0",
     "@noble/hashes": "^1.4.0",
-    "@shikijs/transformers": "^1.4.0",
+    "@shikijs/transformers": "^1.6.3",
     "@unocss/astro": "^0.59.4",
     "@unocss/reset": "^0.59.4",
     "@unpic/astro": "^0.0.46",
     "@yangyang20240403/unocss-preset-daisyui": "^1.0.0",
-    "arctic": "^1.8.1",
-    "astro-integration-kit": "^0.13.2",
+    "arctic": "^1.9.1",
+    "astro-integration-kit": "^0.13.3",
     "astro-theme-provider": "^0.5.0",
     "daisyui": "^4.4.23",
     "fs-extra": "^11.2.0",
@@ -65,7 +67,7 @@
     "marked-shiki": "^1.1.0",
     "marked-smartypants": "^1.1.6",
     "oslo": "^1.2.0",
-    "shiki": "^1.4.0",
+    "shiki": "^1.6.3",
     "typescript": "^5.4.5",
     "unpic": "^3.18.0",
     "unocss": "^0.59.4",

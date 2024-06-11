@@ -5,6 +5,9 @@ export default defineStudioCMSConfig({
     contentRenderer: 'marked',
     verbose: true,
     dateLocale: 'en-us',
+    defaultFrontEndConfig: {
+        favicon: '/favicon.svg'
+    },
     includedIntegrations: {
         useAstroRobots: true,
         useInoxSitemap: true,
@@ -21,10 +24,10 @@ export default defineStudioCMSConfig({
         AuthConfig: {
             enabled: true,
             providers: {
-                auth0: false,
+                auth0: true,
                 discord: true,
                 github: true,
-                google: false,
+                google: true,
                 usernameAndPassword: true,
                 usernameAndPasswordConfig: {
                     allowUserRegistration: true,

@@ -1,6 +1,7 @@
 ---
 import { getPageList, getSiteConfig, Avatar } from "studiocms:components";
 import { StudioCMSRoutes } from "studiocms-dashboard:routeMap";
+import { externalNav } from "virtual:studiocms/_nav"
 import "./navigation.css";
 
 type Props = {
@@ -23,21 +24,35 @@ type LinkProps = {
 
 const links: LinkProps[] = [];
 
-const navPagesList = pageList.filter(page => page.showOnNav === true).sort((a, b) => Date.parse(b.publishedAt.toString()) - Date.parse(a.publishedAt.toString()));
+const navPagesList = pageList.filter(page => page.showOnNav === true && page.package === "@astrolicious/studiocms")
+    .sort((a, b) => Date.parse(b.publishedAt.toString()) - Date.parse(a.publishedAt.toString()));
 
-navPagesList.filter(page => page.slug === "index").forEach(page => {
+const indexPage = navPagesList.find(page => page.slug === "index");
+
+if (indexPage) {
+    links.push({
+        text: indexPage.title || "Home",
+        href: import.meta.env.BASE_URL,
+    })
+}
+
+const restOfPages = navPagesList.filter(page => page.slug !== "index");
+
+for (const page of restOfPages) {
     links.push({
         text: page.title,
         href: import.meta.env.BASE_URL + page.slug,
-    });
-});
+    })
+}
 
-navPagesList.filter(page => page.slug !== "index").forEach(page => {
+const externalLinks = Array.from(externalNav.values())
+
+for (const link of externalLinks) {
     links.push({
-        text: page.title,
-        href: import.meta.env.BASE_URL + page.slug,
-    });
-});
+        text: link.text,
+        href: import.meta.env.BASE_URL + link.slug,
+    })
+}
 
 ---
 { links.length > topLevelLinkCount && (

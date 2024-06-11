@@ -1,13 +1,6 @@
 ---
 import { Code } from 'astro:components';
 import { Layout } from 'studiocms-dashboard:components';
-import Config from 'virtual:studiocms/config';
-
-if (Config.includedIntegrations.useInoxSitemap) {
-    import('sitemap-ext:config').then((sitemap) => {
-        sitemap.default(false)
-    })
-}
 
 const codeBlob = `import { defineConfig } from "astro/config";
 import astroStudioCMS from "@astrolicious/studiocms";

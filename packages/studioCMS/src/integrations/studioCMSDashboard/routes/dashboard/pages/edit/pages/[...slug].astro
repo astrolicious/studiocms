@@ -8,12 +8,6 @@ import { StudioCMSRenderer } from 'studiocms:components';
 import { StudioCMSRoutes, getEditRoute } from 'studiocms-dashboard:routeMap';
 import type { SiteConfigResponse, pageDataReponse } from 'studiocms:components';
 
-if (Config.includedIntegrations.useInoxSitemap) {
-    import('sitemap-ext:config').then((sitemap) => {
-        sitemap.default(false)
-    })
-}
-
 const { dashboardConfig: { developerConfig } } = Config;
 
 const studioCMSPluginList = pluginList;

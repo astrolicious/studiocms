@@ -1,6 +1,19 @@
 {
   "extends": "astro/tsconfigs/strictest",
+  "files": [],
   "compilerOptions": {
-    "outDir": "../../.moon/cache/types/packages/studioCMS"
-  }
+    "outDir": "../../.moon/cache/types/packages/studioCMS",
+    "composite": true,
+    "noEmit": false,
+    "allowImportingTsExtensions": false,
+    "emitDeclarationOnly": false
+  },
+  "include": [
+    "./**/*",
+    "./package.json",
+    "./virt-dev.d.ts"
+  ],
+  "exclude": [
+    "./node_modules"
+  ]
 }

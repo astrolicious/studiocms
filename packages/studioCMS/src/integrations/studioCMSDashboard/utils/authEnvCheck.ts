@@ -1,3 +1,5 @@
+import { loadEnv } from "vite";
+
 type Providers = {
     github: boolean;
     discord: boolean;
@@ -6,26 +8,28 @@ type Providers = {
     usernameAndPassword: boolean;
 }
 
+const env = loadEnv('all', process.cwd(), 'CMS')
+
 const AUTHKEYS = {
     GITHUB: {
-        CLIENT_ID: import.meta.env.CMS_GITHUB_CLIENT_ID || process.env.CMS_GITHUB_CLIENT_ID,
-        CLIENT_SECRET: import.meta.env.CMS_GITHUB_CLIENT_SECRET || process.env.CMS_GITHUB_CLIENT_SECRET,
+        CLIENT_ID: env.CMS_GITHUB_CLIENT_ID,
+        CLIENT_SECRET: env.CMS_GITHUB_CLIENT_SECRET,
     },
     DISCORD: {
-        CLIENT_ID: import.meta.env.CMS_DISCORD_CLIENT_ID || process.env.CMS_DISCORD_CLIENT_ID,
-        CLIENT_SECRET: import.meta.env.CMS_DISCORD_CLIENT_SECRET || process.env.CMS_DISCORD_CLIENT_SECRET,
-        REDIRECT_URI: import.meta.env.CMS_DISCORD_REDIRECT_URI || process.env.CMS_DISCORD_REDIRECT_URI,
+        CLIENT_ID: env.CMS_DISCORD_CLIENT_ID,
+        CLIENT_SECRET: env.CMS_DISCORD_CLIENT_SECRET,
+        REDIRECT_URI: env.CMS_DISCORD_REDIRECT_URI,
     },
     GOOGLE: {
-        CLIENT_ID: import.meta.env.CMS_GOOGLE_CLIENT_ID || process.env.CMS_GOOGLE_CLIENT_ID,
-        CLIENT_SECRET: import.meta.env.CMS_GOOGLE_CLIENT_SECRET || process.env.CMS_GOOGLE_CLIENT_SECRET,
-        REDIRECT_URI: import.meta.env.CMS_GOOGLE_REDIRECT_URI || process.env.CMS_GOOGLE_REDIRECT_URI,
+        CLIENT_ID: env.CMS_GOOGLE_CLIENT_ID,
+        CLIENT_SECRET: env.CMS_GOOGLE_CLIENT_SECRET,
+        REDIRECT_URI: env.CMS_GOOGLE_REDIRECT_URI,
     },
     AUTH0: {
-        CLIENT_ID: import.meta.env.CMS_AUTH0_CLIENT_ID || process.env.CMS_AUTH0_CLIENT_ID,
-        CLIENT_SECRET: import.meta.env.CMS_AUTH0_CLIENT_SECRET || process.env.CMS_AUTH0_CLIENT_SECRET,
-        DOMAIN: import.meta.env.CMS_AUTH0_DOMAIN || process.env.CMS_AUTH0_DOMAIN,
-        REDIRECT_URI: import.meta.env.CMS_AUTH0_REDIRECT_URI || process.env.CMS_AUTH0_REDIRECT_URI,
+        CLIENT_ID: env.CMS_AUTH0_CLIENT_ID,
+        CLIENT_SECRET: env.CMS_AUTH0_CLIENT_SECRET,
+        DOMAIN: env.CMS_AUTH0_DOMAIN,
+        REDIRECT_URI: env.CMS_AUTH0_REDIRECT_URI,
     },
 }
 

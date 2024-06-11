@@ -4,6 +4,7 @@ import { includedIntegrationsSchema } from './integrations';
 import { markedConfigSchema } from './marked';
 import { dashboardConfigSchema } from './dashboard';
 import { overridesSchema } from './componentoverrides';
+import { DefaultFrontEndConfigSchema } from './defaultFrontend';
 
 //
 // MAIN SCHEMA
@@ -37,6 +38,10 @@ export const optionsSchema = z
 		 * Allows customization of the Image Service Options
 		 */
 		imageService: imageServiceSchema,
+		/**
+		 * Default Frontend Configuration
+		 */
+		defaultFrontEndConfig: DefaultFrontEndConfigSchema,
 		/**
 		 * Allows customization of the Dashboard Configuration
 		 * 
