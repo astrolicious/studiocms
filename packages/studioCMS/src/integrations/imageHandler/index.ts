@@ -5,6 +5,7 @@ import cloudflareImageHandler from './adapters/cloudflare';
 import vercelImageHandler from './adapters/vercel';
 import netlifyImageHandler from './adapters/netlify';
 import { ImageHandlerOptionsSchema } from './schemas';
+import { envField } from 'astro/config';
 
 export default defineIntegration({
     name: '@astrolicious/studioCMS:imageHandler',
@@ -17,6 +18,7 @@ export default defineIntegration({
 					const {
 						logger,
 						config: { adapter },
+						updateConfig,
 					} = params;
 
                     const { verbose } = options;
@@ -27,6 +29,19 @@ export default defineIntegration({
 						'@astrojs/vercel', 
 						'@astrojs/netlify'
 					];
+
+					updateConfig({
+						experimental: {
+							env: {
+								schema: {
+									CMS_CLOUDINARY_CLOUDNAME: envField.string({
+										context: 'server',
+										access: 'secret'
+									})
+								}
+							}
+						}
+					})
 
                     // Setup and Configure Astro Adapters and Image Services based on the Adapter and Image Service Configurations
 					integrationLogger(logger, verbose, 'info', 'Determining Astro Adapter Configuration');

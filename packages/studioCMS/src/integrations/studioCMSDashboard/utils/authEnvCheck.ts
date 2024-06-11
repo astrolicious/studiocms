@@ -1,5 +1,3 @@
-// import { loadEnv } from "vite";
-
 import { getSecret } from 'astro:env/server';
 
 type Providers = {
@@ -9,8 +7,6 @@ type Providers = {
     auth0: boolean;
     usernameAndPassword: boolean;
 }
-
-// const env = loadEnv('all', process.cwd(), 'CMS')
 
 const AUTHKEYS = {
     GITHUB: {
