@@ -8,10 +8,16 @@
     "allowImportingTsExtensions": false,
     "emitDeclarationOnly": false
   },
+  "references": [
+    {
+      "path": "../../playgrounds/node"
+    }
+  ],
   "include": [
     "./**/*",
     "./package.json",
-    "./virt-dev.d.ts"
+    "./virt-dev.d.ts",
+    "../../playgrounds/node/.astro/**/*"
   ],
   "exclude": [
     "./node_modules"

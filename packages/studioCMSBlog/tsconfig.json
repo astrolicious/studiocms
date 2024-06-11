@@ -22,6 +22,7 @@
   ],
   "include": [
     "./**/*",
-    "./virtual.d.ts",
+    "../studioCMS/**/*",
+    "../../playgrounds/node/.astro/**/*"
   ]
 }

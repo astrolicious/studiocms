@@ -24,7 +24,7 @@ async function getImageSrc() {
 		//// Initialize Cloudinary
 		const cld = new Cloudinary({
 			cloud: {
-				cloudName: getSecret('CMS_CLOUDINARY_CLOUDNAME') ||	'demo',
+				cloudName: getSecret('CMS_CLOUDINARY_CLOUDNAME') || 'demo',
 			},
 		});
 		//// Configure the image

@@ -4,7 +4,7 @@
   "compilerOptions": {
     "target": "ESNext",
     "module": "ESNext",
-    "moduleResolution": "Bundler",
+    "moduleResolution": "node",
     "composite": true,
     "allowImportingTsExtensions": true,
     "emitDeclarationOnly": true,
@@ -24,6 +24,7 @@
     "dist"
   ],
   "include": [
-    ".astro/studiocms-blog.d.ts",
+    "src/**/*",
+    ".astro/**/*",
   ]
 }

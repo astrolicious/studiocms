@@ -2,22 +2,7 @@ import { defineIntegration } from 'astro-integration-kit';
 import { imageService as unpicImageService } from '@unpic/astro/service';
 import { passthroughImageService, sharpImageService, squooshImageService } from 'astro/config';
 import { integrationLogger } from '../../../utils';
-import { AstroError } from 'astro/errors';
-import { loadEnv } from 'vite';
 import { ImageHandlerOptionsSchema } from '../schemas';
-
-// Environment Variables
-const env = loadEnv('all', process.cwd(), 'CMS');
-
-const AUTHKEYS = {
-	CLOUDINARY: {
-		N: 'CMS_CLOUDINARY_CLOUDNAME',
-		KEY:
-			env.CMS_CLOUDINARY_CLOUDNAME ||
-			import.meta.env.CMS_CLOUDINARY_CLOUDNAME ||
-			process.env.CMS_CLOUDINARY_CLOUDNAME,
-	},
-};
 
 export default defineIntegration({
     name: 'astrolicious/studioCMS:imageHandler/netlify',
@@ -61,11 +46,6 @@ export default defineIntegration({
 								'Netlify Image Service Disabled. Using Built-in Image Service.'
 							);
 							if (cdnPlugin === 'cloudinary-js') {
-								if (!AUTHKEYS.CLOUDINARY.KEY) {
-									throw new AstroError(
-										`Using the Cloudinary CDN JS SDK Plugin requires the ${AUTHKEYS.CLOUDINARY.N} environment variable to be set. Please add this to your .env file.`
-									);
-								}
 								if (astroImageServiceConfig === 'squoosh') {
 									integrationLogger(
 										logger,

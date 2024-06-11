@@ -17,8 +17,9 @@ import studioCMSDashboard from './integrations/studioCMSDashboard';
 import { fileFactory } from './utils/fileFactory';
 import { DbErrors, studioErrors, warnings } from './strings';
 import { getStudioConfigFileUrl, loadStudioCMSConfigFile } from './studiocms-config';
-import { studioCMSPluginList, externalNavigation, customRendererPlugin } from '.';
+import { studioCMSPluginList, externalNavigation } from '.';
 import { version } from '../package.json';
+import { VirtualResolver } from './resolvers';
 
 // Main Integration
 export default defineIntegration({
@@ -75,7 +76,6 @@ export default defineIntegration({
 						defaultFrontEndConfig: {
 							injectDefaultFrontEndRoutes,
 							inject404Route,
-							layoutOverride: defaultFrontEndLayoutConfig,
 						},
 						includedIntegrations: { 
 							useAstroRobots, 
@@ -83,7 +83,6 @@ export default defineIntegration({
 							useInoxSitemap
 						},
 						overrides: {
-							RendererOverride,
 							CustomImageOverride,
 							FormattedDateOverride
 						}
@@ -103,90 +102,52 @@ export default defineIntegration({
 						throw new AstroError(DbErrors.AstroConfigSiteURL);
 					}
 
-					// Create Resolver for User-Defined Virtual Imports
+					// // Create Resolver for User-Defined Virtual Imports
 					const { resolve: rootResolve } = createResolver(astroConfig.root.pathname)
 
-					// Renderer Override Path
-					let RendererComponentPath: string;
-
-					const RendererOverridePlugin = customRendererPlugin.size > 0 ? Array.from(customRendererPlugin) : null;
-
-					// Check for Custom Renderer Plugin
-					if (RendererOverridePlugin) {
-						integrationLogger(logger, verbose, 'info', 'Custom Renderer Plugin Detected. Overriding Default Renderer.');
-						if (customRendererPlugin.size > 1 && RendererOverridePlugin[0]) {
-							integrationLogger(logger, verbose, 'warn', warnings.MultipleRendererPlugins);
-							RendererComponentPath = RendererOverridePlugin[0];
-						} else if (customRendererPlugin.size > 0 && RendererOverridePlugin[0]) {
-							integrationLogger(logger, verbose, 'info', `Using Custom Renderer Plugin: ${RendererOverridePlugin[0]}`);
-							RendererComponentPath = RendererOverridePlugin[0];
-						}
-					} 
-					if (RendererOverride && !RendererOverridePlugin) { 
-						RendererComponentPath = rootResolve(RendererOverride) 
-					} else { 
-						RendererComponentPath = resolve('./components/exports/StudioCMSRenderer.astro') 
-					}
-
-					// Custom Image Override Path
-					let CustomImageComponentPath: string;
-					if (CustomImageOverride) {
-						CustomImageComponentPath = rootResolve(CustomImageOverride)
-					} else {
-						CustomImageComponentPath = resolve('./components/exports/CImage.astro')
-					}
-
-					// Formatted Date Override Path
-					let FormattedDateComponentPath: string;
-					if (FormattedDateOverride) {
-						FormattedDateComponentPath = rootResolve(FormattedDateOverride)
-					} else {
-						FormattedDateComponentPath = resolve('./components/exports/FormattedDate.astro')
-					}
-
-					// Default Frontend Layout
-					let defaultFrontEndLayout: string;
-					if (defaultFrontEndLayoutConfig) {
-						defaultFrontEndLayout = rootResolve(defaultFrontEndLayoutConfig)
-					} else {
-						defaultFrontEndLayout = resolve('./defaultRoutes/components/Layout.astro')
-					}
-
 					// Virtual Resolver
-					const virtResolver = {
-						CImage: CustomImageComponentPath,
-						FormattedDate: FormattedDateComponentPath,
-						StudioCMSRenderer: RendererComponentPath,
-						AuthHelper: resolve('./utils/authhelper.ts'),
-						StudioCMSLocalsMap: resolve('./schemas/locals.ts'),
-						StudioCMSDBTypeHelpers: resolve('./schemas/dbtypehelpers.ts'),
-						UrlGenHelper: resolve('./utils/urlGen.ts'),
-						textFormatterHelper: resolve('./utils/textFormatter.ts'),
-						contentHelper: resolve('./utils/contentHelper.ts'),
-						NavigationBar: resolve('./components/exports/Navigation.astro'),
-						Avatar: resolve('./components/exports/Avatar.astro'),
-						defaultLayout: defaultFrontEndLayout,
-					};
+					const virtResolver = VirtualResolver(
+						CustomImageOverride && rootResolve(CustomImageOverride), 
+						FormattedDateOverride && rootResolve(FormattedDateOverride),
+					)
 
 					// Virtual Components
-					const virtualComponentMap = `
-					export { default as CImage } from '${virtResolver.CImage}';
-					export { default as FormattedDate } from '${virtResolver.FormattedDate}';
-					export { default as StudioCMSRenderer } from '${virtResolver.StudioCMSRenderer}';
-					export { default as Navigation } from '${virtResolver.NavigationBar}';
-					export { default as Avatar } from '${virtResolver.Avatar}';
-					export { default as Layout } from '${virtResolver.defaultLayout}';
-					export * from '${virtResolver.contentHelper}';
-					`;
+					const defaultNamedComponents = [
+						{ title: "CImage", import: virtResolver.CImage },
+						{ title: "FormattedDate", import: virtResolver.FormattedDate },
+						{ title: "StudioCMSRenderer", import: virtResolver.StudioCMSRenderer },
+						{ title: "Navigation", import: virtResolver.NavigationBar },
+						{ title: "Avatar", import: virtResolver.Avatar },
+						{ title: "Layout", import: virtResolver.defaultLayout },
+					];
+
+					// Virtual Component Map
+					let virtualComponentMap = ``
+					defaultNamedComponents.map(({ title, import: path }) => {
+						virtualComponentMap += `export { default as ${title} } from '${path}';\n`
+					})
+					virtualComponentMap += `export * from '${virtResolver.contentHelper}';`;
 
 					// Virtual Helpers
-					const virtualHelperMap = `
-					export { default as authHelper } from '${virtResolver.AuthHelper}';
-					export { default as urlGenFactory } from '${virtResolver.UrlGenHelper}';
-					export * from '${virtResolver.StudioCMSLocalsMap}';
-					export * from '${virtResolver.StudioCMSDBTypeHelpers}';
-					export * from '${virtResolver.textFormatterHelper}';
-					export const pluginList = new Map(${JSON.stringify(Array.from(studioCMSPluginList.entries()))});`;
+					const defaultNamedHelpers = [
+						{ title: 'authHelper', import: virtResolver.AuthHelper },
+						{ title: 'urlGenFactory', import: virtResolver.UrlGenHelper },
+					]
+					const miscNamedHelpers = [
+						{ import: virtResolver.StudioCMSLocalsMap },
+						{ import: virtResolver.StudioCMSDBTypeHelpers },
+						{ import: virtResolver.textFormatterHelper },
+					]
+
+					// Virtual Helper Map
+					let virtualHelperMap = ``
+					defaultNamedHelpers.map(({ title, import: path }) => {
+						virtualHelperMap += `export { default as ${title} } from '${path}';\n`
+					})
+					miscNamedHelpers.map(({ import: path }) => {
+						virtualHelperMap += `export * from '${path}';\n`
+					})
+					virtualHelperMap += `export const pluginList = new Map(${JSON.stringify(Array.from(studioCMSPluginList.entries()))});`;
 
 					// Add Virtual Imports
 					integrationLogger(logger, verbose, 'info', 'Adding Virtual Imports...');

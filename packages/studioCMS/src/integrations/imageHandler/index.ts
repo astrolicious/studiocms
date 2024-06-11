@@ -6,11 +6,13 @@ import vercelImageHandler from './adapters/vercel';
 import netlifyImageHandler from './adapters/netlify';
 import { ImageHandlerOptionsSchema } from './schemas';
 import { envField } from 'astro/config';
+import { loadEnv } from 'vite';
 
 export default defineIntegration({
     name: '@astrolicious/studioCMS:imageHandler',
     optionsSchema: ImageHandlerOptionsSchema,
     setup({ options }) {
+		const env = loadEnv('all', process.cwd(), 'CMS');
         return {
             hooks: {
                 "astro:config:setup": ( params ) => {
@@ -21,7 +23,7 @@ export default defineIntegration({
 						updateConfig,
 					} = params;
 
-                    const { verbose } = options;
+                    const { verbose, ImageServiceConfig: { cdnPlugin } } = options;
 
 					const currentAdapters = [
 						'@astrojs/node', 
@@ -42,6 +44,12 @@ export default defineIntegration({
 							}
 						}
 					})
+
+					if (cdnPlugin === 'cloudinary-js') {
+						if (!env.CMS_CLOUDINARY_CLOUDNAME) {
+							integrationLogger(logger, true, "warn", "Using the Cloudinary CDN JS SDK Plugin requires the CMS_CLOUDINARY_CLOUDNAME environment variable to be set. Please add this to your .env file.");
+						}
+					}
 
                     // Setup and Configure Astro Adapters and Image Services based on the Adapter and Image Service Configurations
 					integrationLogger(logger, verbose, 'info', 'Determining Astro Adapter Configuration');
