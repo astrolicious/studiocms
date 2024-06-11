@@ -77,8 +77,8 @@
     "recast": "^0.23.6"
   },
   "peerDependencies": {
-    "@astrojs/db": ">=0.11.0",
-    "astro": ">=4.10.0"
+    "@astrojs/db": ">=0.11.5",
+    "astro": ">=4.10.2"
   },
   "devDependencies": {
     "@types/node": "20.12.8",

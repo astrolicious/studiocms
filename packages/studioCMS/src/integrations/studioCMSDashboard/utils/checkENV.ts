@@ -73,12 +73,13 @@ export const loadKeys = async (
     } = KeyList;
 
     // List of all currently missing keys
-    let missingKeys:string[] = [];
+    const missingKeys:string[] = [];
 
     // Check for Github Environment Variables
-    let missingGithubKeys:string[] = [];
+    const missingGithubKeys:string[] = [];
     if (github) {
         infoLogger(GithubKeys.CheckMessage)
+        // biome-ignore lint/complexity/noForEach: This is a simple loop
         GithubKeys.Keys.forEach(key => {
             if (!env[key]) {
                 missingGithubKeys.push(key)
@@ -91,9 +92,10 @@ export const loadKeys = async (
     }
 
     // Check for Discord Environment Variables
-    let missingDiscordKeys:string[] = [];
+    const missingDiscordKeys:string[] = [];
     if (discord) {
         infoLogger(DiscordKeys.CheckMessage)
+        // biome-ignore lint/complexity/noForEach: This is a simple loop
         DiscordKeys.Keys.forEach(key => {
             if (!env[key]) {
                 missingDiscordKeys.push(key)
@@ -106,9 +108,10 @@ export const loadKeys = async (
     }
 
     // Check for Google Environment Variables
-    let missingGoogleKeys:string[] = [];
+    const missingGoogleKeys:string[] = [];
     if (google) {
         infoLogger(GoogleKeys.CheckMessage)
+        // biome-ignore lint/complexity/noForEach: This is a simple loop
         GoogleKeys.Keys.forEach(key => {
             if (!env[key]) {
                 missingGoogleKeys.push(key)
@@ -121,9 +124,10 @@ export const loadKeys = async (
     }
 
     // Check for Auth0 Environment Variables
-    let missingAuth0Keys:string[] = [];
+    const missingAuth0Keys:string[] = [];
     if (auth0) {
         infoLogger(Auth0Keys.CheckMessage)
+        // biome-ignore lint/complexity/noForEach: This is a simple loop
         Auth0Keys.Keys.forEach(key => {
             if (!env[key]) {
                 missingAuth0Keys.push(key)

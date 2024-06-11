@@ -13,7 +13,7 @@ import { randomUUID } from "node:crypto";
 import type { AuthConfigMap, usernameAndPasswordConfig } from "../../schemas/auth-types";
 import type { AstroIntegration } from "astro";
 import { loadKeys } from "./utils/checkENV";
-// import { envField } from "astro/config";
+import { envField } from "astro/config";
 
 export default defineIntegration({
     name: '@astrolicious/studioCMS:adminDashboard',
@@ -29,7 +29,7 @@ export default defineIntegration({
 						config,
 						addMiddleware,
 						injectRoute,
-						// updateConfig,
+						updateConfig,
 					} = params;
 
                     const { 
@@ -73,16 +73,66 @@ export default defineIntegration({
                     // Check for Authenication Environment Variables
 					loadKeys(logger, verbose, providers);
 
-					// updateConfig({
-					// 	experimental: {
-					// 		env: {
-					// 			schema: {
-					// 				CMS_GITHUB_CLIENT_ID: envField.string({ context: 'server', access: 'secret' }),
-					// 				CMS_GITHUB_CLIENT_SECRET: envField.string({ context: 'server', access: 'secret' }),
-					// 			}
-					// 		}
-					// 	}
-					// })
+					updateConfig({
+						experimental: {
+							env: {
+								schema: {
+									// GitHub Auth Provider Environment Variables
+									CMS_GITHUB_CLIENT_ID: envField.string({ 
+										context: 'server', 
+										access: 'secret' 
+									}),
+									CMS_GITHUB_CLIENT_SECRET: envField.string({ 
+										context: 'server', 
+										access: 'secret' 
+									}),
+									// Discord Auth Provider Environment Variables
+									CMS_DISCORD_CLIENT_ID: envField.string({ 
+										context: 'server',
+										access: 'secret'
+									}),
+									CMS_DISCORD_CLIENT_SECRET: envField.string({ 
+										context: 'server',
+										access: 'secret'
+									}),
+									CMS_DISCORD_REDIRECT_URI: envField.string({ 
+										context: 'server',
+										access: 'secret'
+									}),
+									// Google Auth Provider Environment Variables
+									CMS_GOOGLE_CLIENT_ID: envField.string({ 
+										context: 'server',
+										access: 'secret'
+									}),
+									CMS_GOOGLE_CLIENT_SECRET: envField.string({ 
+										context: 'server',
+										access: 'secret'
+									}),
+									CMS_GOOGLE_REDIRECT_URI: envField.string({ 
+										context: 'server',
+										access: 'secret'
+									}),
+									// Auth0 Auth Provider Environment Variables
+									CMS_AUTH0_CLIENT_ID: envField.string({ 
+										context: 'server',
+										access: 'secret'
+									}),
+									CMS_AUTH0_CLIENT_SECRET: envField.string({ 
+										context: 'server',
+										access: 'secret'
+									}),
+									CMS_AUTH0_DOMAIN: envField.string({ 
+										context: 'server',
+										access: 'secret'
+									}),
+									CMS_AUTH0_REDIRECT_URI: envField.string({ 
+										context: 'server',
+										access: 'secret'
+									}),
+								}
+							}
+						}
+					})
 
 					// Create Resolvers
 					const { resolve } = createResolver(import.meta.url);

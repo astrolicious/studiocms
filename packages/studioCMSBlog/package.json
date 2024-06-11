@@ -46,7 +46,7 @@
     "devDependencies": {
       "@astrolicious/studiocms": "workspace:*",
       "@types/node": "20.12.8",
-      "astro": "^4.9.1"
+      "astro": "^4.10.2"
     }
   }
   

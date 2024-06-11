@@ -1,4 +1,6 @@
-import { loadEnv } from "vite";
+// import { loadEnv } from "vite";
+
+import { getSecret } from 'astro:env/server';
 
 type Providers = {
     github: boolean;
@@ -8,28 +10,28 @@ type Providers = {
     usernameAndPassword: boolean;
 }
 
-const env = loadEnv('all', process.cwd(), 'CMS')
+// const env = loadEnv('all', process.cwd(), 'CMS')
 
 const AUTHKEYS = {
     GITHUB: {
-        CLIENT_ID: env.CMS_GITHUB_CLIENT_ID,
-        CLIENT_SECRET: env.CMS_GITHUB_CLIENT_SECRET,
+        CLIENT_ID: getSecret('CMS_GITHUB_CLIENT_ID'),
+        CLIENT_SECRET: getSecret('CMS_GITHUB_CLIENT_SECRET'),
     },
     DISCORD: {
-        CLIENT_ID: env.CMS_DISCORD_CLIENT_ID,
-        CLIENT_SECRET: env.CMS_DISCORD_CLIENT_SECRET,
-        REDIRECT_URI: env.CMS_DISCORD_REDIRECT_URI,
+        CLIENT_ID: getSecret('CMS_DISCORD_CLIENT_ID'),
+        CLIENT_SECRET: getSecret('CMS_DISCORD_CLIENT_SECRET'),
+        REDIRECT_URI: getSecret('CMS_DISCORD_REDIRECT_URI'),
     },
     GOOGLE: {
-        CLIENT_ID: env.CMS_GOOGLE_CLIENT_ID,
-        CLIENT_SECRET: env.CMS_GOOGLE_CLIENT_SECRET,
-        REDIRECT_URI: env.CMS_GOOGLE_REDIRECT_URI,
+        CLIENT_ID: getSecret('CMS_GOOGLE_CLIENT_ID'),
+        CLIENT_SECRET: getSecret('CMS_GOOGLE_CLIENT_SECRET'),
+        REDIRECT_URI: getSecret('CMS_GOOGLE_REDIRECT_URI'),
     },
     AUTH0: {
-        CLIENT_ID: env.CMS_AUTH0_CLIENT_ID,
-        CLIENT_SECRET: env.CMS_AUTH0_CLIENT_SECRET,
-        DOMAIN: env.CMS_AUTH0_DOMAIN,
-        REDIRECT_URI: env.CMS_AUTH0_REDIRECT_URI,
+        CLIENT_ID: getSecret('CMS_AUTH0_CLIENT_ID'),
+        CLIENT_SECRET: getSecret('CMS_AUTH0_CLIENT_SECRET'),
+        DOMAIN: getSecret('CMS_AUTH0_DOMAIN'),
+        REDIRECT_URI: getSecret('CMS_AUTH0_REDIRECT_URI'),
     },
 }
 
