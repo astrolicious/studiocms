@@ -19,8 +19,5 @@
     "./package.json",
     "./virt-dev.d.ts",
     "../../playgrounds/node/.astro/**/*"
-  ],
-  "exclude": [
-    "./node_modules"
   ]
 }

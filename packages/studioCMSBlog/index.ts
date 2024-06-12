@@ -1,6 +1,6 @@
 import defineTheme from "astro-theme-provider";
 import { z } from "astro/zod";
-import { studioCMSPluginList, externalNavigation } from "@astrolicious/studiocms"
+import { studioCMSPluginList, externalNavigation } from "@astrolicious/studiocms";
 
 studioCMSPluginList.set("@astrolicious/studiocms-blog", {name: "@astrolicious/studiocms-blog", label: "StudioCMS Blog"});
 
@@ -12,4 +12,4 @@ export default defineTheme({
 		title: z.string().optional(),
 		description: z.string().optional(),
 	}),
-});
+}) 
