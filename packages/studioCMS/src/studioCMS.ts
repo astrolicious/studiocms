@@ -14,12 +14,11 @@ import inoxsitemap from '@inox-tools/sitemap-ext';
 import studioCMSRobotsTXT from './integrations/robotstxt';
 import studioCMSImageHandler from './integrations/imageHandler';
 import studioCMSDashboard from './integrations/studioCMSDashboard';
-import { fileFactory } from './utils/fileFactory';
 import { DbErrors, studioErrors, warnings } from './strings';
 import { getStudioConfigFileUrl, loadStudioCMSConfigFile } from './studiocms-config';
 import { studioCMSPluginList, externalNavigation } from '.';
 import { version } from '../package.json';
-import { VirtualResolver } from './resolvers';
+import { DTSResolver, VirtualResolver } from './resolvers';
 
 // Main Integration
 export default defineIntegration({
@@ -122,7 +121,7 @@ export default defineIntegration({
 					];
 
 					// Virtual Component Map
-					let virtualComponentMap = ``
+					let virtualComponentMap = ''
 					defaultNamedComponents.map(({ title, import: path }) => {
 						virtualComponentMap += `export { default as ${title} } from '${path}';\n`
 					})
@@ -140,7 +139,7 @@ export default defineIntegration({
 					]
 
 					// Virtual Helper Map
-					let virtualHelperMap = ``
+					let virtualHelperMap = ''
 					defaultNamedHelpers.map(({ title, import: path }) => {
 						virtualHelperMap += `export { default as ${title} } from '${path}';\n`
 					})
@@ -162,45 +161,10 @@ export default defineIntegration({
 						},
 					});
 
-					// Create Virtual DTS File
-					const studioCMSDTS = fileFactory();
-
-					// Add Virtual DTS Lines - Components
-					studioCMSDTS.addLines(`declare module 'studiocms:components' {
-						export type ContentHelperTempResponse = import('${virtResolver.contentHelper}').ContentHelperTempResponse;
-						export type SiteConfigResponse = import('${virtResolver.contentHelper}').SiteConfigResponse;
-						export type pageDataReponse = import('${virtResolver.contentHelper}').pageDataReponse;
-						export type UserResponse = import('${virtResolver.contentHelper}').UserResponse;
-						export const CImage: typeof import('${virtResolver.CImage}').default;
-						export const FormattedDate: typeof import('${virtResolver.FormattedDate}').default;
-						export const StudioCMSRenderer: typeof import('${virtResolver.StudioCMSRenderer}').default;
-						export const contentHelper: typeof import('${virtResolver.contentHelper}').contentHelper;
-						export const getSiteConfig: typeof import('${virtResolver.contentHelper}').getSiteConfig;
-						export const getPageList: typeof import('${virtResolver.contentHelper}').getPageList;
-						export const getUserList: typeof import('${virtResolver.contentHelper}').getUserList;
-						export const getUserById: typeof import('${virtResolver.contentHelper}').getUserById;
-						export const Navigation: typeof import('${virtResolver.NavigationBar}').default;
-						export const Avatar: typeof import('${virtResolver.Avatar}').default;
-						export const Layout: typeof import('${virtResolver.defaultLayout}').default;
-					}`);
-
-					// Add Virtual DTS Lines - Helpers
-					studioCMSDTS.addLines(`declare module 'studiocms:helpers' {
-						export type Locals = import('${virtResolver.StudioCMSLocalsMap}').Locals;
-						export type PageDataAndContent = import('${virtResolver.StudioCMSDBTypeHelpers}').PageDataAndContent;
-						export const authHelper: typeof import('${virtResolver.AuthHelper}').default;
-						export const LocalsSchema: typeof import('${virtResolver.StudioCMSLocalsMap}').LocalsSchema;
-						export const PageDataAndContentSchema: typeof import('${virtResolver.StudioCMSDBTypeHelpers}').PageDataAndContentSchema;
-						export const urlGenFactory: typeof import('${virtResolver.UrlGenHelper}').default;
-						export const toCamelCase: typeof import('${virtResolver.textFormatterHelper}').toCamelCase;
-						export const toPascalCase: typeof import('${virtResolver.textFormatterHelper}').toPascalCase;
-						export const pluginList: Map<string, { name: string, label: string }>;
-					}`);
-
 					// Add Virtual DTS File
 					addDts(params, {
 						name,
-						content: studioCMSDTS.text(),
+						content: DTSResolver(virtResolver),
 					});
 
 					if (!dbStartPage) {
