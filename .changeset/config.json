@@ -7,5 +7,11 @@
   "access": "public",
   "baseBranch": "main",
   "updateInternalDependencies": "patch",
-  "ignore": ["playground","cftest","ghost-to-studio"]
+  "ignore": [
+    "web", 
+    "docs",
+    "node-playground",
+    "cloudflare-playground", 
+    "ghost-to-studio"
+  ]
 }
