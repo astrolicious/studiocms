@@ -15,6 +15,7 @@
   ],
   "include": [
     "./**/*",
+    "./src/**/*.json",
     "./package.json",
     "./virt-dev.d.ts",
     "../../playgrounds/node/.astro/**/*"

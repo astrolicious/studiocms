@@ -51,6 +51,9 @@ importers:
       '@astrojs/db':
         specifier: '>=0.11.5'
         version: 0.11.5
+      '@astrojs/markdown-remark':
+        specifier: ^5.1.0
+        version: 5.1.0
       '@astrojs/rss':
         specifier: ^4.0.6
         version: 4.0.6

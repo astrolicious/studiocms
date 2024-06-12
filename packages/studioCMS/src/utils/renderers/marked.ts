@@ -5,7 +5,7 @@ import { markedEmoji } from 'marked-emoji';
 import markedFootnote from 'marked-footnote';
 import markedShiki from 'marked-shiki';
 import { markedSmartypants } from 'marked-smartypants';
-import emojiList from './emoji-en-US.json';
+import emojiList from '../emoji-en-US.json';
 import {
   transformerNotationDiff,
   transformerNotationHighlight,

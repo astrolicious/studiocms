@@ -156,6 +156,7 @@ export default defineIntegration({
 							'virtual:studiocms/config': `export default ${JSON.stringify(mergedOptions)}`,
 							'virtual:studiocms/version': `export default '${version}'`,
 							'virtual:studiocms/_nav': `export const externalNav = new Map(${JSON.stringify(Array.from(externalNavigation.entries()))});`,
+							'virtual:studiocms/astromdremarkConfig': `export default ${JSON.stringify(astroConfig.markdown)}`,
 							'studiocms:components': virtualComponentMap,
 							'studiocms:helpers': virtualHelperMap,
 						},

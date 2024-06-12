@@ -32,7 +32,7 @@ export type ContentHelperTempResponse = {
  * 
  * @param slug The slug of the page to get the content of. Defined in the PageData table.
  * @param lang **Not implemented yet.** The language to get the content in. Default is 'default'.
- * @param package **Not implemented yet.** The package to get the content from. Default is '@astrolicious/studiocms'. 
+ * @param pkg The package to get the content from. Default is '@astrolicious/studiocms'. 
  * @returns The data and content of the page.
  * 
  * @example 
@@ -51,14 +51,23 @@ export type ContentHelperTempResponse = {
  * 
  * ```
  */
-export async function contentHelper( slug:string ): Promise<ContentHelperTempResponse>{
+export async function contentHelper( 
+    slug: string, 
+    pkg?: string 
+): Promise<ContentHelperTempResponse>{
 
     const slugToUse = slug;
+    const packageToGet = pkg || "@astrolicious/studiocms";
 
     const pageData: pageDataReponse = await db
         .select().from(PageData)
         .where(eq(PageData.slug, slugToUse))
         .get();
+    
+    if (pageData.package !== packageToGet) {
+        throw new AstroError(`Page not found: ${slug} in package ${packageToGet}`, 
+        `studioCMS contentHelper Failed to get page data for page ${slug} in package ${packageToGet}` );
+    }
 
     if(!pageData) {
         return {} as ContentHelperTempResponse;

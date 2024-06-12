@@ -42,6 +42,7 @@
   "type": "module",
   "dependencies": {
     "@astrojs/rss": "^4.0.6",
+    "@astrojs/markdown-remark": "^5.1.0",
     "@cloudinary/url-gen": "^1.19.0",
     "@iconify-json/mdi": "^1.1.66",
     "@iconify/utils": "^2.1.24",

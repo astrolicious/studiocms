@@ -3,6 +3,11 @@ declare module 'virtual:studiocms/config' {
 	export default Config;
 }
 
+declare module 'virtual:studiocms/astromdremarkConfig' {
+	const markdownConfig: import('astro').AstroConfig['markdown'];
+	export default markdownConfig;
+}
+
 declare module 'virtual:studiocms/version' {
 	const Version: string;
 	export default Version;

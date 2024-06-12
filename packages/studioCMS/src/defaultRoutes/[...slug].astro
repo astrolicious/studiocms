@@ -4,7 +4,7 @@ import { StudioCMSRenderer, contentHelper } from 'studiocms:components'
 
 const { slug } = Astro.params;
 
-const { title, description, heroImage, content, id } = await contentHelper(slug||"index");
+const { title, description, heroImage, content, id } = await contentHelper(slug||"");
 
 if(!id){
 	return Astro.redirect("/404")

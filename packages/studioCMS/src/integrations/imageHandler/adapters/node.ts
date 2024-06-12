@@ -5,7 +5,7 @@ import { integrationLogger } from '../../../utils';
 import { ImageHandlerOptionsSchema } from '../schemas';
 
 export default defineIntegration({
-    name: 'astrolicious/studioCMS:imageHandler/node',
+    name: '@astrolicious/studioCMS:imageHandler/node',
     optionsSchema: ImageHandlerOptionsSchema,
     setup({ options }) {
         return {
