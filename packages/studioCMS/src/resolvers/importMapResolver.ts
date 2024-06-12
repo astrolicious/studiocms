@@ -4,7 +4,7 @@ import type { externalNavigation } from "../index";
 
 export const ImportMapResolver = (
     imports: {
-        mergedOptions: StudioCMSOptions, 
+        resolvedOptions: StudioCMSOptions, 
         version: string, 
         externalNavigation: typeof externalNavigation,
         astroConfig: AstroConfig, 
@@ -13,10 +13,10 @@ export const ImportMapResolver = (
     }
 ) => {
 
-    const { mergedOptions, version, externalNavigation, astroConfig, virtualComponentMap, virtualHelperMap } = imports
+    const { resolvedOptions, version, externalNavigation, astroConfig, virtualComponentMap, virtualHelperMap } = imports
 
     return { 
-        'virtual:studiocms/config': `export default ${JSON.stringify(mergedOptions)}`,
+        'virtual:studiocms/config': `export default ${JSON.stringify(resolvedOptions)}`,
         'virtual:studiocms/version': `export default '${version}'`,
         'virtual:studiocms/_nav': `export const externalNav = new Map(${JSON.stringify(Array.from(externalNavigation.entries()))});`,
         'virtual:studiocms/astromdremarkConfig': `export default ${JSON.stringify(astroConfig.markdown)}`,

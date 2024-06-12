@@ -3,12 +3,10 @@ import 'astro-integration-kit/types/db';
 import { DTSResolver, ImportMapResolver, MakeVirtualImportMaps, VirtualResolver, optionResolver } from './resolvers';
 import { studioCMSRobotsTXT, studioCMSImageHandler, studioCMSDashboard } from './integrations';
 import inoxsitemap from '@inox-tools/sitemap-ext';
-import { studioCMSPluginList, externalNavigation } from '.';
-import { AstroError } from 'astro/errors';
+import { studioCMSPluginList, externalNavigation } from './plugintools';
 import { getStudioConfigFileUrl } from './studiocms-config';
-import { integrationLogger } from './utils';
+import { checkAstroConfig, integrationLogger } from './utils';
 import { optionsSchema } from './schemas';
-import { DbErrors, warnings } from './strings';
 import { version } from '../package.json';
 
 // Main Integration
@@ -17,7 +15,9 @@ export default defineIntegration({
 	optionsSchema, 
 	setup({ name, options }) {
 
+		// Register StudioCMS Core as First Plugin
 		studioCMSPluginList.set('@astrolicious/studiocms', { name: '@astrolicious/studiocms', label: 'StudioCMS' });
+		
 		// Create Resolver for Virtual Imports
 		const { resolve } = createResolver(import.meta.url);
 
@@ -38,7 +38,9 @@ export default defineIntegration({
 
 					// Watch the StudioCMS Config File for changes (including creation/deletion)
 					addWatchFile(getStudioConfigFileUrl(astroConfig.root))
-					const mergedOptions = await optionResolver(astroConfig, options, logger)
+
+					// Resolve Options
+					const resolvedOptions = await optionResolver(astroConfig, options, logger)
 
 					// Destructure Options
 					const {
@@ -58,21 +60,11 @@ export default defineIntegration({
 							CustomImageOverride,
 							FormattedDateOverride
 						}
-					} = mergedOptions;
+					} = resolvedOptions;
 
-					// Log that the StudioCMS config file is being used if verbose
-					integrationLogger(logger, verbose, 'warn', warnings.StudioCMSConfigPresent);
-
-					// Check for SSR Mode (output: "server")
+					// Check for SSR Mode (output: "server") & Site URL
 					// TODO: Add support for "hybrid" mode
-					if (astroConfig.output !== 'server') {
-						throw new AstroError(DbErrors.AstroConfigOutput);
-					}
-
-					// Check for Site URL
-					if (!astroConfig.site) {
-						throw new AstroError(DbErrors.AstroConfigSiteURL);
-					}
+					checkAstroConfig(astroConfig, logger);
 
 					// Create Resolver for User-Defined Virtual Imports
 					const { resolve: rootResolve } = createResolver(astroConfig.root.pathname)
@@ -87,7 +79,7 @@ export default defineIntegration({
 					integrationLogger(logger, verbose, 'info', 'Adding Virtual Imports...');
 					addVirtualImports(params, { 
 						name, imports: ImportMapResolver({ 
-							mergedOptions, 
+							resolvedOptions, 
 							version, 
 							externalNavigation, 
 							astroConfig, 
@@ -126,7 +118,7 @@ export default defineIntegration({
 
 					// Add Dashboard Integration
 					addIntegration(params, {
-						integration: studioCMSDashboard(mergedOptions)
+						integration: studioCMSDashboard(resolvedOptions)
 					})
 
 					// Add Image Service Handler Integration

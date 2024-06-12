@@ -1,7 +1,7 @@
 import type { AstroConfig, AstroIntegrationLogger } from "astro";
 import { loadStudioCMSConfigFile } from "../studiocms-config";
 import { optionsSchema, type StudioCMSOptions } from "../schemas";
-import { studioErrors } from "../strings";
+import { studioErrors, warnings } from "../strings";
 import { integrationLogger } from "../utils";
 import { AstroError } from "astro/errors";
 
@@ -9,7 +9,7 @@ export const optionResolver = async (astroConfig: AstroConfig, options: StudioCM
 
     // Merge the given options with the ones from a potential StudioCMS config file
     const studioCMSConfigFile = await loadStudioCMSConfigFile(astroConfig.root);
-    let mergedOptions: StudioCMSOptions = { ...options };
+    let resolvedOptions: StudioCMSOptions = { ...options };
     if (studioCMSConfigFile && Object.keys(studioCMSConfigFile).length > 0) {
         const parsedOptions = optionsSchema.safeParse(studioCMSConfigFile);
 
@@ -23,8 +23,12 @@ export const optionResolver = async (astroConfig: AstroConfig, options: StudioCM
             throw new AstroError(studioErrors.invalidConfigFile, parsedErrorString);
         }
 
-        mergedOptions = { ...optionsSchema._def.defaultValue, ...parsedOptions.data }
+        // Merge the options with Defaults
+        resolvedOptions = { ...optionsSchema._def.defaultValue, ...parsedOptions.data }
+
+        // Log that the StudioCMS config file is being used if verbose
+        integrationLogger(logger, resolvedOptions.verbose, 'warn', warnings.StudioCMSConfigPresent);
     }
 
-    return mergedOptions;
+    return resolvedOptions;
 }
