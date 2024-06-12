@@ -11,6 +11,7 @@ export const MakeVirtualImportMaps = (virtResolver: VirtResolver) => {
 		{ title: "Navigation", import: virtResolver.NavigationBar },
 		{ title: "Avatar", import: virtResolver.Avatar },
 		{ title: "FrontLayout", import: virtResolver.defaultLayout },
+        { title: "GenericHeader", import: virtResolver.Genericheader },
 	];
 
 	// Virtual Component Map
@@ -20,6 +21,7 @@ export const MakeVirtualImportMaps = (virtResolver: VirtResolver) => {
 	})
 
 	virtualComponentMap += `export * from '${virtResolver.contentHelper}';`;
+    virtualComponentMap += `export * from '${virtResolver.headDefaults}';`;
 
 	// Virtual Helpers
 	const defaultNamedHelpers = [

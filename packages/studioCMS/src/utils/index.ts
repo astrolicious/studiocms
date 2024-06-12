@@ -31,6 +31,9 @@ export const integrationLogger = async (
 };
 
 export function checkAstroConfig(astroConfig: AstroConfig, logger: AstroIntegrationLogger) {
+
+	// Check for SSR Mode (output: "server")
+	// TODO: Add support for "hybrid" mode
 	if (astroConfig.output !== 'server') {
 		integrationLogger(logger, true, 'error', DbErrors.AstroConfigOutput);
 		throw new AstroError(DbErrors.AstroConfigOutput);

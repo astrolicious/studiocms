@@ -51,5 +51,7 @@ export const VirtualResolver = (
         NavigationBar: resolve('../components/exports/Navigation.astro'),
         Avatar: resolve('../components/exports/Avatar.astro'),
         defaultLayout: resolve('../defaultRoutes/components/Layout.astro'),
+        headDefaults: resolve('../components/exports/headDefaults.ts'),
+        Genericheader: resolve('../components/exports/GenericHeader.astro'),
     }
 }

@@ -1,7 +1,7 @@
 ---
 import type { z } from 'astro/zod';
 import Config from 'virtual:studiocms/config';
-import version from 'virtual:studiocms/version';
+import { headDefaults } from 'studiocms:components';
 import type { HeadConfigSchema } from '../../schemas/defaultFrontend';
 import { createHead } from '../../utils/head';
 import { fileWithBase } from '../../utils/base';
@@ -20,7 +20,7 @@ interface Props {
 	image?: string | undefined;
 }
 
-const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site) : undefined;
+const canonicalURL = Astro.site ? new URL(Astro.url.pathname, Astro.site) : undefined;
 
 const faviconTypeMap = {
 	'.ico': 'image/x-icon',
@@ -49,51 +49,13 @@ const getFavicon = () => {
 const {
 	title,
 	description,
-	lang,
+	lang = "en",
 	image = 'https://images.unsplash.com/photo-1707343843982-f8275f3994c5?q=80&w=1032&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
 } = Astro.props;
 
-const headDefaults: z.input<ReturnType<typeof HeadConfigSchema>> = [
-	{ tag: 'meta', attrs: { charset: 'utf-8' } },
-	{
-		tag: 'meta',
-		attrs: { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-	},
-	{ tag: 'title', content: `${title}` },
-	{ tag: 'meta', attrs: { name: 'title', content: title} },
-	{ tag: 'meta', attrs: { name: 'description', content: description } },
-	{ tag: 'link', attrs: { rel: 'canonical', href: canonical?.href } },
-	{ tag: 'meta', attrs: { name: 'generator', content: Astro.generator } },
-	{
-		tag: 'meta',
-		attrs: { name: 'generator', content: `StudioCMS v${version}` },
-	},
-	// Favicon
-	{
-		tag: 'link',
-		attrs: {
-			rel: 'shortcut icon',
-			href: getFavicon().href,
-			type: getFavicon().type,
-		},
-	},
-	// OpenGraph Tags
-	{ tag: 'meta', attrs: { property: 'og:title', content: title } },
-	{ tag: 'meta', attrs: { property: 'og:type', content: 'website' } },
-	{ tag: 'meta', attrs: { property: 'og:url', content: canonical?.href } },
-	{ tag: 'meta', attrs: { property: 'og:locale', content: lang } },
-	{ tag: 'meta', attrs: { property: 'og:description', content: description } },
-	{ tag: 'meta', attrs: { property: 'og:site_name', content: title } },
-	{ tag: 'meta', attrs: { property: 'og:image', content: image } },
-	// Twitter Tags
-	{
-		tag: 'meta',
-		attrs: { name: 'twitter:card', content: 'summary_large_image' },
-	},
-	{ tag: 'meta', attrs: { name: 'twitter:url', content: canonical?.href } },
-	{ tag: 'meta', attrs: { name: 'twitter:image', content: image } },
-	{ tag: 'meta', attrs: { name: 'twitter:title', content: title } },
-	{ tag: 'meta', attrs: { name: 'twitter:description', content: description } },
+const makeHeader = headDefaults(title, description, lang, Astro, getFavicon(), image, canonicalURL)
+
+const StudioCMSFrontEndHeads: z.input<ReturnType<typeof HeadConfigSchema>> = [
 	// Fonts
 	{ tag: 'link', attrs: { rel: 'preconnect', href: 'https://fonts.googleapis.com' } },
 	{ tag: 'link', attrs: { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' } },
@@ -106,9 +68,11 @@ const headDefaults: z.input<ReturnType<typeof HeadConfigSchema>> = [
 	},
 ];
 
+makeHeader.push(...StudioCMSFrontEndHeads);
+
 // Link to sitemap, but only when `site` is set.
 if (Astro.site) {
-	headDefaults.push({
+	makeHeader.push({
 		tag: 'link',
 		attrs: {
 			rel: 'sitemap',
@@ -117,7 +81,7 @@ if (Astro.site) {
 	});
 }
 
-const head = createHead(headDefaults, htmlDefaultHead);
+const head = createHead(makeHeader, htmlDefaultHead);
 ---
 
 {head.map(({ tag: Tag, attrs, content }) => <Tag {...attrs} set:html={content} />)}

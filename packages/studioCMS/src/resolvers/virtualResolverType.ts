@@ -12,4 +12,6 @@ export type VirtResolver = {
     NavigationBar: string;
     Avatar: string;
     defaultLayout: string;
+    headDefaults: string;
+    Genericheader: string;
 }

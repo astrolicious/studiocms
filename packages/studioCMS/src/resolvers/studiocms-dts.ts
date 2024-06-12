@@ -169,6 +169,14 @@ export const DTSResolver = (virtResolver: VirtResolver) => {
          * }
         */
         export type UserResponse = import('${virtResolver.contentHelper}').UserResponse;
+        /**
+         * A helper function to get the default head configuration for a page.
+        */
+        export const headDefaults: typeof import('${virtResolver.headDefaults}').headDefaults;
+        /**
+         * Generic Header Component used for rendering a generic header with a title and description from StudioCMS
+        */
+        export const Genericheader: typeof import('${virtResolver.Genericheader}').default;
     }`);
     
     // Add Virtual DTS Lines - Helpers
