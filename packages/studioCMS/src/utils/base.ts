@@ -1,4 +1,4 @@
-import { stripLeadingSlash, stripTrailingSlash } from './path.ts';
+import { stripLeadingSlash, stripTrailingSlash } from './path';
 
 const base = stripTrailingSlash(import.meta.env.BASE_URL);
 

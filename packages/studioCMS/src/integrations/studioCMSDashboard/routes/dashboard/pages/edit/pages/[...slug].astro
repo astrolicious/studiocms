@@ -4,7 +4,6 @@ import { PageData, PageContent, SiteConfig, db, eq } from 'astro:db';
 import { Layout } from 'studiocms-dashboard:components';
 import Config from 'virtual:studiocms/config';
 import { authHelper, pluginList, type Locals, type PageDataAndContent } from 'studiocms:helpers';
-import { StudioCMSRenderer } from 'studiocms:components';
 import { StudioCMSRoutes, getEditRoute } from 'studiocms-dashboard:routeMap';
 import type { SiteConfigResponse, pageDataReponse } from 'studiocms:components';
 
@@ -217,6 +216,7 @@ const pageTitle = `Edit Page | ${contextConfig.title}`;
                         <div slot="label" class="text-lg inline">Content</div>
                         {pageContent.content}
                     </sl-textarea>
+            
                     <br />
 
                     <sl-button 
@@ -230,31 +230,23 @@ const pageTitle = `Edit Page | ${contextConfig.title}`;
                 </form>
         </div>
         <br />
+        <textarea 
+            style="visibility: hidden;"
+            id="preload-content"
+            name="preload-content"
+            hx-get={livePreviewBox}
+            hx-trigger="load delay:100ms"
+            hx-target="#html-preview">{pageContent.content}
+        </textarea>
+
         <sl-card class="card-header max-w-[100vw] lg:max-w-[1800px] w-full">
             <div slot="header" class="text-xl font-bold">Live Preview</div>
-            <div id="html-preview" class="w-full max-w-[100vw] lg:max-w-[1800px] prose md:prose-lg lg:prose-xl">
-                <StudioCMSRenderer content={
-                    pageContent.content || 
-                    `Click in the box above to start editing the content. As you type, the preview will update automatically.`
-                    } />
+            <div 
+                id="html-preview" 
+                class="w-full max-w-[100vw] lg:max-w-[1800px] prose md:prose-lg lg:prose-xl"
+                >
+                Click in the box above to start editing the content. As you type, the preview will update automatically.
             </div>
         </sl-card>
     </div>
 </Layout>
-
-
-<style>
-  
-    .card-header [slot='header'] {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-  
-    .card-header h3 {
-      margin: 0;
-    }
-  
-  </style>
-
-  

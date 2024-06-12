@@ -1,10 +1,9 @@
 ---
 // @ts-expect-error - Some types can only be imported from the Astro runtime
 import { SiteConfig, db, eq, asc, PageData } from 'astro:db';
-import { Layout } from 'studiocms-dashboard:components';
+import { Layout, FormattedDate } from 'studiocms-dashboard:components';
 import Config from 'virtual:studiocms/config';
 import { authHelper, type Locals } from 'studiocms:helpers';
-import { FormattedDate } from 'studiocms:components';
 import { StudioCMSRoutes, getEditRoute, getDeleteRoute } from 'studiocms-dashboard:routeMap';
 import type { SiteConfigResponse, pageDataReponse } from 'studiocms:components';
 

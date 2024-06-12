@@ -1,6 +1,5 @@
 ---
-import { Layout } from 'studiocms:components';
-import { StudioCMSRenderer, contentHelper } from 'studiocms:components'
+import { StudioCMSRenderer, contentHelper, FrontLayout } from 'studiocms:components'
 
 const { title, description, heroImage, content, id } = await contentHelper("index")
 
@@ -9,8 +8,8 @@ if(!id){
 }
 ---
 
-<Layout title={title} description={description} heroImage={heroImage}>
+<FrontLayout title={title} description={description} heroImage={heroImage}>
 	<main>
 		<StudioCMSRenderer content={content} />
 	</main>
-</Layout>
+</FrontLayout>

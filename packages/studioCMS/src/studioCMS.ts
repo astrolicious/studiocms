@@ -1,24 +1,15 @@
-import {
-	addDts,
-	addIntegration,
-	addVirtualImports,
-	createResolver,
-	defineIntegration,
-	hasIntegration,
-} from 'astro-integration-kit';
+import { addDts, addIntegration, addVirtualImports, createResolver, defineIntegration, hasIntegration } from 'astro-integration-kit';
 import 'astro-integration-kit/types/db';
-import { AstroError } from 'astro/errors';
-import { integrationLogger } from './utils';
-import { optionsSchema, type StudioCMSOptions } from './schemas';
+import { DTSResolver, ImportMapResolver, MakeVirtualImportMaps, VirtualResolver, optionResolver } from './resolvers';
+import { studioCMSRobotsTXT, studioCMSImageHandler, studioCMSDashboard } from './integrations';
 import inoxsitemap from '@inox-tools/sitemap-ext';
-import studioCMSRobotsTXT from './integrations/robotstxt';
-import studioCMSImageHandler from './integrations/imageHandler';
-import studioCMSDashboard from './integrations/studioCMSDashboard';
-import { DbErrors, studioErrors, warnings } from './strings';
-import { getStudioConfigFileUrl, loadStudioCMSConfigFile } from './studiocms-config';
 import { studioCMSPluginList, externalNavigation } from '.';
+import { AstroError } from 'astro/errors';
+import { getStudioConfigFileUrl } from './studiocms-config';
+import { integrationLogger } from './utils';
+import { optionsSchema } from './schemas';
+import { DbErrors, warnings } from './strings';
 import { version } from '../package.json';
-import { DTSResolver, VirtualResolver } from './resolvers';
 
 // Main Integration
 export default defineIntegration({
@@ -47,25 +38,7 @@ export default defineIntegration({
 
 					// Watch the StudioCMS Config File for changes (including creation/deletion)
 					addWatchFile(getStudioConfigFileUrl(astroConfig.root))
-
-					// Merge the given options with the ones from a potential StudioCMS config file
-					const studioCMSConfigFile = await loadStudioCMSConfigFile(astroConfig.root);
-					let mergedOptions: StudioCMSOptions = { ...options };
-					if (studioCMSConfigFile && Object.keys(studioCMSConfigFile).length > 0) {
-						const parsedOptions = optionsSchema.safeParse(studioCMSConfigFile);
-
-						// If the StudioCMS config file is invalid, throw an error
-						if ( !parsedOptions.success || parsedOptions.error || !parsedOptions.data ) {
-							const parsedErrors = parsedOptions.error.errors;
-							const parsedErrorMap = parsedErrors.map((e) => ` - ${e.message}`).join('\n');
-							const parsedErrorString = `${studioErrors.failedToParseConfig}\n${parsedErrorMap}`;
-
-							integrationLogger(logger, true, 'error', parsedErrorString);
-							throw new AstroError(studioErrors.invalidConfigFile, parsedErrorString);
-						}
-
-						mergedOptions = { ...optionsSchema._def.defaultValue, ...parsedOptions.data }
-					}
+					const mergedOptions = await optionResolver(astroConfig, options, logger)
 
 					// Destructure Options
 					const {
@@ -101,72 +74,29 @@ export default defineIntegration({
 						throw new AstroError(DbErrors.AstroConfigSiteURL);
 					}
 
-					// // Create Resolver for User-Defined Virtual Imports
+					// Create Resolver for User-Defined Virtual Imports
 					const { resolve: rootResolve } = createResolver(astroConfig.root.pathname)
 
-					// Virtual Resolver
-					const virtResolver = VirtualResolver(
+					// Create Virtual Resolver
+					const virtualResolver = VirtualResolver(
 						CustomImageOverride && rootResolve(CustomImageOverride), 
 						FormattedDateOverride && rootResolve(FormattedDateOverride),
 					)
 
-					// Virtual Components
-					const defaultNamedComponents = [
-						{ title: "CImage", import: virtResolver.CImage },
-						{ title: "FormattedDate", import: virtResolver.FormattedDate },
-						{ title: "StudioCMSRenderer", import: virtResolver.StudioCMSRenderer },
-						{ title: "Navigation", import: virtResolver.NavigationBar },
-						{ title: "Avatar", import: virtResolver.Avatar },
-						{ title: "Layout", import: virtResolver.defaultLayout },
-					];
-
-					// Virtual Component Map
-					let virtualComponentMap = ''
-					defaultNamedComponents.map(({ title, import: path }) => {
-						virtualComponentMap += `export { default as ${title} } from '${path}';\n`
-					})
-					virtualComponentMap += `export * from '${virtResolver.contentHelper}';`;
-
-					// Virtual Helpers
-					const defaultNamedHelpers = [
-						{ title: 'authHelper', import: virtResolver.AuthHelper },
-						{ title: 'urlGenFactory', import: virtResolver.UrlGenHelper },
-					]
-					const miscNamedHelpers = [
-						{ import: virtResolver.StudioCMSLocalsMap },
-						{ import: virtResolver.StudioCMSDBTypeHelpers },
-						{ import: virtResolver.textFormatterHelper },
-					]
-
-					// Virtual Helper Map
-					let virtualHelperMap = ''
-					defaultNamedHelpers.map(({ title, import: path }) => {
-						virtualHelperMap += `export { default as ${title} } from '${path}';\n`
-					})
-					miscNamedHelpers.map(({ import: path }) => {
-						virtualHelperMap += `export * from '${path}';\n`
-					})
-					virtualHelperMap += `export const pluginList = new Map(${JSON.stringify(Array.from(studioCMSPluginList.entries()))});`;
-
 					// Add Virtual Imports
 					integrationLogger(logger, verbose, 'info', 'Adding Virtual Imports...');
-					addVirtualImports(params, {
-						name,
-						imports: {
-							'virtual:studiocms/config': `export default ${JSON.stringify(mergedOptions)}`,
-							'virtual:studiocms/version': `export default '${version}'`,
-							'virtual:studiocms/_nav': `export const externalNav = new Map(${JSON.stringify(Array.from(externalNavigation.entries()))});`,
-							'virtual:studiocms/astromdremarkConfig': `export default ${JSON.stringify(astroConfig.markdown)}`,
-							'studiocms:components': virtualComponentMap,
-							'studiocms:helpers': virtualHelperMap,
-						},
+					addVirtualImports(params, { 
+						name, imports: ImportMapResolver({ 
+							mergedOptions, 
+							version, 
+							externalNavigation, 
+							astroConfig, 
+							...MakeVirtualImportMaps(virtualResolver)
+						}) 
 					});
 
 					// Add Virtual DTS File
-					addDts(params, {
-						name,
-						content: DTSResolver(virtResolver),
-					});
+					addDts(params, { name, content: DTSResolver(virtualResolver) });
 
 					if (!dbStartPage) {
 						integrationLogger(logger, verbose, 'info', "Database Start Page disabled. Skipping Database Setup.");

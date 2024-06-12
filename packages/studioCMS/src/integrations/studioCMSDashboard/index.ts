@@ -90,6 +90,7 @@ export default defineIntegration({
 						DashboardLayout: resolve('./routes/dashboard/layouts/Layout.astro'),
 						StudioAuthConfig: rootResolve('./studiocms-auth.config.json'),
 						RouteMap: resolve('./utils/routemap.ts'),
+						FormattedDate: resolve('../../components/exports/FormattedDate.astro'),
 					};
 
 					// Username and Password Config
@@ -179,7 +180,8 @@ export default defineIntegration({
 					export * from '${virtualResolver.AuthENVChecker}';`;
 
 					const VirtualAstroComponents = `
-					export {default as Layout} from '${virtualResolver.DashboardLayout}';`;
+					export {default as Layout} from '${virtualResolver.DashboardLayout}';
+					export {default as FormattedDate} from '${virtualResolver.FormattedDate}';`;
 
 					const VirtualRouteMap = `
 					export * from '${virtualResolver.RouteMap}';`;
@@ -205,6 +207,7 @@ export default defineIntegration({
 
 					studioCMSDTS.addLines(`declare module 'studiocms-dashboard:components' {
 						export const Layout: typeof import('${virtualResolver.DashboardLayout}').default;
+						export const FormattedDate: typeof import('${virtualResolver.FormattedDate}').default;
 					}`);
 
 					studioCMSDTS.addLines(`declare module 'studiocms-dashboard:routeMap' {

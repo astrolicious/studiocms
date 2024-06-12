@@ -1,6 +1,6 @@
 ---
 import config from "studiocms-blog:config";
-import { Layout } from "studiocms:components";
+import { FrontLayout } from "studiocms:components";
 
 type Props = {
     title: string;
@@ -26,7 +26,7 @@ const {
 
 ---
 
-<Layout 
+<FrontLayout 
     {title} 
     {description} 
     {siteTitle} 
@@ -37,4 +37,4 @@ const {
     {pageTitleDelimiter} 
     >
     <slot />
-</Layout>
+</FrontLayout>
