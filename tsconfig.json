@@ -14,16 +14,5 @@
     "skipLibCheck": true,
     "outDir": ".moon/cache/types",
     "paths": {}
-  },
-  "references": [
-    {
-      "path": "packages/studioCMS"
-    },
-    {
-      "path": "packages/studioCMSBlog"
-    },
-    {
-      "path": "playgrounds/node"
-    }
-  ]
+  }
 }
