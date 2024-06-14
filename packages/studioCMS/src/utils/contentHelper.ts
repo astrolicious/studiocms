@@ -41,7 +41,7 @@ export type ContentHelperTempResponse = {
  * // Get the content of the index page:
  * import { StudioCMSRenderer, contentHelper } from 'studiocms:components'
  * 
- * const { title, description, heroImage, content } = await contentHelper("index")
+ * const { title, description, heroImage, content } = await contentHelper("index", "@astrolicious/studiocms")
  * ---
  * 
  * <h1>{title}</h1>
