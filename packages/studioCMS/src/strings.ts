@@ -19,3 +19,11 @@ export const DashboardStrings = {
     AuthDisabled: 'Auth is Disabled by the User Configuration.  You will only be able to edit the database from the Astro Studio Dashboard, https://studio.astro.build/',
     DashboardDisabled: 'Dashboard is Disabled, Some tools and Utilities are still available for developers who are customizing their setup!',
 }
+
+export const MakeFrontendStrings = {
+    NoDBStartPage: "Database Start Page disabled, skipping Database Setup and injecting Default Frontend Routes...",
+    InjectDefaultFrontendRoutes: "Injecting Default Frontend Routes...",
+    Inject404Route: "Injecting 404 Route...",
+    DefaultRoutesInjected: "StudioCMS Default Routes Injected!",
+    DBStartPageEnabled: "Database Start Page enabled, skipping Default Frontend Routes Injection... Please follow the Database Setup Guide to create your Frontend."
+}

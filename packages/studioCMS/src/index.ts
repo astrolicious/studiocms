@@ -48,6 +48,7 @@ export function defineStudioCMSConfig(config: StudioCMSOptions) {
  *
  */
 export const studioCMSCoreIntegration = coreIntegration;
+export default studioCMSCoreIntegration;
 
 /**
  * # Astro Studio CMS Robots.txt Integration
@@ -57,5 +58,3 @@ export const studioCMSCoreIntegration = coreIntegration;
  * This integration is automatically included with the Astro Studio CMS Core Integration. But can be used independently if needed.
  */
 export const studioCMSRobotsTXT = robotsTXT;
-
-export default studioCMSCoreIntegration;

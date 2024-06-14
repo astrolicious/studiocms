@@ -36,7 +36,7 @@ export const DTSResolver = (virtResolver: VirtResolver) => {
          * 
          * This component will render StudioCMS content using the StudioCMS content renderer and will adapt to the current configuration of the StudioCMS 'contentRenderer' settings configuration option.
          * 
-         * @props {string} content - StudioCMS Content
+         * @props {string} content - Content to render
         */
         export const StudioCMSRenderer: typeof import('${virtResolver.StudioCMSRenderer}').default;
 

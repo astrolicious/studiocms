@@ -2,6 +2,9 @@ import type { AstroConfig, AstroIntegrationLogger } from 'astro';
 import { DbErrors } from '../strings';
 import { AstroError } from 'astro/errors';
 
+/** 
+ * DEPRECATED: This Logger Function has been replaced by the `studioLogger` function.
+ */
 export const integrationLogger = async (
 	logger: AstroIntegrationLogger,
 	verbose: boolean,
@@ -30,20 +33,71 @@ export const integrationLogger = async (
 	}
 };
 
-export function checkAstroConfig(astroConfig: AstroConfig, logger: AstroIntegrationLogger) {
+export type StudioLoggerOpts = {
+	logger: AstroIntegrationLogger,
+	verbose: boolean,
+	type: 'info' | 'warn' | 'error' | 'debug',
+};
+
+export type StudioLoggerOptsResolverResponse = {
+	logInfo: StudioLoggerOpts,
+	logWarn: StudioLoggerOpts,
+	logError: StudioLoggerOpts,
+	logDebug: StudioLoggerOpts,
+};
+
+export const studioLoggerOptsResolver = async (
+	logger: AstroIntegrationLogger,
+	verbose: boolean,
+): Promise<StudioLoggerOptsResolverResponse> => {
+	const logInfo: StudioLoggerOpts = { logger, verbose, type: 'info' };
+	const logWarn: StudioLoggerOpts = { logger, verbose, type: 'warn' };
+	const logError: StudioLoggerOpts = { logger, verbose, type: 'error' };
+	const logDebug: StudioLoggerOpts = { logger, verbose, type: 'debug' };
+
+	return { logInfo, logWarn, logError, logDebug };
+}
+
+export const studioLogger = async (
+	opts: StudioLoggerOpts,
+	message: string
+) => {
+	if (opts.verbose) {
+		if (opts.type === 'info') {
+			opts.logger.info(message);
+		} else if (opts.type === 'warn') {
+			opts.logger.warn(message);
+		} else if (opts.type === 'error') {
+			opts.logger.error(message);
+		} else if (opts.type === 'debug') {
+			opts.logger.debug(message);
+		}
+	}
+	if (!opts.verbose) {
+		if (opts.type === 'warn') {
+			opts.logger.warn(message);
+		} else if (opts.type === 'error') {
+			opts.logger.error(message);
+		} else if (opts.type === 'debug') {
+			opts.logger.debug(message);
+		}
+	}
+}
+
+export function checkAstroConfig(astroConfig: AstroConfig, loggerOpts: StudioLoggerOptsResolverResponse) {
 
 	// Check for SSR Mode (output: "server")
 	// TODO: Add support for "hybrid" mode
 	if (astroConfig.output !== 'server') {
-		integrationLogger(logger, true, 'error', DbErrors.AstroConfigOutput);
+		studioLogger(loggerOpts.logError, DbErrors.AstroConfigOutput);
 		throw new AstroError(DbErrors.AstroConfigOutput);
 	}
 
 	// Check for Site URL
 	if (!astroConfig.site) {
-		integrationLogger(logger, true, 'error', DbErrors.AstroConfigSiteURL);
+		studioLogger(loggerOpts.logError, DbErrors.AstroConfigSiteURL);
 		throw new AstroError(DbErrors.AstroConfigSiteURL);
 	}
 
-	return integrationLogger(logger, true, 'info', 'Astro Config `output` & `site` options valid');
+	return studioLogger(loggerOpts.logInfo, 'Astro Config `output` & `site` options valid');
 }
