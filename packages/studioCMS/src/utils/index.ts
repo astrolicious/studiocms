@@ -84,20 +84,20 @@ export const studioLogger = async (
 	}
 }
 
-export function checkAstroConfig(astroConfig: AstroConfig, loggerOpts: StudioLoggerOptsResolverResponse) {
+export function checkAstroConfig(astroConfig: AstroConfig, LoggerOpts: StudioLoggerOptsResolverResponse) {
 
 	// Check for SSR Mode (output: "server")
 	// TODO: Add support for "hybrid" mode
 	if (astroConfig.output !== 'server') {
-		studioLogger(loggerOpts.logError, DbErrors.AstroConfigOutput);
+		studioLogger(LoggerOpts.logError, DbErrors.AstroConfigOutput);
 		throw new AstroError(DbErrors.AstroConfigOutput);
 	}
 
 	// Check for Site URL
 	if (!astroConfig.site) {
-		studioLogger(loggerOpts.logError, DbErrors.AstroConfigSiteURL);
+		studioLogger(LoggerOpts.logError, DbErrors.AstroConfigSiteURL);
 		throw new AstroError(DbErrors.AstroConfigSiteURL);
 	}
 
-	return studioLogger(loggerOpts.logInfo, 'Astro Config `output` & `site` options valid');
+	return studioLogger(LoggerOpts.logInfo, 'Astro Config `output` & `site` options valid');
 }

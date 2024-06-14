@@ -12,14 +12,14 @@ importers:
         specifier: 1.7.2
         version: 1.7.2
       '@changesets/cli':
-        specifier: 2.27.1
-        version: 2.27.1
+        specifier: 2.27.5
+        version: 2.27.5
       '@changesets/config':
-        specifier: 3.0.0
-        version: 3.0.0
+        specifier: 3.0.1
+        version: 3.0.1
       '@moonrepo/cli':
-        specifier: 1.24.3
-        version: 1.24.3
+        specifier: 1.25.6
+        version: 1.25.6
       astro:
         specifier: ^4.10.1
         version: 4.10.1(typescript@5.4.5)
@@ -1108,13 +1108,14 @@ packages:
     dev: true
     optional: true
 
-  /@changesets/apply-release-plan@7.0.0:
-    resolution: {integrity: sha512-vfi69JR416qC9hWmFGSxj7N6wA5J222XNBmezSVATPWDVPIF7gkd4d8CpbEbXmRWbVrkoli3oerGS6dcL/BGsQ==}
+  /@changesets/apply-release-plan@7.0.3:
+    resolution: {integrity: sha512-klL6LCdmfbEe9oyfLxnidIf/stFXmrbFO/3gT5LU5pcyoZytzJe4gWpTBx3BPmyNPl16dZ1xrkcW7b98e3tYkA==}
     dependencies:
       '@babel/runtime': 7.24.5
-      '@changesets/config': 3.0.0
+      '@changesets/config': 3.0.1
       '@changesets/get-version-range-type': 0.4.0
       '@changesets/git': 3.0.0
+      '@changesets/should-skip-package': 0.1.0
       '@changesets/types': 6.0.0
       '@manypkg/get-packages': 1.1.3
       detect-indent: 6.1.0
@@ -1126,12 +1127,13 @@ packages:
       semver: 7.6.2
     dev: true
 
-  /@changesets/assemble-release-plan@6.0.0:
-    resolution: {integrity: sha512-4QG7NuisAjisbW4hkLCmGW2lRYdPrKzro+fCtZaILX+3zdUELSvYjpL4GTv0E4aM9Mef3PuIQp89VmHJ4y2bfw==}
+  /@changesets/assemble-release-plan@6.0.2:
+    resolution: {integrity: sha512-n9/Tdq+ze+iUtjmq0mZO3pEhJTKkku9hUxtUadW30jlN7kONqJG3O6ALeXrmc6gsi/nvoCuKjqEJ68Hk8RbMTQ==}
     dependencies:
       '@babel/runtime': 7.24.5
       '@changesets/errors': 0.2.0
-      '@changesets/get-dependents-graph': 2.0.0
+      '@changesets/get-dependents-graph': 2.1.0
+      '@changesets/should-skip-package': 0.1.0
       '@changesets/types': 6.0.0
       '@manypkg/get-packages': 1.1.3
       semver: 7.6.2
@@ -1143,24 +1145,25 @@ packages:
       '@changesets/types': 6.0.0
     dev: true
 
-  /@changesets/cli@2.27.1:
-    resolution: {integrity: sha512-iJ91xlvRnnrJnELTp4eJJEOPjgpF3NOh4qeQehM6Ugiz9gJPRZ2t+TsXun6E3AMN4hScZKjqVXl0TX+C7AB3ZQ==}
+  /@changesets/cli@2.27.5:
+    resolution: {integrity: sha512-UVppOvzCjjylBenFcwcZNG5IaZ8jsIaEVraV/pbXgukYNb0Oqa0d8UWb0LkYzA1Bf1HmUrOfccFcRLheRuA7pA==}
     hasBin: true
     dependencies:
       '@babel/runtime': 7.24.5
-      '@changesets/apply-release-plan': 7.0.0
-      '@changesets/assemble-release-plan': 6.0.0
+      '@changesets/apply-release-plan': 7.0.3
+      '@changesets/assemble-release-plan': 6.0.2
       '@changesets/changelog-git': 0.2.0
-      '@changesets/config': 3.0.0
+      '@changesets/config': 3.0.1
       '@changesets/errors': 0.2.0
-      '@changesets/get-dependents-graph': 2.0.0
-      '@changesets/get-release-plan': 4.0.0
+      '@changesets/get-dependents-graph': 2.1.0
+      '@changesets/get-release-plan': 4.0.2
       '@changesets/git': 3.0.0
       '@changesets/logger': 0.1.0
       '@changesets/pre': 2.0.0
       '@changesets/read': 0.6.0
+      '@changesets/should-skip-package': 0.1.0
       '@changesets/types': 6.0.0
-      '@changesets/write': 0.3.0
+      '@changesets/write': 0.3.1
       '@manypkg/get-packages': 1.1.3
       '@types/semver': 7.5.8
       ansi-colors: 4.1.3
@@ -1181,11 +1184,11 @@ packages:
       tty-table: 4.2.3
     dev: true
 
-  /@changesets/config@3.0.0:
-    resolution: {integrity: sha512-o/rwLNnAo/+j9Yvw9mkBQOZySDYyOr/q+wptRLcAVGlU6djOeP9v1nlalbL9MFsobuBVQbZCTp+dIzdq+CLQUA==}
+  /@changesets/config@3.0.1:
+    resolution: {integrity: sha512-nCr8pOemUjvGJ8aUu8TYVjqnUL+++bFOQHBVmtNbLvKzIDkN/uiP/Z4RKmr7NNaiujIURHySDEGFPftR4GbTUA==}
     dependencies:
       '@changesets/errors': 0.2.0
-      '@changesets/get-dependents-graph': 2.0.0
+      '@changesets/get-dependents-graph': 2.1.0
       '@changesets/logger': 0.1.0
       '@changesets/types': 6.0.0
       '@manypkg/get-packages': 1.1.3
@@ -1199,8 +1202,8 @@ packages:
       extendable-error: 0.1.7
     dev: true
 
-  /@changesets/get-dependents-graph@2.0.0:
-    resolution: {integrity: sha512-cafUXponivK4vBgZ3yLu944mTvam06XEn2IZGjjKc0antpenkYANXiiE6GExV/yKdsCnE8dXVZ25yGqLYZmScA==}
+  /@changesets/get-dependents-graph@2.1.0:
+    resolution: {integrity: sha512-QOt6pQq9RVXKGHPVvyKimJDYJumx7p4DO5MO9AhRJYgAPgv0emhNqAqqysSVKHBm4sxKlGN4S1zXOIb5yCFuhQ==}
     dependencies:
       '@changesets/types': 6.0.0
       '@manypkg/get-packages': 1.1.3
@@ -1209,12 +1212,12 @@ packages:
       semver: 7.6.2
     dev: true
 
-  /@changesets/get-release-plan@4.0.0:
-    resolution: {integrity: sha512-9L9xCUeD/Tb6L/oKmpm8nyzsOzhdNBBbt/ZNcjynbHC07WW4E1eX8NMGC5g5SbM5z/V+MOrYsJ4lRW41GCbg3w==}
+  /@changesets/get-release-plan@4.0.2:
+    resolution: {integrity: sha512-rOalz7nMuMV2vyeP7KBeAhqEB7FM2GFPO5RQSoOoUKKH9L6wW3QyPA2K+/rG9kBrWl2HckPVES73/AuwPvbH3w==}
     dependencies:
       '@babel/runtime': 7.24.5
-      '@changesets/assemble-release-plan': 6.0.0
-      '@changesets/config': 3.0.0
+      '@changesets/assemble-release-plan': 6.0.2
+      '@changesets/config': 3.0.1
       '@changesets/pre': 2.0.0
       '@changesets/read': 0.6.0
       '@changesets/types': 6.0.0
@@ -1273,6 +1276,14 @@ packages:
       p-filter: 2.1.0
     dev: true
 
+  /@changesets/should-skip-package@0.1.0:
+    resolution: {integrity: sha512-FxG6Mhjw7yFStlSM7Z0Gmg3RiyQ98d/9VpQAZ3Fzr59dCOM9G6ZdYbjiSAt0XtFr9JR5U2tBaJWPjrkGGc618g==}
+    dependencies:
+      '@babel/runtime': 7.24.5
+      '@changesets/types': 6.0.0
+      '@manypkg/get-packages': 1.1.3
+    dev: true
+
   /@changesets/types@4.1.0:
     resolution: {integrity: sha512-LDQvVDv5Kb50ny2s25Fhm3d9QSZimsoUGBsUioj6MC3qbMUCuC8GPIvk/M6IvXx3lYhAs0lwWUQLb+VIEUCECw==}
     dev: true
@@ -1281,8 +1292,8 @@ packages:
     resolution: {integrity: sha512-b1UkfNulgKoWfqyHtzKS5fOZYSJO+77adgL7DLRDr+/7jhChN+QcHnbjiQVOz/U+Ts3PGNySq7diAItzDgugfQ==}
     dev: true
 
-  /@changesets/write@0.3.0:
-    resolution: {integrity: sha512-slGLb21fxZVUYbyea+94uFiD6ntQW0M2hIKNznFizDhZPDgn2c/fv1UzzlW43RVzh1BEDuIqW6hzlJ1OflNmcw==}
+  /@changesets/write@0.3.1:
+    resolution: {integrity: sha512-SyGtMXzH3qFqlHKcvFY2eX+6b0NGiFcNav8AFsYwy5l8hejOeoeTDemu5Yjmke2V5jpzY+pBvM0vCCQ3gdZpfw==}
     dependencies:
       '@babel/runtime': 7.24.5
       '@changesets/types': 6.0.0
@@ -2954,72 +2965,72 @@ packages:
       - supports-color
     dev: false
 
-  /@moonrepo/cli@1.24.3:
-    resolution: {integrity: sha512-8E9Wi9S85sGfCNLZCSfnPXr3jmF46jJDjWmAVoObcyb1YuRTAyP8U6z14PalyAhjxUC22h+1ntP1FKJ2MZB1Ow==}
+  /@moonrepo/cli@1.25.6:
+    resolution: {integrity: sha512-C7HZURLJWK0Zb3Rb021nMANDku0VrqIa0bDQLUuGATorW4qLA0omjBFa3JFvQFGRdTwDVcWalQnO3wuthnDHog==}
     hasBin: true
     requiresBuild: true
     dependencies:
       detect-libc: 2.0.3
     optionalDependencies:
-      '@moonrepo/core-linux-arm64-gnu': 1.24.3
-      '@moonrepo/core-linux-arm64-musl': 1.24.3
-      '@moonrepo/core-linux-x64-gnu': 1.24.3
-      '@moonrepo/core-linux-x64-musl': 1.24.3
-      '@moonrepo/core-macos-arm64': 1.24.3
-      '@moonrepo/core-macos-x64': 1.24.3
-      '@moonrepo/core-windows-x64-msvc': 1.24.3
+      '@moonrepo/core-linux-arm64-gnu': 1.25.6
+      '@moonrepo/core-linux-arm64-musl': 1.25.6
+      '@moonrepo/core-linux-x64-gnu': 1.25.6
+      '@moonrepo/core-linux-x64-musl': 1.25.6
+      '@moonrepo/core-macos-arm64': 1.25.6
+      '@moonrepo/core-macos-x64': 1.25.6
+      '@moonrepo/core-windows-x64-msvc': 1.25.6
     dev: true
 
-  /@moonrepo/core-linux-arm64-gnu@1.24.3:
-    resolution: {integrity: sha512-N1XRF3GeRKiTcczpG+UZOgQq2qUf68cNN08jjQEn9oz7US0UaRftAY/zImRKtXxXjjAJGSbUAB1NTWlgvMonAw==}
+  /@moonrepo/core-linux-arm64-gnu@1.25.6:
+    resolution: {integrity: sha512-LwuXyE4DQ7jEnP+uAa0sbwplsDFgS7RP+ZsDucv6YkiBnCahH8cnN085/jI36fwAQF3G/kzKdJCvvrEXIqfUAw==}
     cpu: [arm64]
     os: [linux]
     requiresBuild: true
     dev: true
     optional: true
 
-  /@moonrepo/core-linux-arm64-musl@1.24.3:
-    resolution: {integrity: sha512-SdxraA1g/C1z1xeWZwrB6BiwpKFd62U0ty8QodrfgTmjdFz6ZgXYLSk8Tyb3rDBJD4lu4UrlWoD6+00tYzRjiA==}
+  /@moonrepo/core-linux-arm64-musl@1.25.6:
+    resolution: {integrity: sha512-TspwxZ53mgjSE29Atb3bdXMH4pPJFjWxvn8kAIM+tWFDoumzg92LNF/y5ArF56V8ilNweHCg80FSDjgUqucu9g==}
     cpu: [arm64]
     os: [linux]
     requiresBuild: true
     dev: true
     optional: true
 
-  /@moonrepo/core-linux-x64-gnu@1.24.3:
-    resolution: {integrity: sha512-USkUD32xKYPcaRxcB+cp6Uqn0JlInj0UtL+I75xcWzNS3lpL4dqrmd6boSi0qUcHdHzNd//Tptoa12BeLZ3a7w==}
+  /@moonrepo/core-linux-x64-gnu@1.25.6:
+    resolution: {integrity: sha512-2X0A2jhqyWz7KVfRuI+qmzh80NTpAOVC3mzYnwhL6fX0kX2dTiSDUWe0Q3M56th7gIwPwN+k+LWxiWWfiFIbyA==}
     cpu: [x64]
     os: [linux]
     requiresBuild: true
     dev: true
     optional: true
 
-  /@moonrepo/core-linux-x64-musl@1.24.3:
-    resolution: {integrity: sha512-V+2ouOgs1GIFOYz7i+1cFxtz7/qfeYQpKyYdMuccjhtXHY+21DBSyVN+uXNBeyBcr7wAf/FeO61sqqNRBVa2lg==}
+  /@moonrepo/core-linux-x64-musl@1.25.6:
+    resolution: {integrity: sha512-uKUn3XM0FivLE8Nfxnnwfv7GH4uAfAP/XUKI7BzKv6GGU2m0yvb41CpHvEK/Va+D2ZqH9hXUXuUiZYXZeOT1DA==}
     cpu: [x64]
     os: [linux]
     requiresBuild: true
     dev: true
     optional: true
 
-  /@moonrepo/core-macos-arm64@1.24.3:
-    resolution: {integrity: sha512-HMim0QwI7ahHsl5PCM/1pZNdDakHNhYgvPg11zatmoQUMYCnqg253A18lonPNNNEBug5lW509ArzWKKud7c+EQ==}
+  /@moonrepo/core-macos-arm64@1.25.6:
+    resolution: {integrity: sha512-qEICkE8aB87BsVpLY/Hu7hg9JuY9pFW9yMr5u5EYuekp8s+5tinVwmxqWedy3hQI3y6IBJ8r2KD0ZQfJLbat3Q==}
     cpu: [arm64]
     os: [darwin]
     requiresBuild: true
     dev: true
     optional: true
 
-  /@moonrepo/core-macos-x64@1.24.3:
-    resolution: {integrity: sha512-myiAgTnUtTK/y3/4XjT2Iwn5YGXwjvqtoSPpQptfZCf8hxkdJgjuRJ7oXnApdEMCb6NzzRHh1e7kmOUsJOdfUg==}
+  /@moonrepo/core-macos-x64@1.25.6:
+    resolution: {integrity: sha512-HQlq+i90wMPUHiTMlqA4vXkmQgp3Ss14nNOVFSrt+X8hwOnq6I62GlbjVcxczTGLxl3pxYo0a/5oeUc3izQOAQ==}
     cpu: [x64]
     os: [darwin]
     requiresBuild: true
     dev: true
     optional: true
 
-  /@moonrepo/core-windows-x64-msvc@1.24.3:
-    resolution: {integrity: sha512-nzoC7ngsoq+T7prLvCRxvrPD/hmkdCk4OvcLG6fwz+jLGK3l2iU9CwjKbVVZ4gGHNWTcNAj3NWxfkOIsvxCtwg==}
+  /@moonrepo/core-windows-x64-msvc@1.25.6:
+    resolution: {integrity: sha512-tWnjKWKBM2Ax3FapKmVYUHaowRjFykpcBrib/POSIec+rI0/8ZL5FKJj3dm5Xy8K0/F5z1oZ1bRaoSiM61/LZA==}
     cpu: [x64]
     os: [win32]
     requiresBuild: true

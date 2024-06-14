@@ -30,11 +30,7 @@ export default defineIntegration({
 				'astro:config:setup': async ( params ) => {
 
 					// Destructure Params
-					const {
-						logger,
-						config: astroConfig,
-						addWatchFile,
-					} = params;
+					const { config: astroConfig, addWatchFile } = params;
 
 					// Watch the StudioCMS Config File for changes (including creation/deletion)
 					addWatchFile(getStudioConfigFileUrl(astroConfig.root))
@@ -43,22 +39,15 @@ export default defineIntegration({
 					const resolvedOptions = await oResolver(params, options)
 
 					// Destructure Options
-					const {
+					const { 
 						verbose,
+						overrides,
 						imageService: ImageServiceConfig,
-						includedIntegrations: { 
-							useAstroRobots, 
-							astroRobotsConfig,
-							useInoxSitemap
-						},
-						overrides: {
-							CustomImageOverride,
-							FormattedDateOverride
-						}
+						includedIntegrations
 					} = resolvedOptions;
 
 					// Setup Logger
-					const LoggerOpts = await studioLoggerOptsResolver(logger, verbose);
+					const LoggerOpts = await studioLoggerOptsResolver(params.logger, resolvedOptions.verbose);
 					studioLogger(LoggerOpts.logInfo, 'Setting up StudioCMS Core...');
 
 					// Check for SSR Mode (output: "server") & Site URL
@@ -70,8 +59,8 @@ export default defineIntegration({
 
 					// Create Virtual Resolver
 					const virtualResolver = VirtualResolver(
-						CustomImageOverride && rootResolve(CustomImageOverride), 
-						FormattedDateOverride && rootResolve(FormattedDateOverride),
+						overrides.CustomImageOverride && rootResolve(overrides.CustomImageOverride), 
+						overrides.FormattedDateOverride && rootResolve(overrides.FormattedDateOverride),
 					)
 
 					// Add Virtual Imports
@@ -96,14 +85,8 @@ export default defineIntegration({
 					makeFrontend(params, {
 						resolvedOptions, LoggerOpts, 
 						defaultRoutes: [
-							{ 
-								pattern: '/', 
-								entrypoint: resolve('./defaultRoutes/index.astro') 
-							},
-							{ 
-								pattern: '[...slug]', 
-								entrypoint: resolve('./defaultRoutes/[...slug].astro') 
-							}
+							{ pattern: '/', entrypoint: resolve('./defaultRoutes/index.astro') },
+							{ pattern: '[...slug]', entrypoint: resolve('./defaultRoutes/[...slug].astro') }
 						],
 						default404Route: resolve('./defaultRoutes/404.astro')
 					})
@@ -119,7 +102,7 @@ export default defineIntegration({
 					})
 
 					// Robots.txt Integration
-					if (useAstroRobots) {
+					if (includedIntegrations.useAstroRobots) {
 						if (
 							!hasIntegration(params, { name: 'astro-robots-txt' }) ||
 							!hasIntegration(params, { name: 'astro-robots' })
@@ -133,7 +116,7 @@ export default defineIntegration({
 											allow: ['/'],
 											disallow: ['/dashboard/'],
 										},
-									], ...astroRobotsConfig
+									], ...includedIntegrations.astroRobotsConfig
 								},),
 							});
 						}
@@ -143,7 +126,7 @@ export default defineIntegration({
 					// Third-Party Integrations
 					//
 						// Sitemap Integration
-						if (useInoxSitemap) {
+						if (includedIntegrations.useInoxSitemap) {
 							if (
 								!hasIntegration(params, { name: '@astrojs/sitemap' }) ||
 								!hasIntegration(params, { name: '@inox-tools/sitemap-ext' })
