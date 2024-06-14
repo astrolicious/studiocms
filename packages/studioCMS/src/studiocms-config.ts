@@ -1,4 +1,5 @@
 import type { StudioCMSOptions } from "./schemas";
+import { studioErrors } from "./strings";
 
 
 // This File was created based on Expressive Code's Astro Integration by Hippotastic on github
@@ -45,7 +46,7 @@ export async function loadStudioCMSConfigFile(projectRootUrl: URL | string): Pro
 		try {
 			const module = (await import(/* @vite-ignore */ path)) as { default: StudioCMSOptions }
 			if (!module.default) {
-				throw new Error('Missing or invalid default export. Please export your StudioCMS config object as the default export.')
+				throw new Error(studioErrors.invalidOrMissingExport)
 			}
 			return module.default
 		} catch (error) {
@@ -58,8 +59,7 @@ export async function loadStudioCMSConfigFile(projectRootUrl: URL | string): Pro
 			}
 			// If the config file exists, but there was a problem loading it, rethrow the error
 			throw new Error(
-				`Your project includes an StudioCMS config file ("studiocms.config.mjs")
-				that could not be loaded due to ${code ? `the error ${code}` : 'the following error'}: ${message}`.replace(/\s+/g, ' '),
+				`${studioErrors.loadingError} ${code ? `the error ${code}` : 'the following error'}: ${message}`.replace(/\s+/g, ' '),
 				error instanceof Error ? { cause: error } : undefined
 			)
 		}

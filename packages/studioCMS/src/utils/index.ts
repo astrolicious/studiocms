@@ -1,6 +1,7 @@
 import type { AstroConfig, AstroIntegrationLogger } from 'astro';
 import { DbErrors } from '../strings';
 import { AstroError } from 'astro/errors';
+export * from './addExternalIntegration';
 
 /** 
  * DEPRECATED: This Logger Function has been replaced by the `studioLogger` function.

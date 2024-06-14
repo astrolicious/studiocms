@@ -1,7 +1,7 @@
-import type { VirtResolver } from ".";
+import type { VirtualResolver } from "./types";
 import { fileFactory } from "../utils/fileFactory";
 
-export const DTSResolver = (virtResolver: VirtResolver) => {
+export const DTSResolver = (virtualResolver: VirtualResolver) => {
 
     // Create Virtual DTS File
     const studioCMSDTS = fileFactory();
@@ -20,7 +20,7 @@ export const DTSResolver = (virtResolver: VirtResolver) => {
          * @props {number} width - Image Width
          * @props {number} height - Image Height
         */
-        export const CImage: typeof import('${virtResolver.CImage}').default;
+        export const CImage: typeof import('${virtualResolver.CImage}').default;
 
         /** 
          * # Formatted Date Component used for rendering dates in a human readable format 
@@ -29,7 +29,7 @@ export const DTSResolver = (virtResolver: VirtResolver) => {
          * 
          * @props {string(Date)} date - Date String
         */
-        export const FormattedDate: typeof import('${virtResolver.FormattedDate}').default;
+        export const FormattedDate: typeof import('${virtualResolver.FormattedDate}').default;
 
         /** 
          * # StudioCMSRenderer Component used for rendering StudioCMS content 
@@ -38,7 +38,7 @@ export const DTSResolver = (virtResolver: VirtResolver) => {
          * 
          * @props {string} content - Content to render
         */
-        export const StudioCMSRenderer: typeof import('${virtResolver.StudioCMSRenderer}').default;
+        export const StudioCMSRenderer: typeof import('${virtualResolver.StudioCMSRenderer}').default;
 
         /** 
          * # Navigation Component used for rendering StudioCMS User Facing Navigation
@@ -48,14 +48,14 @@ export const DTSResolver = (virtResolver: VirtResolver) => {
          * @props {topLevelLinkCount} number - Number of top level links to display before collapsing into a dropdown
          * @props {hideAvatar} boolean - Hide the user avatar/Login button in the navigation bar
         */
-        export const Navigation: typeof import('${virtResolver.NavigationBar}').default;
+        export const Navigation: typeof import('${virtualResolver.NavigationBar}').default;
 
         /** 
          * # Avatar Component used for the Navigation Component 
          * 
          * This component has no props and will render the current user avatar or a default avatar if no user is logged in based on the Astro.locals object
         */
-        export const Avatar: typeof import('${virtResolver.Avatar}').default;
+        export const Avatar: typeof import('${virtualResolver.Avatar}').default;
 
         /** 
          * # Layout Component used for rendering the StudioCMS default layout 
@@ -71,7 +71,7 @@ export const DTSResolver = (virtResolver: VirtResolver) => {
          * @props {string} pageTitleDeliminter - Page Title Deliminter (Default: '|')
          * @props {string} pageDescriptionDeliminter - Page Description Deliminter (Default: '-')
         */
-        export const FrontLayout: typeof import('${virtResolver.defaultLayout}').default;
+        export const FrontLayout: typeof import('${virtualResolver.defaultLayout}').default;
 
         /**
          * # A helper function to get the content of a page by its slug.
@@ -95,28 +95,28 @@ export const DTSResolver = (virtResolver: VirtResolver) => {
          * <StudioCMSRenderer content={content} />
          * 
         */
-        export const contentHelper: typeof import('${virtResolver.contentHelper}').contentHelper;
+        export const contentHelper: typeof import('${virtualResolver.contentHelper}').contentHelper;
 
         /**
          * # Site Configuration helper function to get the site configuration data from Astro Studio's Database.
          * 
          * @returns The site configuration data. (Title, Description)
         */
-        export const getSiteConfig: typeof import('${virtResolver.contentHelper}').getSiteConfig;
+        export const getSiteConfig: typeof import('${virtualResolver.contentHelper}').getSiteConfig;
 
         /**
          * # Get page list helper function to get a list of all pages from Astro Studio's database.
          * 
          * @returns A Array of all pages in the database in ascending order of their published date.
         */
-        export const getPageList: typeof import('${virtResolver.contentHelper}').getPageList;
+        export const getPageList: typeof import('${virtualResolver.contentHelper}').getPageList;
 
         /**
          * # Get user list helper function to get a list of all users from Astro Studio's Database.
          * 
          * @returns A Array of all users in the database.
         */
-        export const getUserList: typeof import('${virtResolver.contentHelper}').getUserList;
+        export const getUserList: typeof import('${virtualResolver.contentHelper}').getUserList;
 
         /**
          * # Get user by ID helper function to get a user by their ID from Astro Studio's Database.
@@ -124,7 +124,7 @@ export const DTSResolver = (virtResolver: VirtResolver) => {
          * @param userId The ID of the user to get. You can get this from 'Astro.locals.dbUser.id' when StudioCMS Auth middleware is used.
          * @returns The user data.
         */
-        export const getUserById: typeof import('${virtResolver.contentHelper}').getUserById;
+        export const getUserById: typeof import('${virtualResolver.contentHelper}').getUserById;
 
         /** 
          * # Content Helper Temp Response Type 
@@ -141,7 +141,7 @@ export const DTSResolver = (virtResolver: VirtResolver) => {
          *   content: string;
          * }
         */
-        export type ContentHelperTempResponse = import('${virtResolver.contentHelper}').ContentHelperTempResponse;
+        export type ContentHelperTempResponse = import('${virtualResolver.contentHelper}').ContentHelperTempResponse;
 
         /** 
          * # Site Config Response Type 
@@ -152,7 +152,7 @@ export const DTSResolver = (virtResolver: VirtResolver) => {
          *   description: string;
          * }
         */
-        export type SiteConfigResponse = import('${virtResolver.contentHelper}').SiteConfigResponse;
+        export type SiteConfigResponse = import('${virtualResolver.contentHelper}').SiteConfigResponse;
 
         /** 
          * # Page Data Response Type
@@ -170,7 +170,7 @@ export const DTSResolver = (virtResolver: VirtResolver) => {
          *   heroImage: string;
          * }
         */
-        export type pageDataReponse = import('${virtResolver.contentHelper}').pageDataReponse;
+        export type pageDataReponse = import('${virtualResolver.contentHelper}').pageDataReponse;
 
         /** 
          * # User Response Type
@@ -192,21 +192,21 @@ export const DTSResolver = (virtResolver: VirtResolver) => {
          *   createdAt: Date | null;
          * }
         */
-        export type UserResponse = import('${virtResolver.contentHelper}').UserResponse;
+        export type UserResponse = import('${virtualResolver.contentHelper}').UserResponse;
 
         /**
          * # Default Head Configuration
          * 
          * A helper function to get the default head configuration for a page.
         */
-        export const headDefaults: typeof import('${virtResolver.headDefaults}').headDefaults;
+        export const headDefaults: typeof import('${virtualResolver.headDefaults}').headDefaults;
 
         /**
          * # Generic Header Component <Genericheader />
          * 
          * Generic Header Component used for rendering a generic header with a title and description from StudioCMS
         */
-        export const Genericheader: typeof import('${virtResolver.Genericheader}').default;
+        export const Genericheader: typeof import('${virtualResolver.Genericheader}').default;
     }`);
     
     // Add Virtual DTS Lines - Helpers
@@ -236,7 +236,7 @@ export const DTSResolver = (virtResolver: VirtResolver) => {
          *  };
          * }
         */
-        export type Locals = import('${virtResolver.StudioCMSLocalsMap}').Locals;
+        export type Locals = import('${virtualResolver.StudioCMSLocalsMap}').Locals;
 
         /** 
          * # Astro DB Schema Type Helpers
@@ -287,7 +287,7 @@ export const DTSResolver = (virtResolver: VirtResolver) => {
          *   };
          * }
         */
-        export type PageDataAndContent = import('${virtResolver.StudioCMSDBTypeHelpers}').PageDataAndContent;
+        export type PageDataAndContent = import('${virtualResolver.StudioCMSDBTypeHelpers}').PageDataAndContent;
 
         /** 
          * # Auth Helper Function
@@ -302,17 +302,17 @@ export const DTSResolver = (virtResolver: VirtResolver) => {
          * const { id, username, name, email, avatar, githubURL, permissionLevel, currentUserSession } = await authHelper(Astro.locals as Locals)
          * ---
         */
-        export const authHelper: typeof import('${virtResolver.AuthHelper}').default;
+        export const authHelper: typeof import('${virtualResolver.AuthHelper}').default;
 
         /** 
          * # Zod Schema for Locals 
         */
-        export const LocalsSchema: typeof import('${virtResolver.StudioCMSLocalsMap}').LocalsSchema;
+        export const LocalsSchema: typeof import('${virtualResolver.StudioCMSLocalsMap}').LocalsSchema;
 
         /** 
          * # Zod Schema for Astro DB Type Helpers 
         */
-        export const PageDataAndContentSchema: typeof import('${virtResolver.StudioCMSDBTypeHelpers}').PageDataAndContentSchema;
+        export const PageDataAndContentSchema: typeof import('${virtualResolver.StudioCMSDBTypeHelpers}').PageDataAndContentSchema;
 
         /** 
          * # URL Generation Helper Function
@@ -321,17 +321,17 @@ export const DTSResolver = (virtResolver: VirtResolver) => {
          * @param {string} path - The path to generate the URL for
          * @param {string} DashboardRoute - The dashboard route to use (Default: 'dashboard')
         */
-        export const urlGenFactory: typeof import('${virtResolver.UrlGenHelper}').default;
+        export const urlGenFactory: typeof import('${virtualResolver.UrlGenHelper}').default;
 
         /** 
          * # Text Formatter Helper Function - Convert a string to Camel Case 
         */
-        export const toCamelCase: typeof import('${virtResolver.textFormatterHelper}').toCamelCase;
+        export const toCamelCase: typeof import('${virtualResolver.textFormatterHelper}').toCamelCase;
 
         /** 
          * # Text Formatter Helper Function - Convert a string to Pascal Case 
         */
-        export const toPascalCase: typeof import('${virtResolver.textFormatterHelper}').toPascalCase;
+        export const toPascalCase: typeof import('${virtualResolver.textFormatterHelper}').toPascalCase;
 
         /** 
          * # Utility Map for declaring StudioCMS Pugins 

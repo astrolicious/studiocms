@@ -1,14 +1,15 @@
-import { addDts, addIntegration, addVirtualImports, createResolver, defineIntegration, hasIntegration } from 'astro-integration-kit';
+import { addDts, addIntegration, addVirtualImports, createResolver, defineIntegration } from 'astro-integration-kit';
 import 'astro-integration-kit/types/db';
-import { DTSResolver, ImportMapResolver, MakeVirtualImportMaps, VirtualResolver, oResolver } from './resolvers';
+import { oResolver, vResolver } from './resolvers';
 import { studioCMSRobotsTXT, studioCMSImageHandler, studioCMSDashboard } from './integrations';
 import inoxsitemap from '@inox-tools/sitemap-ext';
-import { studioCMSPluginList, externalNavigation } from './plugintools';
+import { studioCMSPluginList } from './plugintools';
 import { getStudioConfigFileUrl } from './studiocms-config';
-import { checkAstroConfig, studioLogger, studioLoggerOptsResolver } from './utils';
+import { checkAstroConfig, studioLogger, studioLoggerOptsResolver, addExternalIntegration } from './utils';
 import { optionsSchema } from './schemas';
 import { version } from '../package.json';
 import { makeFrontend } from './makeFrontend';
+import { robotsTXTPreset } from './strings';
 
 // Main Integration
 export default defineIntegration({
@@ -58,27 +59,22 @@ export default defineIntegration({
 					const { resolve: rootResolve } = createResolver(astroConfig.root.pathname)
 
 					// Create Virtual Resolver
-					const virtualResolver = VirtualResolver(
-						overrides.CustomImageOverride && rootResolve(overrides.CustomImageOverride), 
-						overrides.FormattedDateOverride && rootResolve(overrides.FormattedDateOverride),
-					)
+					const { virtualImportMap, dtsFile } = vResolver({ 
+						overrides: {
+							CustomImageOverride: overrides.CustomImageOverride && rootResolve(overrides.CustomImageOverride),
+							FormattedDateOverride: overrides.FormattedDateOverride && rootResolve(overrides.FormattedDateOverride),
+						 }, 
+						 imports: { resolvedOptions, version, astroConfig }
+						})
 
 					// Add Virtual Imports
 					studioLogger(LoggerOpts.logInfo, "Adding Virtual Imports...")
-					addVirtualImports(params, { 
-						name, imports: ImportMapResolver({ 
-							resolvedOptions, 
-							version, 
-							externalNavigation, 
-							astroConfig, 
-							...MakeVirtualImportMaps(virtualResolver)
-						}) 
-					});
+					addVirtualImports(params, { name, imports: virtualImportMap })
 					studioLogger(LoggerOpts.logInfo, "Virtual Imports Added!")
 
 					// Add Virtual DTS File
 					studioLogger(LoggerOpts.logInfo, "Creating and Adding Virtual DTS File...")
-					addDts(params, { name, content: DTSResolver(virtualResolver) });
+					addDts(params, { name, content: dtsFile });
 					studioLogger(LoggerOpts.logInfo, "Virtual DTS File Added!")
 
 					// Generate Default Frontend Routes if Enabled
@@ -103,40 +99,26 @@ export default defineIntegration({
 
 					// Robots.txt Integration
 					if (includedIntegrations.useAstroRobots) {
-						if (
-							!hasIntegration(params, { name: 'astro-robots-txt' }) ||
-							!hasIntegration(params, { name: 'astro-robots' })
-						) {
-							studioLogger(LoggerOpts.logInfo, 'No known robotstxt integration found. Adding `studioCMS:RobotsTXT` integration');
-							addIntegration(params, {
-								integration: studioCMSRobotsTXT({
-									policy: [
-										{
-											userAgent: ['*'],
-											allow: ['/'],
-											disallow: ['/dashboard/'],
-										},
-									], ...includedIntegrations.astroRobotsConfig
-								},),
-							});
-						}
+						addExternalIntegration(params, {
+							knownSimilar: ['astro-robots-txt', 'astro-robots'],
+							integration: studioCMSRobotsTXT({
+								...robotsTXTPreset, ...includedIntegrations.astroRobotsConfig
+							}),
+							LoggerOpts
+						})
 					}
 
 					//
 					// Third-Party Integrations
 					//
-						// Sitemap Integration
-						if (includedIntegrations.useInoxSitemap) {
-							if (
-								!hasIntegration(params, { name: '@astrojs/sitemap' }) ||
-								!hasIntegration(params, { name: '@inox-tools/sitemap-ext' })
-							) {
-								studioLogger(LoggerOpts.logInfo, 'No known sitemap integration found. Adding `@inox-tools/sitemap-ext` integration');
-								addIntegration(params, { 
-									integration: inoxsitemap() 
-								});
-							}
-						}
+					// Sitemap Integration
+					if (includedIntegrations.useInoxSitemap) {
+						addExternalIntegration(params, {
+							knownSimilar: ['@astrojs/sitemap', '@inox-tools/sitemap-ext'],
+							integration: inoxsitemap(),
+							LoggerOpts
+						})
+					}
 
 					// Log Setup Complete
 					studioLogger(LoggerOpts.logInfo, 'StudioCMS Core Setup Complete.');

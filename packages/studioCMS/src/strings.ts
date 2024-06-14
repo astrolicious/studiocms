@@ -1,3 +1,5 @@
+import type { RobotsConfig } from "./integrations/robotstxt"
+
 export const DbErrors = {
     AstroConfigOutput: "Astro Studio CMS is only supported in 'Output: server' SSR mode.",
     AstroConfigSiteURL: "Astro Studio CMS requires a 'site' configuration in your Astro Config. This can be your domain ( 'https://example.com' ) or localhost ( 'http://localhost:4321' - localhost should only be used during development and should not be used in production).",
@@ -6,7 +8,9 @@ export const DbErrors = {
 
 export const studioErrors = {
     failedToParseConfig: "The StudioCMS config file ('studiocms.config.mjs') was found but the following errors where encountered while parsing it:",
-    invalidConfigFile: "Invalid StudioCMS Config File"
+    invalidConfigFile: "Invalid StudioCMS Config File",
+    invalidOrMissingExport: 'Missing or invalid default export. Please export your StudioCMS config object as the default export.',
+    loadingError: `Your project includes an StudioCMS config file ("studiocms.config.mjs") that could not be loaded due to`,
 }
 
 export const warnings = {
@@ -26,4 +30,14 @@ export const MakeFrontendStrings = {
     Inject404Route: "Injecting 404 Route...",
     DefaultRoutesInjected: "StudioCMS Default Routes Injected!",
     DBStartPageEnabled: "Database Start Page enabled, skipping Default Frontend Routes Injection... Please follow the Database Setup Guide to create your Frontend."
+}
+
+export const robotsTXTPreset: Partial<RobotsConfig> = { 
+    policy: [
+        {
+            userAgent: ['*'],
+            allow: ['/'],
+            disallow: ['/dashboard/'],
+        },
+    ]
 }
