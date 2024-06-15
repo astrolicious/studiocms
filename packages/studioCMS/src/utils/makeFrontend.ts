@@ -1,7 +1,7 @@
 import { defineUtility } from "astro-integration-kit";
-import type { StudioCMSOptions } from "./schemas";
-import { studioLogger, type StudioLoggerOptsResolverResponse } from "./utils";
-import { MakeFrontendStrings } from "./strings";
+import type { StudioCMSOptions } from "../schemas";
+import { studioLogger, type StudioLoggerOptsResolverResponse } from ".";
+import { MakeFrontendStrings } from "../strings";
 
 export type FrontendOptions = {
     resolvedOptions: StudioCMSOptions,

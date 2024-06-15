@@ -1,104 +1,65 @@
 import { defineIntegration } from 'astro-integration-kit';
 import { passthroughImageService } from 'astro/config';
-import { integrationLogger } from '../../../utils';
-import { ImageHandlerOptionsSchema } from '../schemas';
+import { studioLogger, studioLoggerOptsResolver } from '../utils';
+import { optionsSchema } from '../schemas';
+import { cloudflareImageHandlerStrings } from '../strings';
 
 export default defineIntegration({
     name: '@astrolicious/studioCMS:imageHandler/cloudflare',
-    optionsSchema: ImageHandlerOptionsSchema,
+    optionsSchema,
     setup({ options }) {
         return {
             hooks: {
-                "astro:config:setup": ( params ) => {
+                "astro:config:setup": async ( params ) => {
 
 					const {
 						updateConfig,
-						logger,
 						config,
 					} = params;
 
-                    const { ImageServiceConfig: {
+                    const { imageService: {
                         astroImageServiceConfig,
                         cdnPlugin,
                     }, verbose } = options;
 
+					const { logInfo } = await studioLoggerOptsResolver(params.logger, verbose);
+
 						// Setup Image Service
 						if (config.image?.service.entrypoint === '@astrojs/cloudflare/image-service') {
-							integrationLogger(
-								logger,
-								verbose,
-								'info',
-								'Cloudflare Image Service Enabled. Using Cloudflare Image Service.'
-							);
+							studioLogger(logInfo, cloudflareImageHandlerStrings.CloudflareImageServiceEnabled)
 						} else {
-							integrationLogger(
-								logger,
-								verbose,
-								'info',
-								'Cloudflare Image Service Disabled. Using Built-in Image Service.'
-							);
-
+							studioLogger(logInfo, cloudflareImageHandlerStrings.CloudflareImageServiceDisabled)
 							if (cdnPlugin === 'cloudinary-js') {
 								if (astroImageServiceConfig === 'squoosh') {
-									integrationLogger(
-										logger,
-										verbose,
-										'warn',
-										"Cloudflare SSR does not support Squoosh Image Service. Using no-op Service as astroImageServiceConfig is set to 'squoosh'"
-									);
+									studioLogger(logInfo, cloudflareImageHandlerStrings.cdnPluginStrings.Squoosh)
 									updateConfig({
 										image: { service: passthroughImageService() },
 									});
 								} else if (astroImageServiceConfig === 'sharp') {
-									integrationLogger(
-										logger,
-										verbose,
-										'warn',
-										"Cloudflare SSR does not support Sharp Image Service. Using no-op Service as astroImageServiceConfig is set to 'sharp'"
-									);
+									studioLogger(logInfo, cloudflareImageHandlerStrings.cdnPluginStrings.Sharp)
 									updateConfig({
 										image: { service: passthroughImageService() },
 									});
 								} else if (astroImageServiceConfig === 'no-op') {
-									integrationLogger(
-										logger,
-										verbose,
-										'info',
-										'Using No-Op Image Service as Fallback for Cloudinary CDN Plugin'
-									);
+									studioLogger(logInfo, cloudflareImageHandlerStrings.cdnPluginStrings.NoOp)
 									updateConfig({
 										image: { service: passthroughImageService() },
 									});
 								}
 							} else {
-								integrationLogger(
-									logger,
-									verbose,
-									'info',
-									'@unpic/astro Image Service Disabled, using Astro Built-in Image Service.'
-								);
+								studioLogger(logInfo, cloudflareImageHandlerStrings.unpicStrings.disabled)
 								if (astroImageServiceConfig === 'squoosh') {
-									integrationLogger(
-										logger,
-										verbose,
-										'info',
-										"Cloudflare SSR does not support Squoosh Image Service. Using no-op Service as astroImageServiceConfig is set to 'squoosh'"
-									);
+									studioLogger(logInfo, cloudflareImageHandlerStrings.unsupported.Squoosh)
 									updateConfig({
 										image: { service: passthroughImageService() },
 									});
 								} else if (astroImageServiceConfig === 'sharp') {
-									integrationLogger(
-										logger,
-										verbose,
-										'info',
-										"Cloudflare SSR does not support Sharp Image Service. Using no-op Service as astroImageServiceConfig is set to 'sharp'"
-									);
+									studioLogger(logInfo, cloudflareImageHandlerStrings.unsupported.Sharp)
 									updateConfig({
 										image: { service: passthroughImageService() },
 									});
 								} else if (astroImageServiceConfig === 'no-op') {
-									integrationLogger(logger, verbose, 'info', 'Using No-Op Image Service');
+									studioLogger(logInfo, cloudflareImageHandlerStrings.NoOp)
 									updateConfig({
 										image: { service: passthroughImageService() },
 									});

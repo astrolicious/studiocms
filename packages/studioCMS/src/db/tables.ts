@@ -1,6 +1,5 @@
 // @ts-expect-error - This is a missing type definition for the `astro:db` import since its a virtual module during Astro Runtime
 import { NOW, column, defineTable, sql } from 'astro:db';
-import { randomUUID } from 'node:crypto';
 
 export const Session = defineTable({
 	columns: {
@@ -12,7 +11,7 @@ export const Session = defineTable({
 
 export const User = defineTable({
 	columns: {
-		id: column.text({ primaryKey: true, default: randomUUID() }),
+		id: column.text({ primaryKey: true }),
 		url: column.text({ optional: true }),
 		name: column.text(),
 		email: column.text({ unique: true, optional: true }),
@@ -31,7 +30,7 @@ export const User = defineTable({
 
 export const PageData = defineTable({
 	columns: {
-		id: column.text({ primaryKey: true, default: randomUUID() }),
+		id: column.text({ primaryKey: true }),
 		package: column.text({ default: '@astrolicious/studiocms' }),
 		title: column.text(),
 		description: column.text(),
@@ -49,7 +48,7 @@ export const PageData = defineTable({
 
 export const PageContent = defineTable({
 	columns: {
-		id: column.text({ primaryKey: true, default: randomUUID() }),
+		id: column.text({ primaryKey: true }),
 		contentId: column.text({ references: () => PageData.columns.id }),
 		contentLang: column.text({ default: 'default' }),
 		content: column.text({ multiline: true, optional: true }),

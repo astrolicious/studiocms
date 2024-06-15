@@ -1,14 +1,13 @@
-import { addDts, addIntegration, addVirtualImports, createResolver, defineIntegration } from 'astro-integration-kit';
+import { checkAstroConfig, studioLogger, studioLoggerOptsResolver, addExternalIntegration, makeFrontend, addIntegrationArray } from './utils';
+import { studioCMSRobotsTXT, studioCMSImageHandler, studioCMSDashboard } from './integrations';
+import { addDts, addVirtualImports, createResolver, defineIntegration } from 'astro-integration-kit';
 import 'astro-integration-kit/types/db';
 import { oResolver, vResolver } from './resolvers';
-import { studioCMSRobotsTXT, studioCMSImageHandler, studioCMSDashboard } from './integrations';
 import inoxsitemap from '@inox-tools/sitemap-ext';
 import { studioCMSPluginList } from './plugintools';
 import { getStudioConfigFileUrl } from './studiocms-config';
-import { checkAstroConfig, studioLogger, studioLoggerOptsResolver, addExternalIntegration } from './utils';
 import { optionsSchema } from './schemas';
 import { version } from '../package.json';
-import { makeFrontend } from './makeFrontend';
 import { robotsTXTPreset } from './strings';
 
 // Main Integration
@@ -26,6 +25,7 @@ export default defineIntegration({
 		return {
 			hooks: {
 				'astro:db:setup': ({ extendDb }) => { 
+					// Configure `@astrojs/db` integration to include the StudioCMS Database Table Schema
 					extendDb({ configEntrypoint: resolve('./db/config.ts') }) 
 				},
 				'astro:config:setup': async ( params ) => {
@@ -40,12 +40,7 @@ export default defineIntegration({
 					const resolvedOptions = await oResolver(params, options)
 
 					// Destructure Options
-					const { 
-						verbose,
-						overrides,
-						imageService: ImageServiceConfig,
-						includedIntegrations
-					} = resolvedOptions;
+					const { overrides, includedIntegrations } = resolvedOptions;
 
 					// Setup Logger
 					const LoggerOpts = await studioLoggerOptsResolver(params.logger, resolvedOptions.verbose);
@@ -70,12 +65,10 @@ export default defineIntegration({
 					// Add Virtual Imports
 					studioLogger(LoggerOpts.logInfo, "Adding Virtual Imports...")
 					addVirtualImports(params, { name, imports: virtualImportMap })
-					studioLogger(LoggerOpts.logInfo, "Virtual Imports Added!")
 
 					// Add Virtual DTS File
 					studioLogger(LoggerOpts.logInfo, "Creating and Adding Virtual DTS File...")
 					addDts(params, { name, content: dtsFile });
-					studioLogger(LoggerOpts.logInfo, "Virtual DTS File Added!")
 
 					// Generate Default Frontend Routes if Enabled
 					makeFrontend(params, {
@@ -87,14 +80,13 @@ export default defineIntegration({
 						default404Route: resolve('./defaultRoutes/404.astro')
 					})
 
-					// Add Dashboard Integration
-					addIntegration(params, {
-						integration: studioCMSDashboard(resolvedOptions)
-					})
-
-					// Add Image Service Handler Integration
-					addIntegration(params, { 
-						integration: studioCMSImageHandler({ ImageServiceConfig, verbose })
+					// Add Internal Integrations
+					addIntegrationArray(params, { 
+						integrations: [ 
+							studioCMSDashboard(resolvedOptions), 
+							studioCMSImageHandler(resolvedOptions) 
+						], 
+						LoggerOpts
 					})
 
 					// Robots.txt Integration
@@ -114,7 +106,7 @@ export default defineIntegration({
 					// Sitemap Integration
 					if (includedIntegrations.useInoxSitemap) {
 						addExternalIntegration(params, {
-							knownSimilar: ['@astrojs/sitemap', '@inox-tools/sitemap-ext'],
+							knownSimilar: ['@astrojs/sitemap', '@inox-tools/sitemap-ext', '@inox-tools/declarative-sitemap'],
 							integration: inoxsitemap(),
 							LoggerOpts
 						})
