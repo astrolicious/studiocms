@@ -61,7 +61,7 @@ export default defineIntegration({
 
 					const LoggerOpts = await studioLoggerOptsResolver(logger, verbose);
 
-					studioLogger(LoggerOpts.logInfo, 'Setting up StudioCMS Dashboard...');
+					studioLogger(LoggerOpts.logInfo, DashboardStrings.Setup);
 
                     // Check for Authenication Environment Variables
 					loadKeys(logger, verbose, providers);
@@ -160,7 +160,7 @@ export default defineIntegration({
 					virtualResolver(params, { name });
 
 					// Add Dashboard Integrations
-					studioLogger(LoggerOpts.logInfo, 'Adding Dashboard Integrations...');
+					studioLogger(LoggerOpts.logInfo, DashboardStrings.AddIntegrations);
 
 					// CSS Management
 					addIntegration(params, {
@@ -215,7 +215,7 @@ export default defineIntegration({
 					// Check if the Dashboard is enabled
 					if ( dashboardEnabled && !dbStartPage ) {
 						// Log that the Dashboard is enabled
-						studioLogger(LoggerOpts.logInfo, 'Dashboard is Enabled');
+						studioLogger(LoggerOpts.logInfo, DashboardStrings.DashboardEnabled);
 
 						injectRouteArray(params, {
 							dashboardRouteOverride,
@@ -259,16 +259,16 @@ export default defineIntegration({
 							}
 
 							// Log that the Auth is enabled
-							studioLogger(LoggerOpts.logInfo, 'Auth Enabled, Setting up...');
+							studioLogger(LoggerOpts.logInfo, DashboardStrings.AuthEnabled);
 
 							// Add Middleware for Auth Session Handling
-							studioLogger(LoggerOpts.logInfo, "Adding Middleware...");
+							studioLogger(LoggerOpts.logInfo, DashboardStrings.Middleware);
 							addMiddleware({
 								entrypoint: resolve('./middleware/index.ts'),
 								order: 'pre',
 							});
 
-							studioLogger(LoggerOpts.logInfo, "Setting up Auth Routes...")
+							studioLogger(LoggerOpts.logInfo, DashboardStrings.AuthRoutes);
 
 							// Inject Login and Logout Routes
 							injectRouteArray(params, {
@@ -367,7 +367,7 @@ export default defineIntegration({
 						}
 
 						// Log that the setup is complete
-						studioLogger(LoggerOpts.logInfo, "StudioCMS Dashboard is ready!");
+						studioLogger(LoggerOpts.logInfo, DashboardStrings.SetupComplete);
 						
 					} else {
 						// Log that the Dashboard is disabled

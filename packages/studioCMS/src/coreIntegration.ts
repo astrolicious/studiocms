@@ -8,7 +8,7 @@ import { studioCMSPluginList } from './plugintools';
 import { getStudioConfigFileUrl } from './studiocms-config';
 import { optionsSchema } from './schemas';
 import { version } from '../package.json';
-import { robotsTXTPreset } from './strings';
+import { CoreStrings, robotsTXTPreset } from './strings';
 
 // Main Integration
 export default defineIntegration({
@@ -44,7 +44,7 @@ export default defineIntegration({
 
 					// Setup Logger
 					const LoggerOpts = await studioLoggerOptsResolver(params.logger, resolvedOptions.verbose);
-					studioLogger(LoggerOpts.logInfo, 'Setting up StudioCMS Core...');
+					studioLogger(LoggerOpts.logInfo, CoreStrings.Start);
 
 					// Check for SSR Mode (output: "server") & Site URL
 					// TODO: Add support for "hybrid" mode
@@ -63,11 +63,11 @@ export default defineIntegration({
 						})
 
 					// Add Virtual Imports
-					studioLogger(LoggerOpts.logInfo, "Adding Virtual Imports...")
+					studioLogger(LoggerOpts.logInfo, CoreStrings.AddVirtualImports)
 					addVirtualImports(params, { name, imports: virtualImportMap })
 
 					// Add Virtual DTS File
-					studioLogger(LoggerOpts.logInfo, "Creating and Adding Virtual DTS File...")
+					studioLogger(LoggerOpts.logInfo, CoreStrings.AddVirtualDTS)
 					addDts(params, { name, content: dtsFile });
 
 					// Generate Default Frontend Routes if Enabled
@@ -109,7 +109,7 @@ export default defineIntegration({
 					})
 
 					// Log Setup Complete
-					studioLogger(LoggerOpts.logInfo, 'StudioCMS Core Setup Complete.');
+					studioLogger(LoggerOpts.logInfo, CoreStrings.SetupComplete);
 				},
 			},
 		};

@@ -1,5 +1,12 @@
 import type { RobotsConfig } from "./integrations/robotstxt"
 
+export const CoreStrings = {
+    Start: "Setting up StudioCMS Core...",
+    AddVirtualImports: "Adding Virtual Imports...",
+    AddVirtualDTS: "Creating and Adding Virtual DTS File...",
+    SetupComplete: "StudioCMS Core Setup Complete.",
+}
+
 export const DbErrors = {
     AstroConfigOutput: "Astro Studio CMS is only supported in 'Output: server' SSR mode.",
     AstroConfigSiteURL: "Astro Studio CMS requires a 'site' configuration in your Astro Config. This can be your domain ( 'https://example.com' ) or localhost ( 'http://localhost:4321' - localhost should only be used during development and should not be used in production).",
@@ -19,9 +26,16 @@ export const warnings = {
 }
 
 export const DashboardStrings = {
+    Setup: "Setting up StudioCMS Dashboard...",
+    AddIntegrations: "Adding Dashboard Integrations...",
     TestAndDemo: 'Testing and Demo Mode is Enabled, Authentication will not be required to access dashboard pages.  But you will only be able to edit the database from the Astro Studio Dashboard, https://studio.astro.build/',
+    AuthEnabled: "Auth is Enabled, Setting Up...",
     AuthDisabled: 'Auth is Disabled by the User Configuration.  You will only be able to edit the database from the Astro Studio Dashboard, https://studio.astro.build/',
+    AuthRoutes: "Setting up Auth Routes...",
+    DashboardEnabled: "Dashboard is Enabled.",
     DashboardDisabled: 'Dashboard is Disabled, Some tools and Utilities are still available for developers who are customizing their setup!',
+    Middleware: "Adding Dashboard Middleware...",
+    SetupComplete: "StudioCMS Dashboard is Setup and Ready to Go!",
 }
 
 export const MakeFrontendStrings = {
