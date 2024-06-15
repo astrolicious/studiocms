@@ -5,6 +5,7 @@ export const CoreStrings = {
     AddVirtualImports: "Adding Virtual Imports...",
     AddVirtualDTS: "Creating and Adding Virtual DTS File...",
     SetupComplete: "StudioCMS Core Setup Complete.",
+    AstroConfigCheck: "Astro Config `output` & `site` options valid",
 }
 
 export const DbErrors = {
@@ -136,4 +137,25 @@ export const AuthProviderLogStrings = {
         enabledMessage: 'User Registration is Enabled',
         disabledMessage: 'User Registration is Disabled',
     },
+}
+
+export const CheckENVStrings = {
+    CheckStart: "Checking Environment Variables...",
+    CheckComplete: "Environment Variables Check Complete.",
+    GithubMessages: {
+        CheckMessage: 'Github Auth Enabled, Checking Github Environment Variables...',
+        ErrorMessage: 'The Following Github Keys are Missing and are Required for the Github Authentication to work:'
+    },
+    DiscordMessages: {
+        CheckMessage: 'Discord Auth Enabled, Checking Discord Environment Variables...',
+        ErrorMessage: 'The Following Discord Keys are Missing and are Required for the Discord Authentication to work:'
+    },
+    GoogleMessages: {
+        CheckMessage: 'Google Auth Enabled, Checking Google Environment Variables...',
+        ErrorMessage: 'The Following Google Keys are Missing and are Required for the Google Authentication to work:'
+    },
+    Auth0Messages: {
+        CheckMessage: 'Auth0 Auth Enabled, Checking Auth0 Environment Variables...',
+        ErrorMessage: 'The Following Auth0 Keys are Missing and are Required for the Auth0 Authentication to work:'
+    }
 }

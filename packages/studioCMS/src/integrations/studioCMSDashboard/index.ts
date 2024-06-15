@@ -1,7 +1,7 @@
 import { addIntegration, addVirtualImports, createResolver, defineIntegration } from "astro-integration-kit";
 import { injectAuthRouteArray, injectRouteArray, virtualResolver, loadKeys, studioLogger, studioLoggerOptsResolver } from "./utils";
 import { optionsSchema, type AuthConfigMap, type usernameAndPasswordConfig } from "./schemas";
-import { AuthProviderLogStrings, DashboardStrings, DbErrors } from "../../strings";
+import { AuthProviderLogStrings, DashboardStrings, DbErrors } from "./strings";
 import { readFileSync, writeFile } from "node:fs";
 import { randomUUID } from "node:crypto";
 import { astroENV } from "./env";
