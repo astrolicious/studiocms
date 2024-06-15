@@ -1,19 +1,11 @@
-import { addDts, addIntegration, addVirtualImports, createResolver, defineIntegration } from "astro-integration-kit";
-import { optionsSchema } from "../../schemas";
-import { integrationLogger } from "../../utils";
-import { fileFactory } from "../../utils/fileFactory";
-import { DashboardStrings, DbErrors } from "../../strings";
-import { presetTypography, presetWind, presetUno, transformerDirectives, presetIcons, presetWebFonts } from "unocss";
-import UnoCSSAstroIntegration from "@unocss/astro";
-import { presetDaisy } from "@yangyang20240403/unocss-preset-daisyui";
-import { FileSystemIconLoader } from '@iconify/utils/lib/loader/node-loaders'
-import { presetScrollbar } from 'unocss-preset-scrollbar';
-import * as fs from "node:fs";
+import { addIntegration, addVirtualImports, createResolver, defineIntegration } from "astro-integration-kit";
+import { injectAuthRouteArray, injectRouteArray, virtualResolver, loadKeys, studioLogger, studioLoggerOptsResolver } from "./utils";
+import { optionsSchema, type AuthConfigMap, type usernameAndPasswordConfig } from "./schemas";
+import { AuthProviderLogStrings, DashboardStrings, DbErrors } from "../../strings";
+import { readFileSync, writeFile } from "node:fs";
 import { randomUUID } from "node:crypto";
-import type { AuthConfigMap, usernameAndPasswordConfig } from "../../schemas/auth-types";
-import type { AstroIntegration } from "astro";
-import { loadKeys } from "./utils/checkENV";
 import { astroENV } from "./env";
+import { StudioUnoCSS, studiocssPreset, FileSystemIconLoader, transformerDirectives } from "./studiocsspreset";
 
 export default defineIntegration({
     name: '@astrolicious/studioCMS:adminDashboard',
@@ -28,7 +20,6 @@ export default defineIntegration({
 						logger, 
 						config,
 						addMiddleware,
-						injectRoute,
 						updateConfig,
 					} = params;
 
@@ -68,7 +59,9 @@ export default defineIntegration({
 						},
 					} = options;
 
-                    integrationLogger(logger, verbose, "info", "Dashboard Setup starting...");
+					const LoggerOpts = await studioLoggerOptsResolver(logger, verbose);
+
+					studioLogger(LoggerOpts.logInfo, 'Setting up StudioCMS Dashboard...');
 
                     // Check for Authenication Environment Variables
 					loadKeys(logger, verbose, providers);
@@ -82,16 +75,6 @@ export default defineIntegration({
 					// Create Resolvers
 					const { resolve } = createResolver(import.meta.url);
 					const { resolve: rootResolve } = createResolver(config.root.pathname);
-
-					// Virtual Resolver
-					const virtualResolver = { 
-						Auth: resolve('./lib/auth.ts'), 
-						AuthENVChecker: resolve("./utils/authEnvCheck.ts"),
-						DashboardLayout: resolve('./routes/dashboard/layouts/Layout.astro'),
-						StudioAuthConfig: rootResolve('./studiocms-auth.config.json'),
-						RouteMap: resolve('./utils/routemap.ts'),
-						FormattedDate: resolve('../../components/exports/FormattedDate.astro'),
-					};
 
 					// Username and Password Config
 					/**
@@ -119,11 +102,11 @@ export default defineIntegration({
 
 					if ( usernameAndPassword ) {
 						try {
-							const authConfigFileJson = fs.readFileSync(virtualResolver.StudioAuthConfig, { encoding: 'utf-8' });
+							const authConfigFileJson = readFileSync(rootResolve('./studiocms-auth.config.json'), { encoding: 'utf-8' });
 							const authConfigFile: AuthConfigMap = JSON.parse(authConfigFileJson);
 
 							if (!authConfigFile.salt) {
-								return integrationLogger(logger, true, 'error', 'studiocms-auth.config.json file does not contain a salt');
+								return studioLogger(LoggerOpts.logError, 'studiocms-auth.config.json file does not contain a salt');
 							}
 
 							const authConfigMap = {
@@ -142,7 +125,7 @@ export default defineIntegration({
 							VirtualAuthSecurity = authConfigMap;
 						} catch (error) {
 							// Log that the file does not exist
-							integrationLogger(logger, verbose, 'error', 'studiocms-auth.config.json file does not exist. Creating...');
+							studioLogger(LoggerOpts.logError, 'studiocms-auth.config.json file does not exist. Creating...');
 
 							// Create a new salt
 							const newSalt = randomUUID();
@@ -160,10 +143,10 @@ export default defineIntegration({
 								}
 							}
 
-							fs.writeFile(virtualResolver.StudioAuthConfig, JSON.stringify(outputMap, null, 2), (err) => {
+							writeFile(rootResolve('./studiocms-auth.config.json'), JSON.stringify(outputMap, null, 2), (err) => {
 								if (err) {
 									// Log that the file could not be created
-									integrationLogger(logger, verbose, 'error', 'studiocms-auth.config.json file could not be created');
+									studioLogger(LoggerOpts.logError, 'studiocms-auth.config.json file could not be created');
 								}
 							});
 						}
@@ -174,305 +157,230 @@ export default defineIntegration({
 
 					}
 
-					// Virtual Components
-					const virtualComponentMap = `
-					export * from '${virtualResolver.Auth}';
-					export * from '${virtualResolver.AuthENVChecker}';`;
-
-					const VirtualAstroComponents = `
-					export {default as Layout} from '${virtualResolver.DashboardLayout}';
-					export {default as FormattedDate} from '${virtualResolver.FormattedDate}';`;
-
-					const VirtualRouteMap = `
-					export * from '${virtualResolver.RouteMap}';`;
-
-					// Add Virtual Imports
-					integrationLogger(logger, verbose, 'info', 'Adding Virtual Imports...');
-					addVirtualImports(params, {
-						name,
-						imports: {
-							'studiocms-dashboard:auth': virtualComponentMap,
-							'studiocms-dashboard:components': VirtualAstroComponents,
-							'studiocms-dashboard:routeMap': VirtualRouteMap,
-						},
-					});
-
-					// Create Virtual DTS File
-					const studioCMSDTS = fileFactory();
-
-					studioCMSDTS.addLines(`declare module 'studiocms-dashboard:auth' {
-                        export const lucia: typeof import('${virtualResolver.Auth}').lucia;
-						export const authEnvCheck: typeof import('${virtualResolver.AuthENVChecker}').authEnvCheck;
-					}`);
-
-					studioCMSDTS.addLines(`declare module 'studiocms-dashboard:components' {
-						export const Layout: typeof import('${virtualResolver.DashboardLayout}').default;
-						export const FormattedDate: typeof import('${virtualResolver.FormattedDate}').default;
-					}`);
-
-					studioCMSDTS.addLines(`declare module 'studiocms-dashboard:routeMap' {
-						export const getSluggedRoute: typeof import('${virtualResolver.RouteMap}').getSluggedRoute;
-						export const getEditRoute: typeof import('${virtualResolver.RouteMap}').getEditRoute;
-						export const getDeleteRoute: typeof import('${virtualResolver.RouteMap}').getDeleteRoute;
-						export const StudioCMSRoutes: typeof import('${virtualResolver.RouteMap}').StudioCMSRoutes;
-						export type SideBarLink = import('${virtualResolver.RouteMap}').SideBarLink;
-						export const sideBarLinkMap: import('${virtualResolver.RouteMap}').sideBarLinkMap;
-					}`);
-
-					// Add Virtual DTS File
-					addDts(params, {
-						name,
-						content: studioCMSDTS.text(),
-					});
+					virtualResolver(params, { name });
 
 					// Add Dashboard Integrations
-					integrationLogger(logger, verbose, 'info', 'Adding Dashboard Integrations');
+					studioLogger(LoggerOpts.logInfo, 'Adding Dashboard Integrations...');
 
 					// CSS Management
 					addIntegration(params, {
-						integration: UnoCSSAstroIntegration({
+						integration: StudioUnoCSS({
 							configFile: false,
 							injectReset: injectReset,
 							injectEntry: injectEntry,
-							presets: [
-								presetUno(),
-								presetWind(), 
-								presetDaisy({
-									themes: themes,
-									darkTheme: darkTheme,
-								}),
-								presetTypography(),
-								presetIcons({
+							presets: studiocssPreset({ 
+								daisy: { themes, darkTheme },
+								icons: {
 									collections: {
 										mdi: () => import('@iconify-json/mdi/icons.json').then(i => i.default),
 										google: FileSystemIconLoader(resolve('./icons/google')),
 										discord: FileSystemIconLoader(resolve('./icons/discord')),
 										github: FileSystemIconLoader(resolve('./icons/github')),
 										auth0: FileSystemIconLoader(resolve('./icons/auth0')),
-									}
-								}),
-								presetScrollbar(),
-								presetWebFonts({
+									},
+								},
+								fonts: {
 									provider: 'google',
 									fonts: {
 										// Required Fonts for Google Icons
 										  sans: 'Roboto',
 										  mono: ['Fira Code', 'Fira Mono:400,700'],
 									},
-								}),
-							],
-							transformers: [
-								transformerDirectives()
-							],
-						}) as unknown as AstroIntegration,
+								}
+							}),
+							transformers: [ transformerDirectives() ],
+						}),
 					});
 
 					// In the case of First time Setup run the Start Pages
 					if ( dbStartPage ) {
-						injectRoute({
-							pattern: 'start/',
-							entrypoint: resolve('./routes/databaseSetup/main.astro'),
-						});
-						injectRoute({
-							pattern: 'api/setup',
-							entrypoint: resolve('./routes/databaseSetup/setup.ts'),
-						});
-						injectRoute({
-							pattern: 'done/',
-							entrypoint: resolve('./routes/databaseSetup/done.astro'),
-						});
+						injectRouteArray(params, {
+							routes: [
+								{ pattern: 'start/', 
+									entrypoint: resolve('./routes/databaseSetup/main.astro'),
+								    _non_dashboard: true
+								}, { 
+									pattern: 'api/setup', 
+									entrypoint: resolve('./routes/databaseSetup/setup.ts'),
+									_non_dashboard: true
+								}, { 
+									pattern: 'done/', 
+									entrypoint: resolve('./routes/databaseSetup/done.astro'),
+									_non_dashboard: true
+								} ]
+						})
 					}
 
 
 					// Check if the Dashboard is enabled
 					if ( dashboardEnabled && !dbStartPage ) {
-
-						let defaultDashboardRoute = "dashboard";
-
-						if (dashboardRouteOverride) {
-							defaultDashboardRoute = dashboardRouteOverride.replace(/^\//, '');
-						}
-
-						const makeRoute = (path?: string) => {
-							const output = `${defaultDashboardRoute}/${path}`;
-							return output;
-						}
-						
 						// Log that the Dashboard is enabled
-						integrationLogger(logger, verbose, 'info', 'Dashboard is Enabled');
+						studioLogger(LoggerOpts.logInfo, 'Dashboard is Enabled');
 
-						// Add Dashboard API Routes
-						injectRoute({
-							pattern: makeRoute('api/liverender'),
-							entrypoint: resolve('./routes/dashboard/partials/LivePreview.astro'),
-						})
-						
-						// Setup the Dashboard Routes
-						injectRoute({
-							pattern: makeRoute("/"),
-							entrypoint: resolve('./routes/dashboard/pages/index.astro')
-						})
-						injectRoute({
-							pattern: makeRoute('profile/'),
-							entrypoint: resolve('./routes/dashboard/pages/profile.astro')
-						})
-						injectRoute({
-							pattern: makeRoute('configuration/'),
-							entrypoint: resolve('./routes/dashboard/pages/configuration/index.astro')
-						})
-						injectRoute({
-							pattern: makeRoute('configuration/admins/'),
-							entrypoint: resolve('./routes/dashboard/pages/configuration/admins.astro')
-						})
-						injectRoute({
-							pattern: makeRoute('new/page/'),
-							entrypoint: resolve('./routes/dashboard/pages/new/page.astro')
-						})
-						injectRoute({
-							pattern: makeRoute('page-list/'),
-							entrypoint: resolve('./routes/dashboard/pages/edit/page-list.astro')
-						})
-						injectRoute({
-							pattern: makeRoute('edit/pages/[...slug]'),
-							entrypoint: resolve('./routes/dashboard/pages/edit/pages/[...slug].astro')
-						})
-						injectRoute({
-							pattern: makeRoute('delete/pages/[...slug]'),
-							entrypoint: resolve('./routes/dashboard/pages/delete/pages/[...slug].astro')
-						})
+						injectRouteArray(params, {
+							dashboardRouteOverride,
+							routes: [
+								{ 
+									pattern: 'api/liverender', 
+									entrypoint: resolve('./routes/dashboard/partials/LivePreview.astro') 
+								}, {
+									pattern: '/',
+									entrypoint: resolve('./routes/dashboard/pages/index.astro')
+								}, {
+									pattern: 'profile/',
+									entrypoint: resolve('./routes/dashboard/pages/profile.astro')
+								}, {
+									pattern: 'configuration/',
+									entrypoint: resolve('./routes/dashboard/pages/configuration/index.astro')
+								}, {
+									pattern: 'configuration/admins/',
+									entrypoint: resolve('./routes/dashboard/pages/configuration/admins.astro')
+								}, {
+									pattern: 'new/page/',
+									entrypoint: resolve('./routes/dashboard/pages/new/page.astro')
+								}, {
+									pattern: 'page-list/',
+									entrypoint: resolve('./routes/dashboard/pages/edit/page-list.astro')
+								}, {
+									pattern: 'edit/pages/[...slug]',
+									entrypoint: resolve('./routes/dashboard/pages/edit/pages/[...slug].astro')
+								}, {
+									pattern: 'delete/pages/[...slug]',
+									entrypoint: resolve('./routes/dashboard/pages/delete/pages/[...slug].astro')
+								}
+							]
+						});
 
 						// Setup The Dashboard Authentication
 						if ( AuthConfig.enabled ) {
 							if ( testingAndDemoMode ) {
 								// Log that the Auth is bypassed in Test and Demo Mode
-								integrationLogger(logger, verbose, 'info', DashboardStrings.TestAndDemo);
+								studioLogger(LoggerOpts.logInfo, DashboardStrings.TestAndDemo);
 							}
 
 							// Log that the Auth is enabled
-							integrationLogger(logger, verbose, 'info', 'Auth is Enabled');
+							studioLogger(LoggerOpts.logInfo, 'Auth Enabled, Setting up...');
 
 							// Add Middleware for Auth Session Handling
-							integrationLogger(logger, verbose, 'info', 'Adding Middleware');
+							studioLogger(LoggerOpts.logInfo, "Adding Middleware...");
 							addMiddleware({
 								entrypoint: resolve('./middleware/index.ts'),
 								order: 'pre',
 							});
 
-							integrationLogger(logger, verbose, 'info', 'Adding Auth Routes');
+							studioLogger(LoggerOpts.logInfo, "Setting up Auth Routes...")
 
 							// Inject Login and Logout Routes
-							injectRoute({
-								pattern: makeRoute('login'),
-								entrypoint: resolve('./routes/authroutes/login/index.astro'),
+							injectRouteArray(params, {
+								dashboardRouteOverride,
+								routes: [
+									{ 
+										pattern: 'login/',
+										entrypoint: resolve('./routes/authroutes/login/index.astro')
+									}, {
+										pattern: 'logout/',
+										entrypoint: resolve('./routes/authroutes/logout.ts')
+									}
+								]
 							})
-							injectRoute({
-								pattern: makeRoute('logout'),
-								entrypoint: resolve('./routes/authroutes/logout.ts'),
+
+							injectAuthRouteArray(params, {
+								dashboardRouteOverride,
+								LoggerOpts,
+								providerRoutes: [
+									{
+										enabled: github,
+										logs: AuthProviderLogStrings.githubLogs,
+										routes: [
+											{
+												pattern: 'login/github',
+												entrypoint: resolve('./routes/authroutes/login/github/index.ts'),
+											}, {
+												pattern: 'login/github/callback',
+												entrypoint: resolve('./routes/authroutes/login/github/callback.ts'),
+											}
+										]
+									}, {
+										enabled: discord,
+										logs: AuthProviderLogStrings.discordLogs,
+										routes: [
+											{
+												pattern: 'login/discord',
+												entrypoint: resolve('./routes/authroutes/login/discord/index.ts'),
+											}, {
+												pattern: 'login/discord/callback',
+												entrypoint: resolve('./routes/authroutes/login/discord/callback.ts'),
+											}
+										]
+									}, {
+										enabled: google,
+										logs: AuthProviderLogStrings.googleLogs,
+										routes: [
+											{
+												pattern: 'login/google',
+												entrypoint: resolve('./routes/authroutes/login/google/index.ts'),
+											}, {
+												pattern: 'login/google/callback',
+												entrypoint: resolve('./routes/authroutes/login/google/callback.ts'),
+											}
+										]
+									}, {
+										enabled: auth0,
+										logs: AuthProviderLogStrings.auth0Logs,
+										routes: [
+											{
+												pattern: 'login/auth0',
+												entrypoint: resolve('./routes/authroutes/login/auth0/index.ts'),
+											}, {
+												pattern: 'login/auth0/callback',
+												entrypoint: resolve('./routes/authroutes/login/auth0/callback.ts'),
+											}
+										]
+									}, {
+										enabled: usernameAndPassword,
+										logs: AuthProviderLogStrings.usernameAndPasswordLogs,
+										routes: [
+											{
+												pattern: 'login/api/login',
+												entrypoint: resolve('./routes/authroutes/login/api/login.ts'),
+											}
+										]
+									}, {
+										enabled: usernameAndPassword && allowUserRegistration,
+										logs: AuthProviderLogStrings.allowUserRegistration,
+										routes: [
+											{
+												pattern: 'signup/',
+												entrypoint: resolve('./routes/authroutes/login/signup.astro'),
+											}, {
+												pattern: 'login/api/register',
+												entrypoint: resolve('./routes/authroutes/login/api/register.ts'),
+											}
+										]
+									}
+								]
 							})
-
-							// GitHub Auth Provider
-							if ( github ) {
-								// Log that the GitHub Auth Provider is enabled
-								integrationLogger(logger, verbose, 'info', 'GitHub Auth Provider is Enabled');
-								injectRoute({
-									pattern: makeRoute('login/github'),
-									entrypoint: resolve('./routes/authroutes/login/github/index.ts'),
-								});
-								injectRoute({
-									pattern: makeRoute('login/github/callback'),
-									entrypoint: resolve('./routes/authroutes/login/github/callback.ts'),
-								});
-							} else {
-								// Log that the GitHub Auth Provider is disabled
-								integrationLogger(logger, verbose, 'info', 'GitHub Auth Provider is Disabled');
-							}
-
-							// Discord Auth Provider
-							if (discord){
-								// Log that the Discord Auth Provider is enabled
-								integrationLogger(logger, verbose, 'info', 'Discord Auth Provider is Enabled');
-								injectRoute({
-									pattern: makeRoute('login/discord'),
-									entrypoint: resolve('./routes/authroutes/login/discord/index.ts'),
-								});
-								injectRoute({
-									pattern: makeRoute('login/discord/callback'),
-									entrypoint: resolve('./routes/authroutes/login/discord/callback.ts'),
-								});
-							}
-
-							// Google Auth Provider
-							if (google){
-								// Log that the Google Auth Provider is enabled
-								integrationLogger(logger, verbose, 'info', 'Google Auth Provider is Enabled');
-								injectRoute({
-									pattern: makeRoute('login/google'),
-									entrypoint: resolve('./routes/authroutes/login/google/index.ts'),
-								});
-								injectRoute({
-									pattern: makeRoute('login/google/callback'),
-									entrypoint: resolve('./routes/authroutes/login/google/callback.ts'),
-								});
-							}
-
-							// Auth0 Auth Provider
-							if (auth0){
-								// Log that the Auth0 Auth Provider is enabled
-								integrationLogger(logger, verbose, 'info', 'Auth0 Auth Provider is Enabled');
-								injectRoute({
-									pattern: makeRoute('login/auth0'),
-									entrypoint: resolve('./routes/authroutes/login/auth0/index.ts'),
-								});
-								injectRoute({
-									pattern: makeRoute('login/auth0/callback'),
-									entrypoint: resolve('./routes/authroutes/login/auth0/callback.ts'),
-								});
-							}
-
-							// Username and Password Auth Provider
-							if ( usernameAndPassword) {
-								// Log that the Username and Password Auth Provider is enabled
-								integrationLogger(logger, verbose, 'info', 'Username and Password Auth Provider is Enabled');
-								injectRoute({
-									pattern: makeRoute('login/api/login'),
-									entrypoint: resolve('./routes/authroutes/login/api/login.ts'),
-								})
-								if ( allowUserRegistration ) {
-									injectRoute({
-										pattern: makeRoute('signup/'),
-										entrypoint: resolve('./routes/authroutes/login/signup.astro'),
-									})
-									injectRoute({
-										pattern: makeRoute('login/api/register'),
-										entrypoint: resolve('./routes/authroutes/login/api/register.ts'),
-									})
-								}
-							}
 
 						} else if ( !AuthConfig.enabled ) {
 							// Log that the Auth is disabled
-							integrationLogger(logger, verbose, 'info', DashboardStrings.AuthDisabled);
+							studioLogger(LoggerOpts.logInfo, DashboardStrings.AuthDisabled);
 						}
 
 						// Log that the setup is complete
-						integrationLogger(logger, verbose, "info", "Dashboard ready!");
+						studioLogger(LoggerOpts.logInfo, "StudioCMS Dashboard is ready!");
 						
 					} else {
 						// Log that the Dashboard is disabled
-						integrationLogger(logger, verbose, 'info', DashboardStrings.DashboardDisabled);
+						studioLogger(LoggerOpts.logInfo, DashboardStrings.DashboardDisabled);
 					}
 
 
                 },
-				'astro:server:start': ({ logger }) => {
+				'astro:server:start': async ({ logger }) => {
 					// Display Console Message if dbStartPage(First Time DB Initialization) is enabled
-					if (options.dbStartPage) {
-						integrationLogger(
-							logger,
-							true,
-							'warn',
-							DbErrors.DbStartPage
-						);
+					const { logWarn } = await studioLoggerOptsResolver(logger, true);
+					if (options.dbStartPage) { 
+						studioLogger(logWarn, DbErrors.DbStartPage);
 					}
 				},
             }

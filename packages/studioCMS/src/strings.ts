@@ -96,3 +96,30 @@ export const cloudflareImageHandlerStrings = {
     },
     ...genericAdapterStrings
 }
+
+export const AuthProviderLogStrings = {
+    githubLogs: {
+        enabledMessage: 'GitHub Auth Provider is Enabled',
+        disabledMessage: 'GitHub Auth Provider is Disabled',
+    },
+    discordLogs: {
+        enabledMessage: 'Discord Auth Provider is Enabled',
+        disabledMessage: 'Discord Auth Provider is Disabled',
+    },
+    googleLogs: {
+        enabledMessage: 'Google Auth Provider is Enabled',
+        disabledMessage: 'Google Auth Provider is Disabled',
+    },
+    auth0Logs: {
+        enabledMessage: 'Auth0 Auth Provider is Enabled',
+        disabledMessage: 'Auth0 Auth Provider is Disabled',
+    },
+    usernameAndPasswordLogs: {
+        enabledMessage: 'Username and Password Auth Provider is Enabled',
+        disabledMessage: 'Username and Password Auth Provider is Disabled',
+    },
+    allowUserRegistration: {
+        enabledMessage: 'User Registration is Enabled',
+        disabledMessage: 'User Registration is Disabled',
+    },
+}

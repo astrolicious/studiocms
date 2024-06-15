@@ -1,4 +1,4 @@
-import { checkAstroConfig, studioLogger, studioLoggerOptsResolver, addExternalIntegration, makeFrontend, addIntegrationArray } from './utils';
+import { checkAstroConfig, studioLogger, studioLoggerOptsResolver, makeFrontend, addIntegrationArray, addIntegrationArrayWithCheck } from './utils';
 import { studioCMSRobotsTXT, studioCMSImageHandler, studioCMSDashboard } from './integrations';
 import { addDts, addVirtualImports, createResolver, defineIntegration } from 'astro-integration-kit';
 import 'astro-integration-kit/types/db';
@@ -82,35 +82,31 @@ export default defineIntegration({
 
 					// Add Internal Integrations
 					addIntegrationArray(params, { 
+						LoggerOpts,
 						integrations: [ 
 							studioCMSDashboard(resolvedOptions), 
 							studioCMSImageHandler(resolvedOptions) 
-						], 
-						LoggerOpts
+						],
 					})
 
-					// Robots.txt Integration
-					if (includedIntegrations.useAstroRobots) {
-						addExternalIntegration(params, {
-							knownSimilar: ['astro-robots-txt', 'astro-robots'],
-							integration: studioCMSRobotsTXT({
-								...robotsTXTPreset, ...includedIntegrations.astroRobotsConfig
-							}),
-							LoggerOpts
-						})
-					}
-
-					//
-					// Third-Party Integrations
-					//
-					// Sitemap Integration
-					if (includedIntegrations.useInoxSitemap) {
-						addExternalIntegration(params, {
-							knownSimilar: ['@astrojs/sitemap', '@inox-tools/sitemap-ext', '@inox-tools/declarative-sitemap'],
-							integration: inoxsitemap(),
-							LoggerOpts
-						})
-					}
+					// Add External Integrations
+					addIntegrationArrayWithCheck(params, {
+						LoggerOpts,
+						integrations: [
+							{ 
+								enabled: includedIntegrations.useAstroRobots, 
+								knownSimilar: ['astro-robots-txt', 'astro-robots'], 
+								integration: studioCMSRobotsTXT({ 
+									...robotsTXTPreset, ...includedIntegrations.astroRobotsConfig 
+								}) 
+							},
+							{
+								enabled: includedIntegrations.useInoxSitemap,
+								knownSimilar: ['@astrojs/sitemap', '@inox-tools/sitemap-ext', '@inox-tools/declarative-sitemap'],
+								integration: inoxsitemap()
+							}
+						]
+					})
 
 					// Log Setup Complete
 					studioLogger(LoggerOpts.logInfo, 'StudioCMS Core Setup Complete.');

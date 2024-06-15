@@ -6,8 +6,8 @@ export const addIntegrationArray = defineUtility("astro:config:setup")(
     ( 
         params, 
         opts: {
-            integrations: AstroIntegration[],
             LoggerOpts: StudioLoggerOptsResolverResponse,
+            integrations: AstroIntegration[],
         },
      ) => {
             for (const integration of opts.integrations) {
