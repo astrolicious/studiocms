@@ -6,7 +6,12 @@
     "composite": true,
     "noEmit": false,
     "allowImportingTsExtensions": false,
-    "emitDeclarationOnly": false
+    "emitDeclarationOnly": false,
+    "paths": {
+      "node-playground/*": [
+        "../../playgrounds/node/src/*"
+      ]
+    }
   },
   "references": [
     {
@@ -14,10 +19,10 @@
     }
   ],
   "include": [
-    "./**/*",
-    "./src/**/*.json",
     "./package.json",
     "./virt-dev.d.ts",
-    "../../playgrounds/node/.astro/**/*"
+    "../../playgrounds/node/.astro/**/*",
+    "./**/*",
+    "./src/**/*.json"
   ]
 }

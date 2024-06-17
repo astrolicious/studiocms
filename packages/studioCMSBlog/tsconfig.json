@@ -9,6 +9,9 @@
       ],
       "@astrolicious/studiocms/*": [
         "../studioCMS/src/*"
+      ],
+      "node-playground/*": [
+        "../../playgrounds/node/src/*"
       ]
     }
   },
@@ -21,7 +24,9 @@
     }
   ],
   "include": [
-    "./**/*",
-    "../../playgrounds/node/.astro/**/*"
+    "../../playgrounds/node/**/*",
+    "../../playgrounds/node/.astro/**/*",
+    "../studioCMS/**/*",
+    "./**/*"
   ]
 }
