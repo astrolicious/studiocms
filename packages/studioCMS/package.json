@@ -47,7 +47,7 @@
     "@lucia-auth/adapter-drizzle": "^1.0.7",
     "@markdoc/markdoc": "^0.4.0",
     "@noble/hashes": "^1.4.0",
-    "@shikijs/transformers": "^1.4.0",
+    "@shikijs/transformers": "^1.7.0",
     "@unocss/astro": "^0.59.4",
     "@unocss/reset": "^0.59.4",
     "@unocss/preset-uno": "^0.59.4",
