@@ -143,7 +143,7 @@ const pageTitle = `Edit Page | ${contextConfig.title}`;
                         <sl-option value="off">No, Don't show on the Navbar</sl-option>
                     </sl-select>
 
-                    <sl-select id="package" name="package" value={pageData.package} help-text="This feature has not yet been implemented">
+                    <sl-select id="package" name="package" value={pageData.package}>
                         <div slot="label" class="text-lg inline">Package</div>
                         {
                             Array.from(studioCMSPluginList.values()).map((plugin) => (

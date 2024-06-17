@@ -12,7 +12,7 @@
   "dependencies": {
     "@astrojs/check": "^0.5.10",
     "@astrojs/tailwind": "^5.1.0",
-    "astro": "^4.5.12",
+    "astro": "^4.9.3",
     "astro-font": "^0.0.80",
     "astro-icon": "^1.1.0",
     "astro-seo": "^0.8.3",
