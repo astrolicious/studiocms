@@ -34,4 +34,5 @@ export type VirtualResolver = {
     defaultLayout: string;
     headDefaults: string;
     Genericheader: string;
+    pathGenerators: string;
 }

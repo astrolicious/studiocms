@@ -344,6 +344,20 @@ export const DTSResolver = (virtualResolver: VirtualResolver) => {
          * # Utility Map for declaring StudioCMS Pugins 
         */
         export const pluginList: Map<string, { name: string, label: string }>;
+
+        /**
+         * # pathWithBase Helper Function
+         * 
+         * Get the a root-relative URL path with the site's 'base' prefixed.
+         */
+        export const pathWithBase: typeof import('${virtualResolver.pathGenerators}').pathWithBase;
+
+        /**
+         * # fileWithBase Helper Function
+         * 
+         * Get the a root-relative file URL path with the site's 'base' prefixed.
+         */
+        export const fileWithBase: typeof import('${virtualResolver.pathGenerators}').fileWithBase;
     }`);
     
     // Return Virtual DTS File

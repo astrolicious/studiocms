@@ -6,11 +6,9 @@ import { StudioCMSRenderer, contentHelper } from "studiocms:components";
 // Get the slug from the URL
 const { slug } = Astro.params;
 
-const fourOhFour = `${import.meta.env.BASE_URL}404`
-
 // If no slug is provided, redirect to 404
 if (!slug) {
-    return Astro.redirect(fourOhFour);
+    return new Response(null, { status: 404 })
 }
 
 // Fetch the blog post content
@@ -26,7 +24,7 @@ const {
 
 // If no content is found, redirect to 404
 if (!id) {
-    return Astro.redirect(fourOhFour);
+    return new Response(null, { status: 404 })
 }
 
 ---

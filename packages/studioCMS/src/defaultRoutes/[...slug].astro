@@ -4,13 +4,13 @@ import { StudioCMSRenderer, contentHelper, FrontLayout } from 'studiocms:compone
 const { slug } = Astro.params;
 
 if(!slug){
-	return Astro.redirect("/404")
+	return new Response(null, { status: 404 })
 }
 
 const { title, description, heroImage, content, id } = await contentHelper(slug);
 
 if(!id){
-	return Astro.redirect("/404")
+	return new Response(null, { status: 404 })
 }
 ---
 

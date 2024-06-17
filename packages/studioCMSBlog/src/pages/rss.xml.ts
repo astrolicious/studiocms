@@ -2,6 +2,7 @@ import rss from '@astrojs/rss';
 import type { APIContext } from 'astro';
 import { getPageList, getSiteConfig } from 'studiocms:components';
 import config from 'studiocms-blog:config';
+import { pathWithBase } from 'studiocms:helpers';
 
 export async function GET(context: APIContext) {
 
@@ -25,7 +26,7 @@ export async function GET(context: APIContext) {
 		title, description, site,
 		items: orderedPosts.map(({ slug, title, description, publishedAt: pubDate }) => ({
 			title, description, pubDate,
-			link: `${site}blog/${slug}`,
+			link: pathWithBase(`blog/${slug}`),
 		})),
 	});
 }

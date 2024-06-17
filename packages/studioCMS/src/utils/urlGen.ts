@@ -1,3 +1,4 @@
+import { pathWithBase } from "studiocms:helpers";
 
 
 export default async function urlGenFactory(
@@ -14,13 +15,13 @@ export default async function urlGenFactory(
 
     if (path) {
         if (isDashboardRoute) {
-            url = `${import.meta.env.BASE_URL}${dashboardRoute}/${path}`;
+            url = pathWithBase(`${dashboardRoute}/${path}`)
         } else {
-            url = `${import.meta.env.BASE_URL}${path}`;
+            url = pathWithBase(path);
         }
     } else {
         if (isDashboardRoute) {
-            url = `${import.meta.env.BASE_URL}${dashboardRoute}`;
+            url = pathWithBase(dashboardRoute);
         } else {
             url = import.meta.env.BASE_URL;
         }

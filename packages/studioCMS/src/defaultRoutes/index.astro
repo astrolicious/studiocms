@@ -4,7 +4,7 @@ import { StudioCMSRenderer, contentHelper, FrontLayout } from 'studiocms:compone
 const { title, description, heroImage, content, id } = await contentHelper("index")
 
 if(!id){
-	return Astro.redirect("/404")
+	return new Response(null, { status: 404 })
 }
 ---
 

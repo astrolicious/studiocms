@@ -3,6 +3,7 @@ import { getPageList, getSiteConfig, Avatar } from "studiocms:components";
 import { StudioCMSRoutes } from "studiocms-dashboard:routeMap";
 import { externalNav } from "virtual:studiocms/_nav"
 import "./navigation.css";
+import { pathWithBase } from "studiocms:helpers";
 
 type Props = {
     topLevelLinkCount?: number;
@@ -41,7 +42,7 @@ const restOfPages = navPagesList.filter(page => page.slug !== "index");
 for (const page of restOfPages) {
     links.push({
         text: page.title,
-        href: import.meta.env.BASE_URL + page.slug,
+        href: pathWithBase(page.slug),
     })
 }
 
@@ -50,7 +51,7 @@ const externalLinks = Array.from(externalNav.values())
 for (const link of externalLinks) {
     links.push({
         text: link.text,
-        href: import.meta.env.BASE_URL + link.slug,
+        href: pathWithBase(link.slug),
     })
 }
 

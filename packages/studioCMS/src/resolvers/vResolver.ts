@@ -57,6 +57,7 @@ export const vResolver = ( opts: ResolverOpts ): ResolverResponse => {
         defaultLayout: resolve('../defaultRoutes/components/Layout.astro'),
         headDefaults: resolve('../components/exports/headDefaults.ts'),
         Genericheader: resolve('../components/exports/GenericHeader.astro'),
+        pathGenerators: resolve('../utils/base.ts'),
     }
 
     // Create Virtual Import Maps
@@ -98,6 +99,7 @@ export const vResolver = ( opts: ResolverOpts ): ResolverResponse => {
         { import: virtualResolver.StudioCMSLocalsMap },
         { import: virtualResolver.StudioCMSDBTypeHelpers },
         { import: virtualResolver.textFormatterHelper },
+        { import: virtualResolver.pathGenerators },
     ]
 
     let virtualHelperMap = ''
