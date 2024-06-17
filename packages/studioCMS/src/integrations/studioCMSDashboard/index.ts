@@ -1,11 +1,10 @@
-import { addIntegration, addVirtualImports, createResolver, defineIntegration } from "astro-integration-kit";
+import { addIntegration, createResolver, defineIntegration } from "astro-integration-kit";
 import { injectAuthRouteArray, injectRouteArray, virtualResolver, loadKeys, studioLogger, studioLoggerOptsResolver } from "./utils";
-import { optionsSchema, type AuthConfigMap, type usernameAndPasswordConfig } from "./schemas";
+import { optionsSchema } from "./schemas";
 import { AuthProviderLogStrings, DashboardStrings, DbErrors } from "./strings";
-import { readFileSync, writeFile } from "node:fs";
-import { randomUUID } from "node:crypto";
 import { astroENV } from "./env";
-import { StudioUnoCSS, studiocssPreset, FileSystemIconLoader, transformerDirectives } from "./studiocsspreset";
+import { FileSystemIconLoader, studioCMSUnoCSSIntegration } from "./studiocsspreset";
+import { usernameAndPasswordAuthConfig } from "./studioauth-config";
 
 export default defineIntegration({
     name: '@astrolicious/studioCMS:adminDashboard',
@@ -17,8 +16,7 @@ export default defineIntegration({
 
                     // Destructure the params and options
                     const { 
-						logger, 
-						config,
+						logger,
 						addMiddleware,
 						updateConfig,
 					} = params;
@@ -30,16 +28,6 @@ export default defineIntegration({
 							dashboardEnabled,
 							AuthConfig,
 							dashboardRouteOverride,
-							UnoCSSConfigOverride: {
-								injectEntry,
-								injectReset,
-								presetsConfig: {
-									presetDaisyUI: {
-										themes,
-										darkTheme
-									}
-								},
-							},
 							AuthConfig: {
 								providers,
 								providers: {
@@ -74,88 +62,6 @@ export default defineIntegration({
 
 					// Create Resolvers
 					const { resolve } = createResolver(import.meta.url);
-					const { resolve: rootResolve } = createResolver(config.root.pathname);
-
-					// Username and Password Config
-					/**
-					 * Check if the salt is defined in the studiocms-auth.config.json file
-					 * 
-					 * File is stored in the root of the user's project as studiocms-auth.config.json
- 					 * 
-					 * @see https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html#scrypt
-					 * @see https://words.filippo.io/the-scrypt-parameters/
-					 * 
-					 * @example
-					 * {
-					 * 	"salt": "salt", //Uint8Array | string
-					 * 	"opts": {
-					 * 		"cpu_mem": 2 ** 12, //NUMBER
-					 * 		"block_size": 8, //NUMBER
-					 * 		"parallelization": 1, //NUMBER
-					 * 		"output_key_length": 32 //NUMBER
-					 *      "asyncTick": 10, //NUMBER
-					 * 		"max_mem": 1024 ** 3 + 1024 //NUMBER
-					 *   },
-					 * }
-					 */
-					let VirtualAuthSecurity: usernameAndPasswordConfig
-
-					if ( usernameAndPassword ) {
-						try {
-							const authConfigFileJson = readFileSync(rootResolve('./studiocms-auth.config.json'), { encoding: 'utf-8' });
-							const authConfigFile: AuthConfigMap = JSON.parse(authConfigFileJson);
-
-							if (!authConfigFile.salt) {
-								return studioLogger(LoggerOpts.logError, 'studiocms-auth.config.json file does not contain a salt');
-							}
-
-							const authConfigMap = {
-								salt: authConfigFile.salt,
-								opts: {
-									N: authConfigFile.opts.cpu_mem || 2 ** 12,
-									r: authConfigFile.opts.block_size || 8,
-									p: authConfigFile.opts.parallelization || 1,
-									dkLen: authConfigFile.opts.output_key_length || 32,
-									asyncTick: authConfigFile.opts.asyncTick || 10,
-									maxmem: authConfigFile.opts.max_mem || 1024 ** 3 + 1024,
-								}
-							};
-
-
-							VirtualAuthSecurity = authConfigMap;
-						} catch (error) {
-							// Log that the file does not exist
-							studioLogger(LoggerOpts.logError, 'studiocms-auth.config.json file does not exist. Creating...');
-
-							// Create a new salt
-							const newSalt = randomUUID();
-							VirtualAuthSecurity = { salt: newSalt, opts: { N: 2 ** 12, r: 8, p: 1, dkLen: 32 }};
-
-							const outputMap: AuthConfigMap = {
-								salt: newSalt,
-								opts: {
-									cpu_mem: 2 ** 12,
-									block_size: 8,
-									parallelization: 1,
-									output_key_length: 32,
-									asyncTick: 10,
-									max_mem: 1024 ** 3 + 1024,
-								}
-							}
-
-							writeFile(rootResolve('./studiocms-auth.config.json'), JSON.stringify(outputMap, null, 2), (err) => {
-								if (err) {
-									// Log that the file could not be created
-									studioLogger(LoggerOpts.logError, 'studiocms-auth.config.json file could not be created');
-								}
-							});
-						}
-
-						// Create Virtual Config
-						const VirtualAuthConfig = `export default ${JSON.stringify(VirtualAuthSecurity)}`;
-						addVirtualImports(params, { name, imports: { 'virtual:studiocms-dashboard/auth-sec': VirtualAuthConfig } });
-
-					}
 
 					virtualResolver(params, { name });
 
@@ -163,34 +69,18 @@ export default defineIntegration({
 					studioLogger(LoggerOpts.logInfo, DashboardStrings.AddIntegrations);
 
 					// CSS Management
-					addIntegration(params, {
-						integration: StudioUnoCSS({
-							configFile: false,
-							injectReset: injectReset,
-							injectEntry: injectEntry,
-							presets: studiocssPreset({ 
-								daisy: { themes, darkTheme },
-								icons: {
-									collections: {
-										mdi: () => import('@iconify-json/mdi/icons.json').then(i => i.default),
-										google: FileSystemIconLoader(resolve('./icons/google')),
-										discord: FileSystemIconLoader(resolve('./icons/discord')),
-										github: FileSystemIconLoader(resolve('./icons/github')),
-										auth0: FileSystemIconLoader(resolve('./icons/auth0')),
-									},
-								},
-								fonts: {
-									provider: 'google',
-									fonts: {
-										// Required Fonts for Google Icons
-										  sans: 'Roboto',
-										  mono: ['Fira Code', 'Fira Mono:400,700'],
-									},
-								}
-							}),
-							transformers: [ transformerDirectives() ],
-						}),
-					});
+					addIntegration(params, { integration: studioCMSUnoCSSIntegration({
+						options,
+						icons: {
+							collections: {
+								mdi: () => import('@iconify-json/mdi/icons.json').then(i => i.default),
+								google: FileSystemIconLoader(resolve('./icons/google')),
+								discord: FileSystemIconLoader(resolve('./icons/discord')),
+								github: FileSystemIconLoader(resolve('./icons/github')),
+								auth0: FileSystemIconLoader(resolve('./icons/auth0')),
+							},
+						}
+					})});
 
 					// In the case of First time Setup run the Start Pages
 					if ( dbStartPage ) {
@@ -284,6 +174,7 @@ export default defineIntegration({
 								]
 							})
 
+							// Inject Auth Provider Routes
 							injectAuthRouteArray(params, {
 								dashboardRouteOverride,
 								LoggerOpts,
@@ -360,6 +251,12 @@ export default defineIntegration({
 									}
 								]
 							})
+
+							// If Username and Password Auth is enabled Verify the Auth Config File Exists and is setup!
+							usernameAndPasswordAuthConfig(params, { 
+								enabled: usernameAndPassword, 
+								name 
+							});
 
 						} else if ( !AuthConfig.enabled ) {
 							// Log that the Auth is disabled

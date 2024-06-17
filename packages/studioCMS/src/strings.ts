@@ -159,3 +159,17 @@ export const CheckENVStrings = {
         ErrorMessage: 'The Following Auth0 Keys are Missing and are Required for the Auth0 Authentication to work:'
     }
 }
+
+export const authConfigStrings = {
+    configSetup: "Setting up StudioCMS Username and Password Authentication...",
+    readConfig: "Trying to read studiocms-auth.config.json...",
+    saltMissing: "studiocms-auth.config.json is missing the required 'salt' field",
+    eRC: {
+        part1: "Error reading studiocms-auth.config.json: ",
+        part2: ", Generating new salt..."
+    },
+    newSalt: "Writing new studiocms-auth.config.json with new salt...",
+    writeFileError: "Error writing new studiocms-auth.config.json: ",
+    newConfig: "New studiocms-auth.config.json generated with salt: ",
+    configComplete: "StudioCMS Username and Password Authentication Setup Complete!"
+}
