@@ -55,12 +55,49 @@ for (const link of externalLinks) {
 }
 
 ---
+
+<!-- If no dropdown items -->
+{ ( links.length < topLevelLinkCount || links.length === topLevelLinkCount ) && (
+    <div class="navigation">
+        <div class="title"><a href={baseSiteURL}>{title}</a></div>
+        <div class="mininav">
+            <button>Menu</button>
+            <div class="mininav-content">
+            { 
+                links.map(({ text, href }) => (
+                    <a href={href}>{text}</a>
+                )) 
+            }
+            </div>
+        </div>
+        { 
+            links.map(({ text, href }) => (
+                <a class="links" href={href}>{text}</a>
+            )) 
+        }
+
+        { !hideAvatar && <div class="avatar"><Avatar /></div> }
+    </div> 
+) }
+
+<!-- If dropdown items -->
 { links.length > topLevelLinkCount && (
     <div class="navigation">
         <div class="title"><a href={baseSiteURL}>{title}</a></div>
+
+        <div class="mininav">
+            <button>Menu</button>
+            <div class="mininav-content">
+            { 
+                links.map(({ text, href }) => (
+                    <a href={href}>{text}</a>
+                )) 
+            }
+            </div>
+        </div>
         { 
             links.slice(0, topLevelLinkCount).map(({ text, href }) => (
-                    <a href={href}>{text}</a>
+                    <a class="links" href={href}>{text}</a>
             ))
         }
             <div class="dropdown">
@@ -73,13 +110,4 @@ for (const link of externalLinks) {
             </div>
         { !hideAvatar && <div class="avatar"><Avatar /></div> }
     </div>
-) }
-{ ( links.length < topLevelLinkCount || links.length === topLevelLinkCount ) && (
-    <div class="navigation">
-        <div class="title"><a href={baseSiteURL}>{title}</a></div>
-    { links.map(({ text, href }) => (
-            <a href={href}>{text}</a>
-    )) }
-        { !hideAvatar && <div class="avatar"><Avatar /></div> }
-    </div> 
 ) }

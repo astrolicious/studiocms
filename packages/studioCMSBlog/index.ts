@@ -9,7 +9,6 @@ externalNavigation.set("@astrolicious/studiocms-blog/index", {text: "Blog", slug
 export default defineTheme({
 	name: "studiocms-blog",
 	schema: z.object({
-		title: z.string().optional(),
 		description: z.string().optional(),
 	}),
 }) 

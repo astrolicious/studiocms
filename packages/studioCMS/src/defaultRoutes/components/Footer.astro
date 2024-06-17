@@ -1,14 +1,14 @@
 ---
 interface Props {
-	title: string;
+	siteTitle: string;
 }
 
-const { title } = Astro.props;
+const { siteTitle } = Astro.props;
 const today = new Date();
 ---
 
 <footer>
-	&copy; {today.getFullYear()} {title}. All rights reserved.
+	&copy; {today.getFullYear()} {siteTitle}. All rights reserved.
 </footer>
 
 <style>
