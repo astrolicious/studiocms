@@ -1,7 +1,5 @@
 ---
 import Config from 'virtual:studiocms/config';
-import { extname } from "node:path";
-import { fileWithBase } from "../../utils/base";
 import { headDefaults } from "./headDefaults"
 import { createHead } from "../../utils/head";
 
@@ -27,31 +25,7 @@ const {
     ogImage 
 } = Astro.props;
 
-const faviconTypeMap = {
-	'.ico': 'image/x-icon',
-	'.gif': 'image/gif',
-	'.jpeg': 'image/jpeg',
-	'.jpg': 'image/jpeg',
-	'.png': 'image/png',
-	'.svg': 'image/svg+xml',
-};
-
-function isFaviconExt(ext: string): ext is keyof typeof faviconTypeMap {
-	return ext in faviconTypeMap;
-}
-
-export const getFavicon = () => {
-	const ext = extname(favicon).toLowerCase();
-
-	if (!isFaviconExt(ext)) {
-		throw new Error(`Unsupported favicon type: ${ext}`);
-	}
-
-	const type = faviconTypeMap[ext];
-	return { href: fileWithBase(favicon), type };
-}
-
-const genericHead = headDefaults(title, description, lang, Astro, getFavicon(), ogImage, canonicalURL);
+const genericHead = headDefaults(title, description, lang, Astro, favicon, ogImage, canonicalURL);
 
 const head = createHead(genericHead, htmlDefaultHead)
 ---

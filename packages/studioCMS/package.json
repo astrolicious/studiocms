@@ -61,6 +61,7 @@
     "marked-footnote": "^1.2.2",
     "marked-shiki": "^1.1.0",
     "marked-smartypants": "^1.1.7",
+    "mrmime": "^2.0.0",
     "oslo": "^1.2.0",
     "shiki": "^1.6.3",
     "unpic": "^3.18.0",

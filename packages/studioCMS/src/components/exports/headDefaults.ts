@@ -2,16 +2,41 @@ import type { z } from "astro/zod";
 import type { HeadConfigSchema } from "../../schemas/defaultFrontend";
 import version from "virtual:studiocms/version";
 import type { AstroGlobalPartial } from "astro";
+import { extname } from "path";
+import { AstroError } from "astro/errors";
+import { lookup } from 'mrmime';
+
+type faviconTypeMap = '.ico' |	'.gif' | '.jpeg' | '.jpg' | '.png' | '.svg';
+const faviconTypes: faviconTypeMap[] = ['.ico', '.gif', '.jpeg', '.jpg', '.png', '.svg'];
+
+function isFaviconExt(ext: string): ext is faviconTypeMap {
+    if (faviconTypes.includes(ext as faviconTypeMap)) {
+        return true;
+    }
+    return false;
+}
+
+const makeFavicon = (favicon: string) => {
+    const ext = extname(favicon).toLocaleLowerCase();
+    if (isFaviconExt(ext)) {
+        const faviconHref = favicon;
+        const faviconType = lookup(ext)
+        return { href: faviconHref, type: faviconType }
+    }
+    throw new AstroError(`Unsupported favicon extension: ${ext}`, `The favicon must be one of the following types: ${faviconTypes.join(', ')}`);
+}
+
 
 export const headDefaults = (
     title: string,
     description: string,
     lang: string,
     Astro: AstroGlobalPartial,
-    getFavicon: { href: string; type: string },
+    favicon: string,
     ogImage: string|undefined,
     canonical: URL|undefined,
 ) => {
+
     const headDefaults: z.input<ReturnType<typeof HeadConfigSchema>> = [
         { tag: 'meta', attrs: { charset: 'utf-8' } },
         {
@@ -32,8 +57,8 @@ export const headDefaults = (
             tag: 'link',
             attrs: {
                 rel: 'shortcut icon',
-                href: getFavicon.href,
-                type: getFavicon.type,
+                href: makeFavicon(favicon).href,
+                type: makeFavicon(favicon).type,
             },
         },
         // OpenGraph Tags
