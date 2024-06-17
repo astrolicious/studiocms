@@ -1,17 +1,19 @@
 ---
 import { BlogLayout } from "studiocms-blog:layouts";
-import { PageList } from "studiocms-blog:components";
+import { PageList, RSSIcon } from "studiocms-blog:components";
 import { getPageList } from "studiocms:components";
 
+// Get all pages
 const pageList = await getPageList();
 
+// Get all blog pages and sort by published date
 const blogPageList = pageList.filter(page => page.package === "@astrolicious/studiocms-blog")
     .sort((a, b) => Date.parse(b.publishedAt.toString()) - Date.parse(a.publishedAt.toString()));
 
 ---
 <BlogLayout title="Blog" description="Blog Index" >
     <main>
-        <h1>Blog Posts</h1>
+        <h1>Blog Posts <a href="/rss.xml"><RSSIcon /></a> </h1>
         <PageList blogPageList={blogPageList} />
     </main>
 </BlogLayout>

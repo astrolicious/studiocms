@@ -15,7 +15,7 @@ export default defineConfig({
 		studioCMS(), // StudioCMS Integration options can be found in `studiocms.config.mjs`
 		blog({
 			config: {
-				title: 'Astro StudioCMS Blog',
+				title: 'StudioCMS Test Blog',
 				description: 'A simple blog built with Astro and StudioCMS',
 			},
 		}), 

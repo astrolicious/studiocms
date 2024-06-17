@@ -63,14 +63,14 @@ export async function contentHelper(
         .select().from(PageData)
         .where(eq(PageData.slug, slugToUse))
         .get();
-    
-    if (pageData.package !== packageToGet) {
-        throw new AstroError(`Page not found: ${slug} in package ${packageToGet}`, 
-        `studioCMS contentHelper Failed to get page data for page ${slug} in package ${packageToGet}` );
-    }
 
     if(!pageData) {
         return {} as ContentHelperTempResponse;
+    }
+    
+    if (pageData.package && pageData.package !== packageToGet) {
+        throw new AstroError(`Page not found: ${slug} in package ${packageToGet}`, 
+        `studioCMS contentHelper Failed to get page data for page ${slug} in package ${packageToGet}` );
     }
 
     const LangToGet = "default";

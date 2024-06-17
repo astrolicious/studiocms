@@ -3,7 +3,11 @@ import { StudioCMSRenderer, contentHelper, FrontLayout } from 'studiocms:compone
 
 const { slug } = Astro.params;
 
-const { title, description, heroImage, content, id } = await contentHelper(slug||"");
+if(!slug){
+	return Astro.redirect("/404")
+}
+
+const { title, description, heroImage, content, id } = await contentHelper(slug);
 
 if(!id){
 	return Astro.redirect("/404")

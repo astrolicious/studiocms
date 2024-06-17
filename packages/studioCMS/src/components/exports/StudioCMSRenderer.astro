@@ -1,22 +1,12 @@
 ---
 import Config from 'virtual:studiocms/config';
-import { renderMarked, renderMarkDoc, renderAstroMD } from "../../utils/renderers";
+import { contentRenderer } from '../../utils/renderers/contentRenderer';
 
 type Props = {
 	content: string;
 };
 
 const { content } = Astro.props;
-
-function contentRenderer() {
-	if (Config.contentRenderer === 'markdoc') {
-		return renderMarkDoc(content);
-	}
-	if (Config.contentRenderer === 'astro') {
-		return renderAstroMD(content);
-	}
-	return renderMarked(content);
-}
 ---
 
-<Fragment set:html={contentRenderer()} />
+<Fragment set:html={contentRenderer(content, Config.contentRenderer)} />

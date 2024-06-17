@@ -1,0 +1,44 @@
+---
+import { BlogLayout } from "studiocms-blog:layouts";
+import { PostHeader } from "studiocms-blog:components";
+import { StudioCMSRenderer, contentHelper } from "studiocms:components";
+
+// Get the slug from the URL
+const { slug } = Astro.params;
+
+// If no slug is provided, redirect to 404
+if (!slug) {
+    return Astro.redirect('/404');
+}
+
+// Fetch the blog post content
+const { 
+    id,
+    title, 
+    description, 
+    heroImage, 
+    publishedAt, 
+    updatedAt, 
+    content, 
+} = await contentHelper(slug, "@astrolicious/studiocms-blog")
+
+// If no content is found, redirect to 404
+if (!id) {
+    return Astro.redirect('/404');
+}
+
+---
+<BlogLayout {title} {description} {heroImage}>
+    <main>
+        <article>
+            <PostHeader {title} {description} {heroImage} {publishedAt} {updatedAt} />
+            <StudioCMSRenderer content={content} />
+        </article>
+    </main>
+</BlogLayout>
+
+<style>
+	main {
+		width: 960px;
+	}
+</style>

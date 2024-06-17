@@ -40,6 +40,11 @@ export const DTSResolver = (virtualResolver: VirtualResolver) => {
         */
         export const StudioCMSRenderer: typeof import('${virtualResolver.StudioCMSRenderer}').default;
 
+        /**
+         * Content Renderer Function - Function used by StudioCMSRenderer to render content
+        */
+        export const contentRenderer: typeof import('${virtualResolver.ContentRenderer}').contentRenderer;
+
         /** 
          * # Navigation Component used for rendering StudioCMS User Facing Navigation
          * 

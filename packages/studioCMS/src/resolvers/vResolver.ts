@@ -45,6 +45,7 @@ export const vResolver = ( opts: ResolverOpts ): ResolverResponse => {
         CImage: customImageResolved,
         FormattedDate: formattedDateResolved,
         StudioCMSRenderer: StudioCMSRendererResolver(),
+        ContentRenderer: resolve('../utils/renderers/contentRenderer.ts'),
         AuthHelper: resolve('../utils/authhelper.ts'),
         StudioCMSLocalsMap: resolve('../schemas/locals.ts'),
         StudioCMSDBTypeHelpers: resolve('../schemas/dbtypehelpers.ts'),
@@ -74,6 +75,7 @@ export const vResolver = ( opts: ResolverOpts ): ResolverResponse => {
     const MiscComponents = [
         { import: virtualResolver.contentHelper },
         { import: virtualResolver.headDefaults },
+        { import: virtualResolver.ContentRenderer },
     ]
 
     let virtualComponentMap = ''

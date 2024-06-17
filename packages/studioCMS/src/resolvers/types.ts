@@ -22,6 +22,7 @@ export type VirtualResolver = {
     CImage: string;
     FormattedDate: string;
     StudioCMSRenderer: string;
+    ContentRenderer: string;
     AuthHelper: string;
     StudioCMSLocalsMap: string;
     StudioCMSDBTypeHelpers: string;

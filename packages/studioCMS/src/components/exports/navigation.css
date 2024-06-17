@@ -73,6 +73,18 @@
     .navigation .links {
         display: none;
     }
+    .navigation .title {
+        position: absolute;
+        padding-left: 0;
+        left: -2rem;
+        scale: 0.5;
+    }
+    .navigation .avatar {
+        position: absolute;
+        padding-right: -4rem;
+        right: 0;
+        scale: 0.8;
+    }
 }
 
 

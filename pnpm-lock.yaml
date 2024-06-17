@@ -169,6 +169,9 @@ importers:
 
   packages/studioCMSBlog:
     dependencies:
+      '@astrojs/rss':
+        specifier: ^4.0.6
+        version: 4.0.6
       astro-theme-provider:
         specifier: ^0.5.0
         version: 0.5.0(@astrojs/db@0.11.5)(astro@4.10.2)
