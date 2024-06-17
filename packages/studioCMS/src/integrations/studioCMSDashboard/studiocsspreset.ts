@@ -1,13 +1,15 @@
-import { presetDaisy } from '@yangyang20240403/unocss-preset-daisyui'
-import { presetTypography, presetUno, presetWebFonts, presetIcons, presetWind, type Preset, type UserConfigDefaults, transformerDirectives } from 'unocss'
-import type { IconsOptions } from 'unocss/preset-icons'
-import type { WebFontsOptions } from 'unocss/preset-web-fonts'
-import type { Theme } from 'unocss/preset-wind'
-import { presetScrollbar } from 'unocss-preset-scrollbar'
-import UnoCSSAstroIntegration, { type AstroIntegrationConfig } from "@unocss/astro";
-import { FileSystemIconLoader } from '@iconify/utils/lib/loader/node-loaders'
-import type { AstroIntegration } from 'astro'
-import type { StudioCMSOptions } from '../../schemas'
+import { presetTypography, presetUno, presetWebFonts, presetIcons, presetWind, transformerDirectives } from 'unocss';
+import UnoCSSAstroIntegration from '@unocss/astro';
+import { presetScrollbar } from 'unocss-preset-scrollbar';
+import { presetDaisy } from '@yangyang20240403/unocss-preset-daisyui';
+import { FileSystemIconLoader } from '@iconify/utils/lib/loader/node-loaders';
+import type { Preset, UserConfigDefaults } from 'unocss';
+import type { AstroIntegrationConfig } from '@unocss/astro';
+import type { IconsOptions } from 'unocss/preset-icons';
+import type { WebFontsOptions } from 'unocss/preset-web-fonts';
+import type { Theme } from 'unocss/preset-wind';
+import type { AstroIntegration } from 'astro';
+import type { StudioCMSOptions } from './schemas';
 
 export { transformerDirectives, FileSystemIconLoader }
 

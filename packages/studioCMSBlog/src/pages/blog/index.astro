@@ -2,19 +2,28 @@
 import { BlogLayout } from "studiocms-blog:layouts";
 import { PageList, RSSIcon } from "studiocms-blog:components";
 import { getPageList } from "studiocms:components";
+import config from "studiocms-blog:config";
+
+// Set the title and description
+const { description: configDescription, blogIndex } = config;
+
+const title: string = blogIndex?.title || "Blog";
+const description: string = configDescription || "Blog Index";
+const showRSSFeed: boolean = blogIndex?.showRSSFeed || true;
 
 // Get all pages
 const pageList = await getPageList();
 
+const rssUrl = `${import.meta.env.BASE_URL}rss.xml`;
 // Get all blog pages and sort by published date
 const blogPageList = pageList.filter(page => page.package === "@astrolicious/studiocms-blog")
     .sort((a, b) => Date.parse(b.publishedAt.toString()) - Date.parse(a.publishedAt.toString()));
 
 ---
-<BlogLayout title="Blog" description="Blog Index" >
+<BlogLayout {title} description={description} >
     <main>
-        <h1>Blog Posts <a href="/rss.xml"><RSSIcon /></a> </h1>
-        <PageList blogPageList={blogPageList} />
+        <h1>{title} {showRSSFeed && <a href={rssUrl}><RSSIcon /></a>}</h1>
+        <PageList {blogPageList} />
     </main>
 </BlogLayout>
 

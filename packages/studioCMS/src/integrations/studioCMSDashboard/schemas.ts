@@ -1,2 +1,2 @@
-export { optionsSchema } from "../../schemas";
-export type { AuthConfigMap, usernameAndPasswordConfig } from "../../schemas/auth-types";
+export * from "../../schemas";
+export * from "../../schemas/auth-types";

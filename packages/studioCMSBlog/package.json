@@ -1,7 +1,7 @@
 {
     "name": "@astrolicious/studiocms-blog",
     "version": "0.0.0-alpha.1",
-    "description": "Blog Theme components for Astro StudioCMS",
+    "description": "Add a blog to your StudioCMS project with ease!",
     "author": {
       "name": "Adam Matthiesen | Jacob Jenkins | Paul Valladares",
       "url": "https://astro-studiocms.xyz"
@@ -23,7 +23,16 @@
       "astro-studiocms",
       "cms",
       "studiocms",
-      "withastro"
+      "withastro",
+      "blog",
+      "studio-blog",
+      "astro-blog",
+      "astro-studio-blog",
+      "studiocms-blog",
+      "theme",
+      "astro-theme",
+      "studiocms-theme",
+      "astro-studiocms-theme"
     ],
     "homepage": "https://astro-studiocms.xyz",
     "publishConfig": {
@@ -32,22 +41,24 @@
     "sideEffects": false,
     "files": [
         "index.ts",
+        "schema.ts",
         "src"
     ],
     "exports": {
-      ".": {
-        "import": "./index.ts"
-      }
+      ".": "./index.ts",
+      "./schema": "./schema.ts"
     },
     "type": "module",
     "dependencies": {
-        "astro-theme-provider": "^0.5.0",
-        "@astrojs/rss": "^4.0.6"
+      "@astrolicious/studiocms": "workspace:*",
+      "@astrojs/rss": "^4.0.6",
+      "astro-theme-provider": "^0.5.0"
     },
     "devDependencies": {
-      "@astrolicious/studiocms": "workspace:*",
-      "@types/node": "20.12.8",
-      "astro": "^4.10.2"
+      "@types/node": "20.12.8"
+    },
+    "peerDependencies": {
+      "astro": ">=4.10.2"
     }
   }
   

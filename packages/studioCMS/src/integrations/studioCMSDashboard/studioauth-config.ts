@@ -1,6 +1,6 @@
 import { addVirtualImports, createResolver, defineUtility } from "astro-integration-kit"
-import { readFileSync, writeFile } from "fs";
-import type { AuthConfigMap, usernameAndPasswordConfig } from "./schemas";
+import { readFileSync, writeFile } from "node:fs";
+import type { AuthConfigMap, StudioCMSOptions, usernameAndPasswordConfig } from "./schemas";
 import { studioLogger, studioLoggerOptsResolver } from "./utils";
 import { randomUUID } from "node:crypto";
 import { authConfigStrings } from "./strings";
@@ -38,13 +38,30 @@ export const usernameAndPasswordAuthConfig = defineUtility("astro:config:setup")
     async (
             params, 
             opts: { 
-                enabled: boolean,
+                options: StudioCMSOptions,
                 name: string 
             }
         ) => {
 
         const { addWatchFile, config } = params;
-        const { enabled, name } = opts;
+        const { name, options } = opts;
+
+        const { 
+            dbStartPage,
+            dashboardConfig: { 
+                dashboardEnabled, 
+                AuthConfig: { 
+                    enabled: authEnabled, 
+                    providers: { 
+                        usernameAndPasswordConfig: { 
+                            allowUserRegistration 
+                        } 
+                    } 
+                } 
+            } 
+        } = options;
+
+        const enabled = !dbStartPage && dashboardEnabled && authEnabled && allowUserRegistration;
 
         const AuthLogger = params.logger.fork('@astrolicious/studioCMS:adminDashboard/auth-security')
 
@@ -124,9 +141,8 @@ export const usernameAndPasswordAuthConfig = defineUtility("astro:config:setup")
                 writeFile(AstroProjectRoot('./studiocms-auth.config.json'), newAuthOutputString, { encoding: 'utf-8'}, (err) => {
                     if (err) {
                         return studioLogger(LoggerOpts.logError, authConfigStrings.writeFileError+err)
-                    } else {
-                        return studioLogger(LoggerOpts.logInfo, authConfigStrings.newConfig+newSalt)
-                    }
+                    } 
+                    return studioLogger(LoggerOpts.logInfo, authConfigStrings.newConfig+newSalt)
                 });
             }
     

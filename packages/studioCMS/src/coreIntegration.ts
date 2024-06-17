@@ -26,7 +26,7 @@ export default defineIntegration({
 			hooks: {
 				'astro:db:setup': ({ extendDb }) => { 
 					// Configure `@astrojs/db` integration to include the StudioCMS Database Table Schema
-					extendDb({ configEntrypoint: resolve('./db/config.ts') }) 
+					extendDb({ configEntrypoint: resolve('./db/config.ts') });
 				},
 				'astro:config:setup': async ( params ) => {
 
@@ -34,13 +34,10 @@ export default defineIntegration({
 					const { config: astroConfig, addWatchFile } = params;
 
 					// Watch the StudioCMS Config File for changes (including creation/deletion)
-					addWatchFile(getStudioConfigFileUrl(astroConfig.root))
+					addWatchFile(getStudioConfigFileUrl(astroConfig.root));
 
 					// Resolve Options
-					const resolvedOptions = await oResolver(params, options)
-
-					// Destructure Options
-					const { overrides, includedIntegrations } = resolvedOptions;
+					const resolvedOptions = await oResolver(params, options);
 
 					// Setup Logger
 					const LoggerOpts = await studioLoggerOptsResolver(params.logger, resolvedOptions.verbose);
@@ -51,34 +48,36 @@ export default defineIntegration({
 					checkAstroConfig(astroConfig, LoggerOpts);
 
 					// Create Resolver for User-Defined Virtual Imports
-					const { resolve: rootResolve } = createResolver(astroConfig.root.pathname)
+					const { resolve: rootResolve } = createResolver(astroConfig.root.pathname);
 
 					// Create Virtual Resolver
 					const { virtualImportMap, dtsFile } = vResolver({ 
 						overrides: {
-							CustomImageOverride: overrides.CustomImageOverride && rootResolve(overrides.CustomImageOverride),
-							FormattedDateOverride: overrides.FormattedDateOverride && rootResolve(overrides.FormattedDateOverride),
+							CustomImageOverride: resolvedOptions.overrides.CustomImageOverride && 
+								rootResolve(resolvedOptions.overrides.CustomImageOverride),
+							FormattedDateOverride: resolvedOptions.overrides.FormattedDateOverride && 
+								rootResolve(resolvedOptions.overrides.FormattedDateOverride),
 						 }, 
 						 imports: { resolvedOptions, version, astroConfig }
-						})
+					});
 
 					// Add Virtual Imports
-					studioLogger(LoggerOpts.logInfo, CoreStrings.AddVirtualImports)
-					addVirtualImports(params, { name, imports: virtualImportMap })
+					studioLogger(LoggerOpts.logInfo, CoreStrings.AddVirtualImports);
+					addVirtualImports(params, { name, imports: virtualImportMap });
 
 					// Add Virtual DTS File
-					studioLogger(LoggerOpts.logInfo, CoreStrings.AddVirtualDTS)
+					studioLogger(LoggerOpts.logInfo, CoreStrings.AddVirtualDTS);
 					addDts(params, { name, content: dtsFile });
 
 					// Generate Default Frontend Routes if Enabled
 					makeFrontend(params, {
 						resolvedOptions, LoggerOpts, 
+						default404Route: resolve('./defaultRoutes/404.astro'),
 						defaultRoutes: [
 							{ pattern: '/', entrypoint: resolve('./defaultRoutes/index.astro') },
 							{ pattern: '[...slug]', entrypoint: resolve('./defaultRoutes/[...slug].astro') }
 						],
-						default404Route: resolve('./defaultRoutes/404.astro')
-					})
+					});
 
 					// Add Internal Integrations
 					addIntegrationArray(params, { 
@@ -87,26 +86,25 @@ export default defineIntegration({
 							studioCMSDashboard(resolvedOptions), 
 							studioCMSImageHandler(resolvedOptions) 
 						],
-					})
+					});
 
 					// Add External Integrations
 					addIntegrationArrayWithCheck(params, {
 						LoggerOpts,
 						integrations: [
 							{ 
-								enabled: includedIntegrations.useAstroRobots, 
+								enabled: resolvedOptions.includedIntegrations.useAstroRobots, 
 								knownSimilar: ['astro-robots-txt', 'astro-robots'], 
 								integration: studioCMSRobotsTXT({ 
-									...robotsTXTPreset, ...includedIntegrations.astroRobotsConfig 
+									...robotsTXTPreset, ...resolvedOptions.includedIntegrations.astroRobotsConfig 
 								}) 
-							},
-							{
-								enabled: includedIntegrations.useInoxSitemap,
+							}, {
+								enabled: resolvedOptions.includedIntegrations.useInoxSitemap,
 								knownSimilar: ['@astrojs/sitemap', '@inox-tools/sitemap-ext', '@inox-tools/declarative-sitemap'],
 								integration: inoxsitemap()
 							}
 						]
-					})
+					});
 
 					// Log Setup Complete
 					studioLogger(LoggerOpts.logInfo, CoreStrings.SetupComplete);

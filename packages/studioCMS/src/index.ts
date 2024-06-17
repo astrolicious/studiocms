@@ -3,6 +3,8 @@ import coreIntegration from './coreIntegration';
 import { studioCMSRobotsTXT as robotsTXT } from './integrations';
 export * from './plugintools';
 
+export type { StudioCMSOptions };
+
 /**
  * A utility function to define the StudioCMS config object. 
  * This function is used to define the optional StudioCMS 

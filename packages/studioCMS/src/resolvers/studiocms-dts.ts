@@ -41,7 +41,9 @@ export const DTSResolver = (virtualResolver: VirtualResolver) => {
         export const StudioCMSRenderer: typeof import('${virtualResolver.StudioCMSRenderer}').default;
 
         /**
-         * Content Renderer Function - Function used by StudioCMSRenderer to render content
+         * # Content Renderer Function
+         * 
+         * Function used by StudioCMSRenderer to render content based on the current configuration of the StudioCMS 'contentRenderer' settings configuration option.
         */
         export const contentRenderer: typeof import('${virtualResolver.ContentRenderer}').contentRenderer;
 

@@ -1,8 +1,8 @@
 import type { AstroIntegrationLogger } from "astro";
 import { loadEnv } from "vite";
 import { studioLogger, studioLoggerOptsResolver } from "../../../utils";
-import type { AuthProviders } from "../../../schemas/auth";
 import { CheckENVStrings } from "../../../strings";
+import type { StudioCMSOptions } from "../schemas";
 
 const KeyList = {
     Github: {
@@ -43,9 +43,11 @@ const env = loadEnv('all', process.cwd(), 'CMS')
 
 export const loadKeys = async (
     logger: AstroIntegrationLogger, 
-    verbose: boolean, 
-    providers: AuthProviders
+    options: StudioCMSOptions,
 ) => {
+
+    const { verbose, dashboardConfig: { AuthConfig: { providers } } } = options;
+
     const { logInfo, logWarn } = await studioLoggerOptsResolver(logger, verbose);
 
     const infoLogger = (message: string) => {
