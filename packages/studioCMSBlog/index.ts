@@ -1,12 +1,6 @@
 import defineTheme from "astro-theme-provider";
-import { studioCMSPluginList, externalNavigation } from "@astrolicious/studiocms";
+import { defineStudioCMSPlugin } from "@astrolicious/studiocms";
 import { studioCMSBlogSchema } from "./schema";
-
-// Add StudioCMS Blog to the StudioCMS Plugin List
-studioCMSPluginList.set("@astrolicious/studiocms-blog", {name: "@astrolicious/studiocms-blog", label: "StudioCMS Blog"});
-
-// Add '/blog/' to the Frontend Navigation menu
-externalNavigation.set("@astrolicious/studiocms-blog/index", {text: "Blog", slug: "blog/"});
 
 /**
  * # StudioCMS Blog Theme(Integration) 
@@ -40,3 +34,14 @@ externalNavigation.set("@astrolicious/studiocms-blog/index", {text: "Blog", slug
 export default defineTheme({
 	name: "studiocms-blog", schema: studioCMSBlogSchema
 }) 
+
+// Register the StudioCMS Blog Plugin
+defineStudioCMSPlugin({
+	pkgname: "@astrolicious/studiocms-blog",
+	opts: {
+		pluginLabel: "StudioCMS Blog",
+		navigationLinks: [
+			{ text: "Blog", slug: "blog/" }
+		]
+	}
+})
