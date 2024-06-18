@@ -13,9 +13,9 @@ declare module 'virtual:studiocms/version' {
 	export default Version;
 }
 
-declare module 'virtual:studiocms-dashboard/auth-sec' {
-	const AuthSec: import('./src/integrations/studioCMSDashboard/index.ts').usernameAndPasswordConfig;
-	export default AuthSec;
+declare module 'virtual:studiocms-dashboard/AuthSecurityConfig' {
+	const AuthSecurityConfig: import('./src/integrations/studioCMSDashboard/schemas').usernameAndPasswordConfig;
+	export default AuthSecurityConfig;
 }
 
 declare module 'virtual:studiocms/_nav' {

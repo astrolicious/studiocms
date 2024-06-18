@@ -2,12 +2,12 @@
 import { User, db, eq } from 'astro:db';
 import { lucia } from "studiocms-dashboard:auth";
 import { scryptAsync } from "@noble/hashes/scrypt";
-import AuthSec from 'virtual:studiocms-dashboard/auth-sec';
 import type { APIContext } from "astro";
 import { randomUUID } from 'node:crypto';
 import { z } from 'astro/zod';
+import AuthSecurityConfig from 'virtual:studiocms-dashboard/AuthSecurityConfig';
 
-const { salt: ScryptSalt, opts: ScryptOpts } = AuthSec;
+const { salt: ScryptSalt, opts: ScryptOpts } = AuthSecurityConfig;
 
 
 export async function POST(context: APIContext): Promise<Response> {

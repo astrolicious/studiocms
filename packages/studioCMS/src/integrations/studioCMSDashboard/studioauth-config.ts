@@ -151,7 +151,7 @@ export const usernameAndPasswordAuthConfig = defineUtility("astro:config:setup")
             addVirtualImports(params, {
                 name,
                 imports: {
-                    'virtual:studiocms-dashboard/auth-sec': VirtualAuthSecImport
+                    'virtual:studiocms-dashboard/AuthSecurityConfig': VirtualAuthSecImport
                 }
             })
     
