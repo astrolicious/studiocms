@@ -3,6 +3,16 @@ import type { APIContext } from 'astro';
 import { getPageList, getSiteConfig } from 'studiocms:components';
 import config from 'studiocms-blog:config';
 import { pathWithBase } from 'studiocms:helpers';
+import { pages } from 'studiocms-blog:context';
+
+const blogRouteFullPath = pages.get('/blog/[...slug]')
+
+function getBlogRoute(slug: string) {
+	if (blogRouteFullPath) {
+		return blogRouteFullPath.replace('[...slug]', slug);
+	}
+	return '#';
+}
 
 export async function GET(context: APIContext) {
 
@@ -26,7 +36,7 @@ export async function GET(context: APIContext) {
 		title, description, site,
 		items: orderedPosts.map(({ slug, title, description, publishedAt: pubDate }) => ({
 			title, description, pubDate,
-			link: pathWithBase(`blog/${slug}`),
+			link: pathWithBase(getBlogRoute(slug)),
 		})),
 	});
 }
