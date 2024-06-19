@@ -2,7 +2,7 @@ import { checkAstroConfig, studioLogger, studioLoggerOptsResolver, makeFrontend,
 import { studioCMSRobotsTXT, studioCMSImageHandler, studioCMSDashboard } from './integrations';
 import { addDts, addVirtualImports, createResolver, defineIntegration } from 'astro-integration-kit';
 import 'astro-integration-kit/types/db';
-import { oResolver, vResolver } from './resolvers';
+import { optionsResolver, vResolver } from './resolvers';
 import inoxsitemap from '@inox-tools/sitemap-ext';
 import { studioCMSPluginList } from './plugintools';
 import { getStudioConfigFileUrl } from './studiocms-config';
@@ -37,7 +37,7 @@ export default defineIntegration({
 					addWatchFile(getStudioConfigFileUrl(astroConfig.root));
 
 					// Resolve Options
-					const resolvedOptions = await oResolver(params, options);
+					const resolvedOptions = await optionsResolver(params, options);
 
 					// Setup Logger
 					const LoggerOpts = await studioLoggerOptsResolver(params.logger, resolvedOptions.verbose);

@@ -13,7 +13,7 @@ import { defineUtility } from "astro-integration-kit";
  * 
  * @returns {StudioCMSOptions} The resolved StudioCMS Options
  */
-export const oResolver = defineUtility("astro:config:setup")(
+export const optionsResolver = defineUtility("astro:config:setup")(
     async (params, options: StudioCMSOptions) => { 
 
         // Destructure Params
