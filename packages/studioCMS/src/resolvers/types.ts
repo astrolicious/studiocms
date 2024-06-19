@@ -19,7 +19,7 @@ export type ResolverResponse = {
 }
 
 export type VirtualResolver = {
-    CImage: string;
+    CustomImage: string;
     FormattedDate: string;
     StudioCMSRenderer: string;
     ContentRenderer: string;

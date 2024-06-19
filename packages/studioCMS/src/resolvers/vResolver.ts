@@ -30,7 +30,7 @@ export const vResolver = ( opts: ResolverOpts ): ResolverResponse => {
     if (overrides.CustomImageOverride) {
         customImageResolved = overrides.CustomImageOverride
     } else {
-        customImageResolved = resolve('../components/exports/CImage.astro')
+        customImageResolved = resolve('../components/exports/CustomImage.astro')
     }
 
     let formattedDateResolved: string
@@ -42,7 +42,7 @@ export const vResolver = ( opts: ResolverOpts ): ResolverResponse => {
     }
 
     const virtualResolver: VirtualResolver = {
-        CImage: customImageResolved,
+        CustomImage: customImageResolved,
         FormattedDate: formattedDateResolved,
         StudioCMSRenderer: StudioCMSRendererResolver(),
         ContentRenderer: resolve('../utils/renderers/contentRenderer.ts'),
@@ -64,7 +64,7 @@ export const vResolver = ( opts: ResolverOpts ): ResolverResponse => {
 
     //-// Virtual Components
     const NamedComponents = [
-		{ title: "CImage", import: virtualResolver.CImage },
+		{ title: "CustomImage", import: virtualResolver.CustomImage },
 		{ title: "FormattedDate", import: virtualResolver.FormattedDate },
 		{ title: "StudioCMSRenderer", import: virtualResolver.StudioCMSRenderer },
 		{ title: "Navigation", import: virtualResolver.NavigationBar },

@@ -1,5 +1,5 @@
 ---
-import { CImage, FormattedDate } from 'studiocms:components'
+import { CustomImage, FormattedDate } from 'studiocms:components'
 
 interface Props {
     title: string
@@ -15,7 +15,7 @@ const { title, description, heroImage, publishedAt, updatedAt } = Astro.props;
 <h1 class="title">{title}</h1>
 
 <div style="text-align: center;">
-	<CImage src={heroImage} alt={title} width={720} height={360}/>
+	<CustomImage src={heroImage} alt={title} width={720} height={360}/>
 	<div>
 		<p class="date">Published: <FormattedDate date={publishedAt}/></p>
 		{updatedAt && <p class="date"> | Last Updated: <FormattedDate date={updatedAt}/></p>}

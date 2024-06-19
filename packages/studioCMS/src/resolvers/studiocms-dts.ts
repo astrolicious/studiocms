@@ -20,7 +20,7 @@ export const DTSResolver = (virtualResolver: VirtualResolver) => {
          * @props {number} width - Image Width
          * @props {number} height - Image Height
         */
-        export const CImage: typeof import('${virtualResolver.CImage}').default;
+        export const CustomImage: typeof import('${virtualResolver.CustomImage}').default;
 
         /** 
          * # Formatted Date Component used for rendering dates in a human readable format 
