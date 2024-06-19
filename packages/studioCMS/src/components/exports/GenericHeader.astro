@@ -3,7 +3,7 @@ import Config from 'virtual:studiocms/config';
 import { headDefaults } from "./headDefaults"
 import { createHead } from "../../utils/head";
 
-const { defaultFrontEndConfig: { htmlDefaultHead, favicon: cFav } } = Config;
+const { defaultFrontEndConfig: { htmlDefaultHead, favicon: configFav } } = Config;
 
 interface Props {
     title: string;
@@ -19,7 +19,7 @@ const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site) : undefin
 const { 
     title, 
     description, 
-    favicon = cFav, 
+    favicon = configFav, 
     canonicalURL = canonical, 
     lang = "en", 
     ogImage 
