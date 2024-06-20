@@ -63,6 +63,6 @@
     "@types/node": "20.12.8"
   },
   "peerDependencies": {
-    "astro": ">=4.10.2"
+    "astro": ">=4.10.3"
   }
 }

@@ -69,8 +69,8 @@
     "unocss": "^0.61.0"
   },
   "peerDependencies": {
-    "@astrojs/db": ">=0.11.5",
-    "astro": ">=4.10.2"
+    "@astrojs/db": ">=0.11.6",
+    "astro": ">=4.10.3"
   },
   "devDependencies": {
     "@types/node": "20.12.8",

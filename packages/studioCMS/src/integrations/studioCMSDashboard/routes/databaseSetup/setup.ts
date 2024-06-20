@@ -1,9 +1,9 @@
 // @ts-expect-error - Some types can only be imported from the Astro runtime
 import { PageContent, PageData, Blog, Permissions, SiteConfig, User, db, eq } from 'astro:db';
 import { scryptAsync } from "@noble/hashes/scrypt";
-import AuthSec from 'virtual:studiocms-dashboard/auth-sec';
+import AuthSecurityConfig from 'virtual:studiocms-dashboard/AuthSecurityConfig';
 
-const { salt: ScryptSalt, opts: ScryptOpts } = AuthSec;
+const { salt: ScryptSalt, opts: ScryptOpts } = AuthSecurityConfig;
 
 import type { APIContext } from "astro";
 import { randomUUID } from 'node:crypto';

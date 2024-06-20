@@ -1,11 +1,11 @@
 // @ts-expect-error - This is a missing type definition for the `astro:db` import since its a virtual module during Astro Runtime
 import { NOW, column, defineTable, sql } from 'astro:db';
 
-export const Session = defineTable({
+export const sessionTable = defineTable({
 	columns: {
-		id: column.text({ primaryKey: true, nullable: false }),
-		userId: column.text({ references: () => User.columns.id, nullable: false }),
-		expiresAt: column.number({ nullable: false }),
+		id: column.text({ primaryKey: true }),
+		userId: column.text({ references: () => User.columns.id, optional: false }),
+		expiresAt: column.date(),
 	},
 });
 

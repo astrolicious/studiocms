@@ -37,7 +37,8 @@ export default defineIntegration({
 								schema: {
 									CMS_CLOUDINARY_CLOUDNAME: envField.string({
 										context: 'server',
-										access: 'secret'
+										access: 'secret',
+										optional: true,
 									})
 								}
 							}

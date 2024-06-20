@@ -29,7 +29,10 @@ export default defineIntegration({
 					loadKeys(params.logger, options);
 
 					// Update Astro Config with Environment Variables (`astro:env`)
-					params.updateConfig({ experimental: { env: astroENV } });
+					params.updateConfig({ 
+						vite: { optimizeDeps: { exclude: ["astro:db"] }},
+						experimental: { env: astroENV } 
+					});
 
 					// Virtual Imports and DTS File Creation
 					virtualResolver(params, { name });
