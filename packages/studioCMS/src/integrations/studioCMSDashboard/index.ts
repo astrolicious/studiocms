@@ -42,11 +42,10 @@ export default defineIntegration({
 						integration: studioCMSUnoCSSIntegration({
 							options, 
 							icons: { 
-								collections: {
-									logos: () => import('@iconify-json/logos/icons.json').then(i => i.default as IconifyJSON),
-									mdi: () => import('@iconify-json/mdi/icons.json').then(i => i.default),
-									auth0: FileSystemIconLoader(resolve('./icons/auth0')),
-							}}
+								logos: () => import('@iconify-json/logos/icons.json').then(i => i.default as IconifyJSON),
+								mdi: () => import('@iconify-json/mdi/icons.json').then(i => i.default),
+								auth0: FileSystemIconLoader(resolve('./icons/auth0')),
+							}
 						})
 					});
 
