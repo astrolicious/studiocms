@@ -2,11 +2,11 @@ import { z } from "astro/zod";
 
 export const developerConfigSchema = z.object({
     /**
-     * Allows the user to enable Astro's View Transition API for the Astro Studio CMS Dashboard
+     * Zero-JavaScript View Transitions
      * 
-     * Disabled do to the fact that the View Transition API is still in development and is not ready for production use.
+     * Chrome 126 (released last week) and Microsoft Edge 126 (releasing this week) both support “cross-document view transitions” unlocking zero-JavaScript view transitions in Astro.
      * 
-     * **NOT YET IMPLEMENTED** - There is a bug with the View Transition API that causes this feature to not work as expected.
+     * @see https://astro.build/blog/future-of-astro-zero-js-view-transitions/
      */
     viewTransitionAPI: z.boolean().optional().default(false),
     /**

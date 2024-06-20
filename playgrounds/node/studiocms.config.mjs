@@ -36,6 +36,7 @@ export default defineStudioCMSConfig({
         },
         dashboardEnabled: true,
         developerConfig: {
+            viewTransitionAPI: true,
             testingAndDemoMode: false,
         },
     },

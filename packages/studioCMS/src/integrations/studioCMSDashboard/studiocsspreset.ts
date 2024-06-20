@@ -33,7 +33,9 @@ export const studiocssPreset = (
         }),
         presetTypography(),
         presetIcons({
-            ...opts.icons.collections,
+            collections: {
+                ...opts.icons.collections,
+            },
         }),
         presetWebFonts(opts.fonts),
     ]

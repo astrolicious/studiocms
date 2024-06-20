@@ -3,7 +3,6 @@ import BaseHead from "../components/BaseHead.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import SideBar from "../components/SideBar.astro";
-// import { ViewTransitions } from "astro:transitions";
 import ThemeManager from "../components/ThemeManager.astro";
 import Config from "virtual:studiocms/config";
 import { studioCMSSocials } from "./studiocms-socials";
@@ -19,9 +18,9 @@ const {
         }
       }
     },
-    // developerConfig: {
-    //   viewTransitionAPI
-    // },
+    developerConfig: {
+      viewTransitionAPI
+    },
   } 
 } = Config;
 
@@ -38,11 +37,6 @@ const {
   includeSidebar = true,
 } = Astro.props;
 
-// const includeViewTransitions = false;
-
-//min-h-[100vh] max-h-[100vh] max-w-[100vw]
-//lg:max-w-[100vw] max-w-[100vw] min-h-[100vh]
-
 ---
 
 <!doctype html>
@@ -51,6 +45,13 @@ const {
     <ThemeManager defaultTheme="auto" />
     <BaseHead title={title} description={description} />
     <!-- { includeViewTransitions && <ViewTransitions />} -->
+    {viewTransitionAPI && (
+      <style>
+        @view-transition {
+          navigation: auto; /* enabled! */
+        }
+      </style>
+    )}
   </head>
   <body>
     <div class="bg-base-100 drawer">
