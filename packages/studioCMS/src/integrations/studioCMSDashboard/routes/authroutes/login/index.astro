@@ -29,15 +29,15 @@ if (locals.isLoggedIn) {
 ---
 
 <Layout title='Login Page' description="Login Page" sideBarActiveItemID='login' includeSidebar={false}>
-  <div class="pb-12 mt-5">
+  <div class="px-10 pb-12 mt-5 flex flex-col content-center items-center">
 
-      <center><div class="text-5xl font-bold">Login</div>
+      <div class="text-5xl font-bold">Login</div>
       <div class="py-2">
           <text class="text-lg">
             To access this site, you need to log in!
           </text>
       </div>
-    </center><br />
+    <br />
 
       <!-- oAUTH Providers -->
       <OauthProviders dashboardConfig={dashboardConfig} />
@@ -46,7 +46,7 @@ if (locals.isLoggedIn) {
       <!-- Username and Password Provider-->
       { usernameAndPassword && (
         <div class="py-8">
-          <div class="bg-base-300 p-8 rounded-lg">
+          <div class="bg-base-300 p-8 rounded-lg md:w-[32rem]">
 
           <form method="post" action={loginAPI}>
 

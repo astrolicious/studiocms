@@ -42,6 +42,7 @@ export default defineIntegration({
 							options, 
 							icons: { 
 								collections: {
+									logos: () => import('@iconify-json/logos/icons.json').then(i => i.default),
 									mdi: () => import('@iconify-json/mdi/icons.json').then(i => i.default),
 									google: FileSystemIconLoader(resolve('./icons/google')),
 									discord: FileSystemIconLoader(resolve('./icons/discord')),

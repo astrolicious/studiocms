@@ -57,6 +57,9 @@ importers:
       '@cloudinary/url-gen':
         specifier: ^1.19.0
         version: 1.19.0
+      '@iconify-json/logos':
+        specifier: ^1.1.43
+        version: 1.1.43
       '@iconify-json/mdi':
         specifier: ^1.1.66
         version: 1.1.66
@@ -2248,6 +2251,12 @@ packages:
 
   /@floating-ui/utils@0.2.2:
     resolution: {integrity: sha512-J4yDIIthosAsRZ5CPYP/jQvUAQtlZTTD/4suA08/FEnlxqW3sKS9iAhgsa9VYLZ6vDHn/ixJgIqRQPotoBjxIw==}
+    dev: false
+
+  /@iconify-json/logos@1.1.43:
+    resolution: {integrity: sha512-UtvL1yDHUr9dl1Tqihh6K9m5dmbYKOYyLf3i9aKhymSW76QjOCGjpgQc0PQ4GJCAdU1cAMu+WO61TgPxdonrlg==}
+    dependencies:
+      '@iconify/types': 2.0.0
     dev: false
 
   /@iconify-json/mdi@1.1.66:

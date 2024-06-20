@@ -16,7 +16,7 @@ if (locals.isLoggedIn) {
 ---
 
 <Layout title='Registration Page' description="Registration Page" sideBarActiveItemID='login' includeSidebar={false}>
-  <div class="pb-12 mt-5">
+  <div class="pb-12 mt-5 flex flex-col content-center items-center">
 
       <center><div class="text-5xl font-bold">Registration Page</div>
       <div class="py-2">
@@ -32,7 +32,7 @@ if (locals.isLoggedIn) {
 
       <!-- Username and Password Provider-->
         <div class="py-8">
-          <div class="bg-base-300 p-8 rounded-lg">
+          <div class="bg-base-300 p-8 rounded-lg md:w-[32rem]">
 
           <form method="post" action={registerAPI}>
 
