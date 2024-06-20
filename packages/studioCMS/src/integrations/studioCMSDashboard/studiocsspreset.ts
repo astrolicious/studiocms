@@ -1,7 +1,7 @@
 import { presetTypography, presetUno, presetWebFonts, presetIcons, presetWind, transformerDirectives } from 'unocss';
 import UnoCSSAstroIntegration from '@unocss/astro';
 import { presetScrollbar } from 'unocss-preset-scrollbar';
-import { presetDaisy } from '@yangyang20240403/unocss-preset-daisyui';
+import { presetDaisy } from '@matthiesenxyz/unocss-preset-daisyui';
 import { FileSystemIconLoader } from '@iconify/utils/lib/loader/node-loaders';
 import type { Preset, UserConfigDefaults } from 'unocss';
 import type { AstroIntegrationConfig } from '@unocss/astro';
