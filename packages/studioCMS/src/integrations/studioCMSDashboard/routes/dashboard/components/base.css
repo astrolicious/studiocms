@@ -1,13 +1,17 @@
-:root, html, body, main {
+:root, html, body {
     min-height: 100vh;
-    min-width: fit-content;
+    min-width: 100vw;
     height: 100%;
     overflow-y: auto;
     overflow-x: hidden;
     scrollbar-width: thin;
 }
 
-:root, html::--webkit-scrollbar {
+main {
+    min-height: 100vh;
+}
+
+:root, html:state(webkit-scrollbar) {
     width: 2px;
 }
 
@@ -17,6 +21,6 @@
     scrollbar-width: thin;
 }
 
-.scrollbar::--webkit-scrollbar {
+.scrollbar:state(webkit-scrollbar) {
     width: 2px;
 }

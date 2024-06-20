@@ -52,7 +52,7 @@ const pageTitle = `Dashboard | ${contextConfig.title}`;
         </sl-breadcrumb>
     </div>
 
-    <div class="container max-w-[100vw] lg:max-w-[1800px] min-w-[75vw]">
+    <div class="container">
 
         <div class="text-5xl font-bold py-8">Dashboard</div>
 
@@ -71,7 +71,7 @@ const pageTitle = `Dashboard | ${contextConfig.title}`;
             </text>
         </div>
 
-        <div class="mt-8 flex gap-4">
+        <div class="mt-8 flex gap-4 max-sm:flex-wrap">
             <sl-button variant="warning" size="large" href={github} target="_blank" outline>
                 <sl-icon slot="prefix" name="star"></sl-icon>
                 <div>Star us on Github</div>

@@ -44,7 +44,6 @@ const {
   <head>
     <ThemeManager defaultTheme="auto" />
     <BaseHead title={title} description={description} />
-    <!-- { includeViewTransitions && <ViewTransitions />} -->
     {viewTransitionAPI && (
       <style>
         @view-transition {
@@ -57,11 +56,9 @@ const {
     <div class="bg-base-100 drawer">
       <div class="drawer-content bg-base-100">
         <Header studioCMSSocials={socialLinks}/>
-        <div class="md:flex md:justify-center">
           <main class="p-6 pt-10">
             <slot />
           </main>
-        </div>
         <Footer studioCMSSocials={socialLinks}/>
       </div>
       { includeSidebar && <SideBar studioCMSSocials={socialLinks}/>}

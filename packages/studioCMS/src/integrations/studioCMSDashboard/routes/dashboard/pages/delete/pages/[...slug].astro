@@ -46,7 +46,7 @@ if ( !developerConfig.testingAndDemoMode ) {
 
 let showSuccessToast = false;
 let showErrorToast = false;
-let showSlugErrorToast = false;
+// let showSlugErrorToast = false;
 
 if (Astro.request.method === 'POST' && !developerConfig.testingAndDemoMode) {
     try {
@@ -64,6 +64,7 @@ if (Astro.request.method === 'POST' && !developerConfig.testingAndDemoMode) {
                 .then(() => {
                     showSuccessToast = true;
                 })
+                // biome-ignore lint/suspicious/noExplicitAny: <explanation>
                 .catch((e: any) => {
                     console.error(e);
                     showErrorToast = true;
@@ -75,6 +76,7 @@ if (Astro.request.method === 'POST' && !developerConfig.testingAndDemoMode) {
                 .then(() => {
                     showSuccessToast = true;
                 })
+                // biome-ignore lint/suspicious/noExplicitAny: <explanation>
                 .catch((e: any) => {
                     console.error(e);
                     showErrorToast = true;
@@ -119,13 +121,13 @@ const pageTitle = `Delete Page | ${contextConfig.title}`;
             There was an Error Deleting the Page. Please try again.
         </sl-alert>
         )}
-        { showSlugErrorToast && (
+        <!-- { showSlugErrorToast && (
         <sl-alert variant="warning" duration="3000" open closable>
             <sl-icon slot="icon" name="exclamation-triangle"></sl-icon>
             <strong>Entered Slug does not match!</strong><br />
             Please enter the correct slug to delete the page.
         </sl-alert>
-        )}
+        )} -->
     </div>
     <div class="pb-12 mt-5">
 
