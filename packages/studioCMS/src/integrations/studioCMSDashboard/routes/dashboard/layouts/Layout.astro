@@ -40,10 +40,13 @@ const {
 
 // const includeViewTransitions = false;
 
+//min-h-[100vh] max-h-[100vh] max-w-[100vw]
+//lg:max-w-[100vw] max-w-[100vw] min-h-[100vh]
+
 ---
 
 <!doctype html>
-<html lang="en" data-theme={lightTheme} class="scrollbar scrollbar-thumb-white scrollbar-track-[#1a172e] h-32 overflow-y-scroll">
+<html lang="en" data-theme={lightTheme}>
   <head>
     <ThemeManager defaultTheme="auto" />
     <BaseHead title={title} description={description} />
@@ -54,7 +57,7 @@ const {
       <div class="drawer-content bg-base-100">
         <Header studioCMSSocials={socialLinks}/>
         <div class="md:flex md:justify-center">
-          <main class="p-6 pt-10 lg:max-w-[1800px] max-w-[100vw] min-h-[100vh]">
+          <main class="p-6 pt-10">
             <slot />
           </main>
         </div>

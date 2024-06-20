@@ -1,0 +1,22 @@
+:root, html, body, main {
+    min-height: 100vh;
+    min-width: fit-content;
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-width: thin;
+}
+
+:root, html::--webkit-scrollbar {
+    width: 2px;
+}
+
+.scrollbar {
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-width: thin;
+}
+
+.scrollbar::--webkit-scrollbar {
+    width: 2px;
+}

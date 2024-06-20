@@ -1,6 +1,5 @@
 import { presetTypography, presetUno, presetWebFonts, presetIcons, presetWind, transformerDirectives } from 'unocss';
 import UnoCSSAstroIntegration from '@unocss/astro';
-import { presetScrollbar } from 'unocss-preset-scrollbar';
 import { presetDaisy } from '@matthiesenxyz/unocss-preset-daisyui';
 import { FileSystemIconLoader } from '@iconify/utils/lib/loader/node-loaders';
 import type { Preset, UserConfigDefaults } from 'unocss';
@@ -36,7 +35,6 @@ export const studiocssPreset = (
         presetIcons({
             ...opts.icons.collections,
         }),
-        presetScrollbar(),
         presetWebFonts(opts.fonts),
     ]
 }
