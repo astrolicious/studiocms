@@ -5,6 +5,7 @@ import { AuthProviderLogStrings, DashboardStrings, DbErrors } from "./strings";
 import { astroENV } from "./env";
 import { FileSystemIconLoader, studioCMSUnoCSSIntegration } from "./studiocsspreset";
 import { usernameAndPasswordAuthConfig } from "./studioauth-config";
+import type { IconifyJSON } from '@iconify/types';
 
 export default defineIntegration({
     name: '@astrolicious/studioCMS:adminDashboard',
@@ -42,11 +43,8 @@ export default defineIntegration({
 							options, 
 							icons: { 
 								collections: {
-									logos: () => import('@iconify-json/logos/icons.json').then(i => i.default),
+									logos: () => import('@iconify-json/logos/icons.json').then(i => i.default as IconifyJSON),
 									mdi: () => import('@iconify-json/mdi/icons.json').then(i => i.default),
-									google: FileSystemIconLoader(resolve('./icons/google')),
-									discord: FileSystemIconLoader(resolve('./icons/discord')),
-									github: FileSystemIconLoader(resolve('./icons/github')),
 									auth0: FileSystemIconLoader(resolve('./icons/auth0')),
 							}}
 						})

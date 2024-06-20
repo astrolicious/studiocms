@@ -76,6 +76,7 @@
     "@types/node": "20.12.8",
     "typescript": "^5.4.5",
     "@types/fs-extra": "^11.0.4",
-    "vite": "^5.2.11"
+    "vite": "^5.2.11",
+    "@iconify/types": "^2.0.0"
   }
 }
