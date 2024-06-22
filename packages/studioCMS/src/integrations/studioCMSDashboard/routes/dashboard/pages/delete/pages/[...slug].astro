@@ -111,15 +111,15 @@ const pageTitle = `Delete Page | ${contextConfig.title}`;
         { showSuccessToast && (
         <sl-alert variant="success" duration="3000" open closable>
             <sl-icon slot="icon" name="check2-circle"></sl-icon>
-            <strong>Page Deleted!</strong><br />
-            You can safely leave this page now.
+            <strong>Page Deleted!</strong>
+            <p>You can safely leave this page now.</p>
         </sl-alert>
         )}
         { showErrorToast && (
         <sl-alert variant="danger" duration="3000" open closable>
             <sl-icon slot="icon" name="exclamation-octagon"></sl-icon>
-            <strong>Error Deleting Page</strong><br />
-            There was an Error Deleting the Page. Please try again.
+            <strong>Error Deleting Page</strong>
+            <p>There was an Error Deleting the Page. Please try again.</p>
         </sl-alert>
         )}
         <!-- { showSlugErrorToast && (
@@ -130,9 +130,9 @@ const pageTitle = `Delete Page | ${contextConfig.title}`;
         </sl-alert>
         )} -->
     </div>
-    <div class="pb-12 mt-5">
+    <div class="container">
 
-        <div class="text-5xl font-bold py-8">Delete Page: {page.title}</div>
+        <h1 class="text-5xl font-bold py-8">Delete Page: {page.title}</h1>
 
         <div class="py-2">
             <text class="text-lg">
@@ -140,7 +140,7 @@ const pageTitle = `Delete Page | ${contextConfig.title}`;
             </text>
         </div>
 
-        <div class="py-2">
+        <div class="py-2 flex justify-center">
     
             <form method="post" enctype="multipart/form-data" >
                     
@@ -149,9 +149,9 @@ const pageTitle = `Delete Page | ${contextConfig.title}`;
                     type="text" 
                     id="slug" 
                     name="slug" 
-                    class="border-solid border-2 border-gray-300 rounded-lg p-2 w-96"
+                    class="border-solid border-2 border-gray-300 rounded-lg p-2 w-96 pb-2"
                     placeholder="Your Post Slug (THIS WILL DELETE THE POST)"
-                    required><br><br>
+                    required>
 
                 <input type="hidden" name="to-delete" id="to-delete" value={page.slug} />
     

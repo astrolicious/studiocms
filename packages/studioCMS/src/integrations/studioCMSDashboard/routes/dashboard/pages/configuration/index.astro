@@ -86,21 +86,21 @@ const pageTitle = `Site Config | ${contextConfig.title}`;
         { showSuccessToast && (
         <sl-alert variant="success" duration="3000" open closable>
             <sl-icon slot="icon" name="check2-circle"></sl-icon>
-            <strong>Site Config Updated!</strong><br />
-            You can safely leave this page now.
+            <strong>Site Config Updated</strong>
+            <p>You can safely leave this page now.</p>
         </sl-alert>
         )}
         { showErrorToast && (
         <sl-alert variant="danger" duration="3000" open closable>
             <sl-icon slot="icon" name="exclamation-octagon"></sl-icon>
-            <strong>Error Updating Site Config</strong><br />
-            There was an Error editing the site config. Please try again.
+            <strong>Error Updating Site Config</strong>
+            <p>There was an Error editing the site config. Please try again.</p>
         </sl-alert>
         )}
     </div>
     <div class="container flex flex-col">
 
-        <div class="text-5xl font-bold grow py-8">Site Configuration</div>
+        <h1 class="text-5xl font-bold grow py-8">Site Configuration</h1>
 
         <div class="py-4 text-center">
             <sl-button variant="warning" href={configurationAdmins} outline>Manage Admins</sl-button>

@@ -126,28 +126,28 @@ const pageTitle = `New Page | ${contextConfig.title}`;
         { showSuccessToast && (
         <sl-alert variant="success" duration="3000" open closable>
             <sl-icon slot="icon" name="check2-circle"></sl-icon>
-            <strong>New Page Created!</strong><br />
-            You can safely leave this page now.
+            <strong>New Page Created!</strong>
+            <p>You can safely leave this page now.</p>
         </sl-alert>
         )}
         { showErrorToast && (
         <sl-alert variant="danger" duration="3000" open closable>
             <sl-icon slot="icon" name="exclamation-octagon"></sl-icon>
-            <strong>Error Creating Page</strong><br />
-            There was an Error Creating the Page. Please try again.
+            <strong>Error Creating Page</strong>
+            <p>There was an Error Creating the Page. Please try again.</p>
         </sl-alert>
         )}
         { showSlugErrorToast && (
         <sl-alert variant="warning" duration="3000" open closable>
             <sl-icon slot="icon" name="exclamation-triangle"></sl-icon>
-            <strong>Page With Slug Already Exists!</strong><br />
-            A page with that slug already exists. Please choose a different slug.
+            <strong>Page With Slug Already Exists!</strong>
+            <p>A page with that slug already exists. Please choose a different slug.</p>
         </sl-alert>
         )}
     </div>
     <div class="container">
 
-        <div class="text-5xl font-bold py-8">Create New Page</div>
+        <h1 class="text-5xl font-bold py-8">Create New Page</h1>
 
         <div class="py-2 flex justify-center">
 
@@ -206,7 +206,7 @@ const pageTitle = `New Page | ${contextConfig.title}`;
                     <sl-input 
                         id="hero-image" 
                         name="hero-image" 
-                        placeholder="Your Page's Hero Image URL (Also the OGImage)" 
+                        placeholder="Your Page's Hero Image URL (Also the OG Image)" 
                         size="medium"
                         value="https://images.unsplash.com/photo-1707343843982-f8275f3994c5?q=80&w=1032&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                         required>
@@ -228,7 +228,8 @@ const pageTitle = `New Page | ${contextConfig.title}`;
                         required>
                         <div slot="label" class="text-lg inline">Content</div>
                     </sl-textarea>
-                    <br />
+                   
+                    <sl-divider></sl-divider>
 
                     <sl-button 
                         variant="success" 
@@ -240,7 +241,9 @@ const pageTitle = `New Page | ${contextConfig.title}`;
         
                 </form>
         </div>
-        <br />
+
+        <sl-divider></sl-divider>
+        
         <sl-card class="card-header max-w-[100vw] lg:max-w-[1800px] w-full">
             <div slot="header" class="text-xl font-bold">Live Preview</div>
             <div id="html-preview" class="w-full max-w-[100vw] lg:max-w-[1800px] prose md:prose-lg lg:prose-xl">

@@ -95,15 +95,15 @@ const pageTitle = `Edit Page | ${contextConfig.title}`;
         { showSuccessToast && (
         <sl-alert variant="success" duration="3000" open closable>
             <sl-icon slot="icon" name="check2-circle"></sl-icon>
-            <strong>Post Edited!</strong><br />
-            You can safely leave this page now.
+            <strong>Page Edited</strong>
+            <p>You can safely leave this page now.</p>
         </sl-alert>
         )}
         { showErrorToast && (
         <sl-alert variant="danger" duration="3000" open closable>
             <sl-icon slot="icon" name="exclamation-octagon"></sl-icon>
-            <strong>Error Editing Post</strong><br />
-            There was an Error editing the Post. Please try again.
+            <strong>Error Editing Page</strong>
+            <p>There was an Error editing the Post. Please try again.</p>
         </sl-alert>
         )}
     </div>
@@ -121,7 +121,7 @@ const pageTitle = `Edit Page | ${contextConfig.title}`;
 
     <div class="container">
 
-        <div class="text-5xl font-bold py-8">Edit Page: {pageData.title}</div>
+        <h1 class="text-5xl font-bold py-8">Edit Page: {pageData.title}</h1>
 
         <div class="py-2 flex justify-center">
 
@@ -139,8 +139,8 @@ const pageTitle = `Edit Page | ${contextConfig.title}`;
 
                     <sl-select id="show-on-nav" name="show-on-nav" value={pageData.showOnNav ? "on" : "off"}>
                         <div slot="label" class="text-lg inline">Show on Navbar?</div>
-                        <sl-option value="on">Yes, Show on the Navbar</sl-option>
-                        <sl-option value="off">No, Don't show on the Navbar</sl-option>
+                        <sl-option value="on">Yes - Show on the Navbar</sl-option>
+                        <sl-option value="off">No - Don't show on the Navbar</sl-option>
                     </sl-select>
 
                     <sl-select id="package" name="package" value={pageData.package}>
@@ -163,7 +163,7 @@ const pageTitle = `Edit Page | ${contextConfig.title}`;
                         style="--sl-tooltip-arrow-size: 0; --max-width: 100%;"
                         distance=1
                         hoist>
-                        <div slot="content">Page <i>slug</i>'s currently can not be edited after creation.</div>
+                        <div slot="content">Page <i>slug</i> cannot be edited after creation.</div>
                         <sl-input
                             id="slug"
                             name="slug"
@@ -193,7 +193,7 @@ const pageTitle = `Edit Page | ${contextConfig.title}`;
                         id="hero-image" 
                         name="hero-image" 
                         value={pageData.heroImage}
-                        placeholder="Your Page's Hero Image URL (Also the OGImage)" 
+                        placeholder="Your Page's Hero Image URL (Also the OG Image)" 
                         size="medium"
                         required>
                         <p slot="help-text" class="text-sm">To use images stored in your public/ folder use the following example: <i>/my-image.png</i></p><br>
@@ -216,8 +216,8 @@ const pageTitle = `Edit Page | ${contextConfig.title}`;
                         <div slot="label" class="text-lg inline">Content</div>
                         {pageContent.content}
                     </sl-textarea>
-            
-                    <br />
+
+                    <sl-divider></sl-divider>
 
                     <sl-button 
                         variant="success" 
@@ -229,7 +229,9 @@ const pageTitle = `Edit Page | ${contextConfig.title}`;
         
                 </form>
         </div>
-        <br />
+
+        <sl-divider></sl-divider>
+        
         <textarea 
             style="visibility: hidden;"
             id="preload-content"
