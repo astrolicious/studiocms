@@ -35,10 +35,15 @@ export async function GET(context: APIContext) {
 		.sort((a, b) => Date.parse(b.publishedAt.toString()) - Date.parse(a.publishedAt.toString()));
 
 	// Render Known Posts
-	const remappedPosts = await Promise.all(orderedPosts.map(async ({slug, title, description, publishedAt, package: pkg}) => {
+	const items = await Promise.all(orderedPosts.map(async ({ 
+		slug, title, description, publishedAt: pubDate , package: pkg 
+	}) => {
 		const { content: fetchedContent } = await contentHelper(slug, pkg);
 		const container = await AstroContainer.create();
-		const renderedContent = await container.renderToString(StudioCMSRenderer, {props: { content: fetchedContent }});
+		const renderedContent = await container.renderToString(
+			StudioCMSRenderer,
+			{ props: { content: fetchedContent } }
+		);
 
 		const content = renderedContent
 				.replace(/<!DOCTYPE html>/, '')
@@ -46,14 +51,10 @@ export async function GET(context: APIContext) {
 				.replace(/<\/html>/, '')
 				.trim();
 
-		return {slug, title, description, publishedAt, content};
+		const link = pathWithBase(getBlogRoute(slug));
+
+		return { title, description, pubDate, content, link };
 	}));
 	
-	return rss({
-		title, description, site,
-		items: remappedPosts.map(({ slug, title, description, publishedAt: pubDate, content }) => ({
-			title, description, pubDate, content,
-			link: pathWithBase(getBlogRoute(slug)),
-		})),
-	});
+	return rss({ title, description, site, items });
 }
