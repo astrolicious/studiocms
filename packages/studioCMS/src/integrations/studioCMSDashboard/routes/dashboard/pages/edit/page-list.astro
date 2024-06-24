@@ -102,11 +102,11 @@ const pageTitle = `Existing Pages | ${contextConfig.title}`;
                                             </sl-button>
                                         </td>
                                         <td class="px-6 py-4">
-                                            { permissionLevel === 'admin' ? <sl-button variant="danger" href={await getDeleteRoute(page.slug)} size="small" type="primary" pill outline>
-                                                Delete
-                                            </sl-button> : <sl-button variant="danger" href={await getDeleteRoute(page.slug)} size="small" type="primary" pill outline disabled>
-                                                Delete
-                                            </sl-button> }
+                                            { permissionLevel === 'admin' && (
+                                                <sl-button variant="danger" href={await getDeleteRoute(page.slug)} size="small" type="primary" pill outline>
+                                                    Delete
+                                                </sl-button> )
+                                            }
                                         </td>
                                     </tr>
                                 )
