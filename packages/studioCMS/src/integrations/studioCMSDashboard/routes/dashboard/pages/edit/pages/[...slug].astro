@@ -6,6 +6,7 @@ import Config from 'virtual:studiocms/config';
 import { authHelper, pluginList, type Locals, type PageDataAndContent } from 'studiocms:helpers';
 import { StudioCMSRoutes, getEditRoute } from 'studiocms-dashboard:routeMap';
 import type { SiteConfigResponse, pageDataReponse } from 'studiocms:components';
+import { CMSSiteConfigId } from '../../../../../../../constVars';
 
 const { dashboardConfig: { developerConfig } } = Config;
 
@@ -25,7 +26,7 @@ const {
 
 const { slug } = Astro.params;
 
-const contextConfig: SiteConfigResponse = await db.select().from(SiteConfig).where(eq(SiteConfig.id, 1)).get();
+const contextConfig: SiteConfigResponse = await db.select().from(SiteConfig).where(eq(SiteConfig.id, CMSSiteConfigId)).get();
 const pageData: pageDataReponse = await db.select().from(PageData).where(eq(PageData.slug, slug)).get();
 const pageContent: PageDataAndContent["PageContent"] = await db.select().from(PageContent).where(eq(PageContent.contentId, pageData.id)).get();
 

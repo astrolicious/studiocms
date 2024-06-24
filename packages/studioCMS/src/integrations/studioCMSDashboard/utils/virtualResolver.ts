@@ -78,8 +78,8 @@ export const virtualResolver = defineUtility("astro:config:setup")(
             export const getEditRoute: typeof import('${resolver.utils.RouteMap}').getEditRoute;
             export const getDeleteRoute: typeof import('${resolver.utils.RouteMap}').getDeleteRoute;
             export const StudioCMSRoutes: typeof import('${resolver.utils.RouteMap}').StudioCMSRoutes;
+            export const sideBarLinkMap: typeof import('${resolver.utils.RouteMap}').sideBarLinkMap;
             export type SideBarLink = import('${resolver.utils.RouteMap}').SideBarLink;
-            export const sideBarLinkMap: import('${resolver.utils.RouteMap}').sideBarLinkMap;
         }`);
         
         addVirtualImports(params, {

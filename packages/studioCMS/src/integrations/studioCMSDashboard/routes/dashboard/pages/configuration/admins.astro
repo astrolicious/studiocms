@@ -6,6 +6,7 @@ import Config from 'virtual:studiocms/config';
 import { authHelper, toPascalCase, type Locals, type PageDataAndContent } from 'studiocms:helpers';
 import { StudioCMSRoutes } from 'studiocms-dashboard:routeMap'
 import type { SiteConfigResponse } from 'studiocms:components';
+import { CMSSiteConfigId } from '../../../../../../constVars';
 
 const { dashboardConfig: { developerConfig } } = Config;
 
@@ -22,7 +23,7 @@ const {
 } = StudioCMSRoutes;
 
 const adminList: PageDataAndContent["Permissions"][] = await db.select().from(Permissions);
-const contextConfig: SiteConfigResponse = await db.select().from(SiteConfig).where(eq(SiteConfig.id, 1)).get();
+const contextConfig: SiteConfigResponse = await db.select().from(SiteConfig).where(eq(SiteConfig.id, CMSSiteConfigId)).get();
 const { permissionLevel } = await authHelper(Astro.locals as Locals);
 
 // If the user is not logged in, redirect to the login page

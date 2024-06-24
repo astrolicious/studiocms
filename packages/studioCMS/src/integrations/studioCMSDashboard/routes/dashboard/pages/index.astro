@@ -7,6 +7,7 @@ import { authHelper, type Locals } from 'studiocms:helpers';
 import { StudioCMSRoutes } from 'studiocms-dashboard:routeMap';
 import { studioCMSSocials } from "../layouts/studiocms-socials";
 import type { SiteConfigResponse } from 'studiocms:components';
+import { CMSSiteConfigId } from '../../../../../constVars';
 
 const { 
     mainLinks: {
@@ -20,7 +21,7 @@ const {
 
 const { github, discord } = studioCMSSocials;
 const { dashboardConfig: { developerConfig } } = Config;
-const contextConfig: SiteConfigResponse = await db.select().from(SiteConfig).where(eq(SiteConfig.id, 1)).get();
+const contextConfig: SiteConfigResponse = await db.select().from(SiteConfig).where(eq(SiteConfig.id, CMSSiteConfigId)).get();
 const { permissionLevel } = await authHelper(Astro.locals as Locals);
 
 // If the user is not logged in, redirect to the login page

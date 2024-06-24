@@ -136,4 +136,4 @@ if (customDashboardDropdown.dropdownItems.length > 0 ) {
     finalSideBarLinkMap.push(customDashboardDropdown);
 }
 
-export const sideBarLinkMap = finalSideBarLinkMap;
+export const sideBarLinkMap: SideBarLink[] = finalSideBarLinkMap;

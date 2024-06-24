@@ -2,6 +2,7 @@
 import { PageData, PageContent, SiteConfig, User, db, eq, asc, desc } from 'astro:db';
 import { AstroError } from 'astro/errors';
 import type { PageDataAndContent } from 'studiocms:helpers';
+import { CMSSiteConfigId } from '../constVars';
 
 export type UserResponse = PageDataAndContent["User"];
 export type pageDataReponse = PageDataAndContent["PageData"];
@@ -114,7 +115,7 @@ export async function getSiteConfig(): Promise<SiteConfigResponse> {
     const config: PageDataAndContent["SiteConfig"] = await db
             .select()
             .from(SiteConfig)
-            .where(eq(SiteConfig.id, 1))
+            .where(eq(SiteConfig.id, CMSSiteConfigId))
             .get();
     
     if(!config) {

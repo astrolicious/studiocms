@@ -7,6 +7,7 @@ const { salt: ScryptSalt, opts: ScryptOpts } = AuthSecurityConfig;
 
 import type { APIContext } from "astro";
 import { randomUUID } from 'node:crypto';
+import { CMSSiteConfigId } from '../../../../constVars';
 
 export async function POST(context: APIContext): Promise<Response> {
 	const formData = await context.request.formData();
@@ -99,7 +100,7 @@ export async function POST(context: APIContext): Promise<Response> {
 	const description = formData.get('description');
 	// const ogImage = formData.get('ogImage'); // TODO: Implement this
 
-	const Config = await db.select().from(SiteConfig).where(eq(SiteConfig.id, 1)).get();
+	const Config = await db.select().from(SiteConfig).where(eq(SiteConfig.id, CMSSiteConfigId)).get();
 
 	if (Config) {
 		return new Response(
