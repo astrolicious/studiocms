@@ -206,7 +206,7 @@ importers:
         version: 0.11.7
       '@astrojs/node':
         specifier: ^8.3.2
-        version: 8.3.2(astro@4.11.2)
+        version: 8.3.2(astro@4.11.3)
       '@astrolicious/studiocms':
         specifier: workspace:*
         version: link:../../packages/studioCMS
@@ -214,8 +214,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/studioCMSBlog
       astro:
-        specifier: ^4.11.2
-        version: 4.11.2(@types/node@20.12.8)(typescript@5.4.5)
+        specifier: ^4.11.3
+        version: 4.11.3(@types/node@20.12.8)(typescript@5.4.5)
     devDependencies:
       '@types/node':
         specifier: 20.12.8
@@ -643,12 +643,12 @@ packages:
       - supports-color
     dev: false
 
-  /@astrojs/node@8.3.2(astro@4.11.2):
+  /@astrojs/node@8.3.2(astro@4.11.3):
     resolution: {integrity: sha512-Upv0D+9b3RXp7XViQTtrijaDqihHWbVHLdJQ2sxtPOEtw2GDrVxuC6LmXIUew5YvJ9Ylmpst6KizVwO8d/K9/Q==}
     peerDependencies:
       astro: ^4.2.0
     dependencies:
-      astro: 4.11.2(@types/node@20.12.8)(typescript@5.4.5)
+      astro: 4.11.3(@types/node@20.12.8)(typescript@5.4.5)
       send: 0.18.0
       server-destroy: 1.0.1
     transitivePeerDependencies:
@@ -4513,87 +4513,6 @@ packages:
       yargs-parser: 21.1.1
       zod: 3.23.8
       zod-to-json-schema: 3.23.0(zod@3.23.8)
-    optionalDependencies:
-      sharp: 0.33.3
-    transitivePeerDependencies:
-      - '@types/node'
-      - less
-      - lightningcss
-      - sass
-      - stylus
-      - sugarss
-      - supports-color
-      - terser
-      - typescript
-    dev: false
-
-  /astro@4.11.2(@types/node@20.12.8)(typescript@5.4.5):
-    resolution: {integrity: sha512-8ulWb74qY5VBFhDTjw1KMCMEf+EXOoSBy4QC6J1oHIq5tzMGCVRt3sUPzUxD737HVPb+CxOIbj35skN0w535fw==}
-    engines: {node: ^18.17.1 || ^20.3.0 || >=21.0.0, npm: '>=9.6.5', pnpm: '>=7.1.0'}
-    hasBin: true
-    dependencies:
-      '@astrojs/compiler': 2.8.1
-      '@astrojs/internal-helpers': 0.4.1
-      '@astrojs/markdown-remark': 5.1.1
-      '@astrojs/telemetry': 3.1.0
-      '@babel/core': 7.24.7
-      '@babel/generator': 7.24.7
-      '@babel/parser': 7.24.7
-      '@babel/plugin-transform-react-jsx': 7.24.7(@babel/core@7.24.7)
-      '@babel/traverse': 7.24.7
-      '@babel/types': 7.24.7
-      '@types/babel__core': 7.20.5
-      '@types/cookie': 0.6.0
-      acorn: 8.12.0
-      aria-query: 5.3.0
-      axobject-query: 4.0.0
-      boxen: 7.1.1
-      chokidar: 3.6.0
-      ci-info: 4.0.0
-      clsx: 2.1.1
-      common-ancestor-path: 1.0.1
-      cookie: 0.6.0
-      cssesc: 3.0.0
-      debug: 4.3.5
-      deterministic-object-hash: 2.0.2
-      devalue: 5.0.0
-      diff: 5.2.0
-      dlv: 1.1.3
-      dset: 3.1.3
-      es-module-lexer: 1.5.4
-      esbuild: 0.21.5
-      estree-walker: 3.0.3
-      execa: 8.0.1
-      fast-glob: 3.3.2
-      flattie: 1.1.1
-      github-slugger: 2.0.0
-      gray-matter: 4.0.3
-      html-escaper: 3.0.3
-      http-cache-semantics: 4.1.1
-      js-yaml: 4.1.0
-      kleur: 4.1.5
-      magic-string: 0.30.10
-      mrmime: 2.0.0
-      ora: 8.0.1
-      p-limit: 5.0.0
-      p-queue: 8.0.1
-      path-to-regexp: 6.2.2
-      preferred-pm: 3.1.3
-      prompts: 2.4.2
-      rehype: 13.0.1
-      semver: 7.6.2
-      shiki: 1.9.1
-      string-width: 7.1.0
-      strip-ansi: 7.1.0
-      tsconfck: 3.1.0(typescript@5.4.5)
-      unist-util-visit: 5.0.0
-      vfile: 6.0.1
-      vite: 5.3.1(@types/node@20.12.8)
-      vitefu: 0.2.5(vite@5.3.1)
-      which-pm: 2.2.0
-      yargs-parser: 21.1.1
-      zod: 3.23.8
-      zod-to-json-schema: 3.23.1(zod@3.23.8)
     optionalDependencies:
       sharp: 0.33.3
     transitivePeerDependencies:
