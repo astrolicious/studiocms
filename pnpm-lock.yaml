@@ -181,7 +181,7 @@ importers:
     dependencies:
       '@astrojs/cloudflare':
         specifier: ^10.2.5
-        version: 10.2.5(astro@4.11.2)
+        version: 10.2.5(astro@4.11.3)
       '@astrojs/db':
         specifier: ^0.11.7
         version: 0.11.7
@@ -189,8 +189,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/studioCMS
       astro:
-        specifier: ^4.11.2
-        version: 4.11.2(@types/node@20.12.8)(typescript@5.4.5)
+        specifier: ^4.11.3
+        version: 4.11.3(@types/node@20.12.8)(typescript@5.4.5)
     devDependencies:
       '@types/node':
         specifier: 20.12.8
@@ -255,7 +255,7 @@ importers:
         version: 5.1.0(astro@4.11.3)(tailwindcss@3.4.3)
       astro:
         specifier: ^4.11.3
-        version: 4.11.3(typescript@5.4.5)
+        version: 4.11.3(@types/node@20.12.8)(typescript@5.4.5)
       astro-font:
         specifier: ^0.0.80
         version: 0.0.80
@@ -343,7 +343,7 @@ packages:
       - prettier-plugin-astro
     dev: false
 
-  /@astrojs/cloudflare@10.2.5(astro@4.11.2):
+  /@astrojs/cloudflare@10.2.5(astro@4.11.3):
     resolution: {integrity: sha512-5tKPU5m/zYwz2CU9vCSKo4tgWsdD7xwpUlDkVbKPwgSkfVB6ZuXb8ffLYnahtUc1Gvh7HgaBSaagPVHGCp73WQ==}
     peerDependencies:
       astro: ^4.2.0
@@ -351,7 +351,7 @@ packages:
       '@astrojs/internal-helpers': 0.3.0
       '@astrojs/underscore-redirects': 0.3.3
       '@cloudflare/workers-types': 4.20240423.0
-      astro: 4.11.2(@types/node@20.12.8)(typescript@5.4.5)
+      astro: 4.11.3(@types/node@20.12.8)(typescript@5.4.5)
       esbuild: 0.19.12
       estree-walker: 3.0.3
       magic-string: 0.30.10
@@ -728,7 +728,7 @@ packages:
       astro: ^3.0.0 || ^4.0.0
       tailwindcss: ^3.0.24
     dependencies:
-      astro: 4.11.3(typescript@5.4.5)
+      astro: 4.11.3(@types/node@20.12.8)(typescript@5.4.5)
       autoprefixer: 10.4.19(postcss@8.4.38)
       postcss: 8.4.38
       postcss-load-config: 4.0.2(postcss@8.4.38)
@@ -4608,7 +4608,7 @@ packages:
       - typescript
     dev: false
 
-  /astro@4.11.3(typescript@5.4.5):
+  /astro@4.11.3(@types/node@20.12.8)(typescript@5.4.5):
     resolution: {integrity: sha512-SuZbB/71XVn+WqWNCe7XOfHuqhS+k4gj8+A3wluTZQrORGaHUFRn/f8F9Tu5yESQZB1q8UKhahvHwkTV3AdVsg==}
     engines: {node: ^18.17.1 || ^20.3.0 || >=21.0.0, npm: '>=9.6.5', pnpm: '>=7.1.0'}
     hasBin: true
