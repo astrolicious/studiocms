@@ -2,6 +2,7 @@
 import { AstroFont } from 'astro-font'
 import { SEO } from 'astro-seo'
 const OgBanner = new URL('/og.png', Astro.url)
+import ThemeManager from './ThemeManager.astro'
 ---
 
 <head>
@@ -9,13 +10,28 @@ const OgBanner = new URL('/og.png', Astro.url)
   <link rel='icon' type='image/svg+xml' href='/favicon.svg' />
   <meta name='viewport' content='width=device-width' />
   <meta name='generator' content={Astro.generator} />
+  <link
+    rel="preload"
+    href="/font/BalooChettan2-Bold.woff2"
+    as="font"
+    type="font/woff2"
+    crossorigin
+  />
+  <link
+    rel="preload"
+    href="/font/ZenKakuGothicNew-Regular.woff2"
+    as="font"
+    type="font/woff2"
+    crossorigin
+  />
+  <title>Astro-StudioCMS</title>
+  <ThemeManager defaultTheme="dark" />
   <script
     is:inline
     defer
     src='https://analytics.astro-studiocms.xyz/script.js'
     data-website-id='393a8616-9a0a-484b-ab3d-1ebc4039fb18'
   ></script>
-  <title>Astro-StudioCMS</title>
   <SEO
     title='Astro StudioCMS'
     description='A dedicated CMS for Astro Studio.'
@@ -27,7 +43,7 @@ const OgBanner = new URL('/og.png', Astro.url)
       },
     }}
   />
-  <AstroFont
+  <!-- <AstroFont
     config={[
       {
         src: [],
@@ -50,5 +66,5 @@ const OgBanner = new URL('/og.png', Astro.url)
         fallback: 'sans-serif',
       },
     ]}
-  />
+  /> -->
 </head>

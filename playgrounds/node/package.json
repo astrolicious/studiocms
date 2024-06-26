@@ -22,5 +22,9 @@
     "@astrolicious/studiocms": "workspace:*",
     "@astrolicious/studiocms-blog": "workspace:*",
     "astro": "^4.10.3"
+    "@astrojs/db": "^0.11.4",
+    "@astrojs/node": "^8.2.5",
+    "astro": "^4.9.3",
+    "@astrolicious/studiocms": "workspace:*"
   }
 }
