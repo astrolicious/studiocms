@@ -11,7 +11,7 @@
   },
   "devDependencies": {
     "@types/node": "20.12.8",
-    "typescript": "5.4.5"
+    "typescript": "5.5.2"
   },
   "dependencies": {
     "@astrojs/db": "^0.11.7",
