@@ -28,7 +28,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "1.7.2",
-    "@moonrepo/cli": "1.25.3",
+    "@moonrepo/cli": "1.26.4",
     "@changesets/cli": "2.27.5",
     "@changesets/config": "3.0.1",
     "astro": ">=4.10.2",
