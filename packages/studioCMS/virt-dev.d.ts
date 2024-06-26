@@ -3,44 +3,26 @@ declare module 'virtual:studiocms/config' {
 	export default Config;
 }
 
-declare module 'studiocms:components' {
-	export const CImage: typeof import('./src/components/exports/CImage.astro').default;
-	export const FormattedDate: typeof import('./src/components/exports/FormattedDate.astro').default;
-	export const StudioCMSRenderer: typeof import('./src/components/exports/StudioCMSRenderer.astro').default;
+declare module 'virtual:studiocms/astromdremarkConfig' {
+	const markdownConfig: import('astro').AstroConfig['markdown'];
+	export default markdownConfig;
 }
 
-declare module 'studiocms:helpers' {
-	export const authHelper: typeof import('./src/utils/authhelper').default;
-	export const LocalsSchema: typeof import('./src/schemas/locals').LocalsSchema;
-	export type Locals = import('./src/schemas/locals').Locals;
-	export const urlGenFactory: typeof import('./src/utils/urlGen').default;
-	export const toCamelCase: typeof import('./src/utils/textFormatter').toCamelCase;
-	export const toPascalCase: typeof import('./src/utils/textFormatter').toPascalCase;
+declare module 'virtual:studiocms/version' {
+	const Version: string;
+	export default Version;
 }
 
-declare module 'studiocms-dashboard:auth' {
-	export const lucia: typeof import('./src/integrations/studioCMSDashboard/lib/auth').lucia;
-	export const authEnvCheck: typeof import('./src/integrations/studioCMSDashboard/utils/authEnvCheck').authEnvCheck;
+declare module 'virtual:studiocms-dashboard/AuthSecurityConfig' {
+	const AuthSecurityConfig: import('./src/integrations/studioCMSDashboard/schemas').usernameAndPasswordConfig;
+	export default AuthSecurityConfig;
 }
 
-declare module 'studiocms-dashboard:components' {
-	export const Layout: typeof import('./src/integrations/studioCMSDashboard/routes/dashboard/layouts/Layout.astro').default;
+declare module 'virtual:studiocms/_nav' {
+	export const externalNav: Map<string, { text: string, slug: string }>;
 }
 
 interface ImportMetaEnv {
-	readonly CMS_GITHUB_CLIENT_ID: string;
-	readonly CMS_GITHUB_CLIENT_SECRET: string;
-	readonly CMS_DISCORD_CLIENT_ID: string;
-	readonly CMS_DISCORD_CLIENT_SECRET: string;
-	readonly CMS_DISCORD_REDIRECT_URI: string;
-	readonly CMS_GOOGLE_CLIENT_ID: string;
-	readonly CMS_GOOGLE_CLIENT_SECRET: string;
-	readonly CMS_GOOGLE_REDIRECT_URI: string;
-	readonly CMS_AUTH0_CLIENT_ID: string;
-	readonly CMS_AUTH0_CLIENT_SECRET: string;
-	readonly CMS_AUTH0_DOMAIN: string;
-	readonly CMS_AUTH0_REDIRECT_URI: string;
-	readonly CMS_CLOUDINARY_CLOUDNAME: string;
 	readonly PROD: boolean;
 	readonly BASE_URL: string;
 }

@@ -1,0 +1,15 @@
+---
+import { StudioCMSRenderer, contentHelper, FrontLayout } from 'studiocms:components'
+
+const { title, description, heroImage, content, id } = await contentHelper("index")
+
+if(!id){
+	return new Response(null, { status: 404 })
+}
+---
+
+<FrontLayout title={title} description={description} heroImage={heroImage}>
+	<main>
+		<StudioCMSRenderer content={content} />
+	</main>
+</FrontLayout>

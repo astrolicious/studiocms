@@ -1,14 +1,20 @@
 ---
+import type { StudioCMSSocials } from '../layouts/studiocms-socials';
+
+
+type Props = { studioCMSSocials: StudioCMSSocials };
+const { studioCMSSocials: { github: githubURL, githubContributors, githubLicense } } = Astro.props;
+
 const today = new Date();
 ---
 
 <footer class="footer footer-center block mb-5 pt-10">
   <div class="pb-2">
     <div class="inline">
-      &copy; {today.getFullYear()} <a href="https://github.com/astrolicious/studiocms" target="_blank"><i>astrolicious/studiocms</i></a> - <a href="https://github.com/astrolicious/studiocms?tab=MIT-1-ov-file#readme" target="_blank" class="font-bold">MIT Licensed</a>
+      &copy; {today.getFullYear()} <a href={githubURL} target="_blank"><i>astrolicious/studiocms</i></a> - <a href={githubLicense} target="_blank" class="font-bold">MIT Licensed</a>
     </div>
   </div>
   <div class="inline opacity-75">
-    Developed by <a href="https://github.com/astrolicious/studiocms/graphs/contributors" target="_blank" class="font-bold">The StudioCMS Contributors</a>
+    Developed by <a href={githubContributors} target="_blank" class="font-bold">The StudioCMS Contributors</a>
   </div>
 </footer>

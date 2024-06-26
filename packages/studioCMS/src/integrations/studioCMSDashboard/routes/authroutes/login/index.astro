@@ -1,19 +1,13 @@
 ---
 import { Layout } from 'studiocms-dashboard:components';
 import Config from 'virtual:studiocms/config';
-import { urlGenFactory, type Locals } from 'studiocms:helpers';
+import type { Locals } from 'studiocms:helpers';
 import OauthProviders from '../components/OauthProviders.astro';
-
-if (Config.includedIntegrations.useInoxSitemap) {
-    import('sitemap-ext:config').then((sitemap) => {
-        sitemap.default(false)
-    })
-}
+import { StudioCMSRoutes } from 'studiocms-dashboard:routeMap';
 
 const { 
   dashboardConfig,
   dashboardConfig: { 
-    dashboardRouteOverride,
     AuthConfig: { 
       providers: {
         usernameAndPassword,
@@ -25,26 +19,25 @@ const {
   } 
 } = Config;
 
+const { authLinks: { loginAPI, signupURL }, mainLinks: { dashboardIndex } } = StudioCMSRoutes;
+
 const locals = Astro.locals as Locals;
 
-const UserPassLoginURL = await urlGenFactory(true, 'login/api/login', dashboardRouteOverride)
-const RegisterURL = await urlGenFactory(true, 'signup/', dashboardRouteOverride)
-
 if (locals.isLoggedIn) {
-	return Astro.redirect(await urlGenFactory(true, undefined, dashboardRouteOverride));
+	return Astro.redirect(dashboardIndex);
 }
 ---
 
 <Layout title='Login Page' description="Login Page" sideBarActiveItemID='login' includeSidebar={false}>
-  <div class="pb-12 mt-5">
+  <div class="px-10 pb-12 mt-5 flex flex-col content-center items-center">
 
-      <center><div class="text-5xl font-bold">Login</div>
+      <div class="text-5xl font-bold">Login</div>
       <div class="py-2">
           <text class="text-lg">
             To access this site, you need to log in!
           </text>
       </div>
-    </center><br />
+    <br />
 
       <!-- oAUTH Providers -->
       <OauthProviders dashboardConfig={dashboardConfig} />
@@ -53,9 +46,9 @@ if (locals.isLoggedIn) {
       <!-- Username and Password Provider-->
       { usernameAndPassword && (
         <div class="py-8">
-          <div class="bg-base-300 p-8 rounded-lg">
+          <div class="bg-base-300 p-8 rounded-lg md:w-[32rem]">
 
-          <form method="post" action={UserPassLoginURL}>
+          <form method="post" action={loginAPI}>
 
               <sl-input 
                 name="username" 
@@ -81,7 +74,7 @@ if (locals.isLoggedIn) {
           {allowUserRegistration && (
             <div class="py-4">
               <center>
-                <a href={RegisterURL} class="text-lg">Don't have an account? Register here!</a>
+                <a href={signupURL} class="text-lg">Don't have an account? Register here!</a>
               </center>
             </div>
           )}

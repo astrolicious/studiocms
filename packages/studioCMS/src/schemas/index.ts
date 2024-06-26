@@ -4,6 +4,7 @@ import { includedIntegrationsSchema } from './integrations';
 import { markedConfigSchema } from './marked';
 import { dashboardConfigSchema } from './dashboard';
 import { overridesSchema } from './componentoverrides';
+import { DefaultFrontEndConfigSchema } from './defaultFrontend';
 
 //
 // MAIN SCHEMA
@@ -21,11 +22,15 @@ export const optionsSchema = z
 		 *
 		 * Marked is A markdown parser and compiler. Built for speed.
 		 * @see https://marked.js.org/ for more info about marked.
+		 * 
+		 * Astro is the built-in Astro remark-markdown plugin.
+		 * @see https://www.npmjs.com/package/@astrojs/markdown-remark
 		 *
 		 * Markdoc is a powerful, flexible, Markdown-based authoring framework. Built by Stripe.
 		 * @see https://markdoc.dev/ for more info about markdoc.
+		 * 
 		 */
-		contentRenderer: z.enum(['markdoc', 'marked']).optional().default('marked'),
+		contentRenderer: z.enum(['marked', 'astro', 'markdoc']).optional().default('marked'),
 		/**
 		 * Allows customization of the Marked Configuration
 		 *
@@ -37,6 +42,10 @@ export const optionsSchema = z
 		 * Allows customization of the Image Service Options
 		 */
 		imageService: imageServiceSchema,
+		/**
+		 * Default Frontend Configuration
+		 */
+		defaultFrontEndConfig: DefaultFrontEndConfigSchema,
 		/**
 		 * Allows customization of the Dashboard Configuration
 		 * 

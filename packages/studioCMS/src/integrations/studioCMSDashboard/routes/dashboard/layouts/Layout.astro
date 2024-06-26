@@ -3,23 +3,24 @@ import BaseHead from "../components/BaseHead.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import SideBar from "../components/SideBar.astro";
-// import { ViewTransitions } from "astro:transitions";
 import ThemeManager from "../components/ThemeManager.astro";
 import Config from "virtual:studiocms/config";
+import { studioCMSSocials } from "./studiocms-socials";
+
+const socialLinks = studioCMSSocials;
 
 const { 
   dashboardConfig: { 
-    dashboardRouteOverride,
-    // developerConfig: {
-    //   viewTransitionAPI
-    // },
     UnoCSSConfigOverride: {
       presetsConfig: {
         presetDaisyUI: {
           lightTheme,
         }
       }
-    }
+    },
+    developerConfig: {
+      viewTransitionAPI
+    },
   } 
 } = Config;
 
@@ -34,32 +35,33 @@ const {
   title,
   description,
   includeSidebar = true,
-  sideBarActiveItemID,
 } = Astro.props;
-
-// const includeViewTransitions = false;
 
 ---
 
 <!doctype html>
-<html lang="en" data-theme={lightTheme} class="scrollbar scrollbar-thumb-white scrollbar-track-[#1a172e] h-32 overflow-y-scroll">
+<html lang="en" data-theme={lightTheme}>
   <head>
     <ThemeManager defaultTheme="auto" />
     <BaseHead title={title} description={description} />
-    <!-- { includeViewTransitions && <ViewTransitions />} -->
+    {viewTransitionAPI && (
+      <style>
+        @view-transition {
+          navigation: auto; /* enabled! */
+        }
+      </style>
+    )}
   </head>
   <body>
     <div class="bg-base-100 drawer">
       <div class="drawer-content bg-base-100">
-        <Header DashboardRouteOverride={dashboardRouteOverride} sideBarActiveItemID={sideBarActiveItemID}/>
-        <div class="md:flex md:justify-center">
-          <main class="p-6 pt-10 lg:max-w-[1800px] max-w-[100vw] min-h-[100vh]">
+        <Header studioCMSSocials={socialLinks}/>
+          <main class="p-6 pt-10">
             <slot />
           </main>
-        </div>
-        <Footer />
+        <Footer studioCMSSocials={socialLinks}/>
       </div>
-      { includeSidebar && <SideBar sideBarActiveItemID={sideBarActiveItemID} DashboardRouteOverride={dashboardRouteOverride}/>}
+      { includeSidebar && <SideBar studioCMSSocials={socialLinks}/>}
     </div>
   </body>
 </html>

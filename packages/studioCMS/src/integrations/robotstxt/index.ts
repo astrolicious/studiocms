@@ -162,7 +162,7 @@ export default function createRobotsIntegration(astroConfig: RobotsConfig): Astr
   const megeredConfig = { ...defaultConfig, ...astroConfig };
 
   return {
-    name: 'astrolicious/studioCMS:robotstxt',
+    name: '@astrolicious/studioCMS:robotstxt',
     hooks: {
       'astro:config:setup': ({ config: cfg }) => {
         config = cfg;

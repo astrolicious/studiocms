@@ -53,6 +53,8 @@ export const authProviderSchema = z.object({
 	usernameAndPasswordConfig: localUsernameAndPasswordConfig,
 }).optional().default({});
 
+export type AuthProviders = z.infer<typeof authProviderSchema>;
+
 //
 // AUTH CONFIG SCHEMA
 //

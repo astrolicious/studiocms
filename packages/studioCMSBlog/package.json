@@ -1,0 +1,68 @@
+{
+  "name": "@astrolicious/studiocms-blog",
+  "version": "0.0.0-alpha.1",
+  "description": "Add a blog to your StudioCMS project with ease!",
+  "author": {
+    "name": "Adam Matthiesen | Jacob Jenkins | Paul Valladares",
+    "url": "https://astro-studiocms.xyz"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/astrolicious/studiocms.git"
+  },
+  "contributors": [
+    "Adammatthiesen",
+    "jdtjenkins",
+    "dreyfus92"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "astro",
+    "astrocms",
+    "astrodb",
+    "astrolicious",
+    "astrostudio",
+    "astro-integration",
+    "astro-studio",
+    "astro-studiocms",
+    "cms",
+    "studiocms",
+    "withastro",
+    "blog",
+    "studio-blog",
+    "astro-blog",
+    "astro-studio-blog",
+    "studiocms-blog",
+    "theme",
+    "astro-theme",
+    "studiocms-theme",
+    "astro-studiocms-theme"
+  ],
+  "homepage": "https://astro-studiocms.xyz",
+  "publishConfig": {
+    "access": "public"
+  },
+  "sideEffects": false,
+  "files": [
+    "index.ts",
+    "schema.ts",
+    "src"
+  ],
+  "exports": {
+    ".": "./index.ts",
+    "./schema": "./schema.ts"
+  },
+  "type": "module",
+  "dependencies": {
+    "@astrolicious/studiocms": "workspace:*",
+    "@astrojs/rss": "^4.0.6",
+    "astro-theme-provider": "^0.5.0"
+  },
+  "devDependencies": {
+    "@astrolicious/studiocms": "workspace:*",
+    "@types/node": "20.12.8"
+  },
+  "peerDependencies": {
+    "astro": ">=4.10.3"
+  }
+}

@@ -1,0 +1,10 @@
+---
+export const partial = true;
+import { StudioCMSRenderer } from "studiocms:components";
+
+const query = Astro.url.searchParams.get("content");
+const preQuery = Astro.url.searchParams.get("preload-content");
+const noContent = "# No content found, Either your Page content is empty or you have not updated the entry.";
+const content = query ? query : (preQuery ? preQuery : noContent);
+---
+<StudioCMSRenderer content={content} />

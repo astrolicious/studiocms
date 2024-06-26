@@ -1,6 +1,28 @@
 {
   "extends": "astro/tsconfigs/strictest",
+  "files": [],
   "compilerOptions": {
-    "outDir": "../../.moon/cache/types/packages/studioCMS"
-  }
+    "outDir": "../../.moon/cache/types/packages/studioCMS",
+    "composite": true,
+    "noEmit": false,
+    "allowImportingTsExtensions": false,
+    "emitDeclarationOnly": false,
+    "paths": {
+      "node-playground/*": [
+        "../../playgrounds/node/src/*"
+      ]
+    }
+  },
+  "references": [
+    {
+      "path": "../../playgrounds/node"
+    }
+  ],
+  "include": [
+    "./package.json",
+    "./virt-dev.d.ts",
+    "../../playgrounds/node/.astro/**/*",
+    "./**/*",
+    "./src/**/*.json"
+  ]
 }

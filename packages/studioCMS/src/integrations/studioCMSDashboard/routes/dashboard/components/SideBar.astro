@@ -1,30 +1,20 @@
 ---
 import SideBarFooter from "./SideBarFooter.astro";
 import SideBarMenu from "./SideBarMenu.astro";
-import defaultAvatar from './avatar.webp';
-import { authHelper, urlGenFactory, type Locals } from "studiocms:helpers";
+import { authHelper, type Locals } from "studiocms:helpers";
+import { StudioCMSRoutes } from "studiocms-dashboard:routeMap"
+import type { StudioCMSSocials } from "../layouts/studiocms-socials";
 
-type Props = {
-    sideBarActiveItemID: string;
-    DashboardRouteOverride?: string|undefined;
-}
+type Props = { studioCMSSocials: StudioCMSSocials };
+const { studioCMSSocials } = Astro.props as Props;
+const { avatar, name, permissionLevel } = await authHelper(Astro.locals as Locals);
+const { mainLinks: { dashboardIndex } } = StudioCMSRoutes;
 
-const { sideBarActiveItemID, DashboardRouteOverride } = Astro.props;
-const locals = Astro.locals as Locals;
-const { avatar, name, permissionLevel } = await authHelper(locals);
-
-let useAvatar: string;
 let useName: string;
 
 if ( permissionLevel === "unknown" ) {
-  useAvatar = defaultAvatar.src;
   useName = "Guest";
 } else {
-  if ( !avatar ) {
-    useAvatar = defaultAvatar.src;
-  } else {
-    useAvatar = avatar;
-  }
   if ( !name ) {
     useName = "User";
   } else {
@@ -32,13 +22,12 @@ if ( permissionLevel === "unknown" ) {
   }
 }
 
-const dashURL = await urlGenFactory(true, undefined, DashboardRouteOverride)
 ---
 
-<div class="z-40 max-sm:hidden">
+<div class="max-md:hidden pr-2">
   <aside class="px-2 pt-2 h-auto min-h-full w-[19rem] bg-base-200 text-base-content flex flex-col">
     <div class="w-fit mx-auto mt-5 mb-6">
-      <a href={dashURL}>
+      <a href={dashboardIndex}>
         <sl-tooltip content={"Avatar of " + useName}>
           <sl-avatar
             image={avatar?.toString()}
@@ -51,8 +40,10 @@ const dashURL = await urlGenFactory(true, undefined, DashboardRouteOverride)
     <div class="text-center pb-2">
       Current User: <b>{useName}</b>
     </div>
-    <SideBarMenu sideBarActiveItemID={sideBarActiveItemID} />
-    <SideBarFooter />
+    <SideBarMenu />
+    <div class="flex-none flex-end">
+      <SideBarFooter studioCMSSocials={studioCMSSocials}/>
+    </div>
   </aside>
 </div>
 

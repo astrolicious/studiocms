@@ -1,13 +1,6 @@
 ---
 import { Code } from 'astro:components';
 import { Layout } from 'studiocms-dashboard:components';
-import Config from 'virtual:studiocms/config';
-
-if (Config.includedIntegrations.useInoxSitemap) {
-    import('sitemap-ext:config').then((sitemap) => {
-        sitemap.default(false)
-    })
-}
 
 const codeBlob = `import { defineConfig } from "astro/config";
 import astroStudioCMS from "@astrolicious/studiocms";
@@ -33,7 +26,7 @@ export default defineConfig({
 				<text class="text-xl py-2">
 				  <text class="font-bold">Next Step</text> 
 				  <br />
-				  You can now stop your dev server and add the following option in your <strong>astro.config</strong> to start using StudioCMS then start back up to see your new CMS data
+				  You can now stop your dev server and add the following option in your <strong>astro.config</strong> to start using StudioCMS. Then you can start your server back up to see your new CMS data.
 				</text>
 			</div>
 	

@@ -1,49 +1,53 @@
 ---
 // @ts-expect-error - Some types can only be imported from the Astro runtime
-import { Pages, SiteConfig, db, eq } from 'astro:db';
+import { PageData, PageContent, SiteConfig, db, eq } from 'astro:db';
 import { Layout } from 'studiocms-dashboard:components';
 import Config from 'virtual:studiocms/config';
-import { authHelper, urlGenFactory, type Locals } from 'studiocms:helpers';
+import { authHelper, type Locals } from 'studiocms:helpers';
+import { StudioCMSRoutes, getDeleteRoute } from 'studiocms-dashboard:routeMap';
+import type { SiteConfigResponse, pageDataReponse } from 'studiocms:components';
+import { CMSSiteConfigId } from '../../../../../../../constVars';
 
-if (Config.includedIntegrations.useInoxSitemap) {
-    import('sitemap-ext:config').then((sitemap) => {
-        sitemap.default(false)
-    })
-}
+const { dashboardConfig: { developerConfig } } = Config;
 
-const { dashboardConfig: { developerConfig, dashboardRouteOverride } } = Config;
+const { 
+    authLinks: { 
+        loginURL 
+    }, 
+    mainLinks: { 
+        userProfile,
+        dashboardIndex,
+        pageEdit
+    } 
+} = StudioCMSRoutes;
 
 const { slug } = Astro.params;
 
-const ConfigArray = await db.select().from(SiteConfig);
-const pageArrayed = await db.select().from(Pages).where(eq(Pages.slug, slug));
-
-const page = pageArrayed[0];
+const contextConfig: SiteConfigResponse = await db.select().from(SiteConfig).where(eq(SiteConfig.id, CMSSiteConfigId)).get();
+const page: pageDataReponse = await db.select().from(PageData).where(eq(PageData.slug, slug)).get();
 
 if (!slug || !page) {
-	return Astro.redirect(await urlGenFactory(true, undefined, dashboardRouteOverride));
+	return Astro.redirect(dashboardIndex);
 }
 
-const contextConfig = ConfigArray.pop();
-
-const locals = Astro.locals as Locals;
-const { permissionLevel } = await authHelper(locals);
+const deleteURL = getDeleteRoute(slug);
+const { permissionLevel } = await authHelper(Astro.locals as Locals);
 
 // If the user is not logged in, redirect to the login page
 if ( !developerConfig.testingAndDemoMode ) {
     if ( permissionLevel === "unknown" ) {
         console.log('User is not logged in. Redirecting to login page.');
-        return Astro.redirect(await urlGenFactory(true, "login", dashboardRouteOverride));
+        return Astro.redirect(loginURL);
     }
     if ( permissionLevel !== 'admin' && permissionLevel !== 'editor' ) {
         console.log('User is not an admin or editor. Redirecting to profile page.');
-        return Astro.redirect(await urlGenFactory(true, "profile", dashboardRouteOverride));
+        return Astro.redirect(userProfile);
     }
 }
 
 let showSuccessToast = false;
 let showErrorToast = false;
-let showSlugErrorToast = false;
+// let showSlugErrorToast = false;
 
 if (Astro.request.method === 'POST' && !developerConfig.testingAndDemoMode) {
     try {
@@ -51,22 +55,37 @@ if (Astro.request.method === 'POST' && !developerConfig.testingAndDemoMode) {
         const slug = data.get('slug');
         if (slug === page.slug) {
             if ( slug === "index" || slug === "about" ) {
+                showErrorToast = true;
                 return new Response('Error: Cannot delete the index or about page.', { status: 500 })
             }
+
             await db
-                .delete(Pages)
-                .where(eq(Pages.slug, page.slug))
+                .delete(PageData)
+                .where(eq(PageData.slug, page.slug as string))
                 .then(() => {
                     showSuccessToast = true;
                 })
-                .catch(() => {
+                // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+                .catch((e: any) => {
+                    console.error(e);
                     showErrorToast = true;
                 });
-        } else {
-            showSlugErrorToast = true;
-        }
+
+            await db
+                .delete(PageContent)
+                .where(eq(PageContent.contentId, page.id))
+                .then(() => {
+                    showSuccessToast = true;
+                })
+                // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+                .catch((e: any) => {
+                    console.error(e);
+                    showErrorToast = true;
+                });
+        } 
     } catch (error) {
         if (error instanceof Error) {
+            console.error(error);
             showErrorToast = true;
         }
     }
@@ -78,32 +97,43 @@ const pageTitle = `Delete Page | ${contextConfig.title}`;
     sideBarActiveItemID="edit-pages" 
     title={pageTitle}
     description={contextConfig.description} >
+    <div class="flex grow w-full pb-4">
+        <sl-breadcrumb>
+            <span slot="separator">/</span>
+            <sl-breadcrumb-item href={dashboardIndex}>
+                Dashboard
+                <sl-icon slot="prefix" name="columns-gap"></sl-icon>
+            </sl-breadcrumb-item>
+            <sl-breadcrumb-item href={pageEdit}>Existing Pages</sl-breadcrumb-item>
+            <sl-breadcrumb-item href={deleteURL}>Delete Page: {page.slug}</sl-breadcrumb-item>
+        </sl-breadcrumb>
+    </div>
     <div class="alert-toast">
         { showSuccessToast && (
         <sl-alert variant="success" duration="3000" open closable>
             <sl-icon slot="icon" name="check2-circle"></sl-icon>
-            <strong>Page Deleted!</strong><br />
-            You can safely leave this page now.
+            <strong>Page Deleted!</strong>
+            <p>You can safely leave this page now.</p>
         </sl-alert>
         )}
         { showErrorToast && (
         <sl-alert variant="danger" duration="3000" open closable>
             <sl-icon slot="icon" name="exclamation-octagon"></sl-icon>
-            <strong>Error Deleting Page</strong><br />
-            There was an Error Deleting the Page. Please try again.
+            <strong>Error Deleting Page</strong>
+            <p>There was an Error Deleting the Page. Please try again.</p>
         </sl-alert>
         )}
-        { showSlugErrorToast && (
+        <!-- { showSlugErrorToast && (
         <sl-alert variant="warning" duration="3000" open closable>
             <sl-icon slot="icon" name="exclamation-triangle"></sl-icon>
             <strong>Entered Slug does not match!</strong><br />
             Please enter the correct slug to delete the page.
         </sl-alert>
-        )}
+        )} -->
     </div>
-    <div class="pb-12 mt-5">
+    <div class="container">
 
-        <div class="text-5xl font-bold">Delete Page: {page.title}</div>
+        <h1 class="text-5xl font-bold py-8">Delete Page: {page.title}</h1>
 
         <div class="py-2">
             <text class="text-lg">
@@ -111,7 +141,7 @@ const pageTitle = `Delete Page | ${contextConfig.title}`;
             </text>
         </div>
 
-        <div class="py-2">
+        <div class="py-2 flex justify-center">
     
             <form method="post" enctype="multipart/form-data" >
                     
@@ -120,9 +150,11 @@ const pageTitle = `Delete Page | ${contextConfig.title}`;
                     type="text" 
                     id="slug" 
                     name="slug" 
-                    class="border-solid border-2 border-gray-300 rounded-lg p-2 w-96"
+                    class="border-solid border-2 border-gray-300 rounded-lg p-2 w-96 pb-2"
                     placeholder="Your Post Slug (THIS WILL DELETE THE POST)"
-                    required><br><br>
+                    required>
+
+                <input type="hidden" name="to-delete" id="to-delete" value={page.slug} />
     
                 <button class="btn btn-outline ml-5 py-2" type="submit">DELETE!</button>
     

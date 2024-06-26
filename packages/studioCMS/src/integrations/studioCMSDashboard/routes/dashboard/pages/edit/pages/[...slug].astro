@@ -1,46 +1,53 @@
 ---
 // @ts-expect-error - Some types can only be imported from the Astro runtime
-import { Pages, SiteConfig, db, eq } from 'astro:db';
+import { PageData, PageContent, SiteConfig, db, eq } from 'astro:db';
 import { Layout } from 'studiocms-dashboard:components';
 import Config from 'virtual:studiocms/config';
-import { authHelper, urlGenFactory, type Locals } from 'studiocms:helpers';
+import { authHelper, pluginList, type Locals, type PageDataAndContent } from 'studiocms:helpers';
+import { StudioCMSRoutes, getEditRoute } from 'studiocms-dashboard:routeMap';
+import type { SiteConfigResponse, pageDataReponse } from 'studiocms:components';
+import { CMSSiteConfigId } from '../../../../../../../constVars';
 
-if (Config.includedIntegrations.useInoxSitemap) {
-    import('sitemap-ext:config').then((sitemap) => {
-        sitemap.default(false)
-    })
-}
+const { dashboardConfig: { developerConfig } } = Config;
 
-const { dashboardConfig: { developerConfig, dashboardRouteOverride } } = Config;
+const studioCMSPluginList = pluginList;
+
+const { 
+    authLinks: { 
+        loginURL 
+    }, 
+    mainLinks: { 
+        userProfile,
+        dashboardIndex,
+        pageEdit,
+        livePreviewBox
+    } 
+} = StudioCMSRoutes;
 
 const { slug } = Astro.params;
 
-const ConfigArray = await db.select().from(SiteConfig);
-const pageArrayed = await db.select().from(Pages).where(eq(Pages.slug, slug));
+const contextConfig: SiteConfigResponse = await db.select().from(SiteConfig).where(eq(SiteConfig.id, CMSSiteConfigId)).get();
+const pageData: pageDataReponse = await db.select().from(PageData).where(eq(PageData.slug, slug)).get();
+const pageContent: PageDataAndContent["PageContent"] = await db.select().from(PageContent).where(eq(PageContent.contentId, pageData.id)).get();
 
-const page = pageArrayed[0];
-
-if (!slug || !page) {
-	return Astro.redirect(await urlGenFactory(true, undefined, dashboardRouteOverride));
+if (!slug || !pageData.id) {
+	return Astro.redirect(dashboardIndex);
 }
 
-const contextConfig = ConfigArray.pop();
-
-const locals = Astro.locals as Locals;
-const { permissionLevel } = await authHelper(locals);
+const editRoute = getEditRoute(slug);
+const { permissionLevel } = await authHelper(Astro.locals as Locals);
 
 // If the user is not logged in, redirect to the login page
 if ( !developerConfig.testingAndDemoMode ) {
     if ( permissionLevel === "unknown" ) {
         console.log('User is not logged in. Redirecting to login page.');
-        return Astro.redirect(await urlGenFactory(true, "login", dashboardRouteOverride));
+        return Astro.redirect(loginURL);
     }
     if ( permissionLevel !== 'admin' && permissionLevel !== 'editor' ) {
         console.log('User is not an admin or editor. Redirecting to profile page.');
-        return Astro.redirect(await urlGenFactory(true, "profile", dashboardRouteOverride));
+        return Astro.redirect(userProfile);
     }
 }
-
 
 let showSuccessToast = false;
 let showErrorToast = false;
@@ -48,26 +55,30 @@ let showErrorToast = false;
 if (Astro.request.method === 'POST' && !developerConfig.testingAndDemoMode) {
   try {
     const data = await Astro.request.formData();
-	const title = data.get('title');
-	const description = data.get('description');
-	const heroImage = data.get('hero-image');
-	const content = data.get('content');
-	await db
-		.update(Pages)
-		.set({
-			title: title as string,
-			description: description as string,
-			heroImage: heroImage as string,
-			content: content as string,
-		})
-		.where(eq(Pages.slug, page.slug))
-		.then(() => {
-            showSuccessToast = true;
-		})
-		.catch(() => {
-            showErrorToast = true;
-		});
-    } catch (error) {
+    const title = data.get("title");
+    const pack = data.get("package");
+	const showOnNav = data.get('show-on-nav');
+    const description = data.get("description");
+    const heroImage = data.get("hero-image");
+    const content = data.get("content");
+    // const contentLang = data.get("content-lang");
+
+    await db.update(PageData).set({ 
+        title: title as string,
+        package: pack as string,
+        description: description as string,
+        showOnNav: showOnNav  === "on",
+        updatedAt: new Date(),
+        heroImage: heroImage as string,
+    }).where(eq(PageData.slug, slug)).then(async () => {
+        await db.update(PageContent).set({ 
+            content: content as string 
+        }).where(eq(PageContent.contentId, pageData.id));
+    }).catch(() => {
+        showErrorToast = true;
+    });
+    showSuccessToast = true;
+  } catch (error) {
     if (error instanceof Error) {
         showErrorToast = true;
     }
@@ -85,110 +96,160 @@ const pageTitle = `Edit Page | ${contextConfig.title}`;
         { showSuccessToast && (
         <sl-alert variant="success" duration="3000" open closable>
             <sl-icon slot="icon" name="check2-circle"></sl-icon>
-            <strong>Page Edited!</strong><br />
-            You can safely leave this page now.
+            <strong>Page Edited</strong>
+            <p>You can safely leave this page now.</p>
         </sl-alert>
         )}
         { showErrorToast && (
         <sl-alert variant="danger" duration="3000" open closable>
             <sl-icon slot="icon" name="exclamation-octagon"></sl-icon>
-            <strong>Error Editing Page</strong><br />
-            There was an Error Editing the Page. Please try again.
+            <strong>Error Editing Page</strong>
+            <p>There was an Error editing the Post. Please try again.</p>
         </sl-alert>
         )}
     </div>
-    <div class="pb-12 mt-5">
 
-        <div class="text-5xl font-bold">Edit Page: {page.title}</div>
+    <div class="flex grow w-full">
+        <sl-breadcrumb>
+            <span slot="separator">/</span>
+            <sl-breadcrumb-item href={dashboardIndex}>Dashboard
+                <sl-icon slot="prefix" name="columns-gap"></sl-icon>
+            </sl-breadcrumb-item>
+            <sl-breadcrumb-item href={pageEdit}>Existing Pages</sl-breadcrumb-item>
+            <sl-breadcrumb-item href={editRoute}>Edit Page: {pageData.title}</sl-breadcrumb-item>
+        </sl-breadcrumb>
+    </div>
 
-        <div class="py-2">
+    <div class="container">
 
-            <center>
+        <h1 class="text-5xl font-bold py-8">Edit Page: {pageData.title}</h1>
 
-                <form method="post" enctype="multipart/form-data" class="w-full">
-                    <label for="title" class="text-lg">Page Title</label><br>
-                    <input 
-                        type="text" 
-                        id="title" 
-                        name="title" 
-                        class="border-solid border-2 border-gray-300 rounded-lg p-2 w-96"
-                        placeholder="Your Post Title" 
-                        value={page.title}
-                        required><br>
-                    <label for="slug" class="text-lg">Slug</label><br>
-                    <input 
-                        type="text" 
-                        id="slug" 
-                        name="slug" 
-                        value={page.slug}
-                        disabled
-                        class="border-solid border-2 border-gray-300 rounded-lg p-2 w-96"
-                        placeholder="your-post-slug"
-                        required><br>
-                    <label for="description" class="text-lg">Description</label><br>
-                    <input
-                        type="text" 
-                        id="description" 
-                        name="description" 
-                        class="border-solid border-2 border-gray-300 rounded-lg p-2 w-96"
-                        placeholder="Your post's basic description"
-                        value={page.description}
-                        required><br>
-                    <label for="hero-image" class="text-lg">Hero Image</label><br>
-                    <p class="text-sm">To use images stored in your public/ folder use the following example: <pre>/my-image.png</pre></p><br>
-                    <input 
-                        type="text" 
+        <div class="py-2 flex justify-center">
+
+                <form method="POST" class="w-full flex flex-col gap-2">
+                    <sl-input
+                        id="title"
+                        name="title"
+                        value={pageData.title}
+                        placeholder="Your post title"
+                        size="medium"
+                        required>
+                        <div slot="label" class="text-lg inline">Page Title</div>
+                        <sl-icon name="card-heading" slot="prefix"></sl-icon>
+                    </sl-input>
+
+                    <sl-select id="show-on-nav" name="show-on-nav" value={pageData.showOnNav ? "on" : "off"}>
+                        <div slot="label" class="text-lg inline">Show on Navbar?</div>
+                        <sl-option value="on">Yes - Show on the Navbar</sl-option>
+                        <sl-option value="off">No - Don't show on the Navbar</sl-option>
+                    </sl-select>
+
+                    <sl-select id="package" name="package" value={pageData.package}>
+                        <div slot="label" class="text-lg inline">Package</div>
+                        {
+                            Array.from(studioCMSPluginList.values()).map((plugin) => (
+                                <sl-option value={plugin.name}>{plugin.label}</sl-option>
+                            ))
+                        }
+                    </sl-select>
+
+                    <sl-select id="content-lang" name="content-lang" value="default" help-text="This feature has not yet been implemented">
+                        <div slot="label" class="text-lg inline">Content Language</div>
+                        <sl-option value="default">Default</sl-option>
+                        <sl-option value="not-yet-implemented" disabled>Not Yet Implemented</sl-option>
+                    </sl-select>
+
+                    <sl-tooltip 
+                        placement='top'
+                        style="--sl-tooltip-arrow-size: 0; --max-width: 100%;"
+                        distance=1
+                        hoist>
+                        <div slot="content">Page <i>slug</i> cannot be edited after creation.</div>
+                        <sl-input
+                            id="slug"
+                            name="slug"
+                            value={pageData.slug}
+                            disabled="true"
+                            readonly="true"
+                            placeholder="your-page-slug"
+                            size="medium"
+                            required>
+                            <div slot="label" class="text-lg inline">Slug</div>
+                            <sl-icon name="link" slot="prefix"></sl-icon>
+                        </sl-input>
+                    </sl-tooltip>
+                    
+                    <sl-input
+                        id="description"
+                        name="description"
+                        value={pageData.description}
+                        placeholder="Your pages's basic description"
+                        size="medium"
+                        required>
+                        <div slot="label" class="text-lg inline">Description</div>
+                        <sl-icon name="info-circle" slot="prefix"></sl-icon>
+                    </sl-input>
+
+                    <sl-input 
                         id="hero-image" 
                         name="hero-image" 
-                        value={page.heroImage}
-                        class="border-solid border-2 border-gray-300 rounded-lg p-2 w-96"
-                        placeholder="Your post's hero image URL"
-                        value="https://images.unsplash.com/photo-1707345512638-997d31a10eaa?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                        required><br>
-                    <label for="content" class="text-lg">Content</label><br>
-                    <div id="editor">
-                        <textarea 
-                            id="content" 
-                            name="content" 
-                            class="border-solid border-2 border-gray-300 rounded-lg p-2 w-full"
-                            data-provide="markdown" 
-                            rows="10" 
-                            placeholder="Your post's content in markdown format."
-                            required>{page.content}</textarea>
-                    </div><br>
-        
-                    <button class="btn btn-outline ml-5 py-2" type="submit">Update Post!</button><br><br>
+                        value={pageData.heroImage}
+                        placeholder="Your Page's Hero Image URL (Also the OG Image)" 
+                        size="medium"
+                        required>
+                        <p slot="help-text" class="text-sm">To use images stored in your public/ folder use the following example: <i>/my-image.png</i></p><br>
+                        <div slot="label" class="text-lg inline">Hero Image</div>
+                        <sl-icon name="image" slot="prefix"></sl-icon>
+                    </sl-input>
+
+                    <sl-textarea 
+                        resize="auto"
+                        id="content"
+                        name="content"
+                        value={pageContent.content}
+                        size="large"
+                        rows="10"
+                        hx-get={livePreviewBox}
+                        hx-trigger="keyup changed delay:500ms"
+                        hx-target="#html-preview"
+                        placeholder="Your pages's content in markdown format."
+                        required>
+                        <div slot="label" class="text-lg inline">Content</div>
+                        {pageContent.content}
+                    </sl-textarea>
+
+                    <sl-divider></sl-divider>
+
+                    <sl-button 
+                        variant="success" 
+                        type="submit" 
+                        class="grow-0 w-48 place-self-center"
+                        outline>Update Page
+                        <sl-icon slot="suffix" name="pencil-square"></sl-icon>
+                    </sl-button>
         
                 </form>
-
-            </center>
-
-            <div class="text-xl font-bold">Live Preview</div>
-            <div id="html-preview" class="border-solid border-2 border-gray-300 rounded-lg p-2 max-w-[100vw] lg:max-w-[1800px] prose"></div><br><br>
         </div>
 
+        <sl-divider></sl-divider>
+        
+        <textarea 
+            style="visibility: hidden;"
+            id="preload-content"
+            name="preload-content"
+            hx-get={livePreviewBox}
+            hx-trigger="load delay:100ms"
+            hx-target="#html-preview">{pageContent.content}
+        </textarea>
+
+        <sl-card class="card-header max-w-[100vw] lg:max-w-[1800px] w-full">
+            <div slot="header" class="text-xl font-bold">Live Preview</div>
+            <div 
+                id="html-preview" 
+                class="w-full max-w-[100vw] lg:max-w-[1800px] prose md:prose-lg lg:prose-xl"
+                >
+                Click in the box above to start editing the content. As you type, the preview will update automatically.
+            </div>
+        </sl-card>
     </div>
 </Layout>
-
-<script>
-    import Config from 'virtual:studiocms/config';
-    import { renderMarked } from '../../../../../../../utils/marked';
-    import { renderMarkDoc } from '../../../../../../../utils/markdoc';
-    
-            document.getElementById('content')?.addEventListener('input', async function () {
-                const markdownContent = document.getElementById('content');
-                const htmlPreview = document.getElementById('html-preview');
-
-                if (Config.contentRenderer === 'marked' ) {
-                    //@ts-ignore
-                    const htmlContent = await renderMarked(markdownContent.value);
-                    //@ts-ignore
-                    htmlPreview.innerHTML = htmlContent;
-                } else if (Config.contentRenderer === 'markdoc') {
-                    //@ts-ignore
-                    const htmlContent = await renderMarkDoc(markdownContent.value);
-                    //@ts-ignore
-                    htmlPreview.innerHTML = htmlContent;
-                }
-            });
-</script>

@@ -1,7 +1,7 @@
 {
   "name": "@astrolicious/studiocms",
   "version": "0.0.0-alpha.1",
-  "description": "Content Management System built for Astro Studio and AstroDB",
+  "description": "A dedicated CMS for Astro Studio. Built from the ground up by the Astro community.",
   "author": {
     "name": "Adam Matthiesen | Jacob Jenkins | Paul Valladares",
     "url": "https://astro-studiocms.xyz"
@@ -30,58 +30,56 @@
     "access": "public"
   },
   "sideEffects": false,
-  "files": ["src"],
+  "files": [
+    "src"
+  ],
   "exports": {
     ".": {
-      "types": "./src/index.d.ts",
-      "import": "./src/index.ts"
+      "import": "./src/index.ts",
+      "types": "./src/index.d.ts"
     }
   },
   "type": "module",
   "dependencies": {
-    "@astrojs/rss": "^4.0.5",
+    "@astrojs/markdown-remark": "^5.1.0",
     "@cloudinary/url-gen": "^1.19.0",
     "@iconify-json/mdi": "^1.1.66",
-    "@iconify/utils": "^2.1.23",
-    "@inox-tools/sitemap-ext": "^0.2.11",
+    "@iconify-json/logos": "^1.1.43",
+    "@iconify/utils": "^2.1.24",
+    "@inox-tools/sitemap-ext": "^0.2.12",
     "@lucia-auth/adapter-drizzle": "^1.0.7",
     "@markdoc/markdoc": "^0.4.0",
+    "@matthiesenxyz/unocss-preset-daisyui": "^0.1.0",
     "@noble/hashes": "^1.4.0",
-    "@shikijs/transformers": "^1.4.0",
-    "@unocss/astro": "^0.59.4",
-    "@unocss/reset": "^0.59.4",
-    "@unocss/preset-uno": "^0.59.4",
-    "@unocss/preset-wind": "^0.59.4",
-    "@unocss/preset-typography": "^0.59.4",
-    "@unocss/preset-web-fonts": "^0.59.4",
-    "@unocss/transformer-directives": "^0.59.4",
+    "@shikijs/transformers": "^1.6.3",
+    "@unocss/astro": "^0.61.0",
+    "@unocss/reset": "^0.61.0",
     "@unpic/astro": "^0.0.46",
-    "@yangyang20240403/unocss-preset-daisyui": "^1.0.0",
-    "arctic": "^1.8.1",
-    "astro-integration-kit": "^0.13.2",
-    "daisyui": "^4.4.23",
+    "arctic": "^1.9.1",
+    "astro-integration-kit": "^0.13.3",
+    "daisyui": "^4.12.2",
     "lucia": "^3.2.0",
-    "marked": "^12.0.2",
+    "marked": "^13.0.0",
     "marked-alert": "^2.0.1",
-    "marked-emoji": "^1.4.0",
+    "marked-emoji": "^1.4.1",
     "marked-footnote": "^1.2.2",
     "marked-shiki": "^1.1.0",
-    "marked-smartypants": "^1.1.6",
+    "marked-smartypants": "^1.1.7",
+    "mrmime": "^2.0.0",
     "oslo": "^1.2.0",
-    "shiki": "^1.4.0",
-    "typescript": "^5.4.5",
+    "shiki": "^1.6.3",
     "unpic": "^3.18.0",
-    "unocss": "^0.59.4",
-    "unocss-preset-scrollbar": "^0.3.1",
-    "vite": "^5.2.11",
-    "pathe": "^1.1.2",
-    "recast": "^0.23.6"
+    "unocss": "^0.61.0"
   },
   "peerDependencies": {
-    "@astrojs/db": ">=0.11.0",
-    "astro": ">=4.7.1"
+    "@astrojs/db": ">=0.11.6",
+    "astro": ">=4.10.3"
   },
   "devDependencies": {
-    "@types/node": "20.12.8"
+    "@types/node": "20.12.8",
+    "typescript": "^5.4.5",
+    "@types/fs-extra": "^11.0.4",
+    "vite": "^5.2.11",
+    "@iconify/types": "^2.0.0"
   }
 }

@@ -1,39 +1,24 @@
 import { defineIntegration } from 'astro-integration-kit';
 import { imageService as unpicImageService } from '@unpic/astro/service';
 import { passthroughImageService, sharpImageService, squooshImageService } from 'astro/config';
-import { integrationLogger } from '../../../utils';
-import { AstroError } from 'astro/errors';
-import { loadEnv } from 'vite';
-import { ImageHandlerOptionsSchema } from '../schemas';
-
-// Environment Variables
-const env = loadEnv('all', process.cwd(), 'CMS');
-
-const AUTHKEYS = {
-	CLOUDINARY: {
-		N: 'CMS_CLOUDINARY_CLOUDNAME',
-		KEY:
-			env.CMS_CLOUDINARY_CLOUDNAME ||
-			import.meta.env.CMS_CLOUDINARY_CLOUDNAME ||
-			process.env.CMS_CLOUDINARY_CLOUDNAME,
-	},
-};
+import { studioLogger, studioLoggerOptsResolver } from '../utils';
+import { optionsSchema } from '../schemas';
+import { netlifyImageHandlerStrings } from '../strings';
 
 export default defineIntegration({
-    name: 'astrolicious/studioCMS:imageHandler/netlify',
-    optionsSchema: ImageHandlerOptionsSchema,
+    name: '@astrolicious/studioCMS:imageHandler/netlify',
+    optionsSchema,
     setup({ options }) {
         return {
             hooks: {
-                "astro:config:setup": ( params ) => {
+                "astro:config:setup": async ( params ) => {
 
 					const {
 						updateConfig,
-						logger,
 						config,
 					} = params;
 
-                    const { ImageServiceConfig: {
+                    const { imageService: {
                         useUnpic,
                         astroImageServiceConfig,
                         cdnPlugin,
@@ -45,65 +30,32 @@ export default defineIntegration({
                         }
                     }, verbose } = options;
 
+						const { logInfo } = await studioLoggerOptsResolver(params.logger, verbose);
+	
 						// Setup Image Service
 						if (config.image?.service.entrypoint === '@astrojs/netlify/image-service.js') {
-							integrationLogger(
-								logger,
-								verbose,
-								'info',
-								'Netlify Image Service Enabled. Using Netlify Image Service.'
-							);
+							studioLogger(logInfo, netlifyImageHandlerStrings.NetlifyImageServiceEnabled)
 						} else {
-							integrationLogger(
-								logger,
-								verbose,
-								'info',
-								'Netlify Image Service Disabled. Using Built-in Image Service.'
-							);
+							studioLogger(logInfo, netlifyImageHandlerStrings.NetlifyImageServiceDisabled)
 							if (cdnPlugin === 'cloudinary-js') {
-								if (!AUTHKEYS.CLOUDINARY.KEY) {
-									throw new AstroError(
-										`Using the Cloudinary CDN JS SDK Plugin requires the ${AUTHKEYS.CLOUDINARY.N} environment variable to be set. Please add this to your .env file.`
-									);
-								}
 								if (astroImageServiceConfig === 'squoosh') {
-									integrationLogger(
-										logger,
-										verbose,
-										'info',
-										'Using Squoosh Image Service as Fallback for Cloudinary CDN Plugin'
-									);
+									studioLogger(logInfo, netlifyImageHandlerStrings.cdnPluginStrings.Squoosh)
 									updateConfig({
 										image: { service: squooshImageService() },
 									});
 								} else if (astroImageServiceConfig === 'sharp') {
-									integrationLogger(
-										logger,
-										verbose,
-										'info',
-										'Using Sharp Image Service as Fallback for Cloudinary CDN Plugin'
-									);
+									studioLogger(logInfo, netlifyImageHandlerStrings.cdnPluginStrings.Sharp)
 									updateConfig({
 										image: { service: sharpImageService() },
 									});
 								} else if (astroImageServiceConfig === 'no-op') {
-									integrationLogger(
-										logger,
-										verbose,
-										'info',
-										'Using No-Op Image Service as Fallback for Cloudinary CDN Plugin'
-									);
+									studioLogger(logInfo, netlifyImageHandlerStrings.cdnPluginStrings.NoOp)
 									updateConfig({
 										image: { service: passthroughImageService() },
 									});
 								}
 							} else if (useUnpic && astroImageServiceConfig !== 'no-op') {
-								integrationLogger(
-									logger,
-									verbose,
-									'info',
-									'Loading @unpic/astro Image Service for External Images'
-								);
+								studioLogger(logInfo, netlifyImageHandlerStrings.unpicStrings.default)
 								updateConfig({
 									image: {
 										service: unpicImageService({
@@ -115,12 +67,7 @@ export default defineIntegration({
 									},
 								});
 							} else if (useUnpic && astroImageServiceConfig === 'no-op') {
-								integrationLogger(
-									logger,
-									verbose,
-									'info',
-									'Loading @unpic/astro Image Service for External Images'
-								);
+								studioLogger(logInfo, netlifyImageHandlerStrings.unpicStrings.NoOp)
 								updateConfig({
 									image: {
 										service: unpicImageService({
@@ -132,24 +79,19 @@ export default defineIntegration({
 									},
 								});
 							} else {
-								integrationLogger(
-									logger,
-									verbose,
-									'info',
-									'@unpic/astro Image Service Disabled, using Astro Built-in Image Service.'
-								);
+								studioLogger(logInfo, netlifyImageHandlerStrings.unpicStrings.disabled)
 								if (astroImageServiceConfig === 'squoosh') {
-									integrationLogger(logger, verbose, 'info', 'Using Squoosh Image Service');
+									studioLogger(logInfo, netlifyImageHandlerStrings.Squoosh)
 									updateConfig({
 										image: { service: squooshImageService() },
 									});
 								} else if (astroImageServiceConfig === 'sharp') {
-									integrationLogger(logger, verbose, 'info', 'Using Sharp Image Service');
+									studioLogger(logInfo, netlifyImageHandlerStrings.Sharp)
 									updateConfig({
 										image: { service: sharpImageService() },
 									});
 								} else if (astroImageServiceConfig === 'no-op') {
-									integrationLogger(logger, verbose, 'info', 'Using No-Op Image Service');
+									studioLogger(logInfo, netlifyImageHandlerStrings.NoOp)
 									updateConfig({
 										image: { service: passthroughImageService() },
 									});

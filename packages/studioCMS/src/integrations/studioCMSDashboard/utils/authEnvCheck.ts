@@ -1,3 +1,5 @@
+import { getSecret } from 'astro:env/server';
+
 type Providers = {
     github: boolean;
     discord: boolean;
@@ -8,24 +10,24 @@ type Providers = {
 
 const AUTHKEYS = {
     GITHUB: {
-        CLIENT_ID: import.meta.env.CMS_GITHUB_CLIENT_ID || process.env.CMS_GITHUB_CLIENT_ID,
-        CLIENT_SECRET: import.meta.env.CMS_GITHUB_CLIENT_SECRET || process.env.CMS_GITHUB_CLIENT_SECRET,
+        CLIENT_ID: getSecret('CMS_GITHUB_CLIENT_ID'),
+        CLIENT_SECRET: getSecret('CMS_GITHUB_CLIENT_SECRET'),
     },
     DISCORD: {
-        CLIENT_ID: import.meta.env.CMS_DISCORD_CLIENT_ID || process.env.CMS_DISCORD_CLIENT_ID,
-        CLIENT_SECRET: import.meta.env.CMS_DISCORD_CLIENT_SECRET || process.env.CMS_DISCORD_CLIENT_SECRET,
-        REDIRECT_URI: import.meta.env.CMS_DISCORD_REDIRECT_URI || process.env.CMS_DISCORD_REDIRECT_URI,
+        CLIENT_ID: getSecret('CMS_DISCORD_CLIENT_ID'),
+        CLIENT_SECRET: getSecret('CMS_DISCORD_CLIENT_SECRET'),
+        REDIRECT_URI: getSecret('CMS_DISCORD_REDIRECT_URI'),
     },
     GOOGLE: {
-        CLIENT_ID: import.meta.env.CMS_GOOGLE_CLIENT_ID || process.env.CMS_GOOGLE_CLIENT_ID,
-        CLIENT_SECRET: import.meta.env.CMS_GOOGLE_CLIENT_SECRET || process.env.CMS_GOOGLE_CLIENT_SECRET,
-        REDIRECT_URI: import.meta.env.CMS_GOOGLE_REDIRECT_URI || process.env.CMS_GOOGLE_REDIRECT_URI,
+        CLIENT_ID: getSecret('CMS_GOOGLE_CLIENT_ID'),
+        CLIENT_SECRET: getSecret('CMS_GOOGLE_CLIENT_SECRET'),
+        REDIRECT_URI: getSecret('CMS_GOOGLE_REDIRECT_URI'),
     },
     AUTH0: {
-        CLIENT_ID: import.meta.env.CMS_AUTH0_CLIENT_ID || process.env.CMS_AUTH0_CLIENT_ID,
-        CLIENT_SECRET: import.meta.env.CMS_AUTH0_CLIENT_SECRET || process.env.CMS_AUTH0_CLIENT_SECRET,
-        DOMAIN: import.meta.env.CMS_AUTH0_DOMAIN || process.env.CMS_AUTH0_DOMAIN,
-        REDIRECT_URI: import.meta.env.CMS_AUTH0_REDIRECT_URI || process.env.CMS_AUTH0_REDIRECT_URI,
+        CLIENT_ID: getSecret('CMS_AUTH0_CLIENT_ID'),
+        CLIENT_SECRET: getSecret('CMS_AUTH0_CLIENT_SECRET'),
+        DOMAIN: getSecret('CMS_AUTH0_DOMAIN'),
+        REDIRECT_URI: getSecret('CMS_AUTH0_REDIRECT_URI'),
     },
 }
 

@@ -19,13 +19,6 @@ export const LocalsSchema = z.object({
         username: z.string(),
         githubId: z.number(),
     }),
-    runtime: z.object({
-        env: z.object({
-            CMS_GITHUB_CLIENT_ID: z.string(),
-            CMS_GITHUB_CLIENT_SECRET: z.string(),
-            CMS_CLOUDINARY_CLOUDNAME: z.string(),
-        }),
-    }),
 });
 
 export type Locals = z.infer<typeof LocalsSchema>;

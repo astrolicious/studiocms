@@ -1,0 +1,13 @@
+{
+  "extends": "astro/tsconfigs/strictest",
+  "files": [],
+  "compilerOptions": {
+    "outDir": "../../.moon/cache/types/packages/studioCMSBlog",
+  },
+  "include": [
+    "../../playgrounds/node/**/*",
+    "../../playgrounds/node/.astro/**/*",
+    "../studioCMS/**/*",
+    "./**/*"
+  ]
+}

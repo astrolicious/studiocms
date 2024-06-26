@@ -1,12 +1,5 @@
 ---
 import { Layout } from 'studiocms-dashboard:components';
-import Config from 'virtual:studiocms/config';
-
-if (Config.includedIntegrations.useInoxSitemap) {
-    import('sitemap-ext:config').then((sitemap) => {
-        sitemap.default(false)
-    })
-}
 
 ---
 
@@ -154,7 +147,7 @@ if (Config.includedIntegrations.useInoxSitemap) {
       //@ts-expect-error - hide is not a standard method on HTMLElement it comes from `Shoelace.syle`
       localAdmin.hide();
       localAdmin.setAttribute("disabled", "true")
-      oauthadmin.removeAttribute("disabled")
+      oauthAdmin.removeAttribute("disabled")
       //@ts-expect-error - show is not a standard method on HTMLElement it comes from `Shoelace.syle`
       oauthAdmin.show();
     }
