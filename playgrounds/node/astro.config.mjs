@@ -2,7 +2,7 @@ import { defineConfig } from 'astro/config';
 import db from '@astrojs/db';
 import node from '@astrojs/node';
 import studioCMS from '@astrolicious/studiocms';
-import studioCMSBlog from '@astrolicious/studiocms-blog';
+// import studioCMSBlog from '@astrolicious/studiocms-blog';
 
 // https://astro.build/config
 export default defineConfig({
@@ -12,11 +12,11 @@ export default defineConfig({
 	integrations: [ 
 		db(), 
 		studioCMS(), // StudioCMS Integration options can be found in `studiocms.config.mjs`
-		studioCMSBlog({
-			config: {
-				title: 'StudioCMS Test Blog',
-				description: 'A simple blog built with Astro and StudioCMS',
-			},
-		}), 
+		// studioCMSBlog({
+		// 	config: {
+		// 		title: 'StudioCMS Test Blog',
+		// 		description: 'A simple blog built with Astro and StudioCMS',
+		// 	},
+		// }), 
 	], 
 });

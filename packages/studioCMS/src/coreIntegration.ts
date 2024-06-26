@@ -3,8 +3,8 @@ import { studioCMSRobotsTXT, studioCMSImageHandler, studioCMSDashboard } from '.
 import { addDts, addVirtualImports, createResolver, defineIntegration } from 'astro-integration-kit';
 import 'astro-integration-kit/types/db';
 import { optionsResolver, vResolver } from './resolvers';
-import inoxsitemap from '@inox-tools/sitemap-ext';
-import { studioCMSPluginList } from './plugintools';
+// import inoxsitemap from '@inox-tools/sitemap-ext';
+import { studioCMSPluginList } from '.';
 import { getStudioConfigFileUrl } from './studiocms-config';
 import { optionsSchema } from './schemas';
 import { version } from '../package.json';
@@ -98,11 +98,12 @@ export default defineIntegration({
 								integration: studioCMSRobotsTXT({ 
 									...robotsTXTPreset, ...resolvedOptions.includedIntegrations.astroRobotsConfig 
 								}) 
-							}, {
-								enabled: resolvedOptions.includedIntegrations.useInoxSitemap,
-								knownSimilar: ['@astrojs/sitemap', '@inox-tools/sitemap-ext', '@inox-tools/declarative-sitemap'],
-								integration: inoxsitemap()
-							}
+							}, 
+							// {
+							// 	enabled: resolvedOptions.includedIntegrations.useInoxSitemap,
+							// 	knownSimilar: ['@astrojs/sitemap', '@inox-tools/sitemap-ext', '@inox-tools/declarative-sitemap'],
+							// 	integration: inoxsitemap()
+							// }
 						]
 					});
 

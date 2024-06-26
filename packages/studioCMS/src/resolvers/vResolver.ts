@@ -1,5 +1,5 @@
 import { createResolver } from "astro-integration-kit";
-import { customRendererPlugin, externalNavigation, studioCMSPluginList } from "../plugintools";
+import { customRendererPlugin, externalNavigation, studioCMSPluginList } from "..";
 import { DTSResolver } from "./studiocms-dts";
 import type { ResolverOpts, ResolverResponse, VirtualResolver } from "./types";
 

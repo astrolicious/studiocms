@@ -34,7 +34,10 @@
     "src"
   ],
   "exports": {
-    ".": "./src/index.ts"
+    ".": {
+      "import": "./src/index.ts",
+      "types": "./src/index.d.ts"
+    }
   },
   "type": "module",
   "dependencies": {
