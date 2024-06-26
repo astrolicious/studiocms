@@ -30,7 +30,6 @@ export default defineIntegration({
 
 					// Update Astro Config with Environment Variables (`astro:env`)
 					params.updateConfig({ 
-						vite: { optimizeDeps: { exclude: ["astro:db"] }},
 						experimental: { env: astroENV } 
 					});
 
