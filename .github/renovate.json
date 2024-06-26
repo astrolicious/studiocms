@@ -1,6 +1,9 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["config:best-practices", "schedule:earlyMondays"],
+  "extends": [
+    "config:best-practices",
+    "schedule:earlyMondays"
+  ],
   "dependencyDashboard": true,
   "lockFileMaintenance": {
     "enabled": true
@@ -10,45 +13,88 @@
     "**/bower_components/**",
     "packages/ghost-to-studio/package.json"
   ],
-  "labels": ["dependencies"],
+  "labels": [
+    "dependencies"
+  ],
   "additionalBranchPrefix": "{{parentDir}}-",
-	"gitIgnoredAuthors": ["github+renovate@astro-studiocms.xyz"],
+  "gitIgnoredAuthors": [
+    "github+renovate@astro-studiocms.xyz"
+  ],
   "prHourlyLimit": 3,
   "rangeStrategy": "bump",
-  "reviewers": ["team:exalted"],
+  "reviewers": [
+    "team:exalted"
+  ],
   "packageRules": [
     {
-      "depTypeList": ["peerDependencies"],
+      "matchDepTypes": [
+        "peerDependencies"
+      ],
       "enabled": false
     },
     {
-      "matchPackagePatterns": ["@biomejs/"],
-      "labels": ["linting","dependencies"]
+      "matchPackagePatterns": [
+        "@biomejs/"
+      ],
+      "labels": [
+        "linting",
+        "dependencies"
+      ]
     },
     {
-      "matchPackagePatterns": ["^astro"],
-      "labels": ["astroDependencies","dependencies"]
+      "matchPackagePatterns": [
+        "^astro"
+      ],
+      "labels": [
+        "astroDependencies",
+        "dependencies"
+      ]
     },
     {
-      "matchPackagePatterns": ["^@astrojs"],
-      "labels": ["astroDependencies","dependencies"]
+      "matchPackagePatterns": [
+        "^@astrojs"
+      ],
+      "labels": [
+        "astroDependencies",
+        "dependencies"
+      ]
     },
     {
-      "matchDepTypes": ["packageManager", "engines"],
-      "labels": ["dependencies"],
+      "matchDepTypes": [
+        "packageManager",
+        "engines"
+      ],
+      "labels": [
+        "dependencies"
+      ],
       "enabled": false
     },
     {
-      "matchFileNames": ["www/**"],
-      "labels": ["websiteDeps","dependencies"]
+      "matchFileNames": [
+        "www/**"
+      ],
+      "labels": [
+        "websiteDeps",
+        "dependencies"
+      ]
     },
     {
-      "matchFileNames": ["packages/**"],
-      "labels": ["packageDeps","dependencies"]
+      "matchFileNames": [
+        "packages/**"
+      ],
+      "labels": [
+        "packageDeps",
+        "dependencies"
+      ]
     },
     {
-      "matchFileNames": ["playgrounds/**"],
-      "labels": ["playgroundDeps","dependencies"]
+      "matchFileNames": [
+        "playgrounds/**"
+      ],
+      "labels": [
+        "playgroundDeps",
+        "dependencies"
+      ]
     }
   ]
 }
