@@ -75,7 +75,7 @@
     "astro": ">=4.10.3"
   },
   "devDependencies": {
-    "@types/node": "20.12.8",
+    "@types/node": "20.14.9",
     "typescript": "^5.5.2",
     "@types/fs-extra": "^11.0.4",
     "vite": "^5.3.1",
