@@ -177,8 +177,8 @@ importers:
   playgrounds/cloudflare:
     dependencies:
       '@astrojs/cloudflare':
-        specifier: ^10.2.5
-        version: 10.2.5(astro@4.11.3)
+        specifier: ^10.4.2
+        version: 10.4.2(astro@4.11.3)
       '@astrojs/db':
         specifier: ^0.11.7
         version: 0.11.7
@@ -340,8 +340,8 @@ packages:
       - prettier-plugin-astro
     dev: false
 
-  /@astrojs/cloudflare@10.2.5(astro@4.11.3):
-    resolution: {integrity: sha512-5tKPU5m/zYwz2CU9vCSKo4tgWsdD7xwpUlDkVbKPwgSkfVB6ZuXb8ffLYnahtUc1Gvh7HgaBSaagPVHGCp73WQ==}
+  /@astrojs/cloudflare@10.4.2(astro@4.11.3):
+    resolution: {integrity: sha512-v6nRHlELAEAyqC9MI7a4yw0h/g5rqcIeVV9ezSuQNxdtvoG7n8sGH6QYgXIpwrEAEIuM+cM2a509Hi1CIpfzCA==}
     peerDependencies:
       astro: ^4.2.0
     dependencies:

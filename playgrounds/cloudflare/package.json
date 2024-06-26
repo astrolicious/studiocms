@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "@astrojs/db": "^0.11.7",
-    "@astrojs/cloudflare": "^10.2.5",
+    "@astrojs/cloudflare": "^10.4.2",
     "astro": "^4.11.3",
     "@astrolicious/studiocms": "workspace:*"
   }
