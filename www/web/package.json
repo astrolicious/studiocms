@@ -10,17 +10,17 @@
     "start": "astro dev"
   },
   "dependencies": {
-    "@astrojs/check": "^0.5.10",
+    "@astrojs/check": "^0.7.0",
     "@astrojs/tailwind": "^5.1.0",
     "astro": "^4.11.3",
-    "astro-font": "^0.0.80",
+    "astro-font": "^0.0.81",
     "astro-icon": "^1.1.0",
-    "astro-seo": "^0.8.3",
+    "astro-seo": "^0.8.4",
     "motion": "^10.17.0",
-    "powerglitch": "^2.3.2",
+    "powerglitch": "^2.3.3",
     "tailwind-merge": "^2.2.2",
-    "tailwindcss": "^3.4.3",
-    "typescript": "^5.4.3"
+    "tailwindcss": "^3.4.4",
+    "typescript": "^5.5.2"
   },
   "devDependencies": {
     "tailwind-scrollbar": "3.1.0"
