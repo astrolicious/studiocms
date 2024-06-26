@@ -18,6 +18,10 @@
   "reviewers": ["team:exalted"],
   "packageRules": [
     {
+      "depTypeList": ["peerDependencies"],
+      "enabled": false
+    },
+    {
       "matchPackagePatterns": ["@biomejs/"],
       "labels": ["linting","dependencies"]
     },
