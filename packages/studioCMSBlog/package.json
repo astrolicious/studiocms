@@ -60,7 +60,7 @@
   },
   "devDependencies": {
     "@astrolicious/studiocms": "workspace:*",
-    "@types/node": "20.12.8"
+    "@types/node": "20.14.9"
   },
   "peerDependencies": {
     "astro": ">=4.10.3"
