@@ -1,11 +1,11 @@
 name: Deployment Helper Comment
 permissions:
     pull-requests: write
-    
+
 on:
   pull_request:
     types: [opened]
-        
+
 jobs:
     comment:
       name: Reply on new PR
