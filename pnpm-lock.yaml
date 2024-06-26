@@ -52,8 +52,8 @@ importers:
         specifier: '>=0.11.6'
         version: 0.11.6
       '@astrojs/markdown-remark':
-        specifier: ^5.1.0
-        version: 5.1.0
+        specifier: ^5.1.1
+        version: 5.1.1
       '@cloudinary/url-gen':
         specifier: ^1.19.0
         version: 1.19.0
