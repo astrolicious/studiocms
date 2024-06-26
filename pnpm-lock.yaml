@@ -269,7 +269,7 @@ importers:
         specifier: ^2.3.3
         version: 2.3.3
       tailwind-merge:
-        specifier: ^2.2.2
+        specifier: ^2.3.0
         version: 2.3.0
       tailwindcss:
         specifier: ^3.4.4
