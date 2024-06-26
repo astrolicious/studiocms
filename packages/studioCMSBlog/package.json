@@ -55,7 +55,7 @@
   "type": "module",
   "dependencies": {
     "@astrolicious/studiocms": "workspace:*",
-    "@astrojs/rss": "^4.0.6",
+    "@astrojs/rss": "^4.0.7",
     "astro-theme-provider": "^0.5.0"
   },
   "devDependencies": {
