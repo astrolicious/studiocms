@@ -45,7 +45,7 @@
     "@cloudinary/url-gen": "^1.19.0",
     "@iconify-json/mdi": "^1.1.67",
     "@iconify-json/logos": "^1.1.43",
-    "@iconify/utils": "^2.1.24",
+    "@iconify/utils": "^2.1.25",
     "@inox-tools/sitemap-ext": "^0.2.12",
     "@lucia-auth/adapter-drizzle": "^1.0.7",
     "@markdoc/markdoc": "^0.4.0",
