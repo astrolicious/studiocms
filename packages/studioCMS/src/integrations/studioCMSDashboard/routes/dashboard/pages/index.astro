@@ -1,7 +1,7 @@
 ---
 // @ts-expect-error - Some types can only be imported from the Astro runtime
 import { SiteConfig, db, eq } from 'astro:db';
-import { Layout } from 'studiocms-dashboard:components';
+import { Layout, WebVitalPanel } from 'studiocms-dashboard:components';
 import Config from 'virtual:studiocms/config';
 import { authHelper, type Locals } from 'studiocms:helpers';
 import { StudioCMSRoutes } from 'studiocms-dashboard:routeMap';
@@ -9,7 +9,7 @@ import { studioCMSSocials } from "../layouts/studiocms-socials";
 import type { SiteConfigResponse } from 'studiocms:components';
 import { CMSSiteConfigId } from '../../../../../constVars';
 import { getWebVitals } from 'studiocms-dashboard:web-vitals';
-import { Breadcrumb, BreadcrumbItem, Divider, Card, Alert, Button, Icon, Tab, TabGroup, TabPanel } from 'astrolace:components';
+import { Breadcrumb, BreadcrumbItem, Divider, Card, Alert, Button, Icon, Details } from 'astrolace:components';
 
 const { 
     mainLinks: {
@@ -76,23 +76,14 @@ const pageTitle = `Dashboard | ${contextConfig.title}`;
 
             <Card class="w-full card-header">
 
-                <div slot="header" class="flex flex-row gap-4 items-center">
-                    <Icon slot="icon" name="check2-circle" class:list={"text-green-500 font-size-6"} />
-                    <p>Web Vitals is <strong class="text-green">ENABLED</strong>! <strong>Performance Metrics</strong> are being collected.</p>
-                </div>
+                <Details>
+                    <div slot="summary" class="flex flex-row gap-4 items-center">
+                        <Icon slot="icon" name="check2-circle" class:list={"text-green-500 font-size-6"} />
+                        <p>Web Vitals is <strong class="text-green">ENABLED</strong>! <strong>Performance Metrics</strong> are being collected.</p>
+                    </div>
+                    <WebVitalPanel webVitalData={webVitals} />
+                </Details>
 
-                <Divider class:list={"divider"}/>
-
-                <TabGroup placement='start'>
-                    <Tab slot="nav" panel='page-route-data'>Page Route Data</Tab>
-                    <Tab slot="nav" panel='core-web-vitals'>Core Web Vitals</Tab>
-                    <Tab slot="nav" panel='core-vitals-by-route'>Core Vitals by Route</Tab>
-
-                    <TabPanel name='page-route-data'>Example page data</TabPanel>
-                    <TabPanel name='core-web-vitals'>Example core web vitals data</TabPanel>
-                    <TabPanel name='core-vitals-by-route'>Example core vitals by Route data</TabPanel>
-                </TabGroup>
-                
             </Card>
         )}
 

@@ -73,8 +73,8 @@ importers:
         specifier: ^0.4.0
         version: 0.4.0(@types/react@18.3.3)
       '@matthiesenxyz/astrolace':
-        specifier: ^0.1.4
-        version: 0.1.4(@astrojs/db@0.11.6)(@types/react@18.3.3)(astro@4.10.3)
+        specifier: ^0.1.5
+        version: 0.1.5(@astrojs/db@0.11.6)(@types/react@18.3.3)(astro@4.10.3)
       '@matthiesenxyz/unocss-preset-daisyui':
         specifier: ^0.1.0
         version: 0.1.0(daisyui@4.12.8)(unocss@0.61.0)
@@ -2900,8 +2900,8 @@ packages:
       '@types/markdown-it': 12.2.3
     dev: false
 
-  /@matthiesenxyz/astrolace@0.1.4(@astrojs/db@0.11.6)(@types/react@18.3.3)(astro@4.10.3):
-    resolution: {integrity: sha512-Snj+iHXzhzLYFz/tjnCiWHLFWehur/4sAVH0L3fu1O6NIt11jZX32UzgwgKEX7bK3qkxkAr3qwjfdpNyk+sK6A==}
+  /@matthiesenxyz/astrolace@0.1.5(@astrojs/db@0.11.6)(@types/react@18.3.3)(astro@4.10.3):
+    resolution: {integrity: sha512-UeAitd99tu4s8tz+tDqhAQ8PItGb9WEEcOounc1DPq27GyRT/v13VlXMd+nuMPBeN7qVMZQspWlZ0ArBFy/Kew==}
     peerDependencies:
       astro: '>=4.8.6'
     dependencies:

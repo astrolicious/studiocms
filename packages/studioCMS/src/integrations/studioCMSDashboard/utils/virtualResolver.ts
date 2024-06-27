@@ -21,7 +21,8 @@ export const virtualResolver = defineUtility("astro:config:setup")(
             },
             components: {
                 DashboardLayout: resolve('../routes/dashboard/layouts/Layout.astro'),
-                FormattedDate: resolve('../../../components/exports/FormattedDate.astro')
+                FormattedDate: resolve('../../../components/exports/FormattedDate.astro'),
+                WebVitalPanel: resolve('../routes/dashboard/components/WebVitalPanel.astro'),
             }
         }
 
@@ -33,6 +34,7 @@ export const virtualResolver = defineUtility("astro:config:setup")(
         const astroComponents = [
             { name: 'Layout', path: resolver.components.DashboardLayout },
             { name: 'FormattedDate', path: resolver.components.FormattedDate },
+            { name: 'WebVitalPanel', path: resolver.components.WebVitalPanel }
         ]
 
         const routeMap = [
@@ -71,6 +73,7 @@ export const virtualResolver = defineUtility("astro:config:setup")(
         studioDashboardDTS.addLines(`declare module 'studiocms-dashboard:components' {
             export const Layout: typeof import('${resolver.components.DashboardLayout}').default;
             export const FormattedDate: typeof import('${resolver.components.FormattedDate}').default;
+            export const WebVitalPanel: typeof import('${resolver.components.WebVitalPanel}').default;
         }`);
 
         studioDashboardDTS.addLines(`declare module 'studiocms-dashboard:routeMap' {

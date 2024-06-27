@@ -1,0 +1,38 @@
+---
+import { Tab, TabGroup, TabPanel } from "astrolace:components";
+import type { WebVitalsResponseItem } from "studiocms-dashboard:web-vitals";
+import CoreVitalPanelCard from "./CoreVitalPanelCard.astro";
+import { buildLcpDataObject } from "./buildLcpDataObject";
+import { buildClsDataObject } from "./buildClsDataObject";
+import { buildInpDataObject } from "./buildInpDataObject";
+
+interface Props {
+    webVitalData: WebVitalsResponseItem[];
+}
+
+const { webVitalData } = Astro.props;
+
+const { lcp24Hours, lcp7Days, lcp30Days, lcpHistorical } = buildLcpDataObject(webVitalData);
+const { cls24Hours, cls7Days, cls30Days, clsHistorical } = buildClsDataObject(webVitalData);
+const { inp24Hours, inp7Days, inp30Days, inpHistorical } = buildInpDataObject(webVitalData);
+---
+
+<TabGroup>
+    <Tab slot="nav" panel='last-24-hours'>Last 24 Hours</Tab>
+    <Tab slot="nav" panel='last-7-days'>Last 7 Days</Tab>
+    <Tab slot="nav" panel='last-30-days'>Last 30 Days</Tab>
+    <Tab slot="nav" panel="all-time">All Historical Data</Tab>
+
+    <TabPanel name='last-24-hours'>
+        <CoreVitalPanelCard lcpData={lcp24Hours} clsData={cls24Hours} inpData={inp24Hours}/>
+    </TabPanel>
+    <TabPanel name='last-7-days'>
+        <CoreVitalPanelCard lcpData={lcp7Days} clsData={cls7Days} inpData={inp7Days}/>
+    </TabPanel>
+    <TabPanel name='last-30-days'>
+        <CoreVitalPanelCard lcpData={lcp30Days} clsData={cls30Days} inpData={inp30Days}/>
+    </TabPanel>
+    <TabPanel name='all-time'>
+        <CoreVitalPanelCard lcpData={lcpHistorical} clsData={clsHistorical} inpData={inpHistorical}/>
+    </TabPanel>
+</TabGroup>

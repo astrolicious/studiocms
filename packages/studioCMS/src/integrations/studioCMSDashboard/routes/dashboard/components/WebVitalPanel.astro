@@ -1,0 +1,34 @@
+---
+import { Tab, TabGroup, TabPanel } from "astrolace:components";
+import type { WebVitalsResponseItem } from "studiocms-dashboard:web-vitals";
+import WebVitalPerRouteData from "./WebVitalPerRouteData.astro";
+import WebVitalPerCoreVital from "./WebVitalPerCoreVital.astro";
+
+interface Props {
+    webVitalData: WebVitalsResponseItem[];
+}
+
+const { webVitalData } = Astro.props;
+
+
+---
+{ 
+    webVitalData.length > 0 ? (
+        <TabGroup>
+            <Tab slot="nav" panel='page-route-analytics'>Page Route Analytics</Tab>
+            <Tab slot="nav" panel='core-web-vitals'>Core Web Vitals</Tab>
+            <Tab slot="nav" panel='core-vitals-by-route'>Core Vitals by Route</Tab>
+        
+            <TabPanel name='page-route-analytics'>
+                <WebVitalPerRouteData webVitalData={webVitalData} />
+            </TabPanel>
+            <TabPanel name='core-web-vitals'>
+                <WebVitalPerCoreVital webVitalData={webVitalData} />
+            </TabPanel>
+            <TabPanel name='core-vitals-by-route'>Example core vitals by Route data</TabPanel>
+        </TabGroup>
+    ) : (
+        <p>Web Vitals data is not yet available.</p>
+    )
+}
+
