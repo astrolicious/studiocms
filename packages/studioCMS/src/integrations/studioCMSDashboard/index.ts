@@ -6,6 +6,8 @@ import { astroENV } from "./env";
 import { FileSystemIconLoader, studioCMSUnoCSSIntegration } from "./studiocsspreset";
 import { usernameAndPasswordAuthConfig } from "./studioauth-config";
 import type { IconifyJSON } from '@iconify/types';
+import { checkForWebVitals } from "./utils/vitals";
+import astrolace from '@matthiesenxyz/astrolace';
 
 export default defineIntegration({
     name: '@astrolicious/studioCMS:adminDashboard',
@@ -36,6 +38,9 @@ export default defineIntegration({
 					// Virtual Imports and DTS File Creation
 					virtualResolver(params, { name });
 
+					// Check for Web Vitals
+					checkForWebVitals(params, { name, LoggerOpts });
+
 					// Add Dashboard Integrations
 					studioLogger(LoggerOpts.logInfo, DashboardStrings.AddIntegrations);
 
@@ -50,6 +55,14 @@ export default defineIntegration({
 							}
 						})
 					});
+
+					// Add Shoelace.style Integration
+					addIntegration(params, {
+						integration: astrolace({
+							verbose: options.verbose,
+							injectCss: false,
+						}),
+					})
 
 					// Inject Routes
 					injectRouteArray(params, {

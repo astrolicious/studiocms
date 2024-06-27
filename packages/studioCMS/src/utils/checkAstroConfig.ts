@@ -5,6 +5,11 @@ import { CoreStrings, DbErrors } from "../strings";
 
 export function checkAstroConfig(astroConfig: AstroConfig, LoggerOpts: StudioLoggerOptsResolverResponse) {
 
+	if (!astroConfig.integrations.find(({ name }) => name === "astro:db")) {
+		studioLogger(LoggerOpts.logError, DbErrors.astroDbMissingMessage);
+		throw new AstroError( DbErrors.astroDbMissingMessage, DbErrors.astroDbMissingHint );
+	}
+
 	// Check for SSR Mode (output: "server")
 	// TODO: Add support for "hybrid" mode
 	if (astroConfig.output !== 'server') {

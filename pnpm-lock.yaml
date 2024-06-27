@@ -50,7 +50,7 @@ importers:
     dependencies:
       '@astrojs/db':
         specifier: '>=0.11.6'
-        version: 0.11.6
+        version: 0.11.6(@types/react@18.3.3)
       '@astrojs/markdown-remark':
         specifier: ^5.1.1
         version: 5.1.1
@@ -71,7 +71,10 @@ importers:
         version: 0.2.12(@astrojs/db@0.11.6)(@types/node@20.14.9)(astro@4.10.3)
       '@markdoc/markdoc':
         specifier: ^0.4.0
-        version: 0.4.0
+        version: 0.4.0(@types/react@18.3.3)
+      '@matthiesenxyz/astrolace':
+        specifier: ^0.1.4
+        version: 0.1.4(@astrojs/db@0.11.6)(@types/react@18.3.3)(astro@4.10.3)
       '@matthiesenxyz/unocss-preset-daisyui':
         specifier: ^0.1.0
         version: 0.1.0(daisyui@4.12.8)(unocss@0.61.0)
@@ -371,7 +374,7 @@ packages:
   /@astrojs/compiler@2.8.1:
     resolution: {integrity: sha512-NGfPAgU/9rvDEwsXu82RI1AxiivaxtEYBK9saW1f+2fTHUUqCJQ27HYtb2akG2QxCmFikgZ9zk26BEWgiHho1Q==}
 
-  /@astrojs/db@0.11.6:
+  /@astrojs/db@0.11.6(@types/react@18.3.3):
     resolution: {integrity: sha512-uDypExJu9szjieIKvoSpu57NCwQI0q9cW71jEuFND22T7TM+hnBshWnmYSb783Z8a5mdv5CF/krLlC7+jeAJ+Q==}
     dependencies:
       '@astrojs/studio': 0.1.0
@@ -379,7 +382,7 @@ packages:
       async-listen: 3.0.1
       ci-info: 4.0.0
       deep-diff: 1.0.2
-      drizzle-orm: 0.31.2(@libsql/client@0.6.2)
+      drizzle-orm: 0.31.2(@libsql/client@0.6.2)(@types/react@18.3.3)
       github-slugger: 2.0.0
       kleur: 4.1.5
       nanoid: 5.0.7
@@ -427,7 +430,7 @@ packages:
       async-listen: 3.0.1
       ci-info: 4.0.0
       deep-diff: 1.0.2
-      drizzle-orm: 0.31.2(@libsql/client@0.6.2)
+      drizzle-orm: 0.31.2(@libsql/client@0.6.2)(@types/react@18.3.3)
       github-slugger: 2.0.0
       kleur: 4.1.5
       nanoid: 5.0.7
@@ -2880,7 +2883,7 @@ packages:
       read-yaml-file: 1.1.0
     dev: true
 
-  /@markdoc/markdoc@0.4.0:
+  /@markdoc/markdoc@0.4.0(@types/react@18.3.3):
     resolution: {integrity: sha512-fSh4P3Y4E7oaKYc2oNzSIJVPDto7SMzAuQN1Iyx53UxzleA6QzRdNWRxmiPqtVDaDi5dELd2yICoG91csrGrAw==}
     engines: {node: '>=14.7.0'}
     peerDependencies:
@@ -2891,8 +2894,25 @@ packages:
         optional: true
       react:
         optional: true
+    dependencies:
+      '@types/react': 18.3.3
     optionalDependencies:
       '@types/markdown-it': 12.2.3
+    dev: false
+
+  /@matthiesenxyz/astrolace@0.1.4(@astrojs/db@0.11.6)(@types/react@18.3.3)(astro@4.10.3):
+    resolution: {integrity: sha512-Snj+iHXzhzLYFz/tjnCiWHLFWehur/4sAVH0L3fu1O6NIt11jZX32UzgwgKEX7bK3qkxkAr3qwjfdpNyk+sK6A==}
+    peerDependencies:
+      astro: '>=4.8.6'
+    dependencies:
+      '@shoelace-style/shoelace': 2.15.1(@types/react@18.3.3)
+      astro: 4.10.3(@types/node@20.14.9)(typescript@5.5.2)
+      astro-integration-kit: 0.14.0(@astrojs/db@0.11.6)(astro@4.10.3)
+      lit: 3.1.4
+      zod: 3.23.8
+    transitivePeerDependencies:
+      - '@astrojs/db'
+      - '@types/react'
     dev: false
 
   /@matthiesenxyz/unocss-preset-daisyui@0.1.0(daisyui@4.12.8)(unocss@0.61.0):
@@ -4295,7 +4315,7 @@ packages:
       '@astrojs/db':
         optional: true
     dependencies:
-      '@astrojs/db': 0.11.6
+      '@astrojs/db': 0.11.6(@types/react@18.3.3)
       astro: 4.10.3(@types/node@20.14.9)(typescript@5.5.2)
       pathe: 1.1.2
       recast: 0.23.9
@@ -4310,7 +4330,7 @@ packages:
       '@astrojs/db':
         optional: true
     dependencies:
-      '@astrojs/db': 0.11.6
+      '@astrojs/db': 0.11.6(@types/react@18.3.3)
       astro: 4.10.3(@types/node@20.14.9)(typescript@5.5.2)
       pathe: 1.1.2
       recast: 0.23.9
@@ -5313,7 +5333,7 @@ packages:
       '@libsql/client': 0.5.6
     dev: false
 
-  /drizzle-orm@0.31.2(@libsql/client@0.6.2):
+  /drizzle-orm@0.31.2(@libsql/client@0.6.2)(@types/react@18.3.3):
     resolution: {integrity: sha512-QnenevbnnAzmbNzQwbhklvIYrDE8YER8K7kSrAWQSV1YvFCdSQPzj+jzqRdTSsV2cDqSpQ0NXGyL1G9I43LDLg==}
     peerDependencies:
       '@aws-sdk/client-rds-data': '>=3'
@@ -5397,6 +5417,7 @@ packages:
         optional: true
     dependencies:
       '@libsql/client': 0.6.2
+      '@types/react': 18.3.3
     dev: false
 
   /dset@3.1.3:
