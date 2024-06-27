@@ -204,6 +204,9 @@ importers:
       '@astrojs/node':
         specifier: ^8.3.2
         version: 8.3.2(astro@4.11.3)
+      '@astrojs/web-vitals':
+        specifier: ^0.2.1
+        version: 0.2.1(@astrojs/db@0.11.7)
       '@astrolicious/studiocms':
         specifier: workspace:*
         version: link:../../packages/studioCMS
@@ -750,6 +753,15 @@ packages:
 
   /@astrojs/underscore-redirects@0.3.3:
     resolution: {integrity: sha512-qDAKhFO4M1KzP7mxoJfiehf8oyf3EB158MxAa6z10NeD2pR3o4K3LlOQI8CfJgXE+BDBQcnaLvVCg/Mz/Gkg4Q==}
+    dev: false
+
+  /@astrojs/web-vitals@0.2.1(@astrojs/db@0.11.7):
+    resolution: {integrity: sha512-IbLRiN4s+6P1xEhopDSO9FAWS6Yg5kFDFOMiYmC6G1Ht0wFEERDQSh+Az1e1BiTMV4WGMfcvaArmTfZtjN7OjQ==}
+    peerDependencies:
+      '@astrojs/db': ^0.11.0
+    dependencies:
+      '@astrojs/db': 0.11.7
+      web-vitals: 4.2.0
     dev: false
 
   /@babel/code-frame@7.24.7:
@@ -9294,6 +9306,10 @@ packages:
   /web-streams-polyfill@3.3.3:
     resolution: {integrity: sha512-d2JWLCivmZYTSIoge9MsgFCZrt571BikcWGYkjC1khllbTeDlGqZ2D8vD8E/lJa8WGWbb7Plm8/XJYV7IJHZZw==}
     engines: {node: '>= 8'}
+    dev: false
+
+  /web-vitals@4.2.0:
+    resolution: {integrity: sha512-ohj72kbtVWCpKYMxcbJ+xaOBV3En76hW47j52dG+tEGG36LZQgfFw5yHl9xyjmosy3XUMn8d/GBUAy4YPM839w==}
     dev: false
 
   /webidl-conversions@3.0.1:

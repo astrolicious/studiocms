@@ -19,6 +19,7 @@
   "dependencies": {
     "@astrojs/db": "^0.11.7",
     "@astrojs/node": "^8.3.2",
+    "@astrojs/web-vitals": "^0.2.1",
     "@astrolicious/studiocms": "workspace:*",
     "@astrolicious/studiocms-blog": "workspace:*",
     "astro": "^4.11.3"
