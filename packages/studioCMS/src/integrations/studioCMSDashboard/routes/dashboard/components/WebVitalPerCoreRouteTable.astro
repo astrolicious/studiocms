@@ -1,0 +1,90 @@
+---
+import type { perPageDataEntry } from './buildPerPageDataObject';
+import { getPageRouteReference } from './getPageRouteReference';
+
+interface Props {
+    perPageRouteData: perPageDataEntry[];
+}
+
+const { perPageRouteData } = Astro.props;
+
+function msToSeconds(ms: number): number {
+    return ms / 1000;
+}
+
+const lcpColor = (lcpData: number) => {
+    if (msToSeconds(lcpData) <= 2.5) {
+        return "green";
+    } 
+    if (msToSeconds(lcpData) > 2.5 && lcpData <= 4) {
+        return "yellow";
+    } 
+    return "red";
+};
+
+const clsColor = (clsData: number) => {
+    if (clsData <= 0.25) {
+        return "green";
+    }
+    if (clsData > 0.25 && clsData <= 0.5) {
+        return "yellow";
+    }
+    return "red";
+}
+
+const inpColor = (inpData: number) => {
+    if (inpData <= 100) {
+        return "green";
+    } 
+    if (inpData > 100 && inpData <= 200) {
+        return "yellow";
+    } 
+    return "red";
+};
+---
+<table class="w-full text-left rtl:text-right">
+    <thead class="uppercase bg-base-300 text-md">
+        <tr>
+            <th scope="col" class="px-6 py-2">Page Pathname</th>
+            <th scope="col" class="px-6 py-2">Page Package Relation</th>
+            <th scope="col" class="px-6 py-2">LCP</th>
+            <th scope="col" class="px-6 py-2">CLS</th>
+            <th scope="col" class="px-6 py-2">INP</th>
+            <th scope="col" class="px-6 py-2">Samples</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        { perPageRouteData.map(({ 
+                pageRoute, 
+                sampleSize, 
+                CLS: { average: clsAverage }, 
+                LCP: { average: lcpAverage }, 
+                INP: { average: inpAverage } 
+          }) => {
+            return (
+                <tr class="bg-base-100 text-sm">
+                    <th scope="row" class="px-6 py-2 font-medium whitespace-nowrap">
+                        {pageRoute}
+                    </th>
+                    <td class="px-6 py-2">
+                        {getPageRouteReference(pageRoute)}
+                    </td>
+                    <td class="px-6 py-2 font-bold" style={`color: ${lcpColor(lcpAverage)};`}>
+                        {lcpAverage}
+                    </td>
+                    <td class="px-6 py-2 font-bold" style={`color: ${clsColor(clsAverage)};`}>
+                        {clsAverage}
+                    </td>
+                    <td class="px-6 py-2 font-bold" style={`color: ${inpColor(inpAverage)}`}>
+                        {inpAverage}
+                    </td>
+                    <td class="px-6 py-2">
+                        {sampleSize}
+                    </td>
+                </tr>
+            )
+        }) }
+    </tbody>
+
+</table>

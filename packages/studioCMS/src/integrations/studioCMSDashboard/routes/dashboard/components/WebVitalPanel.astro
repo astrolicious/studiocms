@@ -4,6 +4,7 @@ import type { WebVitalsResponseItem } from "studiocms-dashboard:web-vitals";
 import WebVitalPerRouteData from "./WebVitalPerRouteData.astro";
 import WebVitalPerCoreVital from "./WebVitalPerCoreVital.astro";
 import PagespeedInsights from "./PagespeedInsights.astro";
+import WebVitalPerCoreVitalRoute from "./WebVitalPerCoreVitalRoute.astro";
 
 interface Props {
     webVitalData: WebVitalsResponseItem[];
@@ -30,7 +31,7 @@ const { webVitalData } = Astro.props;
             </Tab>
             <Tab slot="nav" panel="pagespeed-insights">
                 <Icon name="google" class:list={"pr-2"} />
-                Pagespeed Insights
+                Pagespeed Insights Testing
             </Tab>
         
             <TabPanel name='page-route-analytics'>
@@ -39,7 +40,9 @@ const { webVitalData } = Astro.props;
             <TabPanel name='core-web-vitals'>
                 <WebVitalPerCoreVital webVitalData={webVitalData} />
             </TabPanel>
-            <TabPanel name='core-vitals-by-route'>Example core vitals by Route data</TabPanel>
+            <TabPanel name='core-vitals-by-route'>
+                <WebVitalPerCoreVitalRoute webVitalData={webVitalData} />
+            </TabPanel>
             <TabPanel name='pagespeed-insights'>
                 <PagespeedInsights />
             </TabPanel>
