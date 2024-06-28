@@ -1,0 +1,138 @@
+---
+import { Button, ProgressRing, VisuallyHidden } from "astrolace:components";
+
+const FetchURL = Astro.site;
+---
+
+<div class="pb-4">
+    <Button variant="primary" name="run-test">Run Test</Button>
+</div>
+
+<div class="w-full flex flex-row flex-wrap gap-8">
+    
+    <div id="w-full flex flex-col">
+        <div class="flex justify-center">
+            <ProgressRing label="performance-score" id="perf-ring" value={0}>N/A</ProgressRing>
+        </div>
+        <div class="flex justify-center">Performance</div>
+    </div>
+
+    <div id="w-full flex flex-col">
+        <div class="flex justify-center">
+            <ProgressRing label="accessibility-score" id="acc-ring" value={0}>N/A</ProgressRing>
+        </div>
+        <div class="flex justify-center">Accessibility</div>
+    </div>
+
+    <div id="w-full flex flex-col">
+        <div class="flex justify-center">
+            <ProgressRing label="best-practices-score" id="bp-ring" value={0}>N/A</ProgressRing>
+        </div>
+        <div class="flex justify-center">Best Practices</div>
+    </div>
+
+    <div id="w-full flex flex-col">
+        <div class="flex justify-center">
+            <ProgressRing label="seo-score" id="seo-ring" value={0}>N/A</ProgressRing>
+        </div>
+        <div class="flex justify-center">SEO</div>
+    </div>
+
+</div>
+
+<VisuallyHidden>
+    <div id="lighthouse-fetch-url">{FetchURL}</div>
+</VisuallyHidden>
+
+<style scoped>
+    #perf-ring, #acc-ring, #bp-ring, #seo-ring {
+        --track-width: 1rem;
+    }
+</style>
+
+<script>
+import type { SlButton, SlProgressRing } from "astrolace:types";
+
+function generateLighthouseFetchUrl(url: string, strategy: 'mobile' | 'desktop' | 'mixed-content' = 'mobile'): string {
+    // Base URL for Google PageSpeed Insights API
+    const baseUrl: string = 'https://www.googleapis.com/pagespeedonline/v5/runPagespeed';
+    
+    // Final URL with encoded parameters
+    const fetchUrl: string = `${baseUrl}?url=${encodeURIComponent(url)}&fields=lighthouseResult%2Fcategories%2F*%2Fscore&prettyPrint=false&strategy=${strategy}&category=performance&category=pwa&category=best-practices&category=accessibility&category=seo`;
+    
+    return fetchUrl;
+}
+
+const urlToTest: string = document.getElementById('lighthouse-fetch-url')?.textContent || '';
+
+const lighthouseFetchUrl: string = generateLighthouseFetchUrl(urlToTest);
+
+const runTestButton = document.getElementsByName('run-test')[0] as SlButton;
+
+runTestButton.addEventListener('click', async (e) => {
+    e.preventDefault();
+
+    runTestButton.loading = true;
+    runTestButton.disabled = true;
+
+    console.log('PageSpeed Insights test started.', lighthouseFetchUrl)
+
+    const response = await fetch(lighthouseFetchUrl);
+
+    let performanceScore = 0;
+    let accessibilityScore = 0;
+    let bestPracticesScore = 0;
+    let seoScore = 0;
+
+    if (response.ok) {
+
+        const data = await response.json();
+
+        console.log('Successfully fetched data from the PageSpeed Insights API.', data);
+
+        performanceScore = data.lighthouseResult.categories.performance.score * 100;
+        accessibilityScore = data.lighthouseResult.categories.accessibility.score * 100;
+        bestPracticesScore = data.lighthouseResult.categories['best-practices'].score * 100;
+        seoScore = data.lighthouseResult.categories.seo.score * 100;
+
+        const perfRing = document.getElementById('perf-ring') as SlProgressRing
+        if (perfRing) {
+            perfRing.value = performanceScore;
+            perfRing.textContent = performanceScore.toString();
+            perfRing.style.color = performanceScore >= 90 ? 'green' : performanceScore >= 50 ? 'yellow' : 'red';
+            perfRing.style.setProperty("--indicator-color", performanceScore >= 90 ? 'green' : performanceScore >= 50 ? 'yellow' : 'red');
+        }
+
+        const accRing = document.getElementById('acc-ring') as SlProgressRing
+        if (accRing) {
+            accRing.value = accessibilityScore;
+            accRing.textContent = accessibilityScore.toString();
+            accRing.style.color = accessibilityScore >= 90 ? 'green' : accessibilityScore >= 50 ? 'yellow' : 'red';
+            accRing.style.setProperty("--indicator-color", accessibilityScore >= 90 ? 'green' : accessibilityScore >= 50 ? 'yellow' : 'red');
+        }
+
+        const bpRing = document.getElementById('bp-ring') as SlProgressRing
+        if (bpRing) {
+            bpRing.value = bestPracticesScore;
+            bpRing.textContent = bestPracticesScore.toString();
+            bpRing.style.color = bestPracticesScore >= 90 ? 'green' : bestPracticesScore >= 50 ? 'yellow' : 'red';
+            bpRing.style.setProperty("--indicator-color", bestPracticesScore >= 90 ? 'green' : bestPracticesScore >= 50 ? 'yellow' : 'red');
+        }
+
+        const seoRing = document.getElementById('seo-ring') as SlProgressRing
+        if (seoRing) {
+            seoRing.value = seoScore;
+            seoRing.textContent = seoScore.toString();
+            seoRing.style.color = seoScore >= 90 ? 'green' : seoScore >= 50 ? 'yellow' : 'red';
+            seoRing.style.setProperty("--indicator-color", seoScore >= 90 ? 'green' : seoScore >= 50 ? 'yellow' : 'red');
+        }
+        runTestButton.loading = false;
+        runTestButton.disabled = false;
+    } else {
+        runTestButton.loading = false;
+        runTestButton.disabled = false;
+        console.error('Failed to fetch data from the PageSpeed Insights API.');
+    }
+})
+
+</script>
