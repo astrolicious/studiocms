@@ -1,12 +1,14 @@
 ---
-import { Button, ProgressRing, VisuallyHidden } from "astrolace:components";
+import { Button, Divider, ProgressRing, VisuallyHidden } from "astrolace:components";
 
-const FetchURL = Astro.site;
+const FetchURL = Astro.site||"";
 ---
 
 <div class="pb-4">
     <Button variant="primary" name="run-test">Run Test</Button>
 </div>
+
+<Divider class:list="divider mt-0 pt-0" />
 
 <div class="w-full flex flex-row flex-wrap gap-8">
     
@@ -14,30 +16,36 @@ const FetchURL = Astro.site;
         <div class="flex justify-center">
             <ProgressRing label="performance-score" id="perf-ring" value={0}>N/A</ProgressRing>
         </div>
-        <div class="flex justify-center">Performance</div>
+        <div class="flex justify-center font-bold">Performance</div>
     </div>
 
     <div id="w-full flex flex-col">
         <div class="flex justify-center">
             <ProgressRing label="accessibility-score" id="acc-ring" value={0}>N/A</ProgressRing>
         </div>
-        <div class="flex justify-center">Accessibility</div>
+        <div class="flex justify-center font-bold">Accessibility</div>
     </div>
 
     <div id="w-full flex flex-col">
         <div class="flex justify-center">
             <ProgressRing label="best-practices-score" id="bp-ring" value={0}>N/A</ProgressRing>
         </div>
-        <div class="flex justify-center">Best Practices</div>
+        <div class="flex justify-center font-bold">Best Practices</div>
     </div>
 
     <div id="w-full flex flex-col">
         <div class="flex justify-center">
             <ProgressRing label="seo-score" id="seo-ring" value={0}>N/A</ProgressRing>
         </div>
-        <div class="flex justify-center">SEO</div>
+        <div class="flex justify-center font-bold">SEO</div>
     </div>
 
+</div>
+
+<Divider class:list="divider" />
+
+<div class="text-gray-500">
+    Test results are generated using Google's PageSpeed Insights API. If you would like to see more details, please visit the <a class="text-blue-500" href={`https://pagespeed.web.dev/analysis?url=${encodeURIComponent(FetchURL.toString())}`} target="_blank" rel="noopener noreferrer">PageSpeed Insights Results</a>.
 </div>
 
 <VisuallyHidden>
@@ -47,6 +55,8 @@ const FetchURL = Astro.site;
 <style scoped>
     #perf-ring, #acc-ring, #bp-ring, #seo-ring {
         --track-width: 1rem;
+        font-weight: bolder;
+        font-size: 2rem;
     }
 </style>
 
@@ -99,32 +109,44 @@ runTestButton.addEventListener('click', async (e) => {
         if (perfRing) {
             perfRing.value = performanceScore;
             perfRing.textContent = performanceScore.toString();
-            perfRing.style.color = performanceScore >= 90 ? 'green' : performanceScore >= 50 ? 'yellow' : 'red';
+            perfRing.style.color = performanceScore >= 90 ? 'green' : performanceScore >= 50 ? 'rgb(208, 208, 0)' : 'red';
             perfRing.style.setProperty("--indicator-color", performanceScore >= 90 ? 'green' : performanceScore >= 50 ? 'yellow' : 'red');
+            if (performanceScore < 90) {
+                perfRing.style.webkitTextStroke = '2px black;'
+            }
         }
 
         const accRing = document.getElementById('acc-ring') as SlProgressRing
         if (accRing) {
             accRing.value = accessibilityScore;
             accRing.textContent = accessibilityScore.toString();
-            accRing.style.color = accessibilityScore >= 90 ? 'green' : accessibilityScore >= 50 ? 'yellow' : 'red';
+            accRing.style.color = accessibilityScore >= 90 ? 'green' : accessibilityScore >= 50 ? 'rgb(208, 208, 0)' : 'red';
             accRing.style.setProperty("--indicator-color", accessibilityScore >= 90 ? 'green' : accessibilityScore >= 50 ? 'yellow' : 'red');
+            if (accessibilityScore < 90) {
+                accRing.style.webkitTextStroke = '2px black;'
+            }
         }
 
         const bpRing = document.getElementById('bp-ring') as SlProgressRing
         if (bpRing) {
             bpRing.value = bestPracticesScore;
             bpRing.textContent = bestPracticesScore.toString();
-            bpRing.style.color = bestPracticesScore >= 90 ? 'green' : bestPracticesScore >= 50 ? 'yellow' : 'red';
+            bpRing.style.color = bestPracticesScore >= 90 ? 'green' : bestPracticesScore >= 50 ? 'rgb(208, 208, 0)' : 'red';
             bpRing.style.setProperty("--indicator-color", bestPracticesScore >= 90 ? 'green' : bestPracticesScore >= 50 ? 'yellow' : 'red');
+            if (bestPracticesScore < 90) {
+                bpRing.style.webkitTextStroke = '2px black;'
+            }
         }
 
         const seoRing = document.getElementById('seo-ring') as SlProgressRing
         if (seoRing) {
             seoRing.value = seoScore;
             seoRing.textContent = seoScore.toString();
-            seoRing.style.color = seoScore >= 90 ? 'green' : seoScore >= 50 ? 'yellow' : 'red';
+            seoRing.style.color = seoScore >= 90 ? 'green' : seoScore >= 50 ? 'rgb(208, 208, 0)' : 'red';
             seoRing.style.setProperty("--indicator-color", seoScore >= 90 ? 'green' : seoScore >= 50 ? 'yellow' : 'red');
+            if (seoScore < 90) {
+                seoRing.style.webkitTextStroke = '2px black;'
+            }
         }
         runTestButton.loading = false;
         runTestButton.disabled = false;
