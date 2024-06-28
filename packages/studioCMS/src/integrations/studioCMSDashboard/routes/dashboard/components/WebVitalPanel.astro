@@ -28,7 +28,7 @@ const { webVitalData } = Astro.props;
                 <Icon name="file-earmark-post" class:list={"pr-2"} />
                 Core Vitals by Route
             </Tab>
-            <Tab slot="nav" panel="Pagespeed Insights">
+            <Tab slot="nav" panel="pagespeed-insights">
                 <Icon name="google" class:list={"pr-2"} />
                 Pagespeed Insights
             </Tab>
@@ -40,7 +40,7 @@ const { webVitalData } = Astro.props;
                 <WebVitalPerCoreVital webVitalData={webVitalData} />
             </TabPanel>
             <TabPanel name='core-vitals-by-route'>Example core vitals by Route data</TabPanel>
-            <TabPanel name='Pagespeed Insights'>
+            <TabPanel name='pagespeed-insights'>
                 <PagespeedInsights />
             </TabPanel>
         </TabGroup>
