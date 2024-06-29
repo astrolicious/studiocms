@@ -105,49 +105,26 @@ runTestButton.addEventListener('click', async (e) => {
         bestPracticesScore = data.lighthouseResult.categories['best-practices'].score * 100;
         seoScore = data.lighthouseResult.categories.seo.score * 100;
 
-        const perfRing = document.getElementById('perf-ring') as SlProgressRing
-        if (perfRing) {
-            perfRing.value = performanceScore;
-            perfRing.textContent = performanceScore.toString();
-            perfRing.style.color = performanceScore >= 90 ? 'green' : performanceScore >= 50 ? 'rgb(208, 208, 0)' : 'red';
-            perfRing.style.setProperty("--indicator-color", performanceScore >= 90 ? 'green' : performanceScore >= 50 ? 'yellow' : 'red');
-            if (performanceScore < 90) {
-                perfRing.style.webkitTextStroke = '2px black;'
+        const setProgressRing = ( ProgressRing: SlProgressRing, value: number ) => {
+            ProgressRing.value = value;
+            ProgressRing.textContent = value.toString();
+            ProgressRing.style.color = value >= 90 ? 'green' : value >= 50 ? 'rgb(208, 208, 0)' : 'red';
+            ProgressRing.style.setProperty("--indicator-color", value >= 90 ? 'green' : value >= 50 ? 'yellow' : 'red');
+            if (value < 90) {
+                ProgressRing.style.webkitTextStroke = '2px black;'
             }
         }
 
-        const accRing = document.getElementById('acc-ring') as SlProgressRing
-        if (accRing) {
-            accRing.value = accessibilityScore;
-            accRing.textContent = accessibilityScore.toString();
-            accRing.style.color = accessibilityScore >= 90 ? 'green' : accessibilityScore >= 50 ? 'rgb(208, 208, 0)' : 'red';
-            accRing.style.setProperty("--indicator-color", accessibilityScore >= 90 ? 'green' : accessibilityScore >= 50 ? 'yellow' : 'red');
-            if (accessibilityScore < 90) {
-                accRing.style.webkitTextStroke = '2px black;'
-            }
-        }
+        const perfRing = document.getElementById('perf-ring') as SlProgressRing;
+        const accRing = document.getElementById('acc-ring') as SlProgressRing;
+        const bpRing = document.getElementById('bp-ring') as SlProgressRing;
+        const seoRing = document.getElementById('seo-ring') as SlProgressRing;
+        
+        setProgressRing(perfRing, performanceScore);
+        setProgressRing(accRing, accessibilityScore);
+        setProgressRing(bpRing, bestPracticesScore);
+        setProgressRing(seoRing, seoScore);
 
-        const bpRing = document.getElementById('bp-ring') as SlProgressRing
-        if (bpRing) {
-            bpRing.value = bestPracticesScore;
-            bpRing.textContent = bestPracticesScore.toString();
-            bpRing.style.color = bestPracticesScore >= 90 ? 'green' : bestPracticesScore >= 50 ? 'rgb(208, 208, 0)' : 'red';
-            bpRing.style.setProperty("--indicator-color", bestPracticesScore >= 90 ? 'green' : bestPracticesScore >= 50 ? 'yellow' : 'red');
-            if (bestPracticesScore < 90) {
-                bpRing.style.webkitTextStroke = '2px black;'
-            }
-        }
-
-        const seoRing = document.getElementById('seo-ring') as SlProgressRing
-        if (seoRing) {
-            seoRing.value = seoScore;
-            seoRing.textContent = seoScore.toString();
-            seoRing.style.color = seoScore >= 90 ? 'green' : seoScore >= 50 ? 'rgb(208, 208, 0)' : 'red';
-            seoRing.style.setProperty("--indicator-color", seoScore >= 90 ? 'green' : seoScore >= 50 ? 'yellow' : 'red');
-            if (seoScore < 90) {
-                seoRing.style.webkitTextStroke = '2px black;'
-            }
-        }
         runTestButton.loading = false;
         runTestButton.disabled = false;
     } else {
