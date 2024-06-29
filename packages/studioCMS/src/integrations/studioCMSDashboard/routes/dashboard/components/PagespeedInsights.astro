@@ -64,49 +64,55 @@ const FetchURL = Astro.site||"";
 import type { SlButton, SlProgressRing } from "astrolace:types";
 import { generateLighthouseFetchUrl, setProgressRing } from "./webVitalsUtils";
 
+// get the URL to test from the hidden div
 const urlToTest: string = document.getElementById('lighthouse-fetch-url')?.textContent || '';
-
 const lighthouseFetchUrl: string = generateLighthouseFetchUrl(urlToTest);
 
+// get the `Run Test` button and add an event listener to it
 const runTestButton = document.getElementsByName('run-test')[0] as SlButton;
 
-runTestButton.addEventListener('click', async (e) => {
-    e.preventDefault();
+runTestButton.addEventListener('click', async (
+    // I changed the name of the event from `e` to `buttonClickEvent` for @jdtjenkins(Jumper) since "He wants things to be more descriptive and 'Easier to read'".
+    buttonClickEvent
+) => {
+    buttonClickEvent.preventDefault();
 
     runTestButton.loading = true;
     runTestButton.disabled = true;
 
     console.log('PageSpeed Insights test started.', lighthouseFetchUrl)
 
-    const response = await fetch(lighthouseFetchUrl);
+    // I changed the name of this from `response` to `lighthouseResponse` for @jdtjenkins(Jumper) since "He wants things to be more descriptive and 'Easier to read'".
+    const lighthouseResponse = await fetch(lighthouseFetchUrl);
 
     let performanceScore = 0;
     let accessibilityScore = 0;
     let bestPracticesScore = 0;
     let seoScore = 0;
 
-    if (!response.ok) {
+    if (!lighthouseResponse.ok) {
         console.error('Failed to fetch data from the PageSpeed Insights API.');
         return;
     }
 
-    const data = await response.json();
+    // I changed the name of this from `data` to `lighthouseData` for @jdtjenkins(Jumper) since "He wants things to be more descriptive and 'Easier to read'".
+    const lighthouseData = await lighthouseResponse.json();
 
-    console.log('Successfully fetched data from the PageSpeed Insights API.', data);
+    console.log('Successfully fetched data from the PageSpeed Insights API.');
 
-    performanceScore = data.lighthouseResult.categories.performance.score * 100;
-    accessibilityScore = data.lighthouseResult.categories.accessibility.score * 100;
-    bestPracticesScore = data.lighthouseResult.categories['best-practices'].score * 100;
-    seoScore = data.lighthouseResult.categories.seo.score * 100;
+    performanceScore = lighthouseData.lighthouseResult.categories.performance.score * 100;
+    accessibilityScore = lighthouseData.lighthouseResult.categories.accessibility.score * 100;
+    bestPracticesScore = lighthouseData.lighthouseResult.categories['best-practices'].score * 100;
+    seoScore = lighthouseData.lighthouseResult.categories.seo.score * 100;
 
-    const perfRing = document.getElementById('perf-ring') as SlProgressRing;
-    const accRing = document.getElementById('acc-ring') as SlProgressRing;
-    const bpRing = document.getElementById('bp-ring') as SlProgressRing;
+    const performanceRing = document.getElementById('perf-ring') as SlProgressRing;
+    const accessibilityRing = document.getElementById('acc-ring') as SlProgressRing;
+    const bestPracticesRing = document.getElementById('bp-ring') as SlProgressRing;
     const seoRing = document.getElementById('seo-ring') as SlProgressRing;
         
-    setProgressRing(perfRing, performanceScore);
-    setProgressRing(accRing, accessibilityScore);
-    setProgressRing(bpRing, bestPracticesScore);
+    setProgressRing(performanceRing, performanceScore);
+    setProgressRing(accessibilityRing, accessibilityScore);
+    setProgressRing(bestPracticesRing, bestPracticesScore);
     setProgressRing(seoRing, seoScore);
 
     runTestButton.loading = false;
