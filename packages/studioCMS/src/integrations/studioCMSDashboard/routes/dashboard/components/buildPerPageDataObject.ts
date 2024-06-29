@@ -1,5 +1,6 @@
 import type { WebVitalsResponseItem } from "studiocms-dashboard:web-vitals";
 import { checkDate } from "./checkDate";
+import { calculateClsAverage, calculateClsScoreText, calculateInpAverage, calculateInpScoreText, calculateLcpAverage, calculateLcpScoreText } from "./webVitalsUtils";
 
 export type perPageDataEntry = {
     pageRoute: string;
@@ -17,86 +18,6 @@ export type perPageDataEntry = {
         rating: string;
     };
 };
-
-
-function calculateClsAverage(clsValues: number[]): number {
-
-    const sum = clsValues.reduce((acc, curr) => acc + curr, 0);
-    const average = sum / clsValues.length;
-    
-    // Round average to two decimal places
-    return Math.round(average * 100) / 100;
-}
-
-const clsDataAverage = (clsData: number[]) => {
-    return calculateClsAverage(clsData);
-};
-
-function calculateClsScore(cls: number): string {
-    if (cls <= 0.1) {
-        return "Excellent"; // Excellent
-    }if (cls <= 0.25) {
-        return "Good"; // Good to Excellent
-    }if (cls <= 0.5) {
-        return "Fair"; // Fair to Good
-    }
-    return "Poor"; // Poor to Fair
-}
-
-function calculateLcpAverage(lcpValues: number[]): number {
-    if (lcpValues.length === 0) {
-        throw new Error("Array must not be empty.");
-    }
-
-    const sum = lcpValues.reduce((acc, curr) => acc + curr, 0);
-    const average = sum / lcpValues.length;
-    
-    // Round average to two decimal places
-    return Math.round(average * 100) / 100;
-}
-
-const lcpDataAverage = (lcpData: number[]) => {
-    return Math.floor(calculateLcpAverage(lcpData));
-};
-
-function msToSeconds(ms: number): number {
-    return ms / 1000;
-}
-
-function calculateLcpScore(lcp: number): string {
-    if (msToSeconds(lcp) <= 2) {
-        return "Excellent"; // Excellent
-    }if (msToSeconds(lcp) <= 4) {
-        return "Good"; // Good to Excellent
-    }if (msToSeconds(lcp) <= 6) {
-        return "Fair"; // Fair to Good
-    }
-    return "Poor"; // Poor to Fair
-}
-
-function calculateInpAverage(inpValues: number[]): number {
-
-    const sum = inpValues.reduce((acc, curr) => acc + curr, 0);
-    const average = sum / inpValues.length;
-    
-    // Round average to two decimal places
-    return Math.round(average * 100) / 100;
-}
-
-function inpDataAverage(inpData: number[]): number {
-    return Math.floor(calculateInpAverage(inpData));
-}
-
-function calculateInpScore(inp: number): string {
-    if (inp <= 50) {
-        return "Excellent"; // Excellent
-    }if (inp <= 100) {
-        return "Good"; // Good to Excellent
-    }if (inp <= 200) {
-        return "Fair"; // Fair to Good
-    }
-    return "Poor"; // Poor to Fair
-}
 
 type RouteArrayEntry = { 
     route: string, 
@@ -240,24 +161,24 @@ export const buildPageRouteDataObject = (webVitalData: WebVitalsResponseItem[]) 
         for (const item of RouteArray) {
             const { route, samplesize, clsvalue, lcpvalue, inpvalue } = item;
 
-            const clsAverage = clsDataAverage(clsvalue);
-            const lcpAverage = lcpDataAverage(lcpvalue);
-            const inpAverage = inpDataAverage(inpvalue);
+            const clsAverage = calculateClsAverage(clsvalue);
+            const lcpAverage = calculateLcpAverage(lcpvalue);
+            const inpAverage = calculateInpAverage(inpvalue);
 
             perPageData.push({
                 pageRoute: route,
                 sampleSize: samplesize,
                 CLS: {
                     average: clsAverage,
-                    rating: calculateClsScore(clsAverage),
+                    rating: calculateClsScoreText(clsAverage),
                 },
                 LCP: {
                     average: lcpAverage,
-                    rating: calculateLcpScore(lcpAverage),
+                    rating: calculateLcpScoreText(lcpAverage),
                 },
                 INP: {
                     average: inpAverage,
-                    rating: calculateInpScore(inpAverage),
+                    rating: calculateInpScoreText(inpAverage),
                 },
             });
         }
@@ -265,24 +186,24 @@ export const buildPageRouteDataObject = (webVitalData: WebVitalsResponseItem[]) 
         for (const item of last24HoursData) {
             const { route, samplesize, clsvalue, lcpvalue, inpvalue } = item;
 
-            const clsAverage = clsDataAverage(clsvalue);
-            const lcpAverage = lcpDataAverage(lcpvalue);
-            const inpAverage = inpDataAverage(inpvalue);
+            const clsAverage = calculateClsAverage(clsvalue);
+            const lcpAverage = calculateLcpAverage(lcpvalue);
+            const inpAverage = calculateInpAverage(inpvalue);
 
             last24HoursPerPageData.push({
                 pageRoute: route,
                 sampleSize: samplesize,
                 CLS: {
                     average: clsAverage,
-                    rating: calculateClsScore(clsAverage),
+                    rating: calculateClsScoreText(clsAverage),
                 },
                 LCP: {
                     average: lcpAverage,
-                    rating: calculateLcpScore(lcpAverage),
+                    rating: calculateLcpScoreText(lcpAverage),
                 },
                 INP: {
                     average: inpAverage,
-                    rating: calculateInpScore(inpAverage),
+                    rating: calculateInpScoreText(inpAverage),
                 },
             });
         }
@@ -290,24 +211,24 @@ export const buildPageRouteDataObject = (webVitalData: WebVitalsResponseItem[]) 
         for (const item of last7DaysData) {
             const { route, samplesize, clsvalue, lcpvalue, inpvalue } = item;
 
-            const clsAverage = clsDataAverage(clsvalue);
-            const lcpAverage = lcpDataAverage(lcpvalue);
-            const inpAverage = inpDataAverage(inpvalue);
+            const clsAverage = calculateClsAverage(clsvalue);
+            const lcpAverage = calculateLcpAverage(lcpvalue);
+            const inpAverage = calculateInpAverage(inpvalue);
 
             last7DaysPerPageData.push({
                 pageRoute: route,
                 sampleSize: samplesize,
                 CLS: {
                     average: clsAverage,
-                    rating: calculateClsScore(clsAverage),
+                    rating: calculateClsScoreText(clsAverage),
                 },
                 LCP: {
                     average: lcpAverage,
-                    rating: calculateLcpScore(lcpAverage),
+                    rating: calculateLcpScoreText(lcpAverage),
                 },
                 INP: {
                     average: inpAverage,
-                    rating: calculateInpScore(inpAverage),
+                    rating: calculateInpScoreText(inpAverage),
                 },
             });
         }
@@ -315,24 +236,24 @@ export const buildPageRouteDataObject = (webVitalData: WebVitalsResponseItem[]) 
         for (const item of last30DaysData) {
             const { route, samplesize, clsvalue, lcpvalue, inpvalue } = item;
 
-            const clsAverage = clsDataAverage(clsvalue);
-            const lcpAverage = lcpDataAverage(lcpvalue);
-            const inpAverage = inpDataAverage(inpvalue);
+            const clsAverage = calculateClsAverage(clsvalue);
+            const lcpAverage = calculateLcpAverage(lcpvalue);
+            const inpAverage = calculateInpAverage(inpvalue);
 
             last30DaysPerPageData.push({
                 pageRoute: route,
                 sampleSize: samplesize,
                 CLS: {
                     average: clsAverage,
-                    rating: calculateClsScore(clsAverage),
+                    rating: calculateClsScoreText(clsAverage),
                 },
                 LCP: {
                     average: lcpAverage,
-                    rating: calculateLcpScore(lcpAverage),
+                    rating: calculateLcpScoreText(lcpAverage),
                 },
                 INP: {
                     average: inpAverage,
-                    rating: calculateInpScore(inpAverage),
+                    rating: calculateInpScoreText(inpAverage),
                 },
             });
         }

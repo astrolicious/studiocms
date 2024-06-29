@@ -62,16 +62,7 @@ const FetchURL = Astro.site||"";
 
 <script>
 import type { SlButton, SlProgressRing } from "astrolace:types";
-
-function generateLighthouseFetchUrl(url: string, strategy: 'mobile' | 'desktop' | 'mixed-content' = 'mobile'): string {
-    // Base URL for Google PageSpeed Insights API
-    const baseUrl: string = 'https://www.googleapis.com/pagespeedonline/v5/runPagespeed';
-    
-    // Final URL with encoded parameters
-    const fetchUrl: string = `${baseUrl}?url=${encodeURIComponent(url)}&fields=lighthouseResult%2Fcategories%2F*%2Fscore&prettyPrint=false&strategy=${strategy}&category=performance&category=pwa&category=best-practices&category=accessibility&category=seo`;
-    
-    return fetchUrl;
-}
+import { generateLighthouseFetchUrl, setProgressRing } from "./webVitalsUtils";
 
 const urlToTest: string = document.getElementById('lighthouse-fetch-url')?.textContent || '';
 
@@ -104,16 +95,6 @@ runTestButton.addEventListener('click', async (e) => {
         accessibilityScore = data.lighthouseResult.categories.accessibility.score * 100;
         bestPracticesScore = data.lighthouseResult.categories['best-practices'].score * 100;
         seoScore = data.lighthouseResult.categories.seo.score * 100;
-
-        const setProgressRing = ( ProgressRing: SlProgressRing, value: number ) => {
-            ProgressRing.value = value;
-            ProgressRing.textContent = value.toString();
-            ProgressRing.style.color = value >= 90 ? 'green' : value >= 50 ? 'rgb(208, 208, 0)' : 'red';
-            ProgressRing.style.setProperty("--indicator-color", value >= 90 ? 'green' : value >= 50 ? 'yellow' : 'red');
-            if (value < 90) {
-                ProgressRing.style.webkitTextStroke = '2px black;'
-            }
-        }
 
         const perfRing = document.getElementById('perf-ring') as SlProgressRing;
         const accRing = document.getElementById('acc-ring') as SlProgressRing;
