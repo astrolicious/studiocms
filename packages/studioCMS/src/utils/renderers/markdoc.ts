@@ -1,11 +1,23 @@
 import Markdoc from '@markdoc/markdoc';
+import Config from 'virtual:studiocms/config';
+import React, { type ReactNode } from 'react';
 
-export async function renderMarkDoc(input: string): Promise<string> {
-	const ast = Markdoc.parse(input);
+const {
+	markdocConfig: { argParse, renderType, transformConfig },
+} = Config;
 
-	const content = Markdoc.transform(ast);
+export async function renderMarkDoc(input: string): Promise<string | ReactNode> {
+	const ast = Markdoc.parse(input, argParse);
+	const content = Markdoc.transform(ast, transformConfig);
 
-	const html = Markdoc.renderers.html(content);
-
-	return html;
+	switch (renderType) {
+		case 'react':
+			return Markdoc.renderers.react(content, React);
+		case 'react-static':
+			return Markdoc.renderers.reactStatic(content);
+		case 'html':
+			return Markdoc.renderers.html(content);
+		default:
+			throw new Error('Unsupported Markdoc type');
+	}
 }

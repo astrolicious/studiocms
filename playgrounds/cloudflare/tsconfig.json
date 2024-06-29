@@ -16,7 +16,7 @@
     "allowJs": true,
     "jsx": "preserve",
     "strict": true,
-    "outDir": "../.moon/cache/types/playground"
+    "outDir": "../../.moon/cache/types/playgrounds/cloudflare"
   },
   "exclude": ["dist"]
 }
