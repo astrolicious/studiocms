@@ -5,6 +5,7 @@ import { markedConfigSchema } from './marked';
 import { dashboardConfigSchema } from './dashboard';
 import { overridesSchema } from './componentoverrides';
 import { DefaultFrontEndConfigSchema } from './defaultFrontend';
+import { markdocConfigSchema } from './markdoc';
 
 //
 // MAIN SCHEMA
@@ -13,7 +14,7 @@ export const optionsSchema = z
 	.object({
 		/**
 		 * Project Initialization Page - Used during First Time Setup to initialize the database
-		 * 
+		 *
 		 * @default true
 		 */
 		dbStartPage: z.boolean().optional().default(true),
@@ -22,13 +23,13 @@ export const optionsSchema = z
 		 *
 		 * Marked is A markdown parser and compiler. Built for speed.
 		 * @see https://marked.js.org/ for more info about marked.
-		 * 
+		 *
 		 * Astro is the built-in Astro remark-markdown plugin.
 		 * @see https://www.npmjs.com/package/@astrojs/markdown-remark
 		 *
 		 * Markdoc is a powerful, flexible, Markdown-based authoring framework. Built by Stripe.
 		 * @see https://markdoc.dev/ for more info about markdoc.
-		 * 
+		 *
 		 */
 		contentRenderer: z.enum(['marked', 'astro', 'markdoc']).optional().default('marked'),
 		/**
@@ -39,6 +40,13 @@ export const optionsSchema = z
 		 */
 		markedConfig: markedConfigSchema,
 		/**
+		 * Allows customization of the Markdoc Configuration
+		 *
+		 * Markdoc is a markdown parser and compiler. Built for speed. It is used to convert markdown strings into HTML, react and react-static for rendering content on StudioCMS pages.
+		 * @see https://markdoc.dev/ for more info about markdoc.
+		 */
+		markdocConfig: markdocConfigSchema,
+		/**
 		 * Allows customization of the Image Service Options
 		 */
 		imageService: imageServiceSchema,
@@ -48,7 +56,7 @@ export const optionsSchema = z
 		defaultFrontEndConfig: DefaultFrontEndConfigSchema,
 		/**
 		 * Allows customization of the Dashboard Configuration
-		 * 
+		 *
 		 * Coming soon....
 		 */
 		dashboardConfig: dashboardConfigSchema,
