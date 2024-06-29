@@ -85,34 +85,32 @@ runTestButton.addEventListener('click', async (e) => {
     let bestPracticesScore = 0;
     let seoScore = 0;
 
-    if (response.ok) {
-
-        const data = await response.json();
-
-        console.log('Successfully fetched data from the PageSpeed Insights API.', data);
-
-        performanceScore = data.lighthouseResult.categories.performance.score * 100;
-        accessibilityScore = data.lighthouseResult.categories.accessibility.score * 100;
-        bestPracticesScore = data.lighthouseResult.categories['best-practices'].score * 100;
-        seoScore = data.lighthouseResult.categories.seo.score * 100;
-
-        const perfRing = document.getElementById('perf-ring') as SlProgressRing;
-        const accRing = document.getElementById('acc-ring') as SlProgressRing;
-        const bpRing = document.getElementById('bp-ring') as SlProgressRing;
-        const seoRing = document.getElementById('seo-ring') as SlProgressRing;
-        
-        setProgressRing(perfRing, performanceScore);
-        setProgressRing(accRing, accessibilityScore);
-        setProgressRing(bpRing, bestPracticesScore);
-        setProgressRing(seoRing, seoScore);
-
-        runTestButton.loading = false;
-        runTestButton.disabled = false;
-    } else {
-        runTestButton.loading = false;
-        runTestButton.disabled = false;
+    if (!response.ok) {
         console.error('Failed to fetch data from the PageSpeed Insights API.');
+        return;
     }
+
+    const data = await response.json();
+
+    console.log('Successfully fetched data from the PageSpeed Insights API.', data);
+
+    performanceScore = data.lighthouseResult.categories.performance.score * 100;
+    accessibilityScore = data.lighthouseResult.categories.accessibility.score * 100;
+    bestPracticesScore = data.lighthouseResult.categories['best-practices'].score * 100;
+    seoScore = data.lighthouseResult.categories.seo.score * 100;
+
+    const perfRing = document.getElementById('perf-ring') as SlProgressRing;
+    const accRing = document.getElementById('acc-ring') as SlProgressRing;
+    const bpRing = document.getElementById('bp-ring') as SlProgressRing;
+    const seoRing = document.getElementById('seo-ring') as SlProgressRing;
+        
+    setProgressRing(perfRing, performanceScore);
+    setProgressRing(accRing, accessibilityScore);
+    setProgressRing(bpRing, bestPracticesScore);
+    setProgressRing(seoRing, seoScore);
+
+    runTestButton.loading = false;
+    runTestButton.disabled = false;
 })
 
 </script>
