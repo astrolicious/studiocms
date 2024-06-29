@@ -3,11 +3,20 @@
   "files": [],
   "compilerOptions": {
     "outDir": "../../.moon/cache/types/packages/studioCMSBlog",
+    "paths": {
+      "@astrolicious/studiocms": ["../studioCMS/src/index.ts"],
+      "@astrolicious/studiocms/*": ["../studioCMS/src/*"]
+    }
   },
   "include": [
     "../../playgrounds/node/**/*",
     "../../playgrounds/node/.astro/**/*",
     "../studioCMS/**/*",
     "./**/*"
+  ],
+  "references": [
+    {
+      "path": "../studioCMS"
+    }
   ]
 }

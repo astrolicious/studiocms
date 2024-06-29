@@ -1,8 +1,6 @@
 {
   "extends": "astro/tsconfigs/strict",
-  "include": [
-    "**/*"
-  ],
+  "include": ["**/*", "packages/studioCMS/**/*", "packages/studioCMSBlog/**/*"],
   "compilerOptions": {
     "composite": true,
     "declaration": true,
@@ -13,7 +11,12 @@
     "noEmitOnError": true,
     "skipLibCheck": true,
     "outDir": ".moon/cache/types",
-    "paths": {}
+    "paths": {
+      "@astrolicious/studiocms": ["packages/studioCMS/src/index.ts"],
+      "@astrolicious/studiocms/*": ["packages/studioCMS/src/*"],
+      "@astrolicious/studiocms-blog": ["packages/studioCMSBlog/index.ts"],
+      "@astrolicious/studiocms-blog/*": ["packages/studioCMSBlog/src/*"]
+    }
   },
   "references": [
     {
