@@ -15,15 +15,15 @@ export const buildLcpDataObject = (webVitalData: WebVitalsResponseItem[]) => {
 
                 historicalData.push(item);
 
-                if (checkDate().isInLast24Hours(timestamp)) {
+                if (checkDate(timestamp).isInLast24Hours()) {
                     last24HoursData.push(item);
                 }
 
-                if (checkDate().isInLast7Days(timestamp)) {
+                if (checkDate(timestamp).isInLast7Days()) {
                     last7DaysData.push(item);
                 }
 
-                if (checkDate().isInLast30Days(timestamp)) {
+                if (checkDate(timestamp).isInLast30Days()) {
                     last30DaysData.push(item);
                 }
 

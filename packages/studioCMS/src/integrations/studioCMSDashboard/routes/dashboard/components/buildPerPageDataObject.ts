@@ -117,18 +117,22 @@ export const buildPageRouteDataObject = (webVitalData: WebVitalsResponseItem[]) 
         for (const item of webVitalData) {
             const { route, timestamp } = item;
 
-            if (checkDate().isInLast24Hours(timestamp)) {
+            if (checkDate(timestamp).isInLast24Hours()) {
                 const index = last24HoursData.findIndex((entry) => entry.route === route);
     
                 if (index !== -1) {
+                    // @ts-expect-error - This is a valid index
                     last24HoursData[index].samplesize += 1;
                     if (item.name === "CLS") {
+                        // @ts-expect-error - This is a valid index
                         last24HoursData[index].clsvalue.push(item.value);
                     }
                     if (item.name === "LCP") {
+                        // @ts-expect-error - This is a valid index
                         last24HoursData[index].lcpvalue.push(item.value);
                     }
                     if (item.name === "INP") {
+                        // @ts-expect-error - This is a valid index
                         last24HoursData[index].inpvalue.push(item.value);
                     }
                 } else {
@@ -141,18 +145,22 @@ export const buildPageRouteDataObject = (webVitalData: WebVitalsResponseItem[]) 
                     });
                 }
             }
-            if (checkDate().isInLast7Days(timestamp)) {
+            if (checkDate(timestamp).isInLast7Days()) {
                 const index = last7DaysData.findIndex((entry) => entry.route === route);
     
                 if (index !== -1) {
+                    // @ts-expect-error - This is a valid index
                     last7DaysData[index].samplesize += 1;
                     if (item.name === "CLS") {
+                        // @ts-expect-error - This is a valid index
                         last7DaysData[index].clsvalue.push(item.value);
                     }
                     if (item.name === "LCP") {
+                        // @ts-expect-error - This is a valid index
                         last7DaysData[index].lcpvalue.push(item.value);
                     }
                     if (item.name === "INP") {
+                        // @ts-expect-error - This is a valid index
                         last7DaysData[index].inpvalue.push(item.value);
                     }
                 } else {
@@ -165,18 +173,22 @@ export const buildPageRouteDataObject = (webVitalData: WebVitalsResponseItem[]) 
                     });
                 }
             }
-            if (checkDate().isInLast30Days(timestamp)) {
+            if (checkDate(timestamp).isInLast30Days()) {
                 const index = last30DaysData.findIndex((entry) => entry.route === route);
     
                 if (index !== -1) {
+                    // @ts-expect-error - This is a valid index
                     last30DaysData[index].samplesize += 1;
                     if (item.name === "CLS") {
+                        // @ts-expect-error - This is a valid index
                         last30DaysData[index].clsvalue.push(item.value);
                     }
                     if (item.name === "LCP") {
+                        // @ts-expect-error - This is a valid index
                         last30DaysData[index].lcpvalue.push(item.value);
                     }
                     if (item.name === "INP") {
+                        // @ts-expect-error - This is a valid index
                         last30DaysData[index].inpvalue.push(item.value);
                     }
                 } else {
@@ -193,14 +205,18 @@ export const buildPageRouteDataObject = (webVitalData: WebVitalsResponseItem[]) 
             const index = RouteArray.findIndex((entry) => entry.route === route);
 
             if (index !== -1) {
+                // @ts-expect-error - This is a valid index
                 RouteArray[index].samplesize += 1;
                 if (item.name === "CLS") {
+                    // @ts-expect-error - This is a valid index
                     RouteArray[index].clsvalue.push(item.value);
                 }
                 if (item.name === "LCP") {
+                    // @ts-expect-error - This is a valid index
                     RouteArray[index].lcpvalue.push(item.value);
                 }
                 if (item.name === "INP") {
+                    // @ts-expect-error - This is a valid index
                     RouteArray[index].inpvalue.push(item.value);
                 }
             } else {

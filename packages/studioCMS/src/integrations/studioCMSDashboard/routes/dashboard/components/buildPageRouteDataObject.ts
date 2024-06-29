@@ -19,7 +19,7 @@ export const buildPageRouteDataObject = (webVitalData: WebVitalsResponseItem[]) 
         for (const item of webVitalData) {
             const { pathname, route, timestamp } = item;
 
-            if (checkDate().isInLast24Hours(timestamp)){
+            if (checkDate(timestamp).isInLast24Hours()){
                 const index = last24HoursData.findIndex((entry) => entry.pagePathname === pathname);
                 if (index !== -1) {
                     // @ts-expect-error - This is a valid index
@@ -35,7 +35,7 @@ export const buildPageRouteDataObject = (webVitalData: WebVitalsResponseItem[]) 
                 }
             }
 
-            if (checkDate().isInLast7Days(timestamp)){
+            if (checkDate(timestamp).isInLast7Days()){
                 const index = last7DaysData.findIndex((entry) => entry.pagePathname === pathname);
                 if (index !== -1) {
                     // @ts-expect-error - This is a valid index
@@ -51,7 +51,7 @@ export const buildPageRouteDataObject = (webVitalData: WebVitalsResponseItem[]) 
                 }
             }
 
-            if (checkDate().isInLast30Days(timestamp)){
+            if (checkDate(timestamp).isInLast30Days()){
                 const index = last30DaysData.findIndex((entry) => entry.pagePathname === pathname);
                 if (index !== -1) {
                     // @ts-expect-error - This is a valid index
