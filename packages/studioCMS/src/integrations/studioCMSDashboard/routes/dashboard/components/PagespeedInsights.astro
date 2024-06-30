@@ -2,6 +2,8 @@
 import { Button, Divider, ProgressRing, VisuallyHidden } from "astrolace:components";
 
 const FetchURL = Astro.site||"";
+
+const linkToExternalTest = `https://pagespeed.web.dev/analysis?url=${encodeURIComponent(FetchURL.toString())}`;
 ---
 
 <div class="pb-4">
@@ -42,10 +44,10 @@ const FetchURL = Astro.site||"";
 
 </div>
 
-<Divider class:list="divider" />
+<Divider class:list={["divider"]} />
 
 <div class="text-gray-500">
-    Test results are generated using Google's PageSpeed Insights API. If you would like to see more details for the Results above, please visit the <a class="text-blue-500" href={`https://pagespeed.web.dev/analysis?url=${encodeURIComponent(FetchURL.toString())}`} target="_blank" rel="noopener noreferrer">PageSpeed Insights Results</a>.
+    Test results are generated using Google's PageSpeed Insights API. If you would like to see more details for the Results above, please visit the <a class="text-blue-500" href={linkToExternalTest} target="_blank" rel="noopener noreferrer">PageSpeed Insights Results</a>.
 </div>
 
 <VisuallyHidden>

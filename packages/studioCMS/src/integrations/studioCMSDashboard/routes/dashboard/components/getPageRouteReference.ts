@@ -7,8 +7,10 @@ type FrontEndRoute = {
     ProjectReference: string;
 }
 
+const fixSlashes = (str: string) => str.replace(/^\/+|\/+$/g, '');
+
 const { dashboardConfig: { dashboardRouteOverride } } = Config;
-const dashboardURL = dashboardRouteOverride ? dashboardRouteOverride.replace(/^\/+|\/+$/g, '') : 'dashboard';
+const dashboardURL = dashboardRouteOverride ? fixSlashes(dashboardRouteOverride) : 'dashboard';
 const studioCMSPluginList = pluginList;
 
 export const getPageRouteReference = (pageRoute: string) => {
@@ -24,11 +26,11 @@ export const getPageRouteReference = (pageRoute: string) => {
             if (route[0].startsWith(name)) {
                 if (!frontEndRoutes.some((routed) => routed.PageRoute === `/${route[1].slug}`)) {
                     frontEndRoutes.push({
-                        PageRoute: `/${route[1].slug.replace(/^\/+|\/+$/g, '')}`,
+                        PageRoute: `/${fixSlashes(route[1].slug)}`,
                         ProjectReference: label
                     })
                     frontEndRoutes.push({
-                        PageRoute: `/${route[1].slug.replace(/^\/+|\/+$/g, '')}/[slug]`,
+                        PageRoute: `/${fixSlashes(route[1].slug)}/[slug]`,
                         ProjectReference: label
                     })
                 }
