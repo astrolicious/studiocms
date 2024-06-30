@@ -48,7 +48,7 @@
     "@iconify/utils": "^2.1.25",
     "@inox-tools/sitemap-ext": "^0.2.12",
     "@markdoc/markdoc": "^0.4.0",
-    "@matthiesenxyz/astrolace": "^0.1.5",
+    "@matthiesenxyz/astrolace": "^0.1.7",
     "@matthiesenxyz/unocss-preset-daisyui": "^0.1.0",
     "@noble/hashes": "^1.4.0",
     "@shikijs/transformers": "^1.9.1",
