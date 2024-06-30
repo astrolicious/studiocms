@@ -1,46 +1,13 @@
 ---
 import type { perPageDataEntry } from './buildPerPageDataObject';
 import { getPageRouteReference } from './getPageRouteReference';
+import { clsTextColor, inpTextColor, lcpTextColor } from './webVitalsUtils';
 
 interface Props {
     perPageRouteData: perPageDataEntry[];
 }
 
 const { perPageRouteData } = Astro.props;
-
-function msToSeconds(ms: number): number {
-    return ms / 1000;
-}
-
-const lcpColor = (lcpData: number) => {
-    if (msToSeconds(lcpData) <= 2.5) {
-        return "green";
-    } 
-    if (msToSeconds(lcpData) > 2.5 && lcpData <= 4) {
-        return "yellow";
-    } 
-    return "red";
-};
-
-const clsColor = (clsData: number) => {
-    if (clsData <= 0.25) {
-        return "green";
-    }
-    if (clsData > 0.25 && clsData <= 0.5) {
-        return "yellow";
-    }
-    return "red";
-}
-
-const inpColor = (inpData: number) => {
-    if (inpData <= 100) {
-        return "green";
-    } 
-    if (inpData > 100 && inpData <= 200) {
-        return "yellow";
-    } 
-    return "red";
-};
 ---
 <table class="w-full text-left rtl:text-right">
     <thead class="uppercase bg-base-300 text-md">
@@ -70,13 +37,13 @@ const inpColor = (inpData: number) => {
                     <td class="px-6 py-2">
                         {getPageRouteReference(pageRoute)}
                     </td>
-                    <td class="px-6 py-2 font-bold" style={`color: ${lcpColor(lcpAverage)};`}>
+                    <td class="px-6 py-2 font-bold" style={`color: ${lcpTextColor(lcpAverage)};`}>
                         {lcpAverage}
                     </td>
-                    <td class="px-6 py-2 font-bold" style={`color: ${clsColor(clsAverage)};`}>
+                    <td class="px-6 py-2 font-bold" style={`color: ${clsTextColor(clsAverage)};`}>
                         {clsAverage}
                     </td>
-                    <td class="px-6 py-2 font-bold" style={`color: ${inpColor(inpAverage)}`}>
+                    <td class="px-6 py-2 font-bold" style={`color: ${inpTextColor(inpAverage)}`}>
                         {inpAverage}
                     </td>
                     <td class="px-6 py-2">

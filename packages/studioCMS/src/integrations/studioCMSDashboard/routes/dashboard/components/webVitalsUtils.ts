@@ -70,6 +70,16 @@ export const progressBarClsTrackColor = (clsData: number) => {
     return "red";
 }
 
+export const clsTextColor = (clsData: number) => {
+    if (clsData <= 0.25) {
+        return "green";
+    }
+    if (clsData > 0.25 && clsData <= 0.5) {
+        return "yellow";
+    }
+    return "red";
+}
+
 // LCP Calculations
 export function calculateLcpAverage(lcpValues: number[]): number {
 
@@ -134,6 +144,16 @@ export const progressBarLcpTrackColor = (lcpData: number) => {
     return "red";
 };
 
+export const lcpTextColor = (lcpData: number) => {
+    if (msToSeconds(lcpData) <= 2.5) {
+        return "green";
+    } 
+    if (msToSeconds(lcpData) > 2.5 && lcpData <= 4) {
+        return "yellow";
+    } 
+    return "red";
+};
+
 // INP Calculations
 export function calculateInpAverage(inpValues: number[]): number {
 
@@ -194,6 +214,16 @@ export const progressBarInpTrackColor = (inpData: number) => {
     } 
     if (inpData > 100) {
         return "red";
+    } 
+    return "red";
+};
+
+export const inpTextColor = (inpData: number) => {
+    if (inpData <= 100) {
+        return "green";
+    } 
+    if (inpData > 100 && inpData <= 200) {
+        return "yellow";
     } 
     return "red";
 };
