@@ -7,6 +7,7 @@ export function msToSeconds(ms: number): number {
 }
 
 // CLS Calculations
+// Combine all CLS values and calculate average
 export function calculateClsAverage(clsValues: number[]): number {
 
     const sum = clsValues.reduce((acc, curr) => acc + curr, 0);
@@ -16,6 +17,8 @@ export function calculateClsAverage(clsValues: number[]): number {
     return Math.round(average * 100) / 100;
 }
 
+// Get CLS data from Web Vitals API response
+// Return the Calculated average CLS value
 export const clsDataAverage = (webVitalData: WebVitalsResponseItem[]) => {
     const clsData: number[] = [];
     if (webVitalData) {
@@ -28,6 +31,9 @@ export const clsDataAverage = (webVitalData: WebVitalsResponseItem[]) => {
     return calculateClsAverage(clsData);
 };
 
+// Calculate CLS score based on the average CLS value
+// Return the score as a string (Excellent, Good, Fair, Poor)
+// This is based on the https://web.dev/cls/ guidelines
 export function calculateClsScoreText(cls: number): string {
     if (cls <= 0.1) {
         return "Excellent"; // Excellent
@@ -39,6 +45,9 @@ export function calculateClsScoreText(cls: number): string {
     return "Poor"; // Poor to Fair
 }
 
+// Calculate CLS score based on the average CLS value
+// Return the score as a percentage (0-100)
+// This is based on the https://web.dev/cls/ guidelines
 export function calculateClsScorePercent(cls: number): number {
     if (cls <= 0.1) {
         return 100; // Excellent
@@ -50,6 +59,9 @@ export function calculateClsScorePercent(cls: number): number {
     return Math.round(50 - ((cls - 0.5) / (1 - 0.5)) * 50); // Poor to Fair
 }
 
+// Calculate CLS progress bar color based on the average CLS value
+// Return the color as a string (green, yellow, red)
+// This is based on the https://web.dev/cls/ guidelines
 export const progressBarClsColor = (clsData: number) => {
     if (clsData <= 0.25) {
         return "green";
@@ -60,6 +72,9 @@ export const progressBarClsColor = (clsData: number) => {
     return "red";
 }
 
+// Calculate CLS progress bar track color based on the average CLS value
+// Return the color as a string (yellow, red)
+// This is based on the https://web.dev/cls/ guidelines
 export const progressBarClsTrackColor = (clsData: number) => {
     if (clsData <= 0.25) {
         return "yellow";
@@ -70,6 +85,9 @@ export const progressBarClsTrackColor = (clsData: number) => {
     return "red";
 }
 
+// Calculate CLS text color based on the average CLS value
+// Return the color as a string (green, yellow, red)
+// This is based on the https://web.dev/cls/ guidelines
 export const clsTextColor = (clsData: number) => {
     if (clsData <= 0.25) {
         return "green";
@@ -81,6 +99,8 @@ export const clsTextColor = (clsData: number) => {
 }
 
 // LCP Calculations
+// Combine all LCP values and calculate average
+// Return the Calculated average LCP value
 export function calculateLcpAverage(lcpValues: number[]): number {
 
     const sum = lcpValues.reduce((acc, curr) => acc + curr, 0);
@@ -90,6 +110,8 @@ export function calculateLcpAverage(lcpValues: number[]): number {
     return Math.floor(Math.round(average * 100) / 100);
 }
 
+// Get LCP data from Web Vitals API response
+// Return the Calculated average LCP value
 export const lcpDataAverage = (webVitalData: WebVitalsResponseItem[]) => {
     const lcpData: number[] = [];
     if (webVitalData) {
@@ -102,6 +124,9 @@ export const lcpDataAverage = (webVitalData: WebVitalsResponseItem[]) => {
     return calculateLcpAverage(lcpData);
 };
 
+// Calculate LCP score based on the average LCP value
+// Return the score as a string (Excellent, Good, Fair, Poor)
+// This is based on the https://web.dev/lcp/ guidelines
 export function calculateLcpScoreText(lcp: number): string {
     if (msToSeconds(lcp) <= 2) {
         return "Excellent"; // Excellent
@@ -113,6 +138,9 @@ export function calculateLcpScoreText(lcp: number): string {
     return "Poor"; // Poor to Fair
 }
 
+// Calculate LCP score based on the average LCP value
+// Return the score as a percentage (0-100)
+// This is based on the https://web.dev/lcp/ guidelines
 export function calculateLcpScorePercent(lcp: number): number {
     if (msToSeconds(lcp) <= 2) {
         return 100; // Excellent
@@ -124,6 +152,10 @@ export function calculateLcpScorePercent(lcp: number): number {
         return Math.round(0 - ((lcp - 6) / (10 - 6)) * 50); // Poor to Fair
 }
 
+
+// Calculate LCP progress bar color based on the average LCP value
+// Return the color as a string (green, yellow, red)
+// This is based on the https://web.dev/lcp/ guidelines
 export const progressBarLcpColor = (lcpData: number) => {
     if (msToSeconds(lcpData) <= 2.5) {
         return "green";
@@ -134,6 +166,9 @@ export const progressBarLcpColor = (lcpData: number) => {
     return "red";
 };
 
+// Calculate LCP progress bar track color based on the average LCP value
+// Return the color as a string (yellow, red)
+// This is based on the https://web.dev/lcp/ guidelines
 export const progressBarLcpTrackColor = (lcpData: number) => {
     if (msToSeconds(lcpData) <= 2.5) {
         return "yellow";
@@ -144,6 +179,9 @@ export const progressBarLcpTrackColor = (lcpData: number) => {
     return "red";
 };
 
+// Calculate LCP text color based on the average LCP value
+// Return the color as a string (green, yellow, red)
+// This is based on the https://web.dev/lcp/ guidelines
 export const lcpTextColor = (lcpData: number) => {
     if (msToSeconds(lcpData) <= 2.5) {
         return "green";
@@ -155,6 +193,8 @@ export const lcpTextColor = (lcpData: number) => {
 };
 
 // INP Calculations
+// Combine all INP values and calculate average
+// Return the Calculated average INP value
 export function calculateInpAverage(inpValues: number[]): number {
 
     const sum = inpValues.reduce((acc, curr) => acc + curr, 0);
@@ -164,6 +204,8 @@ export function calculateInpAverage(inpValues: number[]): number {
     return Math.round(average * 100) / 100;
 }
 
+// Get INP data from Web Vitals API response
+// Return the Calculated average INP value
 export function inpDataAverage(webVitalData: WebVitalsResponseItem[]): number {
     const inpData: number[] = [];
     if (webVitalData) {
@@ -176,6 +218,9 @@ export function inpDataAverage(webVitalData: WebVitalsResponseItem[]): number {
     return Math.floor(calculateInpAverage(inpData));
 }
 
+// Calculate INP score based on the average INP value
+// Return the score as a string (Excellent, Good, Fair, Poor)
+// This is based on the https://web.dev/inp/ guidelines
 export function calculateInpScoreText(inp: number): string {
     if (inp <= 50) {
         return "Excellent"; // Excellent
@@ -187,6 +232,9 @@ export function calculateInpScoreText(inp: number): string {
     return "Poor"; // Poor to Fair
 }
 
+// Calculate INP score based on the average INP value
+// Return the score as a percentage (0-100)
+// This is based on the https://web.dev/inp/ guidelines
 export function calculateInpScorePercent(inp: number): number {
     if (inp <= 50) {
         return 100; // Excellent
@@ -198,6 +246,9 @@ export function calculateInpScorePercent(inp: number): number {
     return Math.round(0 - ((inp - 200) / (300 - 200)) * 50); // Poor to Fair
 }
 
+// Calculate INP progress bar color based on the average INP value
+// Return the color as a string (green, yellow, red)
+// This is based on the https://web.dev/inp/ guidelines
 export const progressBarInpColor = (inpData: number) => {
     if (inpData <= 100) {
         return "green";
@@ -208,6 +259,9 @@ export const progressBarInpColor = (inpData: number) => {
     return "red";
 };
 
+// Calculate INP progress bar track color based on the average INP value
+// Return the color as a string (yellow, red)
+// This is based on the https://web.dev/inp/ guidelines
 export const progressBarInpTrackColor = (inpData: number) => {
     if (inpData <= 100) {
         return "yellow";
@@ -218,6 +272,9 @@ export const progressBarInpTrackColor = (inpData: number) => {
     return "red";
 };
 
+// Calculate INP text color based on the average INP value
+// Return the color as a string (green, yellow, red)
+// This is based on the https://web.dev/inp/ guidelines
 export const inpTextColor = (inpData: number) => {
     if (inpData <= 100) {
         return "green";
