@@ -22,7 +22,7 @@ const { lcpData, clsData, inpData } = Astro.props;
             <ProgressBar 
                 value={calculateLcpScorePercent(lcpDataAverage(lcpData))} 
                 label="LCP Data" 
-                class:list={["progressbar-lcp"]}>
+                class="progressbar-lcp">
                 <span>{lcpDataAverage(lcpData)}ms</span>
             </ProgressBar>
         </div>
@@ -36,7 +36,7 @@ const { lcpData, clsData, inpData } = Astro.props;
             <ProgressBar 
                 value={calculateClsScorePercent(clsDataAverage(clsData))} 
                 label="CLS Data" 
-                class:list={["progressbar-cls"]}>
+                class="progressbar-cls">
                     <span>{clsDataAverage(clsData)}</span>
             </ProgressBar>
         </div>
@@ -50,7 +50,7 @@ const { lcpData, clsData, inpData } = Astro.props;
             <ProgressBar 
                 value={calculateInpScorePercent(inpDataAverage(inpData))} 
                 label="CLS Data" 
-                class:list={["progressbar-inp"]}>
+                class="progressbar-inp">
                     <span>{inpDataAverage(inpData)}ms</span>
             </ProgressBar>
         </div>

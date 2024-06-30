@@ -16,35 +16,35 @@ const linkToExternalTest = `https://pagespeed.web.dev/analysis?url=${encodeURICo
     
     <div id="w-full flex flex-col">
         <div class="flex justify-center">
-            <ProgressRing label="performance-score" id="perf-ring" value={0}><span>N/A</span></ProgressRing>
+            <ProgressRing label="performance-score" id="perf-ring" value={0}>N/A</ProgressRing>
         </div>
         <div class="flex justify-center font-bold">Performance</div>
     </div>
 
     <div id="w-full flex flex-col">
         <div class="flex justify-center">
-            <ProgressRing label="accessibility-score" id="acc-ring" value={0}><span>N/A</span></ProgressRing>
+            <ProgressRing label="accessibility-score" id="acc-ring" value={0}>N/A</ProgressRing>
         </div>
         <div class="flex justify-center font-bold">Accessibility</div>
     </div>
 
     <div id="w-full flex flex-col">
         <div class="flex justify-center">
-            <ProgressRing label="best-practices-score" id="bp-ring" value={0}><span>N/A</span></ProgressRing>
+            <ProgressRing label="best-practices-score" id="bp-ring" value={0}>N/A</ProgressRing>
         </div>
         <div class="flex justify-center font-bold">Best Practices</div>
     </div>
 
     <div id="w-full flex flex-col">
         <div class="flex justify-center">
-            <ProgressRing label="seo-score" id="seo-ring" value={0}><span>N/A</span></ProgressRing>
+            <ProgressRing label="seo-score" id="seo-ring" value={0}>N/A</ProgressRing>
         </div>
         <div class="flex justify-center font-bold">SEO</div>
     </div>
 
 </div>
 
-<Divider class:list={["divider"]} />
+<Divider class="divider" />
 
 <div class="text-gray-500">
     Test results are generated using Google's PageSpeed Insights API. If you would like to see more details for the Results above, please visit the <a class="text-blue-500" href={linkToExternalTest} target="_blank" rel="noopener noreferrer">PageSpeed Insights Results</a>.
