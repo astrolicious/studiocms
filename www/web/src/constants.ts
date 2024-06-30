@@ -58,6 +58,12 @@ export const features = [
       'A free and efficient image service, Unpic makes managing external URLs straightforward, with support for major CDNs.',
     icon: 'img-service',
   },
+  {
+    feature: 'Web Vitals',
+    description:
+      'Integration with "@astrojs/web-vitals" for monitoring and providing insights into web performance metrics, ensuring optimal user experiences.',
+    icon: 'webvital',
+  }
 ]
 
 // TODO: Update testimonials when we merge

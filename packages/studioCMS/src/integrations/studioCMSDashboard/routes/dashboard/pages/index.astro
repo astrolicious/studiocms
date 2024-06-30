@@ -1,13 +1,15 @@
 ---
 // @ts-expect-error - Some types can only be imported from the Astro runtime
 import { SiteConfig, db, eq } from 'astro:db';
-import { Layout } from 'studiocms-dashboard:components';
+import { Layout, WebVitalPanel } from 'studiocms-dashboard:components';
 import Config from 'virtual:studiocms/config';
 import { authHelper, type Locals } from 'studiocms:helpers';
 import { StudioCMSRoutes } from 'studiocms-dashboard:routeMap';
 import { studioCMSSocials } from "../layouts/studiocms-socials";
 import type { SiteConfigResponse } from 'studiocms:components';
 import { CMSSiteConfigId } from '../../../../../constVars';
+import { getWebVitals } from 'studiocms-dashboard:web-vitals';
+import { Breadcrumb, BreadcrumbItem, Divider, Card, Alert, Button, Icon, Details } from 'astrolace:components';
 
 const { 
     mainLinks: {
@@ -23,6 +25,9 @@ const { github, discord } = studioCMSSocials;
 const { dashboardConfig: { developerConfig } } = Config;
 const contextConfig: SiteConfigResponse = await db.select().from(SiteConfig).where(eq(SiteConfig.id, CMSSiteConfigId)).get();
 const { permissionLevel } = await authHelper(Astro.locals as Locals);
+
+// Get the web vitals
+const webVitals = await getWebVitals();
 
 // If the user is not logged in, redirect to the login page
 if ( !developerConfig.testingAndDemoMode ) {
@@ -45,42 +50,52 @@ const pageTitle = `Dashboard | ${contextConfig.title}`;
     description={contextConfig.description} >
 
     <div class="flex grow w-full pb-4">
-        <sl-breadcrumb>
-            <span slot="separator">/</span>
-            <sl-breadcrumb-item href={dashboardIndex}>Dashboard
-                <sl-icon slot="prefix" name="columns-gap"></sl-icon>
-            </sl-breadcrumb-item>
-        </sl-breadcrumb>
+        <Breadcrumb separator='/'>
+            <BreadcrumbItem href={dashboardIndex} prefix='columns-gap'>Dashboard
+            </BreadcrumbItem>
+        </Breadcrumb>
     </div>
 
     <div class="container">
 
-        <h1 class="text-5xl font-bold py-8">Dashboard</h1>
+        <h1 class="text-4xl font-bold py-8">Dashboard</h1>
 
-        <div class="py-2">
-            <text class="text-lg">
-                This is <b>StudioCMS</b> a free and open-source CMS built from the ground up by the Astro Community.
-            </text>
-            <text class="text-lg">
-                To get started, click on the sidebar to navigate to the different sections of the CMS.
-            </text>
-        </div>
+        <Card class="w-full">
+            <p>This is <strong>StudioCMS</strong> a free and open-source CMS built from the ground up by the Astro Community.</p>
+        </Card>
 
-        <div class="py-1">
-            <text class="text-xl">
-                This project is <b>Experimental</b> and should not be used in production at this time.
-            </text>
-        </div>
+        <Divider />
+
+        <Alert variant="warning" open>
+            <Icon slot="icon" name="exclamation-triangle" />
+            <p>This project is <strong>Experimental</strong> and should not be used in production at this time.</p>
+        </Alert>
+
+        { webVitals.length > 0 && (
+            <Divider />
+
+            <Card class="w-full card-header">
+
+                <Details>
+                    <div slot="summary" class="flex flex-row gap-4 items-center">
+                        <Icon slot="icon" name="check2-circle" class:list={"text-green-500 font-size-6"} />
+                        <p>Web Vitals is <strong class="text-green">ENABLED</strong>! <strong>Performance Metrics</strong> are being collected.</p>
+                    </div>
+                    <WebVitalPanel webVitalData={webVitals} />
+                </Details>
+
+            </Card>
+        )}
 
         <div class="mt-8 flex gap-4 max-sm:flex-wrap">
-            <sl-button variant="warning" size="large" href={github} target="_blank" outline>
-                <sl-icon slot="prefix" name="star"></sl-icon>
+            <Button variant="warning" size="large" href={github} target="_blank" outline>
+                <Icon slot="prefix" name="star" />
                 <div>Star us on Github</div>
-            </sl-button>
-            <sl-button variant="primary" size="large" href={discord} target="_blank" outline>
-                <sl-icon slot="prefix" name="discord"></sl-icon>
+            </Button>
+            <Button variant="primary" size="large" href={discord} target="_blank" outline>
+                <Icon slot="prefix" name="discord" />
                 Join the Community
-            </sl-button>
+            </Button>
         </div>
 
     </div>

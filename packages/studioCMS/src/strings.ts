@@ -12,6 +12,8 @@ export const DbErrors = {
     AstroConfigOutput: "Astro Studio CMS is only supported in 'Output: server' SSR mode.",
     AstroConfigSiteURL: "Astro Studio CMS requires a 'site' configuration in your Astro Config. This can be your domain ( 'https://example.com' ) or localhost ( 'http://localhost:4321' - localhost should only be used during development and should not be used in production).",
     DbStartPage: "Start Page is Enabled.  This will be the only page available until you initialize your database and disable the config option forcing this page to be displayed. To get started, visit http://localhost:4321/start/ in your browser to initialize your database. And Setup your installation.",
+    astroDbMissingMessage: "Astro DB Integration not found in Astro Config",
+    astroDbMissingHint: "Run `astro add db` to install `@astrojs/db` and add it to your Astro config.",
 }
 
 export const studioErrors = {
@@ -172,4 +174,10 @@ export const authConfigStrings = {
     writeFileError: "Error writing new studiocms-auth.config.json: ",
     newConfig: "New studiocms-auth.config.json generated with salt: ",
     configComplete: "StudioCMS Username and Password Authentication Setup Complete!"
+}
+
+export const webVitalStrings = {
+    checkForWebVitals: "Checking for '@astrojs/web-vitals' integration...",
+    webVitalsFound: "Web Vitals Integration Found!",
+    webVitalsMissing: "'@astrojs/web-vitals' Integration Missing! The '@astrojs/web-vitals' integration is required if you want the Web Vitals features to be displayed in the StudioCMS Dashboard.",
 }
