@@ -13,7 +13,7 @@ export const DbErrors = {
     AstroConfigSiteURL: "Astro Studio CMS requires a 'site' configuration in your Astro Config. This can be your domain ( 'https://example.com' ) or localhost ( 'http://localhost:4321' - localhost should only be used during development and should not be used in production).",
     DbStartPage: "Start Page is Enabled.  This will be the only page available until you initialize your database and disable the config option forcing this page to be displayed. To get started, visit http://localhost:4321/start/ in your browser to initialize your database. And Setup your installation.",
     astroDbMissingMessage: "Astro DB Integration not found in Astro Config",
-    astroDbMissingHint: "Run `npx astro add db` to install `@astrojs/db` and add it to your Astro config.",
+    astroDbMissingHint: "Run `astro add db` to install `@astrojs/db` and add it to your Astro config.",
 }
 
 export const studioErrors = {
