@@ -15,7 +15,7 @@ import {
   transformerMetaHighlight,
   transformerMetaWordHighlight
 } from '@shikijs/transformers'
-import { getHighlighterCore } from 'shiki/core'
+import { createHighlighterCore } from 'shiki/core'
 import getWasm from 'shiki/wasm'
 
 const {
@@ -119,7 +119,7 @@ export async function renderMarked(input: string): Promise<string> {
 		if (shikiLoadLangs) { shikiLangsConfig.push(...shikiLoadLangs); }
 
 		// Create Shiki Highlighter
-		const shikiHighlighter = await getHighlighterCore({
+		const shikiHighlighter = await createHighlighterCore({
 			themes: shikiThemeConfig,
 			langs: shikiLangsConfig,
 			loadWasm: getWasm,
