@@ -9,6 +9,7 @@ import { getStudioConfigFileUrl } from './studiocms-config';
 import { optionsSchema } from './schemas';
 import { version } from '../package.json';
 import { CoreStrings, robotsTXTPreset } from './strings';
+import { namespaceBuiltinsPlugin } from './utils/namespaceBuiltins';
 
 // Main Integration
 export default defineIntegration({
@@ -31,13 +32,19 @@ export default defineIntegration({
 				'astro:config:setup': async ( params ) => {
 
 					// Destructure Params
-					const { config: astroConfig, addWatchFile } = params;
+					const { config: astroConfig, addWatchFile, updateConfig } = params;
 
 					// Watch the StudioCMS Config File for changes (including creation/deletion)
 					addWatchFile(getStudioConfigFileUrl(astroConfig.root));
 
 					// Resolve Options
 					const resolvedOptions = await optionsResolver(params, options);
+
+					updateConfig({
+						vite: {
+							plugins: [namespaceBuiltinsPlugin()]
+						}
+					})
 
 					// Setup Logger
 					const LoggerOpts = await studioLoggerOptsResolver(params.logger, resolvedOptions.verbose);
