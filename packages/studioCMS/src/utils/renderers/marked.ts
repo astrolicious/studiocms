@@ -123,7 +123,7 @@ export async function renderMarked(input: string): Promise<string> {
 			themes: shikiThemeConfig,
 			langs: shikiLangsConfig,
 			loadWasm: getWasm,
-		})
+		});
 
 		// Add Shiki to the Custom Marked Extensions
 		customMarkedExtList.push(
