@@ -1,5 +1,4 @@
 ---
-// @ts-expect-error - Some types can only be imported from the Astro runtime
 import { SiteConfig, db, eq, asc, PageData } from 'astro:db';
 import { Layout, FormattedDate } from 'studiocms-dashboard:components';
 import Config from 'virtual:studiocms/config';
@@ -7,6 +6,7 @@ import { authHelper, pluginList, type Locals } from 'studiocms:helpers';
 import { StudioCMSRoutes, getEditRoute, getDeleteRoute } from 'studiocms-dashboard:routeMap';
 import type { SiteConfigResponse, pageDataReponse } from 'studiocms:components';
 import { CMSSiteConfigId } from '../../../../../../constVars';
+import { Breadcrumb, BreadcrumbItem, Button } from 'astrolace:components';
 
 const { dashboardConfig: { developerConfig: { testingAndDemoMode } } } = Config;
 
@@ -57,13 +57,14 @@ const pageTitle = `Existing Pages | ${contextConfig.title}`;
     description={contextConfig.description} >
 
     <div class="flex grow w-full pb-4">
-        <sl-breadcrumb>
-            <span slot="separator">/</span>
-            <sl-breadcrumb-item href={dashboardIndex}>Dashboard
-                <sl-icon slot="prefix" name="columns-gap"></sl-icon>
-            </sl-breadcrumb-item>
-            <sl-breadcrumb-item href={pageEdit}>Existing Pages</sl-breadcrumb-item>
-        </sl-breadcrumb>
+        <Breadcrumb>
+            <BreadcrumbItem href={dashboardIndex} prefix='columns-gap'>
+                Dashboard
+            </BreadcrumbItem>
+            <BreadcrumbItem href={pageEdit}'>
+                Existing Pages
+            </BreadcrumbItem>
+        </Breadcrumb>
     </div>
 
     <div class="container">
@@ -97,15 +98,15 @@ const pageTitle = `Existing Pages | ${contextConfig.title}`;
                                             <FormattedDate date={page.publishedAt}/>
                                         </td>
                                         <td class="px-6 py-4">
-                                            <sl-button variant="success" href={await getEditRoute(page.slug)} size="small" type="primary" pill outline>
+                                            <Button variant="success" href={await getEditRoute(page.slug)} size="small" pill outline>
                                                 Edit
-                                            </sl-button>
+                                            </Button>
                                         </td>
                                         <td class="px-6 py-4">
                                             { permissionLevel === 'admin' && (
-                                                <sl-button variant="danger" href={await getDeleteRoute(page.slug)} size="small" type="primary" pill outline>
+                                                <Button variant="danger" href={await getDeleteRoute(page.slug)} size="small" pill outline>
                                                     Delete
-                                                </sl-button> )
+                                                </Button> )
                                             }
                                         </td>
                                     </tr>

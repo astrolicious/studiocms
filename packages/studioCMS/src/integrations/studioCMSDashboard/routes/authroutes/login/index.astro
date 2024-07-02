@@ -4,6 +4,7 @@ import Config from 'virtual:studiocms/config';
 import type { Locals } from 'studiocms:helpers';
 import OauthProviders from '../components/OauthProviders.astro';
 import { StudioCMSRoutes } from 'studiocms-dashboard:routeMap';
+import { Alert, Button, Icon, Input } from 'astrolace:components';
 
 const { 
   dashboardConfig,
@@ -39,34 +40,30 @@ if (locals.isLoggedIn) {
       </div>
     <br />
 
-      <!-- oAUTH Providers -->
       <OauthProviders dashboardConfig={dashboardConfig} />
-      <!-- End of oAUTH Providers -->
 
-      <!-- Username and Password Provider-->
       { usernameAndPassword && (
         <div class="py-8">
           <div class="bg-base-300 p-8 rounded-lg md:w-[32rem]">
 
           <form method="post" action={loginAPI}>
 
-              <sl-input 
+              <Input 
                 name="username" 
                 id="username" 
-                >
-                  <div class="text-xl font-bold" slot="label">Username</div>
-              </sl-input><br />
+                label='Username'
+                /><br />
 
-              <sl-input 
+              <Input 
                 type="password" 
                 name="password"
                 id="password"
-                password-toggle>
-                  <div class="text-xl font-bold" slot="label">Password</div>
-                </sl-input><br />
+                label="Password"
+                password-toggle
+                /><br />
 
             <center>
-              <sl-button variant="primary" type="submit" outline>Continue <div slot="suffix" class="i-mdi:login"></div></sl-button>
+              <Button variant="primary" type="submit" outline>Continue <Icon slot="suffix" library="mdi" name="login"/></Button>
             </center>
 
           </form>
@@ -82,26 +79,27 @@ if (locals.isLoggedIn) {
           </div>
         </div> 
       )}
-      <!-- End of Username and Password Provider-->
 
-      <sl-alert id="form-error" variant="danger" duration="4000" closable>
-        <sl-icon slot="icon" name="exclamation-octagon"></sl-icon>
+      <Alert id="form-error" variant="danger" duration={4000} closable>
+        <Icon slot="icon" name="exclamation-octagon" />
         <strong>Something went wrong!</strong><br />
         <div id = "form-error-message"></div>
-      </sl-alert>
-      <sl-alert id="form-success" variant="success" duration="4000" closable>
-        <sl-icon slot="icon" name="check2-circle"></sl-icon>
+      </Alert>
+      <Alert id="form-success" variant="success" duration={4000} closable>
+        <Icon slot="icon" name="check2-circle" />
         <strong>Success!</strong><br />
         <div id = "form-success-message"></div>
-      </sl-alert>
+      </Alert>
 
   </div>
 </Layout>
 
 <script>
-	const alertElement = document.getElementById("form-error")!;
+import type { SlAlert } from "astrolace:types";
+
+	const alertElement = document.getElementById("form-error") as SlAlert;
   const errorMessageElement = document.getElementById("form-error-message")!;
-	const successAlertElement = document.getElementById("form-success")!;
+	const successAlertElement = document.getElementById("form-success") as SlAlert;
   const successMessageElement = document.getElementById("form-success-message")!;
 
 	document.forms[0]?.addEventListener("submit", async (e) => {
@@ -114,14 +112,12 @@ if (locals.isLoggedIn) {
 		});
 		if (response.ok) {
       successMessageElement.innerText = "Login successful! Redirecting...";
-      //@ts-expect-error - toast is not a standard method on HTMLElement it comes from `Shoelace.syle`
       successAlertElement.toast();
       setTimeout(() => {
         window.location.reload();
       }, 1000)
 		} else {
 			errorMessageElement.innerText = (await response.json()).error;
-      //@ts-expect-error - toast is not a standard method on HTMLElement it comes from `Shoelace.syle`
       alertElement.toast();
 		}
 	});

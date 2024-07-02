@@ -105,6 +105,9 @@ importers:
       daisyui:
         specifier: ^4.12.8
         version: 4.12.8(postcss@8.4.38)
+      htmx.org:
+        specifier: ^1.9.12
+        version: 1.9.12
       lucia:
         specifier: ^3.2.0
         version: 3.2.0
@@ -5762,6 +5765,10 @@ packages:
       domhandler: 5.0.3
       domutils: 3.1.0
       entities: 4.5.0
+    dev: false
+
+  /htmx.org@1.9.12:
+    resolution: {integrity: sha512-VZAohXyF7xPGS52IM8d1T1283y+X4D+Owf3qY1NZ9RuBypyu9l8cGsxUMAG5fEAb/DhT7rDoJ9Hpu5/HxFD3cw==}
     dev: false
 
   /http-cache-semantics@4.1.1:

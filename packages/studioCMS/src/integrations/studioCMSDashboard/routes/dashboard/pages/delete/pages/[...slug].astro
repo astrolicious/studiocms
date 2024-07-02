@@ -1,5 +1,4 @@
 ---
-// @ts-expect-error - Some types can only be imported from the Astro runtime
 import { PageData, PageContent, SiteConfig, db, eq } from 'astro:db';
 import { Layout } from 'studiocms-dashboard:components';
 import Config from 'virtual:studiocms/config';
@@ -7,6 +6,7 @@ import { authHelper, type Locals } from 'studiocms:helpers';
 import { StudioCMSRoutes, getDeleteRoute } from 'studiocms-dashboard:routeMap';
 import type { SiteConfigResponse, pageDataReponse } from 'studiocms:components';
 import { CMSSiteConfigId } from '../../../../../../../constVars';
+import { Alert, Breadcrumb, BreadcrumbItem, Button, Divider, Icon, Input } from 'astrolace:components';
 
 const { dashboardConfig: { developerConfig } } = Config;
 
@@ -30,7 +30,7 @@ if (!slug || !page) {
 	return Astro.redirect(dashboardIndex);
 }
 
-const deleteURL = getDeleteRoute(slug);
+const deleteURL = await getDeleteRoute(slug);
 const { permissionLevel } = await authHelper(Astro.locals as Locals);
 
 // If the user is not logged in, redirect to the login page
@@ -98,38 +98,31 @@ const pageTitle = `Delete Page | ${contextConfig.title}`;
     title={pageTitle}
     description={contextConfig.description} >
     <div class="flex grow w-full pb-4">
-        <sl-breadcrumb>
-            <span slot="separator">/</span>
-            <sl-breadcrumb-item href={dashboardIndex}>
+        <Breadcrumb>
+            <BreadcrumbItem href={dashboardIndex} prefix='columns-gap'>
                 Dashboard
-                <sl-icon slot="prefix" name="columns-gap"></sl-icon>
-            </sl-breadcrumb-item>
-            <sl-breadcrumb-item href={pageEdit}>Existing Pages</sl-breadcrumb-item>
-            <sl-breadcrumb-item href={deleteURL}>Delete Page: {page.slug}</sl-breadcrumb-item>
-        </sl-breadcrumb>
+            </BreadcrumbItem>
+            <BreadcrumbItem href={pageEdit}'>
+                Existing Pages
+            </BreadcrumbItem>
+            <BreadcrumbItem href={deleteURL}>Delete Page: {page.slug}</BreadcrumbItem>
+        </Breadcrumb>
     </div>
     <div class="alert-toast">
         { showSuccessToast && (
-        <sl-alert variant="success" duration="3000" open closable>
-            <sl-icon slot="icon" name="check2-circle"></sl-icon>
+        <Alert variant="success" duration={3000} open closable>
+            <Icon slot="icon" name="check2-circle"/>
             <strong>Page Deleted!</strong>
             <p>You can safely leave this page now.</p>
-        </sl-alert>
+        </Alert>
         )}
         { showErrorToast && (
-        <sl-alert variant="danger" duration="3000" open closable>
-            <sl-icon slot="icon" name="exclamation-octagon"></sl-icon>
+        <Alert variant="danger" duration={3000} open closable>
+            <Icon slot="icon" name="exclamation-octagon"/>
             <strong>Error Deleting Page</strong>
             <p>There was an Error Deleting the Page. Please try again.</p>
-        </sl-alert>
+        </Alert>
         )}
-        <!-- { showSlugErrorToast && (
-        <sl-alert variant="warning" duration="3000" open closable>
-            <sl-icon slot="icon" name="exclamation-triangle"></sl-icon>
-            <strong>Entered Slug does not match!</strong><br />
-            Please enter the correct slug to delete the page.
-        </sl-alert>
-        )} -->
     </div>
     <div class="container">
 
@@ -141,26 +134,26 @@ const pageTitle = `Delete Page | ${contextConfig.title}`;
             </text>
         </div>
 
-        <div class="py-2 flex justify-center">
+        <div class="py-2 flex flex-col">
     
             <form method="post" enctype="multipart/form-data" >
                     
-                <label for="slug" class="text-lg">Type the post slug to confirm</label><br>
-                <input 
+                <Input 
                     type="text" 
                     id="slug" 
                     name="slug" 
-                    class="border-solid border-2 border-gray-300 rounded-lg p-2 w-96 pb-2"
-                    placeholder="Your Post Slug (THIS WILL DELETE THE POST)"
-                    required>
+                    label='Type the slug to confirm'
+                    placeholder="Your Page/Post Slug (THIS WILL DELETE THE PAGE/POST!)"
+                    required />
 
                 <input type="hidden" name="to-delete" id="to-delete" value={page.slug} />
+
+                <Divider />
     
-                <button class="btn btn-outline ml-5 py-2" type="submit">DELETE!</button>
+                <Button variant="danger" type="submit" outline><Icon name='trash' slot='prefix' />DELETE</Button>
     
             </form>
     
-                    
         </div>
     </div>
 </Layout>

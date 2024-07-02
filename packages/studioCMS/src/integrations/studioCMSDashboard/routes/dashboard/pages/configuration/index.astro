@@ -1,5 +1,4 @@
 ---
-// @ts-expect-error - Some types can only be imported from the Astro runtime
 import { SiteConfig, db, eq } from 'astro:db';
 import { Layout } from 'studiocms-dashboard:components';
 import Config from 'virtual:studiocms/config';
@@ -7,6 +6,7 @@ import { authHelper, type Locals } from 'studiocms:helpers';
 import { StudioCMSRoutes } from 'studiocms-dashboard:routeMap'
 import type { SiteConfigResponse } from 'studiocms:components';
 import { CMSSiteConfigId } from '../../../../../../constVars';
+import { Alert, Breadcrumb, BreadcrumbItem, Button, Divider, Icon, Input } from 'astrolace:components';
 
 const { dashboardConfig: { developerConfig } } = Config;
 
@@ -75,28 +75,29 @@ const pageTitle = `Site Config | ${contextConfig.title}`;
     title={pageTitle}
     description={contextConfig.description} >
     <div class="flex grow w-full pb-4">
-        <sl-breadcrumb>
-            <span slot="separator">/</span>
-            <sl-breadcrumb-item href={dashboardIndex}>Dashboard
-                <sl-icon slot="prefix" name="columns-gap"></sl-icon>
-            </sl-breadcrumb-item>
-            <sl-breadcrumb-item href={siteConfiguration}>Site Configuration</sl-breadcrumb-item>
-        </sl-breadcrumb>
+        <Breadcrumb>
+            <BreadcrumbItem href={dashboardIndex} prefix='columns-gap'>
+                Dashboard
+            </BreadcrumbItem>
+            <BreadcrumbItem href={siteConfiguration}'>
+                Site Configuration
+            </BreadcrumbItem>
+        </Breadcrumb>
     </div>
     <div class="alert-toast">
         { showSuccessToast && (
-        <sl-alert variant="success" duration="3000" open closable>
-            <sl-icon slot="icon" name="check2-circle"></sl-icon>
+        <Alert variant="success" duration={3000} open closable>
+            <Icon slot="icon" name="check2-circle"></Icon>
             <strong>Site Config Updated</strong>
             <p>You can safely leave this page now.</p>
-        </sl-alert>
+        </Alert>
         )}
         { showErrorToast && (
-        <sl-alert variant="danger" duration="3000" open closable>
-            <sl-icon slot="icon" name="exclamation-octagon"></sl-icon>
+        <Alert variant="danger" duration={3000} open closable>
+            <Icon slot="icon" name="exclamation-octagon"></Icon>
             <strong>Error Updating Site Config</strong>
             <p>There was an Error editing the site config. Please try again.</p>
-        </sl-alert>
+        </Alert>
         )}
     </div>
     <div class="container flex flex-col">
@@ -104,37 +105,38 @@ const pageTitle = `Site Config | ${contextConfig.title}`;
         <h1 class="text-5xl font-bold grow py-8">Site Configuration</h1>
 
         <div class="py-4 text-center">
-            <sl-button variant="warning" href={configurationAdmins} outline>Manage Admins</sl-button>
+            <Button variant="warning" href={configurationAdmins} outline>Manage Admins</Button>
         </div>
 
         <div class="py-2 grow">
             <form method="post" enctype="multipart/form-data" >
 
-                <sl-input
+                <Input
                     id="title"
                     name="title"
                     placeholder="Site Title"
                     size="medium"
-                    class="py-2"
                     value={contextConfig.title} 
+                    label='Site Title'
                     required>
-                    <div slot="label" class="text-lg inline">Site Title</div>
-                    <sl-icon name="globe2" slot="prefix"></sl-icon>
-                </sl-input>
-                <sl-input
+                    <Icon name="globe2" slot="prefix"></Icon> {/* Bug in Astrolace, need to add a prefix and suffix slot to the Icon Compomponent */}
+                </Input>
+
+                <Divider />
+
+                <Input
                     id="description"
                     name="description"
                     placeholder="Site Description"
                     size="medium"
-                    class="py-2"
                     value={contextConfig.description} 
+                    label='Description'
                     required>
-                    <div slot="label" class="text-lg inline">Description</div>
-                    <sl-icon name="line" slot="prefix"></sl-icon>
-                </sl-input>
+                    <Icon name="line" slot="prefix"></Icon> {/* Bug in Astrolace, need to add a prefix and suffix slot to the Icon Compomponent */}
+                </Input>
     
                 <div class="py-4 text-center">
-                    <sl-button variant="success" type="submit" outline>Update</sl-button>
+                    <Button variant="success" type="submit" outline>Update</Button>
                 </div>
     
             </form>

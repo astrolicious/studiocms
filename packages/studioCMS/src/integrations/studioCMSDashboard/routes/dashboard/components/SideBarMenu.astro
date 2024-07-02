@@ -2,6 +2,7 @@
 import { authHelper, type Locals } from "studiocms:helpers";
 import Config from "virtual:studiocms/config";
 import { StudioCMSRoutes, sideBarLinkMap } from "studiocms-dashboard:routeMap"
+import { Button, Details, Icon } from "astrolace:components";
 
 const { dashboardConfig: { developerConfig: { testingAndDemoMode } } } = Config;
 const { authLinks: { logoutURL } } = StudioCMSRoutes;
@@ -20,10 +21,10 @@ const { permissionLevel } = await authHelper(Astro.locals as Locals);
                 permissionLevel === "editor" || 
                 permissionLevel === "visitor" ) ) {
                 return (
-                    <sl-button variant="default" size="medium" class="py-1" style="width: 100%; padding-right: 1rem; padding-left: 1rem;" id={id} href={href} outline >
-                        <sl-icon slot="prefix" name={icon}></sl-icon>
+                    <Button variant="default" size="medium" class="py-1" style="width: 100%; padding-right: 1rem; padding-left: 1rem;" id={id} href={href} outline >
+                        <Icon slot="prefix" name={icon} />
                         {text}
-                    </sl-button>
+                    </Button>
                 );
             }
             if ( minPermissionLevel === "visitor" && ( 
@@ -31,10 +32,10 @@ const { permissionLevel } = await authHelper(Astro.locals as Locals);
                 permissionLevel === "editor" || 
                 permissionLevel === "visitor" ) ) {
                 return (
-                    <sl-button variant="success" size="medium" class="py-1" style="width: 100%; padding-right: 1rem; padding-left: 1rem;" id={id} href={href} outline >
-                        <sl-icon slot="prefix" name={icon}></sl-icon>
+                    <Button variant="success" size="medium" class="py-1" style="width: 100%; padding-right: 1rem; padding-left: 1rem;" id={id} href={href} outline >
+                        <Icon slot="prefix" name={icon} />
                         {text}
-                    </sl-button>
+                    </Button>
                 );
             }
             if ((
@@ -45,10 +46,10 @@ const { permissionLevel } = await authHelper(Astro.locals as Locals);
                 permissionLevel === "admin" || 
                 testingAndDemoMode )) {
                 return (
-                    <sl-button variant="primary" size="medium" class="py-1" style="width: 100%; padding-right: 1rem; padding-left: 1rem;" id={id} href={href} outline >
-                        <sl-icon slot="prefix" name={icon}></sl-icon>
+                    <Button variant="primary" size="medium" class="py-1" style="width: 100%; padding-right: 1rem; padding-left: 1rem;" id={id} href={href} outline >
+                        <Icon slot="prefix" name={icon} />
                         {text}
-                    </sl-button>
+                    </Button>
                 );
             }
             if (( 
@@ -58,10 +59,10 @@ const { permissionLevel } = await authHelper(Astro.locals as Locals);
                 permissionLevel === "admin" || 
                 testingAndDemoMode )) {
                 return (
-                    <sl-button variant="warning" size="medium" class="py-1" style="width: 100%; padding-right: 1rem; padding-left: 1rem;" id={id} href={href} outline >
-                        <sl-icon slot="prefix" name={icon}></sl-icon>
+                    <Button variant="warning" size="medium" class="py-1" style="width: 100%; padding-right: 1rem; padding-left: 1rem;" id={id} href={href} outline >
+                        <Icon slot="prefix" name={icon} />
                         {text}
-                    </sl-button>
+                    </Button>
                 );
             }
         }
@@ -73,9 +74,9 @@ const { permissionLevel } = await authHelper(Astro.locals as Locals);
                 permissionLevel === "editor" || 
                 permissionLevel === "visitor" ) ) {
                 return (
-                    <sl-details style="width: 100%; padding-right: 1rem; padding-left: 1rem;">
+                    <Details style="width: 100%; padding-right: 1rem; padding-left: 1rem;">
                         <div class="py-3 text-base" slot="summary" id={id}>
-                        <sl-icon slot="prefix" class="inline" name={icon}></sl-icon> {text}</div>
+                        <Icon slot="prefix" class="inline" name={icon}/>{text}</div>
 
                         { 
                             dropdownItems && dropdownItems.length > 0 && dropdownItems.map(({ id, href, text, minPermissionLevel, icon, type, }) => {
@@ -86,7 +87,7 @@ const { permissionLevel } = await authHelper(Astro.locals as Locals);
                                         permissionLevel === "editor" || 
                                         permissionLevel === "visitor" ) ) {
                                         return (
-                                            <sl-button 
+                                            <Button 
                                                 variant="default" 
                                                 size="medium" 
                                                 class="py-1" 
@@ -94,9 +95,9 @@ const { permissionLevel } = await authHelper(Astro.locals as Locals);
                                                 id={id} 
                                                 name={id}
                                                 href={href}>
-                                                <sl-icon slot="prefix" name={icon}></sl-icon>
+                                                <Icon slot="prefix" name={icon} />
                                                 {text}
-                                            </sl-button>
+                                            </Button>
                                         );
                                     }
                                     if ((
@@ -107,7 +108,7 @@ const { permissionLevel } = await authHelper(Astro.locals as Locals);
                                         permissionLevel === "admin" || 
                                         testingAndDemoMode )) {
                                         return (
-                                            <sl-button 
+                                            <Button 
                                                 variant="default" 
                                                 size="medium" 
                                                 class="py-1" 
@@ -115,9 +116,9 @@ const { permissionLevel } = await authHelper(Astro.locals as Locals);
                                                 id={id} 
                                                 name={id}
                                                 href={href}>
-                                                <sl-icon slot="prefix" name={icon}></sl-icon>
+                                                <Icon slot="prefix" name={icon} />
                                                 {text}
-                                            </sl-button>
+                                            </Button>
                                         );
                                     }
                                     if (( 
@@ -127,7 +128,7 @@ const { permissionLevel } = await authHelper(Astro.locals as Locals);
                                         permissionLevel === "admin" || 
                                         testingAndDemoMode )) {
                                         return (
-                                            <sl-button 
+                                            <Button 
                                                 variant="default" 
                                                 size="medium" 
                                                 class="py-1" 
@@ -135,16 +136,16 @@ const { permissionLevel } = await authHelper(Astro.locals as Locals);
                                                 id={id} 
                                                 name={id}
                                                 href={href}>
-                                                <sl-icon slot="prefix" name={icon}></sl-icon>
+                                                <Icon slot="prefix" name={icon} />
                                                 {text}
-                                            </sl-button>
+                                            </Button>
                                         );
                                     }
                                 }
                             })
                         }
 
-                    </sl-details>
+                    </Details>
                 );
             }
             if ((
@@ -155,9 +156,9 @@ const { permissionLevel } = await authHelper(Astro.locals as Locals);
                 permissionLevel === "admin" || 
                 testingAndDemoMode )) {
                 return (
-                    <sl-details style="width: 100%; padding-right: 1rem; padding-left: 1rem;">
+                    <Details style="width: 100%; padding-right: 1rem; padding-left: 1rem;">
                         <div class="py-3 text-base flex items-center" slot="summary" id={id}>
-                        <sl-icon class="px-2 object-center" name={icon}></sl-icon> {text}</div>
+                        <Icon class="px-2 object-center" name={icon}/> {text}</div>
                         { 
                             dropdownItems && dropdownItems.length > 0 && dropdownItems.map(({ id, href, text, minPermissionLevel, icon, type, }) => {
                                 if ( type === "link" ) {
@@ -167,10 +168,10 @@ const { permissionLevel } = await authHelper(Astro.locals as Locals);
                                         permissionLevel === "editor" || 
                                         permissionLevel === "visitor" ) ) {
                                         return (
-                                            <sl-button variant="default" size="medium" class="py-1" style="width: 100%; padding-right: 1rem; padding-left: 1rem;" id={id} href={href}>
-                                                <sl-icon slot="prefix" name={icon}></sl-icon>
+                                            <Button variant="default" size="medium" class="py-1" style="width: 100%; padding-right: 1rem; padding-left: 1rem;" id={id} href={href}>
+                                                <Icon slot="prefix" name={icon} />
                                                 {text}
-                                            </sl-button>
+                                            </Button>
                                         );
                                     }
                                     if ((
@@ -181,10 +182,10 @@ const { permissionLevel } = await authHelper(Astro.locals as Locals);
                                         permissionLevel === "admin" || 
                                         testingAndDemoMode )) {
                                         return (
-                                            <sl-button variant="default" size="medium" class="py-1" style="width: 100%; padding-right: 1rem; padding-left: 1rem;" id={id} href={href}>
-                                                <sl-icon slot="prefix" name={icon}></sl-icon>
+                                            <Button variant="default" size="medium" class="py-1" style="width: 100%; padding-right: 1rem; padding-left: 1rem;" id={id} href={href}>
+                                                <Icon slot="prefix" name={icon} />
                                                 {text}
-                                            </sl-button>
+                                            </Button>
                                         );
                                     }
                                     if (( 
@@ -194,17 +195,17 @@ const { permissionLevel } = await authHelper(Astro.locals as Locals);
                                         permissionLevel === "admin" || 
                                         testingAndDemoMode )) {
                                         return (
-                                            <sl-button variant="default" size="medium" class="py-1" style="width: 100%; padding-right: 1rem; padding-left: 1rem;" id={id} href={href}>
-                                                <sl-icon slot="prefix" name={icon}></sl-icon>
+                                            <Button variant="default" size="medium" class="py-1" style="width: 100%; padding-right: 1rem; padding-left: 1rem;" id={id} href={href}>
+                                                <Icon slot="prefix" name={icon} />
                                                 {text}
-                                            </sl-button>
+                                            </Button>
                                         );
                                     }
                                 }
                             })
                         }
 
-                    </sl-details>
+                    </Details>
                 );
             }
             if (( 
@@ -214,9 +215,9 @@ const { permissionLevel } = await authHelper(Astro.locals as Locals);
                 permissionLevel === "admin" || 
                 testingAndDemoMode )) {
                 return (
-                    <sl-details style="width: 100%; padding-right: 1rem; padding-left: 1rem;">
+                    <Details style="width: 100%; padding-right: 1rem; padding-left: 1rem;">
                         <div class="py-3 text-base flex items-center" slot="summary" id={id}>
-                        <sl-icon slot="prefix" class="align-text-center inline" name={icon}></sl-icon> {text}</div>
+                        <Icon slot="prefix" class="align-text-center inline" name={icon} />{text}</div>
                         { 
                             dropdownItems && dropdownItems.length > 0 && dropdownItems.map(({ id, href, text, minPermissionLevel, icon, type, }) => {
                                 if ( type === "link" ) {
@@ -226,10 +227,10 @@ const { permissionLevel } = await authHelper(Astro.locals as Locals);
                                         permissionLevel === "editor" || 
                                         permissionLevel === "visitor" ) ) {
                                         return (
-                                            <sl-button variant="default" size="medium" class="py-1" style="width: 100%; padding-right: 1rem; padding-left: 1rem;" id={id} href={href}>
-                                                <sl-icon slot="prefix" name={icon}></sl-icon>
+                                            <Button variant="default" size="medium" class="py-1" style="width: 100%; padding-right: 1rem; padding-left: 1rem;" id={id} href={href}>
+                                                <Icon slot="prefix" name={icon} />
                                                 {text}
-                                            </sl-button>
+                                            </Button>
                                         );
                                     }
                                     if ((
@@ -240,10 +241,10 @@ const { permissionLevel } = await authHelper(Astro.locals as Locals);
                                         permissionLevel === "admin" || 
                                         testingAndDemoMode )) {
                                         return (
-                                            <sl-button variant="default" size="medium" class="py-1" style="width: 100%; padding-right: 1rem; padding-left: 1rem;" id={id} href={href}>
-                                                <sl-icon slot="prefix" name={icon}></sl-icon>
+                                            <Button variant="default" size="medium" class="py-1" style="width: 100%; padding-right: 1rem; padding-left: 1rem;" id={id} href={href}>
+                                                <Icon slot="prefix" name={icon} />
                                                 {text}
-                                            </sl-button>
+                                            </Button>
                                         );
                                     }
                                     if (( 
@@ -253,31 +254,29 @@ const { permissionLevel } = await authHelper(Astro.locals as Locals);
                                         permissionLevel === "admin" || 
                                         testingAndDemoMode )) {
                                         return (
-                                            <sl-button variant="default" size="medium" class="py-1" style="width: 100%; padding-right: 1rem; padding-left: 1rem;" id={id} href={href}>
-                                                <sl-icon slot="prefix" name={icon}></sl-icon>
+                                            <Button variant="default" size="medium" class="py-1" style="width: 100%; padding-right: 1rem; padding-left: 1rem;" id={id} href={href}>
+                                                <Icon slot="prefix" name={icon} />
                                                 {text}
-                                            </sl-button>
+                                            </Button>
                                         );
                                     }
                                 }
                             })
                         }
 
-                    </sl-details>
+                    </Details>
                 );
             }
         }
 
     }) }
 
-    <sl-divider style="--width: 4px;"></sl-divider>
-
     { ( testingAndDemoMode || permissionLevel !== "unknown" ) ? (
         <form method="post" action={logoutURL}>
-            <sl-button variant="danger" size="medium" class="py-1" style="width: 100%; padding-right: 1rem; padding-left: 1rem;" type="submit" outline>
-                <sl-icon slot="prefix" name="box-arrow-left"></sl-icon>
+            <Button variant="danger" size="medium" class="py-1" style="width: 100%; padding-right: 1rem; padding-left: 1rem;" type="submit" outline>
+                <Icon slot="prefix" name="box-arrow-left" />
                 Sign out
-            </sl-button>
+            </Button>
         </form>
     ) : "" }
 

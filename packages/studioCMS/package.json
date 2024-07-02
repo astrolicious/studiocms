@@ -58,6 +58,7 @@
     "arctic": "^1.9.1",
     "astro-integration-kit": "^0.14.0",
     "daisyui": "^4.12.8",
+    "htmx.org": "^1.9.12",
     "lucia": "^3.2.0",
     "marked": "^13.0.1",
     "marked-alert": "^2.0.1",

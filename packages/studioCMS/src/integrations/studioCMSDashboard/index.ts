@@ -3,7 +3,7 @@ import { injectAuthRouteArray, injectRouteArray, virtualResolver, loadKeys, stud
 import { optionsSchema } from "./schemas";
 import { AuthProviderLogStrings, DashboardStrings, DbErrors } from "./strings";
 import { astroENV } from "./env";
-import { FileSystemIconLoader, studioCMSUnoCSSIntegration } from "./studiocsspreset";
+import { studioCMSUnoCSSIntegration } from "./studiocsspreset";
 import { usernameAndPasswordAuthConfig } from "./studioauth-config";
 import type { IconifyJSON } from '@iconify/types';
 import { checkForWebVitals } from "./utils/vitals";
@@ -51,7 +51,6 @@ export default defineIntegration({
 							icons: { 
 								logos: () => import('@iconify-json/logos/icons.json').then(i => i.default as IconifyJSON),
 								mdi: () => import('@iconify-json/mdi/icons.json').then(i => i.default),
-								auth0: FileSystemIconLoader(resolve('./icons/auth0')),
 							}
 						})
 					});

@@ -1,5 +1,4 @@
 ---
-// @ts-expect-error - Some types can only be imported from the Astro runtime
 import { SiteConfig, db, eq } from 'astro:db';
 import { Layout } from 'studiocms-dashboard:components';
 import Config from 'virtual:studiocms/config';
@@ -7,6 +6,7 @@ import { authHelper, toPascalCase, type Locals } from 'studiocms:helpers';
 import { StudioCMSRoutes } from 'studiocms-dashboard:routeMap';
 import type { SiteConfigResponse } from 'studiocms:components';
 import { CMSSiteConfigId } from '../../../../../constVars';
+import { Breadcrumb, BreadcrumbItem, Card, Divider } from 'astrolace:components';
 
 const { dashboardConfig: { developerConfig } } = Config;
 
@@ -41,13 +41,14 @@ const pageTitle = `User profile | ${contextConfig.title}`;
     description={contextConfig.description} >
 
     <div class="flex grow w-full pb-4">
-        <sl-breadcrumb>
-            <span slot="separator">/</span>
-            <sl-breadcrumb-item href={dashboardIndex}>Dashboard
-                <sl-icon slot="prefix" name="columns-gap"></sl-icon>
-            </sl-breadcrumb-item>
-            <sl-breadcrumb-item href={userProfile}>User Profile</sl-breadcrumb-item>
-        </sl-breadcrumb>
+        <Breadcrumb>
+            <BreadcrumbItem href={dashboardIndex} prefix='columns-gap'>
+                Dashboard
+            </BreadcrumbItem>
+            <BreadcrumbItem href={userProfile}>
+                User Profile
+            </BreadcrumbItem>
+        </Breadcrumb>
     </div>
 
     <div class="container">
@@ -55,24 +56,25 @@ const pageTitle = `User profile | ${contextConfig.title}`;
         <h1 class="text-5xl font-bold py-8">User Profile</h1>
 
 
-        <sl-card class="card-header">
+        <Card class="card-header">
             <div slot="header" class="text-5xl font-bold">
                 {username}'s Profile
             </div>
+            <Divider class="divider" />
             <div class="py-2">
                 <text class="text-lg">
                     <bold>Display Name:</bold> {name}
                 </text>
-                <br />
+                <Divider />
                 <text class="text-lg">
                     <bold>Role:</bold> {toPascalCase(permissionLevel)}
                 </text>
-                <br />
+                <Divider />
                 { githubURL && (
                     <text class="text-lg">
                         <bold>GitHub:</bold> <a class="text-blue" href={githubURL}>{username}</a>
                     </text>
-                    <br />
+                <Divider />
                 )}
                 <text class="text-lg">
                     { currentUserSession && (
@@ -80,7 +82,7 @@ const pageTitle = `User profile | ${contextConfig.title}`;
                     ) } 
                 </text>
             </div>
-        </sl-card>
+        </Card>
 
 
     </div>

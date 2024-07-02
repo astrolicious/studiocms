@@ -6,9 +6,6 @@ import SideBar from "../components/SideBar.astro";
 import ThemeManager from "../components/ThemeManager.astro";
 import Config from "virtual:studiocms/config";
 import { studioCMSSocials } from "./studiocms-socials";
-import { ShoelaceHeader } from "astrolace:components/header"
-import "@matthiesenxyz/astrolace/base.css";
-import "@matthiesenxyz/astrolace/dark.css";
 
 const socialLinks = studioCMSSocials;
 
@@ -47,7 +44,6 @@ const {
   <head>
     <ThemeManager defaultTheme="auto" />
     <BaseHead title={title} description={description} />
-    <ShoelaceHeader />
     {viewTransitionAPI && (
       <style>
         @view-transition {
