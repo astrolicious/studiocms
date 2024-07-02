@@ -21,7 +21,6 @@
   "include": [
     "./package.json",
     "./virt-dev.d.ts",
-    "../../playgrounds/node/**/*",
     "../../playgrounds/node/.astro/**/*",
     "./**/*",
     "./src/**/*.json"
