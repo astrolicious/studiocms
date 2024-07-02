@@ -42,6 +42,11 @@ const { title, description } = Astro.props;
     registerIconLibrary('cib', {
       resolver: name => `https://api.iconify.design/cib/${name}.svg`
     })
+
+    // Register StudioCMS Icons
+    registerIconLibrary('studiocms', {
+      resolver: name => `https://raw.githubusercontent.com/astrolicious/studiocms/main/www/assets/${name}.svg`,
+    })
 </script>
 
 <!-- Global Metadata -->
