@@ -66,7 +66,7 @@ if (Astro.request.method === 'POST' && !developerConfig.testingAndDemoMode) {
         title: title as string,
         package: pack as string,
         description: description as string,
-        showOnNav: showOnNav  === "on",
+        showOnNav: showOnNav === "on",
         updatedAt: new Date(),
         heroImage: heroImage as string,
     }).where(eq(PageData.slug, slug)).then(async () => {

@@ -9,6 +9,7 @@ import type { SiteConfigResponse } from 'studiocms:components';
 import { CMSSiteConfigId } from '../../../../../../constVars';
 import { Alert, Breadcrumb, BreadcrumbItem, Icon } from 'astrolace:components';
 import PageEditAndCreateForm from '../../components/PageEditAndCreateForm.astro';
+import { isArray } from 'node:util';
 
 const { dashboardConfig: { developerConfig } } = Config;
 
@@ -66,38 +67,46 @@ if (Astro.request.method === 'POST' && !developerConfig.testingAndDemoMode) {
 	if (existingPost) {
         showSlugErrorToast = true;
 	} else {
-        const insertedID = await db
-            .insert(PageData)
-            .values({
-                id: randomUUID(),
-                title: title as string,
-                package: pack as string,
-                slug: slug as string,
-                description: description as string,
-                showOnNav: showOnNav  === "on",
-                heroImage: heroImage as string,
-                })
-                .returning({ id: PageData.id })
-                .catch(() => {
+        try {
+            const insertedIDs = await db.insert(PageData)
+                    .values({
+                        id: randomUUID(),
+                        title: title as string,
+                        package: pack as string,
+                        slug: slug as string,
+                        description: description as string,
+                        showOnNav: showOnNav === "on",
+                        heroImage: heroImage as string,
+                        })
+                        .returning({ id: PageData.id });
+            
+            if (insertedIDs.length > 0) {
+                const insertedID = insertedIDs[0]?.id;
+                if (!insertedID || insertedID === undefined) {
                     showErrorToast = true;
-                });
-        await db
-            .insert(PageContent)
-            .values({
-                id: randomUUID(),
-                contentId: insertedID.pop().id,
-                contentLang: "default",
-                content: content as string,
-            })
-            .then(() => {
-                showSuccessToast = true;
-            })
-            .catch(() => {
+                } else {
+                    await db.insert(PageContent)
+                            .values({
+                                id: randomUUID(),
+                                contentId: insertedID,
+                                contentLang: "default",
+                                content: content as string,
+                            })
+                            .then(() => {
+                                showSuccessToast = true;
+                            })
+                            .catch(() => {
+                                showErrorToast = true;
+                            });
+                }
+            }
+        } catch (error) {
+            if (error instanceof Error) {
                 showErrorToast = true;
-            });
-    }
-
-    } catch (error) {
+            }
+        }
+    } 
+  } catch (error) {
     if (error instanceof Error) {
         showErrorToast = true;
     }
