@@ -1,4 +1,3 @@
-// @ts-expect-error - Some types can only be imported from the Astro runtime
 import { User, db, eq } from 'astro:db';
 import { lucia } from "studiocms-dashboard:auth";
 import { scryptAsync } from "@noble/hashes/scrypt";

@@ -1,4 +1,3 @@
-// @ts-expect-error - Some types can only be imported from the Astro runtime
 import { PageData, PageContent, SiteConfig, User, db, eq, asc, desc } from 'astro:db';
 import { AstroError } from 'astro/errors';
 import type { PageDataAndContent } from 'studiocms:helpers';
@@ -60,7 +59,7 @@ export async function contentHelper(
     const slugToUse = slug;
     const packageToGet = pkg || "@astrolicious/studiocms";
 
-    const pageData: pageDataReponse = await db
+    const pageData = await db
         .select().from(PageData)
         .where(eq(PageData.slug, slugToUse))
         .get();
@@ -76,15 +75,15 @@ export async function contentHelper(
 
     const LangToGet = "default";
 
-    const pageContent: pageContentReponse = await db
+    const pageContent = await db
         .select().from(PageContent)
         .where(eq(PageContent.contentId, pageData.id)).get();
 
-    if(!pageContent.content) {
+    if(!pageContent) {
         throw new AstroError(`Page Content not found: ${slug} with language ${LangToGet}`, 
         `studioCMS contentHelper Failed to get page content for page ${slug} with language ${LangToGet}` );
     }
-    return { ...pageData, content: pageContent.content };
+    return { ...pageData, content: pageContent.content||"Failed to fetch Content" };
 }
 
 /**
@@ -112,14 +111,18 @@ export async function getPageList(): Promise<pageDataReponse[]> {
  * @returns The site configuration data. (Title, Description)
  */
 export async function getSiteConfig(): Promise<SiteConfigResponse> {
-    const config: PageDataAndContent["SiteConfig"] = await db
+    const config: PageDataAndContent["SiteConfig"]|undefined = await db
             .select()
             .from(SiteConfig)
             .where(eq(SiteConfig.id, CMSSiteConfigId))
             .get();
     
-    if(!config) {
-        return {} as SiteConfigResponse;
+    if(!config || config === undefined) {
+        return {
+            id: CMSSiteConfigId,
+            title: "StudioCMS",
+            description: "A CMS for Astro."
+        } as SiteConfigResponse;
     }
 
     return {
@@ -136,7 +139,7 @@ export async function getSiteConfig(): Promise<SiteConfigResponse> {
  * @returns The user data.
  */
 export async function getUserById(userId: string): Promise<UserResponse> {
-    const user: UserResponse = await db
+    const user = await db
             .select()
             .from(User)
             .where(eq(User.id, userId))

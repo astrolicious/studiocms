@@ -49,7 +49,7 @@ importers:
   packages/studioCMS:
     dependencies:
       '@astrojs/db':
-        specifier: '>=0.11.6'
+        specifier: '>=0.11.7'
         version: 0.11.7(@types/react@18.3.3)
       '@astrojs/markdown-remark':
         specifier: ^5.1.1
@@ -97,7 +97,7 @@ importers:
         specifier: ^1.9.1
         version: 1.9.1
       astro:
-        specifier: '>=4.10.3'
+        specifier: '>=4.11.3'
         version: 4.11.3(@types/node@20.14.9)(typescript@5.5.2)
       astro-integration-kit:
         specifier: ^0.14.0
@@ -148,9 +148,6 @@ importers:
       '@iconify/types':
         specifier: ^2.0.0
         version: 2.0.0
-      '@types/fs-extra':
-        specifier: ^11.0.4
-        version: 11.0.4
       '@types/node':
         specifier: 20.14.9
         version: 20.14.9
@@ -3406,23 +3403,10 @@ packages:
   /@types/estree@1.0.5:
     resolution: {integrity: sha512-/kYRxGDLWzHOB7q+wtSUQlFrtcdUccpfy+X+9iMBpHK8QLLhx2wIPYuS5DYtR9Wa/YlZAbIovy7qVdB1Aq6Lyw==}
 
-  /@types/fs-extra@11.0.4:
-    resolution: {integrity: sha512-yTbItCNreRooED33qjunPthRcSjERP1r4MqCZc7wv0u2sUkzTFp45tgUfS5+r7FrZPdmCCNflLhVSP/o+SemsQ==}
-    dependencies:
-      '@types/jsonfile': 6.1.4
-      '@types/node': 20.14.9
-    dev: true
-
   /@types/hast@3.0.4:
     resolution: {integrity: sha512-WPs+bbQw5aCj+x6laNGWLH3wviHtoCv/P3+otBhbOhJgG8qtpdAMlTCxLtsTWA7LH1Oh/bFCHsBn0TPS5m30EQ==}
     dependencies:
       '@types/unist': 3.0.2
-
-  /@types/jsonfile@6.1.4:
-    resolution: {integrity: sha512-D5qGUYwjvnNNextdU59/+fI+spnwtTFmyQP0h+PfIOSkNfpU6AOICUOkm4i0OnSk+NyjdPJrxCDro0sJsWlRpQ==}
-    dependencies:
-      '@types/node': 20.14.9
-    dev: true
 
   /@types/linkify-it@3.0.5:
     resolution: {integrity: sha512-yg6E+u0/+Zjva+buc3EIb+29XEg4wltq7cSmd4Uc2EE/1nUVmxyzpX6gUXD0V8jIrG0r7YeOGVIbYRkxeooCtw==}

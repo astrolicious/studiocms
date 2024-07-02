@@ -1,8 +1,8 @@
-// @ts-expect-error - Some types can only be imported from the Astro runtime
 import { User, db, eq } from 'astro:db';
 import { defineMiddleware } from 'astro/middleware';
 import { verifyRequestOrigin } from 'lucia';
 import { lucia } from "studiocms-dashboard:auth";
+import type { Locals } from 'studiocms:helpers';
 
 export const onRequest = defineMiddleware(async (context, next) => {
 	if (context.request.method !== 'GET') {
@@ -17,10 +17,12 @@ export const onRequest = defineMiddleware(async (context, next) => {
 
 	const sessionId = context.cookies.get(lucia.sessionCookieName)?.value ?? null;
 
-	context.locals.isLoggedIn = false;
+	const locals = context.locals as Locals;
+
+	locals.isLoggedIn = false;
 	if (!sessionId) {
-		context.locals.user = null;
-		context.locals.session = null;
+		locals.user = null;
+		locals.session = null;
 		return next();
 	}
 
@@ -39,20 +41,21 @@ export const onRequest = defineMiddleware(async (context, next) => {
 	if (session.fresh) {
 		const sessionCookie = lucia.createSessionCookie(session.id);
 		context.cookies.set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
-		const [dbUser] = await db
+		const dbUser = await db
 			.select()
 			.from(User)
-			.where(eq(User.id, user.id));
-
-		context.locals.dbUser = dbUser;
-		context.locals.isLoggedIn = true;
+			.where(eq(User.id, user.id))
+			.get();
+			
+		locals.dbUser = dbUser;
+		locals.isLoggedIn = true;
 	} else if (session && !session.fresh) {
 		const sessionCookie = lucia.createBlankSessionCookie();
 		await lucia.invalidateSession(session.id);
 		context.cookies.set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
 	}
 
-	context.locals.session = session;
-	context.locals.user = user;
+	locals.session = session;
+	locals.user = user;
 	return next();
 });
