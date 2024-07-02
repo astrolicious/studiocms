@@ -12,7 +12,11 @@ const today = new Date();
 <footer class="footer footer-center block mb-5 pt-10">
   <div class="pb-2">
     <div class="inline">
-      &copy; {today.getFullYear()} <a href={githubURL} target="_blank"><Icon library='studiocms' name='logo-dark' class="w-1rem h-1rem footer-icon" /><i>astrolicious/studiocms</i></a> - <a href={githubLicense} target="_blank" class="font-bold">MIT Licensed</a>
+      &copy; {today.getFullYear()} 
+      <a href={githubURL} target="_blank">
+        <Icon library='studiocms' name='logo-dark' class="w-1rem h-1rem footer-icon" />
+        <i>astrolicious/studiocms</i></a> - <a href={githubLicense} target="_blank" class="font-bold">MIT Licensed
+      </a>
     </div>
   </div>
   <div class="inline opacity-75">
@@ -22,35 +26,20 @@ const today = new Date();
 
 <script>
 import type { SlIcon } from "astrolace:types";
-  // Fix the FooterIcon depending on the Current Theme
-  const footerIcon = document.querySelector('.footer-icon') as SlIcon;
-  const currentTheme = document.documentElement.dataset.theme;
+import type { ThemeChangeEventDetail } from "./footerUtils";
+import { setFooterIcon } from './footerUtils';
 
-  function setFooterIcon(theme: "auto" | "dark" | "light", systemTheme?: "dark" | "light") {
-    if (theme === "auto") {
-      if (systemTheme === "dark") {
-        footerIcon.name = "logo-light";
-      } else {
-        footerIcon.name = "logo-dark";
-      }
-    }
-    if (theme === "dark") {
-      footerIcon.name = "logo-light";
-    }
-    if (theme === "light") {
-      footerIcon.name = "logo-dark";
-    }
-  }
+// Fix the FooterIcon depending on the Current Theme
+const footerIcon = document.querySelector('.footer-icon') as SlIcon;
+const currentTheme = document.documentElement.dataset.theme as ThemeChangeEventDetail["theme"];
 
-  setFooterIcon(currentTheme as "auto" | "dark" | "light");
+setFooterIcon(footerIcon, currentTheme);
 
-  interface ThemeChangeEventDetail {
-  theme: "auto" | "dark" | "light";
-  systemTheme?: "dark" | "light";
-  }
+document.addEventListener("theme-changed", (event) =>{
 
-  document.addEventListener("theme-changed", (event) =>{
-    const newTheme = event as CustomEvent<ThemeChangeEventDetail>;
-    setFooterIcon(newTheme.detail.theme, newTheme.detail.systemTheme);
-  });
+  const newTheme = event as CustomEvent<ThemeChangeEventDetail>;
+    
+  setFooterIcon(footerIcon, newTheme.detail.theme, newTheme.detail.systemTheme);
+
+});
 </script>
