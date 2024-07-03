@@ -1,4 +1,3 @@
-// @ts-expect-error - This is a missing type definition for the `astro:db` import since its a virtual module during Astro Runtime
 import { eq, lte } from "astro:db";
 
 import type { Database, Table } from "@astrojs/db/runtime";
@@ -78,6 +77,7 @@ export class AstroDBAdapter implements Adapter {
 	}
 }
 
+// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 function transformIntoDatabaseSession(raw: any): DatabaseSession {
 	const { id, userId, expiresAt, ...attributes } = raw;
 	return {
@@ -88,6 +88,7 @@ function transformIntoDatabaseSession(raw: any): DatabaseSession {
 	};
 }
 
+// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 function transformIntoDatabaseUser(raw: any): DatabaseUser {
 	const { id, ...attributes } = raw;
 	return {
@@ -97,14 +98,18 @@ function transformIntoDatabaseUser(raw: any): DatabaseUser {
 }
 
 export type UserTable = Table<
+// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 	any,
 	{
 		id: {
 			type: UserIdColumnType;
 			schema: {
 				unique: false;
+				// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 				deprecated: any;
+				// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 				name: any;
+				// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 				collection: any;
 				primaryKey: true;
 			};
@@ -113,14 +118,18 @@ export type UserTable = Table<
 >;
 
 export type SessionTable = Table<
+// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 	any,
 	{
 		id: {
 			type: "text";
 			schema: {
 				unique: false;
+				// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 				deprecated: any;
+				// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 				name: any;
+				// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 				collection: any;
 				primaryKey: true;
 			};
@@ -130,8 +139,11 @@ export type SessionTable = Table<
 			schema: {
 				optional: false;
 				unique: false;
+				// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 				deprecated: any;
+				// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 				name: any;
+				// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 				collection: any;
 			};
 		};
@@ -140,7 +152,9 @@ export type SessionTable = Table<
 			schema: {
 				unique: false;
 				deprecated: false;
+				// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 				name: any;
+				// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 				collection: any;
 				primaryKey: false;
 				optional: false;
@@ -149,7 +163,9 @@ export type SessionTable = Table<
 					schema: {
 						unique: false;
 						deprecated: false;
+						// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 						name: any;
+						// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 						collection: any;
 						primaryKey: true;
 					};

@@ -8,17 +8,27 @@ export const LocalsSchema = z.object({
         name: z.string(),
         email: z.string().nullable(),
         avatar: z.string().nullable(),
-        githubId: z.number(),
+        githubId: z.number().nullable(),
         githubURL: z.string().nullable(),
+        discordId: z.string().nullable(),
+        googleId: z.string().nullable(),
+        auth0Id: z.string().nullable(),
         username: z.string(),
+        password: z.string().nullable(),
         updatedAt: z.date().nullable(),
         createdAt: z.date().nullable(),
-    }),
+    }).optional(),
     user: z.object({
-        id: z.number(),
-        username: z.string(),
-        githubId: z.number(),
-    }),
+        id: z.string(),
+        username: z.string().optional(),
+        githubId: z.number().optional(),
+    }).nullable(),
+    session: z.object({
+        id: z.string(),
+        userId: z.string(),
+        fresh: z.boolean(),
+        expiresAt: z.date(),
+    }).nullable(),
 });
 
 export type Locals = z.infer<typeof LocalsSchema>;

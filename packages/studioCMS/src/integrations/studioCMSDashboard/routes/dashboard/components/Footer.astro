@@ -1,4 +1,5 @@
 ---
+import { Icon } from 'astrolace:components';
 import type { StudioCMSSocials } from '../layouts/studiocms-socials';
 
 
@@ -11,10 +12,30 @@ const today = new Date();
 <footer class="footer footer-center block mb-5 pt-10">
   <div class="pb-2">
     <div class="inline">
-      &copy; {today.getFullYear()} <a href={githubURL} target="_blank"><i>astrolicious/studiocms</i></a> - <a href={githubLicense} target="_blank" class="font-bold">MIT Licensed</a>
+      &copy; {today.getFullYear()} <a href={githubURL} target="_blank"><Icon library='studiocms' name='logo-dark' class="w-1rem h-1rem footer-icon" /><i> astrolicious/studiocms</i></a> - <a href={githubLicense} target="_blank" class="font-bold">MIT Licensed</a>
     </div>
   </div>
   <div class="inline opacity-75">
     Developed by <a href={githubContributors} target="_blank" class="font-bold">The StudioCMS Contributors</a>
   </div>
 </footer>
+
+<script>
+import type { SlIcon } from "astrolace:types";
+import type { ThemeChangeEventDetail } from "./footerUtils";
+import { setFooterIcon } from './footerUtils';
+
+// Fix the FooterIcon depending on the Current Theme
+const footerIcon = document.querySelector('.footer-icon') as SlIcon;
+const currentTheme = document.documentElement.dataset.theme as ThemeChangeEventDetail["theme"];
+
+setFooterIcon(footerIcon, currentTheme);
+
+document.addEventListener("theme-changed", (event) =>{
+
+  const newTheme = event as CustomEvent<ThemeChangeEventDetail>;
+    
+  setFooterIcon(footerIcon, newTheme.detail.theme, newTheme.detail.systemTheme);
+
+});
+</script>

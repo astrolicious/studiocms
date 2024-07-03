@@ -4,6 +4,7 @@ import { StudioCMSRoutes } from "studiocms-dashboard:routeMap"
 import ThemeToggleButton from "./ThemeToggleButton.astro"
 import SideBarMenu from "./SideBarMenu.astro";
 import type { StudioCMSSocials } from "../layouts/studiocms-socials";
+import { Avatar, Button, Divider, Drawer, IconButton } from "astrolace:components";
 
 type Props = { studioCMSSocials: StudioCMSSocials };
 const { studioCMSSocials: { github: githubURL } } = Astro.props;
@@ -22,13 +23,13 @@ if ( !name ) {
 }
 ---
 
-<sl-drawer placement="start" class="drawer-scrolling">
+<Drawer placement="start" class="drawer-scrolling">
   <div slot="label" class="flex items-center gap-4">
-    <sl-avatar
-      image={avatar?.toString()}
+    <Avatar
+      image={avatar?.toString() || ""}
       class=""
       label={"Avatar of " + useName}
-    ></sl-avatar> 
+    ></Avatar> 
     <div>
       Current User: <br />
       <b>{useName}</b>
@@ -39,28 +40,18 @@ if ( !name ) {
     <SideBarMenu />
   </div>
 
+  <Divider slot="footer" class='divider my-0 py-0' />
 
-  <div class="navbar" slot="footer">
-    <div class="navbar-start"> </div>
-
-    <div class="navbar-center"> 
-
-      <sl-icon-button 
-        name="github" 
-        style="font-size: 1rem;" 
-        class="flex-center"
-        label="StudioCMS Github" 
-        href={githubURL} 
-        target="_blank"></sl-icon-button>
-
-    </div>
-    <div class="navbar-end"> 
-
-      <sl-button id="close-button" class="flex-end" variant="primary">Close</sl-button>
-
-    </div>
-  </div>
-</sl-drawer>
+  <IconButton 
+  name="github" 
+  style="font-size: 1rem;" 
+  class="flex justify-center"
+  slot="footer"
+  label="StudioCMS Github" 
+  href={githubURL} 
+  target="_blank" />
+  <Button slot="footer" class="close-button flex-none" variant="primary">Close</Button>
+</Drawer>
 
 <div
   class="sticky top-0 z-30 flex h-16 w-full justify-center bg-opacity-90 backdrop-blur transition-all duration-100 bg-base-100 text-base-content shadow-sm"
@@ -88,12 +79,12 @@ if ( !name ) {
 </div>
 
 <script>
-  const drawer = document.querySelector('.drawer-scrolling');
-  const openButton = document.querySelector('.drawer-header-button');
-  const closeButton = document.getElementById('close-button');
+import type { SlButton, SlDrawer } from "astrolace:types";
 
-  // @ts-expect-error - TS doesn't know that these elements exist because they are from Shoelace.style
-  openButton?.addEventListener('click', () => drawer?.show());
-  // @ts-expect-error - TS doesn't know that these elements exist because they are from Shoelace.style
-  closeButton?.addEventListener('click', () => drawer?.hide());
+  const drawer = document.querySelector('.drawer-scrolling') as SlDrawer;
+  const openButton = document.querySelector('.drawer-header-button') as SlButton;
+  const closeButton = document.querySelector('.close-button') as SlButton;
+
+  openButton.addEventListener('click', () => drawer.show());
+  closeButton.addEventListener('click', () => drawer.hide());
 </script>

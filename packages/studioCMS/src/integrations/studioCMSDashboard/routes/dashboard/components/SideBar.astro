@@ -4,6 +4,7 @@ import SideBarMenu from "./SideBarMenu.astro";
 import { authHelper, type Locals } from "studiocms:helpers";
 import { StudioCMSRoutes } from "studiocms-dashboard:routeMap"
 import type { StudioCMSSocials } from "../layouts/studiocms-socials";
+import { Avatar, Tooltip } from "astrolace:components";
 
 type Props = { studioCMSSocials: StudioCMSSocials };
 const { studioCMSSocials } = Astro.props as Props;
@@ -28,13 +29,13 @@ if ( permissionLevel === "unknown" ) {
   <aside class="px-2 pt-2 h-auto min-h-full w-[19rem] bg-base-200 text-base-content flex flex-col">
     <div class="w-fit mx-auto mt-5 mb-6">
       <a href={dashboardIndex}>
-        <sl-tooltip content={"Avatar of " + useName}>
-          <sl-avatar
-            image={avatar?.toString()}
+        <Tooltip content={"Avatar of " + useName}>
+          <Avatar
+            image={avatar?.toString() || ""}
             class="m-auto ease-in-out hover:scale-[102%] transition"
             label={"Avatar of " + useName}
-          ></sl-avatar> 
-        </sl-tooltip>
+          ></Avatar> 
+        </Tooltip>
       </a>
     </div>
     <div class="text-center pb-2">

@@ -58,6 +58,7 @@
     "arctic": "^1.9.1",
     "astro-integration-kit": "^0.14.0",
     "daisyui": "^4.12.8",
+    "htmx.org": "^1.9.12",
     "lucia": "^3.2.0",
     "marked": "^13.0.1",
     "marked-alert": "^2.0.1",
@@ -72,13 +73,12 @@
     "unocss": "^0.61.0"
   },
   "peerDependencies": {
-    "@astrojs/db": ">=0.11.6",
-    "astro": ">=4.10.3"
+    "@astrojs/db": ">=0.11.7",
+    "astro": ">=4.11.3"
   },
   "devDependencies": {
     "@types/node": "20.14.9",
     "typescript": "^5.5.2",
-    "@types/fs-extra": "^11.0.4",
     "vite": "^5.3.1",
     "@iconify/types": "^2.0.0"
   }

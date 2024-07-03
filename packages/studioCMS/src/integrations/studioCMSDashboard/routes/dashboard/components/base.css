@@ -11,7 +11,7 @@ main {
     min-height: 100vh;
 }
 
-:root, html:state(webkit-scrollbar) {
+:root, ::-webkit-scrollbar {
     width: 2px;
 }
 
@@ -21,6 +21,6 @@ main {
     scrollbar-width: thin;
 }
 
-.scrollbar:state(webkit-scrollbar) {
+.scrollbar ::-webkit-scrollbar {
     width: 2px;
 }

@@ -1,17 +1,16 @@
 ---
-// @ts-expect-error - Some types can only be imported from the Astro runtime
 import { PageData, PageContent, SiteConfig, db, eq } from 'astro:db';
 import { Layout } from 'studiocms-dashboard:components';
 import Config from 'virtual:studiocms/config';
-import { authHelper, type Locals, pluginList } from 'studiocms:helpers';
+import { authHelper, type Locals } from 'studiocms:helpers';
 import { randomUUID } from 'node:crypto';
 import { StudioCMSRoutes } from 'studiocms-dashboard:routeMap';
 import type { SiteConfigResponse } from 'studiocms:components';
 import { CMSSiteConfigId } from '../../../../../../constVars';
+import { Alert, Breadcrumb, BreadcrumbItem, Icon } from 'astrolace:components';
+import PageEditAndCreateForm from '../../components/PageEditAndCreateForm.astro';
 
 const { dashboardConfig: { developerConfig } } = Config;
-
-const studioCMSPluginList = pluginList;
 
 const { 
     authLinks: { 
@@ -67,38 +66,46 @@ if (Astro.request.method === 'POST' && !developerConfig.testingAndDemoMode) {
 	if (existingPost) {
         showSlugErrorToast = true;
 	} else {
-        const insertedID = await db
-            .insert(PageData)
-            .values({
-                id: randomUUID(),
-                title: title as string,
-                package: pack as string,
-                slug: slug as string,
-                description: description as string,
-                showOnNav: showOnNav  === "on",
-                heroImage: heroImage as string,
-                })
-                .returning({ id: PageData.id })
-                .catch(() => {
+        try {
+            const insertedIDs = await db.insert(PageData)
+                    .values({
+                        id: randomUUID(),
+                        title: title as string,
+                        package: pack as string,
+                        slug: slug as string,
+                        description: description as string,
+                        showOnNav: showOnNav === "on",
+                        heroImage: heroImage as string,
+                        })
+                        .returning({ id: PageData.id });
+            
+            if (insertedIDs.length > 0) {
+                const insertedID = insertedIDs[0]?.id;
+                if (!insertedID || insertedID === undefined) {
                     showErrorToast = true;
-                });
-        await db
-            .insert(PageContent)
-            .values({
-                id: randomUUID(),
-                contentId: insertedID.pop().id,
-                contentLang: "default",
-                content: content as string,
-            })
-            .then(() => {
-                showSuccessToast = true;
-            })
-            .catch(() => {
+                } else {
+                    await db.insert(PageContent)
+                            .values({
+                                id: randomUUID(),
+                                contentId: insertedID,
+                                contentLang: "default",
+                                content: content as string,
+                            })
+                            .then(() => {
+                                showSuccessToast = true;
+                            })
+                            .catch(() => {
+                                showErrorToast = true;
+                            });
+                }
+            }
+        } catch (error) {
+            if (error instanceof Error) {
                 showErrorToast = true;
-            });
-    }
-
-    } catch (error) {
+            }
+        }
+    } 
+  } catch (error) {
     if (error instanceof Error) {
         showErrorToast = true;
     }
@@ -114,144 +121,40 @@ const pageTitle = `New Page | ${contextConfig.title}`;
     description={contextConfig.description} >
 
     <div class="flex grow w-full pb-4">
-        <sl-breadcrumb>
-            <span slot="separator">/</span>
-            <sl-breadcrumb-item href={dashboardIndex}>Dashboard
-                <sl-icon slot="prefix" name="columns-gap"></sl-icon>
-            </sl-breadcrumb-item>
-            <sl-breadcrumb-item href={pageNew}>Create New Page</sl-breadcrumb-item>
-        </sl-breadcrumb>
+        <Breadcrumb>
+            <BreadcrumbItem href={dashboardIndex} prefix='columns-gap'>
+                Dashboard
+            </BreadcrumbItem>
+            <BreadcrumbItem href={pageNew}'>
+                Create New Page
+            </BreadcrumbItem>
+        </Breadcrumb>
     </div>
 
     <div class="alert-toast">
         { showSuccessToast && (
-        <sl-alert variant="success" duration="3000" open closable>
-            <sl-icon slot="icon" name="check2-circle"></sl-icon>
+        <Alert variant="success" duration={3000} open closable>
+            <Icon slot="icon" name="check2-circle" />
             <strong>New Page Created!</strong>
             <p>You can safely leave this page now.</p>
-        </sl-alert>
+        </Alert>
         )}
         { showErrorToast && (
-        <sl-alert variant="danger" duration="3000" open closable>
-            <sl-icon slot="icon" name="exclamation-octagon"></sl-icon>
+        <Alert variant="danger" duration={3000} open closable>
+            <Icon slot="icon" name="exclamation-octagon" />
             <strong>Error Creating Page</strong>
             <p>There was an Error Creating the Page. Please try again.</p>
-        </sl-alert>
+        </Alert>
         )}
         { showSlugErrorToast && (
-        <sl-alert variant="warning" duration="3000" open closable>
-            <sl-icon slot="icon" name="exclamation-triangle"></sl-icon>
+        <Alert variant="warning" duration={3000} open closable>
+            <Icon slot="icon" name="exclamation-triangle" />
             <strong>Page With Slug Already Exists!</strong>
             <p>A page with that slug already exists. Please choose a different slug.</p>
-        </sl-alert>
+        </Alert>
         )}
     </div>
-    <div class="container">
 
-        <h1 class="text-5xl font-bold py-8">Create New Page</h1>
+    <PageEditAndCreateForm livePreviewBox={livePreviewBox}/>
 
-        <div class="py-2 flex justify-center">
-
-                <form method="POST" class="w-full flex flex-col gap-2">
-                    <sl-input
-                        id="title"
-                        name="title"
-                        placeholder="Your page title"
-                        size="medium"
-                        required>
-                        <div slot="label" class="text-lg inline">Page Title</div>
-                        <sl-icon name="card-heading" slot="prefix"></sl-icon>
-                    </sl-input>
-
-                    <sl-select id="show-on-nav" name="show-on-nav" value="on">
-                        <div slot="label" class="text-lg inline">Show on Navbar?</div>
-                        <sl-option value="on">Yes, Show on the Navbar</sl-option>
-                        <sl-option value="off">No, Don't show on the Navbar</sl-option>
-                    </sl-select>
-
-                    <sl-select id="package" name="package" value="@astrolicious/studiocms">
-                        <div slot="label" class="text-lg inline">Package</div>
-                        {
-                            Array.from(studioCMSPluginList.values()).map((plugin) => (
-                                <sl-option value={plugin.name}>{plugin.label}</sl-option>
-                            ))
-                        }
-                    </sl-select>
-
-                    <sl-select id="content-lang" name="content-lang" value="default" help-text="This feature has not yet been implemented">
-                        <div slot="label" class="text-lg inline">Content Language</div>
-                        <sl-option value="default">Default</sl-option>
-                        <sl-option value="not-yet-implemented" disabled>Not Yet Implemented</sl-option>
-                    </sl-select>
-
-                    <sl-input
-                        id="slug"
-                        name="slug"
-                        placeholder="your-page-slug"
-                        size="medium"
-                        required>
-                        <div slot="label" class="text-lg inline">Slug</div>
-                        <sl-icon name="link" slot="prefix"></sl-icon>
-                    </sl-input>
-                    
-                    <sl-input
-                        id="description"
-                        name="description"
-                        placeholder="Your page's basic description"
-                        size="medium"
-                        required>
-                        <div slot="label" class="text-lg inline">Description</div>
-                        <sl-icon name="info-circle" slot="prefix"></sl-icon>
-                    </sl-input>
-
-                    <sl-input 
-                        id="hero-image" 
-                        name="hero-image" 
-                        placeholder="Your Page's Hero Image URL (Also the OG Image)" 
-                        size="medium"
-                        value="https://images.unsplash.com/photo-1707343843982-f8275f3994c5?q=80&w=1032&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                        required>
-                        <p slot="help-text" class="text-sm">To use images stored in your public/ folder use the following example: <i>/my-image.png</i></p><br>
-                        <div slot="label" class="text-lg inline">Hero Image</div>
-                        <sl-icon name="image" slot="prefix"></sl-icon>
-                    </sl-input>
-
-                    <sl-textarea 
-                        resize="auto"
-                        id="content"
-                        name="content"
-                        size="large"
-                        rows="10"
-                        hx-get={livePreviewBox}
-                        hx-trigger="keyup changed delay:500ms"
-                        hx-target="#html-preview"
-                        placeholder="Your page's content in markdown format."
-                        required>
-                        <div slot="label" class="text-lg inline">Content</div>
-                    </sl-textarea>
-                   
-                    <sl-divider></sl-divider>
-
-                    <sl-button 
-                        variant="success" 
-                        type="submit" 
-                        class="grow-0 w-48 place-self-center"
-                        outline>Create new Page!
-                        <sl-icon slot="suffix" name="pencil-square"></sl-icon>
-                    </sl-button>
-        
-                </form>
-        </div>
-
-        <sl-divider></sl-divider>
-        
-        <sl-card class="card-header max-w-[100vw] lg:max-w-[1800px] w-full">
-            <div slot="header" class="text-xl font-bold">Live Preview</div>
-            <div id="html-preview" class="w-full max-w-[100vw] lg:max-w-[1800px] prose md:prose-lg lg:prose-xl">
-                <p>
-                    Click in the box above to start editing the content. As you type, the preview will update automatically.
-                </p>
-            </div>
-        </sl-card>
-    </div>
 </Layout>

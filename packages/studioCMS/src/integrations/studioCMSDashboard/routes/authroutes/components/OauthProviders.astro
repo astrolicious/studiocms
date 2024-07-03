@@ -2,6 +2,7 @@
 import { authEnvCheck } from "studiocms-dashboard:auth";
 import type Config from 'virtual:studiocms/config';
 import { StudioCMSRoutes } from 'studiocms-dashboard:routeMap';
+import { Button, Icon } from "astrolace:components";
 
 type Props = {
     dashboardConfig: typeof Config.dashboardConfig;
@@ -40,53 +41,54 @@ const {
     
             {/* <!-- GitHub Provider --> */}
             { githubEnabled && (
-                <sl-button 
+                <Button 
                     variant="default" 
                     href={githubIndex} 
                     outline 
                     pill>
-                    <div slot="prefix" class="i-mdi-github w-24px h-24px inline"></div>
+                    <Icon library="mdi" name="github" slot="prefix" class="w-24px h-24px" />
                     <span class="font-bold text-base text-lg">Sign in with GitHub</span>
-                </sl-button>
+                </Button>
             )}
             {/* <!-- End of GitHub Provider --> */}
 
             {/* <!-- Discord Provider --> */}
             { discordEnabled && (
-                <sl-button 
+                <Button 
                     variant="default" 
                     href={discordIndex}
                     outline 
                     pill>
-                    <div slot="prefix" class="i-logos:discord-icon w-24px h-24px inline"></div>
-                    <span class="font-bold text-base text-lg">Sign in with Discord</span>
-                </sl-button>
+                        <Icon library="svglogos" name="discord-icon" slot="prefix" class="w-24px h-24px" />
+                        <span class="font-bold text-base text-lg">Sign in with Discord</span>
+                </Button>
             )}
             {/* <!-- End of Discord Provider --> */}
 
             {/* <!-- Google Provider --> */}
             { googleEnabled && (
-                <sl-button 
+                <Button 
                     variant="default" 
                     href={googleIndex} 
                     outline 
                     pill>
-                    <div slot="prefix" class="i-logos:google-icon w-24px h-24px inline"></div>
+                    {/* <div slot="prefix" class="i-logos:google-icon w-24px h-24px inline"></div> */}
+                    <Icon library="svglogos" name="google-icon" slot="prefix" class="w-24px h-24px" />
                     <span class="font-bold text-base text-lg">Sign in with Google</span>
-                </sl-button>
+                </Button>
             )}
             {/* <!-- End of Google Provider --> */}
 
             {/* <!-- Auth0 Provider --> */}
             { auth0Enabled && (
-                <sl-button 
+                <Button 
                     variant="default" 
                     href={auth0Index} 
                     outline 
                     pill>
-                    <div slot="prefix" class="i-auth0:logo w-24px h-24px inline"></div>
+                    <Icon library="cib" name="auth0" slot="prefix" class="w-24px h-24px" />
                     <span class="font-bold text-base text-lg">Sign in with Auth0</span>
-                </sl-button>
+                </Button>
             )}
             {/* <!-- End of Auth0 Provider --> */}
     

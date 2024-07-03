@@ -1,5 +1,4 @@
 ---
-// @ts-expect-error - Some types can only be imported from the Astro runtime
 import { Permissions, SiteConfig, db, eq } from 'astro:db';
 import { Layout } from 'studiocms-dashboard:components';
 import Config from 'virtual:studiocms/config';
@@ -7,6 +6,7 @@ import { authHelper, toPascalCase, type Locals, type PageDataAndContent } from '
 import { StudioCMSRoutes } from 'studiocms-dashboard:routeMap'
 import type { SiteConfigResponse } from 'studiocms:components';
 import { CMSSiteConfigId } from '../../../../../../constVars';
+import { Alert, Breadcrumb, BreadcrumbItem, Button, Divider, Icon, Input, Radio, RadioGroup } from 'astrolace:components';
 
 const { dashboardConfig: { developerConfig } } = Config;
 
@@ -74,29 +74,32 @@ const pageTitle = `Site Config | ${contextConfig.title}`;
     title={pageTitle}
     description={contextConfig.description} >
     <div class="flex grow w-full pb-4">
-        <sl-breadcrumb>
-            <span slot="separator">/</span>
-            <sl-breadcrumb-item href={dashboardIndex}>Dashboard
-                <sl-icon slot="prefix" name="columns-gap"></sl-icon>
-            </sl-breadcrumb-item>
-            <sl-breadcrumb-item href={siteConfiguration}>Site Configuration</sl-breadcrumb-item>
-            <sl-breadcrumb-item href={configurationAdmins}>Site Admins</sl-breadcrumb-item>
-        </sl-breadcrumb>
+        <Breadcrumb>
+            <BreadcrumbItem href={dashboardIndex} prefix='columns-gap'>
+                Dashboard
+            </BreadcrumbItem>
+            <BreadcrumbItem href={siteConfiguration}'>
+                Site Configuration
+            </BreadcrumbItem>
+            <BreadcrumbItem href={configurationAdmins}>
+                Site Admins
+            </BreadcrumbItem>
+        </Breadcrumb>
     </div>
     <div class="alert-toast">
         { showSuccessToast && (
-        <sl-alert variant="success" duration="3000" open closable>
-            <sl-icon slot="icon" name="check2-circle"></sl-icon>
+        <Alert variant="success" duration={3000} open closable>
+            <Icon slot="icon" name="check2-circle" />
             <strong>New Admin Added</strong>
             <p>You can safely leave this page now.</p>
-        </sl-alert>
+        </Alert>
         )}
         { showErrorToast && (
-        <sl-alert variant="danger" duration="3000" open closable>
-            <sl-icon slot="icon" name="exclamation-octagon"></sl-icon>
+        <Alert variant="danger" duration={3000} open closable>
+            <Icon slot="icon" name="exclamation-octagon" />
             <strong>Error adding Admin</strong>
             <p>There was an Error adding the new Admin. Please try again.</p>
-        </sl-alert>
+        </Alert>
         )}
     </div>
     <div class="container flex flex-col">
@@ -140,33 +143,34 @@ const pageTitle = `Site Config | ${contextConfig.title}`;
             </text>
         </div>
 
-        <div class="py-2 grow">
+        <div class="py-2 grow gap-2">
             <form method="POST">
         
-                <sl-input
+                <Input
                     id="username"
                     name="username"
                     placeholder="Username"
                     size="medium"
-                    class="py-2"
                     required>
                     <div slot="label" class="text-lg inline">Add New Admin or Editor</div>
-                    <sl-icon name="person-circle" slot="prefix"></sl-icon>
-                </sl-input>
+                    <Icon name="person-circle" slot="prefix" />
+                </Input>
 
-                <sl-radio-group 
-                    name="rank" 
-                    id="rank" 
-                    value="editor" 
+                <Divider />
+
+                <RadioGroup
+                    name="rank"
+                    id="rank"
+                    value="editor"
+                    label='User Permission Level'
+                    helpText='Admins get Full control, while Editors can only Edit and create.'
                     required>
-                    <div slot="label" class="text-lg inline">User Permission Level</div>
-                    <p slot="help-text">Admins get Full control, while Editors can only Edit and create.</p>
-                    <sl-radio value="editor">Editor</sl-radio>
-                    <sl-radio value="admin">Admin</sl-radio>
-                  </sl-radio-group>
+                    <Radio value='editor'>Editor</Radio>
+                    <Radio value='admin'>Admin</Radio>
+                </RadioGroup>
     
                 <div class="py-4 text-center">
-                    <sl-button variant="success" type="submit" outline>Add User</sl-button>
+                    <Button variant="success" type="submit" outline>Add User</Button>
                 </div>
     
             </form>

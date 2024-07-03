@@ -1,5 +1,4 @@
 ---
-// @ts-expect-error - Some types can only be imported from the Astro runtime
 import { SiteConfig, db, eq } from 'astro:db';
 import { Layout, WebVitalPanel } from 'studiocms-dashboard:components';
 import Config from 'virtual:studiocms/config';
@@ -50,8 +49,9 @@ const pageTitle = `Dashboard | ${contextConfig.title}`;
     description={contextConfig.description} >
 
     <div class="flex grow w-full pb-4">
-        <Breadcrumb separator='/'>
-            <BreadcrumbItem href={dashboardIndex} prefix='columns-gap'>Dashboard
+        <Breadcrumb>
+            <BreadcrumbItem href={dashboardIndex} prefix='columns-gap'>
+                Dashboard
             </BreadcrumbItem>
         </Breadcrumb>
     </div>

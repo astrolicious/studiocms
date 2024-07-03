@@ -2,6 +2,8 @@
 import 'uno.css';
 import '@unocss/reset/tailwind.css';
 import './base.css';
+import "@matthiesenxyz/astrolace/base.css";
+import "@matthiesenxyz/astrolace/dark.css";
 import Config from 'virtual:studiocms/config';
 import version from 'virtual:studiocms/version';
 
@@ -15,14 +17,37 @@ export interface Props {
 const { title, description } = Astro.props;
 ---
 
-<script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.15.0/cdn/shoelace-autoloader.js"></script>
-<script src="https://unpkg.com/htmx.org@1.9.12/dist/htmx.js" integrity="sha384-qbtR4rS9RrUMECUWDWM2+YGgN3U4V4ZncZ0BvUcg9FGct0jqXz3PUdVpU1p0yrXS" crossorigin="anonymous"></script>
+<script>
+  import "htmx.org/dist/htmx.js"
+</script>
 
-<style>
-  :not(:defined) {
-    visibility: hidden;
-  }
-</style>
+<script>
+  import { registerIconLibrary } from 'astrolace:tools'
+    // Register the default icon library
+    registerIconLibrary('default', {
+      resolver: name => `https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/icons/${name}.svg`
+    });
+
+    // Register the svgLogos Iconify icon library
+    registerIconLibrary('svglogos', {
+      resolver: name => `https://api.iconify.design/logos/${name}.svg`
+    })
+
+    // Register the mdi Iconify icon library
+    registerIconLibrary('mdi', {
+      resolver: name => `https://api.iconify.design/mdi/${name}.svg`
+    })
+
+    // Register the mdi Iconify icon library
+    registerIconLibrary('cib', {
+      resolver: name => `https://api.iconify.design/cib/${name}.svg`
+    })
+
+    // Register StudioCMS Icons
+    registerIconLibrary('studiocms', {
+      resolver: name => `https://raw.githubusercontent.com/astrolicious/studiocms/main/www/assets/${name}.svg`,
+    })
+</script>
 
 <!-- Global Metadata -->
 <meta charset="utf-8" />
