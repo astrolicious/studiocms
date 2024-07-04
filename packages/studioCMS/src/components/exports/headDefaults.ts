@@ -2,7 +2,7 @@ import type { z } from "astro/zod";
 import type { HeadConfigSchema } from "../../schemas/defaultFrontend";
 import version from "virtual:studiocms/version";
 import type { AstroGlobalPartial } from "astro";
-import { extname } from "path";
+import { extname } from "node:path";
 import { AstroError } from "astro/errors";
 import { lookup } from 'mrmime';
 

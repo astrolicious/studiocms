@@ -11,8 +11,8 @@ const { isLoggedIn, dbUser: userProfile } = Astro.locals as Locals;
 { enabled !== false && (isLoggedIn ? (
     <a href={dashboardIndex} title="User Dashboard">
         <img
-            src={userProfile.avatar}
-            alt={userProfile.name}
+            src={userProfile?.avatar||profileImg.src}
+            alt={userProfile?.name||"Logged In User"}
             width="64"
             height="64" />
         </a>

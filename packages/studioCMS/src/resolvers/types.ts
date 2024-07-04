@@ -3,7 +3,6 @@ import type { StudioCMSOptions } from "../schemas";
 
 export type ResolverOpts = {
     overrides: {
-        CustomImageOverride: string | undefined,
         FormattedDateOverride: string | undefined,
     },
     imports: {
@@ -19,7 +18,6 @@ export type ResolverResponse = {
 }
 
 export type VirtualResolver = {
-    CustomImage: string;
     FormattedDate: string;
     StudioCMSRenderer: string;
     ContentRenderer: string;

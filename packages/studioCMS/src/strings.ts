@@ -61,6 +61,7 @@ export const robotsTXTPreset: Partial<RobotsConfig> = {
 
 export const imageHandlerStrings = {
     CloudinaryCDNWarning: "Using the Cloudinary CDN JS SDK Plugin requires the CMS_CLOUDINARY_CLOUDNAME environment variable to be set. Please add this to your .env file.",
+    CustomImageLog: "Configuring CustomImage Component...",
     NodeAdapter: "Node Adapter Detected. Using Node Adapter.",
     CloudflareAdapter: "Cloudflare Adapter Detected. Using Cloudflare Adapter.",
     VercelAdapter: "Vercel Adapter Detected. Using Vercel Adapter.",

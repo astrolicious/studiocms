@@ -9,20 +9,6 @@ export const DTSResolver = (virtualResolver: VirtualResolver) => {
     // Add Virtual DTS Lines - Components
     studioCMSDTS.addLines(`declare module 'studiocms:components' {
         /** 
-         * # Custom Image Component for StudioCMS:imageHandler 
-         * 
-         * This component will adapt to the current congiguration of the StudioCMS image handler and will render the used image accordingly.
-         * 
-         * The default configuration will use '@unpic/astro' to allow for image optimization and lazy loading from most popular image hosting services.
-         * 
-         * @props {string} src - Image Source
-         * @props {string} alt - Image Alt
-         * @props {number} width - Image Width
-         * @props {number} height - Image Height
-        */
-        export const CustomImage: typeof import('${virtualResolver.CustomImage}').default;
-
-        /** 
          * # Formatted Date Component used for rendering dates in a human readable format 
          * 
          * This components locale will adapt to the current configuration of the StudioCMS 'dateLocale' settings configuration option.

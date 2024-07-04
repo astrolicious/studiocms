@@ -5,11 +5,12 @@ import { studioLogger, studioLoggerOptsResolver } from './utils';
 import { cloudflareImageHandler, netlifyImageHandler, nodeImageHandler, vercelImageHandler } from "./adapters"
 import { optionsSchema } from './schemas';
 import { imageHandlerStrings } from './strings';
+import { componentResolver } from './componentResolver';
 
 export default defineIntegration({
     name: '@astrolicious/studioCMS:imageHandler',
     optionsSchema,
-    setup({ options }) {
+    setup({ name, options }) {
 		const env = loadEnv('all', process.cwd(), 'CMS');
         return {
             hooks: {
@@ -50,6 +51,10 @@ export default defineIntegration({
 							studioLogger(LoggerOpts.logWarn, imageHandlerStrings.CloudinaryCDNWarning);
 						}
 					}
+
+					// Setup and Configure CustomImage Component
+					studioLogger(LoggerOpts.logInfo, imageHandlerStrings.CustomImageLog);
+					componentResolver(params, { name, CustomImageOverride: options.overrides.CustomImageOverride})
 
                     // Setup and Configure Astro Adapters and Image Services based on the Adapter and Image Service Configurations
 					studioLogger(LoggerOpts.logInfo, `Determining Astro Adapter Configuration... ${adapter && (`Detected Adapter: ${adapter.name}`)}`);
