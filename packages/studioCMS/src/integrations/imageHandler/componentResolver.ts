@@ -34,7 +34,7 @@ export const componentResolver = defineUtility('astro:config:setup')(
         /** 
          * # Custom Image Component for StudioCMS:imageHandler 
          * 
-         * This component will adapt to the current congiguration of the StudioCMS image handler and will render the used image accordingly.
+         * This component will adapt to the current configuration of the StudioCMS image handler and will render the used image accordingly.
          * 
          * The default configuration will use '@unpic/astro' to allow for image optimization and lazy loading from most popular image hosting services.
          * 
