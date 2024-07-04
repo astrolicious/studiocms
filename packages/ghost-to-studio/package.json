@@ -14,8 +14,8 @@
     "typescript": "^5.4.3"
   },
   "dependencies": {
-    "@astrojs/db": "^0.9.8",
-    "@astrojs/node": "^8.2.5",
-    "astro": "^4.5.12"
+    "@astrojs/db": "^0.11.7",
+    "@astrojs/node": "^8.3.2",
+    "astro": "^4.11.5"
   }
 }
