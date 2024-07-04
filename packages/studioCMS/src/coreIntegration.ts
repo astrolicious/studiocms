@@ -41,9 +41,7 @@ export default defineIntegration({
 					const resolvedOptions = await optionsResolver(params, options);
 
 					updateConfig({
-						vite: {
-							plugins: [namespaceBuiltinsPlugin()]
-						}
+						vite: { plugins: [namespaceBuiltinsPlugin()] }
 					})
 
 					// Setup Logger

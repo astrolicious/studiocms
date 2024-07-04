@@ -1,8 +1,8 @@
 import { builtinModules as builtins } from 'node:module';
-import type { Plugin } from 'vite';
+import type { AstroConfig } from 'astro'
+type VitePlugin = Required<AstroConfig['vite']>['plugins'][number]
 
-// biome-ignore lint/suspicious/noExplicitAny: <explanation>
-export function namespaceBuiltinsPlugin(): Plugin<any> {
+export function namespaceBuiltinsPlugin(): VitePlugin {
 
     return {
         name: 'namespace-builtins',
@@ -14,6 +14,7 @@ export function namespaceBuiltinsPlugin(): Plugin<any> {
             if (builtins.includes(id)) {
                 return { id: `node:${id}`, external: true };
             }
+            return;
         },
     }
 }
