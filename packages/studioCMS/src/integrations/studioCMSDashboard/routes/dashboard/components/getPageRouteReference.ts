@@ -38,7 +38,7 @@ export const getPageRouteReference = (pageRoute: string) => {
     }}
 
     const matchedRoute = frontEndRoutes.find(route => route.PageRoute === pageRoute );
-    const matchedDashboardRoute = frontEndRoutes.find(route => route.PageRoute === (pageRoute.startsWith('/dashboard') ? '/dashboard' : false) );
+    const matchedDashboardRoute = frontEndRoutes.find(route => route.PageRoute === (pageRoute.startsWith(`/${dashboardURL}`) ? `/${dashboardURL}` : false) );
 
     if (matchedRoute) {
         return matchedRoute.ProjectReference;

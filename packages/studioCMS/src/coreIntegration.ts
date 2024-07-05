@@ -41,9 +41,7 @@ export default defineIntegration({
 					const resolvedOptions = await optionsResolver(params, options);
 
 					updateConfig({
-						vite: {
-							plugins: [namespaceBuiltinsPlugin()]
-						}
+						vite: { plugins: [namespaceBuiltinsPlugin()] }
 					})
 
 					// Setup Logger
@@ -60,8 +58,6 @@ export default defineIntegration({
 					// Create Virtual Resolver
 					const { virtualImportMap, dtsFile } = vResolver({ 
 						overrides: {
-							CustomImageOverride: resolvedOptions.overrides.CustomImageOverride && 
-								rootResolve(resolvedOptions.overrides.CustomImageOverride),
 							FormattedDateOverride: resolvedOptions.overrides.FormattedDateOverride && 
 								rootResolve(resolvedOptions.overrides.FormattedDateOverride),
 						 }, 

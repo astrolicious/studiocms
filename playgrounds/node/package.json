@@ -22,6 +22,6 @@
     "@astrojs/web-vitals": "^0.2.1",
     "@astrolicious/studiocms": "workspace:*",
     "@astrolicious/studiocms-blog": "workspace:*",
-    "astro": "^4.11.3"
+    "astro": "^4.11.5"
   }
 }
