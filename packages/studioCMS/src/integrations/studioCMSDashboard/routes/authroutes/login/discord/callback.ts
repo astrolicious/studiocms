@@ -1,4 +1,3 @@
-// @ts-expect-error - Some types can only be imported from the Astro runtime
 import { User, db, eq } from 'astro:db';
 import { Discord, OAuth2RequestError, type DiscordTokens } from 'arctic';
 import type { APIContext } from 'astro';
@@ -36,9 +35,6 @@ export async function GET(context: APIContext): Promise<Response> {
 	const state = url.searchParams.get('state');
 	const storedState = cookies.get('discord_oauth_state')?.value ?? null;
 	if (!code || !state || !storedState || state !== storedState) {
-		// return new Response(null, {
-		// 	status: 403,
-		// });
 		return redirect(loginURL);
 	}
 

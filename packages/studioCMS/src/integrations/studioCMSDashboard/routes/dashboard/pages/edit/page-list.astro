@@ -1,12 +1,10 @@
 ---
-import { SiteConfig, db, eq, asc, PageData } from 'astro:db';
 import { Layout, FormattedDate } from 'studiocms-dashboard:components';
 import Config from 'virtual:studiocms/config';
 import { authHelper, pluginList, type Locals } from 'studiocms:helpers';
 import { StudioCMSRoutes, getEditRoute, getDeleteRoute } from 'studiocms-dashboard:routeMap';
-import type { SiteConfigResponse, pageDataReponse } from 'studiocms:components';
-import { CMSSiteConfigId } from '../../../../../../constVars';
 import { Breadcrumb, BreadcrumbItem, Button } from 'astrolace:components';
+import { getSiteConfig, getPageList } from 'studiocms-dashboard:contentHelper';
 
 const { dashboardConfig: { developerConfig: { testingAndDemoMode } } } = Config;
 
@@ -21,8 +19,8 @@ const {
     } 
 } = StudioCMSRoutes;
 
-const contextConfig: SiteConfigResponse = await db.select().from(SiteConfig).where(eq(SiteConfig.id, CMSSiteConfigId)).get();
-const pages: pageDataReponse[] = await db.select().from(PageData).orderBy(asc(PageData.id));
+const contextConfig = await getSiteConfig();
+const pages = await getPageList();
 const { permissionLevel } = await authHelper(Astro.locals as Locals);
 
 // If the user is not logged in, redirect to the login page
@@ -98,13 +96,13 @@ const pageTitle = `Existing Pages | ${contextConfig.title}`;
                                             <FormattedDate date={page.publishedAt}/>
                                         </td>
                                         <td class="px-6 py-4">
-                                            <Button variant="success" href={await getEditRoute(page.slug)} size="small" pill outline>
+                                            <Button variant="success" href={await getEditRoute(page.id)} size="small" pill outline>
                                                 Edit
                                             </Button>
                                         </td>
                                         <td class="px-6 py-4">
                                             { permissionLevel === 'admin' && (
-                                                <Button variant="danger" href={await getDeleteRoute(page.slug)} size="small" pill outline>
+                                                <Button variant="danger" href={await getDeleteRoute(page.id)} size="small" pill outline>
                                                     Delete
                                                 </Button> )
                                             }

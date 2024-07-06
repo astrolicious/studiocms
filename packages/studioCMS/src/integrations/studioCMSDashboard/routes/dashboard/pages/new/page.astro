@@ -1,14 +1,13 @@
 ---
-import { PageData, PageContent, SiteConfig, db, eq } from 'astro:db';
+import { PageData, PageContent, db, eq } from 'astro:db';
 import { Layout } from 'studiocms-dashboard:components';
 import Config from 'virtual:studiocms/config';
 import { authHelper, type Locals } from 'studiocms:helpers';
 import { randomUUID } from 'node:crypto';
 import { StudioCMSRoutes } from 'studiocms-dashboard:routeMap';
-import type { SiteConfigResponse } from 'studiocms:components';
-import { CMSSiteConfigId } from '../../../../../../constVars';
 import { Alert, Breadcrumb, BreadcrumbItem, Icon } from 'astrolace:components';
 import PageEditAndCreateForm from '../../components/PageEditAndCreateForm.astro';
+import { getSiteConfig } from 'studiocms-dashboard:contentHelper';
 
 const { dashboardConfig: { developerConfig } } = Config;
 
@@ -24,7 +23,7 @@ const {
     } 
 } = StudioCMSRoutes;
 
-const contextConfig: SiteConfigResponse = await db.select().from(SiteConfig).where(eq(SiteConfig.id, CMSSiteConfigId)).get();
+const contextConfig = await getSiteConfig();
 const { permissionLevel } = await authHelper(Astro.locals as Locals);
 
 // If the user is not logged in, redirect to the login page

@@ -1,5 +1,4 @@
-// @ts-expect-error - Some types can only be imported from the Astro runtime
-import { AstrojsWebVitals_Metric, db, eq } from 'astro:db';
+import { AstrojsWebVitals_Metric, db } from 'astro:db';
 
 export type WebVitalsResponseItem = {
     id: string;

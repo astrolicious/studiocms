@@ -1,4 +1,3 @@
-// @ts-expect-error - Some types can only be imported from the Astro runtime
 import { User, db, eq } from 'astro:db';
 import { Google, OAuth2RequestError } from 'arctic';
 import type { APIContext } from 'astro';
@@ -35,9 +34,6 @@ export async function GET(context: APIContext): Promise<Response> {
 	const storedCodeVerifier = cookies.get("google_oauth_code_verifier")?.value ?? null;
 	const storedState = cookies.get('google_oauth_state')?.value ?? null;
 	if (!code || !storedState || !storedCodeVerifier || state !== storedState) {
-		// return new Response(null, {
-		// 	status: 403,
-		// });
 		return redirect(loginURL);
 	}
 
