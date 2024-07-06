@@ -75,15 +75,15 @@ export async function contentHelper(
         `studioCMS contentHelper Failed to get page data for page ${slug} in package ${packageToGet}` );
     }
 
-    const LangToGet = "default";
+    const langToGet = "default";
 
     const pageContent = await db
         .select().from(PageContent)
         .where(eq(PageContent.contentId, pageData.id)).get();
 
     if(!pageContent) {
-        throw new AstroError(`Page Content not found: ${slug} with language ${LangToGet}`, 
-        `studioCMS contentHelper Failed to get page content for page ${slug} with language ${LangToGet}` );
+        throw new AstroError(`Page Content not found: ${slug} with language ${langToGet}`, 
+        `studioCMS contentHelper Failed to get page content for page ${slug} with language ${langToGet}` );
     }
     return { ...pageData, content: pageContent.content||"Failed to fetch Content" };
 }
@@ -98,15 +98,15 @@ export async function getPageById(id: string): Promise<ContentHelperTempResponse
         return {} as ContentHelperTempResponse;
     }
 
-    const LangToGet = "default";
+    const langToGet = "default";
 
     const pageContent = await db
         .select().from(PageContent)
         .where(eq(PageContent.contentId, pageData.id)).get();
 
     if(!pageContent) {
-        throw new AstroError(`Page Content not found: ${id} with language ${LangToGet}`, 
-        `studioCMS contentHelper Failed to get page content for page ${id} with language ${LangToGet}` );
+        throw new AstroError(`Page Content not found: ${id} with language ${langToGet}`, 
+        `studioCMS contentHelper Failed to get page content for page ${id} with language ${langToGet}` );
     }
     return { ...pageData, content: pageContent.content||"Failed to fetch Content" };
 
