@@ -199,7 +199,7 @@ export async function getUserList(): Promise<UserResponse[]> {
 /**
  * Get permissions list helper function to get a list of all permissions from Astro Studio's Database.
  * 
- * @returns A Array of all permissions in the database.
+ * @returns An Array of all permissions in the database.
  */
 export async function getPermissionsList(): Promise<PageDataAndContent["Permissions"][]> {
     const permissions = await db
