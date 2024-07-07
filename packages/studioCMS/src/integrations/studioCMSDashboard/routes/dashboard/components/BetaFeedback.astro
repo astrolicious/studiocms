@@ -1,0 +1,145 @@
+---
+import { Alert, Divider, Icon } from "astrolace:components";
+import { Input, Textarea } from "astrolace:components";
+import { Button, Dialog } from "astrolace:components";
+---
+<Dialog id="beta-feedback-dialog" label="Beta Feedback Form">
+
+    <div>
+        Give feedback about the beta version of the StudioCMS Dashboard directly to the <a class="text-blue-500" href="https://github.com/astrolicious/studiocms/issues">Github Repository Issues</a>. Your feedback will help us improve StudioCMS.
+    </div>
+
+    <Divider />
+
+    <form id="beta-feedback-form" method="POST">
+
+        <input type="hidden" name="access_key" value="34ebc3d0-5f8a-4a6a-9f4b-538eda89aa87">
+        <input type="checkbox" name="botcheck" id="" style="display: none;" form="beta-feedback-form">
+        <input type="hidden" name="from_name" value="StudioCMS Beta Feedback Form">
+
+        <Input type="email" name="email" label="Github Email" placeholder="Github email used for automatic Github reference" form="beta-feedback-form" required />
+
+        <Divider />
+
+        <Input type="text" name="name" label="Display name" form="beta-feedback-form" placeholder="YourChosenDisplayName" required /> 
+
+        <Divider />
+
+        <Input type="text" name="subject" label="Issue Label" placeholder="New Issue" form="beta-feedback-form" required />
+
+        <Divider />
+
+        <Textarea id="form-message" name="message" form="beta-feedback-form" placeholder="Your Message here, Please make this message as detailed as possible for us to assist!">
+            <span slot="label">Issue Message *</span>
+        </Textarea>
+
+        <Divider />
+
+        <div style="text-align: center;">
+            <Button type="submit" form="beta-feedback-form" variant="success" size="medium" class:list={"beta-feedback-submit"}>
+                Submit
+            </Button>
+        </div>
+
+    </form>
+
+    <Button slot="footer" variant="danger" size="medium" class:list={"beta-feedback-cancel"}>Cancel</Button>
+</Dialog>
+
+<div>
+    <Button variant="success" size="large" class="open-beta-feedback" outline>
+        <Icon slot="prefix" name="alert-octagram-outline" library="mdi"/>
+        Beta Feedback
+    </Button>
+</div>
+
+<div class="alerts">
+    <Alert variant="danger" id="error-toast" duration={6000} closable>
+        <Icon slot="icon" name="alert-circle" />
+        <p id="form-error-toast"></p>
+    </Alert>
+    
+    <Alert variant="success" id="success-toast" duration={6000} closable>
+        <Icon slot="icon" name="check2-circle" />
+        <p id="form-success-toast"></p>
+    </Alert>
+</div>
+
+<script>
+import type { SlDialog, SlButton, SlAlert, SlTextarea } from "astrolace:types";
+
+    const dialog = document.getElementById('beta-feedback-dialog') as SlDialog;
+    const form = document.getElementById('beta-feedback-form') as HTMLFormElement;
+
+    const FormMessage = document.getElementById('form-message') as SlTextarea;
+
+    const openButton = document.getElementsByClassName('open-beta-feedback')[0] as SlButton;
+    const cancelButton = document.getElementsByClassName('beta-feedback-cancel')[0] as SlButton;
+    const submitButton = document.getElementsByClassName('beta-feedback-submit')[0] as SlButton;
+
+    const alertsContainer = document.querySelector('.alerts') as HTMLDivElement;
+    const errorToast = alertsContainer.querySelector('sl-alert[variant="danger"]') as SlAlert;
+    const errorToastMessage = errorToast.querySelector('#form-error-toast') as HTMLParagraphElement;
+    const successToast = alertsContainer.querySelector('sl-alert[variant="success"]') as SlAlert;
+    const successToastMessage = successToast.querySelector('#form-success-toast') as HTMLParagraphElement;
+
+    openButton.addEventListener('click', () => {
+        dialog.show();
+    });
+
+    cancelButton.addEventListener('click', () => {
+        dialog.hide();
+    });
+
+    dialog.addEventListener('sl-request-close', event => {
+        if (event.detail.source === 'overlay') {
+            event.preventDefault();
+        }
+    });
+
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        if (FormMessage.value.length < 10) {
+            errorToastMessage.innerText = 'Please provide a detailed message. Minimum 10 characters.';
+            errorToast.toast();
+            return;
+        }
+
+        const formData = new FormData(form);
+        const object = Object.fromEntries(formData);
+        const json = JSON.stringify(object);
+
+        submitButton.disabled = true;
+        submitButton.loading = true;
+
+        fetch('https://api.web3forms.com/submit', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: json
+        })
+        .then(async (response) => {
+            let json = await response.json();
+            if (response.status == 200) {
+                successToastMessage.innerText = json.message;
+                successToast.toast();
+                form.reset();
+                dialog.hide();
+            } else {
+                errorToastMessage.innerText = json.message;
+                errorToast.toast();
+            }
+        })
+        .catch(error => {
+            errorToastMessage.innerText = error;
+            errorToast.toast();
+        })
+        .then(function() {
+            form.reset();
+        });
+    });
+
+</script>

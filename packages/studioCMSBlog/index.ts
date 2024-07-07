@@ -2,6 +2,11 @@ import defineTheme from "astro-theme-provider";
 import { defineStudioCMSPlugin } from "@astrolicious/studiocms";
 import { studioCMSBlogSchema } from "./schema";
 
+const studioCMSBlogTheme = defineTheme({
+	name: "studiocms-blog",
+	schema: studioCMSBlogSchema,
+});
+
 /**
  * # StudioCMS Blog Theme(Integration) 
  * ## Powered by [`astro-theme-provider`](https://github.com/astrolicious/astro-theme-provider) by [Bryce Russell](https://github.com/BryceRussell)
@@ -31,17 +36,22 @@ import { studioCMSBlogSchema } from "./schema";
  *   ],
  * });
  */
-export default defineTheme({
-	name: "studiocms-blog", schema: studioCMSBlogSchema
-}) 
+export default function studioCMSBlog(options: Parameters<typeof studioCMSBlogTheme>[0]) {
+	let slug: string;
 
-// Register the StudioCMS Blog Plugin
-defineStudioCMSPlugin({
-	pkgname: "@astrolicious/studiocms-blog",
-	opts: {
-		pluginLabel: "StudioCMS Blog",
-		navigationLinks: [
-			{ text: "Blog", slug: "blog/" }
-		]
+	if (typeof options?.pages?.["/blog"] === "string") {
+		slug = options.pages["/blog"];
+	} else {
+		slug = "blog/";
 	}
-})
+
+	defineStudioCMSPlugin({
+		pkgname: "@astrolicious/studiocms-blog",
+		opts: {
+			pluginLabel: "StudioCMS Blog",
+			navigationLinks: [ { text: "Blog", slug: slug } ]
+		}
+	});
+
+	return studioCMSBlogTheme(options);
+};
