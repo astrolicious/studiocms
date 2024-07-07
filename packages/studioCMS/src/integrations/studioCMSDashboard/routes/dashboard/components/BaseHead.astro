@@ -62,7 +62,7 @@ const { title, description } = Astro.props;
 <meta name="title" content={title} />
 <meta name="description" content={description} />
 
-{isDashboardRoute(Astro.url.pathname) && (
+{ !isDashboardRoute(Astro.url.pathname) && (
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content='website' />
   <meta property="og:url" content={Astro.url} />
