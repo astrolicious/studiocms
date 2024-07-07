@@ -7,6 +7,7 @@ import { studioCMSSocials } from "../layouts/studiocms-socials";
 import { getWebVitals } from 'studiocms-dashboard:web-vitals';
 import { Breadcrumb, BreadcrumbItem, Divider, Card, Alert, Button, Icon, Details } from 'astrolace:components';
 import { getSiteConfig } from 'studiocms-dashboard:contentHelper';
+import BetaFeedback from '../components/BetaFeedback.astro';
 
 const { 
     mainLinks: {
@@ -85,7 +86,7 @@ const pageTitle = `Dashboard | ${contextConfig.title}`;
             </Card>
         )}
 
-        <div class="mt-8 flex gap-4 max-sm:flex-wrap">
+        <div class="mt-8 flex flex-wrap gap-4">
             <Button variant="warning" size="large" href={github} target="_blank" outline>
                 <Icon slot="prefix" name="star" />
                 <div>Star us on Github</div>
@@ -94,6 +95,7 @@ const pageTitle = `Dashboard | ${contextConfig.title}`;
                 <Icon slot="prefix" name="discord" />
                 Join the Community
             </Button>
+            <BetaFeedback />
         </div>
 
     </div>
