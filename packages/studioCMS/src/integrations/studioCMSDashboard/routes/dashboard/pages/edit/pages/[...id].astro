@@ -1,13 +1,12 @@
 ---
-import { PageData, PageContent, SiteConfig, db, eq } from 'astro:db';
+import { PageData, PageContent, db, eq } from 'astro:db';
 import { Layout } from 'studiocms-dashboard:components';
 import Config from 'virtual:studiocms/config';
-import { authHelper, type Locals, type PageDataAndContent } from 'studiocms:helpers';
+import { authHelper, type Locals } from 'studiocms:helpers';
 import { StudioCMSRoutes, getEditRoute } from 'studiocms-dashboard:routeMap';
-import type { SiteConfigResponse, pageDataReponse } from 'studiocms:components';
-import { CMSSiteConfigId } from '../../../../../../../constVars';
 import { Alert, Breadcrumb, BreadcrumbItem, Icon } from 'astrolace:components';
 import PageEditAndCreateForm from '../../../components/PageEditAndCreateForm.astro';
+import { getSiteConfig, getPageById } from 'studiocms-dashboard:contentHelper';
 
 const { dashboardConfig: { developerConfig } } = Config;
 
@@ -23,17 +22,19 @@ const {
     } 
 } = StudioCMSRoutes;
 
-const { slug } = Astro.params;
+const { id } = Astro.params;
 
-const contextConfig: SiteConfigResponse = await db.select().from(SiteConfig).where(eq(SiteConfig.id, CMSSiteConfigId)).get();
-const pageData: pageDataReponse = await db.select().from(PageData).where(eq(PageData.slug, slug)).get();
-const pageContent: PageDataAndContent["PageContent"] = await db.select().from(PageContent).where(eq(PageContent.contentId, pageData.id)).get();
+if (!id) {
+	return Astro.redirect(dashboardIndex);
+}
+const contextConfig = await getSiteConfig();
+const pageData = await getPageById(id);
 
-if (!slug || !pageData.id) {
+if (!pageData.id) {
 	return Astro.redirect(dashboardIndex);
 }
 
-const editRoute = await getEditRoute(slug);
+const editRoute = await getEditRoute(id);
 const { permissionLevel } = await authHelper(Astro.locals as Locals);
 
 // If the user is not logged in, redirect to the login page
@@ -69,7 +70,7 @@ if (Astro.request.method === 'POST' && !developerConfig.testingAndDemoMode) {
         showOnNav: showOnNav === "on",
         updatedAt: new Date(),
         heroImage: heroImage as string,
-    }).where(eq(PageData.slug, slug)).then(async () => {
+    }).where(eq(PageData.id, id)).then(async () => {
         await db.update(PageContent).set({ 
             content: content as string 
         }).where(eq(PageContent.contentId, pageData.id));
@@ -123,8 +124,7 @@ const pageTitle = `Edit Page | ${contextConfig.title}`;
     </div>
 
     <PageEditAndCreateForm 
-        pageData={pageData} 
-        pageContent={pageContent} 
+        pageData={pageData}
         livePreviewBox={livePreviewBox} 
         isEditPage />
 </Layout>

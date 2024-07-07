@@ -1,4 +1,3 @@
-// @ts-expect-error - Some types can only be imported from the Astro runtime
 import { User, db, eq } from 'astro:db';
 import { Auth0, OAuth2RequestError, type Auth0Tokens } from 'arctic';
 import type { APIContext } from 'astro';
@@ -44,9 +43,6 @@ const clientDomain = `https://${NoHTTPDOMAIN}`;
 	const state = url.searchParams.get('state');
 	const storedState = cookies.get('auth0_oauth_state')?.value ?? null;
 	if (!code || !state || !storedState || state !== storedState) {
-		// return new Response(null, {
-		// 	status: 403,
-		// });
 		return redirect(loginURL);
 	}
 

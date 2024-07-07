@@ -1,5 +1,4 @@
-// @ts-expect-error - Some types can only be imported from the Astro runtime
-import { PageContent, PageData, Blog, Permissions, SiteConfig, User, db, eq } from 'astro:db';
+import { PageContent, PageData, Permissions, SiteConfig, User, db, eq } from 'astro:db';
 import { scryptAsync } from "@noble/hashes/scrypt";
 import AuthSecurityConfig from 'virtual:studiocms-dashboard/AuthSecurityConfig';
 
@@ -60,17 +59,31 @@ export async function POST(context: APIContext): Promise<Response> {
 			);
 		
 		}
-		await db
+		const newCreatedUser = await db
 			.insert(User)
 			.values({
 				name: name as string,
 				username,
 			})
+			.returning({ id: User.id })
+			.get()
 
-		const serverToken = await scryptAsync(existingUser.id, ScryptSalt, ScryptOpts);
+		const serverToken = await scryptAsync(newCreatedUser.id, ScryptSalt, ScryptOpts);
 		const newUser = await db.select().from(User).where(eq(User.username, username)).get();
 		const hashedPassword = await scryptAsync(password, serverToken, ScryptOpts)
 		const hashedPasswordString = Buffer.from(hashedPassword.buffer).toString();
+
+		if (!newUser) {
+			return new Response(
+				JSON.stringify({
+					error: "User Error"
+				}),
+				{
+					status: 400
+				}
+			);
+		}
+
 		await db
 			.update(User)
 			.set({ 
@@ -113,17 +126,21 @@ export async function POST(context: APIContext): Promise<Response> {
 		);
 	}
 
-	const dbBatchQueries = [];
-
 	// Insert Site Config
-	dbBatchQueries.push(
-		await db
-		.insert(SiteConfig)
-		.values({
-			title: title as string,
-			description: description as string,
-		})
-	);
+	await db.insert(SiteConfig)
+			.values({ 
+				title: title as string,
+				description: description as string 
+			}).catch(() => {
+				return new Response(
+					JSON.stringify({
+						error: "Config Error"
+					}),
+					{
+						status: 400
+					}
+				);
+			})
 
 	const HERO_IMAGE = 'https://images.unsplash.com/photo-1707343843982-f8275f3994c5?q=80&w=1032&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
 	const LOREM_IPSUM =
@@ -155,36 +172,42 @@ export async function POST(context: APIContext): Promise<Response> {
 	const index = await db.select().from(PageData).where(eq(PageData.slug, 'index')).get();
 	const about = await db.select().from(PageData).where(eq(PageData.slug, 'about')).get();
 
+	if (!index || !about) {
+		return new Response(
+			JSON.stringify({
+				error: "Page Data Error"
+			}),
+			{
+				status: 400
+			}
+		);
+	}
 
 	// Insert Page Content
-	dbBatchQueries.push(
-		await db
-		.insert(PageContent)
-		.values([
-			{
-				id: randomUUID(),
-				contentId: index.id,
-				contentLang: 'default',
-				content: LOREM_IPSUM,
-			},
-			{
-				id: randomUUID(),
-				contentId: about.id,
-				contentLang: 'default',
-				content: LOREM_IPSUM,
-			},
-		])
-	);
-
-	// Execute Batch Queries
-	await db
-		.batch(dbBatchQueries)
-		.then(() => {
-			return new Response('Successfully Seeded Database', { status: 200 });
-		})
-		.catch(() => {
-			return new Response('Error Seeding Database', { status: 500 });
-		});
+	await db.insert(PageContent)
+			.values([
+				{
+					id: randomUUID(),
+					contentId: index.id,
+					contentLang: 'default',
+					content: LOREM_IPSUM,
+				},
+				{
+					id: randomUUID(),
+					contentId: about.id,
+					contentLang: 'default',
+					content: LOREM_IPSUM,
+				},
+			]).catch(() => {
+				return new Response(
+					JSON.stringify({
+						error: "Page Content Error"
+					}),
+					{
+						status: 400
+					}
+				);
+			})
 
     return new Response();
 }

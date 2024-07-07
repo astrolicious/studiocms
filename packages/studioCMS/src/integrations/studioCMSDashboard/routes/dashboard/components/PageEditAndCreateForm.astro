@@ -1,17 +1,16 @@
 ---
 import { Input, Icon, Select, Tooltip, Textarea, Button, Divider, Card, Option } from "astrolace:components";
-import type { pageDataReponse } from "studiocms:components";
-import { pluginList, type PageDataAndContent } from "studiocms:helpers";
+import type { ContentHelperTempResponse } from "studiocms-dashboard:contentHelper";
+import { pluginList } from "studiocms:helpers";
 
 interface Props {
-    pageData?: pageDataReponse;
-    pageContent?: PageDataAndContent["PageContent"];
+    pageData?: ContentHelperTempResponse;
     livePreviewBox: string;
     isEditPage?: boolean;
 }
 const studioCMSPluginList = pluginList;
 
-const { pageContent, pageData, livePreviewBox, isEditPage=false } = Astro.props;
+const { pageData, livePreviewBox, isEditPage=false } = Astro.props;
 ---
 
 <div class="container">
@@ -108,7 +107,7 @@ const { pageContent, pageData, livePreviewBox, isEditPage=false } = Astro.props;
                     resize="auto"
                     id="content"
                     name="content"
-                    value={pageContent && pageContent.content || ""}
+                    value={pageData && pageData.content || ""}
                     size="large"
                     rows={10}
                     placeholder="Your pages's content in markdown* format."
@@ -116,7 +115,7 @@ const { pageContent, pageData, livePreviewBox, isEditPage=false } = Astro.props;
                     hx-trigger="keyup changed delay:500ms"
                     hx-target="#html-preview">
                     <div slot="label" class="inline flex">Content</div>
-                    {pageContent && pageContent.content}
+                    {pageData && pageData.content}
                 </Textarea>
 
                 <sl-divider></sl-divider>
@@ -141,7 +140,7 @@ const { pageContent, pageData, livePreviewBox, isEditPage=false } = Astro.props;
             name="preload-content"
             hx-get={livePreviewBox}
             hx-trigger="load delay:100ms"
-            hx-target="#html-preview">{pageContent && pageContent.content}
+            hx-target="#html-preview">{pageData && pageData.content}
         </textarea>
     )}
 

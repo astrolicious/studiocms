@@ -1,4 +1,4 @@
-import { PageData, PageContent, SiteConfig, User, db, eq, asc, desc } from 'astro:db';
+import { PageData, PageContent, SiteConfig, User, db, eq, asc, desc, Permissions } from 'astro:db';
 import { AstroError } from 'astro/errors';
 import type { PageDataAndContent } from 'studiocms:helpers';
 import { CMSSiteConfigId } from '../constVars';
@@ -20,9 +20,11 @@ export type ContentHelperTempResponse = {
     package: string;
     title: string;
     description: string;
+    showOnNav: boolean;
     publishedAt: Date;
     updatedAt: Date | null;
     slug: string;
+    contentLang: string | null;
     heroImage: string;
     content: string;
 }
@@ -73,17 +75,41 @@ export async function contentHelper(
         `studioCMS contentHelper Failed to get page data for page ${slug} in package ${packageToGet}` );
     }
 
-    const LangToGet = "default";
+    const langToGet = "default";
 
     const pageContent = await db
         .select().from(PageContent)
         .where(eq(PageContent.contentId, pageData.id)).get();
 
     if(!pageContent) {
-        throw new AstroError(`Page Content not found: ${slug} with language ${LangToGet}`, 
-        `studioCMS contentHelper Failed to get page content for page ${slug} with language ${LangToGet}` );
+        throw new AstroError(`Page Content not found: ${slug} with language ${langToGet}`, 
+        `studioCMS contentHelper Failed to get page content for page ${slug} with language ${langToGet}` );
     }
     return { ...pageData, content: pageContent.content||"Failed to fetch Content" };
+}
+
+export async function getPageById(id: string): Promise<ContentHelperTempResponse> {
+    const pageData = await db
+        .select().from(PageData)
+        .where(eq(PageData.id, id))
+        .get();
+
+    if(!pageData) {
+        return {} as ContentHelperTempResponse;
+    }
+
+    const langToGet = "default";
+
+    const pageContent = await db
+        .select().from(PageContent)
+        .where(eq(PageContent.contentId, pageData.id)).get();
+
+    if(!pageContent) {
+        throw new AstroError(`Page Content not found: ${id} with language ${langToGet}`, 
+        `studioCMS contentHelper Failed to get page content for page ${id} with language ${langToGet}` );
+    }
+    return { ...pageData, content: pageContent.content||"Failed to fetch Content" };
+
 }
 
 /**
@@ -168,4 +194,21 @@ export async function getUserList(): Promise<UserResponse[]> {
     }
 
     return users;
+}
+
+/**
+ * Get permissions list helper function to get a list of all permissions from Astro Studio's Database.
+ * 
+ * @returns An Array of all permissions in the database.
+ */
+export async function getPermissionsList(): Promise<PageDataAndContent["Permissions"][]> {
+    const permissions = await db
+            .select()
+            .from(Permissions);
+
+    if(!permissions) {
+        return [] as PageDataAndContent["Permissions"][];
+    }
+
+    return permissions;
 }

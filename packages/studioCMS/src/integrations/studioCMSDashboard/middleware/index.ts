@@ -34,7 +34,6 @@ export const onRequest = defineMiddleware(async (context, next) => {
 		return next();
 	}
 
-	// Upstream bug? `session.fresh` always seems to be `false`
 	const isSessionFresh = session.expiresAt.getTime() > new Date().getTime();
 	session.fresh = isSessionFresh;
 

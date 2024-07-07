@@ -105,6 +105,18 @@ export async function POST(context: APIContext): Promise<Response> {
     const newUser = await db.select().from(User).where(eq(User.username, username)).get();
 	const hashedPassword = await scryptAsync(password, serverToken, ScryptOpts)
 	const hashedPasswordString = Buffer.from(hashedPassword.buffer).toString();
+
+	if (!newUser) {
+		return new Response(
+			JSON.stringify({
+				error: "User Error"
+			}),
+			{
+				status: 400
+			}
+		);
+	}
+	
 	await db
 		.update(User)
 		.set({ 

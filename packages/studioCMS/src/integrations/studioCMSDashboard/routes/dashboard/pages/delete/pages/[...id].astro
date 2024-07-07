@@ -1,12 +1,11 @@
 ---
-import { PageData, PageContent, SiteConfig, db, eq } from 'astro:db';
+import { PageData, PageContent, db, eq } from 'astro:db';
 import { Layout } from 'studiocms-dashboard:components';
 import Config from 'virtual:studiocms/config';
 import { authHelper, type Locals } from 'studiocms:helpers';
 import { StudioCMSRoutes, getDeleteRoute } from 'studiocms-dashboard:routeMap';
-import type { SiteConfigResponse, pageDataReponse } from 'studiocms:components';
-import { CMSSiteConfigId } from '../../../../../../../constVars';
 import { Alert, Breadcrumb, BreadcrumbItem, Button, Divider, Icon, Input } from 'astrolace:components';
+import { getSiteConfig, getPageById } from 'studiocms-dashboard:contentHelper';
 
 const { dashboardConfig: { developerConfig } } = Config;
 
@@ -21,16 +20,19 @@ const {
     } 
 } = StudioCMSRoutes;
 
-const { slug } = Astro.params;
+const { id } = Astro.params;
 
-const contextConfig: SiteConfigResponse = await db.select().from(SiteConfig).where(eq(SiteConfig.id, CMSSiteConfigId)).get();
-const page: pageDataReponse = await db.select().from(PageData).where(eq(PageData.slug, slug)).get();
+if (!id) {
+	return Astro.redirect(dashboardIndex);
+}
+const contextConfig = await getSiteConfig();
+const page = await getPageById(id);
 
-if (!slug || !page) {
+if (!page) {
 	return Astro.redirect(dashboardIndex);
 }
 
-const deleteURL = await getDeleteRoute(slug);
+const deleteURL = await getDeleteRoute(id);
 const { permissionLevel } = await authHelper(Astro.locals as Locals);
 
 // If the user is not logged in, redirect to the login page
@@ -47,7 +49,6 @@ if ( !developerConfig.testingAndDemoMode ) {
 
 let showSuccessToast = false;
 let showErrorToast = false;
-// let showSlugErrorToast = false;
 
 if (Astro.request.method === 'POST' && !developerConfig.testingAndDemoMode) {
     try {
