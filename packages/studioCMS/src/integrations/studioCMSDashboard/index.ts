@@ -113,11 +113,11 @@ export default defineIntegration({
 							}, {
 								enabled: options.dashboardConfig.dashboardEnabled && !options.dbStartPage,
 								pattern: 'edit/pages/[...id]',
-								entrypoint: resolve('./routes/dashboard/pages/edit/pages/[...id].astro')
+								entrypoint: resolve('./routes/dashboard/pages/edit-pages/[...id].astro')
 							}, {
 								enabled: options.dashboardConfig.dashboardEnabled && !options.dbStartPage,
 								pattern: 'delete/pages/[...id]',
-								entrypoint: resolve('./routes/dashboard/pages/delete/pages/[...id].astro')
+								entrypoint: resolve('./routes/dashboard/pages/delete-pages/[...id].astro')
 							}, { 
 								enabled: options.dashboardConfig.dashboardEnabled && 
 									!options.dbStartPage && 
