@@ -5,9 +5,10 @@ import Config from 'virtual:studiocms/config';
 import { authHelper, type Locals } from 'studiocms:helpers';
 import { randomUUID } from 'node:crypto';
 import { StudioCMSRoutes } from 'studiocms-dashboard:routeMap';
-import { Alert, Breadcrumb, BreadcrumbItem, Icon } from 'astrolace:components';
+import { Alert, Icon } from 'astrolace:components';
 import PageEditAndCreateForm from '../components/PageEditAndCreateForm.astro';
 import { getSiteConfig } from 'studiocms-dashboard:contentHelper';
+import CrumbStack from '../components/CrumbStack.astro';
 
 const { dashboardConfig: { developerConfig } } = Config;
 
@@ -115,16 +116,10 @@ const pageTitle = `New Page | ${contextConfig.title}`;
     title={pageTitle}
     description={contextConfig.description} >
 
-    <div class="flex grow w-full pb-4">
-        <Breadcrumb>
-            <BreadcrumbItem href={dashboardIndex} prefix='columns-gap'>
-                Dashboard
-            </BreadcrumbItem>
-            <BreadcrumbItem href={pageNew}'>
-                Create New Page
-            </BreadcrumbItem>
-        </Breadcrumb>
-    </div>
+    <CrumbStack items={[
+        { href: dashboardIndex, text: 'Dashboard', prefix: 'columns-gap' },
+        { href: pageNew, text: 'Create new Page' }
+    ]} />
 
     <div class="alert-toast">
         { showSuccessToast && (

@@ -4,9 +4,10 @@ import { Layout } from 'studiocms-dashboard:components';
 import Config from 'virtual:studiocms/config';
 import { authHelper, type Locals } from 'studiocms:helpers';
 import { StudioCMSRoutes, getEditRoute } from 'studiocms-dashboard:routeMap';
-import { Alert, Breadcrumb, BreadcrumbItem, Icon } from 'astrolace:components';
+import { Alert, Icon } from 'astrolace:components';
 import PageEditAndCreateForm from '../../components/PageEditAndCreateForm.astro';
 import { getSiteConfig, getPageById } from 'studiocms-dashboard:contentHelper';
+import CrumbStack from '../../components/CrumbStack.astro';
 
 const { dashboardConfig: { developerConfig } } = Config;
 
@@ -105,19 +106,11 @@ const pageTitle = `Edit Page | ${contextConfig.title}`;
         )}
     </div>
 
-    <div class="flex grow w-full">
-        <Breadcrumb>
-            <BreadcrumbItem href={dashboardIndex} prefix='columns-gap'>
-                Dashboard
-            </BreadcrumbItem>
-            <BreadcrumbItem href={pageEdit}'>
-                Existing Pages
-            </BreadcrumbItem>
-            <BreadcrumbItem href={editRoute}'>
-                Edit Page: {pageData.title}
-            </BreadcrumbItem>
-        </Breadcrumb>
-    </div>
+    <CrumbStack items={[
+        { href: dashboardIndex, text: 'Dashboard', prefix: 'columns-gap' },
+        { href: pageEdit, text: 'Existing Pages' },
+        { href: editRoute, text: `Edit Page: ${pageData.title}` }
+    ]} />
 
     <PageEditAndCreateForm 
         pageData={pageData}

@@ -36,7 +36,7 @@ import { Layout } from 'studiocms-dashboard:components';
         <div class="py-8">
           <div class="bg-base-300 p-8 rounded-lg">
 
-          <form method="post" action="/api/setup">
+          <form method="post" action="/api/setup" id="first-time-setup">
 
             <Input name="title" id="title" label='Site Title' />
 
@@ -118,6 +118,7 @@ import type { SlAlert, SlDetails, SlSwitch } from "astrolace:types";
   const localSetupSwitch = document.getElementById('local-setup') as SlSwitch;
   const localAdmin = document.getElementById('local-admin') as SlDetails;
   const oauthAdmin = document.getElementById('oauth-admin') as SlDetails;
+  const firstTimeSetupForm = document.getElementById('first-time-setup') as HTMLFormElement;
 
   // Update the disabled state of the local-admin and oauth-admin details based on the checkbox state
   localSetupSwitch.addEventListener('sl-change', () => {
@@ -130,7 +131,7 @@ import type { SlAlert, SlDetails, SlSwitch } from "astrolace:types";
     }
   })
 
-	document.forms[0]?.addEventListener("submit", async (e) => {
+	firstTimeSetupForm.addEventListener("submit", async (e) => {
 		e.preventDefault();
 		errorMessageElement.innerText = "";
 		const formElement = e.target as HTMLFormElement;
