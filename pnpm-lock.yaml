@@ -12,8 +12,8 @@ importers:
         specifier: 1.8.2
         version: 1.8.2
       '@changesets/cli':
-        specifier: 2.27.6
-        version: 2.27.6
+        specifier: 2.27.7
+        version: 2.27.7
       '@changesets/config':
         specifier: 3.0.1
         version: 3.0.1
@@ -104,7 +104,7 @@ importers:
         version: 0.14.0(@astrojs/db@0.11.7)(astro@4.11.5)
       daisyui:
         specifier: ^4.12.8
-        version: 4.12.8(postcss@8.4.38)
+        version: 4.12.8(postcss@8.4.39)
       htmx.org:
         specifier: ^1.9.12
         version: 1.9.12
@@ -140,7 +140,7 @@ importers:
         version: 1.9.1
       unocss:
         specifier: ^0.61.0
-        version: 0.61.0(postcss@8.4.38)(vite@5.3.1)
+        version: 0.61.0(postcss@8.4.39)(vite@5.3.1)
       unpic:
         specifier: ^3.18.0
         version: 3.18.0
@@ -1067,11 +1067,11 @@ packages:
     dev: true
     optional: true
 
-  /@changesets/apply-release-plan@7.0.3:
-    resolution: {integrity: sha512-klL6LCdmfbEe9oyfLxnidIf/stFXmrbFO/3gT5LU5pcyoZytzJe4gWpTBx3BPmyNPl16dZ1xrkcW7b98e3tYkA==}
+  /@changesets/apply-release-plan@7.0.4:
+    resolution: {integrity: sha512-HLFwhKWayKinWAul0Vj+76jVx1Pc2v55MGPVjZ924Y/ROeSsBMFutv9heHmCUj48lJyRfOTJG5+ar+29FUky/A==}
     dependencies:
       '@babel/runtime': 7.24.5
-      '@changesets/config': 3.0.1
+      '@changesets/config': 3.0.2
       '@changesets/get-version-range-type': 0.4.0
       '@changesets/git': 3.0.0
       '@changesets/should-skip-package': 0.1.0
@@ -1086,12 +1086,12 @@ packages:
       semver: 7.6.2
     dev: true
 
-  /@changesets/assemble-release-plan@6.0.2:
-    resolution: {integrity: sha512-n9/Tdq+ze+iUtjmq0mZO3pEhJTKkku9hUxtUadW30jlN7kONqJG3O6ALeXrmc6gsi/nvoCuKjqEJ68Hk8RbMTQ==}
+  /@changesets/assemble-release-plan@6.0.3:
+    resolution: {integrity: sha512-bLNh9/Lgl1VwkjWZTq8JmRqH+hj7/Yzfz0jsQ/zJJ+FTmVqmqPj3szeKOri8O/hEM8JmHW019vh2gTO9iq5Cuw==}
     dependencies:
       '@babel/runtime': 7.24.5
       '@changesets/errors': 0.2.0
-      '@changesets/get-dependents-graph': 2.1.0
+      '@changesets/get-dependents-graph': 2.1.1
       '@changesets/should-skip-package': 0.1.0
       '@changesets/types': 6.0.0
       '@manypkg/get-packages': 1.1.3
@@ -1104,18 +1104,18 @@ packages:
       '@changesets/types': 6.0.0
     dev: true
 
-  /@changesets/cli@2.27.6:
-    resolution: {integrity: sha512-PB7KS5JkCQ4WSXlnfThn8CXAHVwYxFdZvYTimhi12fls/tzj9iimUhKsYwkrKSbw1AiVlGCZtihj5Wkt6siIjA==}
+  /@changesets/cli@2.27.7:
+    resolution: {integrity: sha512-6lr8JltiiXPIjDeYg4iM2MeePP6VN/JkmqBsVA5XRiy01hGS3y629LtSDvKcycj/w/5Eur1rEwby/MjcYS+e2A==}
     hasBin: true
     dependencies:
       '@babel/runtime': 7.24.5
-      '@changesets/apply-release-plan': 7.0.3
-      '@changesets/assemble-release-plan': 6.0.2
+      '@changesets/apply-release-plan': 7.0.4
+      '@changesets/assemble-release-plan': 6.0.3
       '@changesets/changelog-git': 0.2.0
-      '@changesets/config': 3.0.1
+      '@changesets/config': 3.0.2
       '@changesets/errors': 0.2.0
-      '@changesets/get-dependents-graph': 2.1.0
-      '@changesets/get-release-plan': 4.0.2
+      '@changesets/get-dependents-graph': 2.1.1
+      '@changesets/get-release-plan': 4.0.3
       '@changesets/git': 3.0.0
       '@changesets/logger': 0.1.0
       '@changesets/pre': 2.0.0
@@ -1154,6 +1154,18 @@ packages:
       micromatch: 4.0.5
     dev: true
 
+  /@changesets/config@3.0.2:
+    resolution: {integrity: sha512-cdEhS4t8woKCX2M8AotcV2BOWnBp09sqICxKapgLHf9m5KdENpWjyrFNMjkLqGJtUys9U+w93OxWT0czorVDfw==}
+    dependencies:
+      '@changesets/errors': 0.2.0
+      '@changesets/get-dependents-graph': 2.1.1
+      '@changesets/logger': 0.1.0
+      '@changesets/types': 6.0.0
+      '@manypkg/get-packages': 1.1.3
+      fs-extra: 7.0.1
+      micromatch: 4.0.5
+    dev: true
+
   /@changesets/errors@0.2.0:
     resolution: {integrity: sha512-6BLOQUscTpZeGljvyQXlWOItQyU71kCdGz7Pi8H8zdw6BI0g3m43iL4xKUVPWtG+qrrL9DTjpdn8eYuCQSRpow==}
     dependencies:
@@ -1170,12 +1182,22 @@ packages:
       semver: 7.6.2
     dev: true
 
-  /@changesets/get-release-plan@4.0.2:
-    resolution: {integrity: sha512-rOalz7nMuMV2vyeP7KBeAhqEB7FM2GFPO5RQSoOoUKKH9L6wW3QyPA2K+/rG9kBrWl2HckPVES73/AuwPvbH3w==}
+  /@changesets/get-dependents-graph@2.1.1:
+    resolution: {integrity: sha512-LRFjjvigBSzfnPU2n/AhFsuWR5DK++1x47aq6qZ8dzYsPtS/I5mNhIGAS68IAxh1xjO9BTtz55FwefhANZ+FCA==}
+    dependencies:
+      '@changesets/types': 6.0.0
+      '@manypkg/get-packages': 1.1.3
+      chalk: 2.4.2
+      fs-extra: 7.0.1
+      semver: 7.6.2
+    dev: true
+
+  /@changesets/get-release-plan@4.0.3:
+    resolution: {integrity: sha512-6PLgvOIwTSdJPTtpdcr3sLtGatT+Jr22+cQwEBJBy6wP0rjB4yJ9lv583J9fVpn1bfQlBkDa8JxbS2g/n9lIyA==}
     dependencies:
       '@babel/runtime': 7.24.5
-      '@changesets/assemble-release-plan': 6.0.2
-      '@changesets/config': 3.0.1
+      '@changesets/assemble-release-plan': 6.0.3
+      '@changesets/config': 3.0.2
       '@changesets/pre': 2.0.0
       '@changesets/read': 0.6.0
       '@changesets/types': 6.0.0
@@ -2553,11 +2575,11 @@ packages:
     dependencies:
       autoprefixer: 10.4.19(postcss@8.4.38)
       camelcase: 8.0.0
-      daisyui: 4.12.8(postcss@8.4.38)
+      daisyui: 4.12.8(postcss@8.4.39)
       parsel-js: 1.1.2
       postcss: 8.4.38
       postcss-js: 4.0.1(postcss@8.4.38)
-      unocss: 0.61.0(postcss@8.4.38)(vite@5.3.1)
+      unocss: 0.61.0(postcss@8.4.39)(vite@5.3.1)
     dev: false
 
   /@mdx-js/mdx@3.0.1:
@@ -3509,7 +3531,7 @@ packages:
       sirv: 2.0.4
     dev: false
 
-  /@unocss/postcss@0.61.0(postcss@8.4.38):
+  /@unocss/postcss@0.61.0(postcss@8.4.39):
     resolution: {integrity: sha512-0ZHUeLYu057xL1vXg2coV62ly6zaCgYdA/oHKCMaU9KT0TI49+DE73GouHypRNM5YXfuUPfXhPGGUuFWkAbI1A==}
     engines: {node: '>=14'}
     peerDependencies:
@@ -3521,7 +3543,7 @@ packages:
       css-tree: 2.3.1
       fast-glob: 3.3.2
       magic-string: 0.30.10
-      postcss: 8.4.38
+      postcss: 8.4.39
     dev: false
 
   /@unocss/preset-attributify@0.61.0:
@@ -4561,14 +4583,14 @@ packages:
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
     dev: false
 
-  /daisyui@4.12.8(postcss@8.4.38):
+  /daisyui@4.12.8(postcss@8.4.39):
     resolution: {integrity: sha512-FDdh0z9BsWMI0VeUSwZy6rwp9frEuUgd83SCPOaCYV3iULPzcgTEQT3IlcAbMCrsriu2ziDYZfGOUwPYHkHrfw==}
     engines: {node: '>=16.9.0'}
     dependencies:
       css-selector-tokenizer: 0.8.0
       culori: 3.3.0
       picocolors: 1.0.0
-      postcss-js: 4.0.1(postcss@8.4.38)
+      postcss-js: 4.0.1(postcss@8.4.39)
     transitivePeerDependencies:
       - postcss
     dev: false
@@ -7166,6 +7188,16 @@ packages:
       camelcase-css: 2.0.1
       postcss: 8.4.38
 
+  /postcss-js@4.0.1(postcss@8.4.39):
+    resolution: {integrity: sha512-dDLF8pEO191hJMtlHFPRa8xsizHaM82MLfNkUHdUtVEV3tgTp5oj+8qbEqYM57SLfc74KSbw//4SeJma2LRVIw==}
+    engines: {node: ^12 || ^14 || >= 16}
+    peerDependencies:
+      postcss: ^8.4.21
+    dependencies:
+      camelcase-css: 2.0.1
+      postcss: 8.4.39
+    dev: false
+
   /postcss-load-config@4.0.2(postcss@8.4.38):
     resolution: {integrity: sha512-bSVhyJGL00wMVoPUzAVAnbEoWyqRxkjv64tUl427SKnPrENtq6hJwUojroMz2VB+Q1edmi4IfrAPpami5VVgMQ==}
     engines: {node: '>= 14'}
@@ -8270,7 +8302,7 @@ packages:
     engines: {node: '>= 4.0.0'}
     dev: true
 
-  /unocss@0.61.0(postcss@8.4.38)(vite@5.3.1):
+  /unocss@0.61.0(postcss@8.4.39)(vite@5.3.1):
     resolution: {integrity: sha512-7642v5tHpEpHO9dl9sqYbKT/Ri4X4lmGHhj/znE4uheEfXcptPPiZ1/hVmQVciHUSI8CnQBqDwkZuxNPDG3bTQ==}
     engines: {node: '>=14'}
     peerDependencies:
@@ -8286,7 +8318,7 @@ packages:
       '@unocss/cli': 0.61.0
       '@unocss/core': 0.61.0
       '@unocss/extractor-arbitrary-variants': 0.61.0
-      '@unocss/postcss': 0.61.0(postcss@8.4.38)
+      '@unocss/postcss': 0.61.0(postcss@8.4.39)
       '@unocss/preset-attributify': 0.61.0
       '@unocss/preset-icons': 0.61.0
       '@unocss/preset-mini': 0.61.0
