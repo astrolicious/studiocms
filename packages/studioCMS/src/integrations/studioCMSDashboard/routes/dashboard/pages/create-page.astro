@@ -12,11 +12,7 @@ import { getSiteConfig } from 'studiocms-dashboard:contentHelper';
 const { dashboardConfig: { developerConfig } } = Config;
 
 const { 
-    authLinks: { 
-        loginURL 
-    }, 
     mainLinks: { 
-        userProfile,
         dashboardIndex,
         pageNew,
         livePreviewBox
@@ -30,11 +26,11 @@ const { permissionLevel } = await authHelper(Astro.locals as Locals);
 if ( !developerConfig.testingAndDemoMode ) {
     if ( permissionLevel === "unknown" ) {
         console.log('User is not logged in. Redirecting to login page.');
-        return Astro.redirect(loginURL);
+        return Astro.redirect(StudioCMSRoutes.authLinks.loginURL);
     }
     if ( permissionLevel !== 'admin' && permissionLevel !== 'editor' ) {
         console.log('User is not an admin or editor. Redirecting to profile page.');
-        return Astro.redirect(userProfile);
+        return Astro.redirect(StudioCMSRoutes.mainLinks.userProfile);
     }
 }
 

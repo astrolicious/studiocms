@@ -9,9 +9,6 @@ import { Breadcrumb, BreadcrumbItem, Card, Divider } from 'astrolace:components'
 const { dashboardConfig: { developerConfig } } = Config;
 
 const { 
-    authLinks: {
-        loginURL
-    }, 
     mainLinks: {
         dashboardIndex,
         userProfile
@@ -25,7 +22,7 @@ const { permissionLevel, name, username, currentUserSession, githubURL } = await
 if ( !developerConfig.testingAndDemoMode ) {
     if ( permissionLevel === "unknown" ) {
         console.log('User is not logged in. Redirecting to login page.');
-        return Astro.redirect(loginURL)
+        return Astro.redirect(StudioCMSRoutes.authLinks.loginURL)
     }
 }
 
