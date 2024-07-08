@@ -60,25 +60,25 @@ const pageTitle = `User profile | ${contextConfig.title}`;
             </div>
             <Divider class="divider" />
             <div class="py-2">
-                <text class="text-lg">
-                    <bold>Display Name:</bold> {name}
-                </text>
+                <span class="text-lg">
+                    <strong>Display Name:</strong> {name}
+                </span>
                 <Divider />
-                <text class="text-lg">
-                    <bold>Role:</bold> {toPascalCase(permissionLevel)}
-                </text>
+                <span class="text-lg">
+                    <strong>Role:</strong> {toPascalCase(permissionLevel)}
+                </span>
                 <Divider />
                 { githubURL && (
-                    <text class="text-lg">
-                        <bold>GitHub:</bold> <a class="text-blue" href={githubURL}>{username}</a>
-                    </text>
+                    <span class="text-lg">
+                        <strong>GitHub:</strong> <a class="text-blue" href={githubURL}>{username}</a>
+                    </span>
                 <Divider />
                 )}
-                <text class="text-lg">
+                <span class="text-lg">
                     { currentUserSession && (
-                        <p><bold>Session Expires:</bold> {new Date(currentUserSession.expiresAt).toLocaleString()} </p>
+                        <><strong>Session Expires:</strong> {new Date(currentUserSession.expiresAt).toLocaleString()}</>
                     ) } 
-                </text>
+                </span>
             </div>
         </Card>
 

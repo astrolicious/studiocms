@@ -2,7 +2,7 @@
 import { Permissions, db } from 'astro:db';
 import { Layout } from 'studiocms-dashboard:components';
 import Config from 'virtual:studiocms/config';
-import { authHelper, toPascalCase, type Locals, type PageDataAndContent } from 'studiocms:helpers';
+import { authHelper, toPascalCase, type Locals } from 'studiocms:helpers';
 import { StudioCMSRoutes } from 'studiocms-dashboard:routeMap'
 import { Alert, Breadcrumb, BreadcrumbItem, Button, Divider, Icon, Input, Radio, RadioGroup } from 'astrolace:components';
 import { getSiteConfig, getPermissionsList } from 'studiocms-dashboard:contentHelper';
@@ -137,9 +137,9 @@ const pageTitle = `Site Config | ${contextConfig.title}`;
         </div>
 
         <div class="py-2">
-            <text>
+            <span>
                 Note: To delete admins you can do this from your Astro Studio Dashboard.
-            </text>
+            </span>
         </div>
 
         <div class="py-2 grow gap-2">

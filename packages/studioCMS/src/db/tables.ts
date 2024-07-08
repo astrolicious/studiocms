@@ -1,5 +1,4 @@
-// @ts-expect-error - This is a missing type definition for the `astro:db` import since its a virtual module during Astro Runtime
-import { NOW, column, defineTable, sql } from 'astro:db';
+import { NOW, column, defineTable } from 'astro:db';
 
 export const sessionTable = defineTable({
 	columns: {
