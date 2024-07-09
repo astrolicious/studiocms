@@ -82,11 +82,7 @@ export default defineIntegration({
 								pattern: 'done/', 
 								entrypoint: resolve('./routes/databaseSetup/done.astro'),
 								_non_dashboard: true
-							}, { 
-								enabled: options.dashboardConfig.dashboardEnabled && !options.dbStartPage,
-								pattern: 'api/liverender', 
-								entrypoint: resolve('./routes/api/LiveRender.astro') 
-							}, {
+							},  {
 								enabled: options.dashboardConfig.dashboardEnabled && !options.dbStartPage,
 								pattern: '/',
 								entrypoint: resolve('./routes/dashboard/pages/index.astro')
@@ -130,9 +126,11 @@ export default defineIntegration({
 									options.dashboardConfig.AuthConfig.enabled,
 								pattern: 'logout/',
 								entrypoint: resolve('./routes/authroutes/logout.ts')
-							}, 
-							// API Endpoints
-							{
+							}, { 
+								enabled: options.dashboardConfig.dashboardEnabled && !options.dbStartPage,
+								pattern: 'api/liverender', 
+								entrypoint: resolve('./routes/api/LiveRender.astro') 
+							}, {
 								enabled: options.dashboardConfig.dashboardEnabled && 
 									!options.dbStartPage && 
 									options.dashboardConfig.AuthConfig.enabled,
