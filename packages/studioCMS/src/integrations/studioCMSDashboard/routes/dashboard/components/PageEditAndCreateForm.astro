@@ -7,10 +7,16 @@ interface Props {
     pageData?: ContentHelperTempResponse;
     livePreviewBox: string;
     isEditPage?: boolean;
+    formActionURL?: string;
 }
 const studioCMSPluginList = pluginList;
 
-const { pageData, livePreviewBox, isEditPage=false } = Astro.props;
+const { 
+    pageData, 
+    livePreviewBox, 
+    isEditPage=false, 
+    //formActionURL
+} = Astro.props;
 ---
 
 <div class="container">
@@ -19,6 +25,7 @@ const { pageData, livePreviewBox, isEditPage=false } = Astro.props;
 
     <div class="py-2 flex justify-center">
 
+            <!-- <form method="POST" class="w-full flex flex-col gap-2" action={formActionURL}> -->
             <form method="POST" class="w-full flex flex-col gap-2">
                 <Input
                     id="title"

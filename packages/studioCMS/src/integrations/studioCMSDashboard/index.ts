@@ -130,7 +130,40 @@ export default defineIntegration({
 									options.dashboardConfig.AuthConfig.enabled,
 								pattern: 'logout/',
 								entrypoint: resolve('./routes/authroutes/logout.ts')
-							}
+							}, 
+							// API Endpoints
+							{
+								enabled: options.dashboardConfig.dashboardEnabled && 
+									!options.dbStartPage && 
+									options.dashboardConfig.AuthConfig.enabled,
+								pattern: "api/config/site",
+								entrypoint: resolve('./routes/api/config/site.ts')
+							},
+							//  {
+							// 	enabled: options.dashboardConfig.dashboardEnabled && 
+							// 		!options.dbStartPage && 
+							// 		options.dashboardConfig.AuthConfig.enabled,
+							// 	pattern: "api/config/admin",
+							// 	entrypoint: resolve('./routes/api/config/admin.ts')
+							// }, {
+							// 	enabled: options.dashboardConfig.dashboardEnabled && 
+							// 		!options.dbStartPage && 
+							// 		options.dashboardConfig.AuthConfig.enabled,
+							// 	pattern: "api/pages/create",
+							// 	entrypoint: resolve('./routes/api/pages/create.ts')
+							// }, {
+							// 	enabled: options.dashboardConfig.dashboardEnabled && 
+							// 		!options.dbStartPage && 
+							// 		options.dashboardConfig.AuthConfig.enabled,
+							// 	pattern: "api/pages/delete",
+							// 	entrypoint: resolve('./routes/api/pages/delete.ts')
+							// }, {
+							// 	enabled: options.dashboardConfig.dashboardEnabled && 
+							// 		!options.dbStartPage && 
+							// 		options.dashboardConfig.AuthConfig.enabled,
+							// 	pattern: "api/pages/edit",
+							// 	entrypoint: resolve('./routes/api/pages/edit.ts')
+							// }
 						]
 					});
 

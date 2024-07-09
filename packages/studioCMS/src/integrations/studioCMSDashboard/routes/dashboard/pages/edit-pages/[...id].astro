@@ -9,6 +9,7 @@ import PageEditAndCreateForm from '../../components/PageEditAndCreateForm.astro'
 import { getSiteConfig, getPageById } from 'studiocms-dashboard:contentHelper';
 import CrumbStack from '../../components/CrumbStack.astro';
 import { makePageTitle } from '../../../../utils/makePageTitle';
+import { logger } from '@it-astro:logger:StudioCMS';
 
 const { dashboardConfig: { developerConfig } } = Config;
 
@@ -37,7 +38,7 @@ const { permissionLevel } = await authHelper(Astro.locals as Locals);
 
 // Check Permission Level
 if ( permissionLevel !== 'admin' && permissionLevel !== 'editor' ) {
-    console.log('User is not an admin or editor. Redirecting to profile page.');
+    logger.info('User is not an admin or editor. Redirecting to profile page.');
     return Astro.redirect(StudioCMSRoutes.mainLinks.userProfile);
 }
 

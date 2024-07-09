@@ -110,6 +110,7 @@ import { makePageTitle } from '../../utils/makePageTitle';
 
 <script>
 import type { SlAlert, SlDetails, SlSwitch } from "astrolace:types";
+import { logger } from '@it-astro:logger:StudioCMS';
 
 	const alertElement = document.getElementById("form-error") as SlAlert;
   const errorMessageElement = document.getElementById("form-error-message")!;
@@ -141,12 +142,14 @@ import type { SlAlert, SlDetails, SlSwitch } from "astrolace:types";
 		});
 		if (response.ok) {
       successMessageElement.innerText = "Successfully Seeded Database! Redirecting...";
+      logger.info('First Time Setup Success: Successfully Seeded Database');
       successAlertElement.toast();
       setTimeout(() => {
         window.location.href = "/done";
       }, 1000)
 		} else {
 			errorMessageElement.innerText = (await response.json()).error;
+      logger.error(`First Time Setup Error: ${errorMessageElement.innerText}`);
       alertElement.toast();
 		}
 	});
@@ -154,6 +157,6 @@ import type { SlAlert, SlDetails, SlSwitch } from "astrolace:types";
 
 <style>
   .textlabelinput {
-    @apply: text-xl font-bold flex items-center gap-2 pb-2;
+    --uno-apply: "text-xl font-bold flex items-center gap-2 pb-2";
   }
 </style>

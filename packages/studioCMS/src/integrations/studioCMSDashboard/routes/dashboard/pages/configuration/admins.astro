@@ -8,6 +8,7 @@ import { Alert, Button, Divider, Icon, Input, Radio, RadioGroup } from 'astrolac
 import { getSiteConfig, getPermissionsList } from 'studiocms-dashboard:contentHelper';
 import CrumbStack from '../../components/CrumbStack.astro';
 import { makePageTitle } from '../../../../utils/makePageTitle';
+import { logger } from '@it-astro:logger:StudioCMS';
 
 const { dashboardConfig: { developerConfig } } = Config;
 
@@ -25,7 +26,7 @@ const { permissionLevel } = await authHelper(Astro.locals as Locals);
 
 // Check Permission Level
 if ( permissionLevel !== 'admin' ) {
-    console.log('User is not an admin. Redirecting to profile page.');
+    logger.info('User is not an admin. Redirecting to profile page.');
     return Astro.redirect(StudioCMSRoutes.mainLinks.userProfile);
 }
 

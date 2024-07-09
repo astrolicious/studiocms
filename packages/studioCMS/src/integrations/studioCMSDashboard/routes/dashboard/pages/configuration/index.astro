@@ -1,22 +1,16 @@
 ---
-import { SiteConfig, db, eq } from 'astro:db';
 import { Layout } from 'studiocms-dashboard:components';
-import Config from 'virtual:studiocms/config';
 import { authHelper, type Locals } from 'studiocms:helpers';
 import { StudioCMSRoutes } from 'studiocms-dashboard:routeMap'
 import { Alert, Button, Divider, Icon, Input } from 'astrolace:components';
 import { getSiteConfig } from 'studiocms-dashboard:contentHelper';
 import CrumbStack from '../../components/CrumbStack.astro';
 import { makePageTitle } from '../../../../utils/makePageTitle';
-
-const { dashboardConfig: { developerConfig } } = Config;
+import { logger } from '@it-astro:logger:StudioCMS';
 
 const { 
-    mainLinks: { 
-        dashboardIndex,
-        siteConfiguration,
-        configurationAdmins
-    } 
+    mainLinks: { dashboardIndex, siteConfiguration, configurationAdmins },
+    endpointLinks: { config: { siteConfig: siteConfigEndpoint } }
 } = StudioCMSRoutes;
 
 const contextConfig = await getSiteConfig();
@@ -24,37 +18,8 @@ const { permissionLevel } = await authHelper(Astro.locals as Locals);
 
 // Check Permission Level
 if ( permissionLevel !== 'admin' ) {
-    console.log('User is not an admin. Redirecting to profile page.');
+    logger.info('User is not an admin. Redirecting to profile page.');
     return Astro.redirect(StudioCMSRoutes.mainLinks.userProfile);
-}
-
-let showSuccessToast = false;
-let showErrorToast = false;
-
-if (Astro.request.method === 'POST' && !developerConfig.testingAndDemoMode) {
-    try {
-        const data = await Astro.request.formData();
-        const title = data.get('title');
-        const description = data.get('description');
-        // Update the site configuration
-        await db
-            .update(SiteConfig)
-            .set({
-                title: title as string,
-                description: description as string,
-            })
-            .where(eq(SiteConfig.id, 1))
-            .then(() => {
-                showSuccessToast = true;
-            })
-            .catch(() => {
-                showErrorToast = true;
-            });
-    } catch (error) {
-        if (error instanceof Error) {
-            showErrorToast = true;
-        }
-    }
 }
 ---
 
@@ -68,22 +33,6 @@ if (Astro.request.method === 'POST' && !developerConfig.testingAndDemoMode) {
         { href: siteConfiguration, text: 'Site Configuration' }
     ]} />
 
-    <div class="alert-toast">
-        { showSuccessToast && (
-        <Alert variant="success" duration={3000} open closable>
-            <Icon slot="icon" name="check2-circle"></Icon>
-            <strong>Site Config Updated</strong>
-            <p>You can safely leave this page now.</p>
-        </Alert>
-        )}
-        { showErrorToast && (
-        <Alert variant="danger" duration={3000} open closable>
-            <Icon slot="icon" name="exclamation-octagon"></Icon>
-            <strong>Error Updating Site Config</strong>
-            <p>There was an Error editing the site config. Please try again.</p>
-        </Alert>
-        )}
-    </div>
     <div class="container flex flex-col">
 
         <h1 class="text-5xl font-bold grow py-8">Site Configuration</h1>
@@ -93,7 +42,7 @@ if (Astro.request.method === 'POST' && !developerConfig.testingAndDemoMode) {
         </div>
 
         <div class="py-2 grow">
-            <form method="post" enctype="multipart/form-data" >
+            <form method="post" id="config-form" enctype="multipart/form-data" action={siteConfigEndpoint}>
 
                 <Input
                     id="title"
@@ -103,7 +52,7 @@ if (Astro.request.method === 'POST' && !developerConfig.testingAndDemoMode) {
                     value={contextConfig.title} 
                     label='Site Title'
                     required>
-                    <Icon name="globe2" slot="prefix"></Icon> {/* Bug in Astrolace, need to add a prefix and suffix slot to the Icon Compomponent */}
+                    <Icon name="globe2" slot="prefix"></Icon>
                 </Input>
 
                 <Divider />
@@ -116,7 +65,7 @@ if (Astro.request.method === 'POST' && !developerConfig.testingAndDemoMode) {
                     value={contextConfig.description} 
                     label='Description'
                     required>
-                    <Icon name="line" slot="prefix"></Icon> {/* Bug in Astrolace, need to add a prefix and suffix slot to the Icon Compomponent */}
+                    <Icon name="line" slot="prefix"></Icon>
                 </Input>
     
                 <div class="py-4 text-center">
@@ -125,5 +74,49 @@ if (Astro.request.method === 'POST' && !developerConfig.testingAndDemoMode) {
     
             </form>
         </div>
+
+
+      <Alert id="form-error" variant="danger" duration={4000} closable>
+        <Icon slot="icon" name="exclamation-octagon" />
+        <strong>Something went wrong!</strong>
+        <Divider />
+        <div id="form-error-message"></div>
+      </Alert>
+      <Alert id="form-success" variant="success" duration={4000} closable>
+        <Icon slot="icon" name="check2-circle" />
+        <strong>Success!</strong>
+        <Divider />
+        <div id="form-success-message"></div>
+      </Alert>
+
     </div>
 </Layout>
+
+<script>
+import type { SlAlert } from "astrolace:types";
+
+    const configForm = document.getElementById('config-form') as HTMLFormElement;
+    const formError = document.getElementById('form-error') as SlAlert;
+    const formErrorMessage = document.getElementById('form-error-message') as HTMLDivElement;
+    const formSuccess = document.getElementById('form-success') as SlAlert;
+    const formSuccessMessage = document.getElementById('form-success-message') as HTMLDivElement;
+
+    configForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const formElement = e.target as HTMLFormElement;
+        const response = await fetch(formElement.action, {
+            method: formElement.method,
+            body: new FormData(formElement)
+        });
+
+        if (response.ok) {
+            formSuccessMessage.innerText = (await response.json()).message;
+            formSuccess.toast();
+        } else {
+            formErrorMessage.innerText = (await response.json()).error;
+            formError.toast();
+        }
+
+    })
+</script>
