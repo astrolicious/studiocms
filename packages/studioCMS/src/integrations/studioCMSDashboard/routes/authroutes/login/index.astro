@@ -57,14 +57,14 @@ if (locals.isLoggedIn) {
 
               <Divider />
 
-            <div style="text-align:center">
+            <div class="text-center">
               <Button variant="primary" type="submit" outline>Continue <Icon slot="suffix" library="mdi" name="login"/></Button>
             </div>
 
           </form>
 
           {allowUserRegistration && (
-            <div class="py-4" style="text-align:center">
+            <div class="py-4 text-center">
                 <a href={signupURL} class="text-lg">Don't have an account? Register here!</a>
             </div>
           )}
