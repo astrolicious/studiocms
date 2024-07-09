@@ -1,6 +1,5 @@
 ---
 import { Layout, WebVitalPanel } from 'studiocms-dashboard:components';
-import Config from 'virtual:studiocms/config';
 import { authHelper, type Locals } from 'studiocms:helpers';
 import { StudioCMSRoutes } from 'studiocms-dashboard:routeMap';
 import { studioCMSSocials } from "../layouts/studiocms-socials";
@@ -9,6 +8,7 @@ import { Divider, Card, Alert, Button, Icon, Details } from 'astrolace:component
 import { getSiteConfig } from 'studiocms-dashboard:contentHelper';
 import BetaFeedback from '../components/BetaFeedback.astro';
 import CrumbStack from '../components/CrumbStack.astro';
+import { makePageTitle } from '../../../utils/makePageTitle';
 
 const { 
     mainLinks: {
@@ -17,31 +17,22 @@ const {
 } = StudioCMSRoutes;
 
 const { github, discord } = studioCMSSocials;
-const { dashboardConfig: { developerConfig } } = Config;
 const contextConfig = await getSiteConfig();
 const { permissionLevel } = await authHelper(Astro.locals as Locals);
 
 // Get the web vitals
 const webVitals = await getWebVitals();
 
-// If the user is not logged in, redirect to the login page
-if ( !developerConfig.testingAndDemoMode ) {
-    if ( permissionLevel === "unknown" ) {
-        console.log('User is not logged in. Redirecting to login page.');
-        return Astro.redirect(StudioCMSRoutes.authLinks.loginURL);
-    }
-    if ( permissionLevel !== 'admin' && permissionLevel !== 'editor' ) {
+// Check Permission Level
+if ( permissionLevel !== 'admin' && permissionLevel !== 'editor' ) {
         console.log('User is not an admin or editor. Redirecting to profile page.');
         return Astro.redirect(StudioCMSRoutes.mainLinks.userProfile);
-    }
 }
-
-const pageTitle = `Dashboard | ${contextConfig.title}`;
 ---
 
 <Layout 
     sideBarActiveItemID="dashboard" 
-    title={pageTitle}
+    title={makePageTitle("Dashboard", contextConfig)}
     description={contextConfig.description} >
 
     <CrumbStack items={[

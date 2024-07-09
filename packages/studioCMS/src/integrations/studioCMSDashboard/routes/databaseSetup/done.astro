@@ -2,6 +2,7 @@
 import { Code } from 'astro:components';
 import { Card, Divider } from 'astrolace:components';
 import { Layout } from 'studiocms-dashboard:components';
+import { makePageTitle } from '../../utils/makePageTitle';
 
 const codeBlob = `import { defineConfig } from "astro/config";
 import astroStudioCMS from "@astrolicious/studiocms";
@@ -18,7 +19,7 @@ export default defineConfig({
 	],
 });`
 ---
-<Layout title='Setup Done | StudioCMS' description="Welcome to StudioCMS" sideBarActiveItemID='start' includeSidebar={false}>
+<Layout title={makePageTitle("Setup Done", {title: "StudioCMS Dashboard"})} description="Welcome to StudioCMS" sideBarActiveItemID='start' includeSidebar={false}>
 	<div class="container lg:max-w-[50vw]">
         <div class="py-8">
           <div class="bg-base-300 p-8 md:p-12 lg:p-16 rounded-lg">

@@ -3,6 +3,16 @@ import { defineMiddleware } from 'astro/middleware';
 import { verifyRequestOrigin } from 'lucia';
 import { lucia } from "studiocms-dashboard:auth";
 import type { Locals } from 'studiocms:helpers';
+import Config from 'virtual:studiocms/config';
+
+const { 
+	dashboardConfig: { 
+		developerConfig: { testingAndDemoMode },
+		dashboardRouteOverride, 
+	} 
+} = Config;
+
+const fixSlashes = (str: string) => str.replace(/^\/+|\/+$/g, '');
 
 export const onRequest = defineMiddleware(async (context, next) => {
 	if (context.request.method !== 'GET') {
@@ -56,5 +66,30 @@ export const onRequest = defineMiddleware(async (context, next) => {
 
 	locals.session = session;
 	locals.user = user;
+
+	const dashboardRoute = dashboardRouteOverride ? fixSlashes(dashboardRouteOverride) : 'dashboard';
+
+	if (
+		context.url.pathname.startsWith(`/${dashboardRoute}`) && 
+		(
+			!context.url.pathname.startsWith(`/${dashboardRoute}/login`) || 
+			!context.url.pathname.startsWith(`/${dashboardRoute}/signup`)
+		)
+	) {
+		if ( !testingAndDemoMode ) {
+			if (!locals.isLoggedIn) {
+				console.log('User is not logged in... Redirecting to login page');
+				return new Response(null, {
+					status: 302,
+					headers: {
+						Location: '/dashboard/login',
+					},
+				});
+			}
+		} else {
+			console.log('Testing and Demo mode is enabled. Skipping login check');
+		}
+	}
+
 	return next();
 });

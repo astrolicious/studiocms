@@ -1,13 +1,12 @@
 ---
 import { Layout, FormattedDate } from 'studiocms-dashboard:components';
-import Config from 'virtual:studiocms/config';
 import { authHelper, pluginList, type Locals } from 'studiocms:helpers';
 import { StudioCMSRoutes, getEditRoute, getDeleteRoute } from 'studiocms-dashboard:routeMap';
 import { Button } from 'astrolace:components';
 import { getSiteConfig, getPageList } from 'studiocms-dashboard:contentHelper';
 import CrumbStack from '../components/CrumbStack.astro';
-
-const { dashboardConfig: { developerConfig: { testingAndDemoMode } } } = Config;
+import { fixPackageLabel } from '../../../utils/pageListPackageLabel';
+import { makePageTitle } from '../../../utils/makePageTitle';
 
 const { 
     mainLinks: { 
@@ -20,35 +19,16 @@ const contextConfig = await getSiteConfig();
 const pages = await getPageList();
 const { permissionLevel } = await authHelper(Astro.locals as Locals);
 
-// If the user is not logged in, redirect to the login page
-if ( !testingAndDemoMode ) {
-    if ( permissionLevel === "unknown" ) {
-        console.log('User is not logged in. Redirecting to login page.');
-        return Astro.redirect(StudioCMSRoutes.authLinks.loginURL);
-    }
-    if ( permissionLevel !== 'admin' && permissionLevel !== 'editor' ) {
-        console.log('User is not an admin or editor. Redirecting to profile page.');
-        return Astro.redirect(StudioCMSRoutes.mainLinks.userProfile);
-    }
+// Check Permission Level
+if ( permissionLevel !== 'admin' && permissionLevel !== 'editor' ) {
+    console.log('User is not an admin or editor. Redirecting to profile page.');
+    return Astro.redirect(StudioCMSRoutes.mainLinks.userProfile);
 }
-
-const fixPackageLabel = ( packageName: string ) => {
-    const PluginLabels = Array.from(pluginList.values())
-
-    for (const plugin of PluginLabels) {
-        if ( plugin.name === packageName ) {
-            return plugin.label;
-        }
-    }
-    return null;
-}
-
-const pageTitle = `Existing Pages | ${contextConfig.title}`;
 ---
 
 <Layout 
     sideBarActiveItemID="edit-pages" 
-    title={pageTitle}
+    title={makePageTitle("Existing Pages", contextConfig)}
     description={contextConfig.description} >
 
     <CrumbStack items={[
@@ -81,7 +61,7 @@ const pageTitle = `Existing Pages | ${contextConfig.title}`;
                                             {page.title}
                                         </th>
                                         <td class="px-6 py-4">
-                                            {fixPackageLabel(page.package)}
+                                            {fixPackageLabel(page.package, pluginList)}
                                         </td>
                                         <td class="px-6 py-4">
                                             <FormattedDate date={page.publishedAt}/>

@@ -7,6 +7,7 @@ import { StudioCMSRoutes } from 'studiocms-dashboard:routeMap'
 import { Alert, Button, Divider, Icon, Input } from 'astrolace:components';
 import { getSiteConfig } from 'studiocms-dashboard:contentHelper';
 import CrumbStack from '../../components/CrumbStack.astro';
+import { makePageTitle } from '../../../../utils/makePageTitle';
 
 const { dashboardConfig: { developerConfig } } = Config;
 
@@ -21,16 +22,10 @@ const {
 const contextConfig = await getSiteConfig();
 const { permissionLevel } = await authHelper(Astro.locals as Locals);
 
-// If the user is not logged in, redirect to the login page
-if ( !developerConfig.testingAndDemoMode ) {
-    if ( permissionLevel === "unknown" ) {
-        console.log('User is not logged in. Redirecting to login page.');
-        return Astro.redirect(StudioCMSRoutes.authLinks.loginURL);
-    }
-    if ( permissionLevel !== 'admin' ) {
-        console.log('User is not an admin. Redirecting to profile page.');
-        return Astro.redirect(StudioCMSRoutes.mainLinks.userProfile);
-    }
+// Check Permission Level
+if ( permissionLevel !== 'admin' ) {
+    console.log('User is not an admin. Redirecting to profile page.');
+    return Astro.redirect(StudioCMSRoutes.mainLinks.userProfile);
 }
 
 let showSuccessToast = false;
@@ -61,14 +56,11 @@ if (Astro.request.method === 'POST' && !developerConfig.testingAndDemoMode) {
         }
     }
 }
-
-
-const pageTitle = `Site Config | ${contextConfig.title}`;
 ---
 
 <Layout 
     sideBarActiveItemID="site-config" 
-    title={pageTitle}
+    title={makePageTitle("Site Config", contextConfig)}
     description={contextConfig.description} >
 
     <CrumbStack items={[

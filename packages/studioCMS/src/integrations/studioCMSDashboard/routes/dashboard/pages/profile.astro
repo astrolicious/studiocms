@@ -1,13 +1,11 @@
 ---
 import { Layout } from 'studiocms-dashboard:components';
 import { getSiteConfig } from 'studiocms-dashboard:contentHelper';
-import Config from 'virtual:studiocms/config';
 import { authHelper, toPascalCase, type Locals } from 'studiocms:helpers';
 import { StudioCMSRoutes } from 'studiocms-dashboard:routeMap';
 import { Card, Divider } from 'astrolace:components';
 import CrumbStack from '../components/CrumbStack.astro';
-
-const { dashboardConfig: { developerConfig } } = Config;
+import { makePageTitle } from '../../../utils/makePageTitle';
 
 const { 
     mainLinks: {
@@ -18,22 +16,11 @@ const {
 
 const contextConfig = await getSiteConfig();
 const { permissionLevel, name, username, currentUserSession, githubURL } = await authHelper(Astro.locals as Locals);
-
-// If the user is not logged in, redirect to the login page
-if ( !developerConfig.testingAndDemoMode ) {
-    if ( permissionLevel === "unknown" ) {
-        console.log('User is not logged in. Redirecting to login page.');
-        return Astro.redirect(StudioCMSRoutes.authLinks.loginURL)
-    }
-}
-
-
-const pageTitle = `User profile | ${contextConfig.title}`;
 ---
 
 <Layout 
     sideBarActiveItemID="profile" 
-    title={pageTitle}
+    title={makePageTitle("User Profile", contextConfig)}
     description={contextConfig.description} >
 
     <CrumbStack items={[

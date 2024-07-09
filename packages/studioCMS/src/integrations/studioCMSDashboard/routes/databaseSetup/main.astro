@@ -1,10 +1,11 @@
 ---
 import { Alert, Button, Card, Details, Divider, Icon, Input, Switch } from 'astrolace:components';
 import { Layout } from 'studiocms-dashboard:components';
+import { makePageTitle } from '../../utils/makePageTitle';
 
 ---
 
-<Layout title='Welcome | StudioCMS' description="Welcome to StudioCMS" sideBarActiveItemID='start' includeSidebar={false}>
+<Layout title={makePageTitle("Welcome", {title: "StudioCMS"})} description="Welcome to StudioCMS" sideBarActiveItemID='start' includeSidebar={false}>
   <div class="container justify-center items-center px-12 w-[100vw]">
 
       <div class="text-5xl font-bold pb-4">Welcome to StudioCMS</div>
