@@ -1,48 +1,68 @@
-import type { APIContext } from "astro";
-import { db, eq, SiteConfig } from "astro:db";
-import { CMSSiteConfigId } from "../../../../../constVars";
+import type { APIContext } from 'astro';
+import { db, eq, SiteConfig } from 'astro:db';
+import { CMSSiteConfigId } from '../../../../../constVars';
 import Config from 'virtual:studiocms/config';
 import { logger } from '@it-astro:logger:StudioCMS';
-import { simpleResponse } from "../../../utils/simpleResponse";
+import { simpleResponse } from '../../../utils/simpleResponse';
+import { authHelper, type Locals } from 'studiocms:helpers';
 
-const { dashboardConfig: { developerConfig: { testingAndDemoMode } } } = Config;
+const {
+	dashboardConfig: {
+		developerConfig: { testingAndDemoMode },
+	},
+} = Config;
 
 export async function POST(context: APIContext): Promise<Response> {
+	// Check if testing and demo mode is enabled
+	if (testingAndDemoMode) {
+		logger.warn('Testing and demo mode is enabled, this action is disabled.');
+		return simpleResponse(400, 'Testing and demo mode is enabled, this action is disabled.');
+	}
 
-    // Check if testing and demo mode is enabled
-    if (testingAndDemoMode) {
-        logger.warn("Testing and demo mode is enabled, this action is disabled.");
-        return simpleResponse(400, "Testing and demo mode is enabled, this action is disabled.");
-    }
+	// Map Locals
+	const locals = context.locals as Locals;
 
-    // Get form data
-    const formData = await context.request.formData();
-    const title = formData.get("title")?.toString();
-    const description = formData.get("description")?.toString();
+	// Check if user is logged in
+	if (!locals.isLoggedIn) {
+		return simpleResponse(403, 'Unauthorized');
+	}
 
-    // Check if title and description are Exists
-    if (!title || !description) {
-        logger.error("Invalid title or description");
-        return simpleResponse(400, "Invalid title or description");
-    }
+	// Check if user has permission
+	if (locals.isLoggedIn) {
+		const { permissionLevel } = await authHelper(locals);
+		if (permissionLevel !== 'admin') {
+			return simpleResponse(403, 'Unauthorized');
+		}
+	}
 
-    // Update Database
-    try {
-        await db.update(SiteConfig)
-                .set({ title, description })
-                .where(eq(SiteConfig.id, CMSSiteConfigId))
-                .returning();
-                
-    } catch (error) {
-        // Log error
-        if (error instanceof Error) {
-            logger.error(error.message);
-        }
-        // Return Error Response
-        return simpleResponse(500, "Error updating site config");
-    }
+	// Get form data
+	const formData = await context.request.formData();
+	const title = formData.get('title')?.toString();
+	const description = formData.get('description')?.toString();
 
-    // Return Response
-    logger.info("Site config updated");
-    return simpleResponse(200, "Site config updated");
+	// Check if title and description exists
+	if (!title || !description) {
+		logger.error('Invalid title or description');
+		return simpleResponse(400, 'Invalid title or description');
+	}
+
+	// Update Database
+	try {
+		await db
+			.update(SiteConfig)
+			.set({ title, description })
+			.where(eq(SiteConfig.id, CMSSiteConfigId))
+			.returning();
+	} catch (error) {
+		// Log error
+		if (error instanceof Error) {
+			logger.error(error.message);
+		}
+		// Return Error Response
+		return simpleResponse(500, 'Error updating site config');
+	}
+
+	// Return Response
+	logger.info('Site config updated');
+	return simpleResponse(200, 'Site config updated');
 }

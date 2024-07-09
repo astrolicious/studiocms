@@ -9,11 +9,8 @@ import { fixPackageLabel } from '../../../utils/pageListPackageLabel';
 import { makePageTitle } from '../../../utils/makePageTitle';
 import { logger } from '@it-astro:logger:StudioCMS';
 
-const { 
-    mainLinks: { 
-        dashboardIndex,
-        pageEdit,
-    } 
+const {
+	mainLinks: { dashboardIndex, pageEdit },
 } = StudioCMSRoutes;
 
 const contextConfig = await getSiteConfig();
@@ -21,9 +18,9 @@ const pages = await getPageList();
 const { permissionLevel } = await authHelper(Astro.locals as Locals);
 
 // Check Permission Level
-if ( permissionLevel !== 'admin' && permissionLevel !== 'editor' ) {
-    logger.info('User is not an admin or editor. Redirecting to profile page.');
-    return Astro.redirect(StudioCMSRoutes.mainLinks.userProfile);
+if (permissionLevel !== 'admin' && permissionLevel !== 'editor') {
+	logger.info('User is not an admin or editor. Redirecting to profile page.');
+	return Astro.redirect(StudioCMSRoutes.mainLinks.userProfile);
 }
 ---
 

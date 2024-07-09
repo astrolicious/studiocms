@@ -1,22 +1,27 @@
 ---
-import { Input, Icon, Select, Tooltip, Textarea, Button, Divider, Card, Option } from "astrolace:components";
-import type { ContentHelperTempResponse } from "studiocms-dashboard:contentHelper";
-import { pluginList } from "studiocms:helpers";
+import {
+	Input,
+	Icon,
+	Select,
+	Tooltip,
+	Textarea,
+	Button,
+	Divider,
+	Card,
+	Option,
+} from 'astrolace:components';
+import type { ContentHelperTempResponse } from 'studiocms-dashboard:contentHelper';
+import { pluginList } from 'studiocms:helpers';
 
 interface Props {
-    pageData?: ContentHelperTempResponse;
-    livePreviewBox: string;
-    isEditPage?: boolean;
-    formActionURL?: string;
+	pageData?: ContentHelperTempResponse;
+	livePreviewBox: string;
+	isEditPage?: boolean;
+	formActionURL?: string;
 }
 const studioCMSPluginList = pluginList;
 
-const { 
-    pageData, 
-    livePreviewBox, 
-    isEditPage=false, 
-    //formActionURL
-} = Astro.props;
+const { pageData, livePreviewBox, isEditPage = false, formActionURL: action } = Astro.props;
 ---
 
 <div class="container">
@@ -25,8 +30,7 @@ const {
 
     <div class="py-2 flex justify-center">
 
-            <!-- <form method="POST" class="w-full flex flex-col gap-2" action={formActionURL}> -->
-            <form method="POST" class="w-full flex flex-col gap-2">
+            <form method="POST" class="w-full flex flex-col gap-2" action={action}>
                 <Input
                     id="title"
                     name="title"

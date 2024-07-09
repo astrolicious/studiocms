@@ -10,13 +10,12 @@ import CrumbStack from '../../components/CrumbStack.astro';
 import { makePageTitle } from '../../../../utils/makePageTitle';
 import { logger } from '@it-astro:logger:StudioCMS';
 
-const { dashboardConfig: { developerConfig } } = Config;
+const {
+	dashboardConfig: { developerConfig },
+} = Config;
 
-const { 
-    mainLinks: { 
-        dashboardIndex,
-        pageEdit
-    } 
+const {
+	mainLinks: { dashboardIndex, pageEdit },
 } = StudioCMSRoutes;
 
 const { id } = Astro.params;
@@ -35,54 +34,54 @@ const deleteURL = await getDeleteRoute(id);
 const { permissionLevel } = await authHelper(Astro.locals as Locals);
 
 // Check Permission Level
-if ( permissionLevel !== 'admin' && permissionLevel !== 'editor' ) {
-    logger.info('User is not an admin or editor. Redirecting to profile page.');
-    return Astro.redirect(StudioCMSRoutes.mainLinks.userProfile);
+if (permissionLevel !== 'admin' && permissionLevel !== 'editor') {
+	logger.info('User is not an admin or editor. Redirecting to profile page.');
+	return Astro.redirect(StudioCMSRoutes.mainLinks.userProfile);
 }
 
 let showSuccessToast = false;
 let showErrorToast = false;
 
 if (Astro.request.method === 'POST' && !developerConfig.testingAndDemoMode) {
-    try {
-        const data = await Astro.request.formData();
-        const slug = data.get('slug');
-        if (slug === page.slug) {
-            if ( slug === "index" || slug === "about" ) {
-                showErrorToast = true;
-                return new Response('Error: Cannot delete the index or about page.', { status: 500 })
-            }
+	try {
+		const data = await Astro.request.formData();
+		const slug = data.get('slug');
+		if (slug === page.slug) {
+			if (slug === 'index' || slug === 'about') {
+				showErrorToast = true;
+				return new Response('Error: Cannot delete the index or about page.', { status: 500 });
+			}
 
-            await db
-                .delete(PageData)
-                .where(eq(PageData.slug, page.slug as string))
-                .then(() => {
-                    showSuccessToast = true;
-                })
-                // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-                .catch((e: any) => {
-                    console.error(e);
-                    showErrorToast = true;
-                });
+			await db
+				.delete(PageData)
+				.where(eq(PageData.slug, page.slug as string))
+				.then(() => {
+					showSuccessToast = true;
+				})
+				// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+				.catch((e: any) => {
+					console.error(e);
+					showErrorToast = true;
+				});
 
-            await db
-                .delete(PageContent)
-                .where(eq(PageContent.contentId, page.id))
-                .then(() => {
-                    showSuccessToast = true;
-                })
-                // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-                .catch((e: any) => {
-                    console.error(e);
-                    showErrorToast = true;
-                });
-        } 
-    } catch (error) {
-        if (error instanceof Error) {
-            console.error(error);
-            showErrorToast = true;
-        }
-    }
+			await db
+				.delete(PageContent)
+				.where(eq(PageContent.contentId, page.id))
+				.then(() => {
+					showSuccessToast = true;
+				})
+				// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+				.catch((e: any) => {
+					console.error(e);
+					showErrorToast = true;
+				});
+		}
+	} catch (error) {
+		if (error instanceof Error) {
+			console.error(error);
+			showErrorToast = true;
+		}
+	}
 }
 ---
 <Layout 

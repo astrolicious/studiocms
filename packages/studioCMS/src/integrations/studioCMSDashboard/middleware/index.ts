@@ -1,15 +1,15 @@
 import { User, db, eq } from 'astro:db';
 import { defineMiddleware } from 'astro/middleware';
 import { verifyRequestOrigin } from 'lucia';
-import { lucia } from "studiocms-dashboard:auth";
+import { lucia } from 'studiocms-dashboard:auth';
 import type { Locals } from 'studiocms:helpers';
 import Config from 'virtual:studiocms/config';
 
-const { 
-	dashboardConfig: { 
+const {
+	dashboardConfig: {
 		developerConfig: { testingAndDemoMode },
-		dashboardRouteOverride, 
-	} 
+		dashboardRouteOverride,
+	},
 } = Config;
 
 const fixSlashes = (str: string) => str.replace(/^\/+|\/+$/g, '');
@@ -50,12 +50,8 @@ export const onRequest = defineMiddleware(async (context, next) => {
 	if (session.fresh) {
 		const sessionCookie = lucia.createSessionCookie(session.id);
 		context.cookies.set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
-		const dbUser = await db
-			.select()
-			.from(User)
-			.where(eq(User.id, user.id))
-			.get();
-			
+		const dbUser = await db.select().from(User).where(eq(User.id, user.id)).get();
+
 		locals.dbUser = dbUser;
 		locals.isLoggedIn = true;
 	} else if (session && !session.fresh) {
@@ -70,13 +66,11 @@ export const onRequest = defineMiddleware(async (context, next) => {
 	const dashboardRoute = dashboardRouteOverride ? fixSlashes(dashboardRouteOverride) : 'dashboard';
 
 	if (
-		context.url.pathname.startsWith(`/${dashboardRoute}`) && 
-		(
-			!context.url.pathname.startsWith(`/${dashboardRoute}/login`) || 
-			!context.url.pathname.startsWith(`/${dashboardRoute}/signup`)
-		)
+		context.url.pathname.startsWith(`/${dashboardRoute}`) &&
+		(!context.url.pathname.startsWith(`/${dashboardRoute}/login`) ||
+			!context.url.pathname.startsWith(`/${dashboardRoute}/signup`))
 	) {
-		if ( !testingAndDemoMode ) {
+		if (!testingAndDemoMode) {
 			if (!locals.isLoggedIn) {
 				console.log('User is not logged in... Redirecting to login page');
 				return new Response(null, {

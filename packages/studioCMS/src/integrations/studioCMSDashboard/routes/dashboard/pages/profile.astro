@@ -7,15 +7,14 @@ import { Card, Divider } from 'astrolace:components';
 import CrumbStack from '../components/CrumbStack.astro';
 import { makePageTitle } from '../../../utils/makePageTitle';
 
-const { 
-    mainLinks: {
-        dashboardIndex,
-        userProfile
-    }
-} = StudioCMSRoutes
+const {
+	mainLinks: { dashboardIndex, userProfile },
+} = StudioCMSRoutes;
 
 const contextConfig = await getSiteConfig();
-const { permissionLevel, name, username, currentUserSession, githubURL } = await authHelper(Astro.locals as Locals);
+const { permissionLevel, name, username, currentUserSession, githubURL } = await authHelper(
+	Astro.locals as Locals
+);
 ---
 
 <Layout 
