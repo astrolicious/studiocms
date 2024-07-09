@@ -9,7 +9,7 @@ import { makePageTitle } from '../../../utils/makePageTitle';
 import { logger } from '@it-astro:logger:StudioCMS';
 
 const {
-	mainLinks: { dashboardIndex, pageNew, livePreviewBox },
+	mainLinks: { dashboardIndex, pageNew, pageEdit, livePreviewBox },
 	endpointLinks: { pages: { createPages: createPagesEndpoint } },
 } = StudioCMSRoutes;
 
@@ -33,6 +33,9 @@ if (permissionLevel !== 'admin' && permissionLevel !== 'editor') {
         { href: pageNew, text: 'Create new Page' }
     ]} />
 
-    <PageEditAndCreateForm livePreviewBox={livePreviewBox} formActionURL={createPagesEndpoint} />
+    <PageEditAndCreateForm 
+	livePreviewBox={livePreviewBox} 
+	pageEdit={pageEdit} 
+	formActionURL={createPagesEndpoint} />
 
 </Layout>

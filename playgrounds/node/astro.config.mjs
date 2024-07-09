@@ -19,7 +19,6 @@ export default defineConfig({
 				title: 'StudioCMS Test Blog',
 				description: 'A simple blog built with Astro and StudioCMS',
 			},
-			
 		}), 
 	], 
 });

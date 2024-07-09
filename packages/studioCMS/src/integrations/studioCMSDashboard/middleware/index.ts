@@ -4,6 +4,7 @@ import { verifyRequestOrigin } from 'lucia';
 import { lucia } from 'studiocms-dashboard:auth';
 import type { Locals } from 'studiocms:helpers';
 import Config from 'virtual:studiocms/config';
+import { logger } from '@it-astro:logger:StudioCMS';
 
 const {
 	dashboardConfig: {
@@ -72,7 +73,7 @@ export const onRequest = defineMiddleware(async (context, next) => {
 	) {
 		if (!testingAndDemoMode) {
 			if (!locals.isLoggedIn) {
-				console.log('User is not logged in... Redirecting to login page');
+				logger.info('User is not logged in... Redirecting to login page');
 				return new Response(null, {
 					status: 302,
 					headers: {
@@ -81,7 +82,7 @@ export const onRequest = defineMiddleware(async (context, next) => {
 				});
 			}
 		} else {
-			console.log('Testing and Demo mode is enabled. Skipping login check');
+			logger.info('Testing and Demo mode is enabled. Skipping login check');
 		}
 	}
 

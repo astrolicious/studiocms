@@ -1,13 +1,12 @@
 ---
-import { Layout, FormattedDate } from 'studiocms-dashboard:components';
-import { authHelper, pluginList, type Locals } from 'studiocms:helpers';
-import { StudioCMSRoutes, getEditRoute, getDeleteRoute } from 'studiocms-dashboard:routeMap';
-import { Button } from 'astrolace:components';
+import { Layout } from 'studiocms-dashboard:components';
+import { authHelper, type Locals } from 'studiocms:helpers';
+import { StudioCMSRoutes } from 'studiocms-dashboard:routeMap';
 import { getSiteConfig, getPageList } from 'studiocms-dashboard:contentHelper';
 import CrumbStack from '../components/CrumbStack.astro';
-import { fixPackageLabel } from '../../../utils/pageListPackageLabel';
 import { makePageTitle } from '../../../utils/makePageTitle';
 import { logger } from '@it-astro:logger:StudioCMS';
+import PageListTable from '../components/PageListTable.astro';
 
 const {
 	mainLinks: { dashboardIndex, pageEdit },
@@ -40,48 +39,7 @@ if (permissionLevel !== 'admin' && permissionLevel !== 'editor') {
 
         <div class="py-2">
             <div class="relative">
-                <table class="w-full text-left rtl:text-right">
-                    <thead class="uppercase bg-base-300 text-inherit">
-                        <tr>
-                            <th scope="col" class="px-6 py-3">Page Title</th>
-                            <th scope="col" class="px-6 py-3">Package Relation</th>
-                            <th scope="col" class="px-6 py-3">Publish Date</th>
-                            <th scope="col" class="px-6 py-3">Edit</th>
-                            <th scope="col" class="px-6 py-3">Delete</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        { 
-                            pages.map(async (page) => {
-                                return (
-                                    <tr class="bg-base-200 text-inherit">
-                                        <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap">
-                                            {page.title}
-                                        </th>
-                                        <td class="px-6 py-4">
-                                            {fixPackageLabel(page.package, pluginList)}
-                                        </td>
-                                        <td class="px-6 py-4">
-                                            <FormattedDate date={page.publishedAt}/>
-                                        </td>
-                                        <td class="px-6 py-4">
-                                            <Button variant="success" href={await getEditRoute(page.id)} size="small" pill outline>
-                                                Edit
-                                            </Button>
-                                        </td>
-                                        <td class="px-6 py-4">
-                                            { permissionLevel === 'admin' && (
-                                                <Button variant="danger" href={await getDeleteRoute(page.id)} size="small" pill outline>
-                                                    Delete
-                                                </Button> )
-                                            }
-                                        </td>
-                                    </tr>
-                                )
-                            })
-                        }
-                    </tbody>
-                </table>
+                <PageListTable pages={pages} permissionLevel={permissionLevel} />
             </div>
         </div>
 

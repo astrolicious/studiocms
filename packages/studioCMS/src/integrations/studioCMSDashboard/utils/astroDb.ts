@@ -1,6 +1,5 @@
 import { PageContent, PageData, SiteConfig, db, eq } from 'astro:db';
 import { randomUUID } from 'node:crypto';
-import type { PageDataAndContent } from 'studiocms:helpers';
 import { logger } from '@it-astro:logger:StudioCMS';
 import { CMSSiteConfigId } from '../../../constVars';
 
@@ -25,6 +24,17 @@ type PageDataInsert = {
     showOnNav: boolean;
     publishedAt: Date;
     contentLang: string;
+    heroImage: string;
+}
+
+type PageDataUpdate = {
+    id: string;
+    package: string;
+    title: string;
+    description: string;
+    showOnNav: boolean;
+    updatedAt: Date | null;
+    slug: string;
     heroImage: string;
 }
 
@@ -88,15 +98,28 @@ export const astroDb = () => {
 
                     return newEntry.pop();
                 },
+                async update(data: PageDataUpdate) {
+                    await db.update(PageData).set({
+                        title: data.title,
+                        description: data.description,
+                        slug: data.slug,
+                        package: data.package,
+                        showOnNav: data.showOnNav,
+                        heroImage: data.heroImage,
+                        updatedAt: data.updatedAt,
+                    }).where(eq(PageData.id, data.id)).catch((error) => {
+                        logger.error(error);
+                    })
+                },
                 async delete(id: string) {
-                    return await db.delete(PageData).where(eq(PageData.id, id));
+                    await db.delete(PageData).where(eq(PageData.id, id));
                 }
 			};
 		},
         pageContent() {
             return {
                 async insert(data: PageContentInsert) {
-                    return await db.insert(PageContent).values({ 
+                    await db.insert(PageContent).values({ 
                         id: randomUUID(), 
                         contentId: data.id, 
                         contentLang: data.lang, 
@@ -106,10 +129,10 @@ export const astroDb = () => {
                     });
                 },
                 async update(data: PageContentUpdate) {
-                    return await db.update(PageContent).set({ content: data.content }).where(eq(PageContent.contentId, data.id ))
+                    await db.update(PageContent).set({ content: data.content }).where(eq(PageContent.contentId, data.id ))
                 },
                 async delete(id: string) {
-                    return await db.delete(PageContent).where(eq(PageContent.contentId, id));
+                    await db.delete(PageContent).where(eq(PageContent.contentId, id));
                 }
             }
         },

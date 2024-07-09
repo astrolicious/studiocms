@@ -10,6 +10,7 @@ import {
 	Card,
 	Option,
 	Alert,
+VisuallyHidden,
 } from 'astrolace:components';
 import type { ContentHelperTempResponse } from 'studiocms-dashboard:contentHelper';
 import { pluginList } from 'studiocms:helpers';
@@ -17,12 +18,13 @@ import { pluginList } from 'studiocms:helpers';
 interface Props {
 	pageData?: ContentHelperTempResponse;
 	livePreviewBox: string;
+    pageEdit: string;
 	isEditPage?: boolean;
 	formActionURL?: string;
 }
 const studioCMSPluginList = pluginList;
 
-const { pageData, livePreviewBox, isEditPage = false, formActionURL } = Astro.props;
+const { pageData, livePreviewBox, isEditPage = false, formActionURL, pageEdit } = Astro.props;
 ---
 
 <div class="container">
@@ -32,6 +34,9 @@ const { pageData, livePreviewBox, isEditPage = false, formActionURL } = Astro.pr
     <div class="py-2 flex justify-center">
 
             <form method="POST" class="w-full flex flex-col gap-2" id="edit-create-form" action={formActionURL}>
+
+                <input type="hidden" name="page-id" id="page-id" value={isEditPage && pageData && pageData.id || ""} />
+
                 <Input
                     id="title"
                     name="title"
@@ -82,11 +87,11 @@ const { pageData, livePreviewBox, isEditPage = false, formActionURL } = Astro.pr
                         id="slug"
                         name="slug"
                         value={pageData && pageData.slug || ""}
-                        disabled={isEditPage}
                         readonly={isEditPage}
                         placeholder="your-page-slug"
                         size="medium"
                         label='Slug'
+                        filled={isEditPage}
                         required>
                         <Icon name="link" slot="prefix"></Icon>
                     </Input>
@@ -182,6 +187,11 @@ const { pageData, livePreviewBox, isEditPage = false, formActionURL } = Astro.pr
     <div id="form-success-message"></div>
   </Alert>
 
+
+  <VisuallyHidden>
+    <div id="edit-page-url">{pageEdit}</div>
+</VisuallyHidden>
+
 <script>
     import type { SlAlert } from "astrolace:types";
 
@@ -191,6 +201,8 @@ const { pageData, livePreviewBox, isEditPage = false, formActionURL } = Astro.pr
     const formErrorMessage = document.getElementById('form-error-message') as HTMLDivElement;
     const formSuccess = document.getElementById('form-success') as SlAlert;
     const formSuccessMessage = document.getElementById('form-success-message') as HTMLDivElement;
+
+    const editPageURL = document.getElementById('edit-page-url') as HTMLDivElement;
 
     formElement.addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -205,7 +217,7 @@ const { pageData, livePreviewBox, isEditPage = false, formActionURL } = Astro.pr
             formSuccessMessage.innerText = (await response.json()).message;
             formSuccess.toast();
             setTimeout(() => {
-                window.location.reload();
+                window.location.replace(editPageURL.innerText);
             }, 4000)
         } else {
             formErrorMessage.innerText = (await response.json()).error;

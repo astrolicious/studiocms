@@ -13,7 +13,7 @@ const { authLinks: { loginURL, registerAPI }, mainLinks: { dashboardIndex } } = 
 
 const contextConfig = await getSiteConfig();
 const locals = Astro.locals as Locals;
-
+ 
 if (locals.isLoggedIn) {
 	return Astro.redirect(dashboardIndex);
 }
