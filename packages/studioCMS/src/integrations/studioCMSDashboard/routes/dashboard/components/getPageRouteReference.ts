@@ -15,7 +15,6 @@ const {
 const dashboardURL = dashboardRouteOverride ? fixSlashes(dashboardRouteOverride) : 'dashboard';
 
 const studioCMSPluginList = pluginList;
-studioCMSPluginList.delete('@astrolicious/studiocms');
 
 export const getPageRouteReference = (pageRoute: string) => {
 	const frontEndRoutes: FrontEndRoute[] = [
@@ -25,6 +24,9 @@ export const getPageRouteReference = (pageRoute: string) => {
 	];
 
 	for (const entry of studioCMSPluginList) {
+        if (entry[0] === '@astrolicious/studiocms') {
+            continue;
+        }
 		const { name, label } = entry[1];
 		for (const route of externalNav) {
 			if (route[0].startsWith(name)) {

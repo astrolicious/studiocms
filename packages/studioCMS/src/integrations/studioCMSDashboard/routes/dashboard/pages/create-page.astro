@@ -1,11 +1,7 @@
 ---
-import { PageData, PageContent, db, eq } from 'astro:db';
 import { Layout } from 'studiocms-dashboard:components';
-import Config from 'virtual:studiocms/config';
 import { authHelper, type Locals } from 'studiocms:helpers';
-import { randomUUID } from 'node:crypto';
 import { StudioCMSRoutes } from 'studiocms-dashboard:routeMap';
-import { Alert, Icon } from 'astrolace:components';
 import PageEditAndCreateForm from '../components/PageEditAndCreateForm.astro';
 import { getSiteConfig } from 'studiocms-dashboard:contentHelper';
 import CrumbStack from '../components/CrumbStack.astro';
@@ -13,11 +9,8 @@ import { makePageTitle } from '../../../utils/makePageTitle';
 import { logger } from '@it-astro:logger:StudioCMS';
 
 const {
-	dashboardConfig: { developerConfig },
-} = Config;
-
-const {
 	mainLinks: { dashboardIndex, pageNew, livePreviewBox },
+	endpointLinks: { pages: { createPages: createPagesEndpoint } },
 } = StudioCMSRoutes;
 
 const contextConfig = await getSiteConfig();
@@ -27,79 +20,6 @@ const { permissionLevel } = await authHelper(Astro.locals as Locals);
 if (permissionLevel !== 'admin' && permissionLevel !== 'editor') {
 	logger.info('User is not an admin or editor. Redirecting to profile page.');
 	return Astro.redirect(StudioCMSRoutes.mainLinks.userProfile);
-}
-
-let showSuccessToast = false;
-let showErrorToast = false;
-let showSlugErrorToast = false;
-
-if (Astro.request.method === 'POST' && !developerConfig.testingAndDemoMode) {
-	try {
-		const data = await Astro.request.formData();
-		const title = data.get('title');
-		const slug = data.get('slug');
-		const description = data.get('description');
-		const showOnNav = data.get('show-on-nav');
-		const heroImage = data.get('hero-image');
-		const content = data.get('content');
-		// const contentLang = data.get("content-lang");
-		const pack = data.get('package');
-
-		const postArrayed = await db
-			.select()
-			.from(PageData)
-			.where(eq(PageData.slug, slug as string));
-		const existingPost = postArrayed[0];
-
-		if (existingPost) {
-			showSlugErrorToast = true;
-		} else {
-			try {
-				const insertedIDs = await db
-					.insert(PageData)
-					.values({
-						id: randomUUID(),
-						title: title as string,
-						package: pack as string,
-						slug: slug as string,
-						description: description as string,
-						showOnNav: showOnNav === 'on',
-						heroImage: heroImage as string,
-					})
-					.returning({ id: PageData.id });
-
-				if (insertedIDs.length > 0) {
-					const insertedID = insertedIDs[0]?.id;
-					if (!insertedID || insertedID === undefined) {
-						showErrorToast = true;
-					} else {
-						await db
-							.insert(PageContent)
-							.values({
-								id: randomUUID(),
-								contentId: insertedID,
-								contentLang: 'default',
-								content: content as string,
-							})
-							.then(() => {
-								showSuccessToast = true;
-							})
-							.catch(() => {
-								showErrorToast = true;
-							});
-					}
-				}
-			} catch (error) {
-				if (error instanceof Error) {
-					showErrorToast = true;
-				}
-			}
-		}
-	} catch (error) {
-		if (error instanceof Error) {
-			showErrorToast = true;
-		}
-	}
 }
 ---
 
@@ -113,30 +33,6 @@ if (Astro.request.method === 'POST' && !developerConfig.testingAndDemoMode) {
         { href: pageNew, text: 'Create new Page' }
     ]} />
 
-    <div class="alert-toast">
-        { showSuccessToast && (
-        <Alert variant="success" duration={3000} open closable>
-            <Icon slot="icon" name="check2-circle" />
-            <strong>New Page Created!</strong>
-            <p>You can safely leave this page now.</p>
-        </Alert>
-        )}
-        { showErrorToast && (
-        <Alert variant="danger" duration={3000} open closable>
-            <Icon slot="icon" name="exclamation-octagon" />
-            <strong>Error Creating Page</strong>
-            <p>There was an Error Creating the Page. Please try again.</p>
-        </Alert>
-        )}
-        { showSlugErrorToast && (
-        <Alert variant="warning" duration={3000} open closable>
-            <Icon slot="icon" name="exclamation-triangle" />
-            <strong>Page With Slug Already Exists!</strong>
-            <p>A page with that slug already exists. Please choose a different slug.</p>
-        </Alert>
-        )}
-    </div>
-
-    <PageEditAndCreateForm livePreviewBox={livePreviewBox}/>
+    <PageEditAndCreateForm livePreviewBox={livePreviewBox} formActionURL={createPagesEndpoint} />
 
 </Layout>

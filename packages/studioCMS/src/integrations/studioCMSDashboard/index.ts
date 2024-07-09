@@ -144,20 +144,21 @@ export default defineIntegration({
 									options.dashboardConfig.AuthConfig.enabled,
 								pattern: "api/config/admin",
 								entrypoint: resolve('./routes/api/config/admin.ts')
-							},
+							}, {
+								enabled: options.dashboardConfig.dashboardEnabled && 
+									!options.dbStartPage && 
+									options.dashboardConfig.AuthConfig.enabled,
+								pattern: "api/pages/create",
+								entrypoint: resolve('./routes/api/pages/create.ts')
+							}, 
 							// {
-							// 	enabled: options.dashboardConfig.dashboardEnabled && 
-							// 		!options.dbStartPage && 
-							// 		options.dashboardConfig.AuthConfig.enabled,
-							// 	pattern: "api/pages/create",
-							// 	entrypoint: resolve('./routes/api/pages/create.ts')
-							// }, {
 							// 	enabled: options.dashboardConfig.dashboardEnabled && 
 							// 		!options.dbStartPage && 
 							// 		options.dashboardConfig.AuthConfig.enabled,
 							// 	pattern: "api/pages/delete",
 							// 	entrypoint: resolve('./routes/api/pages/delete.ts')
-							// }, {
+							// }, 
+							// {
 							// 	enabled: options.dashboardConfig.dashboardEnabled && 
 							// 		!options.dbStartPage && 
 							// 		options.dashboardConfig.AuthConfig.enabled,

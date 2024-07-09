@@ -9,6 +9,7 @@ import {
 	Divider,
 	Card,
 	Option,
+	Alert,
 } from 'astrolace:components';
 import type { ContentHelperTempResponse } from 'studiocms-dashboard:contentHelper';
 import { pluginList } from 'studiocms:helpers';
@@ -21,7 +22,7 @@ interface Props {
 }
 const studioCMSPluginList = pluginList;
 
-const { pageData, livePreviewBox, isEditPage = false, formActionURL: action } = Astro.props;
+const { pageData, livePreviewBox, isEditPage = false, formActionURL } = Astro.props;
 ---
 
 <div class="container">
@@ -30,7 +31,7 @@ const { pageData, livePreviewBox, isEditPage = false, formActionURL: action } = 
 
     <div class="py-2 flex justify-center">
 
-            <form method="POST" class="w-full flex flex-col gap-2" action={action}>
+            <form method="POST" class="w-full flex flex-col gap-2" id="edit-create-form" action={formActionURL}>
                 <Input
                     id="title"
                     name="title"
@@ -167,3 +168,49 @@ const { pageData, livePreviewBox, isEditPage = false, formActionURL: action } = 
         </div>
     </Card>
 </div>
+
+<Alert id="form-error" variant="danger" duration={4000} closable>
+    <Icon slot="icon" name="exclamation-octagon" />
+    <strong>Something went wrong!</strong>
+    <Divider />
+    <div id="form-error-message"></div>
+  </Alert>
+  <Alert id="form-success" variant="success" duration={4000} closable>
+    <Icon slot="icon" name="check2-circle" />
+    <strong>Success!</strong>
+    <Divider />
+    <div id="form-success-message"></div>
+  </Alert>
+
+<script>
+    import type { SlAlert } from "astrolace:types";
+
+    const formElement = document.getElementById('edit-create-form') as HTMLFormElement;
+
+    const formError = document.getElementById('form-error') as SlAlert;
+    const formErrorMessage = document.getElementById('form-error-message') as HTMLDivElement;
+    const formSuccess = document.getElementById('form-success') as SlAlert;
+    const formSuccessMessage = document.getElementById('form-success-message') as HTMLDivElement;
+
+    formElement.addEventListener('submit', async (e) => {
+        e.preventDefault();
+    
+        const formElement = e.target as HTMLFormElement;
+        const response = await fetch(formElement.action, {
+            method: formElement.method,
+            body: new FormData(formElement)
+        });
+    
+        if (response.ok) {
+            formSuccessMessage.innerText = (await response.json()).message;
+            formSuccess.toast();
+            setTimeout(() => {
+                window.location.reload();
+            }, 4000)
+        } else {
+            formErrorMessage.innerText = (await response.json()).error;
+            formError.toast();
+        }
+    
+    })
+</script>
