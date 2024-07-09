@@ -1,5 +1,6 @@
 ---
 import { Code } from 'astro:components';
+import { Card, Divider } from 'astrolace:components';
 import { Layout } from 'studiocms-dashboard:components';
 
 const codeBlob = `import { defineConfig } from "astro/config";
@@ -22,16 +23,20 @@ export default defineConfig({
         <div class="py-8">
           <div class="bg-base-300 p-8 md:p-12 lg:p-16 rounded-lg">
 			<div class="text-5xl font-bold pb-4 text-center">Setup Done!</div>
-			<div class="py-4">
-				<text class="text-xl py-2">
-				  <text class="font-bold">Next Step</text> 
-				  <br />
-				  You can now stop your dev server and add the following option in your <strong>astro.config</strong> to start using StudioCMS. Then you can start your server back up to see your new CMS data.
-				</text>
-			</div>
-	
+			<div class="flex flex-col py-2 w-full gap-4">
+			  <Card>
+				<span class="font-bold">Next Step</span> 
+				<Divider class="divider" />
+				You can now stop your dev server and add the following option in your <strong>astro.config</strong> to start using StudioCMS. Then you can start your server back up to see your new CMS data.
+			  </Card>
 
-			<Code lang="diff" class="p-6" code={codeBlob} wrap/>
+			  <Card>
+				<span class="font-bold">Code to change</span>
+				<Divider class="divider" />
+				<Code lang="diff" class="p-6" code={codeBlob} wrap/>
+			  </Card>
+			</div>
+
 		  </div>
 		</div>
 

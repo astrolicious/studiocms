@@ -87,6 +87,33 @@
     }
 }
 
+@media (max-width: 400px) {
+    .navigation {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        height: auto;
+    }
+    .navigation .title {
+        display: flex;
+        position: relative;
+        justify-self: center;
+    }
+    .navigation .mininav {
+        display: flex;
+        position: relative;
+    }
+    .navigation .mininav button {
+        display: flex;
+        position: relative;
+    }
+    .navigation .avatar {
+        display: flex;
+        position: relative;
+        justify-self: center;
+    }
+}
+
 
 .navigation .avatar {
     font-size: xx-large;

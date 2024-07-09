@@ -75,7 +75,7 @@ export default defineIntegration({
 							}, { 
 								enabled: options.dbStartPage,
 								pattern: 'api/setup', 
-								entrypoint: resolve('./routes/databaseSetup/setup.ts'),
+								entrypoint: resolve('./routes/api/firstTimeSetup.ts'),
 								_non_dashboard: true
 							}, { 
 								enabled: options.dbStartPage,
@@ -85,7 +85,7 @@ export default defineIntegration({
 							}, { 
 								enabled: options.dashboardConfig.dashboardEnabled && !options.dbStartPage,
 								pattern: 'api/liverender', 
-								entrypoint: resolve('./routes/dashboard/partials/LivePreview.astro') 
+								entrypoint: resolve('./routes/api/LiveRender.astro') 
 							}, {
 								enabled: options.dashboardConfig.dashboardEnabled && !options.dbStartPage,
 								pattern: '/',
@@ -105,19 +105,19 @@ export default defineIntegration({
 							}, {
 								enabled: options.dashboardConfig.dashboardEnabled && !options.dbStartPage,
 								pattern: 'new/page/',
-								entrypoint: resolve('./routes/dashboard/pages/new/page.astro')
+								entrypoint: resolve('./routes/dashboard/pages/create-page.astro')
 							}, {
 								enabled: options.dashboardConfig.dashboardEnabled && !options.dbStartPage,
 								pattern: 'page-list/',
-								entrypoint: resolve('./routes/dashboard/pages/edit/page-list.astro')
+								entrypoint: resolve('./routes/dashboard/pages/page-list.astro')
 							}, {
 								enabled: options.dashboardConfig.dashboardEnabled && !options.dbStartPage,
 								pattern: 'edit/pages/[...id]',
-								entrypoint: resolve('./routes/dashboard/pages/edit/pages/[...id].astro')
+								entrypoint: resolve('./routes/dashboard/pages/edit-pages/[...id].astro')
 							}, {
 								enabled: options.dashboardConfig.dashboardEnabled && !options.dbStartPage,
 								pattern: 'delete/pages/[...id]',
-								entrypoint: resolve('./routes/dashboard/pages/delete/pages/[...id].astro')
+								entrypoint: resolve('./routes/dashboard/pages/delete-pages/[...id].astro')
 							}, { 
 								enabled: options.dashboardConfig.dashboardEnabled && 
 									!options.dbStartPage && 

@@ -1,0 +1,38 @@
+---
+import { Breadcrumb, BreadcrumbItem } from 'astrolace:components';
+
+
+interface Props {
+    items: Array<{
+        href: string;
+        text: string;
+        prefix?: string;
+    }>;
+}
+
+const { items } = Astro.props;
+---
+
+
+<div class="flex grow w-full pb-4">
+    <Breadcrumb>
+
+        {
+            items.map(({ href, text, prefix }) => {
+                if (prefix) {
+                    return (
+                        <BreadcrumbItem href={href} prefix={prefix}>
+                            {text}
+                        </BreadcrumbItem>
+                    )
+                } else {
+                return (
+                    <BreadcrumbItem href={href}>
+                        {text}
+                    </BreadcrumbItem>
+                )}
+            })
+        }
+
+    </Breadcrumb>
+</div>

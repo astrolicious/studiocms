@@ -4,14 +4,12 @@ import { getSiteConfig } from 'studiocms-dashboard:contentHelper';
 import Config from 'virtual:studiocms/config';
 import { authHelper, toPascalCase, type Locals } from 'studiocms:helpers';
 import { StudioCMSRoutes } from 'studiocms-dashboard:routeMap';
-import { Breadcrumb, BreadcrumbItem, Card, Divider } from 'astrolace:components';
+import { Card, Divider } from 'astrolace:components';
+import CrumbStack from '../components/CrumbStack.astro';
 
 const { dashboardConfig: { developerConfig } } = Config;
 
 const { 
-    authLinks: {
-        loginURL
-    }, 
     mainLinks: {
         dashboardIndex,
         userProfile
@@ -25,7 +23,7 @@ const { permissionLevel, name, username, currentUserSession, githubURL } = await
 if ( !developerConfig.testingAndDemoMode ) {
     if ( permissionLevel === "unknown" ) {
         console.log('User is not logged in. Redirecting to login page.');
-        return Astro.redirect(loginURL)
+        return Astro.redirect(StudioCMSRoutes.authLinks.loginURL)
     }
 }
 
@@ -38,16 +36,10 @@ const pageTitle = `User profile | ${contextConfig.title}`;
     title={pageTitle}
     description={contextConfig.description} >
 
-    <div class="flex grow w-full pb-4">
-        <Breadcrumb>
-            <BreadcrumbItem href={dashboardIndex} prefix='columns-gap'>
-                Dashboard
-            </BreadcrumbItem>
-            <BreadcrumbItem href={userProfile}>
-                User Profile
-            </BreadcrumbItem>
-        </Breadcrumb>
-    </div>
+    <CrumbStack items={[
+        { href: dashboardIndex, text: 'Dashboard', prefix: 'columns-gap'},
+        { href: userProfile, text: 'User Profile' }
+    ]} />
 
     <div class="container">
 
@@ -60,25 +52,25 @@ const pageTitle = `User profile | ${contextConfig.title}`;
             </div>
             <Divider class="divider" />
             <div class="py-2">
-                <text class="text-lg">
-                    <bold>Display Name:</bold> {name}
-                </text>
+                <span class="text-lg">
+                    <strong>Display Name:</strong> {name}
+                </span>
                 <Divider />
-                <text class="text-lg">
-                    <bold>Role:</bold> {toPascalCase(permissionLevel)}
-                </text>
+                <span class="text-lg">
+                    <strong>Role:</strong> {toPascalCase(permissionLevel)}
+                </span>
                 <Divider />
                 { githubURL && (
-                    <text class="text-lg">
-                        <bold>GitHub:</bold> <a class="text-blue" href={githubURL}>{username}</a>
-                    </text>
+                    <span class="text-lg">
+                        <strong>GitHub:</strong> <a class="text-blue" href={githubURL}>{username}</a>
+                    </span>
                 <Divider />
                 )}
-                <text class="text-lg">
+                <span class="text-lg">
                     { currentUserSession && (
-                        <p><bold>Session Expires:</bold> {new Date(currentUserSession.expiresAt).toLocaleString()} </p>
+                        <><strong>Session Expires:</strong> {new Date(currentUserSession.expiresAt).toLocaleString()}</>
                     ) } 
-                </text>
+                </span>
             </div>
         </Card>
 

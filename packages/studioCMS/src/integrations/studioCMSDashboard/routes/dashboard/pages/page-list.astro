@@ -3,17 +3,14 @@ import { Layout, FormattedDate } from 'studiocms-dashboard:components';
 import Config from 'virtual:studiocms/config';
 import { authHelper, pluginList, type Locals } from 'studiocms:helpers';
 import { StudioCMSRoutes, getEditRoute, getDeleteRoute } from 'studiocms-dashboard:routeMap';
-import { Breadcrumb, BreadcrumbItem, Button } from 'astrolace:components';
+import { Button } from 'astrolace:components';
 import { getSiteConfig, getPageList } from 'studiocms-dashboard:contentHelper';
+import CrumbStack from '../components/CrumbStack.astro';
 
 const { dashboardConfig: { developerConfig: { testingAndDemoMode } } } = Config;
 
 const { 
-    authLinks: { 
-        loginURL 
-    }, 
     mainLinks: { 
-        userProfile,
         dashboardIndex,
         pageEdit,
     } 
@@ -27,11 +24,11 @@ const { permissionLevel } = await authHelper(Astro.locals as Locals);
 if ( !testingAndDemoMode ) {
     if ( permissionLevel === "unknown" ) {
         console.log('User is not logged in. Redirecting to login page.');
-        return Astro.redirect(loginURL);
+        return Astro.redirect(StudioCMSRoutes.authLinks.loginURL);
     }
     if ( permissionLevel !== 'admin' && permissionLevel !== 'editor' ) {
         console.log('User is not an admin or editor. Redirecting to profile page.');
-        return Astro.redirect(userProfile);
+        return Astro.redirect(StudioCMSRoutes.mainLinks.userProfile);
     }
 }
 
@@ -54,16 +51,10 @@ const pageTitle = `Existing Pages | ${contextConfig.title}`;
     title={pageTitle}
     description={contextConfig.description} >
 
-    <div class="flex grow w-full pb-4">
-        <Breadcrumb>
-            <BreadcrumbItem href={dashboardIndex} prefix='columns-gap'>
-                Dashboard
-            </BreadcrumbItem>
-            <BreadcrumbItem href={pageEdit}'>
-                Existing Pages
-            </BreadcrumbItem>
-        </Breadcrumb>
-    </div>
+    <CrumbStack items={[
+        { href: dashboardIndex, text: 'Dashboard', prefix: 'columns-gap' },
+        { href: pageEdit, text: 'Existing Pages' }
+    ]} />
 
     <div class="container">
 

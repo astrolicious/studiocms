@@ -4,7 +4,7 @@ import Config from 'virtual:studiocms/config';
 import type { Locals } from 'studiocms:helpers';
 import OauthProviders from '../components/OauthProviders.astro';
 import { StudioCMSRoutes } from 'studiocms-dashboard:routeMap';
-import { Alert, Button, Icon, Input } from 'astrolace:components';
+import { Alert, Button, Divider, Icon, Input } from 'astrolace:components';
 
 const { 
   dashboardConfig,
@@ -34,11 +34,12 @@ if (locals.isLoggedIn) {
 
       <div class="text-5xl font-bold">Login</div>
       <div class="py-2">
-          <text class="text-lg">
+          <span class="text-lg">
             To access this site, you need to log in!
-          </text>
+          </span>
       </div>
-    <br />
+
+      <Divider />
 
       <OauthProviders dashboardConfig={dashboardConfig} />
 
@@ -46,35 +47,25 @@ if (locals.isLoggedIn) {
         <div class="py-8">
           <div class="bg-base-300 p-8 rounded-lg md:w-[32rem]">
 
-          <form method="post" action={loginAPI}>
+            <form method="post" action={loginAPI}>
 
-              <Input 
-                name="username" 
-                id="username" 
-                label='Username'
-                /><br />
+                <Input name="username" id="username" label='Username' />
 
-              <Input 
-                type="password" 
-                name="password"
-                id="password"
-                label="Password"
-                password-toggle
-                /><br />
+                <Divider />
 
-            <center>
-              <Button variant="primary" type="submit" outline>Continue <Icon slot="suffix" library="mdi" name="login"/></Button>
-            </center>
+                <Input type="password" name="password" id="password" label="Password" password-toggle />
 
-          </form>
+                <Divider />
 
-          {allowUserRegistration && (
-            <div class="py-4">
-              <center>
-                <a href={signupURL} class="text-lg">Don't have an account? Register here!</a>
-              </center>
-            </div>
-          )}
+              <div class="flex flex-col items-center justify-center">
+                <Button variant="primary" type="submit" outline>Continue <Icon slot="suffix" library="mdi" name="login"/></Button>
+
+                { allowUserRegistration && (
+                      <a href={signupURL} class="py-4 text-lg">Don't have an account? Register here!</a>
+                )}
+              </div>
+
+            </form>
 
           </div>
         </div> 
@@ -82,13 +73,15 @@ if (locals.isLoggedIn) {
 
       <Alert id="form-error" variant="danger" duration={4000} closable>
         <Icon slot="icon" name="exclamation-octagon" />
-        <strong>Something went wrong!</strong><br />
-        <div id = "form-error-message"></div>
+        <strong>Something went wrong!</strong>
+        <Divider />
+        <div id="form-error-message"></div>
       </Alert>
       <Alert id="form-success" variant="success" duration={4000} closable>
         <Icon slot="icon" name="check2-circle" />
-        <strong>Success!</strong><br />
-        <div id = "form-success-message"></div>
+        <strong>Success!</strong>
+        <Divider />
+        <div id="form-success-message"></div>
       </Alert>
 
   </div>
