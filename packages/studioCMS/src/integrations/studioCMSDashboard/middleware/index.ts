@@ -13,7 +13,17 @@ const {
 	},
 } = Config;
 
-const fixSlashes = (str: string) => str.replace(/^\/+|\/+$/g, '');
+/**
+ * This function is used to remove any trailing and leading slashes from a string
+ * 
+ * @param {string} str - The string to remove slashes from
+ * 
+ * @returns {string} - The string without any trailing or leading slashes
+ * 
+ * @example
+ * stripSlashes('/dashboard/') // 'dashboard'
+ */
+const stripSlashes = (str: string): string => str.replace(/^\/+|\/+$/g, '');
 
 export const onRequest = defineMiddleware(async (context, next) => {
 	if (context.request.method !== 'GET') {
@@ -63,13 +73,14 @@ export const onRequest = defineMiddleware(async (context, next) => {
 
 	locals.session = session;
 	locals.user = user;
+	const urlPathname = context.url.pathname;
 
-	const dashboardRoute = dashboardRouteOverride ? fixSlashes(dashboardRouteOverride) : 'dashboard';
+	const dashboardRoute = dashboardRouteOverride ? stripSlashes(dashboardRouteOverride) : 'dashboard';
 
 	if (
-		context.url.pathname.startsWith(`/${dashboardRoute}`) &&
-		(!context.url.pathname.startsWith(`/${dashboardRoute}/login`) ||
-			!context.url.pathname.startsWith(`/${dashboardRoute}/signup`))
+		urlPathname.startsWith(`/${dashboardRoute}`) &&
+		(!urlPathname.startsWith(`/${dashboardRoute}/login`) ||
+			!urlPathname.startsWith(`/${dashboardRoute}/signup`))
 	) {
 		if (!testingAndDemoMode) {
 			if (!locals.isLoggedIn) {
