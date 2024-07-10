@@ -47,7 +47,7 @@
     "@iconify-json/logos": "^1.1.43",
     "@iconify/utils": "^2.1.25",
     "@inox-tools/sitemap-ext": "^0.2.13",
-    "@inox-tools/runtime-logger": "^0.1.0",
+    "@inox-tools/runtime-logger": "^0.2.0",
     "@markdoc/markdoc": "^0.4.0",
     "@matthiesenxyz/astrolace": "^0.1.8",
     "@matthiesenxyz/unocss-preset-daisyui": "^0.1.0",

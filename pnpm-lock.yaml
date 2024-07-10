@@ -67,8 +67,8 @@ importers:
         specifier: ^2.1.25
         version: 2.1.25
       '@inox-tools/runtime-logger':
-        specifier: ^0.1.0
-        version: 0.1.0(@astrojs/db@0.11.7)(astro@4.11.5)
+        specifier: ^0.2.0
+        version: 0.2.0(@astrojs/db@0.11.7)(astro@4.11.5)
       '@inox-tools/sitemap-ext':
         specifier: ^0.2.13
         version: 0.2.14(@astrojs/db@0.11.7)(@types/node@20.14.10)(astro@4.11.5)
@@ -2292,8 +2292,8 @@ packages:
       - '@astrojs/db'
     dev: false
 
-  /@inox-tools/runtime-logger@0.1.0(@astrojs/db@0.11.7)(astro@4.11.5):
-    resolution: {integrity: sha512-Pztr7+FZ+53FXlmqd9R3kGOYRMSQfSrE7zKKPn5KvmWREEtOMhOXGt5zth6VUb7rr0/Jx13PaeN2p0zXNpNxtw==}
+  /@inox-tools/runtime-logger@0.2.0(@astrojs/db@0.11.7)(astro@4.11.5):
+    resolution: {integrity: sha512-AQIpclSbapIBJYnUe6T5XYfn/tpYa9UAf7cwmxaZVwi8bs11knIFu7qVHD1hPVnCGDm/vUJ71xM9fXHww/TZ6g==}
     peerDependencies:
       astro: ^4
     dependencies:
