@@ -46,22 +46,22 @@
     "@iconify-json/mdi": "^1.1.67",
     "@iconify-json/logos": "^1.1.43",
     "@iconify/utils": "^2.1.25",
-    "@inox-tools/sitemap-ext": "^0.2.12",
+    "@inox-tools/sitemap-ext": "^0.2.13",
     "@inox-tools/runtime-logger": "^0.1.0",
     "@markdoc/markdoc": "^0.4.0",
     "@matthiesenxyz/astrolace": "^0.1.8",
     "@matthiesenxyz/unocss-preset-daisyui": "^0.1.0",
     "@noble/hashes": "^1.4.0",
-    "@shikijs/transformers": "^1.9.1",
-    "@unocss/astro": "^0.61.0",
-    "@unocss/reset": "^0.61.0",
+    "@shikijs/transformers": "^1.10.3",
+    "@unocss/astro": "^0.61.3",
+    "@unocss/reset": "^0.61.3",
     "@unpic/astro": "^0.0.46",
     "arctic": "^1.9.1",
     "astro-integration-kit": "^0.14.0",
-    "daisyui": "^4.12.8",
+    "daisyui": "^4.12.10",
     "htmx.org": "^1.9.12",
     "lucia": "^3.2.0",
-    "marked": "^13.0.1",
+    "marked": "^13.0.2",
     "marked-alert": "^2.0.1",
     "marked-emoji": "^1.4.1",
     "marked-footnote": "^1.2.2",
@@ -69,18 +69,18 @@
     "marked-smartypants": "^1.1.7",
     "mrmime": "^2.0.0",
     "oslo": "^1.2.1",
-    "shiki": "^1.9.1",
+    "shiki": "^1.10.3",
     "unpic": "^3.18.0",
-    "unocss": "^0.61.0"
+    "unocss": "^0.61.3"
   },
   "peerDependencies": {
     "@astrojs/db": ">=0.11.7",
     "astro": ">=4.11.5"
   },
   "devDependencies": {
-    "@types/node": "20.14.9",
-    "typescript": "^5.5.2",
-    "vite": "^5.3.1",
+    "@types/node": "20.14.10",
+    "typescript": "^5.5.3",
+    "vite": "^5.3.3",
     "@iconify/types": "^2.0.0"
   }
 }
