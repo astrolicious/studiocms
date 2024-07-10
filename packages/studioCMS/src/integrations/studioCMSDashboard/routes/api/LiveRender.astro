@@ -2,10 +2,12 @@
 export const partial = true;
 import { StudioCMSRenderer } from "studiocms:components";
 
+type Content = string | null;
+
 const query = Astro.url.searchParams.get("content");
 const preQuery = Astro.url.searchParams.get("preload-content");
 
-let content = null;
+let content: Content = null;
 
 if (query && query !== "null") {
     content = query;

@@ -5,18 +5,21 @@ import type { Locals } from 'studiocms:helpers';
 import OauthProviders from '../components/OauthProviders.astro';
 import { StudioCMSRoutes } from 'studiocms-dashboard:routeMap';
 import { Alert, Button, Divider, Icon, Input } from 'astrolace:components';
+import { makePageTitle } from '../../../utils/makePageTitle';
+import { getSiteConfig } from 'studiocms-dashboard:contentHelper';
 
 const {  dashboardConfig } = Config;
 const { authLinks: { loginURL, registerAPI }, mainLinks: { dashboardIndex } } = StudioCMSRoutes;
 
+const contextConfig = await getSiteConfig();
 const locals = Astro.locals as Locals;
-
+ 
 if (locals.isLoggedIn) {
 	return Astro.redirect(dashboardIndex);
 }
 ---
 
-<Layout title='Registration Page' description="Registration Page" sideBarActiveItemID='login' includeSidebar={false}>
+<Layout title={makePageTitle("Registration", contextConfig)} description="Registration Page" sideBarActiveItemID='login' includeSidebar={false}>
   <div class="px-10 pb-12 mt-5 flex flex-col content-center items-center">
 
       <div class="text-5xl font-bold">Registration Page</div>

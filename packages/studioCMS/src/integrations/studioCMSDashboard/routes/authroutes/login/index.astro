@@ -5,6 +5,8 @@ import type { Locals } from 'studiocms:helpers';
 import OauthProviders from '../components/OauthProviders.astro';
 import { StudioCMSRoutes } from 'studiocms-dashboard:routeMap';
 import { Alert, Button, Divider, Icon, Input } from 'astrolace:components';
+import { makePageTitle } from '../../../utils/makePageTitle';
+import { getSiteConfig } from 'studiocms-dashboard:contentHelper';
 
 const { 
   dashboardConfig,
@@ -20,6 +22,7 @@ const {
   } 
 } = Config;
 
+const contextConfig = await getSiteConfig();
 const { authLinks: { loginAPI, signupURL }, mainLinks: { dashboardIndex } } = StudioCMSRoutes;
 
 const locals = Astro.locals as Locals;
@@ -29,7 +32,7 @@ if (locals.isLoggedIn) {
 }
 ---
 
-<Layout title='Login Page' description="Login Page" sideBarActiveItemID='login' includeSidebar={false}>
+<Layout title={makePageTitle("Login Page", contextConfig)} description="Login Page" sideBarActiveItemID='login' includeSidebar={false}>
   <div class="px-10 pb-12 mt-5 flex flex-col content-center items-center">
 
       <div class="text-5xl font-bold">Login</div>

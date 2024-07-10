@@ -1,22 +1,16 @@
 ---
-import { PageData, PageContent, db, eq } from 'astro:db';
 import { Layout } from 'studiocms-dashboard:components';
-import Config from 'virtual:studiocms/config';
 import { authHelper, type Locals } from 'studiocms:helpers';
 import { StudioCMSRoutes, getEditRoute } from 'studiocms-dashboard:routeMap';
-import { Alert, Icon } from 'astrolace:components';
 import PageEditAndCreateForm from '../../components/PageEditAndCreateForm.astro';
 import { getSiteConfig, getPageById } from 'studiocms-dashboard:contentHelper';
 import CrumbStack from '../../components/CrumbStack.astro';
+import { makePageTitle } from '../../../../utils/makePageTitle';
+import { logger } from '@it-astro:logger:StudioCMS';
 
-const { dashboardConfig: { developerConfig } } = Config;
-
-const { 
-    mainLinks: { 
-        dashboardIndex,
-        pageEdit,
-        livePreviewBox
-    } 
+const {
+	mainLinks: { dashboardIndex, pageEdit, livePreviewBox },
+    endpointLinks: { pages: { editPages: editPagesEndpoint } }
 } = StudioCMSRoutes;
 
 const { id } = Astro.params;
@@ -34,77 +28,17 @@ if (!pageData.id) {
 const editRoute = await getEditRoute(id);
 const { permissionLevel } = await authHelper(Astro.locals as Locals);
 
-// If the user is not logged in, redirect to the login page
-if ( !developerConfig.testingAndDemoMode ) {
-    if ( permissionLevel === "unknown" ) {
-        console.log('User is not logged in. Redirecting to login page.');
-        return Astro.redirect(StudioCMSRoutes.authLinks.loginURL);
-    }
-    if ( permissionLevel !== 'admin' && permissionLevel !== 'editor' ) {
-        console.log('User is not an admin or editor. Redirecting to profile page.');
-        return Astro.redirect(StudioCMSRoutes.mainLinks.userProfile);
-    }
+// Check Permission Level
+if (permissionLevel !== 'admin' && permissionLevel !== 'editor') {
+	logger.info('User is not an admin or editor. Redirecting to profile page.');
+	return Astro.redirect(StudioCMSRoutes.mainLinks.userProfile);
 }
-
-let showSuccessToast = false;
-let showErrorToast = false;
-
-if (Astro.request.method === 'POST' && !developerConfig.testingAndDemoMode) {
-  try {
-    const data = await Astro.request.formData();
-    const title = data.get("title");
-    const pack = data.get("package");
-	const showOnNav = data.get('show-on-nav');
-    const description = data.get("description");
-    const heroImage = data.get("hero-image");
-    const content = data.get("content");
-    // const contentLang = data.get("content-lang");
-
-    await db.update(PageData).set({ 
-        title: title as string,
-        package: pack as string,
-        description: description as string,
-        showOnNav: showOnNav === "on",
-        updatedAt: new Date(),
-        heroImage: heroImage as string,
-    }).where(eq(PageData.id, id)).then(async () => {
-        await db.update(PageContent).set({ 
-            content: content as string 
-        }).where(eq(PageContent.contentId, pageData.id));
-    }).catch(() => {
-        showErrorToast = true;
-    });
-    showSuccessToast = true;
-  } catch (error) {
-    if (error instanceof Error) {
-        showErrorToast = true;
-    }
-  }
-}
-
-const pageTitle = `Edit Page | ${contextConfig.title}`;
 ---
 
 <Layout 
     sideBarActiveItemID="edit-pages" 
-    title={pageTitle}
+    title={makePageTitle("Edit Page", contextConfig)}
     description={contextConfig.description} >
-    <div class="alert-toast">
-        { showSuccessToast && (
-        <Alert variant="success" duration={3000} open closable>
-            <Icon slot="icon" name="check2-circle"/>
-            <strong>Page Edited</strong>
-            <p>You can safely leave this page now.</p>
-        </Alert>
-        )}
-        { showErrorToast && (
-        <Alert variant="danger" duration={3000} open closable>
-            <Icon slot="icon" name="exclamation-octagon" />
-            <strong>Error Editing Page</strong>
-            <p>There was an Error editing the Post. Please try again.</p>
-        </Alert>
-        )}
-    </div>
 
     <CrumbStack items={[
         { href: dashboardIndex, text: 'Dashboard', prefix: 'columns-gap' },
@@ -114,6 +48,8 @@ const pageTitle = `Edit Page | ${contextConfig.title}`;
 
     <PageEditAndCreateForm 
         pageData={pageData}
-        livePreviewBox={livePreviewBox} 
-        isEditPage />
+        livePreviewBox={livePreviewBox}
+        pageEdit={pageEdit} 
+        isEditPage 
+        formActionURL={editPagesEndpoint} />
 </Layout>

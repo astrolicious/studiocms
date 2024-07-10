@@ -82,11 +82,7 @@ export default defineIntegration({
 								pattern: 'done/', 
 								entrypoint: resolve('./routes/databaseSetup/done.astro'),
 								_non_dashboard: true
-							}, { 
-								enabled: options.dashboardConfig.dashboardEnabled && !options.dbStartPage,
-								pattern: 'api/liverender', 
-								entrypoint: resolve('./routes/api/LiveRender.astro') 
-							}, {
+							},  {
 								enabled: options.dashboardConfig.dashboardEnabled && !options.dbStartPage,
 								pattern: '/',
 								entrypoint: resolve('./routes/dashboard/pages/index.astro')
@@ -130,7 +126,41 @@ export default defineIntegration({
 									options.dashboardConfig.AuthConfig.enabled,
 								pattern: 'logout/',
 								entrypoint: resolve('./routes/authroutes/logout.ts')
-							}
+							}, { 
+								enabled: options.dashboardConfig.dashboardEnabled && !options.dbStartPage,
+								pattern: 'api/liverender', 
+								entrypoint: resolve('./routes/api/LiveRender.astro') 
+							}, {
+								enabled: options.dashboardConfig.dashboardEnabled && 
+									!options.dbStartPage && 
+									options.dashboardConfig.AuthConfig.enabled,
+								pattern: "api/config/site",
+								entrypoint: resolve('./routes/api/config/site.ts')
+							}, {
+								enabled: options.dashboardConfig.dashboardEnabled && 
+									!options.dbStartPage && 
+									options.dashboardConfig.AuthConfig.enabled,
+								pattern: "api/config/admin",
+								entrypoint: resolve('./routes/api/config/admin.ts')
+							}, {
+								enabled: options.dashboardConfig.dashboardEnabled && 
+									!options.dbStartPage && 
+									options.dashboardConfig.AuthConfig.enabled,
+								pattern: "api/pages/create",
+								entrypoint: resolve('./routes/api/pages/create.ts')
+							}, {
+								enabled: options.dashboardConfig.dashboardEnabled && 
+									!options.dbStartPage && 
+									options.dashboardConfig.AuthConfig.enabled,
+								pattern: "api/pages/edit",
+								entrypoint: resolve('./routes/api/pages/edit.ts')
+							}, {
+								enabled: options.dashboardConfig.dashboardEnabled && 
+									!options.dbStartPage && 
+									options.dashboardConfig.AuthConfig.enabled,
+								pattern: "api/pages/delete",
+								entrypoint: resolve('./routes/api/pages/delete.ts')
+							}, 
 						]
 					});
 

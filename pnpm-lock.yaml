@@ -66,6 +66,9 @@ importers:
       '@iconify/utils':
         specifier: ^2.1.25
         version: 2.1.25
+      '@inox-tools/runtime-logger':
+        specifier: ^0.1.0
+        version: 0.1.0(@astrojs/db@0.11.7)(astro@4.11.5)
       '@inox-tools/sitemap-ext':
         specifier: ^0.2.12
         version: 0.2.12(@astrojs/db@0.11.7)(@types/node@20.14.9)(astro@4.11.5)
@@ -104,7 +107,7 @@ importers:
         version: 0.14.0(@astrojs/db@0.11.7)(astro@4.11.5)
       daisyui:
         specifier: ^4.12.8
-        version: 4.12.8(postcss@8.4.38)
+        version: 4.12.8(postcss@8.4.39)
       htmx.org:
         specifier: ^1.9.12
         version: 1.9.12
@@ -140,7 +143,7 @@ importers:
         version: 1.9.1
       unocss:
         specifier: ^0.61.0
-        version: 0.61.0(postcss@8.4.38)(vite@5.3.1)
+        version: 0.61.0(postcss@8.4.39)(vite@5.3.1)
       unpic:
         specifier: ^3.18.0
         version: 3.18.0
@@ -2298,6 +2301,31 @@ packages:
       - terser
     dev: false
 
+  /@inox-tools/modular-station@0.2.1(@astrojs/db@0.11.7)(astro@4.11.5):
+    resolution: {integrity: sha512-doS5q73KUIPE2TiMYCdF3CTolqRe1NrABpGlby4UFTR2cYwl6eQQWtHzBAPi2lcZfIIV9rmmdKTFlLpp/XT7xA==}
+    peerDependencies:
+      astro: ^4.3.5
+    dependencies:
+      '@inox-tools/utils': 0.1.1
+      astro: 4.11.5(@types/node@20.14.9)(typescript@5.5.2)
+      astro-integration-kit: 0.14.0(@astrojs/db@0.11.7)(astro@4.11.5)
+    transitivePeerDependencies:
+      - '@astrojs/db'
+    dev: false
+
+  /@inox-tools/runtime-logger@0.1.0(@astrojs/db@0.11.7)(astro@4.11.5):
+    resolution: {integrity: sha512-Pztr7+FZ+53FXlmqd9R3kGOYRMSQfSrE7zKKPn5KvmWREEtOMhOXGt5zth6VUb7rr0/Jx13PaeN2p0zXNpNxtw==}
+    peerDependencies:
+      astro: ^4
+    dependencies:
+      '@inox-tools/modular-station': 0.2.1(@astrojs/db@0.11.7)(astro@4.11.5)
+      '@inox-tools/utils': 0.1.1
+      astro: 4.11.5(@types/node@20.14.9)(typescript@5.5.2)
+      astro-integration-kit: 0.14.0(@astrojs/db@0.11.7)(astro@4.11.5)
+    transitivePeerDependencies:
+      - '@astrojs/db'
+    dev: false
+
   /@inox-tools/sitemap-ext@0.2.12(@astrojs/db@0.11.7)(@types/node@20.14.9)(astro@4.11.5):
     resolution: {integrity: sha512-TkAY4vZWB+A01gBvaGhsFWk35a2L/a04zVOcEzW/ingGUtaW/YOzGNlp9CIZbIbSP3Pe4HpjbRvEa+/gk+gizQ==}
     peerDependencies:
@@ -2553,11 +2581,11 @@ packages:
     dependencies:
       autoprefixer: 10.4.19(postcss@8.4.38)
       camelcase: 8.0.0
-      daisyui: 4.12.8(postcss@8.4.38)
+      daisyui: 4.12.8(postcss@8.4.39)
       parsel-js: 1.1.2
       postcss: 8.4.38
       postcss-js: 4.0.1(postcss@8.4.38)
-      unocss: 0.61.0(postcss@8.4.38)(vite@5.3.1)
+      unocss: 0.61.0(postcss@8.4.39)(vite@5.3.1)
     dev: false
 
   /@mdx-js/mdx@3.0.1:
@@ -3509,7 +3537,7 @@ packages:
       sirv: 2.0.4
     dev: false
 
-  /@unocss/postcss@0.61.0(postcss@8.4.38):
+  /@unocss/postcss@0.61.0(postcss@8.4.39):
     resolution: {integrity: sha512-0ZHUeLYu057xL1vXg2coV62ly6zaCgYdA/oHKCMaU9KT0TI49+DE73GouHypRNM5YXfuUPfXhPGGUuFWkAbI1A==}
     engines: {node: '>=14'}
     peerDependencies:
@@ -3521,7 +3549,7 @@ packages:
       css-tree: 2.3.1
       fast-glob: 3.3.2
       magic-string: 0.30.10
-      postcss: 8.4.38
+      postcss: 8.4.39
     dev: false
 
   /@unocss/preset-attributify@0.61.0:
@@ -4561,14 +4589,14 @@ packages:
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
     dev: false
 
-  /daisyui@4.12.8(postcss@8.4.38):
+  /daisyui@4.12.8(postcss@8.4.39):
     resolution: {integrity: sha512-FDdh0z9BsWMI0VeUSwZy6rwp9frEuUgd83SCPOaCYV3iULPzcgTEQT3IlcAbMCrsriu2ziDYZfGOUwPYHkHrfw==}
     engines: {node: '>=16.9.0'}
     dependencies:
       css-selector-tokenizer: 0.8.0
       culori: 3.3.0
       picocolors: 1.0.0
-      postcss-js: 4.0.1(postcss@8.4.38)
+      postcss-js: 4.0.1(postcss@8.4.39)
     transitivePeerDependencies:
       - postcss
     dev: false
@@ -7166,6 +7194,16 @@ packages:
       camelcase-css: 2.0.1
       postcss: 8.4.38
 
+  /postcss-js@4.0.1(postcss@8.4.39):
+    resolution: {integrity: sha512-dDLF8pEO191hJMtlHFPRa8xsizHaM82MLfNkUHdUtVEV3tgTp5oj+8qbEqYM57SLfc74KSbw//4SeJma2LRVIw==}
+    engines: {node: ^12 || ^14 || >= 16}
+    peerDependencies:
+      postcss: ^8.4.21
+    dependencies:
+      camelcase-css: 2.0.1
+      postcss: 8.4.39
+    dev: false
+
   /postcss-load-config@4.0.2(postcss@8.4.38):
     resolution: {integrity: sha512-bSVhyJGL00wMVoPUzAVAnbEoWyqRxkjv64tUl427SKnPrENtq6hJwUojroMz2VB+Q1edmi4IfrAPpami5VVgMQ==}
     engines: {node: '>= 14'}
@@ -8270,7 +8308,7 @@ packages:
     engines: {node: '>= 4.0.0'}
     dev: true
 
-  /unocss@0.61.0(postcss@8.4.38)(vite@5.3.1):
+  /unocss@0.61.0(postcss@8.4.39)(vite@5.3.1):
     resolution: {integrity: sha512-7642v5tHpEpHO9dl9sqYbKT/Ri4X4lmGHhj/znE4uheEfXcptPPiZ1/hVmQVciHUSI8CnQBqDwkZuxNPDG3bTQ==}
     engines: {node: '>=14'}
     peerDependencies:
@@ -8286,7 +8324,7 @@ packages:
       '@unocss/cli': 0.61.0
       '@unocss/core': 0.61.0
       '@unocss/extractor-arbitrary-variants': 0.61.0
-      '@unocss/postcss': 0.61.0(postcss@8.4.38)
+      '@unocss/postcss': 0.61.0(postcss@8.4.39)
       '@unocss/preset-attributify': 0.61.0
       '@unocss/preset-icons': 0.61.0
       '@unocss/preset-mini': 0.61.0

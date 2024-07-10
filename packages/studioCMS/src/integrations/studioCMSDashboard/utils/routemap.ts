@@ -48,6 +48,17 @@ export const StudioCMSRoutes = {
         auth0Index: await urlGenFactory(true, "login/auth0", dashboardRouteOverride),
         auth0Callback: await urlGenFactory(true, "login/auth0/callback", dashboardRouteOverride),
     },
+    endpointLinks: {
+        config: {
+            siteConfig: await urlGenFactory(true, "api/config/site", dashboardRouteOverride),
+            adminConfig: await urlGenFactory(true, "api/config/admin", dashboardRouteOverride)
+        },
+        pages: {
+            createPages: await urlGenFactory(true, "api/pages/create", dashboardRouteOverride),
+            editPages: await urlGenFactory(true, "api/pages/edit", dashboardRouteOverride),
+            deletePages: await urlGenFactory(true, "api/pages/delete", dashboardRouteOverride),
+        },
+    },
 }
 
 // Sidebar link type

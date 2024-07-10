@@ -1,8 +1,29 @@
 import { User, db, eq } from 'astro:db';
 import { defineMiddleware } from 'astro/middleware';
 import { verifyRequestOrigin } from 'lucia';
-import { lucia } from "studiocms-dashboard:auth";
+import { lucia } from 'studiocms-dashboard:auth';
 import type { Locals } from 'studiocms:helpers';
+import Config from 'virtual:studiocms/config';
+import { logger } from '@it-astro:logger:StudioCMS';
+
+const {
+	dashboardConfig: {
+		developerConfig: { testingAndDemoMode },
+		dashboardRouteOverride,
+	},
+} = Config;
+
+/**
+ * This function is used to remove any trailing and leading slashes from a string
+ * 
+ * @param {string} str - The string to remove slashes from
+ * 
+ * @returns {string} - The string without any trailing or leading slashes
+ * 
+ * @example
+ * stripSlashes('/dashboard/') // 'dashboard'
+ */
+const stripSlashes = (str: string): string => str.replace(/^\/+|\/+$/g, '');
 
 export const onRequest = defineMiddleware(async (context, next) => {
 	if (context.request.method !== 'GET') {
@@ -40,12 +61,8 @@ export const onRequest = defineMiddleware(async (context, next) => {
 	if (session.fresh) {
 		const sessionCookie = lucia.createSessionCookie(session.id);
 		context.cookies.set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
-		const dbUser = await db
-			.select()
-			.from(User)
-			.where(eq(User.id, user.id))
-			.get();
-			
+		const dbUser = await db.select().from(User).where(eq(User.id, user.id)).get();
+
 		locals.dbUser = dbUser;
 		locals.isLoggedIn = true;
 	} else if (session && !session.fresh) {
@@ -56,5 +73,29 @@ export const onRequest = defineMiddleware(async (context, next) => {
 
 	locals.session = session;
 	locals.user = user;
+	const urlPathname = context.url.pathname;
+
+	const dashboardRoute = dashboardRouteOverride ? stripSlashes(dashboardRouteOverride) : 'dashboard';
+
+	if (
+		urlPathname.startsWith(`/${dashboardRoute}`) &&
+		(!urlPathname.startsWith(`/${dashboardRoute}/login`) ||
+			!urlPathname.startsWith(`/${dashboardRoute}/signup`))
+	) {
+		if (!testingAndDemoMode) {
+			if (!locals.isLoggedIn) {
+				logger.info('User is not logged in... Redirecting to login page');
+				return new Response(null, {
+					status: 302,
+					headers: {
+						Location: '/dashboard/login',
+					},
+				});
+			}
+		} else {
+			logger.info('Testing and Demo mode is enabled. Skipping login check');
+		}
+	}
+
 	return next();
 });

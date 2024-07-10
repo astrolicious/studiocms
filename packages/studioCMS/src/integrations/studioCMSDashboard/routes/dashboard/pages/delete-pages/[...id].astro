@@ -1,20 +1,16 @@
 ---
-import { PageData, PageContent, db, eq } from 'astro:db';
 import { Layout } from 'studiocms-dashboard:components';
-import Config from 'virtual:studiocms/config';
 import { authHelper, type Locals } from 'studiocms:helpers';
 import { StudioCMSRoutes, getDeleteRoute } from 'studiocms-dashboard:routeMap';
-import { Alert, Button, Divider, Icon, Input } from 'astrolace:components';
+import { Alert, Button, Divider, Icon, Input, VisuallyHidden } from 'astrolace:components';
 import { getSiteConfig, getPageById } from 'studiocms-dashboard:contentHelper';
 import CrumbStack from '../../components/CrumbStack.astro';
+import { makePageTitle } from '../../../../utils/makePageTitle';
+import { logger } from '@it-astro:logger:StudioCMS';
 
-const { dashboardConfig: { developerConfig } } = Config;
-
-const { 
-    mainLinks: { 
-        dashboardIndex,
-        pageEdit
-    } 
+const {
+	mainLinks: { dashboardIndex, pageEdit },
+    endpointLinks: { pages: { deletePages: deletePagesEndpoint } }
 } = StudioCMSRoutes;
 
 const { id } = Astro.params;
@@ -32,68 +28,15 @@ if (!page) {
 const deleteURL = await getDeleteRoute(id);
 const { permissionLevel } = await authHelper(Astro.locals as Locals);
 
-// If the user is not logged in, redirect to the login page
-if ( !developerConfig.testingAndDemoMode ) {
-    if ( permissionLevel === "unknown" ) {
-        console.log('User is not logged in. Redirecting to login page.');
-        return Astro.redirect(StudioCMSRoutes.authLinks.loginURL);
-    }
-    if ( permissionLevel !== 'admin' && permissionLevel !== 'editor' ) {
-        console.log('User is not an admin or editor. Redirecting to profile page.');
-        return Astro.redirect(StudioCMSRoutes.mainLinks.userProfile);
-    }
+// Check Permission Level
+if (permissionLevel !== 'admin' && permissionLevel !== 'editor') {
+	logger.info('User is not an admin or editor. Redirecting to profile page.');
+	return Astro.redirect(StudioCMSRoutes.mainLinks.userProfile);
 }
-
-let showSuccessToast = false;
-let showErrorToast = false;
-
-if (Astro.request.method === 'POST' && !developerConfig.testingAndDemoMode) {
-    try {
-        const data = await Astro.request.formData();
-        const slug = data.get('slug');
-        if (slug === page.slug) {
-            if ( slug === "index" || slug === "about" ) {
-                showErrorToast = true;
-                return new Response('Error: Cannot delete the index or about page.', { status: 500 })
-            }
-
-            await db
-                .delete(PageData)
-                .where(eq(PageData.slug, page.slug as string))
-                .then(() => {
-                    showSuccessToast = true;
-                })
-                // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-                .catch((e: any) => {
-                    console.error(e);
-                    showErrorToast = true;
-                });
-
-            await db
-                .delete(PageContent)
-                .where(eq(PageContent.contentId, page.id))
-                .then(() => {
-                    showSuccessToast = true;
-                })
-                // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-                .catch((e: any) => {
-                    console.error(e);
-                    showErrorToast = true;
-                });
-        } 
-    } catch (error) {
-        if (error instanceof Error) {
-            console.error(error);
-            showErrorToast = true;
-        }
-    }
-}
-
-const pageTitle = `Delete Page | ${contextConfig.title}`;
 ---
 <Layout 
     sideBarActiveItemID="edit-pages" 
-    title={pageTitle}
+    title={makePageTitle("Delete Page", contextConfig)}
     description={contextConfig.description} >
 
     <CrumbStack items={[
@@ -102,22 +45,6 @@ const pageTitle = `Delete Page | ${contextConfig.title}`;
         { href: deleteURL, text: `Delete Page: ${page.slug}` }
     ]} />
 
-    <div class="alert-toast">
-        { showSuccessToast && (
-        <Alert variant="success" duration={3000} open closable>
-            <Icon slot="icon" name="check2-circle"/>
-            <strong>Page Deleted!</strong>
-            <p>You can safely leave this page now.</p>
-        </Alert>
-        )}
-        { showErrorToast && (
-        <Alert variant="danger" duration={3000} open closable>
-            <Icon slot="icon" name="exclamation-octagon"/>
-            <strong>Error Deleting Page</strong>
-            <p>There was an Error Deleting the Page. Please try again.</p>
-        </Alert>
-        )}
-    </div>
     <div class="container">
 
         <h1 class="text-5xl font-bold py-8">Delete Page: {page.title}</h1>
@@ -130,7 +57,7 @@ const pageTitle = `Delete Page | ${contextConfig.title}`;
 
         <div class="py-2 flex flex-col">
     
-            <form method="post" enctype="multipart/form-data" >
+            <form method="post" id="delete-form" action={deletePagesEndpoint} enctype="multipart/form-data" >
                     
                 <Input 
                     type="text" 
@@ -141,6 +68,8 @@ const pageTitle = `Delete Page | ${contextConfig.title}`;
                     required />
 
                 <input type="hidden" name="to-delete" id="to-delete" value={page.slug} />
+                <input type="hidden" name="package" id="package" value={page.package} />
+                <input type="hidden" name="page-id" id="page-id" value={page.id} />
 
                 <Divider />
     
@@ -148,6 +77,59 @@ const pageTitle = `Delete Page | ${contextConfig.title}`;
     
             </form>
     
+
+        <Alert id="form-error" variant="danger" duration={4000} closable>
+            <Icon slot="icon" name="exclamation-octagon" />
+            <strong>Something went wrong!</strong>
+            <Divider />
+            <div id="form-error-message"></div>
+        </Alert>
+        <Alert id="form-success" variant="success" duration={4000} closable>
+            <Icon slot="icon" name="check2-circle" />
+            <strong>Success!</strong>
+            <Divider />
+            <div id="form-success-message"></div>
+        </Alert>
+
+        <VisuallyHidden>
+            <div id="edit-page-url">{pageEdit}</div>
+        </VisuallyHidden>
+
         </div>
     </div>
 </Layout>
+
+<script>
+    import type { SlAlert } from "astrolace:types";
+
+    const formElement = document.getElementById('delete-form') as HTMLFormElement;
+
+    const formError = document.getElementById('form-error') as SlAlert;
+    const formErrorMessage = document.getElementById('form-error-message') as HTMLDivElement;
+    const formSuccess = document.getElementById('form-success') as SlAlert;
+    const formSuccessMessage = document.getElementById('form-success-message') as HTMLDivElement;
+
+    const editPageURL = document.getElementById('edit-page-url') as HTMLDivElement;
+
+    formElement.addEventListener('submit', async (e) => {
+        e.preventDefault();
+    
+        const formElement = e.target as HTMLFormElement;
+        const response = await fetch(formElement.action, {
+            method: formElement.method,
+            body: new FormData(formElement)
+        });
+    
+        if (response.ok) {
+            formSuccessMessage.innerText = (await response.json()).message;
+            formSuccess.toast();
+            setTimeout(() => {
+                window.location.replace(editPageURL.innerText);
+            }, 4000)
+        } else {
+            formErrorMessage.innerText = (await response.json()).error;
+            formError.toast();
+        }
+    
+    })
+</script>

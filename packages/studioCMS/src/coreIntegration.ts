@@ -10,6 +10,7 @@ import { optionsSchema } from './schemas';
 import { version } from '../package.json';
 import { CoreStrings, robotsTXTPreset } from './strings';
 import { namespaceBuiltinsPlugin } from './utils/namespaceBuiltins';
+import { runtimeLogger } from '@inox-tools/runtime-logger';
 
 // Main Integration
 export default defineIntegration({
@@ -43,6 +44,9 @@ export default defineIntegration({
 					updateConfig({
 						vite: { plugins: [namespaceBuiltinsPlugin()] }
 					})
+
+					// Create Runtime Logger
+					runtimeLogger(params, { name: "StudioCMS" })
 
 					// Setup Logger
 					const LoggerOpts = await studioLoggerOptsResolver(params.logger, resolvedOptions.verbose);
