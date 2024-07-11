@@ -154,7 +154,7 @@ Developer Options/Configuration.
 - **Type:** `boolean | undefined`
 - **Default:** `false`
 
-Allows the user to enable Astro's View Transition API for the Astro Studio CMS Dashboard.
+Allows the user to enable Astro's ZeroJS View Transition API for the Astro Studio CMS Dashboard.
 
 #### `testingAndDemoMode`
 

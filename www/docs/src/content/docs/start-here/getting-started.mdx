@@ -143,7 +143,7 @@ export default defineConfig({
     integrations: [
         db(),
         studioCMS({
-            dbStartPage: false,
+            dbStartPage: true, // After the first time running the dev server and following the instructions at http://localhost:4321/start this will be set to false.
         }),
     ],
 });

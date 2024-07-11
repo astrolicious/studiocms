@@ -22,7 +22,7 @@ astroStudioCMS({
 - **Type:** `boolean | undefined`
 - **Default:** `true`
 
-Allows the user to enable/disable the use of the Astro Robots Integration.
+Allows the user to enable/disable the use of the StudioCMS Custom `astro-robots-txt` Integration.
 
 ### `astroRobotsConfig`
 
@@ -30,7 +30,11 @@ Allows the user to enable/disable the use of the Astro Robots Integration.
 
 Allows you to modify the default behaviour of the this Integration. For more information on this Integration please visit the [Astro Robots Integration](https://www.npmjs.com/package/astro-robots).
 
-### `useInoxSitemap`
+### `useInoxSitemap` 
+
+#### TEMPORARILY DISABLED
+
+If you would like to still use the Inox-tools Sitemap Plugin, you can manually add it to your project's Integrations.
 
 - **Type:** `boolean | undefined`
 - **Default:** `true`

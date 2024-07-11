@@ -41,14 +41,14 @@ export default defineConfig({
           tag: "meta",
           attrs: {
             property: "og:image",
-            content: site + "og.png?v=1",
+            content: `${site}og.png?v=1`,
           },
         },
         {
           tag: "meta",
           attrs: {
             property: "twitter:image",
-            content: site + "og.png?v=1",
+            content: `${site}og.png?v=1`,
           },
         },
       ],
@@ -65,10 +65,35 @@ export default defineConfig({
               link: "/start-here/environment-variables",
             },
             {
+              label: "Configuration",
+              link: "/start-here/configuration",
+            },
+            {
               label: "Why Astro StudioCMS?",
               link: "/start-here/why-studiocms",
             },
             { label: "Gallery", link: "/start-here/gallery" },
+          ],
+        },
+        {
+          label: "Plugins",
+          items: [
+            { 
+              label: "Web Vitals", 
+              link: "/plugins/web-vitals",
+              badge: {
+                text: "AstroJS",
+                variant: "success",
+              } 
+            },
+            {
+              label: "Blog Integration",
+              link: "/plugins/studiocms-blog",
+              badge: {
+                text: "StudioCMS",
+                variant: "tip",
+              }
+            }
           ],
         },
         {

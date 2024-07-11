@@ -19,7 +19,7 @@ ASTRO_STUDIO_APP_TOKEN=your_app_token
 
 ## Authentication Environment Variables
 
-Currently there are 2 ways to authenticate with Astro StudioCMS:
+Currently there are 5 ways to authenticate with Astro StudioCMS:
 
 ### GitHub
 
@@ -31,6 +31,45 @@ CMS-GITHUB_CLIENT_ID=your_client_id
 CMS-GITHUB_CLIENT_SECRET=your_client_secret
 ```
 
+### Discord
+
+```bash
+# credentials for Discord OAuth
+CMS_DISCORD_CLIENT_ID=
+CMS_DISCORD_CLIENT_SECRET=
+CMS_DISCORD_REDIRECT_URI=http://localhost:4321/dashboard/login/discord/callback
+```
+
+### Google
+
+```bash
+# credentials for Google OAuth
+CMS_GOOGLE_CLIENT_ID=
+CMS_GOOGLE_CLIENT_SECRET=
+CMS_GOOGLE_REDIRECT_URI=http://localhost:4321/dashboard/login/google/callback
+```
+
+### Auth0
+
+```bash
+# credentials for auth0 OAuth
+CMS_AUTH0_CLIENT_ID=
+CMS_AUTH0_CLIENT_SECRET=
+CMS_AUTH0_DOMAIN=
+CMS_AUTH0_REDIRECT_URI=http://localhost:4321/dashboard/login/auth0/callback
+```
+
 ### Username and Password
 
 Alternatively, you can authenticate with Astro StudioCMS using your username and password which doesn't require any additional environment variables.
+
+## Image Handler Environment Variables
+
+### Cloudinary (Optional)
+
+If you choose to use the built-in Cloudinary plugin, you will need to define the following:
+
+```bash
+## Cloudinary Javascript SDK
+CMS_CLOUDINARY_CLOUDNAME="demo"
+```

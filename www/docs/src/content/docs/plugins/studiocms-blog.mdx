@@ -1,0 +1,68 @@
+---
+title: "@astrolicious/studiocms-blog"
+description: "StudioCMS Blog Integration"
+---
+
+import PackageManagerTabs from '~/components/PackageManagerTabs.astro';
+
+# Introduction
+
+#### Powered by [`astro-theme-provider`](https://github.com/astrolicious/astro-theme-provider) by [Bryce Russell](https://github.com/BryceRussell)
+
+This Astro integration enables the StudioCMS Blog feature in your Astro project. This integration will allow you to create, edit, and delete blog posts in the StudioCMS dashboard.
+
+## Installation
+
+<PackageManagerTabs>
+  <Fragment slot="npm">
+  ```shell
+  npm astro add @astrolicious/studiocms-blog
+  ```
+  </Fragment>
+  <Fragment slot="pnpm">
+  ```shell
+  pnpm astro add @astrolicious/studiocms-blog
+  ```
+  </Fragment>
+  <Fragment slot="yarn">
+  ```shell
+  yarn astro add @astrolicious/studiocms-blog
+  ```
+  </Fragment>
+</PackageManagerTabs>
+
+## Usage
+
+### What does this integration do?
+
+This integration will add the following new routes to your StudioCMS Controlled Front-end:
+
+- `/blog` - The main blog page that lists all blog posts.
+- `/blog/[slug]` - The individual blog post page.
+- `/rss.xml` - The RSS feed for your blog posts.
+
+### Example config
+
+```js title="astro.config.mjs"
+import { defineConfig } from 'astro/config';
+import db from '@astrojs/db';
+import studioCMS from '@astrolicious/studiocms';
+import studioCMSBlog from '@astrolicious/studiocms-blog';
+
+// https://astro.build/config
+export default defineConfig({
+  site: "https://example.com",
+  output: "server",
+  adapter: ...
+  integrations: [ 
+    db(), // REQUIRED - `@astrojs/db` must be included in the integrations list
+    studioCMS(), // REQUIRED - StudioCMS must be included in the integrations list
+    studioCMSBlog({
+      config: {
+        title: "My StudioCMS Blog",
+        description: "A Simple Blog build with Astro, Astrojs/DB, and StudioCMS.".
+      },
+    }), 
+  ],
+});
+```
