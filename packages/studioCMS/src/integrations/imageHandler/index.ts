@@ -6,6 +6,7 @@ import { cloudflareImageHandler, netlifyImageHandler, nodeImageHandler, vercelIm
 import { optionsSchema } from './schemas';
 import { imageHandlerStrings } from './strings';
 import { componentResolver } from './componentResolver';
+import { addAstroEnvConfig } from '../../utils/astroEnvConfig';
 
 export default defineIntegration({
     name: '@astrolicious/studioCMS:imageHandler',
@@ -16,10 +17,7 @@ export default defineIntegration({
             hooks: {
                 "astro:config:setup": async ( params ) => {
 
-					const {
-						config: { adapter },
-						updateConfig,
-					} = params;
+					const { config: { adapter } } = params;
 
                     const { verbose, imageService: { cdnPlugin } } = options;
 
@@ -32,19 +30,15 @@ export default defineIntegration({
 						'@astrojs/netlify'
 					];
 
-					updateConfig({
-						experimental: {
-							env: {
-								schema: {
-									CMS_CLOUDINARY_CLOUDNAME: envField.string({
-										context: 'server',
-										access: 'secret',
-										optional: true,
-									})
-								}
-							}
+					addAstroEnvConfig(params,{
+						schema: {
+							CMS_CLOUDINARY_CLOUDNAME: envField.string({
+								context: 'server',
+								access: 'secret',
+								optional: true,
+							})
 						}
-					})
+					});
 
 					if (cdnPlugin === 'cloudinary-js') {
 						if (!env.CMS_CLOUDINARY_CLOUDNAME) {
