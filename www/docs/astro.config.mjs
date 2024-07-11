@@ -19,6 +19,7 @@ export default defineConfig({
       },
       social: {
         github: "https://github.com/astrolicious/studiocms",
+        discord: "https://chat.astrolicious.dev",
       },
       customCss: [
         // Relative path to your custom CSS file
@@ -94,6 +95,12 @@ export default defineConfig({
                 variant: "tip",
               }
             }
+          ],
+        },
+        {
+          label: "Understanding StudioCMS",
+          items: [
+            { label: "How does it work!?", link: "/how-it-works/" },
           ],
         },
         {
