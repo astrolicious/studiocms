@@ -1,6 +1,6 @@
 import { checkAstroConfig, studioLogger, studioLoggerOptsResolver, makeFrontend, addIntegrationArray, addIntegrationArrayWithCheck } from './utils';
 import { studioCMSRobotsTXT, studioCMSImageHandler, studioCMSDashboard } from './integrations';
-import { addDts, addVirtualImports, createResolver, defineIntegration } from 'astro-integration-kit';
+import { addDts, addVirtualImports, addVitePlugin, createResolver, defineIntegration } from 'astro-integration-kit';
 import 'astro-integration-kit/types/db';
 import { optionsResolver, vResolver } from './resolvers';
 // import inoxsitemap from '@inox-tools/sitemap-ext';
@@ -33,7 +33,7 @@ export default defineIntegration({
 				'astro:config:setup': async ( params ) => {
 
 					// Destructure Params
-					const { config: astroConfig, addWatchFile, updateConfig } = params;
+					const { config: astroConfig, addWatchFile } = params;
 
 					// Watch the StudioCMS Config File for changes (including creation/deletion)
 					addWatchFile(getStudioConfigFileUrl(astroConfig.root));
@@ -41,9 +41,8 @@ export default defineIntegration({
 					// Resolve Options
 					const resolvedOptions = await optionsResolver(params, options);
 
-					updateConfig({
-						vite: { plugins: [namespaceBuiltinsPlugin()] }
-					})
+					// Add Namespace Builtins Plugin for vite
+					addVitePlugin(params, { plugin: namespaceBuiltinsPlugin() })
 
 					// Create Runtime Logger
 					runtimeLogger(params, { name: "StudioCMS" })

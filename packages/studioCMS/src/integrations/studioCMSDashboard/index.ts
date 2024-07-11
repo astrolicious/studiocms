@@ -8,6 +8,7 @@ import { usernameAndPasswordAuthConfig } from "./studioauth-config";
 import type { IconifyJSON } from '@iconify/types';
 import { checkForWebVitals } from "./utils/vitals";
 import astrolace from '@matthiesenxyz/astrolace';
+import { addAstroEnvConfig } from "../../utils/astroEnvConfig";
 
 export default defineIntegration({
     name: '@astrolicious/studioCMS:adminDashboard',
@@ -31,9 +32,7 @@ export default defineIntegration({
 					loadKeys(params.logger, options);
 
 					// Update Astro Config with Environment Variables (`astro:env`)
-					params.updateConfig({ 
-						experimental: { env: astroENV } 
-					});
+					addAstroEnvConfig(params, astroENV)
 
 					// Virtual Imports and DTS File Creation
 					virtualResolver(params, { name });
