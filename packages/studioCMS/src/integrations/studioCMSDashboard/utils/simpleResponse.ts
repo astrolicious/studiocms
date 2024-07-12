@@ -7,6 +7,9 @@ export const simpleResponse = (statusCode: number, message: string) => {
                 error: message
             }),
             {
+                headers: {
+                    'Content-Type': 'application/json'
+                },
                 status: statusCode
             }
         )
@@ -16,6 +19,9 @@ export const simpleResponse = (statusCode: number, message: string) => {
             message: message
         }),
         {
+            headers: {
+                'Content-Type': 'application/json'
+            },
             status: statusCode
         }
     )
