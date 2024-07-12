@@ -32,9 +32,6 @@ export default defineConfig({
       editLink: {
         baseUrl: "https://github.com/astrolicious/studiocms/tree/main/www/docs",
       },
-      plugins: [
-        starlightLinksValidator(),
-      ],
       head: [
         {
           tag: "script",
