@@ -1,29 +1,42 @@
 import { defineConfig } from "astro/config";
 import starlight from "@astrojs/starlight";
 // import starlightLinksValidator from 'starlight-links-validator'; // Disabled for now
-import { createStarlightTypeDocPlugin } from 'starlight-typedoc';
+import { createStarlightTypeDocPlugin, type StarlightTypeDocOptions } from 'starlight-typedoc';
 
+// Create Starlight TypeDoc Plugins for different parts of the Astro StudioCMS Project
 const [studioCMSTypeDoc, studioCMSTypeDocSidebarGroup] = createStarlightTypeDocPlugin();
 const [studioCMSBlogTypeDoc, studioCMSBlogTypeDocSidebarGroup] = createStarlightTypeDocPlugin();
 const [studioCMSAdminTypeDoc, studioCMSAdminTypeDocSidebarGroup] = createStarlightTypeDocPlugin();
 
+// Create Sidebar Groups for the TypeDocs
 const TypeDocSidebarGroup = [studioCMSTypeDocSidebarGroup, studioCMSBlogTypeDocSidebarGroup, studioCMSAdminTypeDocSidebarGroup];
 
+// Define the Site URL
 const site = "https://docs.astro-studiocms.xyz/";
 
-const TypeDocOpts = (label, readme) => {
+// Utility Function for TypeDoc Options
+const makeTypeDocOptions = (
+  label: string,
+  urlPath: string,
+  tsconfig: string,
+  entryPoints: string[],
+  readme?: string
+) => {
   return {
+    tsconfig,
+    entryPoints,
+    output: urlPath,
     sidebar: {
-      label: label,
+      label,
       collapsed: true,
     },
     pagination: true,
     typeDoc: {
-      readme: readme,
+      readme,
       jsDocCompatibility: true,
       skipErrorChecking: true,
-    }
-  }
+    },
+  } as StarlightTypeDocOptions;
 }
 
 export default defineConfig({
@@ -36,7 +49,10 @@ export default defineConfig({
       favicon: "/logo-dark.svg",
       tagline: "A dedicated CMS for Astro Studio. Built from the ground up by the Astro community.",
       expressiveCode: {
-        themes: ["houston", "starlight-light"]
+        themes: ["houston", "starlight-light"],
+        defaultProps: {
+          wrap: true,
+        },
       },
       logo: {
         dark: "../assets/logo-light.svg",
@@ -79,9 +95,11 @@ export default defineConfig({
         },
       ],
       plugins: [
-        studioCMSTypeDoc({
-          tsconfig: '../../packages/studioCMS/tsconfig.json',
-          entryPoints: [ 
+        studioCMSTypeDoc(makeTypeDocOptions(
+          "StudioCMS-Core",
+          "typedoc/studiocms-core",
+          "../../packages/studioCMS/tsconfig.json",
+          [
             '../../packages/studioCMS/src/index.ts',
             '../../packages/studioCMS/src/coreIntegration.ts',
             '../../packages/studioCMS/src/studiocms-config.ts',
@@ -95,31 +113,31 @@ export default defineConfig({
             '../../packages/studioCMS/src/utils/authhelper.ts',
             '../../packages/studioCMS/src/utils/contentHelper.ts',
           ],
-          output: 'typedoc/studiocms-core',
-          ...TypeDocOpts("StudioCMS-Core", "../../packages/studioCMS/README.md")
-        }),
-        studioCMSAdminTypeDoc({
-          tsconfig: '../../packages/studioCMS/tsconfig.json',
-          entryPoints: [ 
+          "../../packages/studioCMS/README.md"
+        )),
+        studioCMSAdminTypeDoc(makeTypeDocOptions(
+          "StudioCMS-Dashboard",
+          "typedoc/studiocms-dashboard",
+          "../../packages/studioCMS/tsconfig.json",
+          [
             '../../packages/studioCMS/src/integrations/studioCMSDashboard/index.ts',
             '../../packages/studioCMS/src/integrations/studioCMSDashboard/schemas.ts',
             '../../packages/studioCMS/src/integrations/studioCMSDashboard/env.ts',
             '../../packages/studioCMS/src/integrations/studioCMSDashboard/lib/auth.ts',
             '../../packages/studioCMS/src/integrations/studioCMSDashboard/middleware/index.ts',
           ],
-          output: 'typedoc/studiocms-dashboard',
-          ...TypeDocOpts("StudioCMS-Dashboard")
-        }),
-        studioCMSBlogTypeDoc({
-          tsconfig: '../../packages/studioCMSBlog/tsconfig.json',
-          entryPoints: [ 
+        )),
+        studioCMSBlogTypeDoc(makeTypeDocOptions(
+          "StudioCMS-Blog",
+          "typedoc/studiocms-blog",
+          "../../packages/studioCMSBlog/tsconfig.json",
+          [
             '../../packages/studioCMSBlog/index.ts',
             '../../packages/studioCMSBlog/schema.ts',
-            '../../packages/studioCMSBlog/src/pages/rss.xml.ts', 
+            '../../packages/studioCMSBlog/src/pages/rss.xml.ts',
           ],
-          output: 'typedoc/studiocms-blog',
-          ...TypeDocOpts("StudioCMS-Blog", "../../packages/studioCMSBlog/README.md")
-        }),
+          "../../packages/studioCMSBlog/README.md"
+        )),
       ],
       sidebar: [
         {
@@ -141,7 +159,10 @@ export default defineConfig({
               label: "Why Astro StudioCMS?",
               link: "/start-here/why-studiocms",
             },
-            { label: "Gallery", link: "/start-here/gallery" },
+            { 
+              label: "Gallery", 
+              link: "/start-here/gallery" 
+            },
           ],
         },
         {
@@ -168,7 +189,10 @@ export default defineConfig({
         {
           label: "Understanding StudioCMS",
           items: [
-            { label: "How does it work!?", link: "/how-it-works/" },
+            { 
+              label: "How does it work!?", 
+              link: "/how-it-works/" 
+            },
           ],
         },
         {
