@@ -11,12 +11,12 @@ Extending StudioCMS is easy too! You can also create your own plugins to add new
 
 ## How does it work?
 
-StudioCMS is devided into multiple parts:
+StudioCMS is divided into multiple parts:
 
-- **StudioCMS Core**: The core of StudioCMS is the primary integration that hooks into your Astro project and provides the ability to interact with the AstroStudio (through AstroDB) integration with a prebuilt front-end.
+- **StudioCMS Core**: The core of StudioCMS is the primary integration that hooks into your Astro project and provides the ability to interact with the Astro Studio (through AstroDB) integration with a prebuilt front-end.
 - **StudioCMS: Dashboard**: The StudioCMS dashboard is the primary web interface for managing your AstroStudioCMS project. It provides a user-friendly interface for creating, editing, and deleting content for your Astro project.
 - **StudioCMS: ImageHandler**: This integration provides a `<CustomImage />` Astro component that is used to handle remote images and optimize them for your Astro project in a SSR environment.
-- **StudioCMS: Robots-TXT**: This integration automates the creation of a robots.txt file for your Astro project and AstroStudioCMS.
+- **StudioCMS: Robots-TXT**: This integration automates the creation of a `robots.txt` file for your Astro project and AstroStudioCMS.
 
 ## Breakdown
 
@@ -28,16 +28,16 @@ StudioCMS Core is an Astro Integration which provides a comprehensive CMS soluti
 
 #### Features
 - **@astrojs/db**: The StudioCMS Core integration uses the `@astrojs/db` integration to connect to AstroStudio.
-- **Virtual Imports**: The StudioCMS Core integration adds several [Vite Virtual Imports](https://vitejs.dev/guide/api-plugin#virtual-modules-convention) packed with features which gives you full control over your dynamic content.
-- **Logging**: The StudioCMS Core integration logs all changes to AstroStudio and can be enabled or disabled through a config option.
+- **Virtual Imports**: The StudioCMS Core integration adds several [Vite Virtual Imports](https://vitejs.dev/guide/api-plugin#virtual-modules-convention) packed with features that give you full control over your dynamic content.
+- **Logging**: The StudioCMS Core integration logs all changes to Astro Studio and can be enabled or disabled through a config option.
 - **Default Frontend Routes**: The StudioCMS Core integration adds default frontend routes to your Astro project to allow for easy access to the StudioCMS dashboard.
-- **Plugin System**: You can easily extend StudioCMS using it's own plugin system so you can easily create extra functionality into StudioCMS.
+- **Plugin System**: You can easily extend StudioCMS using its own plugin system to create additional functionality.
 
 #### Core Virtual Modules
 
 - **`virtual:studiocms/config`**: Provides the resolved configuration for the StudioCMS integration ecosystem.
 - **`virtual:studiocms/version`**: Provides the current version of the StudioCMS integration ecosystem.
-- **`virtual:studiocms/_nav`**: Provides the navigation mappings for the user-facing Front-end.
+- **`virtual:studiocms/_nav`**: Provides the navigation mappings for the user-facing front-end.
 - **`virtual:studiocms/astromdremarkConfig`**: Provides the configuration for Astro Markdown support.
 - **`studiocms:components`**: Provides the front-end exported components for StudioCMS.
 - **`studiocms:helpers`**: Provides the front-end exported helper functions for StudioCMS.
@@ -68,7 +68,7 @@ The StudioCMS Dashboard is a web-based interface that allows you to manage your 
 
 #### Overview
 
-The StudioCMS ImageHandler is an integration that provides a custom image component for your Astro project. This component is used to handle remote images and optimize them for your Astro project in an SSR environment using [@unpic/astro](https://unpic.pics/img/astro/) for image optimization.
+The StudioCMS ImageHandler is an integration that provides a custom image component for your Astro project. This component is used to handle remote images and optimize them for your Astro project in a SSR environment using [@unpic/astro](https://unpic.pics/img/astro/) for image optimization.
 
 #### Features
 
