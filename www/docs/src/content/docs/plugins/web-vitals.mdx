@@ -4,7 +4,8 @@ description: "Web Vitals Integration with the StudioCMS Dashboard"
 ---
 
 import { PackageManagers } from 'starlight-package-managers';
-import WebVitals from '~/components/WebVitalPreview.astro';
+import Gallery from '~/components/Gallery.astro'
+import { webVitalsImages } from "../../../assets/index.ts"
 
 # Introduction
 
@@ -14,6 +15,6 @@ This Astro integration enables tracking real-world website performance and stori
 
 <PackageManagers type="exec" pkg="astro" args="add @astrojs/web-vitals" />
 
-## Example
+## Gallery Demo
 
-<WebVitals />
+<Gallery images={webVitalsImages} />

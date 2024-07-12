@@ -5,8 +5,9 @@ tableOfContents: false
 ---
 
 import Gallery from '~/components/Gallery.astro'
+import { galleryImages } from "../assets/index.ts"
 
 This is a small gallery of images to show off the `Astro StudioCMS` integration.
 
-<Gallery />
+<Gallery images={galleryImages} />
 

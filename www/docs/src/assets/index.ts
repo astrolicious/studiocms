@@ -1,20 +1,26 @@
-import LoginPageDark from "./LoginPageDark.png";
-import LoginPageLight from "./LoginPageLight.png";
-import CreateNewPageDark from "./CreateNewPageDark.png";
-import CreateNewPageLight1 from "./CreateNewPageLight-1.png";
-import CreateNewPageLight2 from "./CreateNewPageLight-2.png";
-import DashboardDark from "./DashboardDark.png";
-import DashboardLight from "./DashboardLight.png";
-import EditPageDark1 from "./EditPageDark-1.png";
-import EditPageDark2 from "./EditPageDark-2.png";
-import EditPageLight1 from "./EditPageLight-1.png";
-import EditPageLight2 from "./EditPageLight-2.png";
-import SiteAdminsDark from "./SiteAdminsDark.png";
-import SiteConfigDark from "./SiteConfigDark.png";
-import UserProfileDark from "./UserProfileDark.png";
-import UserProfileLight from "./UserProfileLight.png";
+import type { Props as GalleryProps } from "~/components/Gallery.astro";
 
-const galleryImages = [
+// Image type
+type ImageType = GalleryProps['images'];
+
+// Gallery Images
+import LoginPageDark from "./gallery/LoginPageDark.png";
+import LoginPageLight from "./gallery/LoginPageLight.png";
+import CreateNewPageDark from "./gallery/CreateNewPageDark.png";
+import CreateNewPageLight1 from "./gallery/CreateNewPageLight-1.png";
+import CreateNewPageLight2 from "./gallery/CreateNewPageLight-2.png";
+import DashboardDark from "./gallery/DashboardDark.png";
+import DashboardLight from "./gallery/DashboardLight.png";
+import EditPageDark1 from "./gallery/EditPageDark-1.png";
+import EditPageDark2 from "./gallery/EditPageDark-2.png";
+import EditPageLight1 from "./gallery/EditPageLight-1.png";
+import EditPageLight2 from "./gallery/EditPageLight-2.png";
+import SiteAdminsDark from "./gallery/SiteAdminsDark.png";
+import SiteConfigDark from "./gallery/SiteConfigDark.png";
+import UserProfileDark from "./gallery/UserProfileDark.png";
+import UserProfileLight from "./gallery/UserProfileLight.png";
+
+export const galleryImages: ImageType = [
   { imageMetadata:LoginPageDark, alt: "Login Page Dark" },
   { imageMetadata:LoginPageLight, alt: "Login Page Light" },
   { imageMetadata:CreateNewPageDark, alt: "Create New Page Dark" },
@@ -32,4 +38,23 @@ const galleryImages = [
   { imageMetadata:UserProfileLight, alt: "User Profile Light" },
 ];
 
-export default galleryImages;
+// Web-Vitals Images
+import AnalyticsDark from "./web-vitals/cv-analytics-dark.png";
+import AnalyticsLight from "./web-vitals/cv-analytics-light.png";
+import CoreWebVitalsDark from "./web-vitals/cv-progressbars-dark.png";
+import CoreWebVitalsLight from "./web-vitals/cv-progressbars-light.png";
+import ByRouteDark from "./web-vitals/cv-byroute-dark.png";
+import ByRouteLight from "./web-vitals/cv-byroute-light.png";
+import PageSpeedDark from "./web-vitals/pagespeed-dark.png";
+import PageSpeedLight from "./web-vitals/pagespeed-light.png";
+
+export const webVitalsImages: ImageType = [
+  { imageMetadata:AnalyticsDark, alt: "Web Vitals Page Route Analytics (Dark Mode)" },
+  { imageMetadata:AnalyticsLight, alt: "Web Vitals Page Route Analytics (Light Mode)" },
+  { imageMetadata:CoreWebVitalsDark, alt: "Web Vitals Core Web Vitals (Dark Mode)" },
+  { imageMetadata:CoreWebVitalsLight, alt: "Web Vitals Core Web Vitals (Light Mode)" },
+  { imageMetadata:ByRouteDark, alt: "Web Vitals Core Vitals By Route (Dark Mode)" },
+  { imageMetadata:ByRouteLight, alt: "Web Vitals Core Vitals By Route (Light Mode)" },
+  { imageMetadata:PageSpeedDark, alt: "Web Vitals Page Speed (Dark Mode)" },
+  { imageMetadata:PageSpeedLight, alt: "Web Vitals Page Speed (Light Mode)" },
+];
