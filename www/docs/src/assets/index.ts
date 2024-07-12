@@ -1,7 +1,7 @@
 
 // Image type for Gallery component used to ensure all images are imported correctly from this file.
 import type { Props as GalleryProps } from "~/components/Gallery.astro";
-type ImageType = GalleryProps['galleryImages'];
+type ImageArrayType = GalleryProps['galleryImages'];
 
 // Gallery Images
 import LoginPageDark from "./gallery/LoginPageDark.png";
@@ -20,7 +20,7 @@ import SiteConfigDark from "./gallery/SiteConfigDark.png";
 import UserProfileDark from "./gallery/UserProfileDark.png";
 import UserProfileLight from "./gallery/UserProfileLight.png";
 
-export const mainDemoGalleryImages: ImageType = [
+export const mainDemoGalleryImages: ImageArrayType = [
   { imageMetadata:LoginPageDark, alt: "Login Page Dark" },
   { imageMetadata:LoginPageLight, alt: "Login Page Light" },
   { imageMetadata:CreateNewPageDark, alt: "Create New Page Dark" },
@@ -48,7 +48,7 @@ import ByRouteLight from "./web-vitals/cv-byroute-light.png";
 import PageSpeedDark from "./web-vitals/pagespeed-dark.png";
 import PageSpeedLight from "./web-vitals/pagespeed-light.png";
 
-export const webVitalsImages: ImageType = [
+export const webVitalsImages: ImageArrayType = [
   { imageMetadata:AnalyticsDark, alt: "Web Vitals Page Route Analytics (Dark Mode)" },
   { imageMetadata:AnalyticsLight, alt: "Web Vitals Page Route Analytics (Light Mode)" },
   { imageMetadata:CoreWebVitalsDark, alt: "Web Vitals Core Web Vitals (Dark Mode)" },
