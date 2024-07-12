@@ -1,7 +1,6 @@
 import { defineConfig } from "astro/config";
 import starlight from "@astrojs/starlight";
-
-// https://astro.build/config
+import starlightLinksValidator from 'starlight-links-validator'
 
 const site = "https://docs.astro-studiocms.xyz/";
 
@@ -13,6 +12,10 @@ export default defineConfig({
       description:
         "A dedicated CMS for Astro Studio. Built from the ground up by the Astro community.",
       favicon: "/logo-dark.svg",
+      tagline: "A dedicated CMS for Astro Studio. Built from the ground up by the Astro community.",
+      expressiveCode: {
+        themes: ["houston", "starlight-light"]
+      },
       logo: {
         dark: "../assets/logo-light.svg",
         light: "../assets/logo-dark.svg",
@@ -29,6 +32,9 @@ export default defineConfig({
       editLink: {
         baseUrl: "https://github.com/astrolicious/studiocms/tree/main/www/docs",
       },
+      plugins: [
+        starlightLinksValidator(),
+      ],
       head: [
         {
           tag: "script",

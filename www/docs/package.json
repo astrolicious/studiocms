@@ -15,6 +15,8 @@
     "@shoelace-style/shoelace": "^2.15.1",
     "astro": "^4.11.5",
     "sharp": "^0.33.4",
+    "starlight-links-validator": "^0.9.1",
+    "starlight-package-managers": "^0.6.0",
     "typescript": "^5.5.3"
   }
 }

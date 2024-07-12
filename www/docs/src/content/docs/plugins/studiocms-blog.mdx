@@ -1,9 +1,12 @@
 ---
 title: "@astrolicious/studiocms-blog"
 description: "StudioCMS Blog Integration"
+banner:
+  content: |
+    StudioCMS-Blog does not yet have a public release. This documentation is a preview of what's to come.
 ---
 
-import PackageManagerTabs from '~/components/PackageManagerTabs.astro';
+import { PackageManagers } from 'starlight-package-managers';
 
 # Introduction
 
@@ -13,23 +16,7 @@ This Astro integration enables the StudioCMS Blog feature in your Astro project.
 
 ## Installation
 
-<PackageManagerTabs>
-  <Fragment slot="npm">
-  ```shell
-  npm astro add @astrolicious/studiocms-blog
-  ```
-  </Fragment>
-  <Fragment slot="pnpm">
-  ```shell
-  pnpm astro add @astrolicious/studiocms-blog
-  ```
-  </Fragment>
-  <Fragment slot="yarn">
-  ```shell
-  yarn astro add @astrolicious/studiocms-blog
-  ```
-  </Fragment>
-</PackageManagerTabs>
+<PackageManagers type="exec" pkg="astro" args="add @astrolicious/studiocms-blog" />
 
 ## Usage
 

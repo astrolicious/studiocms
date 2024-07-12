@@ -3,7 +3,7 @@ title: "@astrojs/web-vitals"
 description: "Web Vitals Integration with the StudioCMS Dashboard"
 ---
 
-import PackageManagerTabs from '~/components/PackageManagerTabs.astro';
+import { PackageManagers } from 'starlight-package-managers';
 
 # Introduction
 
@@ -11,23 +11,7 @@ This Astro integration enables tracking real-world website performance and stori
 
 ## Installation
 
-<PackageManagerTabs>
-  <Fragment slot="npm">
-  ```shell
-  npm astro add @astrojs/web-vitals
-  ```
-  </Fragment>
-  <Fragment slot="pnpm">
-  ```shell
-  pnpm astro add @astrojs/web-vitals
-  ```
-  </Fragment>
-  <Fragment slot="yarn">
-  ```shell
-  yarn astro add @astrojs/web-vitals
-  ```
-  </Fragment>
-</PackageManagerTabs>
+<PackageManagers type="exec" pkg="astro" args="add @astrojs/web-vitals" />
 
 ## Example
 
