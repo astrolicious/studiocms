@@ -1,10 +1,8 @@
 ---
 editUrl: false
-next: false
-prev: false
+next: true
+prev: true
 title: "@astrolicious/studiocms-blog"
 ---
 
-## Functions
-
-- [default](/typedoc/studiocms-blog/functions/default/)
+# StudioCMS - Blog Provider

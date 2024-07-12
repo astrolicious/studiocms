@@ -36,7 +36,7 @@ const studioCMSBlogTheme = defineTheme({
  *   ],
  * });
  */
-export default function studioCMSBlog(options: Parameters<typeof studioCMSBlogTheme>[0]) {
+export function studioCMSBlog(options: Parameters<typeof studioCMSBlogTheme>[0]) {
 	let slug: string;
 
 	if (typeof options?.pages?.["/blog"] === "string") {
@@ -55,3 +55,5 @@ export default function studioCMSBlog(options: Parameters<typeof studioCMSBlogTh
 
 	return studioCMSBlogTheme(options);
 };
+
+export default studioCMSBlog;

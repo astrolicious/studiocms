@@ -1,12 +1,30 @@
 import { defineConfig } from "astro/config";
 import starlight from "@astrojs/starlight";
-// import starlightLinksValidator from 'starlight-links-validator' // Disabled for now
-import { createStarlightTypeDocPlugin } from 'starlight-typedoc'
+// import starlightLinksValidator from 'starlight-links-validator'; // Disabled for now
+import { createStarlightTypeDocPlugin } from 'starlight-typedoc';
 
-const [studioCMSTypeDoc, studioCMSTypeDocSidebarGroup] = createStarlightTypeDocPlugin()
-const [studioCMSBlogTypeDoc, studioCMSBlogTypeDocSidebarGroup] = createStarlightTypeDocPlugin()
+const [studioCMSTypeDoc, studioCMSTypeDocSidebarGroup] = createStarlightTypeDocPlugin();
+const [studioCMSBlogTypeDoc, studioCMSBlogTypeDocSidebarGroup] = createStarlightTypeDocPlugin();
+const [studioCMSAdminTypeDoc, studioCMSAdminTypeDocSidebarGroup] = createStarlightTypeDocPlugin();
+
+const TypeDocSidebarGroup = [studioCMSTypeDocSidebarGroup, studioCMSBlogTypeDocSidebarGroup, studioCMSAdminTypeDocSidebarGroup];
 
 const site = "https://docs.astro-studiocms.xyz/";
+
+const TypeDocOpts = (label, readme) => {
+  return {
+    sidebar: {
+      label: label,
+      collapsed: true,
+    },
+    pagination: true,
+    typeDoc: {
+      readme: readme,
+      jsDocCompatibility: true,
+      skipErrorChecking: true,
+    }
+  }
+}
 
 export default defineConfig({
   site,
@@ -63,23 +81,44 @@ export default defineConfig({
       plugins: [
         studioCMSTypeDoc({
           tsconfig: '../../packages/studioCMS/tsconfig.json',
-          entryPoints: [ '../../packages/studioCMS/src/index.ts' ],
-          output: 'typedoc/studiocms',
-          typeDoc: {
-            jsDocCompatibility: true,
-            excludeReferences: true,
-            skipErrorChecking: true,
-          }
+          entryPoints: [ 
+            '../../packages/studioCMS/src/index.ts',
+            '../../packages/studioCMS/src/coreIntegration.ts',
+            '../../packages/studioCMS/src/studiocms-config.ts',
+            '../../packages/studioCMS/src/db/config.ts',
+            '../../packages/studioCMS/src/db/tables.ts',
+            '../../packages/studioCMS/src/components/headDefaults.ts',
+            '../../packages/studioCMS/src/utils/renderers/contentRenderer.ts',
+            '../../packages/studioCMS/src/utils/renderers/marked.ts',
+            '../../packages/studioCMS/src/utils/renderers/markdoc.ts',
+            '../../packages/studioCMS/src/utils/renderers/astromd.ts',
+            '../../packages/studioCMS/src/utils/authhelper.ts',
+            '../../packages/studioCMS/src/utils/contentHelper.ts',
+          ],
+          output: 'typedoc/studiocms-core',
+          ...TypeDocOpts("StudioCMS-Core", "../../packages/studioCMS/README.md")
+        }),
+        studioCMSAdminTypeDoc({
+          tsconfig: '../../packages/studioCMS/tsconfig.json',
+          entryPoints: [ 
+            '../../packages/studioCMS/src/integrations/studioCMSDashboard/index.ts',
+            '../../packages/studioCMS/src/integrations/studioCMSDashboard/schemas.ts',
+            '../../packages/studioCMS/src/integrations/studioCMSDashboard/env.ts',
+            '../../packages/studioCMS/src/integrations/studioCMSDashboard/lib/auth.ts',
+            '../../packages/studioCMS/src/integrations/studioCMSDashboard/middleware/index.ts',
+          ],
+          output: 'typedoc/studiocms-dashboard',
+          ...TypeDocOpts("StudioCMS-Dashboard")
         }),
         studioCMSBlogTypeDoc({
           tsconfig: '../../packages/studioCMSBlog/tsconfig.json',
-          entryPoints: [ '../../packages/studioCMSBlog/index.ts' ],
+          entryPoints: [ 
+            '../../packages/studioCMSBlog/index.ts',
+            '../../packages/studioCMSBlog/schema.ts',
+            '../../packages/studioCMSBlog/src/pages/rss.xml.ts', 
+          ],
           output: 'typedoc/studiocms-blog',
-          typeDoc: {
-            jsDocCompatibility: true,
-            excludeReferences: true,
-            skipErrorChecking: true,
-          }
+          ...TypeDocOpts("StudioCMS-Blog", "../../packages/studioCMSBlog/README.md")
         }),
       ],
       sidebar: [
@@ -143,16 +182,7 @@ export default defineConfig({
             text: "Auto-Generated",
             variant: "success",
           },
-          items: [
-            {
-              label: "StudioCMS",
-              items: [studioCMSTypeDocSidebarGroup],
-            },
-            {
-              label: "StudioCMS Blog",
-              items: [studioCMSBlogTypeDocSidebarGroup],
-            },
-          ],
+          items: TypeDocSidebarGroup,
         }
       ],
       lastUpdated: true,
