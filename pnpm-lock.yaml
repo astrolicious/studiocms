@@ -88,10 +88,10 @@ importers:
         specifier: ^1.10.3
         version: 1.10.3
       '@unocss/astro':
-        specifier: ^0.61.3
+        specifier: ^0.61.0
         version: 0.61.3(vite@5.3.3)
       '@unocss/reset':
-        specifier: ^0.61.3
+        specifier: ^0.61.0
         version: 0.61.3
       '@unpic/astro':
         specifier: ^0.0.46
@@ -142,7 +142,7 @@ importers:
         specifier: ^1.10.3
         version: 1.10.3
       unocss:
-        specifier: ^0.61.3
+        specifier: ^0.61.0
         version: 0.61.3(postcss@8.4.39)(vite@5.3.3)
       unpic:
         specifier: ^3.18.0
