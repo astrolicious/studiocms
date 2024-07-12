@@ -1,7 +1,7 @@
-import type { Props as GalleryProps } from "~/components/Gallery.astro";
 
-// Image type
-type ImageType = GalleryProps['images'];
+// Image type for Gallery component used to ensure all images are imported correctly from this file.
+import type { Props as GalleryProps } from "~/components/Gallery.astro";
+type ImageType = GalleryProps['galleryImages'];
 
 // Gallery Images
 import LoginPageDark from "./gallery/LoginPageDark.png";
@@ -20,7 +20,7 @@ import SiteConfigDark from "./gallery/SiteConfigDark.png";
 import UserProfileDark from "./gallery/UserProfileDark.png";
 import UserProfileLight from "./gallery/UserProfileLight.png";
 
-export const galleryImages: ImageType = [
+export const mainDemoGalleryImages: ImageType = [
   { imageMetadata:LoginPageDark, alt: "Login Page Dark" },
   { imageMetadata:LoginPageLight, alt: "Login Page Light" },
   { imageMetadata:CreateNewPageDark, alt: "Create New Page Dark" },

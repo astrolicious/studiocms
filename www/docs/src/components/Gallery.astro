@@ -2,20 +2,20 @@
 import { Image } from "astro:assets";
 
 export interface Props {
-  images: Array<{ 
+  galleryImages: Array<{ 
     imageMetadata: ImageMetadata; 
     alt: string; 
   }>;
 };
 
-const { images } = Astro.props;
+const { galleryImages } = Astro.props;
 
-const galleryImagesMinusFirst = images.slice(1);
+const galleryImagesMinusFirst = galleryImages.slice(1);
 ---
 
 <sl-carousel class="carousel-thumbnails" navigation loop>
   {
-    images.map((image, index) => (
+    galleryImages.map((image, index) => (
       <sl-carousel-item id={index}>
         <Image
           src={image.imageMetadata}
@@ -31,8 +31,8 @@ const galleryImagesMinusFirst = images.slice(1);
 <div class="thumbnails">
   <div class="thumbnails__scroller">
     <Image 
-      src={images[0].imageMetadata}
-      alt={images[0].alt + ' ' + 'thumbnail'}
+      src={galleryImages[0].imageMetadata}
+      alt={galleryImages[0].alt + ' ' + 'thumbnail'}
       width="64"
       height="64"
       class="thumbnails__image active"
