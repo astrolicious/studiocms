@@ -1,6 +1,10 @@
 import { defineConfig } from "astro/config";
 import starlight from "@astrojs/starlight";
-import starlightLinksValidator from 'starlight-links-validator'
+// import starlightLinksValidator from 'starlight-links-validator' // Disabled for now
+import { createStarlightTypeDocPlugin } from 'starlight-typedoc'
+
+const [studioCMSTypeDoc, studioCMSTypeDocSidebarGroup] = createStarlightTypeDocPlugin()
+const [studioCMSBlogTypeDoc, studioCMSBlogTypeDocSidebarGroup] = createStarlightTypeDocPlugin()
 
 const site = "https://docs.astro-studiocms.xyz/";
 
@@ -56,6 +60,28 @@ export default defineConfig({
           },
         },
       ],
+      plugins: [
+        studioCMSTypeDoc({
+          tsconfig: '../../packages/studioCMS/tsconfig.json',
+          entryPoints: [ '../../packages/studioCMS/src/index.ts' ],
+          output: 'typedoc/studiocms',
+          typeDoc: {
+            jsDocCompatibility: true,
+            excludeReferences: true,
+            skipErrorChecking: true,
+          }
+        }),
+        studioCMSBlogTypeDoc({
+          tsconfig: '../../packages/studioCMSBlog/tsconfig.json',
+          entryPoints: [ '../../packages/studioCMSBlog/index.ts' ],
+          output: 'typedoc/studiocms-blog',
+          typeDoc: {
+            jsDocCompatibility: true,
+            excludeReferences: true,
+            skipErrorChecking: true,
+          }
+        }),
+      ],
       sidebar: [
         {
           label: "Start Here",
@@ -109,7 +135,25 @@ export default defineConfig({
         {
           label: "Reference",
           autogenerate: { directory: "reference" },
+          collapsed: true,
         },
+        {
+          label: "TypeDoc",
+          badge: {
+            text: "Auto-Generated",
+            variant: "success",
+          },
+          items: [
+            {
+              label: "StudioCMS",
+              items: [studioCMSTypeDocSidebarGroup],
+            },
+            {
+              label: "StudioCMS Blog",
+              items: [studioCMSBlogTypeDocSidebarGroup],
+            },
+          ],
+        }
       ],
       lastUpdated: true,
     }),
