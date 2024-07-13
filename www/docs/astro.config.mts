@@ -12,7 +12,7 @@ const [studioCMSAdminTypeDoc, studioCMSAdminTypeDocSidebarGroup] = createStarlig
 const TypeDocSidebarGroup = [studioCMSTypeDocSidebarGroup, studioCMSBlogTypeDocSidebarGroup, studioCMSAdminTypeDocSidebarGroup];
 
 // Define the Site URL
-const site = "https://docs.astro-studiocms.xyz/";
+const site = process.env.COOLIFY_URL || "https://docs.astro-studiocms.xyz/";
 
 // Utility Function for TypeDoc Options
 const makeTypeDocOptions = (
