@@ -9,6 +9,10 @@ You can create a `.env` file in the root directory of your project and add the r
 
 For future reference on how to work with environment variables within Astro you can checkout [Environment Variables](https://docs.astro.build/guides/environment-variables) from the Astro documentation.
 
+:::note
+StudioCMS makes use of Astro's new Experimental [`astro:env`](https://docs.astro.build/en/reference/configuration-reference/#experimentalenv) for handling all of its Environment Variables. If you face any issues with environment variables please submit an [issue on Github](https://github.com/astrolicious/studiocms/issues/new/choose)
+:::
+
 ## Required Environment Variables
 
 `ASTRO_STUDIO_APP_TOKEN` is required to connect to the database.
@@ -21,14 +25,19 @@ ASTRO_STUDIO_APP_TOKEN=your_app_token
 
 Currently there are 5 ways to authenticate with Astro StudioCMS:
 
+:::tip
+Use `http://localhost:4321` for local development and testing callback urls, and `https://your-domain.tld` for your callback urls in production!
+:::
+
 ### GitHub
 
 To authenticate with GitHub, you need to add the following environment variables to your `.env` file:
 
 ```bash
 # credentials for GitHub OAuth
-CMS-GITHUB_CLIENT_ID=your_client_id
-CMS-GITHUB_CLIENT_SECRET=your_client_secret
+CMS_GITHUB_CLIENT_ID=your_client_id
+CMS_GITHUB_CLIENT_SECRET=your_client_secret
+# Callback URL for github (NOT AN ENV VARIABLE): http://localhost:4321/dashboard/login/github/callback
 ```
 
 ### Discord
@@ -62,6 +71,10 @@ CMS_AUTH0_REDIRECT_URI=http://localhost:4321/dashboard/login/auth0/callback
 ### Username and Password
 
 Alternatively, you can authenticate with Astro StudioCMS using your username and password which doesn't require any additional environment variables.
+
+:::note
+When Username and Password authentication is enabled you can modify its configuration and level of security using the generated `studiocms-auth.config.json` file.
+:::
 
 ## Image Handler Environment Variables
 
