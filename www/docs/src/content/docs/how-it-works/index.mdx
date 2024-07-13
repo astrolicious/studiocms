@@ -27,11 +27,12 @@ StudioCMS is divided into multiple parts:
 StudioCMS Core is an Astro Integration which provides a comprehensive CMS solution out-of-the-box. This integration registers StudioCMS as the first plugin, sets up database configurations, watches for configuration changes, and adds various features including virtual imports, logging, and default frontend routes.
 
 #### Features
-- **@astrojs/db**: The StudioCMS Core integration uses the `@astrojs/db` integration to connect to AstroStudio.
-- **Virtual Imports**: The StudioCMS Core integration adds several [Vite Virtual Imports](https://vitejs.dev/guide/api-plugin#virtual-modules-convention) packed with features that give you full control over your dynamic content.
-- **Logging**: The StudioCMS Core integration logs all changes to Astro Studio and can be enabled or disabled through a config option.
+
+- **@astrojs/db**: StudioCMS Core uses the `@astrojs/db` integration to connect to Astro Studio.
+- **Virtual Imports**: StudioCMS Core adds several [virtual modules](https://vitejs.dev/guide/api-plugin#virtual-modules-convention) packed with features that give you full control over your dynamic content.
+- **Logging**: StudioCMS Core logs all changes to Astro Studio. This can be enabled in your config file.
 - **Default Frontend Routes**: The StudioCMS Core integration adds default frontend routes to your Astro project to allow for easy access to the StudioCMS dashboard.
-- **Plugin System**: You can easily extend StudioCMS using its own plugin system to create additional functionality.
+- **Plugin System**: You can extend StudioCMS using plugins to add additional functionality.
 
 #### Core Virtual Modules
 
