@@ -21,4 +21,4 @@ pnpm-debug.log*
 .DS_Store
 
 # TypeDoc documentation
-src/content/docs/typedoc/
+src/content/docs/typedoc/*
