@@ -5,18 +5,18 @@ description: "How does Astro StudioCMS Work?  Well here is all the answers!"
 
 # Introduction
 
-StudioCMS is a CMS built for Astro. It is a powerful tool that allows you to create, edit, and delete content for your Astro project in an SSR deployment while connected to [Astro Studio](https://studio.astro.build). It is designed to be easy to use and flexible enough to handle any type of content.
+StudioCMS is a powerful CMS built for Astro that allows you to manage and serve your content using [Astro Studio](https://studio.astro.build/). It's designed to be easy-to-use and flexible enough to handle any type of content.
 
-Extending StudioCMS is easy too! You can also create your own plugins to add new features to StudioCMS.
+Extending StudioCMS is easy too! You can create your own plugins to add new features to StudioCMS.
 
 ## How does it work?
 
 StudioCMS is divided into multiple parts:
 
-- **StudioCMS Core**: The core of StudioCMS is the primary integration that hooks into your Astro project and provides the ability to interact with the Astro Studio (through AstroDB) integration with a prebuilt front-end.
-- **StudioCMS: Dashboard**: The StudioCMS dashboard is the primary web interface for managing your AstroStudioCMS project. It provides a user-friendly interface for creating, editing, and deleting content for your Astro project.
-- **StudioCMS: ImageHandler**: This integration provides a `<CustomImage />` Astro component that is used to handle remote images and optimize them for your Astro project in a SSR environment.
-- **StudioCMS: Robots-TXT**: This integration automates the creation of a `robots.txt` file for your Astro project and AstroStudioCMS.
+- **StudioCMS Core**: The primary integration that hooks into your Astro project and provides the ability to interact with Astro Studio (through the `@astrojs/db` integration) with a prebuilt front-end.
+- **StudioCMS: Dashboard**: The primary web interface for managing your StudioCMS project. It provides a user-friendly interface for creating, editing, and deleting content.
+- **StudioCMS: ImageHandler**: An integration that provides a `<CustomImage />` component to handle remote images and optimize them for your project in an SSR environment.
+- **StudioCMS: Robots-TXT**: An integration that automates the creation of a `robots.txt` file for your StudioCMS project.
 
 ## Breakdown
 
@@ -24,7 +24,7 @@ StudioCMS is divided into multiple parts:
 
 #### Overview
 
-StudioCMS Core is an Astro Integration which provides a comprehensive CMS solution out-of-the-box. This integration registers StudioCMS as the first plugin, sets up database configurations, watches for configuration changes, and adds various functionalities including virtual imports, logging, and default frontend routes.
+StudioCMS Core is an Astro Integration which provides a comprehensive CMS solution out-of-the-box. This integration registers StudioCMS as the first plugin, sets up database configurations, watches for configuration changes, and adds various features including virtual imports, logging, and default frontend routes.
 
 #### Features
 - **@astrojs/db**: The StudioCMS Core integration uses the `@astrojs/db` integration to connect to AstroStudio.
@@ -46,7 +46,7 @@ StudioCMS Core is an Astro Integration which provides a comprehensive CMS soluti
 
 #### Overview
 
-The StudioCMS Dashboard is a web-based interface that allows you to manage your AstroStudioCMS project. It provides a user-friendly interface for creating, editing, and deleting content for your Astro project. The StudioCMS Dashboard is built with [Astro](https://astro.build) and [DaisyUI](https://daisyui.com/) with [UnoCSS](https://unocss.dev).
+The StudioCMS Dashboard is a web interface that allows you to manage your StudioCMS project. It provides a user-friendly interface for creating, editing, and deleting content for your project. The StudioCMS Dashboard is built with [Astro](https://astro.build) and [DaisyUI](https://daisyui.com/) with [UnoCSS](https://unocss.dev).
 
 #### Features
 
@@ -68,7 +68,7 @@ The StudioCMS Dashboard is a web-based interface that allows you to manage your 
 
 #### Overview
 
-The StudioCMS ImageHandler is an integration that provides a custom image component for your Astro project. This component is used to handle remote images and optimize them for your Astro project in a SSR environment using [@unpic/astro](https://unpic.pics/img/astro/) for image optimization.
+The StudioCMS ImageHandler is an integration that provides a custom image component for your Astro project. This component is used to handle remote images and optimize them in a SSR environment using [@unpic/astro](https://unpic.pics/img/astro/).
 
 #### Features
 
