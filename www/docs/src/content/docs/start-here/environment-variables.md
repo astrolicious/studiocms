@@ -17,7 +17,7 @@ StudioCMS makes use of Astro's new Experimental [`astro:env`](https://docs.astro
 
 `ASTRO_STUDIO_APP_TOKEN` is required to connect to the database.
 
-```bash
+```bash title=".env"
 ASTRO_STUDIO_APP_TOKEN=your_app_token
 ```
 
@@ -33,16 +33,16 @@ Use `http://localhost:4321` for local development and testing callback urls, and
 
 To authenticate with GitHub, you need to add the following environment variables to your `.env` file:
 
-```bash
+```bash title=".env"
 # credentials for GitHub OAuth
+# Callback URL for github (NOT AN ENV VARIABLE): 'http://localhost:4321/dashboard/login/github/callback'
 CMS_GITHUB_CLIENT_ID=your_client_id
 CMS_GITHUB_CLIENT_SECRET=your_client_secret
-# Callback URL for github (NOT AN ENV VARIABLE): http://localhost:4321/dashboard/login/github/callback
 ```
 
 ### Discord
 
-```bash
+```bash title=".env"
 # credentials for Discord OAuth
 CMS_DISCORD_CLIENT_ID=
 CMS_DISCORD_CLIENT_SECRET=
@@ -51,7 +51,7 @@ CMS_DISCORD_REDIRECT_URI=http://localhost:4321/dashboard/login/discord/callback
 
 ### Google
 
-```bash
+```bash title=".env"
 # credentials for Google OAuth
 CMS_GOOGLE_CLIENT_ID=
 CMS_GOOGLE_CLIENT_SECRET=
@@ -60,7 +60,7 @@ CMS_GOOGLE_REDIRECT_URI=http://localhost:4321/dashboard/login/google/callback
 
 ### Auth0
 
-```bash
+```bash title=".env"
 # credentials for auth0 OAuth
 CMS_AUTH0_CLIENT_ID=
 CMS_AUTH0_CLIENT_SECRET=
@@ -82,7 +82,7 @@ When Username and Password authentication is enabled you can modify its configur
 
 If you choose to use the built-in Cloudinary plugin, you will need to define the following:
 
-```bash
+```bash title=".env"
 ## Cloudinary Javascript SDK
 CMS_CLOUDINARY_CLOUDNAME="demo"
 ```
