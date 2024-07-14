@@ -11,7 +11,7 @@ description: A reference page for includedIntegrations
 astroStudioCMS({
   includedIntegrations: {
     useAstroRobots: true,
-    astroRobotsConfig: true,
+    astroRobotsConfig: {},
     useInoxSitemap: true,
   },
 }),
