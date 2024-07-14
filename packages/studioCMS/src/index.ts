@@ -1,8 +1,9 @@
 import type { StudioCMSOptions } from './schemas';
 import coreIntegration from './coreIntegration';
 import { studioCMSRobotsTXT as robotsTXT } from './integrations';
+import type { usernameAndPasswordConfig } from './integrations/studioCMSDashboard/schemas';
 
-export type { StudioCMSOptions };
+export type { StudioCMSOptions, usernameAndPasswordConfig };
 
 /**
  * A utility function to define the StudioCMS config object. 
