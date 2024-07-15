@@ -109,8 +109,8 @@ importers:
         specifier: ^4.12.10
         version: 4.12.10(postcss@8.4.39)
       htmx.org:
-        specifier: ^1.9.12
-        version: 1.9.12
+        specifier: ^2.0.0
+        version: 2.0.1
       lucia:
         specifier: ^3.2.0
         version: 3.2.0
@@ -5524,8 +5524,8 @@ packages:
       entities: 4.5.0
     dev: false
 
-  /htmx.org@1.9.12:
-    resolution: {integrity: sha512-VZAohXyF7xPGS52IM8d1T1283y+X4D+Owf3qY1NZ9RuBypyu9l8cGsxUMAG5fEAb/DhT7rDoJ9Hpu5/HxFD3cw==}
+  /htmx.org@2.0.1:
+    resolution: {integrity: sha512-wO/rWlveSLD2mzRS9Em0v5hlsi6r21iUvaS17GPMgehBbM7eoQmqGQCkscsM67poF24zONgq3gQv+q/cgCHn2w==}
     dev: false
 
   /http-cache-semantics@4.1.1:
