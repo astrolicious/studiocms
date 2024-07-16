@@ -1,9 +1,16 @@
 ---
-//TODO: Make this component reusable
 import { Image } from "astro:assets";
 
-import galleryImages from "../assets/index.ts"
-const galleryImagesMinusFirst = galleryImages.slice(1)
+export interface Props {
+  galleryImages: Array<{ 
+    imageMetadata: ImageMetadata; 
+    alt: string; 
+  }>;
+};
+
+const { galleryImages } = Astro.props;
+
+const galleryImagesMinusFirst = galleryImages.slice(1);
 ---
 
 <sl-carousel class="carousel-thumbnails" navigation loop>

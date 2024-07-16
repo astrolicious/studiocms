@@ -17,13 +17,6 @@ astroStudioCMS({
 }),
 ```
 
-### `RendererOverride`
-
-- **Type:** `string | undefined`
-- **Default:** `undefined`
-
-The path to a custom renderer component that will be used to render content in the `Astro-Studio-CMS`.
-
 ### `CustomImageOverride`
 
 - **Type:** `string | undefined`
