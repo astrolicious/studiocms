@@ -107,18 +107,15 @@ import { makePageTitle } from '../../utils/makePageTitle';
   </div>
 </Layout>
 
-<script>
-import type { SlAlert, SlDetails, SlSwitch } from "astrolace:types";
-import { logger } from '@it-astro:logger:StudioCMS';
-
-	const alertElement = document.getElementById("form-error") as SlAlert;
-  const errorMessageElement = document.getElementById("form-error-message")!;
-	const successAlertElement = document.getElementById("form-success") as SlAlert;
-  const successMessageElement = document.getElementById("form-success-message")!;
-  const localSetupSwitch = document.getElementById('local-setup') as SlSwitch;
-  const localAdmin = document.getElementById('local-admin') as SlDetails;
-  const oauthAdmin = document.getElementById('oauth-admin') as SlDetails;
-  const firstTimeSetupForm = document.getElementById('first-time-setup') as HTMLFormElement;
+<script is:inline>
+	const alertElement = document.getElementById("form-error");
+  const errorMessageElement = document.getElementById("form-error-message");
+	const successAlertElement = document.getElementById("form-success");
+  const successMessageElement = document.getElementById("form-success-message");
+  const localSetupSwitch = document.getElementById('local-setup');
+  const localAdmin = document.getElementById('local-admin');
+  const oauthAdmin = document.getElementById('oauth-admin');
+  const firstTimeSetupForm = document.getElementById('first-time-setup');
 
   // Update the disabled state of the local-admin and oauth-admin details based on the checkbox state
   localSetupSwitch.addEventListener('sl-change', () => {
@@ -134,7 +131,7 @@ import { logger } from '@it-astro:logger:StudioCMS';
 	firstTimeSetupForm.addEventListener("submit", async (e) => {
 		e.preventDefault();
 		errorMessageElement.innerText = "";
-		const formElement = e.target as HTMLFormElement;
+		const formElement = e.target;
 		const response = await fetch(formElement.action, {
 			method: formElement.method,
 			body: new FormData(formElement)

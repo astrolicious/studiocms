@@ -99,22 +99,18 @@ if (permissionLevel !== 'admin' && permissionLevel !== 'editor') {
     </div>
 </Layout>
 
-<script>
-    import type { SlAlert } from "astrolace:types";
-
-    const formElement = document.getElementById('delete-form') as HTMLFormElement;
-
-    const formError = document.getElementById('form-error') as SlAlert;
-    const formErrorMessage = document.getElementById('form-error-message') as HTMLDivElement;
-    const formSuccess = document.getElementById('form-success') as SlAlert;
-    const formSuccessMessage = document.getElementById('form-success-message') as HTMLDivElement;
-
-    const editPageURL = document.getElementById('edit-page-url') as HTMLDivElement;
+<script is:inline>
+    const formElement = document.getElementById('delete-form');
+    const formError = document.getElementById('form-error');
+    const formErrorMessage = document.getElementById('form-error-message');
+    const formSuccess = document.getElementById('form-success');
+    const formSuccessMessage = document.getElementById('form-success-message');
+    const editPageURL = document.getElementById('edit-page-url');
 
     formElement.addEventListener('submit', async (e) => {
         e.preventDefault();
     
-        const formElement = e.target as HTMLFormElement;
+        const formElement = e.target;
         const response = await fetch(formElement.action, {
             method: formElement.method,
             body: new FormData(formElement)

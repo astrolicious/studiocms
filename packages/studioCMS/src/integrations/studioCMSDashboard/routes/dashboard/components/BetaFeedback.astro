@@ -65,23 +65,18 @@ import { Button, Dialog } from "astrolace:components";
     </Alert>
 </div>
 
-<script>
-import type { SlDialog, SlButton, SlAlert, SlTextarea } from "astrolace:types";
-
-    const dialog = document.getElementById('beta-feedback-dialog') as SlDialog;
-    const form = document.getElementById('beta-feedback-form') as HTMLFormElement;
-
-    const FormMessage = document.getElementById('form-message') as SlTextarea;
-
-    const openButton = document.getElementsByClassName('open-beta-feedback')[0] as SlButton;
-    const cancelButton = document.getElementsByClassName('beta-feedback-cancel')[0] as SlButton;
-    const submitButton = document.getElementsByClassName('beta-feedback-submit')[0] as SlButton;
-
-    const alertsContainer = document.querySelector('.alerts') as HTMLDivElement;
-    const errorToast = alertsContainer.querySelector('sl-alert[variant="danger"]') as SlAlert;
-    const errorToastMessage = errorToast.querySelector('#form-error-toast') as HTMLParagraphElement;
-    const successToast = alertsContainer.querySelector('sl-alert[variant="success"]') as SlAlert;
-    const successToastMessage = successToast.querySelector('#form-success-toast') as HTMLParagraphElement;
+<script is:inline>
+    const dialog = document.getElementById('beta-feedback-dialog');
+    const form = document.getElementById('beta-feedback-form');
+    const FormMessage = document.getElementById('form-message');
+    const openButton = document.getElementsByClassName('open-beta-feedback')[0];
+    const cancelButton = document.getElementsByClassName('beta-feedback-cancel')[0];
+    const submitButton = document.getElementsByClassName('beta-feedback-submit')[0];
+    const alertsContainer = document.querySelector('.alerts');
+    const errorToast = alertsContainer.querySelector('sl-alert[variant="danger"]');
+    const errorToastMessage = errorToast.querySelector('#form-error-toast');
+    const successToast = alertsContainer.querySelector('sl-alert[variant="success"]');
+    const successToastMessage = successToast.querySelector('#form-success-toast');
 
     openButton.addEventListener('click', () => {
         dialog.show();
