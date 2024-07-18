@@ -10,19 +10,19 @@
     "start": "astro dev"
   },
   "dependencies": {
-    "@astrojs/check": "^0.8.1",
-    "@astrojs/tailwind": "^5.1.0",
-    "astro": "^4.11.5",
-    "astro-font": "^0.0.81",
-    "astro-icon": "^1.1.0",
-    "astro-seo": "^0.8.4",
-    "motion": "^10.18.0",
-    "powerglitch": "^2.3.3",
-    "tailwind-merge": "^2.3.0",
-    "tailwindcss": "^3.4.4",
-    "typescript": "^5.5.3"
+    "@astrojs/check": "catalog:",
+    "@astrojs/tailwind": "catalog:",
+    "astro": "catalog:",
+    "astro-font": "catalog:landing",
+    "astro-icon": "catalog:landing",
+    "astro-seo": "catalog:landing",
+    "motion": "catalog:landing",
+    "powerglitch": "catalog:landing",
+    "tailwind-merge": "catalog:landing",
+    "tailwindcss": "catalog:landing",
+    "typescript": "catalog:"
   },
   "devDependencies": {
-    "tailwind-scrollbar": "3.1.0"
+    "tailwind-scrollbar": "catalog:landing"
   }
 }

@@ -13,15 +13,15 @@
     "astro": "astro"
   },
   "devDependencies": {
-    "@types/node": "20.14.10",
-    "typescript": "5.5.3"
+    "@types/node": "catalog:",
+    "typescript": "catalog:"
   },
   "dependencies": {
-    "@astrojs/db": "^0.11.7",
-    "@astrojs/node": "^8.3.2",
-    "@astrojs/web-vitals": "^0.2.1",
+    "@astrojs/db": "catalog:",
+    "@astrojs/node": "catalog:",
+    "@astrojs/web-vitals": "catalog:",
     "@astrolicious/studiocms": "workspace:*",
     "@astrolicious/studiocms-blog": "workspace:*",
-    "astro": "^4.11.5"
+    "astro": "catalog:"
   }
 }

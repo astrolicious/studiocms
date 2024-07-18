@@ -10,13 +10,13 @@
     "astro": "astro"
   },
   "devDependencies": {
-    "@types/node": "20.14.10",
-    "typescript": "5.5.3"
+    "@types/node": "catalog:",
+    "typescript": "catalog:"
   },
   "dependencies": {
-    "@astrojs/db": "^0.11.7",
-    "@astrojs/cloudflare": "^11.0.1",
-    "astro": "^4.11.5",
+    "@astrojs/db": "catalog:",
+    "@astrojs/cloudflare": "catalog:",
+    "astro": "catalog:",
     "@astrolicious/studiocms": "workspace:*"
   }
 }

@@ -10,16 +10,16 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/check": "^0.8.1",
-    "@astrojs/starlight": "^0.25.1",
-    "@shoelace-style/shoelace": "^2.15.1",
-    "astro": "^4.11.5",
-    "sharp": "^0.33.4",
-    "starlight-links-validator": "^0.9.1",
-    "starlight-package-managers": "^0.6.0",
-    "starlight-typedoc": "^0.13.0",
-    "typedoc": "^0.26.4",
-    "typedoc-plugin-markdown": "^4.2.1",
-    "typescript": "^5.5.3"
+    "@astrojs/check": "catalog:",
+    "@astrojs/starlight": "catalog:",
+    "@shoelace-style/shoelace": "catalog:docs",
+    "astro": "catalog:",
+    "sharp": "catalog:",
+    "starlight-links-validator": "catalog:docs",
+    "starlight-package-managers": "catalog:docs",
+    "starlight-typedoc": "catalog:docs",
+    "typedoc": "catalog:docs",
+    "typedoc-plugin-markdown": "catalog:docs",
+    "typescript": "catalog:"
   }
 }
