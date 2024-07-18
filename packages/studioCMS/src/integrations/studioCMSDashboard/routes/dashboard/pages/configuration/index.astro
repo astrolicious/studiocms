@@ -103,38 +103,30 @@ if (permissionLevel !== 'admin') {
 
     configForm.addEventListener('submit', async (e) => {
         e.preventDefault();
-        console.log("Form submission prevented");
-
         const formElement = e.target;
-        console.log("Form action:", formElement.action);
-        console.log("Form method:", formElement.method);
-
         try {
             const response = await fetch(formElement.action, {
                 method: formElement.method,
                 body: new FormData(formElement)
             });
-
-            console.log("Response status:", response.status);
-
             const responseData = await response.json();
-            console.log("Response data:", responseData);
 
             if (response.ok) {
                 formSuccessMessage.innerText = responseData.message;
                 formSuccess.toast();
-                console.log("Success toast triggered");
                 setTimeout(() => {
                     window.location.reload();
                 }, 4000);
             } else {
                 formErrorMessage.innerText = responseData.error;
                 formError.toast();
-                console.log("Error toast triggered");
             }
         } catch (error) {
-            console.error("Fetch error:", error);
-            formErrorMessage.innerText = "An unexpected error occurred.";
+            if (error instanceof Error) {
+                formErrorMessage.innerText = error.message;
+            } else {
+                formErrorMessage.innerText = "An unexpected error occurred.";
+            }
             formError.toast();
         }
     });
