@@ -88,7 +88,7 @@ export const onRequest = defineMiddleware(async (context, next) => {
 				return new Response(null, {
 					status: 302,
 					headers: {
-						Location: '/dashboard/login',
+						Location: `/${dashboardRoute}/login`,
 					},
 				});
 			}

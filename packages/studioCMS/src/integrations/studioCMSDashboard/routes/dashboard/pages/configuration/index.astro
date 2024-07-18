@@ -94,34 +94,40 @@ if (permissionLevel !== 'admin') {
     </div>
 </Layout>
 
-<script>
-import type { SlAlert } from "astrolace:types";
-
-    const configForm = document.getElementById('config-form') as HTMLFormElement;
-    const formError = document.getElementById('form-error') as SlAlert;
-    const formErrorMessage = document.getElementById('form-error-message') as HTMLDivElement;
-    const formSuccess = document.getElementById('form-success') as SlAlert;
-    const formSuccessMessage = document.getElementById('form-success-message') as HTMLDivElement;
+<script is:inline>
+    const configForm = document.getElementById('config-form');
+    const formError = document.getElementById('form-error');
+    const formErrorMessage = document.getElementById('form-error-message');
+    const formSuccess = document.getElementById('form-success');
+    const formSuccessMessage = document.getElementById('form-success-message');
 
     configForm.addEventListener('submit', async (e) => {
         e.preventDefault();
+        const formElement = e.target;
+        try {
+            const response = await fetch(formElement.action, {
+                method: formElement.method,
+                body: new FormData(formElement)
+            });
+            const responseData = await response.json();
 
-        const formElement = e.target as HTMLFormElement;
-        const response = await fetch(formElement.action, {
-            method: formElement.method,
-            body: new FormData(formElement)
-        });
-
-        if (response.ok) {
-            formSuccessMessage.innerText = (await response.json()).message;
-            formSuccess.toast();
-            setTimeout(() => {
-                window.location.reload();
-            }, 4000)
-        } else {
-            formErrorMessage.innerText = (await response.json()).error;
+            if (response.ok) {
+                formSuccessMessage.innerText = responseData.message;
+                formSuccess.toast();
+                setTimeout(() => {
+                    window.location.reload();
+                }, 4000);
+            } else {
+                formErrorMessage.innerText = responseData.error;
+                formError.toast();
+            }
+        } catch (error) {
+            if (error instanceof Error) {
+                formErrorMessage.innerText = error.message;
+            } else {
+                formErrorMessage.innerText = "An unexpected error occurred.";
+            }
             formError.toast();
         }
-
-    })
+    });
 </script>

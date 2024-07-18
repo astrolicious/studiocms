@@ -50,7 +50,7 @@ if (locals.isLoggedIn) {
         <div class="py-8">
           <div class="bg-base-300 p-8 rounded-lg md:w-[32rem]">
 
-            <form method="post" action={loginAPI}>
+            <form method="post" id="login-form" action={loginAPI}>
 
                 <Input name="username" id="username" label='Username' />
 
@@ -90,18 +90,17 @@ if (locals.isLoggedIn) {
   </div>
 </Layout>
 
-<script>
-import type { SlAlert } from "astrolace:types";
+<script is:inline>
+	const alertElement = document.getElementById("form-error");
+  const errorMessageElement = document.getElementById("form-error-message");
+	const successAlertElement = document.getElementById("form-success");
+  const successMessageElement = document.getElementById("form-success-message");
+  const formElement = document.getElementById('login-form');
 
-	const alertElement = document.getElementById("form-error") as SlAlert;
-  const errorMessageElement = document.getElementById("form-error-message")!;
-	const successAlertElement = document.getElementById("form-success") as SlAlert;
-  const successMessageElement = document.getElementById("form-success-message")!;
-
-	document.forms[0]?.addEventListener("submit", async (e) => {
+	formElement.addEventListener("submit", async (e) => {
 		e.preventDefault();
 		errorMessageElement.innerText = "";
-		const formElement = e.target as HTMLFormElement;
+		const formElement = e.target;
 		const response = await fetch(formElement.action, {
 			method: formElement.method,
 			body: new FormData(formElement)
@@ -111,7 +110,7 @@ import type { SlAlert } from "astrolace:types";
       successAlertElement.toast();
       setTimeout(() => {
         window.location.reload();
-      }, 1000)
+      }, 2000)
 		} else {
 			errorMessageElement.innerText = (await response.json()).error;
       alertElement.toast();

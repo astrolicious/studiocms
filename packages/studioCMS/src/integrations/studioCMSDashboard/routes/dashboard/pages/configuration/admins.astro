@@ -128,34 +128,31 @@ if (permissionLevel !== 'admin') {
 </Layout>
 
 
-<script>
-    import type { SlAlert } from "astrolace:types";
+<script is:inline>
+    const adminsForm = document.getElementById('admins-form');
+    const formError = document.getElementById('form-error');
+    const formErrorMessage = document.getElementById('form-error-message');
+    const formSuccess = document.getElementById('form-success');
+    const formSuccessMessage = document.getElementById('form-success-message');
     
-        const adminsForm = document.getElementById('admins-form') as HTMLFormElement;
-        const formError = document.getElementById('form-error') as SlAlert;
-        const formErrorMessage = document.getElementById('form-error-message') as HTMLDivElement;
-        const formSuccess = document.getElementById('form-success') as SlAlert;
-        const formSuccessMessage = document.getElementById('form-success-message') as HTMLDivElement;
+    adminsForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
     
-        adminsForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
+        const formElement = e.target;
+        const response = await fetch(formElement.action, {
+            method: formElement.method,
+            body: new FormData(formElement)
+        });
     
-            const formElement = e.target as HTMLFormElement;
-            const response = await fetch(formElement.action, {
-                method: formElement.method,
-                body: new FormData(formElement)
-            });
-    
-            if (response.ok) {
-                formSuccessMessage.innerText = (await response.json()).message;
-                formSuccess.toast();
-                setTimeout(() => {
-                    window.location.reload();
-                }, 4000)
-            } else {
-                formErrorMessage.innerText = (await response.json()).error;
-                formError.toast();
-            }
-    
-        })
-    </script>
+        if (response.ok) {
+            formSuccessMessage.innerText = (await response.json()).message;
+            formSuccess.toast();
+            setTimeout(() => {
+                window.location.reload();
+            }, 4000)
+        } else {
+            formErrorMessage.innerText = (await response.json()).error;
+            formError.toast();
+        }
+    })
+</script>
