@@ -94,20 +94,20 @@ if (permissionLevel !== 'admin') {
     </div>
 </Layout>
 
-<script>
-import type { SlAlert } from "astrolace:types";
+<script is:inline>
+// import type { SlAlert } from "astrolace:types";
 
-    const configForm = document.getElementById('config-form') as HTMLFormElement;
-    const formError = document.getElementById('form-error') as SlAlert;
-    const formErrorMessage = document.getElementById('form-error-message') as HTMLDivElement;
-    const formSuccess = document.getElementById('form-success') as SlAlert;
-    const formSuccessMessage = document.getElementById('form-success-message') as HTMLDivElement;
+    const configForm = document.getElementById('config-form');
+    const formError = document.getElementById('form-error');
+    const formErrorMessage = document.getElementById('form-error-message');
+    const formSuccess = document.getElementById('form-success');
+    const formSuccessMessage = document.getElementById('form-success-message');
 
     configForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         console.log("Form submission prevented");
 
-        const formElement = e.target as HTMLFormElement;
+        const formElement = e.target;
         console.log("Form action:", formElement.action);
         console.log("Form method:", formElement.method);
 
