@@ -55,14 +55,14 @@
   "type": "module",
   "dependencies": {
     "@astrolicious/studiocms": "workspace:*",
-    "@astrojs/rss": "^4.0.7",
-    "astro-theme-provider": "^0.5.0"
+    "@astrojs/rss": "catalog:",
+    "astro-theme-provider": "catalog:"
   },
   "devDependencies": {
     "@astrolicious/studiocms": "workspace:*",
-    "@types/node": "20.14.10"
+    "@types/node": "catalog:"
   },
   "peerDependencies": {
-    "astro": ">=4.11.5"
+    "astro": "catalog:min"
   }
 }

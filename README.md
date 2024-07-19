@@ -41,10 +41,10 @@ We have an active community of developers on the Astrolicious [Discord Server](h
 ## Our ToolSet
 
 - **Node** - 20.12.x
-- **pnpm** - 8.15.4
-- [`BiomeJS`](https://biomejs.dev/) - 1.7.3
-- [`Moon`](https://moonrepo.dev) - 1.24.3
-- [`Proto`](https://moonrepo.dev) - 0.34.4
+- **pnpm** - 9.5.0
+- [`BiomeJS`](https://biomejs.dev/) - 1.8.3
+- [`Moon`](https://moonrepo.dev) - 1.27.2
+- [`Proto`](https://moonrepo.dev) - 0.38.3
 
 ## This is a [`Moonrepo`](https://moonrepo.dev)
 

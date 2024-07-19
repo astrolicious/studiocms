@@ -79,12 +79,10 @@ if ( !name ) {
   </div>
 </div>
 
-<script>
-import type { SlButton, SlDrawer } from "astrolace:types";
-
-  const drawer = document.querySelector('.drawer-scrolling') as SlDrawer;
-  const openButton = document.querySelector('.drawer-header-button') as SlButton;
-  const closeButton = document.querySelector('.close-button') as SlButton;
+<script is:inline>
+  const drawer = document.querySelector('.drawer-scrolling');
+  const openButton = document.querySelector('.drawer-header-button');
+  const closeButton = document.querySelector('.close-button');
 
   openButton.addEventListener('click', () => drawer.show());
   closeButton.addEventListener('click', () => drawer.hide());
