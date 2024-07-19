@@ -51,6 +51,7 @@ catalogs:
     '@markdoc/markdoc': ^0.4.0
     '@noble/hashes': ^1.4.0
     '@shikijs/transformers': ^1.10.3
+    '@shoelace-style/shoelace': ^2.15.1
     '@unocss/astro': ^0.61.0
     '@unocss/reset': ^0.61.0
     unocss: ^0.61.0

@@ -142,6 +142,9 @@ catalogs:
     '@shikijs/transformers':
       specifier: ^1.10.3
       version: 1.10.3
+    '@shoelace-style/shoelace':
+      specifier: ^2.15.1
+      version: 2.15.1
     '@unocss/astro':
       specifier: ^0.61.0
       version: 0.61.3
@@ -277,6 +280,9 @@ importers:
       '@shikijs/transformers':
         specifier: catalog:studiocms
         version: 1.10.3
+      '@shoelace-style/shoelace':
+        specifier: catalog:studiocms
+        version: 2.15.1(@types/react@18.3.3)
       '@unocss/astro':
         specifier: catalog:studiocms
         version: 0.61.3(rollup@4.18.1)(vite@5.3.3(@types/node@20.14.11))

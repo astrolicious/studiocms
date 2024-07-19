@@ -53,6 +53,7 @@
     "@matthiesenxyz/unocss-preset-daisyui": "catalog:studiocms",
     "@noble/hashes": "catalog:studiocms",
     "@shikijs/transformers": "catalog:studiocms",
+    "@shoelace-style/shoelace": "catalog:studiocms",
     "@unocss/astro": "catalog:studiocms",
     "@unocss/reset": "catalog:studiocms",
     "@unpic/astro": "catalog:studiocms",
