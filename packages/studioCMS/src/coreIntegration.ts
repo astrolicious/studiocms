@@ -17,7 +17,6 @@ export default defineIntegration({
 	name: '@astrolicious/studiocms',
 	optionsSchema, 
 	setup({ name, options }) {
-
 		// Register StudioCMS Core as First Plugin
 		studioCMSPluginList.set('@astrolicious/studiocms', { name: '@astrolicious/studiocms', label: 'StudioCMS' });
 		
