@@ -80,10 +80,10 @@ if ( !name ) {
 </div>
 
 <script is:inline>
-  const drawer = document.querySelector('.drawer-scrolling');
-  const openButton = document.querySelector('.drawer-header-button');
-  const closeButton = document.querySelector('.close-button');
+  const sidbarDrawer = document.querySelector('.drawer-scrolling');
+  const openDrawerButton = document.querySelector('.drawer-header-button');
+  const closeDrawerButton = document.querySelector('.close-button');
 
-  openButton.addEventListener('click', () => drawer.show());
-  closeButton.addEventListener('click', () => drawer.hide());
+  openDrawerButton.addEventListener('click', () => sidbarDrawer.show());
+  closeDrawerButton.addEventListener('click', () => sidbarDrawer.hide());
 </script>

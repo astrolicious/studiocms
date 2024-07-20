@@ -1,7 +1,7 @@
+/// <reference types="@astrojs/db" />
 import { checkAstroConfig, studioLogger, studioLoggerOptsResolver, makeFrontend, addIntegrationArray, addIntegrationArrayWithCheck } from './utils';
 import { studioCMSRobotsTXT, studioCMSImageHandler, studioCMSDashboard } from './integrations';
 import { addDts, addVirtualImports, addVitePlugin, createResolver, defineIntegration } from 'astro-integration-kit';
-import 'astro-integration-kit/types/db';
 import { optionsResolver, vResolver } from './resolvers';
 // import inoxsitemap from '@inox-tools/sitemap-ext';
 import { studioCMSPluginList } from '.';
