@@ -72,7 +72,7 @@
     "marked-footnote": "catalog:studiocms",
     "marked-shiki": "catalog:studiocms",
     "marked-smartypants": "catalog:studiocms",
-    "micromatch": "^4.0.7",
+    "micromatch": "catalog:studiocms",
     "mrmime": "catalog:studiocms",
     "oslo": "catalog:studiocms",
     "shiki": "catalog:studiocms",
@@ -85,7 +85,7 @@
   },
   "devDependencies": {
     "@iconify/types": "catalog:studiocms",
-    "@types/micromatch": "^4.0.9",
+    "@types/micromatch": "catalog:studiocms",
     "@types/node": "catalog:",
     "typescript": "catalog:",
     "vite": "catalog:"
