@@ -1,7 +1,7 @@
 import { defineStudioCMSConfig } from "@astrolicious/studiocms";
 
 export default defineStudioCMSConfig({
-    dbStartPage: true,
+    dbStartPage: false,
     contentRenderer: 'marked',
     verbose: true,
     dateLocale: 'en-us',
