@@ -7,6 +7,7 @@ import type { StudioCMSSocials } from "../layouts/studiocms-socials";
 import { Avatar, Button, Divider, Drawer, IconButton } from "astrolace:components";
 import githubLogo from "../../../assets/github-logo.svg";
 import listIcon from "../../../assets/list.svg";
+import personFillIcon from "../../../assets/person-fill.svg";
 
 type Props = { studioCMSSocials: StudioCMSSocials };
 const { studioCMSSocials: { github: githubURL } } = Astro.props;
@@ -28,7 +29,7 @@ if ( !name ) {
 <Drawer placement="start" class="drawer-scrolling">
   <div slot="label" class="flex items-center gap-4">
     <Avatar
-      image={avatar?.toString() || ""}
+      image={avatar ? avatar.toString() : personFillIcon}
       class=""
       label={"Avatar of " + useName}
     ></Avatar> 

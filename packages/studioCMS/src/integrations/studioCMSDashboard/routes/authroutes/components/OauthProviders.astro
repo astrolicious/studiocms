@@ -3,6 +3,10 @@ import { authEnvCheck } from "studiocms-dashboard:auth";
 import type Config from 'virtual:studiocms/config';
 import { StudioCMSRoutes } from 'studiocms-dashboard:routeMap';
 import { Button, Icon } from "astrolace:components";
+import githubLogo from "../../../assets/github-logo.svg";
+import discordLogo from "../../../assets/discord-logo.svg";
+import googleLogo from "../../../assets/google-logo.svg";
+import auth0Logo from "../../../assets/auth0-logo.svg";
 
 type Props = {
     dashboardConfig: typeof Config.dashboardConfig;
@@ -46,7 +50,7 @@ const {
                     href={githubIndex} 
                     outline 
                     pill>
-                    <Icon library="mdi" name="github" slot="prefix" class="w-24px h-24px" />
+                    <Icon src={githubLogo.src} slot="prefix" class="w-24px h-24px" />
                     <span class="font-bold text-base text-lg">Sign in with GitHub</span>
                 </Button>
             )}
@@ -59,7 +63,7 @@ const {
                     href={discordIndex}
                     outline 
                     pill>
-                        <Icon library="svglogos" name="discord-icon" slot="prefix" class="w-24px h-24px" />
+                        <Icon src={discordLogo.src} slot="prefix" class="w-24px h-24px" />
                         <span class="font-bold text-base text-lg">Sign in with Discord</span>
                 </Button>
             )}
@@ -72,8 +76,7 @@ const {
                     href={googleIndex} 
                     outline 
                     pill>
-                    {/* <div slot="prefix" class="i-logos:google-icon w-24px h-24px inline"></div> */}
-                    <Icon library="svglogos" name="google-icon" slot="prefix" class="w-24px h-24px" />
+                    <Icon src={googleLogo.src} slot="prefix" class="w-24px h-24px" />
                     <span class="font-bold text-base text-lg">Sign in with Google</span>
                 </Button>
             )}
@@ -86,7 +89,7 @@ const {
                     href={auth0Index} 
                     outline 
                     pill>
-                    <Icon library="cib" name="auth0" slot="prefix" class="w-24px h-24px" />
+                    <Icon src={auth0Logo.src} slot="prefix" class="w-24px h-24px" />
                     <span class="font-bold text-base text-lg">Sign in with Auth0</span>
                 </Button>
             )}

@@ -21,7 +21,7 @@ const { title, description } = Astro.props;
 {/* HTMX - Moved to CDN Src due to astro bundler issues */}
 <script src="https://unpkg.com/htmx.org@2.0.1"></script>
 
-<script>
+<!-- <script>
   import "@shoelace-style/shoelace/dist/shoelace.js"
   import { registerIconLibrary } from 'astrolace:tools';
     // Register the default icon library
@@ -48,7 +48,7 @@ const { title, description } = Astro.props;
     registerIconLibrary('studiocms', {
       resolver: name => `https://raw.githubusercontent.com/astrolicious/studiocms/main/www/assets/${name}.svg`,
     })
-</script>
+</script> -->
 
 <!-- Global Metadata -->
 <meta charset="utf-8" />

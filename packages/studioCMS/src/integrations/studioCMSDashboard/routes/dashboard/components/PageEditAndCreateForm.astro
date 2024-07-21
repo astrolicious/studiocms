@@ -14,6 +14,9 @@ VisuallyHidden,
 } from 'astrolace:components';
 import type { ContentHelperTempResponse } from 'studiocms-dashboard:contentHelper';
 import { pluginList } from 'studiocms:helpers';
+import exclamationOctagon from "../../../assets/exclamation-octagon.svg";
+import check2Circle from "../../../assets/check2-circle.svg";
+import pencilSquare from "../../../assets/pencil-square.svg";
 
 interface Props {
 	pageData?: ContentHelperTempResponse;
@@ -45,7 +48,6 @@ const { pageData, livePreviewBox, isEditPage = false, formActionURL, pageEdit } 
                     size="medium"
                     label='Page Title'
                     required>
-                    <Icon name="card-heading" slot="prefix"></Icon>
                 </Input>
 
                 <Select 
@@ -93,7 +95,6 @@ const { pageData, livePreviewBox, isEditPage = false, formActionURL, pageEdit } 
                         label='Slug'
                         filled={isEditPage}
                         required>
-                        <Icon name="link" slot="prefix"></Icon>
                     </Input>
                 </Tooltip>
                 
@@ -105,7 +106,6 @@ const { pageData, livePreviewBox, isEditPage = false, formActionURL, pageEdit } 
                     size="medium"
                     label='Description'
                     required>
-                    <Icon name="info-circle" slot="prefix"></Icon>
                 </Input>
 
                 <Input 
@@ -117,7 +117,6 @@ const { pageData, livePreviewBox, isEditPage = false, formActionURL, pageEdit } 
                     label='Hero Image'
                     helpText='To use images stored in your "public/" folder use the following example: "/my-image.png"'
                     required>
-                    <Icon name="image" slot="prefix"></Icon>
                 </Input>
 
                 <Textarea 
@@ -142,7 +141,7 @@ const { pageData, livePreviewBox, isEditPage = false, formActionURL, pageEdit } 
                     type="submit" 
                     class="grow-0 w-48 place-self-center"
                     outline>{isEditPage ? "Update" : "Create"}
-                    <Icon slot="suffix" name="pencil-square"></Icon>
+                    <Icon slot="suffix" src={pencilSquare.src}></Icon>
                 </Button>
     
             </form>
@@ -175,13 +174,13 @@ const { pageData, livePreviewBox, isEditPage = false, formActionURL, pageEdit } 
 </div>
 
 <Alert id="form-error" variant="danger" duration={4000} closable>
-    <Icon slot="icon" name="exclamation-octagon" />
+    <Icon slot="icon" src={exclamationOctagon.src} />
     <strong>Something went wrong!</strong>
     <Divider />
     <div id="form-error-message"></div>
   </Alert>
   <Alert id="form-success" variant="success" duration={4000} closable>
-    <Icon slot="icon" name="check2-circle" />
+    <Icon slot="icon" src={check2Circle.src} />
     <strong>Success!</strong>
     <Divider />
     <div id="form-success-message"></div>

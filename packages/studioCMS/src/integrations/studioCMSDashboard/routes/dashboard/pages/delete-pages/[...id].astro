@@ -7,6 +7,8 @@ import { getSiteConfig, getPageById } from 'studiocms-dashboard:contentHelper';
 import CrumbStack from '../../components/CrumbStack.astro';
 import { makePageTitle } from '../../../../utils/makePageTitle';
 import { logger } from '@it-astro:logger:StudioCMS';
+import exclamationOctagon from "../../../assets/exclamation-octagon.svg";
+import check2Circle from "../../../assets/check2-circle.svg";
 
 const {
 	mainLinks: { dashboardIndex, pageEdit },
@@ -39,11 +41,13 @@ if (permissionLevel !== 'admin' && permissionLevel !== 'editor') {
     title={makePageTitle("Delete Page", contextConfig)}
     description={contextConfig.description} >
 
-    <CrumbStack items={[
-        { href: dashboardIndex, text: 'Dashboard', prefix: 'columns-gap' },
-        { href: pageEdit, text: 'Existing Pages' },
-        { href: deleteURL, text: `Delete Page: ${page.slug}` }
-    ]} />
+    <CrumbStack 
+        isDashboard 
+        items={[
+            { href: dashboardIndex, text: 'Dashboard' },
+            { href: pageEdit, text: 'Existing Pages' },
+            { href: deleteURL, text: `Delete Page: ${page.slug}` }
+        ]} />
 
     <div class="container">
 
@@ -73,19 +77,19 @@ if (permissionLevel !== 'admin' && permissionLevel !== 'editor') {
 
                 <Divider />
     
-                <Button variant="danger" type="submit" outline><Icon name='trash' slot='prefix' />DELETE</Button>
+                <Button variant="danger" type="submit" outline>DELETE</Button>
     
             </form>
     
 
         <Alert id="form-error" variant="danger" duration={4000} closable>
-            <Icon slot="icon" name="exclamation-octagon" />
+            <Icon slot="icon" src={exclamationOctagon.src} />
             <strong>Something went wrong!</strong>
             <Divider />
             <div id="form-error-message"></div>
         </Alert>
         <Alert id="form-success" variant="success" duration={4000} closable>
-            <Icon slot="icon" name="check2-circle" />
+            <Icon slot="icon" src={check2Circle.src} />
             <strong>Success!</strong>
             <Divider />
             <div id="form-success-message"></div>
