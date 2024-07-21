@@ -131,8 +131,8 @@ catalogs:
       specifier: ^0.4.0
       version: 0.4.0
     '@matthiesenxyz/astrolace':
-      specifier: ^0.1.8
-      version: 0.1.8
+      specifier: ^0.1.9
+      version: 0.1.9
     '@matthiesenxyz/unocss-preset-daisyui':
       specifier: ^0.1.0
       version: 0.1.0
@@ -270,7 +270,7 @@ importers:
         version: 0.4.0(@types/react@18.3.3)
       '@matthiesenxyz/astrolace':
         specifier: catalog:studiocms
-        version: 0.1.8(@astrojs/db@0.12.0(@cloudflare/workers-types@4.20240718.0)(@types/react@18.3.3))(@types/react@18.3.3)(astro@4.12.2(@types/node@20.14.11)(typescript@5.5.3))
+        version: 0.1.9(@astrojs/db@0.12.0(@cloudflare/workers-types@4.20240718.0)(@types/react@18.3.3))(@types/react@18.3.3)(astro@4.12.2(@types/node@20.14.11)(typescript@5.5.3))
       '@matthiesenxyz/unocss-preset-daisyui':
         specifier: catalog:studiocms
         version: 0.1.0(daisyui@4.12.10(postcss@8.4.39))(unocss@0.61.5(postcss@8.4.39)(rollup@4.18.1)(vite@5.3.4(@types/node@20.14.11)))
@@ -1665,8 +1665,8 @@ packages:
       react:
         optional: true
 
-  '@matthiesenxyz/astrolace@0.1.8':
-    resolution: {integrity: sha512-kiKkfP/oBPDMW5tXV83lMDzGn+cvCkDoHBRpv6Am995KQisOByAylezl51KcDKSsp+g05b7j6pcTGf0sKfj/uw==}
+  '@matthiesenxyz/astrolace@0.1.9':
+    resolution: {integrity: sha512-T6/zCcWCXZa0074E5GSH/9aAMJz96xSeQfKxWIGWWb6Y4gw538tovCJcrr/asUnTP1bLjll8Iv3Lnu0TUx/77A==}
     peerDependencies:
       astro: '>=4.8.6'
 
@@ -6366,7 +6366,7 @@ snapshots:
       '@types/markdown-it': 12.2.3
       '@types/react': 18.3.3
 
-  '@matthiesenxyz/astrolace@0.1.8(@astrojs/db@0.12.0(@cloudflare/workers-types@4.20240718.0)(@types/react@18.3.3))(@types/react@18.3.3)(astro@4.12.2(@types/node@20.14.11)(typescript@5.5.3))':
+  '@matthiesenxyz/astrolace@0.1.9(@astrojs/db@0.12.0(@cloudflare/workers-types@4.20240718.0)(@types/react@18.3.3))(@types/react@18.3.3)(astro@4.12.2(@types/node@20.14.11)(typescript@5.5.3))':
     dependencies:
       '@shoelace-style/shoelace': 2.15.1(@types/react@18.3.3)
       astro: 4.12.2(@types/node@20.14.11)(typescript@5.5.3)

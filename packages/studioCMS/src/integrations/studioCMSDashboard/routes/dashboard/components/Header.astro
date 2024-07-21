@@ -28,8 +28,9 @@ if ( !name ) {
 
 <Drawer placement="start" class="drawer-scrolling">
   <div slot="label" class="flex items-center gap-4">
-    <Avatar
-      image={avatar ? avatar.toString() : personFillIcon}
+    <Avatar 
+      defaultImageSrc={personFillIcon.src}
+      image={avatar?.toString() || ''}
       class=""
       label={"Avatar of " + useName}
     ></Avatar> 

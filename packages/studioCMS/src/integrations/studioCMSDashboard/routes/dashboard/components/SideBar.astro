@@ -32,7 +32,8 @@ if ( permissionLevel === "unknown" ) {
       <a href={dashboardIndex}>
         <Tooltip content={"Avatar of " + useName}>
           <Avatar
-            image={avatar ? avatar.toString() : personFillIcon}
+            defaultImageSrc={personFillIcon.src}
+            image={avatar?.toString() || ''}
             class="m-auto ease-in-out hover:scale-[102%] transition"
             label={"Avatar of " + useName}
           ></Avatar> 

@@ -1,6 +1,7 @@
 ---
 import { Breadcrumb, BreadcrumbItem, Icon } from 'astrolace:components';
 import columnsGap from '../../../assets/columns-gap.svg';
+import chevronRight from '../../../assets/chevron-right.svg';
 
 interface Props {
     items: Array<{
@@ -16,7 +17,7 @@ const { items, isDashboard } = Astro.props;
 
 <div class="flex grow w-full pb-4 items-center">
     {isDashboard && <Icon src={columnsGap.src} class="px-2" />}
-    <Breadcrumb>
+    <Breadcrumb separatorSrc={chevronRight.src}>
         {
             items.map(({ href, text }) => (
                     <BreadcrumbItem href={href}>
@@ -24,6 +25,5 @@ const { items, isDashboard } = Astro.props;
                     </BreadcrumbItem>
                 ))
         }
-
     </Breadcrumb>
 </div>
