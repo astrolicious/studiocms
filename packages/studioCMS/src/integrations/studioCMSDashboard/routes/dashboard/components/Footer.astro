@@ -1,8 +1,8 @@
 ---
-import { Icon } from 'astrolace:components';
+import { Icon, VisuallyHidden } from 'astrolace:components';
 import type { StudioCMSSocials } from '../layouts/studiocms-socials';
+import studioCMSLightLogo from '../../../assets/logo-light.svg';
 import studioCMSDarkLogo from '../../../assets/logo-dark.svg';
-
 
 type Props = { studioCMSSocials: StudioCMSSocials };
 const { studioCMSSocials: { github: githubURL, githubContributors, githubLicense } } = Astro.props;
@@ -21,10 +21,16 @@ const today = new Date();
   </div>
 </footer>
 
+<VisuallyHidden>
+  <div id="light-logo">{studioCMSLightLogo.src}</div>
+  <div id="dark-logo">{studioCMSDarkLogo.src}</div>
+</VisuallyHidden>
+
 <script>
 import type { SlIcon } from "astrolace:types";
-import studioCMSLightLogo from '../../../assets/logo-light.svg';
-import studioCMSDarkLogo from '../../../assets/logo-dark.svg';
+
+const lightLogo = document.getElementById('light-logo') as HTMLDivElement;
+const darkLogo = document.getElementById('dark-logo') as HTMLDivElement;
 
 interface ThemeChangeEventDetail {
     theme: 'auto' | 'dark' | 'light';
@@ -38,16 +44,16 @@ function setFooterIcon(
   ) {
     if (theme === 'auto') {
       if (systemTheme === 'dark') {
-        footerIcon.src = studioCMSLightLogo.src;
+        footerIcon.src = lightLogo.innerText;
       } else {
-        footerIcon.src = studioCMSDarkLogo.src;
+        footerIcon.src = darkLogo.innerText;
       }
     }
     if (theme === 'dark') {
-      footerIcon.src = studioCMSLightLogo.src;
+      footerIcon.src = lightLogo.innerText;
     }
     if (theme === 'light') {
-      footerIcon.src = studioCMSDarkLogo.src;
+      footerIcon.src = darkLogo.innerText;
     }
   }
 
