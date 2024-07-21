@@ -1,6 +1,7 @@
 ---
 import { Icon } from 'astrolace:components';
 import type { StudioCMSSocials } from '../layouts/studiocms-socials';
+import studioCMSDarkLogo from '../../../assets/logo-dark.svg';
 
 
 type Props = { studioCMSSocials: StudioCMSSocials };
@@ -12,7 +13,7 @@ const today = new Date();
 <footer class="footer footer-center block mb-5 pt-10">
   <div class="pb-2">
     <div class="inline">
-      &copy; {today.getFullYear()} <Icon library='studiocms' name='logo-dark' class="w-1rem h-1rem footer-icon" /><a href={githubURL} target="_blank"><i> astrolicious/studiocms</i></a> - <a href={githubLicense} target="_blank" class="font-bold">MIT Licensed</a>
+      &copy; {today.getFullYear()} <Icon src={studioCMSDarkLogo.src} class="w-1rem h-1rem footer-icon" /><a href={githubURL} target="_blank"><i> astrolicious/studiocms</i></a> - <a href={githubLicense} target="_blank" class="font-bold">MIT Licensed</a>
     </div>
   </div>
   <div class="inline opacity-75">
@@ -22,8 +23,33 @@ const today = new Date();
 
 <script>
 import type { SlIcon } from "astrolace:types";
-import type { ThemeChangeEventDetail } from "./footerUtils";
-import { setFooterIcon } from './footerUtils';
+import studioCMSLightLogo from '../../../assets/logo-light.svg';
+import studioCMSDarkLogo from '../../../assets/logo-dark.svg';
+
+interface ThemeChangeEventDetail {
+    theme: 'auto' | 'dark' | 'light';
+    systemTheme?: 'dark' | 'light';
+  }
+
+function setFooterIcon(
+  footerIcon: SlIcon,
+  theme: ThemeChangeEventDetail['theme'],
+  systemTheme?: ThemeChangeEventDetail['systemTheme'],
+  ) {
+    if (theme === 'auto') {
+      if (systemTheme === 'dark') {
+        footerIcon.src = studioCMSLightLogo.src;
+      } else {
+        footerIcon.src = studioCMSDarkLogo.src;
+      }
+    }
+    if (theme === 'dark') {
+      footerIcon.src = studioCMSLightLogo.src;
+    }
+    if (theme === 'light') {
+      footerIcon.src = studioCMSDarkLogo.src;
+    }
+  }
 
 // Fix the FooterIcon depending on the Current Theme
 const footerIcon = document.querySelector('.footer-icon') as SlIcon;
@@ -34,7 +60,7 @@ setFooterIcon(footerIcon, currentTheme);
 document.addEventListener("theme-changed", (event) =>{
 
   const newTheme = event as CustomEvent<ThemeChangeEventDetail>;
-    
+  
   setFooterIcon(footerIcon, newTheme.detail.theme, newTheme.detail.systemTheme);
 
 });

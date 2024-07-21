@@ -5,6 +5,8 @@ import ThemeToggleButton from "./ThemeToggleButton.astro"
 import SideBarMenu from "./SideBarMenu.astro";
 import type { StudioCMSSocials } from "../layouts/studiocms-socials";
 import { Avatar, Button, Divider, Drawer, IconButton } from "astrolace:components";
+import githubLogo from "../../../assets/github-logo.svg";
+import listIcon from "../../../assets/list.svg";
 
 type Props = { studioCMSSocials: StudioCMSSocials };
 const { studioCMSSocials: { github: githubURL } } = Astro.props;
@@ -44,7 +46,7 @@ if ( !name ) {
   <Divider slot="footer" class='divider my-0 py-0' />
 
   <IconButton 
-  name="github" 
+  src={githubLogo.src}
   style="font-size: 1rem;" 
   class="flex justify-center"
   slot="footer"
@@ -61,13 +63,12 @@ if ( !name ) {
     <div class="navbar-start"> 
 
       { permissionLevel !== "unknown" && (
-        <sl-icon-button 
-          name="list"
+        <IconButton 
+          src={listIcon.src}
           style="font-size: 2rem;" 
           size="medium" 
           label="Open Menu"
-          class="md:hidden drawer-header-button">
-        </sl-icon-button> 
+          class="md:hidden drawer-header-button" />
       )}
     </div>
     <div class="navbar-center">

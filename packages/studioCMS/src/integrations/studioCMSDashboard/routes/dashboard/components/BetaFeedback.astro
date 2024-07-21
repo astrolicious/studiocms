@@ -2,6 +2,9 @@
 import { Alert, Divider, Icon } from "astrolace:components";
 import { Input, Textarea } from "astrolace:components";
 import { Button, Dialog } from "astrolace:components";
+import alertOctogramOutline from "../../../assets/alert-octagram-outline.svg";
+import exclamationOctagon from "../../../assets/exclamation-octagon.svg";
+import check2Circle from "../../../assets/check2-circle.svg";
 ---
 <Dialog id="beta-feedback-dialog" label="Beta Feedback Form">
 
@@ -48,19 +51,19 @@ import { Button, Dialog } from "astrolace:components";
 
 <div>
     <Button variant="success" size="large" class="open-beta-feedback" outline>
-        <Icon slot="prefix" name="alert-octagram-outline" library="mdi"/>
+        <Icon slot="prefix" src={alertOctogramOutline.src} />
         Beta Feedback
     </Button>
 </div>
 
 <div class="alerts">
     <Alert variant="danger" id="error-toast" duration={6000} closable>
-        <Icon slot="icon" name="exclamation-octagon" />
+        <Icon slot="icon" src={exclamationOctagon.src} />
         <p id="form-error-toast"></p>
     </Alert>
     
     <Alert variant="success" id="success-toast" duration={6000} closable>
-        <Icon slot="icon" name="check2-circle" />
+        <Icon slot="icon" name={check2Circle.src} />
         <p id="form-success-toast"></p>
     </Alert>
 </div>
