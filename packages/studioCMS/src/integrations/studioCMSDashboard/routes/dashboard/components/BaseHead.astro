@@ -18,9 +18,8 @@ export interface Props {
 const { title, description } = Astro.props;
 ---
 
-<script>
-  import "htmx.org/dist/htmx.js"
-</script>
+{/* HTMX - Moved to CDN Src due to astro bundler issues */}
+<script src="https://unpkg.com/htmx.org@2.0.1"></script>
 
 <script>
   import "@shoelace-style/shoelace/dist/shoelace.js"
