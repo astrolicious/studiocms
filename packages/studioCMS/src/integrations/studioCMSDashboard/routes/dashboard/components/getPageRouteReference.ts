@@ -13,7 +13,7 @@ const dashboardURL = dashboardRouteOverride ? fixSlashes(dashboardRouteOverride)
 const ExternalNav = Array.from(externalNav);
 const PluginList = Array.from(pluginList);
 
-export const getPageRouteReference = async (pageRoute: string) => {
+export const getPageRouteReference = (pageRoute: string) => {
 
 	// Check if the route is the dashboard
 	if ( pageRoute.startsWith(`/${dashboardURL}`) ) {
