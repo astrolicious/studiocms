@@ -40,8 +40,8 @@ catalogs:
       specifier: ^4.12.2
       version: 4.12.2
     astro-integration-kit:
-      specifier: ^0.15.0
-      version: 0.15.0
+      specifier: ^0.16.0
+      version: 0.16.0
     astro-theme-provider:
       specifier: ^0.6.1
       version: 0.6.1
@@ -122,7 +122,7 @@ catalogs:
       specifier: ^2.1.25
       version: 2.1.25
     '@inox-tools/runtime-logger':
-      specifier: ^0.2.0
+      specifier: ^0.2.1
       version: 0.2.1
     '@inox-tools/sitemap-ext':
       specifier: ^0.2.15
@@ -306,7 +306,7 @@ importers:
         version: 4.12.2(@types/node@20.14.11)(typescript@5.5.3)
       astro-integration-kit:
         specifier: 'catalog:'
-        version: 0.15.0(astro@4.12.2(@types/node@20.14.11)(typescript@5.5.3))
+        version: 0.16.0(astro@4.12.2(@types/node@20.14.11)(typescript@5.5.3))
       daisyui:
         specifier: catalog:studiocms
         version: 4.12.10(postcss@8.4.39)
@@ -2423,8 +2423,8 @@ packages:
       '@astrojs/db':
         optional: true
 
-  astro-integration-kit@0.15.0:
-    resolution: {integrity: sha512-wzU5Z1GHmdAMbuci+shlJA076xCIh51nM2AkPsA6jPorOln6RBvPMckFjIPN5JvvvuvupuQFr7QuspTtogTYDQ==}
+  astro-integration-kit@0.16.0:
+    resolution: {integrity: sha512-FAWYxsh3H5DfNiqVBAanK9FfBJgzDq6CBKEora73IpWxDX2jPPr8cYndUI6COnWII84wbYK1qHq3lX/fIcQG+Q==}
     peerDependencies:
       astro: ^4.12.0
 
@@ -3513,7 +3513,6 @@ packages:
 
   libsql@0.3.19:
     resolution: {integrity: sha512-Aj5cQ5uk/6fHdmeW0TiXK42FqUlwx7ytmMLPSaUQPin5HKKKuUPD62MAbN4OEweGBBI7q1BekoEN4gPUEL6MZA==}
-    cpu: [x64, arm64, wasm32]
     os: [darwin, linux, win32]
 
   lilconfig@2.1.0:
@@ -7207,7 +7206,7 @@ snapshots:
     optionalDependencies:
       '@astrojs/db': 0.12.0(@cloudflare/workers-types@4.20240718.0)(@types/react@18.3.3)
 
-  astro-integration-kit@0.15.0(astro@4.12.2(@types/node@20.14.11)(typescript@5.5.3)):
+  astro-integration-kit@0.16.0(astro@4.12.2(@types/node@20.14.11)(typescript@5.5.3)):
     dependencies:
       astro: 4.12.2(@types/node@20.14.11)(typescript@5.5.3)
       pathe: 1.1.2
