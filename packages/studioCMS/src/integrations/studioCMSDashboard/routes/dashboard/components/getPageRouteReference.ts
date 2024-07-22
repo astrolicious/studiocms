@@ -7,10 +7,11 @@ const fixSlashes = (str: string) => str.replace(/^\/+|\/+$/g, '');
 const {
 	dashboardConfig: { dashboardRouteOverride },
 } = Config;
+
 const dashboardURL = dashboardRouteOverride ? fixSlashes(dashboardRouteOverride) : 'dashboard';
 
 const ExternalNav = Array.from(externalNav);
-const PluginList = Array.from(pluginList)
+const PluginList = Array.from(pluginList);
 
 export const getPageRouteReference = async (pageRoute: string) => {
 
