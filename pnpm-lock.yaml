@@ -43,8 +43,8 @@ catalogs:
       specifier: ^0.15.0
       version: 0.15.0
     astro-theme-provider:
-      specifier: ^0.6.0
-      version: 0.6.0
+      specifier: ^0.6.1
+      version: 0.6.1
     sharp:
       specifier: ^0.33.4
       version: 0.33.4
@@ -370,7 +370,7 @@ importers:
         version: 4.12.2(@types/node@20.14.11)(typescript@5.5.3)
       astro-theme-provider:
         specifier: 'catalog:'
-        version: 0.6.0(@astrojs/db@0.11.7)(astro@4.12.2(@types/node@20.14.11)(typescript@5.5.3))
+        version: 0.6.1(@astrojs/db@0.11.7)(astro@4.12.2(@types/node@20.14.11)(typescript@5.5.3))
     devDependencies:
       '@types/node':
         specifier: 'catalog:'
@@ -2423,8 +2423,8 @@ packages:
   astro-seo@0.8.4:
     resolution: {integrity: sha512-Ou1vzQSXAxa0K8rtNtXNvSpYqOGEgMhh0immMxJeXmbVZac3UKCNWAoXWyOQDFYsZvBugCRSg0N1phBqPMVgCw==}
 
-  astro-theme-provider@0.6.0:
-    resolution: {integrity: sha512-+vFqHqc7QexE3P4cPZ1BhCO5MbB28Gg9Ej6U6vkctCm+kQgcrjIFTP650VdezD20l+CXhmmPyNa0EKEk3Uvhyg==}
+  astro-theme-provider@0.6.1:
+    resolution: {integrity: sha512-6cFbq7G5OlhVQqCdhLO7PVp17SMbparSqvr9JJ+HvfTacfTJ+wEIBMujE0/0PGzDkvSw0vi2ETHERQQpH3yk9g==}
     peerDependencies:
       '@astrojs/db': '>=0.8.0'
       astro: '>=3'
@@ -7205,7 +7205,7 @@ snapshots:
       - prettier-plugin-astro
       - typescript
 
-  astro-theme-provider@0.6.0(@astrojs/db@0.11.7)(astro@4.12.2(@types/node@20.14.11)(typescript@5.5.3)):
+  astro-theme-provider@0.6.1(@astrojs/db@0.11.7)(astro@4.12.2(@types/node@20.14.11)(typescript@5.5.3)):
     dependencies:
       astro: 4.12.2(@types/node@20.14.11)(typescript@5.5.3)
       astro-integration-kit: 0.14.0(@astrojs/db@0.11.7)(astro@4.12.2(@types/node@20.14.11)(typescript@5.5.3))

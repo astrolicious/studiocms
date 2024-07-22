@@ -11,7 +11,7 @@ catalog:
   '@types/node': ^20.14.11
   astro: ^4.12.2
   astro-integration-kit: ^0.15.0
-  astro-theme-provider: ^0.6.0
+  astro-theme-provider: ^0.6.1
   typescript: ^5.5.3
   vite: ^5.3.3
   sharp: ^0.33.4
