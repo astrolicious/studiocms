@@ -9,6 +9,8 @@ import CrumbStack from '../components/CrumbStack.astro';
 import { makePageTitle } from '../../../utils/makePageTitle';
 import { logger } from '@it-astro:logger:StudioCMS';
 import DashboardButtons from '../components/DashboardButtons.astro';
+import exclamationTriangle from "../../../assets/exclamation-triangle.svg";
+import check2Circle from "../../../assets/check2-circle.svg";
 
 const {
 	mainLinks: { dashboardIndex },
@@ -32,9 +34,11 @@ if (permissionLevel !== 'admin' && permissionLevel !== 'editor') {
     title={makePageTitle("Dashboard", contextConfig)}
     description={contextConfig.description} >
 
-    <CrumbStack items={[
-        { href: dashboardIndex, text: 'Dashboard', prefix: 'columns-gap' }
-    ]} />
+    <CrumbStack 
+        isDashboard
+        items={[
+            { href: dashboardIndex, text: 'Dashboard' }
+        ]} />
 
     <div class="container">
 
@@ -47,7 +51,7 @@ if (permissionLevel !== 'admin' && permissionLevel !== 'editor') {
         <Divider />
 
         <Alert variant="warning" open>
-            <Icon slot="icon" name="exclamation-triangle" />
+            <Icon slot="icon" src={exclamationTriangle.src} />
             <p>This project is <strong>Experimental</strong> and should not be used in production at this time.</p>
         </Alert>
 
@@ -58,7 +62,7 @@ if (permissionLevel !== 'admin' && permissionLevel !== 'editor') {
 
                 <Details>
                     <div slot="summary" class="flex flex-row gap-4 items-center">
-                        <Icon slot="icon" name="check2-circle" class:list={"text-green-500 font-size-6"} />
+                        <Icon slot="icon" src={check2Circle.src} class:list={"text-green-500 font-size-6"} />
                         <p>Web Vitals is <strong class="text-green">ENABLED</strong>! <strong>Performance Metrics</strong> are being collected.</p>
                     </div>
                     <WebVitalPanel webVitalData={webVitals} />

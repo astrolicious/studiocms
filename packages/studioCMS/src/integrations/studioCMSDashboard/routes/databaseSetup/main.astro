@@ -2,6 +2,11 @@
 import { Alert, Button, Card, Details, Divider, Icon, Input, Switch } from 'astrolace:components';
 import { Layout } from 'studiocms-dashboard:components';
 import { makePageTitle } from '../../utils/makePageTitle';
+import exclamationOctagon from "../../assets/exclamation-octagon.svg";
+import check2Circle from "../../assets/check2-circle.svg";
+import personAdd from "../../assets/person-add.svg";
+import personExclamation from "../../assets/person-exclamation.svg";
+import personRolodex from "../../assets/person-rolodex.svg";
 ---
 
 <Layout title={makePageTitle("Welcome", {title: "StudioCMS"})} description="Welcome to StudioCMS" sideBarActiveItemID='start' includeSidebar={false}>
@@ -52,14 +57,14 @@ import { makePageTitle } from '../../utils/makePageTitle';
 
             <Switch name="local-setup" id="local-setup" value="1" size="medium" help-text="Would you like to setup a local Admin User or OAuth User?">
               <div class="textlabelinput">
-                <Icon name="person-exclamation" />
+                <Icon src={personExclamation.src} />
                 Setup Local Admin User?
               </div>
             </Switch>
             
             <Details id="local-admin">
               <div class="textlabelinput" slot="summary">
-                <Icon name="person-add" /> 
+                <Icon src={personAdd.src} /> 
                 Local Admin Setup
               </div>
 
@@ -75,14 +80,14 @@ import { makePageTitle } from '../../utils/makePageTitle';
             </Details>
 
             <Details id="oauth-admin" open>
-              <div class="textlabelinput" slot="summary"><Icon name="person-rolodex" /> oAuth Admin Setup</div>
+              <div class="textlabelinput" slot="summary"><Icon src={personRolodex.src} /> oAuth Admin Setup</div>
               <Input name="oauth-admin-name" id="oauth-admin-name" placeholder="Username of Primary Admin (ex. GithubUsername)" label='Username of Primary Admin (ex. GithubUsername)' helpText='( Just set one, You can add more later )' />
             </Details>
 
             <Divider />
 
             <div class="py-4 flex items-center justify-center">
-              <Button variant="success" type="submit" outline>Initialize Database<Icon slot="suffix" library='mdi' name="login" /></Button>
+              <Button variant="success" type="submit" outline>Initialize Database</Button>
             </div>
 
           </form>
@@ -91,13 +96,13 @@ import { makePageTitle } from '../../utils/makePageTitle';
         </div> 
 
       <Alert id="form-error" variant="danger" duration={4000} closable>
-        <Icon slot="icon" name="exclamation-octagon"/>
+        <Icon slot="icon" src={exclamationOctagon.src}/>
         <strong>Something went wrong!</strong>
         <Divider />
         <div id="form-error-message"></div>
       </Alert>
       <Alert id="form-success" variant="success" duration={4000} closable>
-        <Icon slot="icon" name="check2-circle"/>
+        <Icon slot="icon" src={check2Circle.src}/>
         <strong>Success!</strong>
         <Divider />
         <div id="form-success-message"></div>

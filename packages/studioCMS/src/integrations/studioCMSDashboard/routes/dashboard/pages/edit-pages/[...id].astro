@@ -40,11 +40,13 @@ if (permissionLevel !== 'admin' && permissionLevel !== 'editor') {
     title={makePageTitle("Edit Page", contextConfig)}
     description={contextConfig.description} >
 
-    <CrumbStack items={[
-        { href: dashboardIndex, text: 'Dashboard', prefix: 'columns-gap' },
-        { href: pageEdit, text: 'Existing Pages' },
-        { href: editRoute, text: `Edit Page: ${pageData.title}` }
-    ]} />
+    <CrumbStack 
+        isDashboard 
+        items={[
+            { href: dashboardIndex, text: 'Dashboard' },
+            { href: pageEdit, text: 'Existing Pages' },
+            { href: editRoute, text: `Edit Page: ${pageData.title}` }
+        ]} />
 
     <PageEditAndCreateForm 
         pageData={pageData}

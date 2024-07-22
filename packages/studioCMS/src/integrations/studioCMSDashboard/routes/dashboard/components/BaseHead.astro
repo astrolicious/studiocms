@@ -18,62 +18,30 @@ export interface Props {
 const { title, description } = Astro.props;
 ---
 
-<script>
-  import "htmx.org/dist/htmx.js"
-</script>
+{/* HTMX - Moved to CDN src due to astro bundler issues */}
+<script src="https://unpkg.com/htmx.org@2.0.1"></script>
 
-<script>
-  import "@shoelace-style/shoelace/dist/shoelace.js";
-  import { registerIconLibrary } from 'astrolace:tools';
-    // Register the default icon library
-    registerIconLibrary('default', {
-      resolver: name => `https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/icons/${name}.svg`
-    });
-
-    // Register the svgLogos Iconify icon library
-    registerIconLibrary('svglogos', {
-      resolver: name => `https://api.iconify.design/logos/${name}.svg`
-    })
-
-    // Register the mdi Iconify icon library
-    registerIconLibrary('mdi', {
-      resolver: name => `https://api.iconify.design/mdi/${name}.svg`
-    })
-
-    // Register the mdi Iconify icon library
-    registerIconLibrary('cib', {
-      resolver: name => `https://api.iconify.design/cib/${name}.svg`
-    })
-
-    // Register StudioCMS Icons
-    registerIconLibrary('studiocms', {
-      resolver: name => `https://raw.githubusercontent.com/astrolicious/studiocms/main/www/assets/${name}.svg`,
-    })
-</script>
-
-<!-- Global Metadata -->
+{/* Global Metadata */}
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <link rel="icon" type="image/svg+xml" href={faviconURL} />
 <meta name="generator" content={Astro.generator} />
 <meta name="generator" content=`StudioCMS v${version}` />
 
-<!-- Primary Meta Tags -->
+{/* Primary Meta Tags */}
 <title>{title}</title>
 <meta name="title" content={title} />
 <meta name="description" content={description} />
 
+{/* Open Graph / Facebook / Twitter */}
 { !isDashboardRoute(Astro.url.pathname) && (
-  <!-- Open Graph / Facebook -->
   <meta property="og:type" content='website' />
   <meta property="og:url" content={Astro.url} />
   <meta property="og:title" content={title} />
   <meta property="og:description" content={description} />
   
-  <!-- Twitter -->
   <meta property="twitter:card" content="summary_large_image" />
   <meta property="twitter:url" content={Astro.url} />
   <meta property="twitter:title" content={title} />
   <meta property="twitter:description" content={description} />
-
- )}
+)}

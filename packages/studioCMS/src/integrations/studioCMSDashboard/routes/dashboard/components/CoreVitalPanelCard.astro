@@ -2,6 +2,9 @@
 import { Card, Icon, ProgressBar } from "astrolace:components";
 import type { WebVitalsResponseItem } from "studiocms-dashboard:web-vitals";
 import { calculateClsScorePercent, clsDataAverage, lcpDataAverage, progressBarClsColor, progressBarClsTrackColor, calculateLcpScorePercent, progressBarLcpColor, progressBarLcpTrackColor, inpDataAverage, calculateInpScorePercent, progressBarInpColor, progressBarInpTrackColor } from "./webVitalsUtils";
+import speedometer from "../../../assets/speedometer.svg";
+import layoutWtf from "../../../assets/layout-wtf.svg";
+import cursor from "../../../assets/cursor.svg";
 
 interface Props {
     lcpData: WebVitalsResponseItem[];
@@ -15,7 +18,7 @@ const { lcpData, clsData, inpData } = Astro.props;
 <div class="w-full grid max-sm:grid-cols-1 max-lg:grid-cols-2 lg:grid-cols-3 gap-4">
     <Card>
         <div slot="header" class="flex flex-row items-center gap-2">
-            <Icon slot="icon" name="speedometer" class:list={"lcp-icon"} />
+            <Icon slot="icon" src={speedometer.src} class:list={"lcp-icon"} />
             <div class="text-xl font-bold">Largest Contentful Paint</div>
         </div>
         <div class="pt-2">
@@ -29,7 +32,7 @@ const { lcpData, clsData, inpData } = Astro.props;
     </Card>
     <Card>
         <div slot="header" class="flex flex-row items-center gap-2">
-            <Icon slot="icon" name="layout-wtf" class:list={"cls-icon"} />
+            <Icon slot="icon" src={layoutWtf.src} class:list={"cls-icon"} />
             <div class="text-xl font-bold">Cumulative Layout Shift</div>
         </div>
         <div class="pt-2">
@@ -43,7 +46,7 @@ const { lcpData, clsData, inpData } = Astro.props;
     </Card>
     <Card>
         <div slot="header" class="flex flex-row items-center gap-2">
-            <Icon slot="icon" name="cursor" class:list={"inp-icon"} />
+            <Icon slot="icon" src={cursor.src} class:list={"inp-icon"} />
             <div class="text-xl font-bold">Interaction to Next Paint</div>
         </div>
         <div class="pt-2">

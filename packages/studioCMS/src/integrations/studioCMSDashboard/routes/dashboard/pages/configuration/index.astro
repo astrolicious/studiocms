@@ -7,6 +7,8 @@ import { getSiteConfig } from 'studiocms-dashboard:contentHelper';
 import CrumbStack from '../../components/CrumbStack.astro';
 import { makePageTitle } from '../../../../utils/makePageTitle';
 import { logger } from '@it-astro:logger:StudioCMS';
+import exclamationOctagon from "../../../../assets/exclamation-octagon.svg";
+import check2Circle from "../../../../assets/check2-circle.svg";
 
 const {
 	mainLinks: { dashboardIndex, siteConfiguration, configurationAdmins },
@@ -30,10 +32,12 @@ if (permissionLevel !== 'admin') {
     title={makePageTitle("Site Config", contextConfig)}
     description={contextConfig.description} >
 
-    <CrumbStack items={[
-        { href: dashboardIndex, text: 'Dashboard', prefix: 'columns-gap' },
-        { href: siteConfiguration, text: 'Site Configuration' }
-    ]} />
+    <CrumbStack 
+        isDashboard 
+        items={[
+            { href: dashboardIndex, text: 'Dashboard' },
+            { href: siteConfiguration, text: 'Site Configuration' }
+        ]} />
 
     <div class="container flex flex-col">
 
@@ -54,7 +58,6 @@ if (permissionLevel !== 'admin') {
                     value={contextConfig.title} 
                     label='Site Title'
                     required>
-                    <Icon name="globe2" slot="prefix"></Icon>
                 </Input>
 
                 <Divider />
@@ -67,7 +70,6 @@ if (permissionLevel !== 'admin') {
                     value={contextConfig.description} 
                     label='Description'
                     required>
-                    <Icon name="line" slot="prefix"></Icon>
                 </Input>
     
                 <div class="py-4 text-center">
@@ -79,13 +81,13 @@ if (permissionLevel !== 'admin') {
 
 
       <Alert id="form-error" variant="danger" duration={4000} closable>
-        <Icon slot="icon" name="exclamation-octagon" />
+        <Icon slot="icon" src={exclamationOctagon.src} />
         <strong>Something went wrong!</strong>
         <Divider />
         <div id="form-error-message"></div>
       </Alert>
       <Alert id="form-success" variant="success" duration={4000} closable>
-        <Icon slot="icon" name="check2-circle" />
+        <Icon slot="icon" src={check2Circle.src} />
         <strong>Success!</strong>
         <Divider />
         <div id="form-success-message"></div>

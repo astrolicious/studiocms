@@ -2,6 +2,9 @@
 import { Alert, Divider, Icon } from "astrolace:components";
 import { Input, Textarea } from "astrolace:components";
 import { Button, Dialog } from "astrolace:components";
+import alertOctogramOutline from "../../../assets/alert-octagram-outline.svg";
+import exclamationOctagon from "../../../assets/exclamation-octagon.svg";
+import check2Circle from "../../../assets/check2-circle.svg";
 ---
 <Dialog id="beta-feedback-dialog" label="Beta Feedback Form">
 
@@ -48,51 +51,51 @@ import { Button, Dialog } from "astrolace:components";
 
 <div>
     <Button variant="success" size="large" class="open-beta-feedback" outline>
-        <Icon slot="prefix" name="alert-octagram-outline" library="mdi"/>
+        <Icon slot="prefix" src={alertOctogramOutline.src} />
         Beta Feedback
     </Button>
 </div>
 
 <div class="alerts">
     <Alert variant="danger" id="error-toast" duration={6000} closable>
-        <Icon slot="icon" name="exclamation-octagon" />
+        <Icon slot="icon" src={exclamationOctagon.src} />
         <p id="form-error-toast"></p>
     </Alert>
     
     <Alert variant="success" id="success-toast" duration={6000} closable>
-        <Icon slot="icon" name="check2-circle" />
+        <Icon slot="icon" src={check2Circle.src} />
         <p id="form-success-toast"></p>
     </Alert>
 </div>
 
 <script is:inline>
-    const dialog = document.getElementById('beta-feedback-dialog');
-    const form = document.getElementById('beta-feedback-form');
+    const betaFeedbackDialog = document.getElementById('beta-feedback-dialog');
+    const betaFeedbackForm = document.getElementById('beta-feedback-form');
     const FormMessage = document.getElementById('form-message');
-    const openButton = document.getElementsByClassName('open-beta-feedback')[0];
-    const cancelButton = document.getElementsByClassName('beta-feedback-cancel')[0];
-    const submitButton = document.getElementsByClassName('beta-feedback-submit')[0];
+    const openFeedbackDialogButton = document.getElementsByClassName('open-beta-feedback')[0];
+    const cancelFeedbackDialogButton = document.getElementsByClassName('beta-feedback-cancel')[0];
+    const submitFeedbackButton = document.getElementsByClassName('beta-feedback-submit')[0];
     const alertsContainer = document.querySelector('.alerts');
     const errorToast = alertsContainer.querySelector('sl-alert[variant="danger"]');
     const errorToastMessage = errorToast.querySelector('#form-error-toast');
     const successToast = alertsContainer.querySelector('sl-alert[variant="success"]');
     const successToastMessage = successToast.querySelector('#form-success-toast');
 
-    openButton.addEventListener('click', () => {
-        dialog.show();
+    openFeedbackDialogButton.addEventListener('click', () => {
+        betaFeedbackDialog.show();
     });
 
-    cancelButton.addEventListener('click', () => {
-        dialog.hide();
+    cancelFeedbackDialogButton.addEventListener('click', () => {
+        betaFeedbackDialog.hide();
     });
 
-    dialog.addEventListener('sl-request-close', event => {
+    betaFeedbackDialog.addEventListener('sl-request-close', event => {
         if (event.detail.source === 'overlay') {
             event.preventDefault();
         }
     });
 
-    form.addEventListener('submit', function(e) {
+    betaFeedbackForm.addEventListener('submit', function(e) {
         e.preventDefault();
 
         if (FormMessage.value.length < 10) {
@@ -101,12 +104,12 @@ import { Button, Dialog } from "astrolace:components";
             return;
         }
 
-        const formData = new FormData(form);
+        const formData = new FormData(betaFeedbackForm);
         const object = Object.fromEntries(formData);
         const json = JSON.stringify(object);
 
-        submitButton.disabled = true;
-        submitButton.loading = true;
+        submitFeedbackButton.disabled = true;
+        submitFeedbackButton.loading = true;
 
         fetch('https://api.web3forms.com/submit', {
             method: 'POST',
@@ -121,8 +124,8 @@ import { Button, Dialog } from "astrolace:components";
             if (response.status == 200) {
                 successToastMessage.innerText = json.message;
                 successToast.toast();
-                form.reset();
-                dialog.hide();
+                betaFeedbackForm.reset();
+                betaFeedbackDialog.hide();
             } else {
                 errorToastMessage.innerText = json.message;
                 errorToast.toast();
@@ -133,7 +136,7 @@ import { Button, Dialog } from "astrolace:components";
             errorToast.toast();
         })
         .then(function() {
-            form.reset();
+            betaFeedbackForm.reset();
         });
     });
 
