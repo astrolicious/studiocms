@@ -1,10 +1,11 @@
 import { User, db, eq } from 'astro:db';
-import { defineMiddleware } from 'astro/middleware';
 import { verifyRequestOrigin } from 'lucia';
 import { lucia } from 'studiocms-dashboard:auth';
 import type { Locals } from 'studiocms:helpers';
 import Config from 'virtual:studiocms/config';
 import { logger } from '@it-astro:logger:StudioCMS';
+import { defineMiddlewareRouter } from './router';
+import type { MiddlewareHandler } from 'astro';
 
 const {
 	dashboardConfig: {
@@ -15,87 +16,89 @@ const {
 
 /**
  * This function is used to remove any trailing and leading slashes from a string
- * 
+ *
  * @param {string} str - The string to remove slashes from
- * 
+ *
  * @returns {string} - The string without any trailing or leading slashes
- * 
+ *
  * @example
  * stripSlashes('/dashboard/') // 'dashboard'
  */
 const stripSlashes = (str: string): string => str.replace(/^\/+|\/+$/g, '');
 
-export const onRequest = defineMiddleware(async (context, next) => {
-	if (context.request.method !== 'GET') {
-		const originHeader = context.request.headers.get('Origin');
-		const hostHeader = context.request.headers.get('Host');
-		if (!originHeader || !hostHeader || !verifyRequestOrigin(originHeader, [hostHeader])) {
-			return new Response(null, {
-				status: 403,
-			});
-		}
-	}
+const dashboardRoute = dashboardRouteOverride ? stripSlashes(dashboardRouteOverride) : 'dashboard';
 
-	const sessionId = context.cookies.get(lucia.sessionCookieName)?.value ?? null;
+const router: Record<string, MiddlewareHandler> = {}
+router['/**'] = async (context, next) => {
+  if (context.request.method !== 'GET') {
+    const originHeader = context.request.headers.get('Origin');
+    const hostHeader = context.request.headers.get('Host');
+    if (!originHeader || !hostHeader || !verifyRequestOrigin(originHeader, [hostHeader])) {
+      return new Response(null, {
+        status: 403,
+      });
+    }
+  }
 
-	const locals = context.locals as Locals;
+  const sessionId = context.cookies.get(lucia.sessionCookieName)?.value ?? null;
 
-	locals.isLoggedIn = false;
-	if (!sessionId) {
-		locals.user = null;
-		locals.session = null;
-		return next();
-	}
+  const locals = context.locals as Locals;
 
-	const { session, user } = await lucia.validateSession(sessionId);
+  locals.isLoggedIn = false;
+  if (!sessionId) {
+    locals.user = null;
+    locals.session = null;
+    return next();
+  }
 
-	if (!session || session === null) {
-		const sessionCookie = lucia.createBlankSessionCookie();
-		context.cookies.set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
-		return next();
-	}
+  const { session, user } = await lucia.validateSession(sessionId);
 
-	const isSessionFresh = session.expiresAt.getTime() > new Date().getTime();
-	session.fresh = isSessionFresh;
+  if (!session || session === null) {
+    const sessionCookie = lucia.createBlankSessionCookie();
+    context.cookies.set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
+    return next();
+  }
 
-	if (session.fresh) {
-		const sessionCookie = lucia.createSessionCookie(session.id);
-		context.cookies.set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
-		const dbUser = await db.select().from(User).where(eq(User.id, user.id)).get();
+  const isSessionFresh = session.expiresAt.getTime() > new Date().getTime();
+  session.fresh = isSessionFresh;
 
-		locals.dbUser = dbUser;
-		locals.isLoggedIn = true;
-	} else if (session && !session.fresh) {
-		const sessionCookie = lucia.createBlankSessionCookie();
-		await lucia.invalidateSession(session.id);
-		context.cookies.set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
-	}
+  if (session.fresh) {
+    const sessionCookie = lucia.createSessionCookie(session.id);
+    context.cookies.set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
+    const dbUser = await db.select().from(User).where(eq(User.id, user.id)).get();
 
-	locals.session = session;
-	locals.user = user;
-	const urlPathname = context.url.pathname;
+    locals.dbUser = dbUser;
+    locals.isLoggedIn = true;
+  } else if (session && !session.fresh) {
+    const sessionCookie = lucia.createBlankSessionCookie();
+    await lucia.invalidateSession(session.id);
+    context.cookies.set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
+  }
 
-	const dashboardRoute = dashboardRouteOverride ? stripSlashes(dashboardRouteOverride) : 'dashboard';
+  locals.session = session;
+  locals.user = user;
 
-	if (
-		urlPathname.startsWith(`/${dashboardRoute}`) &&
-		(!urlPathname.startsWith(`/${dashboardRoute}/login`) ||
-			!urlPathname.startsWith(`/${dashboardRoute}/signup`))
-	) {
-		if (!testingAndDemoMode) {
-			if (!locals.isLoggedIn) {
-				logger.info('User is not logged in... Redirecting to login page');
-				return new Response(null, {
-					status: 302,
-					headers: {
-						Location: `/${dashboardRoute}/login`,
-					},
-				});
-			}
-		} else {
-			logger.info('Testing and Demo mode is enabled. Skipping login check');
-		}
-	}
+  return next();
+}
 
-	return next();
-});
+router[`/${dashboardRoute}/!(login|signup)**`] = async (context, next) => {
+  const locals = context.locals as Locals;
+
+  if (!testingAndDemoMode) {
+    if (!locals.isLoggedIn) {
+      logger.info('User is not logged in... Redirecting to login page');
+      return new Response(null, {
+        status: 302,
+        headers: {
+          Location: `/${dashboardRoute}/login`,
+        },
+      });
+    }
+  } else {
+    logger.info('Testing and Demo mode is enabled. Skipping login check');
+  }
+
+  return next();
+}
+
+export const onRequest = defineMiddlewareRouter(router);

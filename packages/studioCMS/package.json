@@ -10,7 +10,11 @@
     "type": "git",
     "url": "git+https://github.com/astrolicious/studiocms.git"
   },
-  "contributors": ["Adammatthiesen", "jdtjenkins", "dreyfus92"],
+  "contributors": [
+    "Adammatthiesen",
+    "jdtjenkins",
+    "dreyfus92"
+  ],
   "license": "MIT",
   "keywords": [
     "astro",
@@ -43,11 +47,11 @@
   "dependencies": {
     "@astrojs/markdown-remark": "catalog:",
     "@cloudinary/url-gen": "catalog:studiocms",
-    "@iconify-json/mdi": "catalog:studiocms",
     "@iconify-json/logos": "catalog:studiocms",
+    "@iconify-json/mdi": "catalog:studiocms",
     "@iconify/utils": "catalog:studiocms",
-    "@inox-tools/sitemap-ext": "catalog:studiocms",
     "@inox-tools/runtime-logger": "catalog:studiocms",
+    "@inox-tools/sitemap-ext": "catalog:studiocms",
     "@markdoc/markdoc": "catalog:studiocms",
     "@matthiesenxyz/astrolace": "catalog:studiocms",
     "@matthiesenxyz/unocss-preset-daisyui": "catalog:studiocms",
@@ -68,20 +72,22 @@
     "marked-footnote": "catalog:studiocms",
     "marked-shiki": "catalog:studiocms",
     "marked-smartypants": "catalog:studiocms",
+    "micromatch": "catalog:studiocms",
     "mrmime": "catalog:studiocms",
     "oslo": "catalog:studiocms",
     "shiki": "catalog:studiocms",
-    "unpic": "catalog:studiocms",
-    "unocss": "catalog:studiocms"
+    "unocss": "catalog:studiocms",
+    "unpic": "catalog:studiocms"
   },
   "peerDependencies": {
     "@astrojs/db": "catalog:min",
     "astro": "catalog:min"
   },
   "devDependencies": {
+    "@iconify/types": "catalog:studiocms",
+    "@types/micromatch": "catalog:studiocms",
     "@types/node": "catalog:",
     "typescript": "catalog:",
-    "vite": "catalog:",
-    "@iconify/types": "catalog:studiocms"
+    "vite": "catalog:"
   }
 }
