@@ -5,6 +5,7 @@ import { authHelper, type Locals } from "studiocms:helpers";
 import { StudioCMSRoutes } from "studiocms-dashboard:routeMap"
 import type { StudioCMSSocials } from "../layouts/studiocms-socials";
 import { Avatar, Tooltip } from "astrolace:components";
+import personFillIcon from "../../../assets/person-fill.svg";
 
 type Props = { studioCMSSocials: StudioCMSSocials };
 const { studioCMSSocials } = Astro.props as Props;
@@ -31,7 +32,8 @@ if ( permissionLevel === "unknown" ) {
       <a href={dashboardIndex}>
         <Tooltip content={"Avatar of " + useName}>
           <Avatar
-            image={avatar?.toString() || ""}
+            defaultImageSrc={personFillIcon.src}
+            image={avatar?.toString() || ''}
             class="m-auto ease-in-out hover:scale-[102%] transition"
             label={"Avatar of " + useName}
           ></Avatar> 

@@ -34,33 +34,6 @@
       "enabled": false
     },
     {
-      "matchPackagePatterns": [
-        "@biomejs/"
-      ],
-      "labels": [
-        "linting",
-        "dependencies"
-      ]
-    },
-    {
-      "matchPackagePatterns": [
-        "^astro"
-      ],
-      "labels": [
-        "astroDependencies",
-        "dependencies"
-      ]
-    },
-    {
-      "matchPackagePatterns": [
-        "^@astrojs"
-      ],
-      "labels": [
-        "astroDependencies",
-        "dependencies"
-      ]
-    },
-    {
       "matchDepTypes": [
         "packageManager",
         "engines"
@@ -69,33 +42,6 @@
         "dependencies"
       ],
       "enabled": false
-    },
-    {
-      "matchFileNames": [
-        "www/**"
-      ],
-      "labels": [
-        "websiteDeps",
-        "dependencies"
-      ]
-    },
-    {
-      "matchFileNames": [
-        "packages/**"
-      ],
-      "labels": [
-        "packageDeps",
-        "dependencies"
-      ]
-    },
-    {
-      "matchFileNames": [
-        "playgrounds/**"
-      ],
-      "labels": [
-        "playgroundDeps",
-        "dependencies"
-      ]
     }
   ]
 }

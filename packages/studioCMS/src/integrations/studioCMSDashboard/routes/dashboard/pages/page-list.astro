@@ -28,10 +28,12 @@ if (permissionLevel !== 'admin' && permissionLevel !== 'editor') {
     title={makePageTitle("Existing Pages", contextConfig)}
     description={contextConfig.description} >
 
-    <CrumbStack items={[
-        { href: dashboardIndex, text: 'Dashboard', prefix: 'columns-gap' },
-        { href: pageEdit, text: 'Existing Pages' }
-    ]} />
+    <CrumbStack 
+        isDashboard 
+        items={[
+            { href: dashboardIndex, text: 'Dashboard' },
+            { href: pageEdit, text: 'Existing Pages' }
+        ]} />
 
     <div class="container">
 

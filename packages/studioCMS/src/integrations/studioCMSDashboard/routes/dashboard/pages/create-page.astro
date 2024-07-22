@@ -28,10 +28,12 @@ if (permissionLevel !== 'admin' && permissionLevel !== 'editor') {
     title={makePageTitle("New Page", contextConfig)}
     description={contextConfig.description} >
 
-    <CrumbStack items={[
-        { href: dashboardIndex, text: 'Dashboard', prefix: 'columns-gap' },
-        { href: pageNew, text: 'Create new Page' }
-    ]} />
+    <CrumbStack 
+        isDashboard
+        items={[
+            { href: dashboardIndex, text: 'Dashboard' },
+            { href: pageNew, text: 'Create new Page' }
+        ]} />
 
     <PageEditAndCreateForm 
 	livePreviewBox={livePreviewBox} 

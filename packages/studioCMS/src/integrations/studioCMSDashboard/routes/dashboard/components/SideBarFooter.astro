@@ -1,6 +1,7 @@
 ---
 import { IconButton } from "astrolace:components";
 import type { StudioCMSSocials } from "../layouts/studiocms-socials";
+import githubLogo from "../../../assets/github-logo.svg";
 
 type Props = { studioCMSSocials: StudioCMSSocials };
 const { studioCMSSocials: { github: githubURL } } = Astro.props as Props;
@@ -10,7 +11,7 @@ const { studioCMSSocials: { github: githubURL } } = Astro.props as Props;
 
 <div class="social-icons px-4 pb-5 pt-1 flex self-center justify-center sticky bottom-0 bg-base-200">
     <IconButton 
-    name="github" 
+    src={githubLogo.src}
     style="font-size: 24px;" 
     class="flex-center"
     label="StudioCMS Github" 

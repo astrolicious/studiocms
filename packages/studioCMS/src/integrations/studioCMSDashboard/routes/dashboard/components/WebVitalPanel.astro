@@ -5,6 +5,10 @@ import WebVitalPerRouteData from "./WebVitalPerRouteData.astro";
 import WebVitalPerCoreVital from "./WebVitalPerCoreVital.astro";
 import PagespeedInsights from "./PagespeedInsights.astro";
 import WebVitalPerCoreVitalRoute from "./WebVitalPerCoreVitalRoute.astro";
+import speedometer from "../../../assets/speedometer.svg";
+import google from "../../../assets/google-logo.svg";
+import fileEarmark from "../../../assets/file-earmark.svg";
+import fileEarmarkPost from "../../../assets/file-earmark-post.svg";
 
 interface Props {
     webVitalData: WebVitalsResponseItem[];
@@ -18,19 +22,19 @@ const { webVitalData } = Astro.props;
     webVitalData.length > 0 ? (
         <TabGroup>
             <Tab slot="nav" panel='page-route-analytics'>
-                <Icon name="file-earmark" class:list={["pr-2"]} />
+                <Icon src={fileEarmark.src} class:list={["pr-2"]} />
                 Page Route Analytics
             </Tab>
             <Tab slot="nav" panel='core-web-vitals'>
-                <Icon name="speedometer" class:list={["pr-2"]} />
+                <Icon src={speedometer.src} class:list={["pr-2"]} />
                 Core Web Vitals
             </Tab>
             <Tab slot="nav" panel='core-vitals-by-route'>
-                <Icon name="file-earmark-post" class:list={["pr-2"]} />
+                <Icon src={fileEarmarkPost.src} class:list={["pr-2"]} />
                 Core Vitals by Route
             </Tab>
             <Tab slot="nav" panel="pagespeed-insights">
-                <Icon name="google" class:list={["pr-2"]} />
+                <Icon src={google.src} class:list={["pr-2"]} />
                 Pagespeed Insights Testing
             </Tab>
         

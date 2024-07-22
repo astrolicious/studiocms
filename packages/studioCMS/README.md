@@ -100,7 +100,7 @@ Your `astro.config.mjs` should look like the following
 
 ```mjs
 import { defineConfig } from "astro/config";
-import astroStudioCMS from "@astrolicious/studiocms";
+import studioCMS from "@astrolicious/studiocms";
 import db from '@astrojs/db';
 import node from "@astrojs/node";
 
@@ -111,7 +111,7 @@ export default defineConfig({
 	adapter: node({ mode: 'standalone' }),
 	integrations: [
 	        db(),
-	        astroStudioCMS({
+	        studioCMS({
 	            dbStartPage: true // DEFAULT - This injects a start page to setup your DB data.
 	        })
 	],

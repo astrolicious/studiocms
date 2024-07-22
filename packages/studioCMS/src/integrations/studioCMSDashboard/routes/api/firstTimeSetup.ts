@@ -62,6 +62,7 @@ export async function POST(context: APIContext): Promise<Response> {
 		const newCreatedUser = await db
 			.insert(User)
 			.values({
+				id: randomUUID(),
 				name: name as string,
 				username,
 			})

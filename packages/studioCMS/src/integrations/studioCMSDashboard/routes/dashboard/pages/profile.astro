@@ -22,10 +22,12 @@ const { permissionLevel, name, username, currentUserSession, githubURL } = await
     title={makePageTitle("User Profile", contextConfig)}
     description={contextConfig.description} >
 
-    <CrumbStack items={[
-        { href: dashboardIndex, text: 'Dashboard', prefix: 'columns-gap'},
-        { href: userProfile, text: 'User Profile' }
-    ]} />
+    <CrumbStack
+        isDashboard 
+        items={[
+            { href: dashboardIndex, text: 'Dashboard' },
+            { href: userProfile, text: 'User Profile' }
+        ]} />
 
     <div class="container">
 
