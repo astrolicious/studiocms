@@ -5,8 +5,9 @@ template: splash
 hero:
   tagline: A dedicated CMS for Astro Studio. Built from the ground up by the Astro community.
   image:
-    file: ../../../../assets/studioCMS.png
-    alt: Astro StudioCMS
+    alt: Astro StudioCMS Logo
+    dark: ../../../../assets/studioCMS.png
+    light: ../../../../assets/studioCMS-dark.png
   actions:
     - text: Get started
       link: /start-here/getting-started
@@ -16,3 +17,7 @@ hero:
       link: https://github.com/astrolicious/studiocms
       icon: github
 ---
+
+import Youtube from '~/components/Youtube.astro'
+
+<Youtube />

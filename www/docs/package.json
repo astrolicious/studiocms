@@ -14,6 +14,7 @@
     "@astrojs/starlight": "catalog:",
     "@shoelace-style/shoelace": "catalog:docs",
     "astro": "catalog:",
+    "astro-embed": "catalog:docs",
     "sharp": "catalog:",
     "starlight-links-validator": "catalog:docs",
     "starlight-package-managers": "catalog:docs",
