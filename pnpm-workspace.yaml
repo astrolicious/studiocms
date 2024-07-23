@@ -10,7 +10,7 @@ catalog:
   '@astrojs/cloudflare': ^11.0.1
   '@types/node': ^20.14.11
   astro: ^4.12.2
-  astro-integration-kit: ^0.15.0
+  astro-integration-kit: ^0.16.0
   astro-theme-provider: ^0.6.1
   typescript: ^5.5.3
   vite: ^5.3.3
@@ -20,7 +20,7 @@ catalogs:
   min:
     astro: ^4.12
     '@astrojs/db': ^0.12
-    astro-integration-kit: ^0.15
+    astro-integration-kit: ^0.16
     vite: ^4 || ^5
   landing:
     motion: ^10.18.0
@@ -44,9 +44,9 @@ catalogs:
     '@iconify-json/mdi': ^1.1.67
     '@iconify-json/logos': ^1.1.43
     '@iconify/utils': ^2.1.25
-    '@inox-tools/sitemap-ext': ^0.2.15
-    '@inox-tools/runtime-logger': ^0.2.0
-    '@matthiesenxyz/astrolace': ^0.1.9
+    '@inox-tools/sitemap-ext': ^0.3.1
+    '@inox-tools/runtime-logger': ^0.3.0
+    '@matthiesenxyz/astrolace': ^0.2.0
     '@matthiesenxyz/unocss-preset-daisyui': ^0.1.0
     '@markdoc/markdoc': ^0.4.0
     '@noble/hashes': ^1.4.0

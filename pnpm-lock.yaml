@@ -40,8 +40,8 @@ catalogs:
       specifier: ^4.12.2
       version: 4.12.2
     astro-integration-kit:
-      specifier: ^0.15.0
-      version: 0.15.0
+      specifier: ^0.16.0
+      version: 0.16.0
     astro-theme-provider:
       specifier: ^0.6.1
       version: 0.6.1
@@ -122,17 +122,17 @@ catalogs:
       specifier: ^2.1.25
       version: 2.1.25
     '@inox-tools/runtime-logger':
-      specifier: ^0.2.0
-      version: 0.2.1
+      specifier: ^0.3.0
+      version: 0.3.0
     '@inox-tools/sitemap-ext':
-      specifier: ^0.2.15
-      version: 0.2.15
+      specifier: ^0.3.1
+      version: 0.3.1
     '@markdoc/markdoc':
       specifier: ^0.4.0
       version: 0.4.0
     '@matthiesenxyz/astrolace':
-      specifier: ^0.1.9
-      version: 0.1.9
+      specifier: ^0.2.0
+      version: 0.2.0
     '@matthiesenxyz/unocss-preset-daisyui':
       specifier: ^0.1.0
       version: 0.1.0
@@ -267,16 +267,16 @@ importers:
         version: 2.1.25
       '@inox-tools/runtime-logger':
         specifier: catalog:studiocms
-        version: 0.2.1(@astrojs/db@0.12.0(@cloudflare/workers-types@4.20240718.0)(@types/react@18.3.3))(astro@4.12.2(@types/node@20.14.11)(typescript@5.5.3))
+        version: 0.3.0(astro@4.12.2(@types/node@20.14.11)(typescript@5.5.3))
       '@inox-tools/sitemap-ext':
         specifier: catalog:studiocms
-        version: 0.2.15(@astrojs/db@0.12.0(@cloudflare/workers-types@4.20240718.0)(@types/react@18.3.3))(@types/node@20.14.11)(astro@4.12.2(@types/node@20.14.11)(typescript@5.5.3))
+        version: 0.3.1(@types/node@20.14.11)(astro@4.12.2(@types/node@20.14.11)(typescript@5.5.3))
       '@markdoc/markdoc':
         specifier: catalog:studiocms
         version: 0.4.0(@types/react@18.3.3)
       '@matthiesenxyz/astrolace':
         specifier: catalog:studiocms
-        version: 0.1.9(@astrojs/db@0.12.0(@cloudflare/workers-types@4.20240718.0)(@types/react@18.3.3))(@types/react@18.3.3)(astro@4.12.2(@types/node@20.14.11)(typescript@5.5.3))
+        version: 0.2.0(@types/react@18.3.3)(astro@4.12.2(@types/node@20.14.11)(typescript@5.5.3))
       '@matthiesenxyz/unocss-preset-daisyui':
         specifier: catalog:studiocms
         version: 0.1.0(daisyui@4.12.10(postcss@8.4.39))(unocss@0.61.5(postcss@8.4.39)(rollup@4.18.1)(vite@5.3.4(@types/node@20.14.11)))
@@ -306,7 +306,7 @@ importers:
         version: 4.12.2(@types/node@20.14.11)(typescript@5.5.3)
       astro-integration-kit:
         specifier: 'catalog:'
-        version: 0.15.0(astro@4.12.2(@types/node@20.14.11)(typescript@5.5.3))
+        version: 0.16.0(astro@4.12.2(@types/node@20.14.11)(typescript@5.5.3))
       daisyui:
         specifier: catalog:studiocms
         version: 4.12.10(postcss@8.4.39)
@@ -1543,26 +1543,26 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@inox-tools/aik-route-config@0.6.2':
-    resolution: {integrity: sha512-gLt+OwZ6qoTzu2a1QNMmrLII6kiZz49BcDYRhJADLaP3/2QrCOOQtEqGW80h2TVsqtQE5UIh1J495tFnqzYluQ==}
+  '@inox-tools/aik-route-config@0.7.0':
+    resolution: {integrity: sha512-ne+XJt2+ngx7wUikaOXG9l7YlFPug1goYziSYjHxXBCH2SBXoBndZuDzdWDMeoLWQzUnhoNLLHuwm4ufdd4Mpg==}
     peerDependencies:
-      astro: ^4.3.5
-      astro-integration-kit: ~0.14
+      astro: ^4.12.2
+      astro-integration-kit: ~0.16
 
-  '@inox-tools/modular-station@0.2.3':
-    resolution: {integrity: sha512-jacFuVyTa7Pix4Eq8YIx7L8D+DhnGGGqf2CJfvRoHX/Lv8yHdwGJ7s3UepHJdYkoyHxkejzQ2XnqzwFBAcjWKg==}
+  '@inox-tools/modular-station@0.3.0':
+    resolution: {integrity: sha512-aRUm5afEIamsBAkAuD9u3cDsHOwojCOzUdOr7r4dSThM9cV5UkNk8pksGk7VD7OwbTysSadFvZDR6HHvTkaU1g==}
     peerDependencies:
-      astro: ^4.3.5
+      astro: ^4.12.2
 
-  '@inox-tools/runtime-logger@0.2.1':
-    resolution: {integrity: sha512-Cs2WwGX+CvpApQio+WOaRoo82pWCep9LJKjbSUfTjj39XU5v3XVrO/iKmK+UYJg2q5j+WOlVe2qDqEQ2fTmjFA==}
+  '@inox-tools/runtime-logger@0.3.0':
+    resolution: {integrity: sha512-nAv7dBbr8H/9BGdPU1AU9oAxzP7P6S0kA5z0/Hd46vihLPfqToMYa3oQai41qByPLHGzdp4j1alASgVZn4whMA==}
     peerDependencies:
-      astro: ^4.3.5
+      astro: ^4.12.2
 
-  '@inox-tools/sitemap-ext@0.2.15':
-    resolution: {integrity: sha512-Y5OFx56edP9M11A1mMoY3DVZNOsBGC+kw49aI2rgKDqHld8hmCw6/5Ox/E0lXqepA8yhC1ejXdzuCEHj0jfTdw==}
+  '@inox-tools/sitemap-ext@0.3.1':
+    resolution: {integrity: sha512-bD5sqLIFdaaKWHdI39EwfUY2ZZ6e+cheiAJEBwwjObT5L0Ef6Qq7MCvZahZrqKc7hzoxk2mjlrZyhz/ajfgP1w==}
     peerDependencies:
-      astro: ^4.3.5
+      astro: ^4.12.2
 
   '@inox-tools/utils@0.1.3':
     resolution: {integrity: sha512-UhneOA5PwcPhvcvcH1pW9wGZXRKASD7/MWHCrE+DbSzbMhzBTeUn1rKpssys8rDF51pr3FwgLFz1Cvjj2TMIwA==}
@@ -1677,10 +1677,10 @@ packages:
       react:
         optional: true
 
-  '@matthiesenxyz/astrolace@0.1.9':
-    resolution: {integrity: sha512-T6/zCcWCXZa0074E5GSH/9aAMJz96xSeQfKxWIGWWb6Y4gw538tovCJcrr/asUnTP1bLjll8Iv3Lnu0TUx/77A==}
+  '@matthiesenxyz/astrolace@0.2.0':
+    resolution: {integrity: sha512-tT1Mt1wh6jw48wGT0TNbdABNbHc+jUziKhCGKGUq1kxzbSTPtm8ByBOn9k7T821omFIh8wSX2GFnyxYvouS01w==}
     peerDependencies:
-      astro: '>=4.8.6'
+      astro: '>=4.12'
 
   '@matthiesenxyz/unocss-preset-daisyui@0.1.0':
     resolution: {integrity: sha512-aF08UKmKp2bdeUD1CBHduXQpxQZlGWcnSQTK6z66Dgx+tNqbsBBDdjiangleb2RqmtHDKY6yma49PHcuy9YArQ==}
@@ -2423,8 +2423,8 @@ packages:
       '@astrojs/db':
         optional: true
 
-  astro-integration-kit@0.15.0:
-    resolution: {integrity: sha512-wzU5Z1GHmdAMbuci+shlJA076xCIh51nM2AkPsA6jPorOln6RBvPMckFjIPN5JvvvuvupuQFr7QuspTtogTYDQ==}
+  astro-integration-kit@0.16.0:
+    resolution: {integrity: sha512-FAWYxsh3H5DfNiqVBAanK9FfBJgzDq6CBKEora73IpWxDX2jPPr8cYndUI6COnWII84wbYK1qHq3lX/fIcQG+Q==}
     peerDependencies:
       astro: ^4.12.0
 
@@ -3513,7 +3513,6 @@ packages:
 
   libsql@0.3.19:
     resolution: {integrity: sha512-Aj5cQ5uk/6fHdmeW0TiXK42FqUlwx7ytmMLPSaUQPin5HKKKuUPD62MAbN4OEweGBBI7q1BekoEN4gPUEL6MZA==}
-    cpu: [x64, arm64, wasm32]
     os: [darwin, linux, win32]
 
   lilconfig@2.1.0:
@@ -6199,11 +6198,11 @@ snapshots:
   '@img/sharp-win32-x64@0.33.4':
     optional: true
 
-  '@inox-tools/aik-route-config@0.6.2(@types/node@20.14.11)(astro-integration-kit@0.14.0(@astrojs/db@0.12.0(@cloudflare/workers-types@4.20240718.0)(@types/react@18.3.3))(astro@4.12.2(@types/node@20.14.11)(typescript@5.5.3)))(astro@4.12.2(@types/node@20.14.11)(typescript@5.5.3))':
+  '@inox-tools/aik-route-config@0.7.0(@types/node@20.14.11)(astro-integration-kit@0.16.0(astro@4.12.2(@types/node@20.14.11)(typescript@5.5.3)))(astro@4.12.2(@types/node@20.14.11)(typescript@5.5.3))':
     dependencies:
       '@inox-tools/utils': 0.1.3
       astro: 4.12.2(@types/node@20.14.11)(typescript@5.5.3)
-      astro-integration-kit: 0.14.0(@astrojs/db@0.12.0(@cloudflare/workers-types@4.20240718.0)(@types/react@18.3.3))(astro@4.12.2(@types/node@20.14.11)(typescript@5.5.3))
+      astro-integration-kit: 0.16.0(astro@4.12.2(@types/node@20.14.11)(typescript@5.5.3))
       recast: 0.23.9
       vite: 5.3.4(@types/node@20.14.11)
     transitivePeerDependencies:
@@ -6215,32 +6214,27 @@ snapshots:
       - sugarss
       - terser
 
-  '@inox-tools/modular-station@0.2.3(@astrojs/db@0.12.0(@cloudflare/workers-types@4.20240718.0)(@types/react@18.3.3))(astro@4.12.2(@types/node@20.14.11)(typescript@5.5.3))':
+  '@inox-tools/modular-station@0.3.0(astro@4.12.2(@types/node@20.14.11)(typescript@5.5.3))':
     dependencies:
       '@inox-tools/utils': 0.1.3
       astro: 4.12.2(@types/node@20.14.11)(typescript@5.5.3)
-      astro-integration-kit: 0.14.0(@astrojs/db@0.12.0(@cloudflare/workers-types@4.20240718.0)(@types/react@18.3.3))(astro@4.12.2(@types/node@20.14.11)(typescript@5.5.3))
-    transitivePeerDependencies:
-      - '@astrojs/db'
+      astro-integration-kit: 0.16.0(astro@4.12.2(@types/node@20.14.11)(typescript@5.5.3))
 
-  '@inox-tools/runtime-logger@0.2.1(@astrojs/db@0.12.0(@cloudflare/workers-types@4.20240718.0)(@types/react@18.3.3))(astro@4.12.2(@types/node@20.14.11)(typescript@5.5.3))':
+  '@inox-tools/runtime-logger@0.3.0(astro@4.12.2(@types/node@20.14.11)(typescript@5.5.3))':
     dependencies:
-      '@inox-tools/modular-station': 0.2.3(@astrojs/db@0.12.0(@cloudflare/workers-types@4.20240718.0)(@types/react@18.3.3))(astro@4.12.2(@types/node@20.14.11)(typescript@5.5.3))
+      '@inox-tools/modular-station': 0.3.0(astro@4.12.2(@types/node@20.14.11)(typescript@5.5.3))
       '@inox-tools/utils': 0.1.3
       astro: 4.12.2(@types/node@20.14.11)(typescript@5.5.3)
-      astro-integration-kit: 0.14.0(@astrojs/db@0.12.0(@cloudflare/workers-types@4.20240718.0)(@types/react@18.3.3))(astro@4.12.2(@types/node@20.14.11)(typescript@5.5.3))
-    transitivePeerDependencies:
-      - '@astrojs/db'
+      astro-integration-kit: 0.16.0(astro@4.12.2(@types/node@20.14.11)(typescript@5.5.3))
 
-  '@inox-tools/sitemap-ext@0.2.15(@astrojs/db@0.12.0(@cloudflare/workers-types@4.20240718.0)(@types/react@18.3.3))(@types/node@20.14.11)(astro@4.12.2(@types/node@20.14.11)(typescript@5.5.3))':
+  '@inox-tools/sitemap-ext@0.3.1(@types/node@20.14.11)(astro@4.12.2(@types/node@20.14.11)(typescript@5.5.3))':
     dependencies:
       '@astrojs/sitemap': 3.1.6
-      '@inox-tools/aik-route-config': 0.6.2(@types/node@20.14.11)(astro-integration-kit@0.14.0(@astrojs/db@0.12.0(@cloudflare/workers-types@4.20240718.0)(@types/react@18.3.3))(astro@4.12.2(@types/node@20.14.11)(typescript@5.5.3)))(astro@4.12.2(@types/node@20.14.11)(typescript@5.5.3))
+      '@inox-tools/aik-route-config': 0.7.0(@types/node@20.14.11)(astro-integration-kit@0.16.0(astro@4.12.2(@types/node@20.14.11)(typescript@5.5.3)))(astro@4.12.2(@types/node@20.14.11)(typescript@5.5.3))
       astro: 4.12.2(@types/node@20.14.11)(typescript@5.5.3)
-      astro-integration-kit: 0.14.0(@astrojs/db@0.12.0(@cloudflare/workers-types@4.20240718.0)(@types/react@18.3.3))(astro@4.12.2(@types/node@20.14.11)(typescript@5.5.3))
+      astro-integration-kit: 0.16.0(astro@4.12.2(@types/node@20.14.11)(typescript@5.5.3))
       sitemap: 8.0.0
     transitivePeerDependencies:
-      - '@astrojs/db'
       - '@types/node'
       - less
       - lightningcss
@@ -6385,15 +6379,14 @@ snapshots:
       '@types/markdown-it': 12.2.3
       '@types/react': 18.3.3
 
-  '@matthiesenxyz/astrolace@0.1.9(@astrojs/db@0.12.0(@cloudflare/workers-types@4.20240718.0)(@types/react@18.3.3))(@types/react@18.3.3)(astro@4.12.2(@types/node@20.14.11)(typescript@5.5.3))':
+  '@matthiesenxyz/astrolace@0.2.0(@types/react@18.3.3)(astro@4.12.2(@types/node@20.14.11)(typescript@5.5.3))':
     dependencies:
       '@shoelace-style/shoelace': 2.15.1(@types/react@18.3.3)
       astro: 4.12.2(@types/node@20.14.11)(typescript@5.5.3)
-      astro-integration-kit: 0.14.0(@astrojs/db@0.12.0(@cloudflare/workers-types@4.20240718.0)(@types/react@18.3.3))(astro@4.12.2(@types/node@20.14.11)(typescript@5.5.3))
+      astro-integration-kit: 0.16.0(astro@4.12.2(@types/node@20.14.11)(typescript@5.5.3))
       lit: 3.1.4
       zod: 3.23.8
     transitivePeerDependencies:
-      - '@astrojs/db'
       - '@types/react'
 
   '@matthiesenxyz/unocss-preset-daisyui@0.1.0(daisyui@4.12.10(postcss@8.4.39))(unocss@0.61.5(postcss@8.4.39)(rollup@4.18.1)(vite@5.3.4(@types/node@20.14.11)))':
@@ -7199,15 +7192,7 @@ snapshots:
     optionalDependencies:
       '@astrojs/db': 0.11.7
 
-  astro-integration-kit@0.14.0(@astrojs/db@0.12.0(@cloudflare/workers-types@4.20240718.0)(@types/react@18.3.3))(astro@4.12.2(@types/node@20.14.11)(typescript@5.5.3)):
-    dependencies:
-      astro: 4.12.2(@types/node@20.14.11)(typescript@5.5.3)
-      pathe: 1.1.2
-      recast: 0.23.9
-    optionalDependencies:
-      '@astrojs/db': 0.12.0(@cloudflare/workers-types@4.20240718.0)(@types/react@18.3.3)
-
-  astro-integration-kit@0.15.0(astro@4.12.2(@types/node@20.14.11)(typescript@5.5.3)):
+  astro-integration-kit@0.16.0(astro@4.12.2(@types/node@20.14.11)(typescript@5.5.3)):
     dependencies:
       astro: 4.12.2(@types/node@20.14.11)(typescript@5.5.3)
       pathe: 1.1.2
