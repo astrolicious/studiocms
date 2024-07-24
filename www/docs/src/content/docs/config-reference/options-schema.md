@@ -31,7 +31,7 @@ The Markdown Content Renderer to use for rendering pages within StudioCMS
 - **Type:** `'marked'` | `'markdoc'` | `'astro'`
 - **Default:** `'marked'`
 
-`contentRenderer` is a string value that is used to determine how content should be rendered in the `astroStudioCMS`. This is used to setup your content data. The default value is `marked` but you can also use `markdoc` or `astro`'s built in Remark processor.
+`contentRenderer` determines how Markdown content should be rendered in `astroStudioCMS`. This is used to setup your content data. The default value is `marked` but you can also use `markdoc` or `astro` which uses Astro's built-in Remark processor.
 
 ### Usage
 
