@@ -1,6 +1,8 @@
 ---
 title: includedIntegrations
 description: A reference page for includedIntegrations
+sidebar:
+  order: 5
 ---
 
 `includedIntegrations` is an object that is used to determine which Astro Integrations should be included in the `astroStudioCMS`. Currently there are three Integrations that can be included: `useAstroRobots`, `astroRobotsConfig`, and `useInoxSitemap`.

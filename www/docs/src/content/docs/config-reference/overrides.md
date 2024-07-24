@@ -1,6 +1,8 @@
 ---
 title: overrides
 description: A reference page for overrides
+sidebar:
+  order: 6
 ---
 
 `overrides` is an object that is used to override the default configuration of the `astroStudioCMS`.
@@ -10,7 +12,6 @@ description: A reference page for overrides
 ```js title="astro.config.mjs"  {2-6}
 astroStudioCMS({
   overrides: {
-    RendererOverride: "./src/components/MyCustomRenderer.astro",
     CustomImageOverride: "./src/components/MyCustomImage.astro",
     FormattedDateOverride: "./src/components/MyCustomFormattedDate.astro",
   },

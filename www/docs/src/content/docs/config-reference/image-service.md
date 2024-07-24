@@ -1,6 +1,8 @@
 ---
 title: imageService
 description: A reference page for Image Service
+sidebar:
+  order: 3
 ---
 
 `imageService` is an object value that is used to determine how images should be rendered in the `astroStudioCMS`. This is used to setup your image data.

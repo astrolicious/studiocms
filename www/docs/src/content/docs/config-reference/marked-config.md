@@ -1,6 +1,8 @@
 ---
 title: markedConfig
 description: A reference page for markedConfig
+sidebar:
+  order: 2
 ---
 
 `markedConfig` is an object that is used to determine how content should be rendered in the `astroStudioCMS`. This is used to setup your content data.

@@ -1,15 +1,17 @@
 ---
-title: dashboard
+title: dashboardConfig
 description: A reference page for dashboard
+sidebar:
+  order: 4
 ---
 
-`dashboard` option let's customize the dashboard for the `astroStudioCMS`. This is used to setup your dashboard data.
+`dashboardConfig` option let's customize the dashboard for the `astroStudioCMS`. This is used to setup your dashboard data.
 
 ## Usage
 
 ```js title="astro.config.mjs"  {2-24}
 astroStudioCMS({
-  dashboard: {
+  dashboardConfig: {
     dashboardEnabled: true,
     faviconURL: "/favicon.ico",
     dashboardRouteOverride: "/components/dashboard",
