@@ -14,7 +14,7 @@ Project Initialization Page - Used during First time setup to create your databa
 - **Type:** `boolean`
 - **Default:** `true`
 
-`dbStartPage` is a boolean value that is used to determine if the start page should be injected into the `astroStudioCMS`. This is used to setup your DB data.
+`dbStartPage` Should the Start page be injected into the `astroStudioCMS`. This is used to setup your DB data.
 
 ### Usage
 
@@ -51,7 +51,7 @@ The Markdown Content Renderer to use for rendering pages within StudioCMS
 
 ## `imageService`
 
-`imageService` is an object value that is used to determine how images should be rendered in the `astroStudioCMS`. This is used to setup your image data.
+`imageService` lets you configure your which service you're using for Images.
 
 ### Usage
 
@@ -59,7 +59,7 @@ The Markdown Content Renderer to use for rendering pages within StudioCMS
 
 ## `defaultFrontEndConfig`
 
-`defaultFrontEndConfig` is an object value that is used to determine how the default dashboard routes should be rendered in `astroStudioCMS`. This is used to setup your user facing front-end.
+`defaultFrontEndConfig` Determines how the default Dashboard routes should be rendered in `astroStudioCMS`. This is used to setup your user facing front-end.
 
 ### Usage
 
@@ -67,7 +67,7 @@ The Markdown Content Renderer to use for rendering pages within StudioCMS
 
 ## `dashboardConfig`
 
-`dashboardConfig` option let's customize the dashboard for the `astroStudioCMS`. This is used to setup your dashboard data.
+`dashboardConfig` option lets you customize the dashboard for `astroStudioCMS`. This is used to setup your dashboard data.
 
 ### Usage
 
@@ -75,7 +75,7 @@ The Markdown Content Renderer to use for rendering pages within StudioCMS
 
 ## `includedIntegrations`
 
-`includedIntegrations` is an object that is used to determine which Astro Integrations should be included in the `astroStudioCMS`. Currently there are three Integrations that can be included: `useAstroRobots`, `astroRobotsConfig`, and `useInoxSitemap`.
+`includedIntegrations` defines which Astro Integrations should be included in `astroStudioCMS`. Currently there are three Integrations that can be included: `useAstroRobots`, `astroRobotsConfig`, and `useInoxSitemap`.
 
 ### Usage
 
@@ -88,7 +88,7 @@ Date locale used for formatting dates
 - **Type:** `string`
 - **Default:** `en-us`
 
-`dateLocale` is a string value that is used to determine how dates should be formatted in the `astroStudioCMS`.
+`dateLocale` specifies how dates should be formatted in `astroStudioCMS`.
 
 ### Usage
 
@@ -100,7 +100,7 @@ astroStudioCMS({
 
 ## `overrides`
 
-`overrides` is an object that is used to override the default configuration of the `astroStudioCMS`.
+`overrides` Used to override the default configuration of the `astroStudioCMS`.
 
 ### Usage
 
@@ -111,12 +111,12 @@ astroStudioCMS({
 - **Type:** `boolean| undefined`
 - **Default:** `true`
 
-`verbose` is a boolean value that is used to determine if verbose logging should be enabled in the `astroStudioCMS`.
+`verbose` enables verbose logging.
 
 ### Usage
 
 ```js title="astro.config.mjs"  {2}
 astroStudioCMS({
-  verbose: true, // DEFAULT - This enables verbose logging in the Astro-Studio-CMS.
+  verbose: true, // DEFAULT - This enables verbose logging in AstroStudioCMS.
 }),
 ```
