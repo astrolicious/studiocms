@@ -35,6 +35,7 @@ const makeTypeDocOptions = (
       readme,
       jsDocCompatibility: true,
       skipErrorChecking: true,
+      sourceLinkTemplate: 'https://github.com/astrolicious/studiocms/tree/main/{path}#L{line}'
     },
   } as StarlightTypeDocOptions;
 }
@@ -61,6 +62,7 @@ export default defineConfig({
       social: {
         github: "https://github.com/astrolicious/studiocms",
         discord: "https://chat.astrolicious.dev",
+        youtube: "https://www.youtube.com/@AstroStudioCMS"
       },
       customCss: [
         // Relative path to your custom CSS file
@@ -196,8 +198,8 @@ export default defineConfig({
           ],
         },
         {
-          label: "Reference",
-          autogenerate: { directory: "reference" },
+          label: "Configuration Reference",
+          autogenerate: { directory: "config-reference" },
           collapsed: true,
         },
         {
