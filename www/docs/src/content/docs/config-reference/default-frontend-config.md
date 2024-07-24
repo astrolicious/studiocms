@@ -62,7 +62,15 @@ HTML Default Header - The default head configuration for the Frontend
 ```js title="astro.config.mjs" {2-4}
 astroStudioCMS({
     htmlDefaultHead: [
-        { tag: 'title', content: 'My Awesome Site' }
+        { tag: 'title', content: 'My Awesome Site' },
+        {
+          tag: 'script',
+          attrs: {
+            defer: true,
+            src: 'https://umami.mydomain.dev/script.js',
+            'data-website-id': 'my-umami-website-id',
+          }
+        }
     ],
 })
 ```
