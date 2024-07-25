@@ -55,7 +55,7 @@ jobs:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Add Label to CI PR
-        run: gh pr edit --add-label "ci" "$PR_URL"
+        run: gh pr edit "$PR_URL" --add-label "ci"
         env:
           PR_URL: ${{ steps.changesets.outputs.pull_request_url }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
