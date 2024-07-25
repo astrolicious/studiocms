@@ -2,6 +2,7 @@ import type { AstroConfig } from "astro";
 import { envField } from "astro/config";
 
 export const astroENV: AstroConfig['experimental']['env'] = {
+    validateSecrets: true,
     schema: {
         // GitHub Auth Provider Environment Variables
         CMS_GITHUB_CLIENT_ID: envField.string({ 

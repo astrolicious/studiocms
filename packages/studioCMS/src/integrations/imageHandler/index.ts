@@ -30,7 +30,8 @@ export default defineIntegration({
 						'@astrojs/netlify'
 					];
 
-					addAstroEnvConfig(params,{
+					addAstroEnvConfig(params, {
+            validateSecrets: false,
 						schema: {
 							CMS_CLOUDINARY_CLOUDNAME: envField.string({
 								context: 'server',
