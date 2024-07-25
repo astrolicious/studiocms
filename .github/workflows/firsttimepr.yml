@@ -16,7 +16,7 @@ jobs:
         with:
           script: |
             if (context.payload.pull_request.merged) {
-              const creator = context.payload.sender.login
+              const creator = context.payload.user.login
               const owner = context.repo.owner
               const repo = context.repo.repo
               const res = await github.rest.search.issuesAndPullRequests({
@@ -43,7 +43,7 @@ jobs:
                     ref: 'main',
                     inputs: {
                       creator: creator,
-                      mergedPR: context.payload.pull_request.number
+                      mergedPR: context.payload.pull_request.number.toString()
                     }
                   })
                 } catch (error) {
