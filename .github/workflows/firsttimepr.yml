@@ -16,7 +16,7 @@ jobs:
         with:
           script: |
             if (context.payload.pull_request.merged) {
-              const creator = context.payload.user.login
+              const creator = context.payload.pull_request.user.login
               const owner = context.repo.owner
               const repo = context.repo.repo
               const res = await github.rest.search.issuesAndPullRequests({
@@ -31,7 +31,7 @@ jobs:
                     issue_number: context.issue.number,
                     owner: context.repo.owner,
                     repo: context.repo.repo,
-                    body: `**Welcome**, new contributor! 🎉 
+                    body: `**Welcome** @${creator}, to the Contributor Squad! 🎉 
 
                     If you havent already, please join our Discord, https://chat.astrolicious.dev community to stay in the loop for any future help we may need!`
                   })
