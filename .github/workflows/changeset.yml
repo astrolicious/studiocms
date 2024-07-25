@@ -1,6 +1,7 @@
 name: Release
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
@@ -52,3 +53,10 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Add Label to CI PR
+        run: gh pr edit "$PR_URL" --add-label "ci"
+        env:
+          PR_URL: ${{ steps.changesets.outputs.pull_request_url }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        
