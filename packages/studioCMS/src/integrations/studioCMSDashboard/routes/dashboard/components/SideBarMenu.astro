@@ -272,13 +272,11 @@ const { permissionLevel } = await authHelper(Astro.locals as Locals);
 
     }) }
 
-    { ( testingAndDemoMode || permissionLevel !== "unknown" ) ? (
-        <form method="post" action={logoutURL}>
-            <Button variant="danger" size="medium" class="py-1" style="width: 100%; padding-right: 1rem; padding-left: 1rem;" type="submit" outline>
-                <Icon slot="prefix" src={boxArrowLeft.src} />
-                Sign out
-            </Button>
-        </form>
-    ) : "" }
+    <form method="post" action={logoutURL}>
+        <Button variant="danger" size="medium" class="py-1" style="width: 100%; padding-right: 1rem; padding-left: 1rem;" type="submit" outline>
+            <Icon slot="prefix" src={boxArrowLeft.src} />
+            Sign out
+        </Button>
+    </form>
 
     </div>
