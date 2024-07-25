@@ -12,8 +12,8 @@ catalog:
   astro: ^4.12.2
   astro-integration-kit: ^0.16.0
   astro-theme-provider: ^0.6.1
-  typescript: ^5.5.3
-  vite: ^5.3.3
+  typescript: ^5.5.4
+  vite: ^5.3.4
   sharp: ^0.33.4
 
 catalogs:
@@ -48,15 +48,15 @@ catalogs:
     '@inox-tools/sitemap-ext': ^0.3.1
     '@inox-tools/runtime-logger': ^0.3.0
     '@matthiesenxyz/astrolace': ^0.2.0
-    '@matthiesenxyz/unocss-preset-daisyui': ^0.1.0
+    '@matthiesenxyz/unocss-preset-daisyui': ^0.1.1
     '@markdoc/markdoc': ^0.4.0
     '@noble/hashes': ^1.4.0
     '@shikijs/transformers': ^1.10.3
     '@shoelace-style/shoelace': ^2.15.1
     '@types/micromatch': ^4.0.9
-    '@unocss/astro': ^0.61.0
-    '@unocss/reset': ^0.61.0
-    unocss: ^0.61.0
+    '@unocss/astro': ^0.61.5
+    '@unocss/reset': ^0.61.5
+    unocss: ^0.61.5
     '@unpic/astro': ^0.0.46
     unpic: ^3.18.0
     arctic: ^1.9.1
