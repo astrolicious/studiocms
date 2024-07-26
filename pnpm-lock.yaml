@@ -13,7 +13,7 @@ catalogs:
       specifier: ^11.0.1
       version: 11.0.1
     '@astrojs/db':
-      specifier: ^0.12.0
+      specifier: https://pkg.pr.new/Fryuni/astro/@astrojs/db@58726ef
       version: 0.12.0
     '@astrojs/markdown-remark':
       specifier: ^5.2.0
@@ -233,7 +233,7 @@ importers:
     dependencies:
       '@astrojs/db':
         specifier: 'catalog:'
-        version: 0.12.0(@cloudflare/workers-types@4.20240718.0)(@types/react@18.3.3)
+        version: https://pkg.pr.new/Fryuni/astro/@astrojs/db@58726ef(@cloudflare/workers-types@4.20240718.0)(@types/react@18.3.3)
       '@astrojs/node':
         specifier: 'catalog:'
         version: 8.3.2(astro@4.12.2(@types/node@20.14.11)(typescript@5.5.4))
@@ -398,7 +398,7 @@ importers:
         version: 11.0.1(astro@4.12.2(@types/node@20.14.11)(typescript@5.5.4))
       '@astrojs/db':
         specifier: 'catalog:'
-        version: 0.12.0(@cloudflare/workers-types@4.20240718.0)(@types/react@18.3.3)
+        version: https://pkg.pr.new/Fryuni/astro/@astrojs/db@58726ef(@cloudflare/workers-types@4.20240718.0)(@types/react@18.3.3)
       '@astrolicious/studiocms':
         specifier: workspace:*
         version: link:../../packages/studioCMS
@@ -417,13 +417,13 @@ importers:
     dependencies:
       '@astrojs/db':
         specifier: 'catalog:'
-        version: 0.12.0(@cloudflare/workers-types@4.20240718.0)(@types/react@18.3.3)
+        version: https://pkg.pr.new/Fryuni/astro/@astrojs/db@58726ef(@cloudflare/workers-types@4.20240718.0)(@types/react@18.3.3)
       '@astrojs/node':
         specifier: 'catalog:'
         version: 8.3.2(astro@4.12.2(@types/node@20.14.11)(typescript@5.5.4))
       '@astrojs/web-vitals':
         specifier: 'catalog:'
-        version: 1.0.0(@astrojs/db@0.12.0(@cloudflare/workers-types@4.20240718.0)(@types/react@18.3.3))
+        version: 1.0.0(@astrojs/db@https://pkg.pr.new/Fryuni/astro/@astrojs/db@58726ef(@cloudflare/workers-types@4.20240718.0)(@types/react@18.3.3))
       '@astrolicious/studiocms':
         specifier: workspace:*
         version: link:../../packages/studioCMS
@@ -588,6 +588,10 @@ packages:
   '@astrojs/db@0.12.0':
     resolution: {integrity: sha512-ZrHuH4sJcPE0liTG+mWc6tR7pLax4vKsDBH5hBSo3mWiGjg/jWvMhZsSclYGZ8gRi7+zUh4FDqgcBeiHVmYf6Q==}
 
+  '@astrojs/db@https://pkg.pr.new/Fryuni/astro/@astrojs/db@58726ef':
+    resolution: {tarball: https://pkg.pr.new/Fryuni/astro/@astrojs/db@58726ef}
+    version: 0.12.0
+
   '@astrojs/internal-helpers@0.3.0':
     resolution: {integrity: sha512-tGmHvrhpzuz0JBHaJX8GywN9g4rldVNHtkoVDC3m/DdzBO70jGoVuc0uuNVglRYnsdwkbG0K02Iw3nOOR3/Y4g==}
 
@@ -653,6 +657,7 @@ packages:
 
   '@astrojs/web-vitals@1.0.0':
     resolution: {integrity: sha512-aTWcd9FOFa3k8gfWequ+BPiWb/7W1tjQnyy27JmxvEZwyFkSM1ZGznhAr6jm6/XWO9azoUWglEE7uYs1pZszFg==}
+    version: 1.0.0
     peerDependencies:
       '@astrojs/db': ^0.12.0
 
@@ -5278,6 +5283,54 @@ snapshots:
       - sqlite3
       - utf-8-validate
 
+  '@astrojs/db@https://pkg.pr.new/Fryuni/astro/@astrojs/db@58726ef(@cloudflare/workers-types@4.20240718.0)(@types/react@18.3.3)':
+    dependencies:
+      '@astrojs/studio': 0.1.1
+      '@libsql/client': 0.7.0
+      async-listen: 3.0.1
+      ci-info: 4.0.0
+      deep-diff: 1.0.2
+      drizzle-orm: 0.31.4(@cloudflare/workers-types@4.20240718.0)(@libsql/client@0.7.0)(@types/react@18.3.3)
+      github-slugger: 2.0.0
+      kleur: 4.1.5
+      nanoid: 5.0.7
+      open: 10.1.0
+      ora: 8.0.1
+      prompts: 2.4.2
+      strip-ansi: 7.1.0
+      yargs-parser: 21.1.1
+      zod: 3.23.8
+    transitivePeerDependencies:
+      - '@aws-sdk/client-rds-data'
+      - '@cloudflare/workers-types'
+      - '@electric-sql/pglite'
+      - '@neondatabase/serverless'
+      - '@op-engineering/op-sqlite'
+      - '@opentelemetry/api'
+      - '@planetscale/database'
+      - '@prisma/client'
+      - '@tidbcloud/serverless'
+      - '@types/better-sqlite3'
+      - '@types/pg'
+      - '@types/react'
+      - '@types/sql.js'
+      - '@vercel/postgres'
+      - '@xata.io/client'
+      - better-sqlite3
+      - bufferutil
+      - bun-types
+      - expo-sqlite
+      - knex
+      - kysely
+      - mysql2
+      - pg
+      - postgres
+      - prisma
+      - react
+      - sql.js
+      - sqlite3
+      - utf-8-validate
+
   '@astrojs/internal-helpers@0.3.0': {}
 
   '@astrojs/internal-helpers@0.4.1': {}
@@ -5427,9 +5480,9 @@ snapshots:
 
   '@astrojs/underscore-redirects@0.3.4': {}
 
-  '@astrojs/web-vitals@1.0.0(@astrojs/db@0.12.0(@cloudflare/workers-types@4.20240718.0)(@types/react@18.3.3))':
+  '@astrojs/web-vitals@1.0.0(@astrojs/db@https://pkg.pr.new/Fryuni/astro/@astrojs/db@58726ef(@cloudflare/workers-types@4.20240718.0)(@types/react@18.3.3))':
     dependencies:
-      '@astrojs/db': 0.12.0(@cloudflare/workers-types@4.20240718.0)(@types/react@18.3.3)
+      '@astrojs/db': https://pkg.pr.new/Fryuni/astro/@astrojs/db@58726ef(@cloudflare/workers-types@4.20240718.0)(@types/react@18.3.3)
       web-vitals: 4.2.2
 
   '@babel/code-frame@7.24.7':
