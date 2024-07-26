@@ -1,7 +1,7 @@
 /// <reference types="@astrojs/db" />
-import { db, sessionTable, User } from 'astro:db';
-import { AstroDBAdapter } from './lucia-astrodb-adapter';
+import { User, db, sessionTable } from 'astro:db';
 import { Lucia, TimeSpan } from 'lucia';
+import { AstroDBAdapter } from './lucia-astrodb-adapter';
 
 const adapter = new AstroDBAdapter(db, sessionTable, User);
 export const lucia = new Lucia(adapter, {

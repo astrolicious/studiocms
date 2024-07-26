@@ -1,11 +1,18 @@
 ---
-import type { Locals } from "studiocms:helpers";
-import { StudioCMSRoutes } from "studiocms-dashboard:routeMap";
-import Config from "virtual:studiocms/config";
+import { StudioCMSRoutes } from 'studiocms-dashboard:routeMap';
+import type { Locals } from 'studiocms:helpers';
+import Config from 'virtual:studiocms/config';
 import profileImg from '../../assets/profile.webp';
 
-const { dashboardConfig: { AuthConfig: { enabled } } } = Config;
-const { mainLinks: { dashboardIndex }, authLinks: { loginURL } } = StudioCMSRoutes;
+const {
+	dashboardConfig: {
+		AuthConfig: { enabled },
+	},
+} = Config;
+const {
+	mainLinks: { dashboardIndex },
+	authLinks: { loginURL },
+} = StudioCMSRoutes;
 const { isLoggedIn, dbUser: userProfile } = Astro.locals as Locals;
 ---
 { enabled !== false && (isLoggedIn ? (

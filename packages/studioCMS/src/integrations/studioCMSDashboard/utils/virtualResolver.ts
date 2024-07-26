@@ -1,84 +1,78 @@
-import { addDts, addVirtualImports, createResolver, defineUtility } from "astro-integration-kit";
-import { fileFactory } from "../../../utils/fileFactory";
+import { addDts, addVirtualImports, createResolver, defineUtility } from 'astro-integration-kit';
+import { fileFactory } from '../../../utils/fileFactory';
 
 const { resolve } = createResolver(import.meta.url);
 
-export const virtualResolver = defineUtility("astro:config:setup")(
-    (
-        params,
-        opts: {
-            name: string
-        }
-    ) => {
+export const virtualResolver = defineUtility('astro:config:setup')(
+	(
+		params,
+		opts: {
+			name: string;
+		}
+	) => {
+		const resolver = {
+			lib: {
+				Auth: resolve('../lib/auth.ts'),
+			},
+			utils: {
+				AuthENVChecker: resolve('./authEnvCheck.ts'),
+				RouteMap: resolve('./routemap.ts'),
+			},
+			components: {
+				DashboardLayout: resolve('../routes/dashboard/layouts/Layout.astro'),
+				FormattedDate: resolve('../../../components/exports/FormattedDate.astro'),
+				WebVitalPanel: resolve('../routes/dashboard/components/WebVitalPanel.astro'),
+			},
+			contentHelper: resolve('../../../utils/contentHelper.ts'),
+		};
 
-        const resolver = {
-            lib: {
-                Auth: resolve('../lib/auth.ts'),
-            },
-            utils: {
-                AuthENVChecker: resolve('./authEnvCheck.ts'),
-                RouteMap: resolve('./routemap.ts'),
-            },
-            components: {
-                DashboardLayout: resolve('../routes/dashboard/layouts/Layout.astro'),
-                FormattedDate: resolve('../../../components/exports/FormattedDate.astro'),
-                WebVitalPanel: resolve('../routes/dashboard/components/WebVitalPanel.astro'),
-            },
-            contentHelper: resolve('../../../utils/contentHelper.ts'),
-        }
+		const authComponents = [resolver.lib.Auth, resolver.utils.AuthENVChecker];
 
-        const authComponents = [
-            resolver.lib.Auth,
-            resolver.utils.AuthENVChecker,
-        ]
+		const astroComponents = [
+			{ name: 'Layout', path: resolver.components.DashboardLayout },
+			{ name: 'FormattedDate', path: resolver.components.FormattedDate },
+			{ name: 'WebVitalPanel', path: resolver.components.WebVitalPanel },
+		];
 
-        const astroComponents = [
-            { name: 'Layout', path: resolver.components.DashboardLayout },
-            { name: 'FormattedDate', path: resolver.components.FormattedDate },
-            { name: 'WebVitalPanel', path: resolver.components.WebVitalPanel }
-        ]
+		const routeMap = [resolver.utils.RouteMap];
 
-        const routeMap = [
-            resolver.utils.RouteMap,
-        ]
+		let authComponentsMap = '';
+		let astroComponentsMap = '';
+		let routeMapMap = '';
 
-        let authComponentsMap = ""
-        let astroComponentsMap = ""
-        let routeMapMap = ""
+		for (const comp of authComponents) {
+			authComponentsMap += `export * from '${comp}'\n`;
+		}
 
-        for (const comp of authComponents) {
-            authComponentsMap += `export * from '${comp}'\n`
-        }
+		for (const comp of astroComponents) {
+			astroComponentsMap += `export { default as ${comp.name} } from '${comp.path}'\n`;
+		}
 
-        for (const comp of astroComponents) {
-            astroComponentsMap += `export { default as ${comp.name} } from '${comp.path}'\n`
-        }
+		for (const comp of routeMap) {
+			routeMapMap += `export * from '${comp}'\n`;
+		}
 
-        for (const comp of routeMap) {
-            routeMapMap += `export * from '${comp}'\n`
-        }
+		const virtualImports: Record<string, string> = {
+			'studiocms-dashboard:auth': authComponentsMap,
+			'studiocms-dashboard:components': astroComponentsMap,
+			'studiocms-dashboard:contentHelper': `export * from '${resolver.contentHelper}'`,
+			'studiocms-dashboard:routeMap': routeMapMap,
+		};
 
-        const virtualImports: Record<string, string> = {
-            'studiocms-dashboard:auth': authComponentsMap,
-            'studiocms-dashboard:components': astroComponentsMap,
-            'studiocms-dashboard:contentHelper': `export * from '${resolver.contentHelper}'`,
-            'studiocms-dashboard:routeMap': routeMapMap,
-        }
+		const studioDashboardDTS = fileFactory();
 
-        const studioDashboardDTS = fileFactory();
-
-        studioDashboardDTS.addLines(`declare module 'studiocms-dashboard:auth' {
+		studioDashboardDTS.addLines(`declare module 'studiocms-dashboard:auth' {
             export const lucia: typeof import('${resolver.lib.Auth}').lucia;
             export const authEnvCheck: typeof import('${resolver.utils.AuthENVChecker}').authEnvCheck;
         }`);
 
-        studioDashboardDTS.addLines(`declare module 'studiocms-dashboard:components' {
+		studioDashboardDTS.addLines(`declare module 'studiocms-dashboard:components' {
             export const Layout: typeof import('${resolver.components.DashboardLayout}').default;
             export const FormattedDate: typeof import('${resolver.components.FormattedDate}').default;
             export const WebVitalPanel: typeof import('${resolver.components.WebVitalPanel}').default;
         }`);
 
-        studioDashboardDTS.addLines(`declare module 'studiocms-dashboard:routeMap' {
+		studioDashboardDTS.addLines(`declare module 'studiocms-dashboard:routeMap' {
             export const getSluggedRoute: typeof import('${resolver.utils.RouteMap}').getSluggedRoute;
             export const getEditRoute: typeof import('${resolver.utils.RouteMap}').getEditRoute;
             export const getDeleteRoute: typeof import('${resolver.utils.RouteMap}').getDeleteRoute;
@@ -87,7 +81,7 @@ export const virtualResolver = defineUtility("astro:config:setup")(
             export type SideBarLink = import('${resolver.utils.RouteMap}').SideBarLink;
         }`);
 
-        studioDashboardDTS.addLines(`declare module 'studiocms-dashboard:contentHelper' {
+		studioDashboardDTS.addLines(`declare module 'studiocms-dashboard:contentHelper' {
             export type UserResponse = import('${resolver.contentHelper}').UserResponse;
             export type pageDataReponse = import('${resolver.contentHelper}').pageDataReponse;
             export type pageContentReponse = import('${resolver.contentHelper}').pageContentReponse;
@@ -101,16 +95,15 @@ export const virtualResolver = defineUtility("astro:config:setup")(
             export const getUserList: typeof import('${resolver.contentHelper}').getUserList;
             export const getPermissionsList: typeof import('${resolver.contentHelper}').getPermissionsList;
         }`);
-        
-        addVirtualImports(params, {
-            name: opts.name,
-            imports: virtualImports,
-        })
 
-        addDts(params, {
-            name: opts.name,
-            content: studioDashboardDTS.text()
-        })
+		addVirtualImports(params, {
+			name: opts.name,
+			imports: virtualImports,
+		});
 
-    }
-)
+		addDts(params, {
+			name: opts.name,
+			content: studioDashboardDTS.text(),
+		});
+	}
+);

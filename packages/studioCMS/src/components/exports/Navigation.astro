@@ -1,14 +1,14 @@
 ---
-import { getPageList, getSiteConfig, Avatar } from "studiocms:components";
-import { StudioCMSRoutes } from "studiocms-dashboard:routeMap";
-import { externalNav } from "virtual:studiocms/_nav"
-import "./navigation.css";
-import { pathWithBase } from "studiocms:helpers";
+import { StudioCMSRoutes } from 'studiocms-dashboard:routeMap';
+import { Avatar, getPageList, getSiteConfig } from 'studiocms:components';
+import { externalNav } from 'virtual:studiocms/_nav';
+import './navigation.css';
+import { pathWithBase } from 'studiocms:helpers';
 
 type Props = {
-    topLevelLinkCount?: number;
-    hideAvatar?: boolean;
-}
+	topLevelLinkCount?: number;
+	hideAvatar?: boolean;
+};
 
 const { hideAvatar, topLevelLinkCount = 3 } = Astro.props;
 
@@ -16,45 +16,47 @@ const config = await getSiteConfig();
 const pageList = await getPageList();
 
 const { title } = config;
-const { mainLinks: { baseSiteURL } } = StudioCMSRoutes;
+const {
+	mainLinks: { baseSiteURL },
+} = StudioCMSRoutes;
 
 type LinkProps = {
-    text: string;
-    href: string;
+	text: string;
+	href: string;
 };
 
 const links: LinkProps[] = [];
 
-const navPagesList = pageList.filter(page => page.showOnNav === true && page.package === "@astrolicious/studiocms")
-    .sort((a, b) => Date.parse(b.publishedAt.toString()) - Date.parse(a.publishedAt.toString()));
+const navPagesList = pageList
+	.filter((page) => page.showOnNav === true && page.package === '@astrolicious/studiocms')
+	.sort((a, b) => Date.parse(b.publishedAt.toString()) - Date.parse(a.publishedAt.toString()));
 
-const indexPage = navPagesList.find(page => page.slug === "index");
+const indexPage = navPagesList.find((page) => page.slug === 'index');
 
 if (indexPage) {
-    links.push({
-        text: indexPage.title || "Home",
-        href: import.meta.env.BASE_URL,
-    })
+	links.push({
+		text: indexPage.title || 'Home',
+		href: import.meta.env.BASE_URL,
+	});
 }
 
-const restOfPages = navPagesList.filter(page => page.slug !== "index");
+const restOfPages = navPagesList.filter((page) => page.slug !== 'index');
 
 for (const page of restOfPages) {
-    links.push({
-        text: page.title,
-        href: pathWithBase(page.slug),
-    })
+	links.push({
+		text: page.title,
+		href: pathWithBase(page.slug),
+	});
 }
 
-const externalLinks = Array.from(externalNav.values())
+const externalLinks = Array.from(externalNav.values());
 
 for (const link of externalLinks) {
-    links.push({
-        text: link.text,
-        href: pathWithBase(link.slug),
-    })
+	links.push({
+		text: link.text,
+		href: pathWithBase(link.slug),
+	});
 }
-
 ---
 
 <!-- If no dropdown items -->

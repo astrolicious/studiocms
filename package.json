@@ -16,7 +16,7 @@
     "cf:dev": "pnpm --filter cloudflare-playground dev",
     "cf:build": "pnpm --filter cloudflare-playground build",
     "lint": "biome check .",
-    "lint:fix": "biome check --apply .",
+    "lint:fix": "biome check --write .",
     "ci:install": "pnpm install --frozen-lockfile",
     "ci:preversion": "pnpm changeset pre enter beta && pnpm changeset version",
     "ci:version": "pnpm changeset version",

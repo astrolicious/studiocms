@@ -1,44 +1,35 @@
 ---
-import { authEnvCheck } from "studiocms-dashboard:auth";
-import type Config from 'virtual:studiocms/config';
+import { Button, Icon } from 'astrolace:components';
+import { authEnvCheck } from 'studiocms-dashboard:auth';
 import { StudioCMSRoutes } from 'studiocms-dashboard:routeMap';
-import { Button, Icon } from "astrolace:components";
-import githubLogo from "../../../assets/github-logo.svg";
-import discordLogo from "../../../assets/discord-logo.svg";
-import googleLogo from "../../../assets/google-logo.svg";
-import auth0Logo from "../../../assets/auth0-logo.svg";
+import type Config from 'virtual:studiocms/config';
+import auth0Logo from '../../../assets/auth0-logo.svg';
+import discordLogo from '../../../assets/discord-logo.svg';
+import githubLogo from '../../../assets/github-logo.svg';
+import googleLogo from '../../../assets/google-logo.svg';
 
 type Props = {
-    dashboardConfig: typeof Config.dashboardConfig;
+	dashboardConfig: typeof Config.dashboardConfig;
 };
 
-const { 
-    dashboardConfig: {
-        AuthConfig: {
-            providers
-        },
-    },
+const {
+	dashboardConfig: {
+		AuthConfig: { providers },
+	},
 } = Astro.props;
 
-const { authLinks: { auth0Index, discordIndex, githubIndex, googleIndex } } = StudioCMSRoutes;
+const {
+	authLinks: { auth0Index, discordIndex, githubIndex, googleIndex },
+} = StudioCMSRoutes;
 
-const { 
-    DISCORD: {
-        ENABLED: discordEnabled
-    },
-    GITHUB: {
-        ENABLED: githubEnabled
-    },
-    GOOGLE: {
-        ENABLED: googleEnabled
-    },
-    AUTH0: {
-        ENABLED: auth0Enabled
-    },
-    SHOW_OAUTH,
-    SHOW_PROVIDER_ERROR
- } = await authEnvCheck(providers);
-
+const {
+	DISCORD: { ENABLED: discordEnabled },
+	GITHUB: { ENABLED: githubEnabled },
+	GOOGLE: { ENABLED: googleEnabled },
+	AUTH0: { ENABLED: auth0Enabled },
+	SHOW_OAUTH,
+	SHOW_PROVIDER_ERROR,
+} = await authEnvCheck(providers);
 ---
 {SHOW_OAUTH && ( 
         <div class="bg-base-300 rounded-lg p-6 grid grid-cols-1 md:grid-cols-2 gap-4">

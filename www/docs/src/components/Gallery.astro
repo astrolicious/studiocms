@@ -1,12 +1,12 @@
 ---
-import { Image } from "astro:assets";
+import { Image } from 'astro:assets';
 
 export interface Props {
-  galleryImages: Array<{ 
-    imageMetadata: ImageMetadata; 
-    alt: string; 
-  }>;
-};
+	galleryImages: Array<{
+		imageMetadata: ImageMetadata;
+		alt: string;
+	}>;
+}
 
 const { galleryImages } = Astro.props;
 

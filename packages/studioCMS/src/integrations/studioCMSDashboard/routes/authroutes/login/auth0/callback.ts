@@ -1,42 +1,37 @@
-import { User, db, eq } from 'astro:db';
-import { Auth0, OAuth2RequestError, type Auth0Tokens } from 'arctic';
-import type { APIContext } from 'astro';
-import { authEnvCheck, lucia } from "studiocms-dashboard:auth";
-import Config from 'virtual:studiocms/config';
-import { StudioCMSRoutes } from 'studiocms-dashboard:routeMap';
 import { randomUUID } from 'node:crypto';
+import { User, db, eq } from 'astro:db';
+import { authEnvCheck, lucia } from 'studiocms-dashboard:auth';
+import { StudioCMSRoutes } from 'studiocms-dashboard:routeMap';
+import Config from 'virtual:studiocms/config';
+import { Auth0, type Auth0Tokens, OAuth2RequestError } from 'arctic';
+import type { APIContext } from 'astro';
 
-const { 
-	dashboardConfig: { 
-		AuthConfig: {
-			providers
-		},
-	} 
-  } = Config;
+const {
+	dashboardConfig: {
+		AuthConfig: { providers },
+	},
+} = Config;
 
-const { AUTH0: { CLIENT_ID, CLIENT_SECRET, DOMAIN, REDIRECT_URI } } = await authEnvCheck(providers);
-const { authLinks: { loginURL }, mainLinks: { dashboardIndex } } = StudioCMSRoutes;
+const {
+	AUTH0: { CLIENT_ID, CLIENT_SECRET, DOMAIN, REDIRECT_URI },
+} = await authEnvCheck(providers);
+const {
+	authLinks: { loginURL },
+	mainLinks: { dashboardIndex },
+} = StudioCMSRoutes;
 
 export async function GET(context: APIContext): Promise<Response> {
-	const {
-		url,
-		cookies,
-		redirect,
-	} = context;
-	
+	const { url, cookies, redirect } = context;
 
-const cleanDomainslash = DOMAIN ?
-						DOMAIN.replace(/^\//, '') : "";
-const NoHTTPDOMAIN = cleanDomainslash
-						.replace(/http:\/\//, '')
-						.replace(/https:\/\//, '');
-const clientDomain = `https://${NoHTTPDOMAIN}`;
+	const cleanDomainslash = DOMAIN ? DOMAIN.replace(/^\//, '') : '';
+	const NoHTTPDOMAIN = cleanDomainslash.replace(/http:\/\//, '').replace(/https:\/\//, '');
+	const clientDomain = `https://${NoHTTPDOMAIN}`;
 
 	const auth0 = new Auth0(
-		clientDomain, 
-		CLIENT_ID?CLIENT_ID:"", 
-		CLIENT_SECRET?CLIENT_SECRET:"", 
-		REDIRECT_URI?REDIRECT_URI:""
+		clientDomain,
+		CLIENT_ID ? CLIENT_ID : '',
+		CLIENT_SECRET ? CLIENT_SECRET : '',
+		REDIRECT_URI ? REDIRECT_URI : ''
 	);
 
 	const code = url.searchParams.get('code');
@@ -50,18 +45,12 @@ const clientDomain = `https://${NoHTTPDOMAIN}`;
 		const tokens: Auth0Tokens = await auth0.validateAuthorizationCode(code);
 		const auth0Response = await fetch(`${clientDomain}/userinfo`, {
 			headers: {
-				Authorization: `Bearer ${tokens.accessToken}`
-			}
+				Authorization: `Bearer ${tokens.accessToken}`,
+			},
 		});
 
 		const auth0User: Auth0User = await auth0Response.json();
-		const {
-			sub: auth0Id,
-			name,
-			nickname: username,
-			email,
-			picture: avatar,
-		} = auth0User;
+		const { sub: auth0Id, name, nickname: username, email, picture: avatar } = auth0User;
 
 		const existingUser = await db.select().from(User).where(eq(User.auth0Id, auth0Id)).get();
 
@@ -76,7 +65,7 @@ const clientDomain = `https://${NoHTTPDOMAIN}`;
 		const existingUserByEmail = await db.select().from(User).where(eq(User.email, email)).get();
 
 		if (existingUserName || existingUserByEmail) {
-			return new Response("User already exists", {
+			return new Response('User already exists', {
 				status: 400,
 			});
 		}

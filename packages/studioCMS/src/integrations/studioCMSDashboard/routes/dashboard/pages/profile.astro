@@ -1,11 +1,11 @@
 ---
+import { Card, Divider } from 'astrolace:components';
 import { Layout } from 'studiocms-dashboard:components';
 import { getSiteConfig } from 'studiocms-dashboard:contentHelper';
-import { authHelper, toPascalCase, type Locals } from 'studiocms:helpers';
 import { StudioCMSRoutes } from 'studiocms-dashboard:routeMap';
-import { Card, Divider } from 'astrolace:components';
-import CrumbStack from '../components/CrumbStack.astro';
+import { type Locals, authHelper, toPascalCase } from 'studiocms:helpers';
 import { makePageTitle } from '../../../utils/makePageTitle';
+import CrumbStack from '../components/CrumbStack.astro';
 
 const {
 	mainLinks: { dashboardIndex, userProfile },

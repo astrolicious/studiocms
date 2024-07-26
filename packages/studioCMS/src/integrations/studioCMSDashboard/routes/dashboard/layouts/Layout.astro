@@ -1,42 +1,33 @@
 ---
-import BaseHead from "../components/BaseHead.astro";
-import Header from "../components/Header.astro";
-import Footer from "../components/Footer.astro";
-import SideBar from "../components/SideBar.astro";
-import ThemeManager from "../components/ThemeManager.astro";
-import Config from "virtual:studiocms/config";
-import { studioCMSSocials } from "./studiocms-socials";
+import Config from 'virtual:studiocms/config';
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import SideBar from '../components/SideBar.astro';
+import ThemeManager from '../components/ThemeManager.astro';
+import { studioCMSSocials } from './studiocms-socials';
 
 const socialLinks = studioCMSSocials;
 
-const { 
-  dashboardConfig: { 
-    UnoCSSConfigOverride: {
-      presetsConfig: {
-        presetDaisyUI: {
-          lightTheme,
-        }
-      }
-    },
-    developerConfig: {
-      viewTransitionAPI
-    },
-  } 
+const {
+	dashboardConfig: {
+		UnoCSSConfigOverride: {
+			presetsConfig: {
+				presetDaisyUI: { lightTheme },
+			},
+		},
+		developerConfig: { viewTransitionAPI },
+	},
 } = Config;
 
 type Props = {
-  title: string;
-  description: string;
-  includeSidebar?: boolean;
-  sideBarActiveItemID: string;
+	title: string;
+	description: string;
+	includeSidebar?: boolean;
+	sideBarActiveItemID: string;
 };
 
-const {
-  title,
-  description,
-  includeSidebar = true,
-} = Astro.props;
-
+const { title, description, includeSidebar = true } = Astro.props;
 ---
 
 <!doctype html>

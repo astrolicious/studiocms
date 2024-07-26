@@ -8,18 +8,11 @@
     "emitDeclarationOnly": true,
     "allowImportingTsExtensions": false,
     "paths": {
-      "@astrolicious/studiocms": [
-        "../studioCMS/src/index.ts"
-      ],
-      "@astrolicious/studiocms/*": [
-        "../studioCMS/src/*"
-      ]
+      "@astrolicious/studiocms": ["../studioCMS/src/index.ts"],
+      "@astrolicious/studiocms/*": ["../studioCMS/src/*"]
     }
   },
-  "include": [
-    "../../playgrounds/node/.astro/**/*",
-    "./**/*"
-  ],
+  "include": ["../../playgrounds/node/.astro/**/*", "./**/*"],
   "references": [
     {
       "path": "../studioCMS"

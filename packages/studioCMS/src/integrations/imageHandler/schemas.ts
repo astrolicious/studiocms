@@ -1,1 +1,1 @@
-export { optionsSchema } from '../../schemas/index'
+export { optionsSchema } from '../../schemas/index';

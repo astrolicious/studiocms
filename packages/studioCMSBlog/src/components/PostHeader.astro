@@ -1,17 +1,16 @@
 ---
-import { FormattedDate } from 'studiocms:components'
-import { CustomImage } from 'studiocms:imageHandler/components'
+import { FormattedDate } from 'studiocms:components';
+import { CustomImage } from 'studiocms:imageHandler/components';
 
 interface Props {
-    title: string
-    publishedAt: Date
-    updatedAt?: Date|null
-    heroImage: string
-    description: string
+	title: string;
+	publishedAt: Date;
+	updatedAt?: Date | null;
+	heroImage: string;
+	description: string;
 }
 
 const { title, description, heroImage, publishedAt, updatedAt } = Astro.props;
-
 ---
 <h1 class="title">{title}</h1>
 

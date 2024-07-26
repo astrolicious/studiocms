@@ -1,19 +1,18 @@
 ---
-import { Tab, TabGroup, TabPanel } from "astrolace:components";
-import type { WebVitalsResponseItem } from "studiocms-dashboard:web-vitals";
-import CoreVitalPanelCard from "./CoreVitalPanelCard.astro";
-import { buildDataObject } from "./buildDataObject";
+import { Tab, TabGroup, TabPanel } from 'astrolace:components';
+import type { WebVitalsResponseItem } from 'studiocms-dashboard:web-vitals';
+import CoreVitalPanelCard from './CoreVitalPanelCard.astro';
+import { buildDataObject } from './buildDataObject';
 
 interface Props {
-    webVitalData: WebVitalsResponseItem[];
+	webVitalData: WebVitalsResponseItem[];
 }
 
 const { webVitalData } = Astro.props;
 
-const lcpData = buildDataObject(webVitalData, "LCP");
-const clsData = buildDataObject(webVitalData, "CLS");
-const inpData = buildDataObject(webVitalData, "INP");
-
+const lcpData = buildDataObject(webVitalData, 'LCP');
+const clsData = buildDataObject(webVitalData, 'CLS');
+const inpData = buildDataObject(webVitalData, 'INP');
 ---
 
 <TabGroup>

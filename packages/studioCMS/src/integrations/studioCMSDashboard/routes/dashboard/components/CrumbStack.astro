@@ -1,14 +1,14 @@
 ---
 import { Breadcrumb, BreadcrumbItem, Icon } from 'astrolace:components';
-import columnsGap from '../../../assets/columns-gap.svg';
 import chevronRight from '../../../assets/chevron-right.svg';
+import columnsGap from '../../../assets/columns-gap.svg';
 
 interface Props {
-    items: Array<{
-        href: string;
-        text: string;
-    }>;
-    isDashboard: boolean;
+	items: Array<{
+		href: string;
+		text: string;
+	}>;
+	isDashboard: boolean;
 }
 
 const { items, isDashboard } = Astro.props;

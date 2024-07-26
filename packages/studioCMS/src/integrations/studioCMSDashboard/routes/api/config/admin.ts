@@ -1,9 +1,9 @@
-import type { APIContext } from 'astro';
-import { db, Permissions } from 'astro:db';
-import Config from 'virtual:studiocms/config';
 import { logger } from '@it-astro:logger:StudioCMS';
+import { Permissions, db } from 'astro:db';
+import { type Locals, authHelper } from 'studiocms:helpers';
+import Config from 'virtual:studiocms/config';
+import type { APIContext } from 'astro';
 import { simpleResponse } from '../../../utils/simpleResponse';
-import { authHelper, type Locals } from 'studiocms:helpers';
 
 const {
 	dashboardConfig: {

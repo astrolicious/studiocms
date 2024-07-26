@@ -1,15 +1,20 @@
 ---
-import { authHelper, type Locals } from "studiocms:helpers";
-import Config from "virtual:studiocms/config";
-import { StudioCMSRoutes, sideBarLinkMap } from "studiocms-dashboard:routeMap"
-import { Button, Details, Icon } from "astrolace:components";
-import boxArrowLeft from "../../../assets/box-arrow-left.svg";
+import { Button, Details, Icon } from 'astrolace:components';
+import { StudioCMSRoutes, sideBarLinkMap } from 'studiocms-dashboard:routeMap';
+import { type Locals, authHelper } from 'studiocms:helpers';
+import Config from 'virtual:studiocms/config';
+import boxArrowLeft from '../../../assets/box-arrow-left.svg';
 
-const { dashboardConfig: { developerConfig: { testingAndDemoMode } } } = Config;
-const { authLinks: { logoutURL } } = StudioCMSRoutes;
+const {
+	dashboardConfig: {
+		developerConfig: { testingAndDemoMode },
+	},
+} = Config;
+const {
+	authLinks: { logoutURL },
+} = StudioCMSRoutes;
 const sideBarLinks = sideBarLinkMap;
 const { permissionLevel } = await authHelper(Astro.locals as Locals);
-
 ---
 
 <div class="menu menu-md grow shrink">

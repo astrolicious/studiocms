@@ -1,6 +1,6 @@
 import { z } from 'astro/zod';
 import type { MarkedExtension } from 'marked';
-import type { LanguageInput, BundledTheme, ThemeInput } from 'shiki';
+import type { BundledTheme, LanguageInput, ThemeInput } from 'shiki';
 
 //
 // MARKED EXTENSIONS SCHEMA
@@ -42,19 +42,19 @@ export const shikiConfigSchema = z
 	.object({
 		/**
 		 * Allows the user to choose a Shiki Theme.
-		 * 
+		 *
 		 * Note: The Only available themes are the ones listed below, and the user can import them from the `shiki` package. using loadTheme option.
-		 * 
+		 *
 		 * ### Current Bundled Themes:
 		 * - `houston`
 		 * - `github-dark`
 		 * - `github-light`
 		 * - `night-owl`
-		 * 
+		 *
 		 * Import the theme from the `shiki` package
 		 * @default theme: "houston"
 		 */
-		theme: z.custom<BundledTheme>().optional().default("houston"),
+		theme: z.custom<BundledTheme>().optional().default('houston'),
 		/**
 		 * Allows the user to load additional Shiki Themes
 		 *
@@ -93,7 +93,7 @@ export const markedHighlighterConfigSchema = z
 		 *
 		 * @default 'disabled'
 		 */
-		highlighter: z.enum(['shiki','disabled']).optional().default('disabled'),
+		highlighter: z.enum(['shiki', 'disabled']).optional().default('disabled'),
 		/**
 		 * Allows the user to configure the Shiki Highlighter
 		 */

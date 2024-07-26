@@ -1,13 +1,15 @@
-import type { AstroConfig } from "astro";
-import { studioLogger, type StudioLoggerOptsResolverResponse } from ".";
-import { AstroError } from "astro/errors";
-import { CoreStrings, DbErrors } from "../strings";
+import type { AstroConfig } from 'astro';
+import { AstroError } from 'astro/errors';
+import { type StudioLoggerOptsResolverResponse, studioLogger } from '.';
+import { CoreStrings, DbErrors } from '../strings';
 
-export function checkAstroConfig(astroConfig: AstroConfig, LoggerOpts: StudioLoggerOptsResolverResponse) {
-
-	if (!astroConfig.integrations.find(({ name }) => name === "astro:db")) {
+export function checkAstroConfig(
+	astroConfig: AstroConfig,
+	LoggerOpts: StudioLoggerOptsResolverResponse
+) {
+	if (!astroConfig.integrations.find(({ name }) => name === 'astro:db')) {
 		studioLogger(LoggerOpts.logError, DbErrors.astroDbMissingMessage);
-		throw new AstroError( DbErrors.astroDbMissingMessage, DbErrors.astroDbMissingHint );
+		throw new AstroError(DbErrors.astroDbMissingMessage, DbErrors.astroDbMissingHint);
 	}
 
 	// Check for SSR Mode (output: "server")

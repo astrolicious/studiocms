@@ -2,13 +2,13 @@
 import { getPageRouteReference } from './getPageRouteReference';
 
 interface Props {
-    perRouteData: {
-        pagePathname: string;
-        analyticData: {
-            pageRoute: string;
-            pageViews: number;
-        };
-    }[];
+	perRouteData: {
+		pagePathname: string;
+		analyticData: {
+			pageRoute: string;
+			pageViews: number;
+		};
+	}[];
 }
 
 const { perRouteData } = Astro.props;

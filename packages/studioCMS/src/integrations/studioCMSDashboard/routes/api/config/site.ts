@@ -1,9 +1,9 @@
-import type { APIContext } from 'astro';
-import Config from 'virtual:studiocms/config';
 import { logger } from '@it-astro:logger:StudioCMS';
-import { simpleResponse } from '../../../utils/simpleResponse';
-import { authHelper, type Locals } from 'studiocms:helpers';
+import { type Locals, authHelper } from 'studiocms:helpers';
+import Config from 'virtual:studiocms/config';
+import type { APIContext } from 'astro';
 import { astroDb } from '../../../utils/astroDb';
+import { simpleResponse } from '../../../utils/simpleResponse';
 
 const {
 	dashboardConfig: {
@@ -47,7 +47,7 @@ export async function POST(context: APIContext): Promise<Response> {
 
 	// Update Database
 	try {
-        await astroDb().siteConfig().update({ title, description });
+		await astroDb().siteConfig().update({ title, description });
 	} catch (error) {
 		// Log error
 		if (error instanceof Error) {

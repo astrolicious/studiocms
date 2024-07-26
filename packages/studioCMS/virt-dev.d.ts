@@ -1,10 +1,10 @@
 /**
  * # DEV TIP
- * 
+ *
  * Wanting to extend StudioCMS? You can do so by defining a new module in the `virtual:studiocms` namespace within your project with the following format:
- * 
+ *
  * This module can also be delcared from `@astrolicious/studiocms`.
- * 
+ *
  * @example
  * declare module 'virtual:studiocms/config' {
  * const Config: import('@astrolicious/studiocms').StudioCMSOptions;
@@ -28,11 +28,11 @@ declare module 'virtual:studiocms/version' {
 
 /**
  * # DEV TIP
- * 
+ *
  * Wanting to extend StudioCMS? You can do so by defining a new module in the `virtual:studiocms` namespace within your project with the following format:
- * 
+ *
  * This module can also be delcared from `@astrolicious/studiocms`.
- * 
+ *
  * @example
  * declare module 'virtual:studiocms-dashboard/AuthSecurityConfig' {
  * const AuthSecurityConfig: import('@astrolicious/studiocms').usernameAndPasswordConfig;
@@ -45,7 +45,7 @@ declare module 'virtual:studiocms-dashboard/AuthSecurityConfig' {
 }
 
 declare module 'virtual:studiocms/_nav' {
-	export const externalNav: Map<string, { text: string, slug: string }>;
+	export const externalNav: Map<string, { text: string; slug: string }>;
 }
 
 interface ImportMetaEnv {
@@ -59,9 +59,9 @@ interface ImportMeta {
 
 interface Window {
 	theme: {
-	  setTheme: (theme: "auto" | "dark" | "light") => void;
-	  getTheme: () => "auto" | "dark" | "light";
-	  getSystemTheme: () => "light" | "dark";
-	  getDefaultTheme: () => "auto" | "dark" | "light";
+		setTheme: (theme: 'auto' | 'dark' | 'light') => void;
+		getTheme: () => 'auto' | 'dark' | 'light';
+		getSystemTheme: () => 'light' | 'dark';
+		getDefaultTheme: () => 'auto' | 'dark' | 'light';
 	};
 }

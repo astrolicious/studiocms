@@ -1,10 +1,10 @@
 ---
-import { FormattedDate, type pageDataReponse } from 'studiocms:components';
-import { CustomImage } from 'studiocms:imageHandler/components'
-import { pathWithBase } from 'studiocms:helpers';
 import { pages } from 'studiocms-blog:context';
+import { FormattedDate, type pageDataReponse } from 'studiocms:components';
+import { pathWithBase } from 'studiocms:helpers';
+import { CustomImage } from 'studiocms:imageHandler/components';
 
-const blogRouteFullPath = pages.get('/blog/[...slug]')
+const blogRouteFullPath = pages.get('/blog/[...slug]');
 
 function getBlogRoute(slug: string) {
 	if (blogRouteFullPath) {
@@ -14,7 +14,7 @@ function getBlogRoute(slug: string) {
 }
 
 interface Props {
-    blogPageList: pageDataReponse[];
+	blogPageList: pageDataReponse[];
 }
 
 const { blogPageList } = Astro.props;

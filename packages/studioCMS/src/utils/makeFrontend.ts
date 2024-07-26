@@ -1,70 +1,66 @@
-import { defineUtility } from "astro-integration-kit";
-import type { StudioCMSOptions } from "../schemas";
-import { studioLogger, type StudioLoggerOptsResolverResponse } from ".";
-import { MakeFrontendStrings } from "../strings";
+import { defineUtility } from 'astro-integration-kit';
+import { type StudioLoggerOptsResolverResponse, studioLogger } from '.';
+import type { StudioCMSOptions } from '../schemas';
+import { MakeFrontendStrings } from '../strings';
 
 export type FrontendOptions = {
-    resolvedOptions: StudioCMSOptions,
-    LoggerOpts: StudioLoggerOptsResolverResponse,
-    defaultRoutes: {
-        pattern: string, 
-        entrypoint: string
-    }[],
-    default404Route: string,
-}
+	resolvedOptions: StudioCMSOptions;
+	LoggerOpts: StudioLoggerOptsResolverResponse;
+	defaultRoutes: {
+		pattern: string;
+		entrypoint: string;
+	}[];
+	default404Route: string;
+};
 
-export const makeFrontend = defineUtility("astro:config:setup")(
-    (params, options: FrontendOptions) => {
+export const makeFrontend = defineUtility('astro:config:setup')(
+	(params, options: FrontendOptions) => {
+		// Destructure Params
+		const { injectRoute } = params;
 
-        // Destructure Params
-        const { injectRoute } = params;
+		// Destructure Options
+		const {
+			resolvedOptions: studioCMSOptions,
+			LoggerOpts,
+			defaultRoutes,
+			default404Route,
+		} = options;
 
-        // Destructure Options
-        const { 
-            resolvedOptions: studioCMSOptions, 
-            LoggerOpts, 
-            defaultRoutes, 
-            default404Route 
-        } = options;
+		// Destructure StudioCMS Options
+		const {
+			dbStartPage,
+			defaultFrontEndConfig: { injectDefaultFrontEndRoutes, inject404Route },
+		} = studioCMSOptions;
 
-        // Destructure StudioCMS Options
-        const { 
-            dbStartPage, 
-            defaultFrontEndConfig: { 
-                injectDefaultFrontEndRoutes, 
-                inject404Route 
-            } 
-        } = studioCMSOptions;
+		// Inject Default Routes
+		if (!dbStartPage) {
+			studioLogger(LoggerOpts.logInfo, MakeFrontendStrings.NoDBStartPage);
 
-        // Inject Default Routes
-        if (!dbStartPage) {
-            studioLogger(LoggerOpts.logInfo, MakeFrontendStrings.NoDBStartPage);
+			// Inject Default Frontend Routes
+			if (injectDefaultFrontEndRoutes) {
+				studioLogger(LoggerOpts.logInfo, MakeFrontendStrings.InjectDefaultFrontendRoutes);
+				for (const route of defaultRoutes) {
+					injectRoute({
+						pattern: route.pattern,
+						entrypoint: route.entrypoint,
+					});
+				}
+			}
 
-            // Inject Default Frontend Routes
-            if (injectDefaultFrontEndRoutes) {
-                studioLogger(LoggerOpts.logInfo, MakeFrontendStrings.InjectDefaultFrontendRoutes);
-                for (const route of defaultRoutes) {
-                    injectRoute({
-                        pattern: route.pattern,
-                        entrypoint: route.entrypoint
-                    })
-                }
-            }
+			// Inject 404 Route
+			if (inject404Route) {
+				studioLogger(LoggerOpts.logInfo, MakeFrontendStrings.Inject404Route);
+				injectRoute({
+					pattern: '404',
+					entrypoint: default404Route,
+				});
+			}
 
-            // Inject 404 Route
-            if (inject404Route) {
-                studioLogger(LoggerOpts.logInfo, MakeFrontendStrings.Inject404Route);
-                injectRoute({
-                    pattern: '404',
-                    entrypoint: default404Route
-                })
-            }
+			studioLogger(LoggerOpts.logInfo, MakeFrontendStrings.DefaultRoutesInjected);
+		}
 
-            studioLogger(LoggerOpts.logInfo, MakeFrontendStrings.DefaultRoutesInjected);
-        }
-
-        if (dbStartPage) {
-            studioLogger(LoggerOpts.logWarn, MakeFrontendStrings.DBStartPageEnabled);
-        }
-    }
+		if (dbStartPage) {
+			studioLogger(LoggerOpts.logWarn, MakeFrontendStrings.DBStartPageEnabled);
+		}
+	}
 );

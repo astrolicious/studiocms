@@ -1,7 +1,7 @@
-import { eq, lte } from "astro:db";
+import { eq, lte } from 'astro:db';
 
-import type { Database, Table } from "@astrojs/db/runtime";
-import type { Adapter, DatabaseSession, DatabaseUser, UserId } from "lucia";
+import type { Database, Table } from '@astrojs/db/runtime';
+import type { Adapter, DatabaseSession, DatabaseUser, UserId } from 'lucia';
 
 export class AstroDBAdapter implements Adapter {
 	private db: Database;
@@ -29,7 +29,7 @@ export class AstroDBAdapter implements Adapter {
 		const result = await this.db
 			.select({
 				user: this.userTable,
-				session: this.sessionTable
+				session: this.sessionTable,
 			})
 			.from(this.sessionTable)
 			.innerJoin(this.userTable, eq(this.sessionTable.userId, this.userTable.id))
@@ -57,7 +57,7 @@ export class AstroDBAdapter implements Adapter {
 				id: session.id,
 				userId: session.userId,
 				expiresAt: session.expiresAt,
-				...session.attributes
+				...session.attributes,
 			})
 			.run();
 	}
@@ -66,7 +66,7 @@ export class AstroDBAdapter implements Adapter {
 		await this.db
 			.update(this.sessionTable)
 			.set({
-				expiresAt: expiresAt
+				expiresAt: expiresAt,
 			})
 			.where(eq(this.sessionTable.id, sessionId))
 			.run();
@@ -84,7 +84,7 @@ function transformIntoDatabaseSession(raw: any): DatabaseSession {
 		userId,
 		id,
 		expiresAt,
-		attributes
+		attributes,
 	};
 }
 
@@ -93,12 +93,12 @@ function transformIntoDatabaseUser(raw: any): DatabaseUser {
 	const { id, ...attributes } = raw;
 	return {
 		id,
-		attributes
+		attributes,
 	};
 }
 
 export type UserTable = Table<
-// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+	// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 	any,
 	{
 		id: {
@@ -118,11 +118,11 @@ export type UserTable = Table<
 >;
 
 export type SessionTable = Table<
-// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+	// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 	any,
 	{
 		id: {
-			type: "text";
+			type: 'text';
 			schema: {
 				unique: false;
 				// biome-ignore lint/suspicious/noExplicitAny: <explanation>
@@ -135,7 +135,7 @@ export type SessionTable = Table<
 			};
 		};
 		expiresAt: {
-			type: "date";
+			type: 'date';
 			schema: {
 				optional: false;
 				unique: false;
@@ -175,4 +175,4 @@ export type SessionTable = Table<
 	}
 >;
 
-type UserIdColumnType = UserId extends string ? "text" : UserId extends number ? "number" : never;
+type UserIdColumnType = UserId extends string ? 'text' : UserId extends number ? 'number' : never;

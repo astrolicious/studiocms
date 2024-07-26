@@ -14,9 +14,8 @@ const ExternalNav = Array.from(externalNav);
 const PluginList = Array.from(pluginList);
 
 export const getPageRouteReference = (pageRoute: string) => {
-
 	// Check if the route is the dashboard
-	if ( pageRoute.startsWith(`/${dashboardURL}`) ) {
+	if (pageRoute.startsWith(`/${dashboardURL}`)) {
 		return 'StudioCMS (Dashboard)';
 	}
 
@@ -27,7 +26,7 @@ export const getPageRouteReference = (pageRoute: string) => {
 
 			for (const externalRoute of ExternalNav) {
 				if (externalRoute[0].startsWith(name)) {
-					if (pageRoute.startsWith(`/${fixSlashes(externalRoute[1].slug)}`)){
+					if (pageRoute.startsWith(`/${fixSlashes(externalRoute[1].slug)}`)) {
 						return label;
 					}
 				}
@@ -36,7 +35,7 @@ export const getPageRouteReference = (pageRoute: string) => {
 	}
 
 	// Check if the route is from the setup
-	if ( pageRoute === '/start' || pageRoute === '/done' ) {
+	if (pageRoute === '/start' || pageRoute === '/done') {
 		return 'StudioCMS (Setup)';
 	}
 
