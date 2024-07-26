@@ -1,27 +1,27 @@
 ---
-import { BlogLayout } from "studiocms-blog:layouts";
-import { PageList, RSSIcon } from "studiocms-blog:components";
-import { getPageList } from "studiocms:components";
-import config from "studiocms-blog:config";
+import { PageList, RSSIcon } from 'studiocms-blog:components';
+import config from 'studiocms-blog:config';
 import { pages } from 'studiocms-blog:context';
+import { BlogLayout } from 'studiocms-blog:layouts';
+import { getPageList } from 'studiocms:components';
 
 // Set the title and description
 const { description: configDescription, blogIndex } = config;
 
-const title: string = blogIndex?.title || "Blog";
-const description: string = configDescription || "Blog Index";
+const title: string = blogIndex?.title || 'Blog';
+const description: string = configDescription || 'Blog Index';
 const showRSSFeed: boolean = blogIndex?.showRSSFeed || true;
 
 // Get all pages
 const pageList = await getPageList();
 
 // Get the RSS feed URL
-const rssPath = pages.get('/rss.xml')
+const rssPath = pages.get('/rss.xml');
 
 // Get all blog pages and sort by published date
-const blogPageList = pageList.filter(page => page.package === "@astrolicious/studiocms-blog")
-    .sort((a, b) => Date.parse(b.publishedAt.toString()) - Date.parse(a.publishedAt.toString()));
-
+const blogPageList = pageList
+	.filter((page) => page.package === '@astrolicious/studiocms-blog')
+	.sort((a, b) => Date.parse(b.publishedAt.toString()) - Date.parse(a.publishedAt.toString()));
 ---
 <BlogLayout {title} description={description} >
     <main>

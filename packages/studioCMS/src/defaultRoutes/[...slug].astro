@@ -1,16 +1,16 @@
 ---
-import { StudioCMSRenderer, contentHelper, FrontLayout } from 'studiocms:components'
+import { FrontLayout, StudioCMSRenderer, contentHelper } from 'studiocms:components';
 
 const { slug } = Astro.params;
 
-if(!slug){
-	return new Response(null, { status: 404 })
+if (!slug) {
+	return new Response(null, { status: 404 });
 }
 
 const { title, description, heroImage, content, id } = await contentHelper(slug);
 
-if(!id){
-	return new Response(null, { status: 404 })
+if (!id) {
+	return new Response(null, { status: 404 });
 }
 ---
 

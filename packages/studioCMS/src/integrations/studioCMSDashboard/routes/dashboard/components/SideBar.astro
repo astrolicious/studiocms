@@ -1,29 +1,30 @@
 ---
-import SideBarFooter from "./SideBarFooter.astro";
-import SideBarMenu from "./SideBarMenu.astro";
-import { authHelper, type Locals } from "studiocms:helpers";
-import { StudioCMSRoutes } from "studiocms-dashboard:routeMap"
-import type { StudioCMSSocials } from "../layouts/studiocms-socials";
-import { Avatar, Tooltip } from "astrolace:components";
-import personFillIcon from "../../../assets/person-fill.svg";
+import { Avatar, Tooltip } from 'astrolace:components';
+import { StudioCMSRoutes } from 'studiocms-dashboard:routeMap';
+import { type Locals, authHelper } from 'studiocms:helpers';
+import personFillIcon from '../../../assets/person-fill.svg';
+import type { StudioCMSSocials } from '../layouts/studiocms-socials';
+import SideBarFooter from './SideBarFooter.astro';
+import SideBarMenu from './SideBarMenu.astro';
 
 type Props = { studioCMSSocials: StudioCMSSocials };
 const { studioCMSSocials } = Astro.props as Props;
 const { avatar, name, permissionLevel } = await authHelper(Astro.locals as Locals);
-const { mainLinks: { dashboardIndex } } = StudioCMSRoutes;
+const {
+	mainLinks: { dashboardIndex },
+} = StudioCMSRoutes;
 
 let useName: string;
 
-if ( permissionLevel === "unknown" ) {
-  useName = "Guest";
+if (permissionLevel === 'unknown') {
+	useName = 'Guest';
 } else {
-  if ( !name ) {
-    useName = "User";
-  } else {
-  useName = name;
-  }
+	if (!name) {
+		useName = 'User';
+	} else {
+		useName = name;
+	}
 }
-
 ---
 
 <div class="max-md:hidden pr-2">

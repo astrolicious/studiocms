@@ -2,13 +2,15 @@
 import 'uno.css';
 import '@unocss/reset/tailwind.css';
 import './base.css';
-import "@matthiesenxyz/astrolace/base.css";
-import "@matthiesenxyz/astrolace/dark.css";
+import '@matthiesenxyz/astrolace/base.css';
+import '@matthiesenxyz/astrolace/dark.css';
 import Config from 'virtual:studiocms/config';
 import version from 'virtual:studiocms/version';
 import { isDashboardRoute } from './isDashboardRoute';
 
-const { dashboardConfig: { faviconURL } } = Config;
+const {
+	dashboardConfig: { faviconURL },
+} = Config;
 
 export interface Props {
 	title: string;

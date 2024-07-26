@@ -1,11 +1,11 @@
 ---
-import config from "studiocms-blog:config";
-import { FrontLayout } from "studiocms:components";
+import config from 'studiocms-blog:config';
+import { FrontLayout } from 'studiocms:components';
 
 interface Props {
-    title: string;
-    description: string;
-	lang?: string|undefined;
+	title: string;
+	description: string;
+	lang?: string | undefined;
 	heroImage?: string;
 	siteTitle?: string;
 	siteDescription?: string;
@@ -13,17 +13,16 @@ interface Props {
 	pageDescriptionDelimiter?: string;
 }
 
-const { 
-    title, 
-    description, 
-    heroImage, 
-    lang,
-    pageDescriptionDelimiter, 
-    pageTitleDelimiter, 
-    siteDescription = config.description, 
-    siteTitle
+const {
+	title,
+	description,
+	heroImage,
+	lang,
+	pageDescriptionDelimiter,
+	pageTitleDelimiter,
+	siteDescription = config.description,
+	siteTitle,
 } = Astro.props;
-
 ---
 
 <FrontLayout 

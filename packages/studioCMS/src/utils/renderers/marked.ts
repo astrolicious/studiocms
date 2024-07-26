@@ -1,33 +1,29 @@
 import Config from 'virtual:studiocms/config';
+import {
+	transformerMetaHighlight,
+	transformerMetaWordHighlight,
+	transformerNotationDiff,
+	transformerNotationErrorLevel,
+	transformerNotationFocus,
+	transformerNotationHighlight,
+	transformerNotationWordHighlight,
+} from '@shikijs/transformers';
 import { type MarkedExtension, marked } from 'marked';
 import markedAlert from 'marked-alert';
 import { markedEmoji } from 'marked-emoji';
 import markedFootnote from 'marked-footnote';
 import markedShiki from 'marked-shiki';
 import { markedSmartypants } from 'marked-smartypants';
+import { createHighlighterCore } from 'shiki/core';
+import getWasm from 'shiki/wasm';
 import emojiList from '../emoji-en-US.json';
-import {
-  transformerNotationDiff,
-  transformerNotationHighlight,
-  transformerNotationWordHighlight,
-  transformerNotationFocus,
-  transformerNotationErrorLevel,
-  transformerMetaHighlight,
-  transformerMetaWordHighlight
-} from '@shikijs/transformers'
-import { createHighlighterCore } from 'shiki/core'
-import getWasm from 'shiki/wasm'
 
 const {
 	markedConfig: {
 		loadmarkedExtensions,
 		highlighterConfig: {
 			highlighter: selectedHighlighter,
-			shikiConfig: { 
-				theme: shikiTheme,
-				loadThemes: shikiLoadThemes,
-				loadLangs: shikiLoadLangs
-			},
+			shikiConfig: { theme: shikiTheme, loadThemes: shikiLoadThemes, loadLangs: shikiLoadLangs },
 		},
 		includedExtensions: {
 			markedAlert: mAlertExt,
@@ -73,7 +69,6 @@ export async function renderMarked(input: string): Promise<string> {
 
 	// Setup Marked Highlighter
 	if (selectedHighlighter === 'shiki') {
-
 		// Create Shiki Highlighter
 
 		// Load Shiki Themes
@@ -85,13 +80,15 @@ export async function renderMarked(input: string): Promise<string> {
 			import('shiki/themes/github-dark.mjs'),
 			import('shiki/themes/github-light.mjs'),
 			import('shiki/themes/night-owl.mjs'),
-		]
+		];
 
 		// Add the Default Themes to the Config
-		shikiThemeConfig.push(...studioCMSDefaultThemes)
-		
+		shikiThemeConfig.push(...studioCMSDefaultThemes);
+
 		// Add any additional UserLoaded Themes to the Config
-		if (shikiLoadThemes) { shikiThemeConfig.push(...shikiLoadThemes); }
+		if (shikiLoadThemes) {
+			shikiThemeConfig.push(...shikiLoadThemes);
+		}
 
 		// Load Shiki Languages
 		const shikiLangsConfig = [];
@@ -116,7 +113,9 @@ export async function renderMarked(input: string): Promise<string> {
 		shikiLangsConfig.push(...studioCMSDefaultLangs);
 
 		// Add any additional UserLoaded Languages to the Config
-		if (shikiLoadLangs) { shikiLangsConfig.push(...shikiLoadLangs); }
+		if (shikiLoadLangs) {
+			shikiLangsConfig.push(...shikiLoadLangs);
+		}
 
 		// Create Shiki Highlighter
 		const shikiHighlighter = await createHighlighterCore({
@@ -129,10 +128,10 @@ export async function renderMarked(input: string): Promise<string> {
 		customMarkedExtList.push(
 			markedShiki({
 				highlight(code, lang, props) {
-					return shikiHighlighter.codeToHtml(code, { 
-						lang, 
-						theme: shikiTheme, 
-						meta: { __raw: props.join(' ') },// required by `transformerMeta*`
+					return shikiHighlighter.codeToHtml(code, {
+						lang,
+						theme: shikiTheme,
+						meta: { __raw: props.join(' ') }, // required by `transformerMeta*`
 						transformers: [
 							transformerNotationDiff(),
 							transformerNotationHighlight(),
@@ -140,8 +139,8 @@ export async function renderMarked(input: string): Promise<string> {
 							transformerNotationFocus(),
 							transformerNotationErrorLevel(),
 							transformerMetaHighlight(),
-							transformerMetaWordHighlight()
-						] 
+							transformerMetaWordHighlight(),
+						],
 					});
 				},
 			})

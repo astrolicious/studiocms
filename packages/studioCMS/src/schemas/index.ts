@@ -1,10 +1,10 @@
 import { z } from 'astro/zod';
+import { overridesSchema } from './componentoverrides';
+import { dashboardConfigSchema } from './dashboard';
+import { DefaultFrontEndConfigSchema } from './defaultFrontend';
 import { imageServiceSchema } from './imageService';
 import { includedIntegrationsSchema } from './integrations';
 import { markedConfigSchema } from './marked';
-import { dashboardConfigSchema } from './dashboard';
-import { overridesSchema } from './componentoverrides';
-import { DefaultFrontEndConfigSchema } from './defaultFrontend';
 
 //
 // MAIN SCHEMA
@@ -13,7 +13,7 @@ export const optionsSchema = z
 	.object({
 		/**
 		 * Project Initialization Page - Used during First Time Setup to initialize the database
-		 * 
+		 *
 		 * @default true
 		 */
 		dbStartPage: z.boolean().optional().default(true),
@@ -22,13 +22,13 @@ export const optionsSchema = z
 		 *
 		 * Marked is A markdown parser and compiler. Built for speed.
 		 * @see https://marked.js.org/ for more info about marked.
-		 * 
+		 *
 		 * Astro is the built-in Astro remark-markdown plugin.
 		 * @see https://www.npmjs.com/package/@astrojs/markdown-remark
 		 *
 		 * Markdoc is a powerful, flexible, Markdown-based authoring framework. Built by Stripe.
 		 * @see https://markdoc.dev/ for more info about markdoc.
-		 * 
+		 *
 		 */
 		contentRenderer: z.enum(['marked', 'astro', 'markdoc']).optional().default('marked'),
 		/**
@@ -48,7 +48,7 @@ export const optionsSchema = z
 		defaultFrontEndConfig: DefaultFrontEndConfigSchema,
 		/**
 		 * Allows customization of the Dashboard Configuration
-		 * 
+		 *
 		 * Coming soon....
 		 */
 		dashboardConfig: dashboardConfigSchema,

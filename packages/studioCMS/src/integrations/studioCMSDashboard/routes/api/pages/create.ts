@@ -1,9 +1,9 @@
-import type { APIContext } from 'astro';
-import Config from 'virtual:studiocms/config';
 import { logger } from '@it-astro:logger:StudioCMS';
-import { simpleResponse } from '../../../utils/simpleResponse';
-import { authHelper, type Locals } from 'studiocms:helpers';
+import { type Locals, authHelper } from 'studiocms:helpers';
+import Config from 'virtual:studiocms/config';
+import type { APIContext } from 'astro';
 import { astroDb } from '../../../utils/astroDb';
+import { simpleResponse } from '../../../utils/simpleResponse';
 
 const {
 	dashboardConfig: {
@@ -44,25 +44,25 @@ export async function POST(context: APIContext): Promise<Response> {
 	const content = formData.get('content')?.toString();
 	const pack = formData.get('package')?.toString();
 
-    // TODO: Implement this for i18n support
+	// TODO: Implement this for i18n support
 	// const contentLang = formData.get("content-lang")?.toString();
 
-    const checkArray: { name: string, value: string|undefined }[] = [
-        { name: 'title', value: title },
-        { name: 'slug', value: slug },
-        { name: 'description', value: description },
-        { name: 'showOnNav', value: showOnNav },
-        { name: 'heroImage', value: heroImage },
-        { name: 'content', value: content },
-        { name: 'pack', value: pack },
-    ];
+	const checkArray: { name: string; value: string | undefined }[] = [
+		{ name: 'title', value: title },
+		{ name: 'slug', value: slug },
+		{ name: 'description', value: description },
+		{ name: 'showOnNav', value: showOnNav },
+		{ name: 'heroImage', value: heroImage },
+		{ name: 'content', value: content },
+		{ name: 'pack', value: pack },
+	];
 
-    for (const check of checkArray) {
-        if (!check.value) {
-            logger.error(`Invalid ${check.name}`);
-            return simpleResponse(400, `Invalid ${check.name}`);
-        }
-    }
+	for (const check of checkArray) {
+		if (!check.value) {
+			logger.error(`Invalid ${check.name}`);
+			return simpleResponse(400, `Invalid ${check.name}`);
+		}
+	}
 
 	if (!title || !slug || !description || !showOnNav || !heroImage || !content || !pack) {
 		logger.error('Invalid data');

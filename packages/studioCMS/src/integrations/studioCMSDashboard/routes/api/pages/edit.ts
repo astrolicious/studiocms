@@ -1,9 +1,9 @@
-import type { APIContext } from 'astro';
-import Config from 'virtual:studiocms/config';
 import { logger } from '@it-astro:logger:StudioCMS';
-import { simpleResponse } from '../../../utils/simpleResponse';
-import { authHelper, type Locals } from 'studiocms:helpers';
+import { type Locals, authHelper } from 'studiocms:helpers';
+import Config from 'virtual:studiocms/config';
+import type { APIContext } from 'astro';
 import { astroDb } from '../../../utils/astroDb';
+import { simpleResponse } from '../../../utils/simpleResponse';
 
 const {
 	dashboardConfig: {
@@ -36,7 +36,7 @@ export async function POST(context: APIContext): Promise<Response> {
 
 	// Get form data
 	const formData = await context.request.formData();
-    const pageId = formData.get('page-id')?.toString();
+	const pageId = formData.get('page-id')?.toString();
 	const title = formData.get('title')?.toString();
 	const slug = formData.get('slug')?.toString();
 	const description = formData.get('description')?.toString();
@@ -45,49 +45,53 @@ export async function POST(context: APIContext): Promise<Response> {
 	const content = formData.get('content')?.toString();
 	const pack = formData.get('package')?.toString();
 
-    // TODO: Implement this for i18n support
+	// TODO: Implement this for i18n support
 	// const contentLang = formData.get("content-lang")?.toString();
 
-    const checkArray: { name: string, value: string|undefined }[] = [
-        { name: 'title', value: title },
-        { name: 'slug', value: slug },
-        { name: 'description', value: description },
-        { name: 'showOnNav', value: showOnNav },
-        { name: 'heroImage', value: heroImage },
-        { name: 'content', value: content },
-        { name: 'pack', value: pack },
-        { name: 'pageId', value: pageId }
-    ];
+	const checkArray: { name: string; value: string | undefined }[] = [
+		{ name: 'title', value: title },
+		{ name: 'slug', value: slug },
+		{ name: 'description', value: description },
+		{ name: 'showOnNav', value: showOnNav },
+		{ name: 'heroImage', value: heroImage },
+		{ name: 'content', value: content },
+		{ name: 'pack', value: pack },
+		{ name: 'pageId', value: pageId },
+	];
 
-    for (const check of checkArray) {
-        if (!check.value) {
-            logger.error(`Invalid ${check.name}`);
-            return simpleResponse(400, `Invalid ${check.name}`);
-        }
-    }
+	for (const check of checkArray) {
+		if (!check.value) {
+			logger.error(`Invalid ${check.name}`);
+			return simpleResponse(400, `Invalid ${check.name}`);
+		}
+	}
 
 	if (!title || !slug || !description || !showOnNav || !heroImage || !content || !pack || !pageId) {
 		logger.error('Invalid data');
 		return simpleResponse(400, 'Invalid data');
 	}
 
-    return await astroDb().pageData().update({
-            id: pageId,
-            title,
-            slug,
-            description,
-            showOnNav: showOnNav === 'on',
-            heroImage,
-            package: pack,
-            updatedAt: new Date()
-    }).then( async () => {
-            await astroDb().pageContent().update({
-                id: pageId,
-                content
-            });
-            return simpleResponse(200, 'Page and Page Content updated');
-    }).catch((error) => {
-            logger.error(error);
-            return simpleResponse(500, 'Error updating page');
-    });
+	return await astroDb()
+		.pageData()
+		.update({
+			id: pageId,
+			title,
+			slug,
+			description,
+			showOnNav: showOnNav === 'on',
+			heroImage,
+			package: pack,
+			updatedAt: new Date(),
+		})
+		.then(async () => {
+			await astroDb().pageContent().update({
+				id: pageId,
+				content,
+			});
+			return simpleResponse(200, 'Page and Page Content updated');
+		})
+		.catch((error) => {
+			logger.error(error);
+			return simpleResponse(500, 'Error updating page');
+		});
 }

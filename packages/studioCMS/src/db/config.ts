@@ -1,5 +1,5 @@
 import { defineDb } from 'astro:db';
-import { PageContent, PageData, Permissions, sessionTable, SiteConfig, User } from './tables';
+import { PageContent, PageData, Permissions, SiteConfig, User, sessionTable } from './tables';
 
 // https://astro.build/db/config
 export default defineDb({

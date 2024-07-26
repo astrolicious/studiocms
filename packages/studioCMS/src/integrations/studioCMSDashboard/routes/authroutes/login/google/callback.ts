@@ -1,37 +1,37 @@
+import { randomUUID } from 'node:crypto';
 import { User, db, eq } from 'astro:db';
+import { authEnvCheck, lucia } from 'studiocms-dashboard:auth';
+import { StudioCMSRoutes } from 'studiocms-dashboard:routeMap';
+import Config from 'virtual:studiocms/config';
 import { Google, OAuth2RequestError } from 'arctic';
 import type { APIContext } from 'astro';
-import { authEnvCheck, lucia } from "studiocms-dashboard:auth";
-import Config from 'virtual:studiocms/config';
-import { StudioCMSRoutes } from 'studiocms-dashboard:routeMap';
-import { randomUUID } from 'node:crypto';
 
-const { 
-	dashboardConfig: { 
-		AuthConfig: {
-			providers
-		},
-	} 
-  } = Config;
+const {
+	dashboardConfig: {
+		AuthConfig: { providers },
+	},
+} = Config;
 
-const { authLinks: { loginURL }, mainLinks: { dashboardIndex } } = StudioCMSRoutes;
-const { GOOGLE: { CLIENT_ID, CLIENT_SECRET, REDIRECT_URI } } = await authEnvCheck(providers);
+const {
+	authLinks: { loginURL },
+	mainLinks: { dashboardIndex },
+} = StudioCMSRoutes;
+const {
+	GOOGLE: { CLIENT_ID, CLIENT_SECRET, REDIRECT_URI },
+} = await authEnvCheck(providers);
 
 export async function GET(context: APIContext): Promise<Response> {
-	const {
-		url,
-		cookies,
-		redirect,
-	} = context;
+	const { url, cookies, redirect } = context;
 
 	const google = new Google(
-		CLIENT_ID?CLIENT_ID:"", 
-		CLIENT_SECRET?CLIENT_SECRET:"", 
-		REDIRECT_URI?REDIRECT_URI:"");
-		
+		CLIENT_ID ? CLIENT_ID : '',
+		CLIENT_SECRET ? CLIENT_SECRET : '',
+		REDIRECT_URI ? REDIRECT_URI : ''
+	);
+
 	const code = url.searchParams.get('code');
 	const state = url.searchParams.get('state');
-	const storedCodeVerifier = cookies.get("google_oauth_code_verifier")?.value ?? null;
+	const storedCodeVerifier = cookies.get('google_oauth_code_verifier')?.value ?? null;
 	const storedState = cookies.get('google_oauth_state')?.value ?? null;
 	if (!code || !storedState || !storedCodeVerifier || state !== storedState) {
 		return redirect(loginURL);
@@ -40,18 +40,13 @@ export async function GET(context: APIContext): Promise<Response> {
 	try {
 		const tokens = await google.validateAuthorizationCode(code, storedCodeVerifier);
 
-		const response = await fetch("https://openidconnect.googleapis.com/v1/userinfo", {
+		const response = await fetch('https://openidconnect.googleapis.com/v1/userinfo', {
 			headers: {
-				Authorization: `Bearer ${tokens.accessToken}`
-			}
+				Authorization: `Bearer ${tokens.accessToken}`,
+			},
 		});
 		const googleUser: GoogleUser = await response.json();
-		const {
-			sub: googleId,
-			picture: avatar,
-			name,
-			email,
-		} = googleUser;
+		const { sub: googleId, picture: avatar, name, email } = googleUser;
 
 		const existingUser = await db.select().from(User).where(eq(User.googleId, googleId)).get();
 
@@ -63,14 +58,14 @@ export async function GET(context: APIContext): Promise<Response> {
 		}
 
 		// Google does not provide a username, so we create one based on the name
-		const fixname = name.replace(/\s/g, "").toLowerCase();
-		const username = `g_${fixname}`
+		const fixname = name.replace(/\s/g, '').toLowerCase();
+		const username = `g_${fixname}`;
 
 		const existingUserName = await db.select().from(User).where(eq(User.username, username)).get();
 		const existingUserByEmail = await db.select().from(User).where(eq(User.email, email)).get();
 
 		if (existingUserName || existingUserByEmail) {
-			return new Response("User already exists", {
+			return new Response('User already exists', {
 				status: 400,
 			});
 		}

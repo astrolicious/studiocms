@@ -1,19 +1,31 @@
 ---
-import { Card, Icon, ProgressBar } from "astrolace:components";
-import type { WebVitalsResponseItem } from "studiocms-dashboard:web-vitals";
-import { calculateClsScorePercent, clsDataAverage, lcpDataAverage, progressBarClsColor, progressBarClsTrackColor, calculateLcpScorePercent, progressBarLcpColor, progressBarLcpTrackColor, inpDataAverage, calculateInpScorePercent, progressBarInpColor, progressBarInpTrackColor } from "./webVitalsUtils";
-import speedometer from "../../../assets/speedometer.svg";
-import layoutWtf from "../../../assets/layout-wtf.svg";
-import cursor from "../../../assets/cursor.svg";
+import { Card, Icon, ProgressBar } from 'astrolace:components';
+import type { WebVitalsResponseItem } from 'studiocms-dashboard:web-vitals';
+import cursor from '../../../assets/cursor.svg';
+import layoutWtf from '../../../assets/layout-wtf.svg';
+import speedometer from '../../../assets/speedometer.svg';
+import {
+	calculateClsScorePercent,
+	calculateInpScorePercent,
+	calculateLcpScorePercent,
+	clsDataAverage,
+	inpDataAverage,
+	lcpDataAverage,
+	progressBarClsColor,
+	progressBarClsTrackColor,
+	progressBarInpColor,
+	progressBarInpTrackColor,
+	progressBarLcpColor,
+	progressBarLcpTrackColor,
+} from './webVitalsUtils';
 
 interface Props {
-    lcpData: WebVitalsResponseItem[];
-    clsData: WebVitalsResponseItem[];
-    inpData: WebVitalsResponseItem[];
+	lcpData: WebVitalsResponseItem[];
+	clsData: WebVitalsResponseItem[];
+	inpData: WebVitalsResponseItem[];
 }
 
 const { lcpData, clsData, inpData } = Astro.props;
-
 ---
 <div class="w-full grid max-sm:grid-cols-1 max-lg:grid-cols-2 lg:grid-cols-3 gap-4">
     <Card>

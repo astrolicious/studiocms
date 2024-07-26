@@ -1,9 +1,9 @@
-import type { APIContext } from "astro";
-import Config from 'virtual:studiocms/config';
-import { authHelper, type Locals } from "studiocms:helpers";
-import { simpleResponse } from "../../../utils/simpleResponse";
 import { logger } from '@it-astro:logger:StudioCMS';
-import { astroDb } from "../../../utils/astroDb";
+import { type Locals, authHelper } from 'studiocms:helpers';
+import Config from 'virtual:studiocms/config';
+import type { APIContext } from 'astro';
+import { astroDb } from '../../../utils/astroDb';
+import { simpleResponse } from '../../../utils/simpleResponse';
 
 const {
 	dashboardConfig: {
@@ -34,54 +34,54 @@ export async function POST(context: APIContext): Promise<Response> {
 		}
 	}
 
-    // Get form data
-    const formData = await context.request.formData();
-    const pageId = formData.get('page-id')?.toString();
-    const slug = formData.get('to-delete')?.toString();
-    const pack = formData.get('package')?.toString();
-    const slugConfirm = formData.get('slug')?.toString();
+	// Get form data
+	const formData = await context.request.formData();
+	const pageId = formData.get('page-id')?.toString();
+	const slug = formData.get('to-delete')?.toString();
+	const pack = formData.get('package')?.toString();
+	const slugConfirm = formData.get('slug')?.toString();
 
-    // Check if slug and slugConfirm exists
-    if (!slug || !slugConfirm) {
-        logger.error('Invalid slug or slug Confirmation');
-        return simpleResponse(400, 'Invalid slug or slug Confirmation');
-    }
+	// Check if slug and slugConfirm exists
+	if (!slug || !slugConfirm) {
+		logger.error('Invalid slug or slug Confirmation');
+		return simpleResponse(400, 'Invalid slug or slug Confirmation');
+	}
 
-    // Check if slug and slugConfirm are the same
-    if (slug !== slugConfirm) {
-        logger.error('Slug and Slug Confirmation do not match');
-        return simpleResponse(400, 'Slug and Slug Confirmation do not match');
-    }
+	// Check if slug and slugConfirm are the same
+	if (slug !== slugConfirm) {
+		logger.error('Slug and Slug Confirmation do not match');
+		return simpleResponse(400, 'Slug and Slug Confirmation do not match');
+	}
 
-    // Check for Page ID
-    if (!pageId) {
-        logger.error('Invalid Page ID');
-        return simpleResponse(400, 'Invalid Page ID');
-    }
+	// Check for Page ID
+	if (!pageId) {
+		logger.error('Invalid Page ID');
+		return simpleResponse(400, 'Invalid Page ID');
+	}
 
-    if (pack === '@astrolicious/studiocms') {
-        if (slug === 'index') {
-            logger.error('Cannot delete Index Page');
-            return simpleResponse(400, 'Cannot delete Index Page');
-        }
-        if (slug === 'about') {
-            logger.error('Cannot delete About Page');
-            return simpleResponse(400, 'Cannot delete About Page');
-        }
-    }
+	if (pack === '@astrolicious/studiocms') {
+		if (slug === 'index') {
+			logger.error('Cannot delete Index Page');
+			return simpleResponse(400, 'Cannot delete Index Page');
+		}
+		if (slug === 'about') {
+			logger.error('Cannot delete About Page');
+			return simpleResponse(400, 'Cannot delete About Page');
+		}
+	}
 
-    // Update Database
+	// Update Database
 
-    try {
-        await astroDb().pageContent().delete(pageId);
-        await astroDb().pageData().delete(pageId);
-        return simpleResponse(200, 'Page Deleted');
-    } catch (error) {
-        // Log error
-        if (error instanceof Error) {
-            logger.error(error.message);
-        }
-        // Return Error Response
-        return simpleResponse(500, 'Error deleting page');
-    }
+	try {
+		await astroDb().pageContent().delete(pageId);
+		await astroDb().pageData().delete(pageId);
+		return simpleResponse(200, 'Page Deleted');
+	} catch (error) {
+		// Log error
+		if (error instanceof Error) {
+			logger.error(error.message);
+		}
+		// Return Error Response
+		return simpleResponse(500, 'Error deleting page');
+	}
 }

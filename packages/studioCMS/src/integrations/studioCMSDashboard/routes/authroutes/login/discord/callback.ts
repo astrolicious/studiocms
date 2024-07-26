@@ -1,34 +1,33 @@
+import { randomUUID } from 'node:crypto';
 import { User, db, eq } from 'astro:db';
-import { Discord, OAuth2RequestError, type DiscordTokens } from 'arctic';
-import type { APIContext } from 'astro';
-import { lucia } from "studiocms-dashboard:auth";
-import Config from 'virtual:studiocms/config';
+import { lucia } from 'studiocms-dashboard:auth';
 import { authEnvCheck } from 'studiocms-dashboard:auth';
 import { StudioCMSRoutes } from 'studiocms-dashboard:routeMap';
-import { randomUUID } from 'node:crypto';
+import Config from 'virtual:studiocms/config';
+import { Discord, type DiscordTokens, OAuth2RequestError } from 'arctic';
+import type { APIContext } from 'astro';
 
-const { 
-	dashboardConfig: { 
-		AuthConfig: {
-			providers
-		},
-	} 
-  } = Config;
+const {
+	dashboardConfig: {
+		AuthConfig: { providers },
+	},
+} = Config;
 
-const { DISCORD: { CLIENT_ID, CLIENT_SECRET, REDIRECT_URI } } = await authEnvCheck(providers);
-const { authLinks: { loginURL }, mainLinks: { dashboardIndex } } = StudioCMSRoutes;
+const {
+	DISCORD: { CLIENT_ID, CLIENT_SECRET, REDIRECT_URI },
+} = await authEnvCheck(providers);
+const {
+	authLinks: { loginURL },
+	mainLinks: { dashboardIndex },
+} = StudioCMSRoutes;
 
 export async function GET(context: APIContext): Promise<Response> {
-	const {
-		url,
-		cookies,
-		redirect,
-	} = context;
+	const { url, cookies, redirect } = context;
 
 	const discord = new Discord(
-		CLIENT_ID?CLIENT_ID:"",
-		CLIENT_SECRET?CLIENT_SECRET:"",
-		REDIRECT_URI?REDIRECT_URI:""
+		CLIENT_ID ? CLIENT_ID : '',
+		CLIENT_SECRET ? CLIENT_SECRET : '',
+		REDIRECT_URI ? REDIRECT_URI : ''
 	);
 
 	const code = url.searchParams.get('code');
@@ -40,25 +39,23 @@ export async function GET(context: APIContext): Promise<Response> {
 
 	try {
 		const tokens: DiscordTokens = await discord.validateAuthorizationCode(code);
-		const discordResponse = await fetch("https://discord.com/api/users/@me", {
+		const discordResponse = await fetch('https://discord.com/api/users/@me', {
 			headers: {
-				Authorization: `Bearer ${tokens.accessToken}`
-			}
+				Authorization: `Bearer ${tokens.accessToken}`,
+			},
 		});
 
 		const discordUser: DiscordUser = await discordResponse.json();
 
-		const {
-			id: discordId,
-			avatar: avatarHash,
-			username,
-			global_name,
-			email
-		} = discordUser;
+		const { id: discordId, avatar: avatarHash, username, global_name, email } = discordUser;
 
 		const avatar = `https://cdn.discordapp.com/avatars/${discordId}/${avatarHash}.png`;
 
-		const existingUserById = await db.select().from(User).where(eq(User.discordId, discordId)).get();
+		const existingUserById = await db
+			.select()
+			.from(User)
+			.where(eq(User.discordId, discordId))
+			.get();
 
 		if (existingUserById) {
 			const session = await lucia.createSession(existingUserById.id, {});
@@ -66,12 +63,16 @@ export async function GET(context: APIContext): Promise<Response> {
 			cookies.set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
 			return redirect(dashboardIndex);
 		}
-		
-		const existingUserByUsername = await db.select().from(User).where(eq(User.username, username)).get();
+
+		const existingUserByUsername = await db
+			.select()
+			.from(User)
+			.where(eq(User.username, username))
+			.get();
 		const existingUserByEmail = await db.select().from(User).where(eq(User.email, email)).get();
 
 		if (existingUserByUsername || existingUserByEmail) {
-			return new Response("User already exists", {
+			return new Response('User already exists', {
 				status: 400,
 			});
 		}
