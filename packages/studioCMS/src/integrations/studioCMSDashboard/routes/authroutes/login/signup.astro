@@ -1,22 +1,25 @@
 ---
-import { Layout } from 'studiocms-dashboard:components';
-import Config from 'virtual:studiocms/config';
-import type { Locals } from 'studiocms:helpers';
-import OauthProviders from '../components/OauthProviders.astro';
-import { StudioCMSRoutes } from 'studiocms-dashboard:routeMap';
 import { Alert, Button, Divider, Icon, Input } from 'astrolace:components';
-import { makePageTitle } from '../../../utils/makePageTitle';
+import { Layout } from 'studiocms-dashboard:components';
 import { getSiteConfig } from 'studiocms-dashboard:contentHelper';
-import loginSvg from "../../../assets/login.svg";
-import exclamationOctogon from "../../../assets/exclamation-octagon.svg";
-import check2Circle from "../../../assets/check2-circle.svg";
+import { StudioCMSRoutes } from 'studiocms-dashboard:routeMap';
+import type { Locals } from 'studiocms:helpers';
+import Config from 'virtual:studiocms/config';
+import check2Circle from '../../../assets/check2-circle.svg';
+import exclamationOctogon from '../../../assets/exclamation-octagon.svg';
+import loginSvg from '../../../assets/login.svg';
+import { makePageTitle } from '../../../utils/makePageTitle';
+import OauthProviders from '../components/OauthProviders.astro';
 
-const {  dashboardConfig } = Config;
-const { authLinks: { loginURL, registerAPI }, mainLinks: { dashboardIndex } } = StudioCMSRoutes;
+const { dashboardConfig } = Config;
+const {
+	authLinks: { loginURL, registerAPI },
+	mainLinks: { dashboardIndex },
+} = StudioCMSRoutes;
 
 const contextConfig = await getSiteConfig();
 const locals = Astro.locals as Locals;
- 
+
 if (locals.isLoggedIn) {
 	return Astro.redirect(dashboardIndex);
 }

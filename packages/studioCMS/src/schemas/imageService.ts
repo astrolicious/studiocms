@@ -16,12 +16,12 @@ export const unpicConfigSchema = z
 		 *
 		 * Falls back to the value of `astroImageServiceConfig` if not set here
 		 */
-		fallbackService: z.union([z.custom<ImageCdn>(), z.enum(['sharp','squoosh'])]).optional(),
+		fallbackService: z.union([z.custom<ImageCdn>(), z.enum(['sharp', 'squoosh'])]).optional(),
 		/**
 		 * The default placeholder background to use for images.
 		 * Can be `"blurhash"`, `"dominantColor"`, or `"lqip"`
 		 * Local images don't support `"blurhash"`, `"dominantColor"` or `"lqip"`, and will
-		 * not include a background 
+		 * not include a background
 		 * Default is no background.
 		 * Note that because the element uses no Javascript, the background will not
 		 * be removed when the image loads, so you should not use it for images that

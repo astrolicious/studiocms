@@ -1,6 +1,6 @@
 declare module 'virtual:studiocms/config' {
-    const Config: import("@astrolicious/studiocms").StudioCMSOptions;
-    export default Config;
+	const Config: import('@astrolicious/studiocms').StudioCMSOptions;
+	export default Config;
 }
 
 interface ImportMetaEnv {

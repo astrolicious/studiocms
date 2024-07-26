@@ -1,99 +1,94 @@
-import { defineIntegration } from 'astro-integration-kit';
 import { imageService as unpicImageService } from '@unpic/astro/service';
+import { defineIntegration } from 'astro-integration-kit';
 import { passthroughImageService, sharpImageService, squooshImageService } from 'astro/config';
-import { studioLogger, studioLoggerOptsResolver } from '../utils';
 import { optionsSchema } from '../schemas';
 import { nodeImageHandlerStrings } from '../strings';
+import { studioLogger, studioLoggerOptsResolver } from '../utils';
 
 export default defineIntegration({
-    name: '@astrolicious/studioCMS:imageHandler/node',
-    optionsSchema,
-    setup({ options }) {
-        return {
-            hooks: {
-                "astro:config:setup": async ( params ) => {
+	name: '@astrolicious/studioCMS:imageHandler/node',
+	optionsSchema,
+	setup({ options }) {
+		return {
+			hooks: {
+				'astro:config:setup': async (params) => {
+					const { updateConfig } = params;
 
 					const {
-						updateConfig,
-					} = params;
+						imageService: {
+							useUnpic,
+							astroImageServiceConfig,
+							cdnPlugin,
+							unpicConfig: { cdnOptions, layout, placeholder, fallbackService },
+						},
+						verbose,
+					} = options;
 
-                    const { imageService: {
-                        useUnpic,
-                        astroImageServiceConfig,
-                        cdnPlugin,
-                        unpicConfig: {
-                            cdnOptions,
-                            layout,
-                            placeholder,
-                            fallbackService,
-                        }
-                    }, verbose } = options;
+					const { logInfo } = await studioLoggerOptsResolver(params.logger, verbose);
 
-						const { logInfo } = await studioLoggerOptsResolver(params.logger, verbose);
-
-						// Setup Image Service
-						if (cdnPlugin === 'cloudinary-js') {
-							if (astroImageServiceConfig === 'squoosh') {
-								studioLogger(logInfo, nodeImageHandlerStrings.cdnPluginStrings.Squoosh)
-								updateConfig({
-									image: { service: squooshImageService() },
-								});
-							} else if (astroImageServiceConfig === 'sharp') {
-								studioLogger(logInfo, nodeImageHandlerStrings.cdnPluginStrings.Sharp)
-								updateConfig({
-									image: { service: sharpImageService() },
-								});
-							} else if (astroImageServiceConfig === 'no-op') {
-								studioLogger(logInfo, nodeImageHandlerStrings.cdnPluginStrings.NoOp)
-								updateConfig({
-									image: { service: passthroughImageService() },
-								});
-							}
-						} else if (useUnpic && astroImageServiceConfig !== 'no-op') {
-							studioLogger(logInfo, nodeImageHandlerStrings.unpicStrings.default)
+					// Setup Image Service
+					if (cdnPlugin === 'cloudinary-js') {
+						if (astroImageServiceConfig === 'squoosh') {
+							studioLogger(logInfo, nodeImageHandlerStrings.cdnPluginStrings.Squoosh);
 							updateConfig({
-								image: {
-									service: unpicImageService({
-										placeholder: placeholder,
-										fallbackService: fallbackService ? fallbackService : astroImageServiceConfig,
-										layout: layout,
-										cdnOptions: cdnOptions,
-									}),
-								},
+								image: { service: squooshImageService() },
 							});
-						} else if (useUnpic && astroImageServiceConfig === 'no-op') {
-							studioLogger(logInfo, nodeImageHandlerStrings.unpicStrings.NoOp)
+						} else if (astroImageServiceConfig === 'sharp') {
+							studioLogger(logInfo, nodeImageHandlerStrings.cdnPluginStrings.Sharp);
 							updateConfig({
-								image: {
-									service: unpicImageService({
-										placeholder: placeholder,
-										fallbackService: fallbackService ? fallbackService : 'astro',
-										layout: layout,
-										cdnOptions: cdnOptions,
-									}),
-								},
+								image: { service: sharpImageService() },
 							});
-						} else {
-							studioLogger(logInfo, nodeImageHandlerStrings.unpicStrings.disabled)
-							if (astroImageServiceConfig === 'squoosh') {
-								studioLogger(logInfo, nodeImageHandlerStrings.Squoosh)
-								updateConfig({
-									image: { service: squooshImageService() },
-								});
-							} else if (astroImageServiceConfig === 'sharp') {
-								studioLogger(logInfo, nodeImageHandlerStrings.Sharp)
-								updateConfig({
-									image: { service: sharpImageService() },
-								});
-							} else if (astroImageServiceConfig === 'no-op') {
-								studioLogger(logInfo, nodeImageHandlerStrings.NoOp)
-								updateConfig({
-									image: { service: passthroughImageService() },
-								});
-							}
+						} else if (astroImageServiceConfig === 'no-op') {
+							studioLogger(logInfo, nodeImageHandlerStrings.cdnPluginStrings.NoOp);
+							updateConfig({
+								image: { service: passthroughImageService() },
+							});
 						}
-                }
-            }
-        }
-    },
+					} else if (useUnpic && astroImageServiceConfig !== 'no-op') {
+						studioLogger(logInfo, nodeImageHandlerStrings.unpicStrings.default);
+						updateConfig({
+							image: {
+								service: unpicImageService({
+									placeholder: placeholder,
+									fallbackService: fallbackService ? fallbackService : astroImageServiceConfig,
+									layout: layout,
+									cdnOptions: cdnOptions,
+								}),
+							},
+						});
+					} else if (useUnpic && astroImageServiceConfig === 'no-op') {
+						studioLogger(logInfo, nodeImageHandlerStrings.unpicStrings.NoOp);
+						updateConfig({
+							image: {
+								service: unpicImageService({
+									placeholder: placeholder,
+									fallbackService: fallbackService ? fallbackService : 'astro',
+									layout: layout,
+									cdnOptions: cdnOptions,
+								}),
+							},
+						});
+					} else {
+						studioLogger(logInfo, nodeImageHandlerStrings.unpicStrings.disabled);
+						if (astroImageServiceConfig === 'squoosh') {
+							studioLogger(logInfo, nodeImageHandlerStrings.Squoosh);
+							updateConfig({
+								image: { service: squooshImageService() },
+							});
+						} else if (astroImageServiceConfig === 'sharp') {
+							studioLogger(logInfo, nodeImageHandlerStrings.Sharp);
+							updateConfig({
+								image: { service: sharpImageService() },
+							});
+						} else if (astroImageServiceConfig === 'no-op') {
+							studioLogger(logInfo, nodeImageHandlerStrings.NoOp);
+							updateConfig({
+								image: { service: passthroughImageService() },
+							});
+						}
+					}
+				},
+			},
+		};
+	},
 });

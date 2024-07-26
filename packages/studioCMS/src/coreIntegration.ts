@@ -1,36 +1,51 @@
-/// <reference types="@astrojs/db" />
-import { checkAstroConfig, studioLogger, studioLoggerOptsResolver, makeFrontend, addIntegrationArray, addIntegrationArrayWithCheck } from './utils';
-import { studioCMSRobotsTXT, studioCMSImageHandler, studioCMSDashboard } from './integrations';
-import { addDts, addVirtualImports, addVitePlugin, createResolver, defineIntegration } from 'astro-integration-kit';
-import { optionsResolver, vResolver } from './resolvers';
+import { runtimeLogger } from '@inox-tools/runtime-logger';
+import {
+	addDts,
+	addVirtualImports,
+	addVitePlugin,
+	createResolver,
+	defineIntegration,
+} from 'astro-integration-kit';
 // import inoxsitemap from '@inox-tools/sitemap-ext';
 import { studioCMSPluginList } from '.';
-import { getStudioConfigFileUrl } from './studiocms-config';
-import { optionsSchema } from './schemas';
 import { version } from '../package.json';
+import { studioCMSDashboard, studioCMSImageHandler, studioCMSRobotsTXT } from './integrations';
+import { optionsResolver, vResolver } from './resolvers';
+import { optionsSchema } from './schemas';
 import { CoreStrings, robotsTXTPreset } from './strings';
+import { getStudioConfigFileUrl } from './studiocms-config';
+/// <reference types="@astrojs/db" />
+import {
+	addIntegrationArray,
+	addIntegrationArrayWithCheck,
+	checkAstroConfig,
+	makeFrontend,
+	studioLogger,
+	studioLoggerOptsResolver,
+} from './utils';
 import { namespaceBuiltinsPlugin } from './utils/namespaceBuiltins';
-import { runtimeLogger } from '@inox-tools/runtime-logger';
 
 // Main Integration
 export default defineIntegration({
 	name: '@astrolicious/studiocms',
-	optionsSchema, 
+	optionsSchema,
 	setup({ name, options }) {
 		// Register StudioCMS Core as First Plugin
-		studioCMSPluginList.set('@astrolicious/studiocms', { name: '@astrolicious/studiocms', label: 'StudioCMS' });
-		
+		studioCMSPluginList.set('@astrolicious/studiocms', {
+			name: '@astrolicious/studiocms',
+			label: 'StudioCMS',
+		});
+
 		// Create Resolver for Virtual Imports
 		const { resolve } = createResolver(import.meta.url);
 
 		return {
 			hooks: {
-				'astro:db:setup': ({ extendDb }) => { 
+				'astro:db:setup': ({ extendDb }) => {
 					// Configure `@astrojs/db` integration to include the StudioCMS Database Table Schema
 					extendDb({ configEntrypoint: resolve('./db/config.ts') });
 				},
-				'astro:config:setup': async ( params ) => {
-
+				'astro:config:setup': async (params) => {
 					// Destructure Params
 					const { config: astroConfig, addWatchFile } = params;
 
@@ -41,10 +56,10 @@ export default defineIntegration({
 					const resolvedOptions = await optionsResolver(params, options);
 
 					// Add Namespace Builtins Plugin for vite
-					addVitePlugin(params, { plugin: namespaceBuiltinsPlugin() })
+					addVitePlugin(params, { plugin: namespaceBuiltinsPlugin() });
 
 					// Create Runtime Logger
-					runtimeLogger(params, { name: "StudioCMS" })
+					runtimeLogger(params, { name: 'StudioCMS' });
 
 					// Setup Logger
 					const LoggerOpts = await studioLoggerOptsResolver(params.logger, resolvedOptions.verbose);
@@ -58,12 +73,13 @@ export default defineIntegration({
 					const { resolve: rootResolve } = createResolver(astroConfig.root.pathname);
 
 					// Create Virtual Resolver
-					const { virtualImportMap, dtsFile } = vResolver({ 
+					const { virtualImportMap, dtsFile } = vResolver({
 						overrides: {
-							FormattedDateOverride: resolvedOptions.overrides.FormattedDateOverride && 
+							FormattedDateOverride:
+								resolvedOptions.overrides.FormattedDateOverride &&
 								rootResolve(resolvedOptions.overrides.FormattedDateOverride),
-						 }, 
-						 imports: { resolvedOptions, version, astroConfig }
+						},
+						imports: { resolvedOptions, version, astroConfig },
 					});
 
 					// Add Virtual Imports
@@ -76,20 +92,21 @@ export default defineIntegration({
 
 					// Generate Default Frontend Routes if Enabled
 					makeFrontend(params, {
-						resolvedOptions, LoggerOpts, 
+						resolvedOptions,
+						LoggerOpts,
 						default404Route: resolve('./defaultRoutes/404.astro'),
 						defaultRoutes: [
 							{ pattern: '/', entrypoint: resolve('./defaultRoutes/index.astro') },
-							{ pattern: '[...slug]', entrypoint: resolve('./defaultRoutes/[...slug].astro') }
+							{ pattern: '[...slug]', entrypoint: resolve('./defaultRoutes/[...slug].astro') },
 						],
 					});
 
 					// Add Internal Integrations
-					addIntegrationArray(params, { 
+					addIntegrationArray(params, {
 						LoggerOpts,
-						integrations: [ 
-							studioCMSDashboard(resolvedOptions), 
-							studioCMSImageHandler(resolvedOptions) 
+						integrations: [
+							studioCMSDashboard(resolvedOptions),
+							studioCMSImageHandler(resolvedOptions),
 						],
 					});
 
@@ -97,19 +114,20 @@ export default defineIntegration({
 					addIntegrationArrayWithCheck(params, {
 						LoggerOpts,
 						integrations: [
-							{ 
-								enabled: resolvedOptions.includedIntegrations.useAstroRobots, 
-								knownSimilar: ['astro-robots-txt', 'astro-robots'], 
-								integration: studioCMSRobotsTXT({ 
-									...robotsTXTPreset, ...resolvedOptions.includedIntegrations.astroRobotsConfig 
-								}) 
-							}, 
+							{
+								enabled: resolvedOptions.includedIntegrations.useAstroRobots,
+								knownSimilar: ['astro-robots-txt', 'astro-robots'],
+								integration: studioCMSRobotsTXT({
+									...robotsTXTPreset,
+									...resolvedOptions.includedIntegrations.astroRobotsConfig,
+								}),
+							},
 							// {
 							// 	enabled: resolvedOptions.includedIntegrations.useInoxSitemap,
 							// 	knownSimilar: ['@astrojs/sitemap', '@inox-tools/sitemap-ext', '@inox-tools/declarative-sitemap'],
 							// 	integration: inoxsitemap()
 							// }
-						]
+						],
 					});
 
 					// Log Setup Complete

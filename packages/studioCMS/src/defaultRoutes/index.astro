@@ -1,10 +1,10 @@
 ---
-import { StudioCMSRenderer, contentHelper, FrontLayout } from 'studiocms:components'
+import { FrontLayout, StudioCMSRenderer, contentHelper } from 'studiocms:components';
 
-const { title, description, heroImage, content, id } = await contentHelper("index")
+const { title, description, heroImage, content, id } = await contentHelper('index');
 
-if(!id){
-	return new Response(null, { status: 404 })
+if (!id) {
+	return new Response(null, { status: 404 });
 }
 ---
 

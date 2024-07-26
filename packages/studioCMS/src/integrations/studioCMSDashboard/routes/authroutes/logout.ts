@@ -1,8 +1,11 @@
-import type { APIContext } from 'astro';
 import { lucia } from 'studiocms-dashboard:auth';
-import { StudioCMSRoutes } from "studiocms-dashboard:routeMap"
+import { StudioCMSRoutes } from 'studiocms-dashboard:routeMap';
+import type { APIContext } from 'astro';
 
-const { authLinks: { loginURL }, mainLinks: { baseSiteURL } } = StudioCMSRoutes;
+const {
+	authLinks: { loginURL },
+	mainLinks: { baseSiteURL },
+} = StudioCMSRoutes;
 
 export async function GET(context: APIContext): Promise<Response> {
 	return context.redirect(baseSiteURL);

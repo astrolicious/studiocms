@@ -1,38 +1,39 @@
 ---
-import { Navigation, getSiteConfig } from 'studiocms:components'
+import { Navigation, getSiteConfig } from 'studiocms:components';
 import Config from 'virtual:studiocms/config';
 import BaseHead from './BaseHead.astro';
 import Footer from './Footer.astro';
 
 const { title: SiteTitle, description: SiteDescription } = await getSiteConfig();
 
-const { defaultFrontEndConfig: { htmlDefaultLanguage } } = Config;
+const {
+	defaultFrontEndConfig: { htmlDefaultLanguage },
+} = Config;
 
 type Props = {
 	title: string;
 	description: string;
-	lang?: string|undefined;
-	heroImage?: string|undefined;
-	siteTitle?: string|undefined;
-	siteDescription?: string|undefined;
-	pageTitleDelimiter?: string|undefined;
-	pageDescriptionDelimiter?: string|undefined;
+	lang?: string | undefined;
+	heroImage?: string | undefined;
+	siteTitle?: string | undefined;
+	siteDescription?: string | undefined;
+	pageTitleDelimiter?: string | undefined;
+	pageDescriptionDelimiter?: string | undefined;
 };
 
-const { 
-	title, 
-	description, 
-	heroImage, 
+const {
+	title,
+	description,
+	heroImage,
 	lang = htmlDefaultLanguage || 'en',
-	siteTitle = SiteTitle, 
-	siteDescription = SiteDescription, 
-	pageTitleDelimiter = "|", 
-	pageDescriptionDelimiter = "-" 
+	siteTitle = SiteTitle,
+	siteDescription = SiteDescription,
+	pageTitleDelimiter = '|',
+	pageDescriptionDelimiter = '-',
 } = Astro.props;
 
 const pageDescription = `${description} ${pageDescriptionDelimiter} ${siteDescription}`;
 const pageTitle = `${title} ${pageTitleDelimiter} ${siteTitle}`;
-
 ---
 
 <!doctype html>

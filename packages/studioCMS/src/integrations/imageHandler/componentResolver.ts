@@ -1,36 +1,34 @@
-import { addDts, addVirtualImports, createResolver, defineUtility } from "astro-integration-kit";
-import { fileFactory } from "../../utils/fileFactory";
-
+import { addDts, addVirtualImports, createResolver, defineUtility } from 'astro-integration-kit';
+import { fileFactory } from '../../utils/fileFactory';
 
 export const componentResolver = defineUtility('astro:config:setup')(
-    (params, options: { name: string, CustomImageOverride: string | undefined }) => {
+	(params, options: { name: string; CustomImageOverride: string | undefined }) => {
+		// Destructure Params
+		const { config: astroConfig } = params;
 
-        // Destructure Params
-        const { config: astroConfig } = params;
+		// Create Resolver for User-Defined Virtual Imports
+		const { resolve: rootResolve } = createResolver(astroConfig.root.pathname);
+		const { resolve } = createResolver(import.meta.url);
 
-        // Create Resolver for User-Defined Virtual Imports
-        const { resolve: rootResolve } = createResolver(astroConfig.root.pathname);
-        const { resolve } = createResolver(import.meta.url);
+		// Create Virtual Resolver
+		let customImageResolved: string;
 
-        // Create Virtual Resolver
-        let customImageResolved: string
+		if (options.CustomImageOverride) {
+			customImageResolved = rootResolve(options.CustomImageOverride);
+		} else {
+			customImageResolved = resolve('./components/CustomImage.astro');
+		}
 
-        if (options.CustomImageOverride) {
-            customImageResolved = rootResolve(options.CustomImageOverride)
-        } else {
-            customImageResolved = resolve('./components/CustomImage.astro')
-        }
+		addVirtualImports(params, {
+			name: options.name,
+			imports: {
+				'studiocms:imageHandler/components': `export { default as CustomImage } from '${customImageResolved}';`,
+			},
+		});
 
-        addVirtualImports(params, {
-            name: options.name,
-            imports: {
-                'studiocms:imageHandler/components': `export { default as CustomImage } from '${customImageResolved}';`
-            }
-        })
+		const customImageDTS = fileFactory();
 
-        const customImageDTS = fileFactory();
-
-        customImageDTS.addLines(`declare module 'studiocms:imageHandler/components' {
+		customImageDTS.addLines(`declare module 'studiocms:imageHandler/components' {
         /** 
          * # Custom Image Component for StudioCMS:imageHandler 
          * 
@@ -44,12 +42,11 @@ export const componentResolver = defineUtility('astro:config:setup')(
          * @props {number} height - Image Height
         */
         export const CustomImage: typeof import('${customImageResolved}').default;
-        }`)
+        }`);
 
-        addDts(params, {
-            name: options.name,
-            content: customImageDTS.text()
-        })
-
-    }
-)
+		addDts(params, {
+			name: options.name,
+			content: customImageDTS.text(),
+		});
+	}
+);

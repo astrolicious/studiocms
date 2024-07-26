@@ -10,11 +10,7 @@
     "type": "git",
     "url": "git+https://github.com/astrolicious/studiocms.git"
   },
-  "contributors": [
-    "Adammatthiesen",
-    "jdtjenkins",
-    "dreyfus92"
-  ],
+  "contributors": ["Adammatthiesen", "jdtjenkins", "dreyfus92"],
   "license": "MIT",
   "keywords": [
     "astro",
@@ -34,9 +30,7 @@
     "access": "public"
   },
   "sideEffects": false,
-  "files": [
-    "src"
-  ],
+  "files": ["src"],
   "exports": {
     ".": {
       "import": "./src/index.ts",

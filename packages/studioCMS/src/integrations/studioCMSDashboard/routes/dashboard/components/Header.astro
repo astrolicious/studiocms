@@ -1,28 +1,32 @@
 ---
-import { authHelper, type Locals } from "studiocms:helpers"
-import { StudioCMSRoutes } from "studiocms-dashboard:routeMap"
-import ThemeToggleButton from "./ThemeToggleButton.astro"
-import SideBarMenu from "./SideBarMenu.astro";
-import type { StudioCMSSocials } from "../layouts/studiocms-socials";
-import { Avatar, Button, Divider, Drawer, IconButton } from "astrolace:components";
-import githubLogo from "../../../assets/github-logo.svg";
-import listIcon from "../../../assets/list.svg";
-import personFillIcon from "../../../assets/person-fill.svg";
+import { Avatar, Button, Divider, Drawer, IconButton } from 'astrolace:components';
+import { StudioCMSRoutes } from 'studiocms-dashboard:routeMap';
+import { type Locals, authHelper } from 'studiocms:helpers';
+import githubLogo from '../../../assets/github-logo.svg';
+import listIcon from '../../../assets/list.svg';
+import personFillIcon from '../../../assets/person-fill.svg';
+import type { StudioCMSSocials } from '../layouts/studiocms-socials';
+import SideBarMenu from './SideBarMenu.astro';
+import ThemeToggleButton from './ThemeToggleButton.astro';
 
 type Props = { studioCMSSocials: StudioCMSSocials };
-const { studioCMSSocials: { github: githubURL } } = Astro.props;
-const { mainLinks: { dashboardIndex } } = StudioCMSRoutes;
+const {
+	studioCMSSocials: { github: githubURL },
+} = Astro.props;
+const {
+	mainLinks: { dashboardIndex },
+} = StudioCMSRoutes;
 const { avatar, name, permissionLevel } = await authHelper(Astro.locals as Locals);
 
 let useName: string;
 
-if ( permissionLevel === "unknown" ) {
-  useName = "Guest";
-} 
-if ( !name ) {
-  useName = "User";
+if (permissionLevel === 'unknown') {
+	useName = 'Guest';
+}
+if (!name) {
+	useName = 'User';
 } else {
-  useName = name;
+	useName = name;
 }
 ---
 

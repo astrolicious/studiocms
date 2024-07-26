@@ -1,20 +1,17 @@
 ---
-import { twMerge } from 'tailwind-merge'
+import { twMerge } from 'tailwind-merge';
 interface Props {
-  extraClasses?: string
-  orientation?: 'horizontal' | 'vertical'
+	extraClasses?: string;
+	orientation?: 'horizontal' | 'vertical';
 }
 
-const { extraClasses, orientation } = Astro.props
+const { extraClasses, orientation } = Astro.props;
 
 const horizontalClass = twMerge(
-  'mx-4 border-b w-full border-gray-300 hidden md:block',
-  extraClasses,
-)
-const verticalClass = twMerge(
-  'my-4 h-full border-r border-gray-300 hidden md:block',
-  extraClasses,
-)
+	'mx-4 border-b w-full border-gray-300 hidden md:block',
+	extraClasses
+);
+const verticalClass = twMerge('my-4 h-full border-r border-gray-300 hidden md:block', extraClasses);
 ---
 
 {

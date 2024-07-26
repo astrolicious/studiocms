@@ -1,13 +1,13 @@
 export const fileFactory = () => {
 	// biome-ignore lint/style/noUnusedTemplateLiteral: <explanation>
-	let file = ``
+	let file = ``;
 
 	return {
 		addLines(lines: string) {
-			file += lines
+			file += lines;
 		},
 		text() {
-			return file
-		}
-	}
-}
+			return file;
+		},
+	};
+};

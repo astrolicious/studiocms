@@ -1,11 +1,13 @@
 ---
 import { Icon, VisuallyHidden } from 'astrolace:components';
-import type { StudioCMSSocials } from '../layouts/studiocms-socials';
-import studioCMSLightLogo from '../../../assets/logo-light.svg';
 import studioCMSDarkLogo from '../../../assets/logo-dark.svg';
+import studioCMSLightLogo from '../../../assets/logo-light.svg';
+import type { StudioCMSSocials } from '../layouts/studiocms-socials';
 
 type Props = { studioCMSSocials: StudioCMSSocials };
-const { studioCMSSocials: { github: githubURL, githubContributors, githubLicense } } = Astro.props;
+const {
+	studioCMSSocials: { github: githubURL, githubContributors, githubLicense },
+} = Astro.props;
 
 const today = new Date();
 ---

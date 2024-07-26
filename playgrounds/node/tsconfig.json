@@ -20,11 +20,6 @@
     "strict": true,
     "outDir": "../../.moon/cache/types/playgrounds/node"
   },
-  "exclude": [
-    "dist"
-  ],
-  "include": [
-    "src/**/*",
-    ".astro/**/*",
-  ]
+  "exclude": ["dist"],
+  "include": ["src/**/*", ".astro/**/*"]
 }

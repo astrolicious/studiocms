@@ -1,16 +1,17 @@
 ---
-import { Tab, TabGroup, TabPanel } from "astrolace:components";
-import DataAnalyticsTable from "./DataAnalyticsTable.astro";
-import type { WebVitalsResponseItem } from "studiocms-dashboard:web-vitals";
-import { buildPageRouteDataObject } from "./buildPageRouteDataObject";
+import { Tab, TabGroup, TabPanel } from 'astrolace:components';
+import type { WebVitalsResponseItem } from 'studiocms-dashboard:web-vitals';
+import DataAnalyticsTable from './DataAnalyticsTable.astro';
+import { buildPageRouteDataObject } from './buildPageRouteDataObject';
 
 interface Props {
-    webVitalData: WebVitalsResponseItem[];
+	webVitalData: WebVitalsResponseItem[];
 }
 
 const { webVitalData } = Astro.props;
 
-const { last24HoursData, last30DaysData, last7DaysData, perRouteData } = buildPageRouteDataObject(webVitalData);
+const { last24HoursData, last30DaysData, last7DaysData, perRouteData } =
+	buildPageRouteDataObject(webVitalData);
 ---
 
 <TabGroup>

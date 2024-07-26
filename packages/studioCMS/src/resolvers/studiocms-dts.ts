@@ -1,13 +1,12 @@
-import type { VirtualResolver } from "./types";
-import { fileFactory } from "../utils/fileFactory";
+import { fileFactory } from '../utils/fileFactory';
+import type { VirtualResolver } from './types';
 
 export const DTSResolver = (virtualResolver: VirtualResolver) => {
+	// Create Virtual DTS File
+	const studioCMSDTS = fileFactory();
 
-    // Create Virtual DTS File
-    const studioCMSDTS = fileFactory();
-    
-    // Add Virtual DTS Lines - Components
-    studioCMSDTS.addLines(`declare module 'studiocms:components' {
+	// Add Virtual DTS Lines - Components
+	studioCMSDTS.addLines(`declare module 'studiocms:components' {
         /** 
          * # Formatted Date Component used for rendering dates in a human readable format 
          * 
@@ -201,9 +200,9 @@ export const DTSResolver = (virtualResolver: VirtualResolver) => {
         */
         export const Genericheader: typeof import('${virtualResolver.Genericheader}').default;
     }`);
-    
-    // Add Virtual DTS Lines - Helpers
-    studioCMSDTS.addLines(`declare module 'studiocms:helpers' {
+
+	// Add Virtual DTS Lines - Helpers
+	studioCMSDTS.addLines(`declare module 'studiocms:helpers' {
 
         /** 
          * # Local Schema Type - This may be out of date W.I.P.
@@ -345,7 +344,7 @@ export const DTSResolver = (virtualResolver: VirtualResolver) => {
          */
         export const fileWithBase: typeof import('${virtualResolver.pathGenerators}').fileWithBase;
     }`);
-    
-    // Return Virtual DTS File
-    return studioCMSDTS.text();
-    }
+
+	// Return Virtual DTS File
+	return studioCMSDTS.text();
+};

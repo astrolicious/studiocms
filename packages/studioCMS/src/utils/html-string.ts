@@ -1,6 +1,5 @@
-
 export class HTMLString extends String {
-    get [Symbol.toStringTag]() {
-        return 'HTMLString';
-    }
+	get [Symbol.toStringTag]() {
+		return 'HTMLString';
+	}
 }

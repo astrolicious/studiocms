@@ -1,13 +1,13 @@
+import config from 'studiocms-blog:config';
+import { pages } from 'studiocms-blog:context';
+import { StudioCMSRenderer, contentHelper, getPageList, getSiteConfig } from 'studiocms:components';
+import { pathWithBase } from 'studiocms:helpers';
 import rss from '@astrojs/rss';
 import type { APIContext } from 'astro';
-import { StudioCMSRenderer, contentHelper, getPageList, getSiteConfig } from 'studiocms:components';
-import config from 'studiocms-blog:config';
-import { pathWithBase } from 'studiocms:helpers';
-import { pages } from 'studiocms-blog:context';
 
-import { experimental_AstroContainer as AstroContainer } from 'astro/container'
+import { experimental_AstroContainer as AstroContainer } from 'astro/container';
 
-const blogRouteFullPath = pages.get('/blog/[...slug]')
+const blogRouteFullPath = pages.get('/blog/[...slug]');
 
 function getBlogRoute(slug: string) {
 	if (blogRouteFullPath) {
@@ -17,44 +17,42 @@ function getBlogRoute(slug: string) {
 }
 
 export async function GET(context: APIContext) {
-
 	// Get Config from Studio Database
-    const studioCMSConfig = await getSiteConfig();
+	const studioCMSConfig = await getSiteConfig();
 
 	// Set Title, Description, and Site
-    const title = config.title ?? studioCMSConfig.title;
-    const description = config.description ?? studioCMSConfig.description;
-    const site = context.site ?? 'https://example.com';
+	const title = config.title ?? studioCMSConfig.title;
+	const description = config.description ?? studioCMSConfig.description;
+	const site = context.site ?? 'https://example.com';
 
 	// Get all Posts from Studio Database
-    const unorderedPosts = await getPageList();
+	const unorderedPosts = await getPageList();
 
 	// Order Posts by Published Date
-    const orderedPosts = unorderedPosts
-		.filter(page => page.package === "@astrolicious/studiocms-blog")
+	const orderedPosts = unorderedPosts
+		.filter((page) => page.package === '@astrolicious/studiocms-blog')
 		.sort((a, b) => Date.parse(b.publishedAt.toString()) - Date.parse(a.publishedAt.toString()));
 
 	// Render Known Posts
-	const items = await Promise.all(orderedPosts.map(async ({ 
-		slug, title, description, publishedAt: pubDate , package: pkg 
-	}) => {
-		const { content: fetchedContent } = await contentHelper(slug, pkg);
-		const container = await AstroContainer.create();
-		const renderedContent = await container.renderToString(
-			StudioCMSRenderer,
-			{ props: { content: fetchedContent } }
-		);
+	const items = await Promise.all(
+		orderedPosts.map(async ({ slug, title, description, publishedAt: pubDate, package: pkg }) => {
+			const { content: fetchedContent } = await contentHelper(slug, pkg);
+			const container = await AstroContainer.create();
+			const renderedContent = await container.renderToString(StudioCMSRenderer, {
+				props: { content: fetchedContent },
+			});
 
-		const content = renderedContent
+			const content = renderedContent
 				.replace(/<!DOCTYPE html>/, '')
 				.replace(/<html.*?>/, '')
 				.replace(/<\/html>/, '')
 				.trim();
 
-		const link = pathWithBase(getBlogRoute(slug));
+			const link = pathWithBase(getBlogRoute(slug));
 
-		return { title, description, pubDate, content, link };
-	}));
-	
+			return { title, description, pubDate, content, link };
+		})
+	);
+
 	return rss({ title, description, site, items });
 }

@@ -1,19 +1,21 @@
+import { authEnvCheck } from 'studiocms-dashboard:auth';
+import Config from 'virtual:studiocms/config';
 import { generateState } from 'arctic';
 import { Discord } from 'arctic';
 import type { APIRoute } from 'astro';
-import { authEnvCheck } from 'studiocms-dashboard:auth';
-import Config from 'virtual:studiocms/config';
 
-const { DISCORD: { CLIENT_ID, CLIENT_SECRET, REDIRECT_URI } } = await authEnvCheck(Config.dashboardConfig.AuthConfig.providers);
+const {
+	DISCORD: { CLIENT_ID, CLIENT_SECRET, REDIRECT_URI },
+} = await authEnvCheck(Config.dashboardConfig.AuthConfig.providers);
 export const GET: APIRoute = async ({ redirect, cookies }) => {
 	const discord = new Discord(
-		CLIENT_ID?CLIENT_ID:"",
-		CLIENT_SECRET?CLIENT_SECRET:"",
-		REDIRECT_URI?REDIRECT_URI:""
+		CLIENT_ID ? CLIENT_ID : '',
+		CLIENT_SECRET ? CLIENT_SECRET : '',
+		REDIRECT_URI ? REDIRECT_URI : ''
 	);
 
 	const state = generateState();
-	const url: URL = await discord.createAuthorizationURL(state, { scopes: ['identify', 'email'], });
+	const url: URL = await discord.createAuthorizationURL(state, { scopes: ['identify', 'email'] });
 
 	cookies.set('discord_oauth_state', state, {
 		path: import.meta.env.BASE_URL,

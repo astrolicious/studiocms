@@ -1,10 +1,6 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": [
-    "config:best-practices",
-    "schedule:earlyMondays",
-    ":preserveSemverRanges"
-  ],
+  "extends": ["config:best-practices", "schedule:earlyMondays", ":preserveSemverRanges"],
   "dependencyDashboard": true,
   "lockFileMaintenance": {
     "enabled": true
@@ -14,33 +10,20 @@
     "**/bower_components/**",
     "packages/ghost-to-studio/package.json"
   ],
-  "labels": [
-    "dependencies"
-  ],
+  "labels": ["dependencies"],
   "additionalBranchPrefix": "{{parentDir}}-",
-  "gitIgnoredAuthors": [
-    "github+renovate@astro-studiocms.xyz"
-  ],
+  "gitIgnoredAuthors": ["github+renovate@astro-studiocms.xyz"],
   "prHourlyLimit": 3,
   "rangeStrategy": "bump",
-  "reviewers": [
-    "team:exalted"
-  ],
+  "reviewers": ["team:exalted"],
   "packageRules": [
     {
-      "matchDepTypes": [
-        "peerDependencies"
-      ],
+      "matchDepTypes": ["peerDependencies"],
       "enabled": false
     },
     {
-      "matchDepTypes": [
-        "packageManager",
-        "engines"
-      ],
-      "labels": [
-        "dependencies"
-      ],
+      "matchDepTypes": ["packageManager", "engines"],
+      "labels": ["dependencies"],
       "enabled": false
     }
   ]

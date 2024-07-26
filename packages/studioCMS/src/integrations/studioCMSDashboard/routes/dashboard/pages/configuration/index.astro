@@ -1,14 +1,14 @@
 ---
-import { Layout } from 'studiocms-dashboard:components';
-import { authHelper, type Locals } from 'studiocms:helpers';
-import { StudioCMSRoutes } from 'studiocms-dashboard:routeMap';
-import { Alert, Button, Divider, Icon, Input } from 'astrolace:components';
-import { getSiteConfig } from 'studiocms-dashboard:contentHelper';
-import CrumbStack from '../../components/CrumbStack.astro';
-import { makePageTitle } from '../../../../utils/makePageTitle';
 import { logger } from '@it-astro:logger:StudioCMS';
-import exclamationOctagon from "../../../../assets/exclamation-octagon.svg";
-import check2Circle from "../../../../assets/check2-circle.svg";
+import { Alert, Button, Divider, Icon, Input } from 'astrolace:components';
+import { Layout } from 'studiocms-dashboard:components';
+import { getSiteConfig } from 'studiocms-dashboard:contentHelper';
+import { StudioCMSRoutes } from 'studiocms-dashboard:routeMap';
+import { type Locals, authHelper } from 'studiocms:helpers';
+import check2Circle from '../../../../assets/check2-circle.svg';
+import exclamationOctagon from '../../../../assets/exclamation-octagon.svg';
+import { makePageTitle } from '../../../../utils/makePageTitle';
+import CrumbStack from '../../components/CrumbStack.astro';
 
 const {
 	mainLinks: { dashboardIndex, siteConfiguration, configurationAdmins },

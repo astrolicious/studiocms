@@ -1,33 +1,29 @@
+import { randomUUID } from 'node:crypto';
 import { User, db, eq } from 'astro:db';
+import { authEnvCheck, lucia } from 'studiocms-dashboard:auth';
+import { StudioCMSRoutes } from 'studiocms-dashboard:routeMap';
+import Config from 'virtual:studiocms/config';
 import { GitHub, OAuth2RequestError } from 'arctic';
 import type { APIContext } from 'astro';
-import { authEnvCheck, lucia } from "studiocms-dashboard:auth";
-import Config from 'virtual:studiocms/config';
-import { StudioCMSRoutes } from 'studiocms-dashboard:routeMap';
-import { randomUUID } from 'node:crypto';
 
-const { 
-	dashboardConfig: { 
-		AuthConfig: {
-			providers
-		},
-	} 
-  } = Config;
+const {
+	dashboardConfig: {
+		AuthConfig: { providers },
+	},
+} = Config;
 
-const { GITHUB: { CLIENT_ID, CLIENT_SECRET } } = await authEnvCheck(providers);
-const { authLinks: { loginURL }, mainLinks: { dashboardIndex } } = StudioCMSRoutes;
+const {
+	GITHUB: { CLIENT_ID, CLIENT_SECRET },
+} = await authEnvCheck(providers);
+const {
+	authLinks: { loginURL },
+	mainLinks: { dashboardIndex },
+} = StudioCMSRoutes;
 
 export async function GET(context: APIContext): Promise<Response> {
-	const {
-		url,
-		cookies,
-		redirect,
-	} = context;
+	const { url, cookies, redirect } = context;
 
-	const github = new GitHub(
-		CLIENT_ID?CLIENT_ID:"",
-		CLIENT_SECRET?CLIENT_SECRET:""
-	);
+	const github = new GitHub(CLIENT_ID ? CLIENT_ID : '', CLIENT_SECRET ? CLIENT_SECRET : '');
 
 	const code = url.searchParams.get('code');
 	const state = url.searchParams.get('state');
@@ -67,7 +63,7 @@ export async function GET(context: APIContext): Promise<Response> {
 		const existingUserByEmail = await db.select().from(User).where(eq(User.email, email)).get();
 
 		if (existingUserName || existingUserByEmail) {
-			return new Response("User already exists", {
+			return new Response('User already exists', {
 				status: 400,
 			});
 		}

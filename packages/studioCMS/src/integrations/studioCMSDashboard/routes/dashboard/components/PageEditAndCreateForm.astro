@@ -1,27 +1,27 @@
 ---
 import {
-	Input,
-	Icon,
-	Select,
-	Tooltip,
-	Textarea,
-	Button,
-	Divider,
-	Card,
-	Option,
 	Alert,
-VisuallyHidden,
+	Button,
+	Card,
+	Divider,
+	Icon,
+	Input,
+	Option,
+	Select,
+	Textarea,
+	Tooltip,
+	VisuallyHidden,
 } from 'astrolace:components';
 import type { ContentHelperTempResponse } from 'studiocms-dashboard:contentHelper';
 import { pluginList } from 'studiocms:helpers';
-import exclamationOctagon from "../../../assets/exclamation-octagon.svg";
-import check2Circle from "../../../assets/check2-circle.svg";
-import pencilSquare from "../../../assets/pencil-square.svg";
+import check2Circle from '../../../assets/check2-circle.svg';
+import exclamationOctagon from '../../../assets/exclamation-octagon.svg';
+import pencilSquare from '../../../assets/pencil-square.svg';
 
 interface Props {
 	pageData?: ContentHelperTempResponse;
 	livePreviewBox: string;
-    pageEdit: string;
+	pageEdit: string;
 	isEditPage?: boolean;
 	formActionURL?: string;
 }
