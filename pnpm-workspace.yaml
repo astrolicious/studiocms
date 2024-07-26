@@ -1,5 +1,5 @@
 catalog:
-  '@astrojs/db': https://pkg.pr.new/Fryuni/astro/@astrojs/db@58726ef
+  '@astrojs/db': ^0.12.0 
   '@astrojs/markdown-remark': ^5.2.0
   '@astrojs/rss': ^4.0.7
   '@astrojs/check': ^0.8.2

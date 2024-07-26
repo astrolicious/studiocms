@@ -12,9 +12,6 @@ catalogs:
     '@astrojs/cloudflare':
       specifier: ^11.0.1
       version: 11.0.1
-    '@astrojs/db':
-      specifier: https://pkg.pr.new/Fryuni/astro/@astrojs/db@58726ef
-      version: 0.12.0
     '@astrojs/markdown-remark':
       specifier: ^5.2.0
       version: 5.2.0
@@ -232,8 +229,8 @@ importers:
   packages/ghost-to-studio:
     dependencies:
       '@astrojs/db':
-        specifier: 'catalog:'
-        version: https://pkg.pr.new/Fryuni/astro/@astrojs/db@58726ef(@cloudflare/workers-types@4.20240718.0)(@types/react@18.3.3)
+        specifier: file:../../vendored/astrojs-db.tgz
+        version: file:vendored/astrojs-db.tgz(@cloudflare/workers-types@4.20240718.0)(@types/react@18.3.3)
       '@astrojs/node':
         specifier: 'catalog:'
         version: 8.3.2(astro@4.12.2(@types/node@20.14.11)(typescript@5.5.4))
@@ -397,8 +394,8 @@ importers:
         specifier: 'catalog:'
         version: 11.0.1(astro@4.12.2(@types/node@20.14.11)(typescript@5.5.4))
       '@astrojs/db':
-        specifier: 'catalog:'
-        version: https://pkg.pr.new/Fryuni/astro/@astrojs/db@58726ef(@cloudflare/workers-types@4.20240718.0)(@types/react@18.3.3)
+        specifier: file:../../vendored/astrojs-db.tgz
+        version: file:vendored/astrojs-db.tgz(@cloudflare/workers-types@4.20240718.0)(@types/react@18.3.3)
       '@astrolicious/studiocms':
         specifier: workspace:*
         version: link:../../packages/studioCMS
@@ -416,14 +413,14 @@ importers:
   playgrounds/node:
     dependencies:
       '@astrojs/db':
-        specifier: 'catalog:'
-        version: https://pkg.pr.new/Fryuni/astro/@astrojs/db@58726ef(@cloudflare/workers-types@4.20240718.0)(@types/react@18.3.3)
+        specifier: file:../../vendored/astrojs-db.tgz
+        version: file:vendored/astrojs-db.tgz(@cloudflare/workers-types@4.20240718.0)(@types/react@18.3.3)
       '@astrojs/node':
         specifier: 'catalog:'
         version: 8.3.2(astro@4.12.2(@types/node@20.14.11)(typescript@5.5.4))
       '@astrojs/web-vitals':
         specifier: 'catalog:'
-        version: 1.0.0(@astrojs/db@https://pkg.pr.new/Fryuni/astro/@astrojs/db@58726ef(@cloudflare/workers-types@4.20240718.0)(@types/react@18.3.3))
+        version: 1.0.0(@astrojs/db@file:vendored/astrojs-db.tgz(@cloudflare/workers-types@4.20240718.0)(@types/react@18.3.3))
       '@astrolicious/studiocms':
         specifier: workspace:*
         version: link:../../packages/studioCMS
@@ -588,8 +585,8 @@ packages:
   '@astrojs/db@0.12.0':
     resolution: {integrity: sha512-ZrHuH4sJcPE0liTG+mWc6tR7pLax4vKsDBH5hBSo3mWiGjg/jWvMhZsSclYGZ8gRi7+zUh4FDqgcBeiHVmYf6Q==}
 
-  '@astrojs/db@https://pkg.pr.new/Fryuni/astro/@astrojs/db@58726ef':
-    resolution: {tarball: https://pkg.pr.new/Fryuni/astro/@astrojs/db@58726ef}
+  '@astrojs/db@file:vendored/astrojs-db.tgz':
+    resolution: {integrity: sha512-S/ttR/aDQAR8ZeH7/JCTqkZzipFQCG3nSc8oSUSZDoLTFsiv7IoluBaAIsdSkGdutnKprSc+wL5MDcy7ItEGRg==, tarball: file:vendored/astrojs-db.tgz}
     version: 0.12.0
 
   '@astrojs/internal-helpers@0.3.0':
@@ -5283,7 +5280,7 @@ snapshots:
       - sqlite3
       - utf-8-validate
 
-  '@astrojs/db@https://pkg.pr.new/Fryuni/astro/@astrojs/db@58726ef(@cloudflare/workers-types@4.20240718.0)(@types/react@18.3.3)':
+  '@astrojs/db@file:vendored/astrojs-db.tgz(@cloudflare/workers-types@4.20240718.0)(@types/react@18.3.3)':
     dependencies:
       '@astrojs/studio': 0.1.1
       '@libsql/client': 0.7.0
@@ -5480,9 +5477,9 @@ snapshots:
 
   '@astrojs/underscore-redirects@0.3.4': {}
 
-  '@astrojs/web-vitals@1.0.0(@astrojs/db@https://pkg.pr.new/Fryuni/astro/@astrojs/db@58726ef(@cloudflare/workers-types@4.20240718.0)(@types/react@18.3.3))':
+  '@astrojs/web-vitals@1.0.0(@astrojs/db@file:vendored/astrojs-db.tgz(@cloudflare/workers-types@4.20240718.0)(@types/react@18.3.3))':
     dependencies:
-      '@astrojs/db': https://pkg.pr.new/Fryuni/astro/@astrojs/db@58726ef(@cloudflare/workers-types@4.20240718.0)(@types/react@18.3.3)
+      '@astrojs/db': file:vendored/astrojs-db.tgz(@cloudflare/workers-types@4.20240718.0)(@types/react@18.3.3)
       web-vitals: 4.2.2
 
   '@babel/code-frame@7.24.7':
