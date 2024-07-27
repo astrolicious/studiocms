@@ -12,7 +12,7 @@ jobs:
     comment:
       name: Reply on new PR
       runs-on: ubuntu-latest
-      if: ${{ github.pull_request.user.login !== 'create-issue-branch[bot]' }}
+      if: ${{ github.pull_request.user.login != 'create-issue-branch[bot]' }}
       steps:
         - uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7
           with:
