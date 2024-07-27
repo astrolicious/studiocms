@@ -48,6 +48,7 @@ catalogs:
     '@inox-tools/sitemap-ext': ^0.3.1
     '@inox-tools/runtime-logger': ^0.3.0
     '@matthiesenxyz/astrolace': ^0.2.0
+    "@matthiesenxyz/integration-utils": ^0.1.1
     '@matthiesenxyz/unocss-preset-daisyui': ^0.1.1
     '@markdoc/markdoc': ^0.4.0
     '@noble/hashes': ^1.4.0
