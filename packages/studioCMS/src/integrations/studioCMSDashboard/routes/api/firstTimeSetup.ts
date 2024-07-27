@@ -1,9 +1,9 @@
+import { randomUUID } from 'node:crypto';
 import { PageContent, PageData, Permissions, SiteConfig, User, db, eq } from 'astro:db';
 import AuthSecurityConfig from 'virtual:studiocms-dashboard/AuthSecurityConfig';
-import { scryptAsync } from '@noble/hashes/scrypt';
-import { randomUUID } from 'node:crypto';
-import type { APIContext } from 'astro';
 import { reservedNames } from '@matthiesenxyz/integration-utils';
+import { scryptAsync } from '@noble/hashes/scrypt';
+import type { APIContext } from 'astro';
 import { CMSSiteConfigId } from '../../../../constVars';
 
 const { salt: ScryptSalt, opts: ScryptOpts } = AuthSecurityConfig;

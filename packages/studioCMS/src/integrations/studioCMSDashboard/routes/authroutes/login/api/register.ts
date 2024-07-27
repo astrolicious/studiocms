@@ -2,10 +2,10 @@ import { randomUUID } from 'node:crypto';
 import { User, db, eq } from 'astro:db';
 import { lucia } from 'studiocms-dashboard:auth';
 import AuthSecurityConfig from 'virtual:studiocms-dashboard/AuthSecurityConfig';
+import { reservedNames } from '@matthiesenxyz/integration-utils';
 import { scryptAsync } from '@noble/hashes/scrypt';
 import type { APIContext } from 'astro';
 import { z } from 'astro/zod';
-import { reservedNames } from '@matthiesenxyz/integration-utils';
 
 const { salt: ScryptSalt, opts: ScryptOpts } = AuthSecurityConfig;
 
