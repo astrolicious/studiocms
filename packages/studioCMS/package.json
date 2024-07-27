@@ -48,6 +48,7 @@
     "@inox-tools/sitemap-ext": "catalog:studiocms",
     "@markdoc/markdoc": "catalog:studiocms",
     "@matthiesenxyz/astrolace": "catalog:studiocms",
+    "@matthiesenxyz/integration-utils": "catalog:studiocms",
     "@matthiesenxyz/unocss-preset-daisyui": "catalog:studiocms",
     "@noble/hashes": "catalog:studiocms",
     "@shikijs/transformers": "catalog:studiocms",

@@ -2,6 +2,7 @@ import { randomUUID } from 'node:crypto';
 import { User, db, eq } from 'astro:db';
 import { lucia } from 'studiocms-dashboard:auth';
 import AuthSecurityConfig from 'virtual:studiocms-dashboard/AuthSecurityConfig';
+import { reservedNames } from '@matthiesenxyz/integration-utils';
 import { scryptAsync } from '@noble/hashes/scrypt';
 import type { APIContext } from 'astro';
 import { z } from 'astro/zod';
@@ -17,7 +18,8 @@ export async function POST(context: APIContext): Promise<Response> {
 		typeof username !== 'string' ||
 		username.length < 3 ||
 		username.length > 31 ||
-		!/^[a-z0-9_-]+$/.test(username)
+		!/^[a-z0-9_-]+$/.test(username) ||
+		reservedNames().check(username).username()
 	) {
 		return new Response(
 			JSON.stringify({
@@ -29,7 +31,12 @@ export async function POST(context: APIContext): Promise<Response> {
 		);
 	}
 	const password = formData.get('password');
-	if (typeof password !== 'string' || password.length < 6 || password.length > 255) {
+	if (
+		typeof password !== 'string' ||
+		password.length < 6 ||
+		password.length > 255 ||
+		reservedNames().check(password).password()
+	) {
 		return new Response(
 			JSON.stringify({
 				error: 'Invalid password',
