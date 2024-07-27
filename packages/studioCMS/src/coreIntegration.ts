@@ -24,6 +24,7 @@ import {
 	studioLoggerOptsResolver,
 } from './utils';
 import { namespaceBuiltinsPlugin } from './utils/namespaceBuiltins';
+import { updateAstroConfig } from './utils/updateAstroConfig';
 
 // Main Integration
 export default defineIntegration({
@@ -57,6 +58,9 @@ export default defineIntegration({
 
 					// Add Namespace Builtins Plugin for vite
 					addVitePlugin(params, { plugin: namespaceBuiltinsPlugin() });
+
+					// Update Astro/Vite Config
+					updateAstroConfig(params);
 
 					// Create Runtime Logger
 					runtimeLogger(params, { name: 'StudioCMS' });
