@@ -1,0 +1,20 @@
+{
+  "mode": "pre",
+  "tag": "beta",
+  "initialVersions": {
+    "ghost-to-studio": "0.0.1",
+    "@astrolicious/studiocms": "0.1.0-beta.1",
+    "@astrolicious/studiocms-blog": "0.1.0-beta.1",
+    "cloudflare-playground": "0.0.1",
+    "node-playground": "0.0.1",
+    "docs": "0.0.1",
+    "web": "0.0.1"
+  },
+  "changesets": [
+    "early-sheep-obey",
+    "eighty-chicken-fail",
+    "modern-experts-dream",
+    "purple-beers-flash",
+    "spotty-baboons-exercise"
+  ]
+}
