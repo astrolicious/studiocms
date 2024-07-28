@@ -9,10 +9,9 @@ export const marqueeKeywords = [
 ];
 
 // Links
-// TODO: Update links when we merge
 export const GITHUB_URL = 'https://github.com/astrolicious/studiocms';
 export const SPONSOR_URL = 'https://github.com/astrolicious/studiocms';
-export const DISCORD_URL = 'https://chat.astrolicious.dev/';
+export const DISCORD_URL = 'https://chat.astro-studiocms.xyz/';
 export const DOCS_URL = 'https://docs.astro-studiocms.xyz/';
 
 export const features = [
