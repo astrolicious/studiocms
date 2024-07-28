@@ -1,6 +1,6 @@
 {
   "name": "@astrolicious/studiocms",
-  "version": "0.1.0-beta.1",
+  "version": "0.1.0-beta.2",
   "description": "A dedicated CMS for Astro Studio. Built from the ground up by the Astro community.",
   "author": {
     "name": "Adam Matthiesen | Jacob Jenkins | Paul Valladares",
@@ -10,7 +10,11 @@
     "type": "git",
     "url": "git+https://github.com/astrolicious/studiocms.git"
   },
-  "contributors": ["Adammatthiesen", "jdtjenkins", "dreyfus92"],
+  "contributors": [
+    "Adammatthiesen",
+    "jdtjenkins",
+    "dreyfus92"
+  ],
   "license": "MIT",
   "keywords": [
     "astro",
@@ -30,7 +34,9 @@
     "access": "public"
   },
   "sideEffects": false,
-  "files": ["src"],
+  "files": [
+    "src"
+  ],
   "exports": {
     ".": {
       "import": "./src/index.ts",
