@@ -3,7 +3,7 @@ name: Changeset Release and Snapshot
 on:
   workflow_dispatch:
     inputs:
-      runRealse:
+      runRelease:
         default: 'false'
         required: false
         type: boolean
@@ -41,7 +41,7 @@ permissions:
 jobs:
   release:
     name: Release
-    if: ${{ github.event.inputs.runRealse == 'true' || github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+    if: ${{ github.event.inputs.runRelease == 'true' || github.event_name == 'push' && github.ref == 'refs/heads/main' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo
