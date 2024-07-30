@@ -28,5 +28,6 @@ jobs:
         uses: juulsn/todo-issue@main
         with:
           excludePattern: '^(node_modules/)'
+          autoAssign: false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

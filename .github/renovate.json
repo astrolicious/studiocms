@@ -1,6 +1,11 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["config:best-practices", "schedule:earlyMondays", ":preserveSemverRanges"],
+  "extends": [
+    "config:best-practices",
+    "schedule:earlyMondays",
+    ":preserveSemverRanges",
+    "customManagers:biomeVersions"
+  ],
   "dependencyDashboard": true,
   "lockFileMaintenance": {
     "enabled": true
