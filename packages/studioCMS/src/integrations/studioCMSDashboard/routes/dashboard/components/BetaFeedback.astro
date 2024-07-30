@@ -122,12 +122,12 @@ import exclamationOctagon from '../../../assets/exclamation-octagon.svg';
             });
 
             if (response.ok) {
-                successToastMessage.innerText = response.body || 'Feedback sent successfully!';
+                successToastMessage.innerText = 'Feedback sent successfully!';
                 successToast.toast();
                 betaFeedbackForm.reset();
                 betaFeedbackDialog.hide();
             } else {
-                errorToastMessage.innerText = response.body || 'An error occurred while sending feedback. Please try again later.';
+                errorToastMessage.innerText = 'An error occurred while sending feedback. Please try again later.';
                 errorToast.toast();
             }
         } catch (error) {
