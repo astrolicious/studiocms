@@ -2,6 +2,10 @@
 
 ![Readme's Banner](./packages/studioCMS/src/assets/banner-readme.png)
 
+[![NPM Version](https://img.shields.io/npm/v/@astrolicious/studiocms)](https://npm.im/@astrolicious/studiocms)
+[![Formatted with Biome](https://img.shields.io/badge/Formatted_with-Biome-60a5fa?style=flat&logo=biome)](https://biomejs.dev/)
+[![Built with Astro](https://astro.badg.es/v2/built-with-astro/tiny.svg)](https://astro.build)
+
 This is an SSR CMS built with AstroDB / Lucia Auth / Unpic Image handler for the Astro Ecosystem.
 
 To see how to get started, check out the [studioCMS README](./packages/studioCMS/README.md).
@@ -66,7 +70,7 @@ Steps to get a running playground should be the following:
 
 - clone repo
 - run `pnpm i --frozen-lockfile`
-- change line 14 of the [node playground's](./playgrounds/node/astro.config.mjs#L14) config to `true`
+- change `dbStartPage` in the [node playground's](./playgrounds/node/studiocms.config.mjs) config to `true`
 - read the first time setup instructions listed in the [main package readme](./packages/studioCMS/README.md#first-start-and-setup) then replace the astro db commands with the following:
 
   Commands to run:
