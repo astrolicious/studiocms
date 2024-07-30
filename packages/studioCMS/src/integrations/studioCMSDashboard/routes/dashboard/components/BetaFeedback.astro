@@ -2,9 +2,12 @@
 import { Alert, Divider, Icon } from 'astrolace:components';
 import { Input, Textarea } from 'astrolace:components';
 import { Button, Dialog } from 'astrolace:components';
+import { FEEDBACK_FORM, MAILSERVICE } from '../../../../../constVars';
 import alertOctogramOutline from '../../../assets/alert-octagram-outline.svg';
 import check2Circle from '../../../assets/check2-circle.svg';
 import exclamationOctagon from '../../../assets/exclamation-octagon.svg';
+
+const formAction = `${MAILSERVICE}/${FEEDBACK_FORM}`;
 ---
 <Dialog id="beta-feedback-dialog" label="Beta Feedback Form">
 
@@ -14,11 +17,9 @@ import exclamationOctagon from '../../../assets/exclamation-octagon.svg';
 
     <Divider />
 
-    <form id="beta-feedback-form" method="POST">
+    <form id="beta-feedback-form" method="POST" action={formAction}>
 
-        <input type="hidden" name="access_key" value="34ebc3d0-5f8a-4a6a-9f4b-538eda89aa87">
-        <input type="checkbox" name="botcheck" id="" style="display: none;" form="beta-feedback-form">
-        <input type="hidden" name="from_name" value="StudioCMS Beta Feedback Form">
+        <input type="checkbox" name="botcheck" id="botcheck" style="display: none;" form="beta-feedback-form" >
 
         <Input type="email" name="email" label="Github Email" placeholder="Github email used for automatic Github reference" form="beta-feedback-form" required />
 
@@ -72,6 +73,7 @@ import exclamationOctagon from '../../../assets/exclamation-octagon.svg';
     const betaFeedbackDialog = document.getElementById('beta-feedback-dialog');
     const betaFeedbackForm = document.getElementById('beta-feedback-form');
     const FormMessage = document.getElementById('form-message');
+    const botCheck = document.getElementById('botcheck');
     const openFeedbackDialogButton = document.getElementsByClassName('open-beta-feedback')[0];
     const cancelFeedbackDialogButton = document.getElementsByClassName('beta-feedback-cancel')[0];
     const submitFeedbackButton = document.getElementsByClassName('beta-feedback-submit')[0];
@@ -95,7 +97,7 @@ import exclamationOctagon from '../../../assets/exclamation-octagon.svg';
         }
     });
 
-    betaFeedbackForm.addEventListener('submit', function(e) {
+    betaFeedbackForm.addEventListener('submit', async function(e) {
         e.preventDefault();
 
         if (FormMessage.value.length < 10) {
@@ -104,40 +106,38 @@ import exclamationOctagon from '../../../assets/exclamation-octagon.svg';
             return;
         }
 
+        if (botCheck.checked) {
+            errorToastMessage.innerText = 'You are a bot!';
+            errorToast.toast();
+            return;
+        }
+
         const formData = new FormData(betaFeedbackForm);
-        const object = Object.fromEntries(formData);
-        const json = JSON.stringify(object);
 
         submitFeedbackButton.disabled = true;
         submitFeedbackButton.loading = true;
 
-        fetch('https://api.web3forms.com/submit', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            },
-            body: json
-        })
-        .then(async (response) => {
-            let json = await response.json();
-            if (response.status == 200) {
-                successToastMessage.innerText = json.message;
+        try {
+            const response = await fetch(betaFeedbackForm.action, {
+                method: "POST",
+                body: formData,
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                successToastMessage.innerText = data.message || 'Feedback sent successfully!';
                 successToast.toast();
                 betaFeedbackForm.reset();
                 betaFeedbackDialog.hide();
             } else {
-                errorToastMessage.innerText = json.message;
+                errorToastMessage.innerText = data.error || 'An error occurred while sending feedback. Please try again later.';
                 errorToast.toast();
             }
-        })
-        .catch(error => {
-            errorToastMessage.innerText = error;
+        } catch (error) {
+            errorToastMessage.innerText = error.message || 'An error occurred while sending feedback. Please try again later.';
             errorToast.toast();
-        })
-        .then(function() {
-            betaFeedbackForm.reset();
-        });
+        }
     });
 
 </script>
