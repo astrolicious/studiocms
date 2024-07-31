@@ -1,0 +1,57 @@
+name: StudioCMS Deployments
+
+permissions:
+  pull-requests: read
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  changed_files:
+    name: Check for changes
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4
+        with:
+          fetch-depth: 2
+
+      - name: Get changed files
+        id: changed-files
+        uses: tj-actions/changed-files@v44
+        with:
+          files_yaml: |
+            docs:
+              - www/docs/**
+            landing:
+              - www/web/**
+            packages:
+              - packages/**
+              - playgrounds/node/**
+    
+      - name: Docs Deployment
+        if: steps.changed-files.outputs.docs_any_changed == 'true'
+        uses: distributhor/workflow-webhook@v3
+        with:
+          webhook_url: ${{ secrets.STUDIOCMS_DEPLOYMENT_WEBHOOK }}
+          webhook_secret: ${{ secrets.DOCS_DEPLOYMENT_SECRET }}
+    
+      - name: Landing Page Deployment
+        if: steps.changed-files.outputs.landing_any_changed == 'true'
+        uses: distributhor/workflow-webhook@v3
+        with:
+          webhook_url: ${{ secrets.STUDIOCMS_DEPLOYMENT_WEBHOOK }}
+          webhook_secret: ${{ secrets.LANDING_DEPLOYMENT_SECRET }}
+
+      - name: Demo/Testing Deployment
+        if: steps.changed-files.outputs.packages_any_changed == 'true'
+        uses: distributhor/workflow-webhook@v3
+        with:
+          webhook_url: ${{ secrets.STUDIOCMS_DEPLOYMENT_WEBHOOK }}
+          webhook_secret: ${{ secrets.DEMO_DEPLOYMENT_SECRET }}
+  

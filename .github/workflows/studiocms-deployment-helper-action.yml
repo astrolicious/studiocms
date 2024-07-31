@@ -22,8 +22,13 @@ jobs:
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 body: `@${context.payload.pull_request.user.login}, thank you for opening this pull request!
+
+                The following links can be used to access the deployment previews:
+                  - [PR Landing Page Deployment](https://pr${context.payload.pull_request.number}-www.astro-studiocms.xyz/)
+                  - [PR Docs Deployment](https://pr${context.payload.pull_request.number}-docs.astro-studiocms.xyz/)
+                  - [PR Demo/Testing Deployment](https://pr${context.payload.pull_request.number}-demo.astro-studiocms.xyz/)
                 
-                Automated deployments are currently disabled for this project due to upstream issues. Please wait for a maintainer to review your changes and queue a deployment for you.
+                Preview deployments are automatically updated when changes are pushed to the PR. Please note that it may take a few minutes for the changes to be reflected on the preview sites as deployments are queued and processed in the order they are received.
                 
                 If you have any questions, feel free to ask!`
               })

@@ -81,7 +81,7 @@ export default defineConfig({
 					tag: 'script',
 					attrs: {
 						src: 'https://analytics.astro-studiocms.xyz/script.js',
-						'data-website-id': 'b2ca8ffa-2a9e-4743-a55f-9d8472214d90',
+						'data-website-id': '00717cde-0d92-42be-8f49-8de0b1d810b2',
 						defer: true,
 					},
 				},

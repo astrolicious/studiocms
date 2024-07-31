@@ -12,7 +12,7 @@ export default defineStudioCMSConfig({
 				tag: 'script',
 				attrs: {
 					src: 'https://analytics.astro-studiocms.xyz/script.js',
-					'data-website-id': '0d658050-e98a-4c04-8a8f-18af489506c8',
+					'data-website-id': '23a84c25-40fd-4303-a191-aba4bfaf3ff1',
 					defer: true,
 				},
 			},
