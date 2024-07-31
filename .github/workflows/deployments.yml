@@ -18,6 +18,8 @@ jobs:
     steps:
       - name: Checkout Repo
         uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4
+        with:
+          fetch-depth: 0
 
       - name: Get changed files
         id: changed-files
@@ -36,6 +38,7 @@ jobs:
         if: steps.changed-files.outputs.docs_any_changed == 'true'
         uses: distributhor/workflow-webhook@v3
         with:
+          webhook_type: 'json-extended'
           webhook_url: ${{ secrets.STUDIOCMS_DEPLOYMENT_WEBHOOK }}
           webhook_secret: ${{ secrets.DOCS_DEPLOYMENT_SECRET }}
     
@@ -43,6 +46,7 @@ jobs:
         if: steps.changed-files.outputs.landing_any_changed == 'true'
         uses: distributhor/workflow-webhook@v3
         with:
+          webhook_type: 'json-extended'
           webhook_url: ${{ secrets.STUDIOCMS_DEPLOYMENT_WEBHOOK }}
           webhook_secret: ${{ secrets.LANDING_DEPLOYMENT_SECRET }}
 
@@ -50,6 +54,7 @@ jobs:
         if: steps.changed-files.outputs.packages_any_changed == 'true'
         uses: distributhor/workflow-webhook@v3
         with:
+          webhook_type: 'json-extended'
           webhook_url: ${{ secrets.STUDIOCMS_DEPLOYMENT_WEBHOOK }}
           webhook_secret: ${{ secrets.DEMO_DEPLOYMENT_SECRET }}
   
