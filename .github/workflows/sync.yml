@@ -1,0 +1,22 @@
+name: "Sync: Git Mirror"
+
+on:
+  - push
+  - delete
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    name: Git Repo Sync
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+    - uses: MatthiesenXYZ/git-sync-action@v1.1
+      with:
+        # Such as https://github.com/matthiesenxyz/git-sync-action.git
+        target-url: ${{ secrets.GITLAB_URL }}
+        # Such as adammatthiesen
+        target-username: ${{ secrets.GITLAB_USERNAME }}
+          # You can store token in your project's 'Setting > Secrets' and reference the name here. Such as ${{ secrets.ACCESS\_TOKEN }}
+        target-token: ${{ secrets.GITLAB_ACCESS }}
