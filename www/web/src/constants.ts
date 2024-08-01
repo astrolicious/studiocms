@@ -42,7 +42,7 @@ export const features = [
 	{
 		feature: 'Secure Studio Database',
 		description:
-			'All data is securely housed within the Astro Studio database, ensuring accessibility only to authorized users with Studio.astro.built login credentials.',
+			'All data is securely housed within the Astro Studio database, ensuring accessibility only to authorized users with Studio.astro.build login credentials.',
 		icon: 'database-lock',
 	},
 	{
