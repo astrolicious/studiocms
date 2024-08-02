@@ -1,7 +1,7 @@
 name: StudioCMS Deployments
 
 permissions:
-  pull-requests: read
+  pull-requests: write
 
 on:
   push:
@@ -13,16 +13,15 @@ on:
 
 jobs:
   changed_files:
-    name: Check for changes
+    name: Check for changes on Pull Request to main
     runs-on: ubuntu-latest
+    if: github.event_name == "pull_request"
     steps:
       - name: Checkout Repo
         uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4
-        with:
-          fetch-depth: 2
 
       - name: Get changed files
-        id: changed-files
+        id: changed-files-pr
         uses: tj-actions/changed-files@v44
         with:
           files_yaml: |
@@ -34,27 +33,110 @@ jobs:
               - packages/**
               - playgrounds/node/**
     
-      - name: Docs Deployment
-        if: steps.changed-files.outputs.docs_any_changed == 'true'
+      - name: Docs Deployment (PR Demo)
+        if: steps.changed-files-pr.outputs.docs_any_changed == 'true'
         uses: distributhor/workflow-webhook@v3
         with:
           webhook_type: 'json-extended'
           webhook_url: ${{ secrets.STUDIOCMS_DEPLOYMENT_WEBHOOK }}
           webhook_secret: ${{ secrets.DOCS_DEPLOYMENT_SECRET }}
+
+      - name: Docs Deployment Queue Comment
+        if: steps.changed-files-pr.outputs.docs_any_changed == 'true'
+        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `New deployment for the Docs has been queued and should be available shortly.  To view the deployment once it is ready, click [here](https://pr${context.payload.pull_request.number}-docs.astro-studiocms.xyz/)`
+            })
     
-      - name: Landing Page Deployment
-        if: steps.changed-files.outputs.landing_any_changed == 'true'
+      - name: Landing Page Deployment (PR Demo)
+        if: steps.changed-files-pr.outputs.landing_any_changed == 'true'
         uses: distributhor/workflow-webhook@v3
         with:
           webhook_type: 'json-extended'
           webhook_url: ${{ secrets.STUDIOCMS_DEPLOYMENT_WEBHOOK }}
           webhook_secret: ${{ secrets.LANDING_DEPLOYMENT_SECRET }}
 
-      - name: Demo/Testing Deployment
-        if: steps.changed-files.outputs.packages_any_changed == 'true'
+      - name: Landing Page Deployment Queue Comment
+        if: steps.changed-files-pr.outputs.landing_any_changed == 'true'
+        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `New deployment for the Landing Page has been queued and should be available shortly.  To view the deployment once it is ready, click [here](https://pr${context.payload.pull_request.number}-www.astro-studiocms.xyz/)`
+            })
+
+
+      - name: Demo/Testing Deployment (PR Demo)
+        if: steps.changed-files-pr.outputs.packages_any_changed == 'true'
         uses: distributhor/workflow-webhook@v3
         with:
           webhook_type: 'json-extended'
           webhook_url: ${{ secrets.STUDIOCMS_DEPLOYMENT_WEBHOOK }}
           webhook_secret: ${{ secrets.DEMO_DEPLOYMENT_SECRET }}
-  
+
+      - name: Demo/Testing Deployment Queue Comment
+        if: steps.changed-files-pr.outputs.packages_any_changed == 'true'
+        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `New deployment for the Packages/Playground DEMO has been queued and should be available shortly.  To view the deployment once it is ready, click [here](https://pr${context.payload.pull_request.number}-demo.astro-studiocms.xyz/)`
+            })
+          
+  redeploy:
+    name: Check for Changes on Push to main
+    runs-on: ubuntu-latest
+    if: github.event_name == "push"
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4
+        with:
+          fetch-depth: 2
+
+      - name: Get changed files
+        id: changed-files-push
+        uses: tj-actions/changed-files@v44
+        with:
+          files_yaml: |
+            landing:
+              - www/web/**
+            packagesanddocs:
+              - packages/**
+              - playgrounds/node/**
+              - www/docs/**
+              
+      - name: Docs Deployment (Prod | Pkg Typedoc)
+        if: steps.changed-files-push.outputs.packagesanddocs_any_changed == 'true'
+        uses: distributhor/workflow-webhook@v3
+        with:
+          webhook_type: 'json-extended'
+          webhook_url: ${{ secrets.STUDIOCMS_DEPLOYMENT_WEBHOOK }}
+          webhook_secret: ${{ secrets.DOCS_DEPLOYMENT_SECRET }}
+    
+      - name: Landing Page Deployment (Prod)
+        if: steps.changed-files-push.outputs.landing_any_changed == 'true'
+        uses: distributhor/workflow-webhook@v3
+        with:
+          webhook_type: 'json-extended'
+          webhook_url: ${{ secrets.STUDIOCMS_DEPLOYMENT_WEBHOOK }}
+          webhook_secret: ${{ secrets.LANDING_DEPLOYMENT_SECRET }}
+
+      - name: Demo/Testing Deployment (Prod)
+        if: steps.changed-files-push.outputs.packagesanddocs_any_changed == 'true'
+        uses: distributhor/workflow-webhook@v3
+        with:
+          webhook_type: 'json-extended'
+          webhook_url: ${{ secrets.STUDIOCMS_DEPLOYMENT_WEBHOOK }}
+          webhook_secret: ${{ secrets.DEMO_DEPLOYMENT_SECRET }}
+    
