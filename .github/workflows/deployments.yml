@@ -15,7 +15,7 @@ jobs:
   changed_files:
     name: Check for changes on Pull Request to main
     runs-on: ubuntu-latest
-    if: ${{github.event_name == "pull_request"}}
+    if: contains(fromJSON('["pull_request"]'), github.event_name)
     steps:
       - name: Checkout Repo
         uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4
@@ -97,7 +97,7 @@ jobs:
   redeploy:
     name: Check for Changes on Push to main
     runs-on: ubuntu-latest
-    if: ${{github.event_name == "push"}}
+    if: contains(fromJSON('["push"]'), github.event_name)
     steps:
       - name: Checkout Repo
         uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4
