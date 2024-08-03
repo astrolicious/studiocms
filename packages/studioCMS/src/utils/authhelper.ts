@@ -35,7 +35,7 @@ export default async function authHelper(locals: Locals): Promise<authHelperResp
 				.get();
 
 			if (permissions) {
-				if (permissions && permissions.username === username) {
+				if (permissions && permissions.username.toLowerCase() === username.toLowerCase()) {
 					if (permissions.rank === 'admin') {
 						permissionLevel = 'admin';
 					}
@@ -48,6 +48,8 @@ export default async function authHelper(locals: Locals): Promise<authHelperResp
 				} else {
 					permissionLevel = 'visitor';
 				}
+			} else {
+				permissionLevel = 'visitor';
 			}
 			return {
 				id,
