@@ -64,10 +64,6 @@ export const usernameAndPasswordAuthConfig = defineUtility('astro:config:setup')
 
 		const LoggerOpts = await studioLoggerOptsResolver(AuthLogger, true);
 
-		if (!enabled) {
-			return;
-		}
-
 		if (dbStartPage || enabled) {
 			studioLogger(LoggerOpts.logInfo, authConfigStrings.configSetup);
 
