@@ -143,14 +143,14 @@ import { makePageTitle } from '../../utils/makePageTitle';
 		});
 		if (response.ok) {
       successMessageElement.innerText = "Successfully Seeded Database! Redirecting...";
-      logger.info('First Time Setup Success: Successfully Seeded Database');
+      console.log('First Time Setup Success: Successfully Seeded Database');
       successAlertElement.toast();
       setTimeout(() => {
         window.location.href = "/done";
       }, 1000)
 		} else {
 			errorMessageElement.innerText = (await response.json()).error;
-      logger.error(`First Time Setup Error: ${errorMessageElement.innerText}`);
+      console.log(`First Time Setup Error: ${errorMessageElement.innerText}`);
       alertElement.toast();
 		}
 	});
