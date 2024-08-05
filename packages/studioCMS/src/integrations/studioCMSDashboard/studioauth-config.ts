@@ -58,15 +58,11 @@ export const usernameAndPasswordAuthConfig = defineUtility('astro:config:setup')
 			},
 		} = options;
 
-		const enabled = dashboardEnabled && authEnabled && allowUserRegistration;
+		const enabled = dashboardEnabled && authEnabled;
 
 		const AuthLogger = params.logger.fork('@astrolicious/studioCMS:adminDashboard/auth-security');
 
 		const LoggerOpts = await studioLoggerOptsResolver(AuthLogger, true);
-
-		if (!enabled) {
-			return;
-		}
 
 		if (dbStartPage || enabled) {
 			studioLogger(LoggerOpts.logInfo, authConfigStrings.configSetup);
