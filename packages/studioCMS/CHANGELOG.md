@@ -1,5 +1,13 @@
 # @astrolicious/studiocms
 
+## 0.1.0-beta.3
+
+### Patch Changes
+
+- 0949b48: New Mailing system for Beta Feedback form
+- 5679b08: Fix: Allow studiocms-auth.config.json to be created during first time database setup
+- 9a137b5: [Bug]: Fix case sensitivity issue in authHelper function
+
 ## 0.1.0-beta.2
 
 ### Patch Changes
