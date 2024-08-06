@@ -22,7 +22,7 @@ jobs:
 
       - name: Get changed files
         id: changed-files-pr
-        uses: tj-actions/changed-files@v44
+        uses: tj-actions/changed-files@c65cd883420fd2eb864698a825fc4162dd94482c # v44
         with:
           files_yaml: |
             docs:
@@ -35,7 +35,7 @@ jobs:
     
       - name: Docs Deployment (PR Demo)
         if: steps.changed-files-pr.outputs.docs_any_changed == 'true'
-        uses: distributhor/workflow-webhook@v3
+        uses: distributhor/workflow-webhook@f5a294e144d6ef44cfac4d3d5e20b613bcee0d4b # v3
         with:
           webhook_type: 'json-extended'
           webhook_url: ${{ secrets.STUDIOCMS_DEPLOYMENT_WEBHOOK }}
@@ -55,7 +55,7 @@ jobs:
     
       - name: Landing Page Deployment (PR Demo)
         if: steps.changed-files-pr.outputs.landing_any_changed == 'true'
-        uses: distributhor/workflow-webhook@v3
+        uses: distributhor/workflow-webhook@f5a294e144d6ef44cfac4d3d5e20b613bcee0d4b # v3
         with:
           webhook_type: 'json-extended'
           webhook_url: ${{ secrets.STUDIOCMS_DEPLOYMENT_WEBHOOK }}
@@ -76,7 +76,7 @@ jobs:
 
       - name: Demo/Testing Deployment (PR Demo)
         if: steps.changed-files-pr.outputs.packages_any_changed == 'true'
-        uses: distributhor/workflow-webhook@v3
+        uses: distributhor/workflow-webhook@f5a294e144d6ef44cfac4d3d5e20b613bcee0d4b # v3
         with:
           webhook_type: 'json-extended'
           webhook_url: ${{ secrets.STUDIOCMS_DEPLOYMENT_WEBHOOK }}
@@ -106,7 +106,7 @@ jobs:
 
       - name: Get changed files
         id: changed-files-push
-        uses: tj-actions/changed-files@v44
+        uses: tj-actions/changed-files@c65cd883420fd2eb864698a825fc4162dd94482c # v44
         with:
           files_yaml: |
             landing:
@@ -118,7 +118,7 @@ jobs:
               
       - name: Docs Deployment (Prod | Pkg Typedoc)
         if: steps.changed-files-push.outputs.packagesanddocs_any_changed == 'true'
-        uses: distributhor/workflow-webhook@v3
+        uses: distributhor/workflow-webhook@f5a294e144d6ef44cfac4d3d5e20b613bcee0d4b # v3
         with:
           webhook_type: 'json-extended'
           webhook_url: ${{ secrets.STUDIOCMS_DEPLOYMENT_WEBHOOK }}
@@ -126,7 +126,7 @@ jobs:
     
       - name: Landing Page Deployment (Prod)
         if: steps.changed-files-push.outputs.landing_any_changed == 'true'
-        uses: distributhor/workflow-webhook@v3
+        uses: distributhor/workflow-webhook@f5a294e144d6ef44cfac4d3d5e20b613bcee0d4b # v3
         with:
           webhook_type: 'json-extended'
           webhook_url: ${{ secrets.STUDIOCMS_DEPLOYMENT_WEBHOOK }}
@@ -134,7 +134,7 @@ jobs:
 
       - name: Demo/Testing Deployment (Prod)
         if: steps.changed-files-push.outputs.packagesanddocs_any_changed == 'true'
-        uses: distributhor/workflow-webhook@v3
+        uses: distributhor/workflow-webhook@f5a294e144d6ef44cfac4d3d5e20b613bcee0d4b # v3
         with:
           webhook_type: 'json-extended'
           webhook_url: ${{ secrets.STUDIOCMS_DEPLOYMENT_WEBHOOK }}
