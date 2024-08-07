@@ -223,8 +223,8 @@ importers:
         specifier: 3.0.2
         version: 3.0.2
       '@moonrepo/cli':
-        specifier: 1.27.2
-        version: 1.27.2
+        specifier: 1.27.6
+        version: 1.27.6
       typescript:
         specifier: 5.5.4
         version: 5.5.4
@@ -233,7 +233,7 @@ importers:
     dependencies:
       '@astrojs/db':
         specifier: file:../../vendored/astrojs-db.tgz
-        version: file:vendored/astrojs-db.tgz(@cloudflare/workers-types@4.20240725.0)
+        version: file:vendored/astrojs-db.tgz(@cloudflare/workers-types@4.20240725.0)(@types/react@18.3.3)
       '@astrojs/node':
         specifier: 'catalog:'
         version: 8.3.2(astro@4.12.3(@types/node@20.14.13)(typescript@5.5.4))
@@ -401,7 +401,7 @@ importers:
         version: 11.0.1(astro@4.12.3(@types/node@20.14.13)(typescript@5.5.4))
       '@astrojs/db':
         specifier: file:../../vendored/astrojs-db.tgz
-        version: file:vendored/astrojs-db.tgz(@cloudflare/workers-types@4.20240725.0)
+        version: file:vendored/astrojs-db.tgz(@cloudflare/workers-types@4.20240725.0)(@types/react@18.3.3)
       '@astrolicious/studiocms':
         specifier: workspace:*
         version: link:../../packages/studioCMS
@@ -420,13 +420,13 @@ importers:
     dependencies:
       '@astrojs/db':
         specifier: file:../../vendored/astrojs-db.tgz
-        version: file:vendored/astrojs-db.tgz(@cloudflare/workers-types@4.20240725.0)
+        version: file:vendored/astrojs-db.tgz(@cloudflare/workers-types@4.20240725.0)(@types/react@18.3.3)
       '@astrojs/node':
         specifier: 'catalog:'
         version: 8.3.2(astro@4.12.3(@types/node@20.14.13)(typescript@5.5.4))
       '@astrojs/web-vitals':
         specifier: 'catalog:'
-        version: 1.0.0(@astrojs/db@file:vendored/astrojs-db.tgz(@cloudflare/workers-types@4.20240725.0))
+        version: 1.0.0(@astrojs/db@file:vendored/astrojs-db.tgz(@cloudflare/workers-types@4.20240725.0)(@types/react@18.3.3))
       '@astrolicious/studiocms':
         specifier: workspace:*
         version: link:../../packages/studioCMS
@@ -1855,42 +1855,42 @@ packages:
   '@mdx-js/mdx@3.0.1':
     resolution: {integrity: sha512-eIQ4QTrOWyL3LWEe/bu6Taqzq2HQvHcyTMaOrI95P2/LmJE7AsfPfgJGuFLPVqBUE1BC1rik3VIhU+s9u72arA==}
 
-  '@moonrepo/cli@1.27.2':
-    resolution: {integrity: sha512-ADi+OR+uU2KMxZMvB1Kf0wnwy5V39NmtahmQcy/uyZz5Y02YJgOy1vL1XlJPJfmbyJyKWDvCBqA+qQTmPTHrlQ==}
+  '@moonrepo/cli@1.27.6':
+    resolution: {integrity: sha512-/hbYF4LmJgqE68u+9r6E2/b917juEK5rb3a877YK0q96LCHBx6SYqDbcknbvHf2rHlDn8OwOLCXjV2L8w9SSpw==}
     hasBin: true
 
-  '@moonrepo/core-linux-arm64-gnu@1.27.2':
-    resolution: {integrity: sha512-AKIL/mK3ka27NWFLunPQq9h00ML3lNDAfCS2ytFF0eDwJcG+qeIJAuyfbYbwQhowJRd7s0w/BVhZpb/qsWr9qQ==}
+  '@moonrepo/core-linux-arm64-gnu@1.27.6':
+    resolution: {integrity: sha512-WMKsjLZmDZoZjC6iR2Mlj5Xek3p3Ws1cSdGUzO9oUUspKJ4ZqG8eP+o2oRkEm1MQashplU/l4O1BAq5LARjTUQ==}
     cpu: [arm64]
     os: [linux]
 
-  '@moonrepo/core-linux-arm64-musl@1.27.2':
-    resolution: {integrity: sha512-iDJLXdqZnaGmdmINdADBkc4Fcq+1yBZOARJVuJBwmsjHTchCNy/KOeHWbWfwWK4qzO+q8xUYiDVyqA+scWTs9Q==}
+  '@moonrepo/core-linux-arm64-musl@1.27.6':
+    resolution: {integrity: sha512-AB8DrLogFxn6WbGBh5T1vKXWvVuZitNIIX8+8bt4pJij9W0hOEu0d/3MW3QsUFpHzICdzvThjfz6WL7R5+TMtA==}
     cpu: [arm64]
     os: [linux]
 
-  '@moonrepo/core-linux-x64-gnu@1.27.2':
-    resolution: {integrity: sha512-r1SQuHbAEByE8rDNRPyz+C4NK3zq6XagUgKkSDH69Q8WDmfUR0PSG654LivOHrfvvcTHAJNt1x1j8CHgRxryRQ==}
+  '@moonrepo/core-linux-x64-gnu@1.27.6':
+    resolution: {integrity: sha512-KHHzszm6RJc1S7PxtjeoxEmP0VdRJ98LMV0uUCDWXQx/MHR7gbvEJUe1ffQnDreD/GYTJ1i8Zw4h8MkvepCKqw==}
     cpu: [x64]
     os: [linux]
 
-  '@moonrepo/core-linux-x64-musl@1.27.2':
-    resolution: {integrity: sha512-y/rt7Hd5kpdfdEhKv1WBwYuQn1QoR4S6uMy2B4FfS6tgi2ZzLzKqk9poSYAMJuneXw1uIh1wuqnn/qqV+PLB0A==}
+  '@moonrepo/core-linux-x64-musl@1.27.6':
+    resolution: {integrity: sha512-cFFWECDoBptH2Mprni9dK8QCqmPfSrwk9da/T/Sqbpy4x0LHbYeYVVaVzzdz3Fo/eqHNUPwASCh2YnevlYOUNg==}
     cpu: [x64]
     os: [linux]
 
-  '@moonrepo/core-macos-arm64@1.27.2':
-    resolution: {integrity: sha512-71ALunAwE89tGdpYVNELdKHTix3lI/bVbG5pWBF6J1FoC10eaMZovSj3Zs10oJFTxT/3oPIB/vXtn6mSIpvt1Q==}
+  '@moonrepo/core-macos-arm64@1.27.6':
+    resolution: {integrity: sha512-LiKNE5K5D/7/fzfu1PIKmmQ20l3k6jKBOufmXjCMkpi0VQX0auNMMnGSg2Y6xz7Kce5SZvffRVjHeN0nNAKDOA==}
     cpu: [arm64]
     os: [darwin]
 
-  '@moonrepo/core-macos-x64@1.27.2':
-    resolution: {integrity: sha512-XxJ4H+QoceTqkqdgA367ayws/+I8HC7shxHjhaRU928pSOZoAoKG+tdD/thsKScgd5JgSW8oSH/wER8SKsw4gw==}
+  '@moonrepo/core-macos-x64@1.27.6':
+    resolution: {integrity: sha512-YeZwtUPnuKVkXCGCmZ/8x0FbEuqyAu8jDpp4Y/MjiFXIdMN9Vng0O16hN5OOcuQZfQ4Po9SaBMCie9ntYuAJgg==}
     cpu: [x64]
     os: [darwin]
 
-  '@moonrepo/core-windows-x64-msvc@1.27.2':
-    resolution: {integrity: sha512-VObdj8l5Q4wGcKB1LDjuvXTOd9tiF18aEoVzsK++owkVTyv1ZZnCBaNObI7jgn1Pc/SAjvQ7ejDD/IgBGOTz0A==}
+  '@moonrepo/core-windows-x64-msvc@1.27.6':
+    resolution: {integrity: sha512-mKShI5/CDHuuleWQtRd6YbWxmNts0QF36csi7mONJyIZYDNEx3XJDhRQPviCA/zFVjuXFVrAF+UO5KnZHmD9bw==}
     cpu: [x64]
     os: [win32]
 
@@ -5456,7 +5456,7 @@ snapshots:
       - sqlite3
       - utf-8-validate
 
-  '@astrojs/db@file:vendored/astrojs-db.tgz(@cloudflare/workers-types@4.20240725.0)':
+  '@astrojs/db@file:vendored/astrojs-db.tgz(@cloudflare/workers-types@4.20240725.0)(@types/react@18.3.3)':
     dependencies:
       '@astrojs/studio': 0.1.1
       '@libsql/client': 0.7.0
@@ -5654,9 +5654,9 @@ snapshots:
 
   '@astrojs/underscore-redirects@0.3.4': {}
 
-  '@astrojs/web-vitals@1.0.0(@astrojs/db@file:vendored/astrojs-db.tgz(@cloudflare/workers-types@4.20240725.0))':
+  '@astrojs/web-vitals@1.0.0(@astrojs/db@file:vendored/astrojs-db.tgz(@cloudflare/workers-types@4.20240725.0)(@types/react@18.3.3))':
     dependencies:
-      '@astrojs/db': file:vendored/astrojs-db.tgz(@cloudflare/workers-types@4.20240725.0)
+      '@astrojs/db': file:vendored/astrojs-db.tgz(@cloudflare/workers-types@4.20240725.0)(@types/react@18.3.3)
       web-vitals: 4.2.2
 
   '@babel/code-frame@7.24.7':
@@ -6793,37 +6793,37 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@moonrepo/cli@1.27.2':
+  '@moonrepo/cli@1.27.6':
     dependencies:
       detect-libc: 2.0.3
     optionalDependencies:
-      '@moonrepo/core-linux-arm64-gnu': 1.27.2
-      '@moonrepo/core-linux-arm64-musl': 1.27.2
-      '@moonrepo/core-linux-x64-gnu': 1.27.2
-      '@moonrepo/core-linux-x64-musl': 1.27.2
-      '@moonrepo/core-macos-arm64': 1.27.2
-      '@moonrepo/core-macos-x64': 1.27.2
-      '@moonrepo/core-windows-x64-msvc': 1.27.2
+      '@moonrepo/core-linux-arm64-gnu': 1.27.6
+      '@moonrepo/core-linux-arm64-musl': 1.27.6
+      '@moonrepo/core-linux-x64-gnu': 1.27.6
+      '@moonrepo/core-linux-x64-musl': 1.27.6
+      '@moonrepo/core-macos-arm64': 1.27.6
+      '@moonrepo/core-macos-x64': 1.27.6
+      '@moonrepo/core-windows-x64-msvc': 1.27.6
 
-  '@moonrepo/core-linux-arm64-gnu@1.27.2':
+  '@moonrepo/core-linux-arm64-gnu@1.27.6':
     optional: true
 
-  '@moonrepo/core-linux-arm64-musl@1.27.2':
+  '@moonrepo/core-linux-arm64-musl@1.27.6':
     optional: true
 
-  '@moonrepo/core-linux-x64-gnu@1.27.2':
+  '@moonrepo/core-linux-x64-gnu@1.27.6':
     optional: true
 
-  '@moonrepo/core-linux-x64-musl@1.27.2':
+  '@moonrepo/core-linux-x64-musl@1.27.6':
     optional: true
 
-  '@moonrepo/core-macos-arm64@1.27.2':
+  '@moonrepo/core-macos-arm64@1.27.6':
     optional: true
 
-  '@moonrepo/core-macos-x64@1.27.2':
+  '@moonrepo/core-macos-x64@1.27.6':
     optional: true
 
-  '@moonrepo/core-windows-x64-msvc@1.27.2':
+  '@moonrepo/core-windows-x64-msvc@1.27.6':
     optional: true
 
   '@motionone/animation@10.18.0':
