@@ -17,41 +17,53 @@ export async function getDeleteRoute(slug: string): Promise<string> {
 	return await getSluggedRoute('delete/pages/', slug);
 }
 
+export async function makeNonDashboardRoute(route?: string | undefined): Promise<string> {
+	return await urlGenFactory(false, route);
+}
+
+export async function makeDashboardRoute(route?: string | undefined): Promise<string> {
+	return await urlGenFactory(true, route, dashboardRouteOverride);
+}
+
+export async function makeAPIDashboardRoute(route: string): Promise<string> {
+	return await urlGenFactory(true, `api/${route}`, dashboardRouteOverride);
+}
+
 export const StudioCMSRoutes = {
 	mainLinks: {
-		baseSiteURL: await urlGenFactory(false, undefined),
-		dashboardIndex: await urlGenFactory(true, undefined, dashboardRouteOverride),
-		userProfile: await urlGenFactory(true, 'profile/', dashboardRouteOverride),
-		pageNew: await urlGenFactory(true, 'new/page/'),
-		pageEdit: await urlGenFactory(true, 'page-list/', dashboardRouteOverride),
-		siteConfiguration: await urlGenFactory(true, 'configuration/'),
-		livePreviewBox: await urlGenFactory(true, 'api/liverender', dashboardRouteOverride),
-		configurationAdmins: await urlGenFactory(true, 'configuration/admins/', dashboardRouteOverride),
+		baseSiteURL: await makeNonDashboardRoute(),
+		dashboardIndex: await makeDashboardRoute(),
+		userProfile: await makeDashboardRoute('profile/'),
+		pageNew: await makeDashboardRoute('new/page/'),
+		pageEdit: await makeDashboardRoute('page-list/'),
+		siteConfiguration: await makeDashboardRoute('configuration/'),
+		livePreviewBox: await makeAPIDashboardRoute('liverender'),
+		configurationAdmins: await makeDashboardRoute('configuration/admins/'),
 	},
 	authLinks: {
-		loginURL: await urlGenFactory(true, 'login', dashboardRouteOverride),
-		logoutURL: await urlGenFactory(true, 'logout', dashboardRouteOverride),
-		signupURL: await urlGenFactory(true, 'signup/', dashboardRouteOverride),
-		loginAPI: await urlGenFactory(true, 'login/api/login', dashboardRouteOverride),
-		registerAPI: await urlGenFactory(true, 'login/api/register', dashboardRouteOverride),
-		githubIndex: await urlGenFactory(true, 'login/github', dashboardRouteOverride),
-		githubCallback: await urlGenFactory(true, 'login/github/callback', dashboardRouteOverride),
-		discordIndex: await urlGenFactory(true, 'login/discord', dashboardRouteOverride),
-		discordCallback: await urlGenFactory(true, 'login/discord/callback', dashboardRouteOverride),
-		googleIndex: await urlGenFactory(true, 'login/google', dashboardRouteOverride),
-		googleCallback: await urlGenFactory(true, 'login/google/callback', dashboardRouteOverride),
-		auth0Index: await urlGenFactory(true, 'login/auth0', dashboardRouteOverride),
-		auth0Callback: await urlGenFactory(true, 'login/auth0/callback', dashboardRouteOverride),
+		loginURL: await makeDashboardRoute('login'),
+		logoutURL: await makeDashboardRoute('logout'),
+		signupURL: await makeDashboardRoute('signup/'),
+		loginAPI: await makeDashboardRoute('login/api/login'),
+		registerAPI: await makeDashboardRoute('login/api/register'),
+		githubIndex: await makeDashboardRoute('login/github'),
+		githubCallback: await makeDashboardRoute('login/github/callback'),
+		discordIndex: await makeDashboardRoute('login/discord'),
+		discordCallback: await makeDashboardRoute('login/discord/callback'),
+		googleIndex: await makeDashboardRoute('login/google'),
+		googleCallback: await makeDashboardRoute('login/google/callback'),
+		auth0Index: await makeDashboardRoute('login/auth0'),
+		auth0Callback: await makeDashboardRoute('login/auth0/callback'),
 	},
 	endpointLinks: {
 		config: {
-			siteConfig: await urlGenFactory(true, 'api/config/site', dashboardRouteOverride),
-			adminConfig: await urlGenFactory(true, 'api/config/admin', dashboardRouteOverride),
+			siteConfig: await makeAPIDashboardRoute('config/site'),
+			adminConfig: await makeAPIDashboardRoute('config/admin'),
 		},
 		pages: {
-			createPages: await urlGenFactory(true, 'api/pages/create', dashboardRouteOverride),
-			editPages: await urlGenFactory(true, 'api/pages/edit', dashboardRouteOverride),
-			deletePages: await urlGenFactory(true, 'api/pages/delete', dashboardRouteOverride),
+			createPages: await makeAPIDashboardRoute('pages/create'),
+			editPages: await makeAPIDashboardRoute('pages/edit'),
+			deletePages: await makeAPIDashboardRoute('pages/delete'),
 		},
 	},
 };
@@ -65,12 +77,19 @@ export const StudioCMSRoutes = {
  * @param icon - The icon to display for the link ( see https://shoelace.style/components/icon )
  */
 export type SideBarLink = {
+	/** Unique link ID */
 	id: string;
+	/** URL to redirect to */
 	href: string;
+	/** Text to display for the link */
 	text: string;
+	/** Minimum permission level required to view the link (unkown/visitor/editor/admin) */
 	minPermissionLevel: string;
+	/** Icon to display for the link ( icon: 'data:image/svg+xml;base64,PH...) */
 	icon: string;
+	/** Type of link (link/dropdown) */
 	type: 'link' | 'dropdown';
+	/** Dropdown items for dropdown links (Requires `type: 'dropdown'`) */
 	dropdownItems?: SideBarLink[];
 };
 
