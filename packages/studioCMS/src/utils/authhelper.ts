@@ -1,4 +1,4 @@
-import { Permissions, db, eq } from 'astro:db';
+import { Permissions, db, sql } from 'astro:db';
 import { lucia } from 'studiocms-dashboard:auth';
 import type { Session } from 'lucia';
 import type { Locals } from '../schemas/locals';
@@ -15,72 +15,56 @@ type authHelperResponse = {
 };
 
 export default async function authHelper(locals: Locals): Promise<authHelperResponse> {
-	const isLoggedIn = locals.isLoggedIn;
-
-	if (isLoggedIn) {
-		if (locals.dbUser) {
-			const sessionArray = await lucia.getUserSessions(locals.dbUser.id);
-			const id = locals.dbUser.id;
-			const username = locals.dbUser.username;
-			const name = locals.dbUser.name;
-			const email = locals.dbUser.email;
-			const avatar = locals.dbUser.avatar;
-			const githubURL = locals.dbUser.githubURL;
-			const currentUserSession = sessionArray[0];
-			let permissionLevel: 'admin' | 'editor' | 'visitor' | 'unknown' = 'unknown';
-			const permissions = await db
-				.select()
-				.from(Permissions)
-				.where(eq(Permissions.username, username))
-				.get();
-
-			if (permissions) {
-				if (permissions && permissions.username.toLowerCase() === username.toLowerCase()) {
-					if (permissions.rank === 'admin') {
-						permissionLevel = 'admin';
-					}
-					if (permissions.rank === 'editor') {
-						permissionLevel = 'editor';
-					}
-					if (permissions.rank === 'visitor') {
-						permissionLevel = 'visitor';
-					}
-				} else {
-					permissionLevel = 'visitor';
-				}
-			} else {
-				permissionLevel = 'visitor';
-			}
-			return {
-				id,
-				username,
-				name,
-				email,
-				avatar,
-				githubURL,
-				permissionLevel,
-				currentUserSession,
-			};
-		}
-		return {
-			id: '',
-			username: null,
-			name: null,
-			email: null,
-			avatar: null,
-			githubURL: null,
-			permissionLevel: 'unknown',
-			currentUserSession: undefined,
-		};
-	}
-	return {
+	let user: authHelperResponse = {
 		id: '',
+		permissionLevel: 'unknown',
 		username: null,
 		name: null,
 		email: null,
 		avatar: null,
 		githubURL: null,
-		permissionLevel: 'unknown',
 		currentUserSession: undefined,
 	};
+
+	if (locals.isLoggedIn && locals.dbUser) {
+		let permissionLevel: 'admin' | 'editor' | 'visitor' | 'unknown' = 'unknown';
+		const permissions = await db
+			.select()
+			.from(Permissions)
+			.where(sql`lower(${Permissions.username}) = ${locals.dbUser.username.toLowerCase()}`)
+			.get();
+
+		if (
+			permissions &&
+			permissions.username.toLowerCase() === locals.dbUser.username.toLowerCase()
+		) {
+			switch (permissions.rank) {
+				case 'admin':
+					permissionLevel = 'admin';
+					break;
+				case 'editor':
+					permissionLevel = 'editor';
+					break;
+				case 'visitor':
+					permissionLevel = 'visitor';
+					break;
+				default:
+					permissionLevel = 'unknown';
+					break;
+			}
+		}
+
+		user = {
+			id: locals.dbUser.id,
+			username: locals.dbUser.username,
+			name: locals.dbUser.name,
+			email: locals.dbUser.email,
+			avatar: locals.dbUser.avatar,
+			githubURL: locals.dbUser.githubURL,
+			currentUserSession: (await lucia.getUserSessions(locals.dbUser.id))[0],
+			permissionLevel,
+		};
+	}
+
+	return user;
 }
