@@ -1,8 +1,8 @@
+import { PLUGIN_INTEGRATION_ICON } from './constVars';
 import coreIntegration from './coreIntegration';
 import { studioCMSRobotsTXT as robotsTXT } from './integrations';
 import type { usernameAndPasswordConfig } from './integrations/studioCMSDashboard/schemas';
 import type { StudioCMSOptions } from './schemas';
-import { PLUGIN_INTEGRATION_ICON } from './constVars';
 
 export type { StudioCMSOptions, usernameAndPasswordConfig };
 

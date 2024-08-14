@@ -1,9 +1,9 @@
 import { createResolver } from 'astro-integration-kit';
 import {
 	customRendererPlugin,
+	dashboardPageLinksMap,
 	externalNavigation,
 	studioCMSPluginList,
-	dashboardPageLinksMap,
 } from '..';
 import { DTSResolver } from './studiocms-dts';
 import type { ResolverOpts, ResolverResponse, VirtualResolver } from './types';

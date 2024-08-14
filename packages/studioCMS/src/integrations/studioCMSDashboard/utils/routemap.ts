@@ -1,6 +1,6 @@
 import { urlGenFactory } from 'studiocms:helpers';
-import Config from 'virtual:studiocms/config';
 import { dashboardPageLinks } from 'virtual:studiocms/_pluginDashboardLinks';
+import Config from 'virtual:studiocms/config';
 
 const {
 	dashboardConfig: { dashboardRouteOverride },
