@@ -1,8 +1,8 @@
-import { PLUGIN_INTEGRATION_ICON } from './constVars';
 import coreIntegration from './coreIntegration';
 import { studioCMSRobotsTXT as robotsTXT } from './integrations';
 import type { usernameAndPasswordConfig } from './integrations/studioCMSDashboard/schemas';
 import type { StudioCMSOptions } from './schemas';
+import { convertDashboardLinksType } from './utils/convertDashboardLinksType';
 
 export type { StudioCMSOptions, usernameAndPasswordConfig };
 
@@ -66,7 +66,7 @@ export const studioCMSRobotsTXT = robotsTXT;
 /**
  * Reference from StudioCMS-Dashboard routemap.ts
  */
-type SideBarLink = {
+export type SideBarLink = {
 	/** Unique link ID */
 	id: string;
 	/** URL to redirect to */
@@ -156,72 +156,15 @@ export function defineStudioCMSPlugin(options: StudioCMSPluginOptions) {
 
 	// Add the custom Dashboard pages to the Dashboard Page Links
 	if (dashboardPageLinks) {
-		// Create an array to store the Dashboard Page Links
-		const dashboardPageLinksArray: SideBarLink[] = [];
-
 		// Convert the Dashboard Page Links to the SideBarLink type
-		const DashboardPluginLink: SideBarLink[] = [
-			{
-				id: `${pkgname}-dashboard`,
-				href: '',
-				text: pluginLabel,
-				minPermissionLevel: 'visitor',
-				icon: PLUGIN_INTEGRATION_ICON,
-				type: 'dropdown',
-				dropdownItems: dashboardPageLinksArray,
-			},
-		];
-
-		for (const linkItem of dashboardPageLinks) {
-			const { type } = linkItem;
-
-			if (type === 'link') {
-				const { icon, label, link, minRole } = linkItem;
-
-				dashboardPageLinksArray.push({
-					id: `${pkgname}-${label}`,
-					href: link,
-					text: label,
-					minPermissionLevel: minRole,
-					icon: icon,
-					type: 'link',
-				});
-			}
-
-			if (type === 'dropdown') {
-				const { icon, label, link, minRole, type, dropdownChildren } = linkItem;
-
-				const DropdownChildren: SideBarLink[] = [];
-
-				if (dropdownChildren) {
-					for (const childItem of dropdownChildren) {
-						const { icon, label, link, minRole, type } = childItem;
-
-						DropdownChildren.push({
-							id: `${pkgname}-${label}`,
-							href: link,
-							text: label,
-							minPermissionLevel: minRole,
-							icon: icon,
-							type: type,
-						});
-					}
-				}
-
-				dashboardPageLinksArray.push({
-					id: `${pkgname}-${label}`,
-					href: link,
-					text: label,
-					minPermissionLevel: minRole,
-					icon: icon,
-					type: type,
-					dropdownItems: DropdownChildren,
-				});
-			}
-		}
+		const DashboardPluginLinkList = convertDashboardLinksType(
+			dashboardPageLinks,
+			pkgname,
+			pluginLabel
+		);
 
 		// Add the Dashboard Page Links to the Dashboard Page Links Map
-		dashboardPageLinksMap.set(pkgname, DashboardPluginLink);
+		dashboardPageLinksMap.set(pkgname, DashboardPluginLinkList);
 	}
 
 	// Add the custom renderer plugin path to the Custom Renderer Plugin Set
