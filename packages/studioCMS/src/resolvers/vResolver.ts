@@ -7,6 +7,7 @@ import {
 } from '..';
 import { DTSResolver } from './studiocms-dts';
 import type { ResolverOpts, ResolverResponse, VirtualResolver } from './types';
+import { stringify, stringifyMap } from '../utils/JsonArrayMap';
 
 const { resolve } = createResolver(import.meta.url);
 
@@ -106,7 +107,7 @@ export const vResolver = (opts: ResolverOpts): ResolverResponse => {
 		virtualHelperMap += `export * from '${path}';\n`;
 	});
 
-	virtualHelperMap += `export const pluginList = new Map(${JSON.stringify(Array.from(studioCMSPluginList.entries()))});`;
+	virtualHelperMap += `export const pluginList = new Map(${stringifyMap(studioCMSPluginList)});`;
 
 	//-// Build Virtual Import Map
 	const {
@@ -116,11 +117,11 @@ export const vResolver = (opts: ResolverOpts): ResolverResponse => {
 	} = imports;
 
 	const importMap: ResolverResponse['virtualImportMap'] = {
-		'virtual:studiocms/config': `export default ${JSON.stringify(resolvedOptions)}`,
+		'virtual:studiocms/config': `export default ${stringify(resolvedOptions)}`,
 		'virtual:studiocms/version': `export default '${version}'`,
-		'virtual:studiocms/_nav': `export const externalNav = new Map(${JSON.stringify(Array.from(externalNavigation.entries()))});`,
-		'virtual:studiocms/_pluginDashboardLinks': `export const dashboardPageLinks = new Map(${JSON.stringify(Array.from(dashboardPageLinksMap.entries()))});`,
-		'virtual:studiocms/astromdremarkConfig': `export default ${JSON.stringify(astroMarkdown)}`,
+		'virtual:studiocms/_nav': `export const externalNav = new Map(${stringifyMap(externalNavigation)});`,
+		'virtual:studiocms/_pluginDashboardLinks': `export const dashboardPageLinks = new Map(${stringifyMap(dashboardPageLinksMap)});`,
+		'virtual:studiocms/astromdremarkConfig': `export default ${stringify(astroMarkdown)}`,
 		'studiocms:components': virtualComponentMap,
 		'studiocms:helpers': virtualHelperMap,
 	};

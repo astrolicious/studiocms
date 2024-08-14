@@ -9,8 +9,9 @@ import CrumbStack from '../components/CrumbStack.astro';
 import PageEditAndCreateForm from '../components/PageEditAndCreateForm.astro';
 
 const {
-	mainLinks: { dashboardIndex, pageNew, pageEdit, livePreviewBox },
+	mainLinks: { dashboardIndex, pageNew, pageEdit },
 	endpointLinks: {
+		partials: { livePreviewBox },
 		pages: { createPages: createPagesEndpoint },
 	},
 } = StudioCMSRoutes;

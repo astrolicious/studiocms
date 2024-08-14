@@ -1,6 +1,7 @@
 import { urlGenFactory } from 'studiocms:helpers';
 import { dashboardPageLinks } from 'virtual:studiocms/_pluginDashboardLinks';
 import Config from 'virtual:studiocms/config';
+import type { SideBarLink } from '../../../schemas/types';
 
 const {
 	dashboardConfig: { dashboardRouteOverride },
@@ -38,7 +39,6 @@ export const StudioCMSRoutes = {
 		pageNew: await makeDashboardRoute('new/page/'),
 		pageEdit: await makeDashboardRoute('page-list/'),
 		siteConfiguration: await makeDashboardRoute('configuration/'),
-		livePreviewBox: await makeAPIDashboardRoute('liverender'),
 		configurationAdmins: await makeDashboardRoute('configuration/admins/'),
 	},
 	authLinks: {
@@ -57,6 +57,9 @@ export const StudioCMSRoutes = {
 		auth0Callback: await makeDashboardRoute('login/auth0/callback'),
 	},
 	endpointLinks: {
+		partials: {
+			livePreviewBox: await makeAPIDashboardRoute('liverender'),
+		},
 		config: {
 			siteConfig: await makeAPIDashboardRoute('config/site'),
 			adminConfig: await makeAPIDashboardRoute('config/admin'),
@@ -69,30 +72,7 @@ export const StudioCMSRoutes = {
 	},
 };
 
-// Sidebar link type
-/**
- * @param id - The unique identifier for the link
- * @param href - The URL to redirect to
- * @param text - The text to display for the link
- * @param minPermissionLevel - The minimum permission level required to view the link (unknown, visitor, editor, admin)
- * @param icon - The icon to display for the link ( see https://shoelace.style/components/icon )
- */
-export type SideBarLink = {
-	/** Unique link ID */
-	id: string;
-	/** URL to redirect to */
-	href: string;
-	/** Text to display for the link */
-	text: string;
-	/** Minimum permission level required to view the link (unkown/visitor/editor/admin) */
-	minPermissionLevel: string;
-	/** Icon to display for the link ( icon: 'data:image/svg+xml;base64,PH...) */
-	icon: string;
-	/** Type of link (link/dropdown) */
-	type: 'link' | 'dropdown';
-	/** Dropdown items for dropdown links (Requires `type: 'dropdown'`) */
-	dropdownItems?: SideBarLink[];
-};
+export type { SideBarLink };
 
 // Add default dashboard page links
 const defaultDashboardPageLinks: SideBarLink[] = [
