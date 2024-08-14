@@ -2,6 +2,7 @@ import coreIntegration from './coreIntegration';
 import { studioCMSRobotsTXT as robotsTXT } from './integrations';
 import type { usernameAndPasswordConfig } from './integrations/studioCMSDashboard/schemas';
 import type { StudioCMSOptions } from './schemas';
+import { PLUGIN_INTEGRATION_ICON } from './constVars';
 
 export type { StudioCMSOptions, usernameAndPasswordConfig };
 
@@ -61,6 +62,42 @@ export default studioCMSCoreIntegration;
  */
 export const studioCMSRobotsTXT = robotsTXT;
 
+// Sidebar link type
+/**
+ * Reference from StudioCMS-Dashboard routemap.ts
+ */
+type SideBarLink = {
+	/** Unique link ID */
+	id: string;
+	/** URL to redirect to */
+	href: string;
+	/** Text to display for the link */
+	text: string;
+	/** Minimum permission level required to view the link (unkown/visitor/editor/admin) */
+	minPermissionLevel: string;
+	/** Icon to display for the link ( icon: 'data:image/svg+xml;base64,PH...) */
+	icon: string;
+	/** Type of link (link/dropdown) */
+	type: 'link' | 'dropdown';
+	/** Dropdown items for dropdown links (Requires `type: 'dropdown'`) */
+	dropdownItems?: SideBarLink[];
+};
+
+export type DashboardPageLink = {
+	/** Label for the link */
+	label: string;
+	/** URL to redirect to */
+	link: string;
+	/** Minimum permission level required to view the link (unkown/visitor/editor/admin) */
+	minRole: 'unknown' | 'visitor' | 'editor' | 'admin';
+	/** Icon to display for the link ( icon: 'data:image/svg+xml;base64,PH...) */
+	icon: string;
+	/** Type of link (link/dropdown) */
+	type: 'link' | 'dropdown';
+	/** Dropdown items for dropdown links (Requires `type: 'dropdown'`) */
+	dropdownChildren?: DashboardPageLink[];
+};
+
 export type StudioCMSPluginOptions = {
 	/**
 	 * The Package Name of the Plugin
@@ -82,6 +119,10 @@ export type StudioCMSPluginOptions = {
 			slug: string;
 		}[];
 		/**
+		 * Custom Dashboard pages for the Plugin
+		 */
+		dashboardPageLinks?: DashboardPageLink[];
+		/**
 		 * The Custom Renderer Plugin Path - This is used to replace the built-in Markdown Renderer. Recommended for Advanced Users.
 		 */
 		customRendererPluginPath?: string;
@@ -99,14 +140,91 @@ export type StudioCMSPluginOptions = {
  * @param options.opts.customRendererPluginPath { string } - The Custom Renderer Plugin Path - This is used to replace the built-in Markdown Renderer. Recommended for Advanced Users.
  */
 export function defineStudioCMSPlugin(options: StudioCMSPluginOptions) {
+	// Extract the options
 	const { pkgname, opts } = options;
-	const { pluginLabel, navigationLinks, customRendererPluginPath } = opts;
+	const { pluginLabel, navigationLinks, customRendererPluginPath, dashboardPageLinks } = opts;
+
+	// Add the plugin to the StudioCMS Plugin List
 	studioCMSPluginList.set(pkgname, { name: pkgname, label: pluginLabel });
+
+	// Add the navigation links to the External Navigation Map
 	if (navigationLinks) {
 		for (const link of navigationLinks) {
 			externalNavigation.set(`${pkgname}:${link.slug}`, { text: link.text, slug: link.slug });
 		}
 	}
+
+	// Add the custom Dashboard pages to the Dashboard Page Links
+	if (dashboardPageLinks) {
+		// Create an array to store the Dashboard Page Links
+		const dashboardPageLinksArray: SideBarLink[] = [];
+
+		// Convert the Dashboard Page Links to the SideBarLink type
+		const DashboardPluginLink: SideBarLink[] = [
+			{
+				id: `${pkgname}-dashboard`,
+				href: '',
+				text: pluginLabel,
+				minPermissionLevel: 'visitor',
+				icon: PLUGIN_INTEGRATION_ICON,
+				type: 'dropdown',
+				dropdownItems: dashboardPageLinksArray,
+			},
+		];
+
+		for (const linkItem of dashboardPageLinks) {
+			const { type } = linkItem;
+
+			if (type === 'link') {
+				const { icon, label, link, minRole } = linkItem;
+
+				dashboardPageLinksArray.push({
+					id: `${pkgname}-${label}`,
+					href: link,
+					text: label,
+					minPermissionLevel: minRole,
+					icon: icon,
+					type: 'link',
+				});
+			}
+
+			if (type === 'dropdown') {
+				const { icon, label, link, minRole, type, dropdownChildren } = linkItem;
+
+				const DropdownChildren: SideBarLink[] = [];
+
+				if (dropdownChildren) {
+					for (const childItem of dropdownChildren) {
+						const { icon, label, link, minRole, type } = childItem;
+
+						DropdownChildren.push({
+							id: `${pkgname}-${label}`,
+							href: link,
+							text: label,
+							minPermissionLevel: minRole,
+							icon: icon,
+							type: type,
+						});
+					}
+				}
+
+				dashboardPageLinksArray.push({
+					id: `${pkgname}-${label}`,
+					href: link,
+					text: label,
+					minPermissionLevel: minRole,
+					icon: icon,
+					type: type,
+					dropdownItems: DropdownChildren,
+				});
+			}
+		}
+
+		// Add the Dashboard Page Links to the Dashboard Page Links Map
+		dashboardPageLinksMap.set(pkgname, DashboardPluginLink);
+	}
+
+	// Add the custom renderer plugin path to the Custom Renderer Plugin Set
 	if (customRendererPluginPath) {
 		customRendererPlugin.add(customRendererPluginPath);
 	}
@@ -125,6 +243,13 @@ export const studioCMSPluginList = new Map<string, { name: string; label: string
  * A Map of External Navigation Links used to register with the StudioCMS Core for usage on the Front-end Navigation bar.
  */
 export const externalNavigation = new Map<string, { text: string; slug: string }>();
+
+/**
+ * # Dashboard Page Links Map
+ *
+ * A Map of Dashboard Page Links used to register with the StudioCMS Core for usage on the Dashboard Sidebar for displaying custom plugin pages.
+ */
+export const dashboardPageLinksMap = new Map<string, SideBarLink[]>();
 
 /**
  * # Custom Renderer Plugin

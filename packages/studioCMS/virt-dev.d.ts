@@ -48,6 +48,31 @@ declare module 'virtual:studiocms/_nav' {
 	export const externalNav: Map<string, { text: string; slug: string }>;
 }
 
+// Sidebar link type
+/**
+ * Reference from StudioCMS-Dashboard routemap.ts
+ */
+type SideBarLink = {
+	/** Unique link ID */
+	id: string;
+	/** URL to redirect to */
+	href: string;
+	/** Text to display for the link */
+	text: string;
+	/** Minimum permission level required to view the link (unkown/visitor/editor/admin) */
+	minPermissionLevel: string;
+	/** Icon to display for the link ( icon: 'data:image/svg+xml;base64,PH...) */
+	icon: string;
+	/** Type of link (link/dropdown) */
+	type: 'link' | 'dropdown';
+	/** Dropdown items for dropdown links (Requires `type: 'dropdown'`) */
+	dropdownItems?: SideBarLink[];
+};
+
+declare module 'virtual:studiocms/_pluginDashboardLinks' {
+	export const dashboardPageLinks: Map<string, SideBarLink[]>;
+}
+
 interface ImportMetaEnv {
 	readonly PROD: boolean;
 	readonly BASE_URL: string;

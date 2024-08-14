@@ -1,5 +1,10 @@
 import { createResolver } from 'astro-integration-kit';
-import { customRendererPlugin, externalNavigation, studioCMSPluginList } from '..';
+import {
+	customRendererPlugin,
+	externalNavigation,
+	studioCMSPluginList,
+	dashboardPageLinksMap,
+} from '..';
 import { DTSResolver } from './studiocms-dts';
 import type { ResolverOpts, ResolverResponse, VirtualResolver } from './types';
 
@@ -114,6 +119,7 @@ export const vResolver = (opts: ResolverOpts): ResolverResponse => {
 		'virtual:studiocms/config': `export default ${JSON.stringify(resolvedOptions)}`,
 		'virtual:studiocms/version': `export default '${version}'`,
 		'virtual:studiocms/_nav': `export const externalNav = new Map(${JSON.stringify(Array.from(externalNavigation.entries()))});`,
+		'virtual:studiocms/_pluginDashboardLinks': `export const dashboardPageLinks = new Map(${JSON.stringify(Array.from(dashboardPageLinksMap.entries()))});`,
 		'virtual:studiocms/astromdremarkConfig': `export default ${JSON.stringify(astroMarkdown)}`,
 		'studiocms:components': virtualComponentMap,
 		'studiocms:helpers': virtualHelperMap,
