@@ -1,6 +1,6 @@
 import type { AstroIntegration } from 'astro';
-import type { StudioCMSPluginOptions } from './schemas/types';
 import type { StudioCMSOptions } from './schemas';
+import type { StudioCMSPluginOptions } from './schemas/types';
 
 export type { StudioCMSOptions, StudioCMSPluginOptions };
 

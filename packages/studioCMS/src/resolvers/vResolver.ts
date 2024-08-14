@@ -5,9 +5,9 @@ import {
 	externalNavigation,
 	studioCMSPluginList,
 } from '..';
+import { stringify, stringifyMap } from '../utils/JsonArrayMap';
 import { DTSResolver } from './studiocms-dts';
 import type { ResolverOpts, ResolverResponse, VirtualResolver } from './types';
-import { stringify, stringifyMap } from '../utils/JsonArrayMap';
 
 const { resolve } = createResolver(import.meta.url);
 
