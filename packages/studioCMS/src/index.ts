@@ -124,7 +124,7 @@ export const externalNavigation = new Map<string, { text: string; slug: string }
 /**
  * # Dashboard Page Links Map
  *
- * A Map of Dashboard Page Links used to register with the StudioCMS Core for usage on the Dashboard Sidebar for displaying custom plugin pages.
+ * A map of dashboard page links used to register with the StudioCMS Core for usage on the dashboard sidebar for displaying custom plugin pages.
  */
 export const dashboardPageLinksMap = new Map<string, SideBarLink[]>();
 

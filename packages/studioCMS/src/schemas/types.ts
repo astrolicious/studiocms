@@ -13,7 +13,7 @@ export type SideBarLink = {
 	href: string;
 	/** Text to display for the link */
 	text: string;
-	/** Minimum permission level required to view the link (unkown/visitor/editor/admin) */
+	/** Minimum permission level required to view the link (unknown/visitor/editor/admin) */
 	minPermissionLevel: string;
 	/** Icon to display for the link ( icon: 'data:image/svg+xml;base64,PH...) */
 	icon: string;
@@ -28,7 +28,7 @@ export type DashboardPageLink = {
 	label: string;
 	/** URL to redirect to */
 	link: string;
-	/** Minimum permission level required to view the link (unkown/visitor/editor/admin) */
+	/** Minimum permission level required to view the link (unknown/visitor/editor/admin) */
 	minRole: 'unknown' | 'visitor' | 'editor' | 'admin';
 	/** Icon to display for the link ( icon: 'data:image/svg+xml;base64,PH...) */
 	icon: string;
@@ -40,30 +40,30 @@ export type DashboardPageLink = {
 
 export type StudioCMSPluginOptions = {
 	/**
-	 * The Package Name of the Plugin
+	 * The package name of the plugin
 	 */
 	pkgname: string;
 	/**
-	 * The Options for the Plugin
+	 * The options for the plugin
 	 */
 	opts: {
 		/**
-		 * The Label for the Plugin used in the Dashboard
+		 * The label for the plugin (used in the dashboard)
 		 */
 		pluginLabel: string;
 		/**
-		 * The Front-end Navigation Links for the Plugin
+		 * The front-end navigation links for the plugin
 		 */
 		navigationLinks?: {
 			text: string;
 			slug: string;
 		}[];
 		/**
-		 * Custom Dashboard pages for the Plugin
+		 * Custom dashboard pages for the plugin
 		 */
 		dashboardPageLinks?: DashboardPageLink[];
 		/**
-		 * The Custom Renderer Plugin Path - This is used to replace the built-in Markdown Renderer. Recommended for Advanced Users.
+		 * The custom renderer plugin path - This is used to replace the built-in Markdown renderer. Recommended for advanced users.
 		 */
 		customRendererPluginPath?: string;
 	};
