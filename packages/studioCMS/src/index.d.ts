@@ -1,6 +1,6 @@
 import type { AstroIntegration } from 'astro';
-import type { StudioCMSPluginOptions } from '.';
 import type { StudioCMSOptions } from './schemas';
+import type { StudioCMSPluginOptions } from './schemas/types';
 
 export type { StudioCMSOptions, StudioCMSPluginOptions };
 
@@ -57,7 +57,8 @@ export default studioCMSCoreIntegration;
  *
  * @param options.pkgname {string} - The Package Name of the Plugin
  * @param options.opts.pluginLabel {string} - The Label for the Plugin
- * @param options.opts.navigationLinks Array<{ text: string, slug: string }> - The Navigation Links for the Plugin
- * @param options.opts.customRendererPluginPath { string } - The Custom Renderer Plugin Path - This is used to replace the built-in Markdown Renderer. Recommended for Advanced Users.
+ * @param options.opts.navigationLinks {Array<{ text: string, slug: string }>} - The Navigation Links for the Plugin
+ * @param options.opts.dashboardPageLinks {Array<{ label: string, link: string, minRole: 'unknown' | 'visitor' | 'editor' | 'admin', icon: string, type: 'link' | 'dropdown', dropdownChildren: []}>} - The Dashboard Page Links for the Plugin
+ * @param options.opts.customRendererPluginPath { string } - The Custom Renderer Plugin Path - This is used to replace the built-in Markdown Renderer. *Recommended for Advanced Users.*
  */
 export function defineStudioCMSPlugin(options: StudioCMSPluginOptions): void;

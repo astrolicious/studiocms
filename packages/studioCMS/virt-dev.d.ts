@@ -45,7 +45,11 @@ declare module 'virtual:studiocms-dashboard/AuthSecurityConfig' {
 }
 
 declare module 'virtual:studiocms/_nav' {
-	export const externalNav: Map<string, { text: string; slug: string }>;
+	export const externalNav: typeof import('./src/index').externalNavigation;
+}
+
+declare module 'virtual:studiocms/_pluginDashboardLinks' {
+	export const dashboardPageLinks: typeof import('./src/index').dashboardPageLinksMap;
 }
 
 interface ImportMetaEnv {

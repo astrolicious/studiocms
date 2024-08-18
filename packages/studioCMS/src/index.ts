@@ -2,6 +2,8 @@ import coreIntegration from './coreIntegration';
 import { studioCMSRobotsTXT as robotsTXT } from './integrations';
 import type { usernameAndPasswordConfig } from './integrations/studioCMSDashboard/schemas';
 import type { StudioCMSOptions } from './schemas';
+import type { SideBarLink, StudioCMSPluginOptions } from './schemas/types';
+import { convertDashboardLinksType } from './utils/convertDashboardLinksType';
 
 export type { StudioCMSOptions, usernameAndPasswordConfig };
 
@@ -61,33 +63,6 @@ export default studioCMSCoreIntegration;
  */
 export const studioCMSRobotsTXT = robotsTXT;
 
-export type StudioCMSPluginOptions = {
-	/**
-	 * The Package Name of the Plugin
-	 */
-	pkgname: string;
-	/**
-	 * The Options for the Plugin
-	 */
-	opts: {
-		/**
-		 * The Label for the Plugin used in the Dashboard
-		 */
-		pluginLabel: string;
-		/**
-		 * The Front-end Navigation Links for the Plugin
-		 */
-		navigationLinks?: {
-			text: string;
-			slug: string;
-		}[];
-		/**
-		 * The Custom Renderer Plugin Path - This is used to replace the built-in Markdown Renderer. Recommended for Advanced Users.
-		 */
-		customRendererPluginPath?: string;
-	};
-};
-
 /**
  * # Define StudioCMS Plugin
  *
@@ -99,14 +74,34 @@ export type StudioCMSPluginOptions = {
  * @param options.opts.customRendererPluginPath { string } - The Custom Renderer Plugin Path - This is used to replace the built-in Markdown Renderer. Recommended for Advanced Users.
  */
 export function defineStudioCMSPlugin(options: StudioCMSPluginOptions) {
+	// Extract the options
 	const { pkgname, opts } = options;
-	const { pluginLabel, navigationLinks, customRendererPluginPath } = opts;
+	const { pluginLabel, navigationLinks, customRendererPluginPath, dashboardPageLinks } = opts;
+
+	// Add the plugin to the StudioCMS Plugin List
 	studioCMSPluginList.set(pkgname, { name: pkgname, label: pluginLabel });
+
+	// Add the navigation links to the External Navigation Map
 	if (navigationLinks) {
 		for (const link of navigationLinks) {
 			externalNavigation.set(`${pkgname}:${link.slug}`, { text: link.text, slug: link.slug });
 		}
 	}
+
+	// Add the custom Dashboard pages to the Dashboard Page Links
+	if (dashboardPageLinks) {
+		// Convert the Dashboard Page Links to the SideBarLink type
+		const DashboardPluginLinkList = convertDashboardLinksType(
+			dashboardPageLinks,
+			pkgname,
+			pluginLabel
+		);
+
+		// Add the Dashboard Page Links to the Dashboard Page Links Map
+		dashboardPageLinksMap.set(pkgname, DashboardPluginLinkList);
+	}
+
+	// Add the custom renderer plugin path to the Custom Renderer Plugin Set
 	if (customRendererPluginPath) {
 		customRendererPlugin.add(customRendererPluginPath);
 	}
@@ -125,6 +120,13 @@ export const studioCMSPluginList = new Map<string, { name: string; label: string
  * A Map of External Navigation Links used to register with the StudioCMS Core for usage on the Front-end Navigation bar.
  */
 export const externalNavigation = new Map<string, { text: string; slug: string }>();
+
+/**
+ * # Dashboard Page Links Map
+ *
+ * A map of dashboard page links used to register with the StudioCMS Core for usage on the dashboard sidebar for displaying custom plugin pages.
+ */
+export const dashboardPageLinksMap = new Map<string, SideBarLink[]>();
 
 /**
  * # Custom Renderer Plugin

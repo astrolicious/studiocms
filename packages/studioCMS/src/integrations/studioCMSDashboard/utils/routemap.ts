@@ -1,5 +1,7 @@
 import { urlGenFactory } from 'studiocms:helpers';
+import { dashboardPageLinks } from 'virtual:studiocms/_pluginDashboardLinks';
 import Config from 'virtual:studiocms/config';
+import type { SideBarLink } from '../../../schemas/types';
 
 const {
 	dashboardConfig: { dashboardRouteOverride },
@@ -17,62 +19,60 @@ export async function getDeleteRoute(slug: string): Promise<string> {
 	return await getSluggedRoute('delete/pages/', slug);
 }
 
+export async function makeNonDashboardRoute(route?: string | undefined): Promise<string> {
+	return await urlGenFactory(false, route);
+}
+
+export async function makeDashboardRoute(route?: string | undefined): Promise<string> {
+	return await urlGenFactory(true, route, dashboardRouteOverride);
+}
+
+export async function makeAPIDashboardRoute(route: string): Promise<string> {
+	return await urlGenFactory(true, `api/${route}`, dashboardRouteOverride);
+}
+
 export const StudioCMSRoutes = {
 	mainLinks: {
-		baseSiteURL: await urlGenFactory(false, undefined),
-		dashboardIndex: await urlGenFactory(true, undefined, dashboardRouteOverride),
-		userProfile: await urlGenFactory(true, 'profile/', dashboardRouteOverride),
-		pageNew: await urlGenFactory(true, 'new/page/'),
-		pageEdit: await urlGenFactory(true, 'page-list/', dashboardRouteOverride),
-		siteConfiguration: await urlGenFactory(true, 'configuration/'),
-		livePreviewBox: await urlGenFactory(true, 'api/liverender', dashboardRouteOverride),
-		configurationAdmins: await urlGenFactory(true, 'configuration/admins/', dashboardRouteOverride),
+		baseSiteURL: await makeNonDashboardRoute(),
+		dashboardIndex: await makeDashboardRoute(),
+		userProfile: await makeDashboardRoute('profile/'),
+		pageNew: await makeDashboardRoute('new/page/'),
+		pageEdit: await makeDashboardRoute('page-list/'),
+		siteConfiguration: await makeDashboardRoute('configuration/'),
+		configurationAdmins: await makeDashboardRoute('configuration/admins/'),
 	},
 	authLinks: {
-		loginURL: await urlGenFactory(true, 'login', dashboardRouteOverride),
-		logoutURL: await urlGenFactory(true, 'logout', dashboardRouteOverride),
-		signupURL: await urlGenFactory(true, 'signup/', dashboardRouteOverride),
-		loginAPI: await urlGenFactory(true, 'login/api/login', dashboardRouteOverride),
-		registerAPI: await urlGenFactory(true, 'login/api/register', dashboardRouteOverride),
-		githubIndex: await urlGenFactory(true, 'login/github', dashboardRouteOverride),
-		githubCallback: await urlGenFactory(true, 'login/github/callback', dashboardRouteOverride),
-		discordIndex: await urlGenFactory(true, 'login/discord', dashboardRouteOverride),
-		discordCallback: await urlGenFactory(true, 'login/discord/callback', dashboardRouteOverride),
-		googleIndex: await urlGenFactory(true, 'login/google', dashboardRouteOverride),
-		googleCallback: await urlGenFactory(true, 'login/google/callback', dashboardRouteOverride),
-		auth0Index: await urlGenFactory(true, 'login/auth0', dashboardRouteOverride),
-		auth0Callback: await urlGenFactory(true, 'login/auth0/callback', dashboardRouteOverride),
+		loginURL: await makeDashboardRoute('login'),
+		logoutURL: await makeDashboardRoute('logout'),
+		signupURL: await makeDashboardRoute('signup/'),
+		loginAPI: await makeDashboardRoute('login/api/login'),
+		registerAPI: await makeDashboardRoute('login/api/register'),
+		githubIndex: await makeDashboardRoute('login/github'),
+		githubCallback: await makeDashboardRoute('login/github/callback'),
+		discordIndex: await makeDashboardRoute('login/discord'),
+		discordCallback: await makeDashboardRoute('login/discord/callback'),
+		googleIndex: await makeDashboardRoute('login/google'),
+		googleCallback: await makeDashboardRoute('login/google/callback'),
+		auth0Index: await makeDashboardRoute('login/auth0'),
+		auth0Callback: await makeDashboardRoute('login/auth0/callback'),
 	},
 	endpointLinks: {
+		partials: {
+			livePreviewBox: await makeAPIDashboardRoute('liverender'),
+		},
 		config: {
-			siteConfig: await urlGenFactory(true, 'api/config/site', dashboardRouteOverride),
-			adminConfig: await urlGenFactory(true, 'api/config/admin', dashboardRouteOverride),
+			siteConfig: await makeAPIDashboardRoute('config/site'),
+			adminConfig: await makeAPIDashboardRoute('config/admin'),
 		},
 		pages: {
-			createPages: await urlGenFactory(true, 'api/pages/create', dashboardRouteOverride),
-			editPages: await urlGenFactory(true, 'api/pages/edit', dashboardRouteOverride),
-			deletePages: await urlGenFactory(true, 'api/pages/delete', dashboardRouteOverride),
+			createPages: await makeAPIDashboardRoute('pages/create'),
+			editPages: await makeAPIDashboardRoute('pages/edit'),
+			deletePages: await makeAPIDashboardRoute('pages/delete'),
 		},
 	},
 };
 
-// Sidebar link type
-/**
- * @param id - The unique identifier for the link
- * @param href - The URL to redirect to
- * @param text - The text to display for the link
- * @param minPermissionLevel - The minimum permission level required to view the link (unknown, visitor, editor, admin)
- * @param icon - The icon to display for the link ( see https://shoelace.style/components/icon )
- */
-export type SideBarLink = {
-	id: string;
-	href: string;
-	text: string;
-	minPermissionLevel: string;
-	icon: string;
-	type: 'link' | 'dropdown';
-	dropdownItems?: SideBarLink[];
-};
+export type { SideBarLink };
 
 // Add default dashboard page links
 const defaultDashboardPageLinks: SideBarLink[] = [
@@ -129,6 +129,12 @@ const defaultDashboardPageLinks: SideBarLink[] = [
 // Add custom dashboard page links
 const customDashboardPageLinks: SideBarLink[] = [];
 
+const customDashboardRoutes = Array.from(dashboardPageLinks.values());
+
+for (const links of customDashboardRoutes) {
+	customDashboardPageLinks.push(...links);
+}
+
 const customDashboardDropdown = {
 	id: 'integrations',
 	href: '',
@@ -136,7 +142,7 @@ const customDashboardDropdown = {
 	minPermissionLevel: 'editor',
 	icon: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDE2IDE2Ij48cGF0aCBmaWxsPSJjdXJyZW50Q29sb3IiIGQ9Ik0zLjExMiAzLjY0NUExLjUgMS41IDAgMCAxIDQuNjA1IDJIN2EuNS41IDAgMCAxIC41LjV2LjM4MmMwIC42OTYtLjQ5NyAxLjE4Mi0uODcyIDEuNDY5YS41LjUgMCAwIDAtLjExNS4xMThsLS4wMTIuMDI1TDYuNSA0LjV2LjAwM2wuMDAzLjAxcS4wMDUuMDE1LjAzNi4wNTNhLjkuOSAwIDAgMCAuMjcuMTk0QzcuMDkgNC45IDcuNTEgNSA4IDVjLjQ5MiAwIC45MTItLjEgMS4xOS0uMjRhLjkuOSAwIDAgMCAuMjcxLS4xOTRhLjIuMiAwIDAgMCAuMDM5LS4wNjN2LS4wMDlsLS4wMTItLjAyNWEuNS41IDAgMCAwLS4xMTUtLjExOGMtLjM3NS0uMjg3LS44NzItLjc3My0uODcyLTEuNDY5VjIuNUEuNS41IDAgMCAxIDkgMmgyLjM5NWExLjUgMS41IDAgMCAxIDEuNDkzIDEuNjQ1TDEyLjY0NSA2LjVoLjIzN2MuMTk1IDAgLjQyLS4xNDcuNjc1LS40OGMuMjEtLjI3NC41MjgtLjUyLjk0My0uNTJjLjU2OCAwIC45NDcuNDQ3IDEuMTU0Ljg2MkMxNS44NzcgNi44MDcgMTYgNy4zODcgMTYgOHMtLjEyMyAxLjE5My0uMzQ2IDEuNjM4Yy0uMjA3LjQxNS0uNTg2Ljg2Mi0xLjE1NC44NjJjLS40MTUgMC0uNzMzLS4yNDYtLjk0My0uNTJjLS4yNTUtLjMzMy0uNDgtLjQ4LS42NzUtLjQ4aC0uMjM3bC4yNDMgMi44NTVBMS41IDEuNSAwIDAgMSAxMS4zOTUgMTRIOWEuNS41IDAgMCAxLS41LS41di0uMzgyYzAtLjY5Ni40OTctMS4xODIuODcyLTEuNDY5YS41LjUgMCAwIDAgLjExNS0uMTE4bC4wMTItLjAyNWwuMDAxLS4wMDZ2LS4wMDNhLjIuMiAwIDAgMC0uMDM5LS4wNjRhLjkuOSAwIDAgMC0uMjctLjE5M0M4LjkxIDExLjEgOC40OSAxMSA4IDExcy0uOTEyLjEtMS4xOS4yNGEuOS45IDAgMCAwLS4yNzEuMTk0YS4yLjIgMCAwIDAtLjAzOS4wNjN2LjAwM2wuMDAxLjAwNmwuMDEyLjAyNWMuMDE2LjAyNy4wNS4wNjguMTE1LjExOGMuMzc1LjI4Ny44NzIuNzczLjg3MiAxLjQ2OXYuMzgyYS41LjUgMCAwIDEtLjUuNUg0LjYwNWExLjUgMS41IDAgMCAxLTEuNDkzLTEuNjQ1TDMuMzU2IDkuNWgtLjIzOGMtLjE5NSAwLS40Mi4xNDctLjY3NS40OGMtLjIxLjI3NC0uNTI4LjUyLS45NDMuNTJjLS41NjggMC0uOTQ3LS40NDctMS4xNTQtLjg2MkMuMTIzIDkuMTkzIDAgOC42MTMgMCA4cy4xMjMtMS4xOTMuMzQ2LTEuNjM4Qy41NTMgNS45NDcuOTMyIDUuNSAxLjUgNS41Yy40MTUgMCAuNzMzLjI0Ni45NDMuNTJjLjI1NS4zMzMuNDguNDguNjc1LjQ4aC4yMzh6TTQuNjA1IDNhLjUuNSAwIDAgMC0uNDk4LjU1bC4wMDEuMDA3bC4yOSAzLjRBLjUuNSAwIDAgMSAzLjkgNy41aC0uNzgyYy0uNjk2IDAtMS4xODItLjQ5Ny0xLjQ2OS0uODcyYS41LjUgMCAwIDAtLjExOC0uMTE1bC0uMDI1LS4wMTJMMS41IDYuNWgtLjAwM2EuMi4yIDAgMCAwLS4wNjQuMDM5YS45LjkgMCAwIDAtLjE5My4yN0MxLjEgNy4wOSAxIDcuNTEgMSA4cy4xLjkxMi4yNCAxLjE5Yy4wNy4xNC4xNC4yMjUuMTk0LjI3MWEuMi4yIDAgMCAwIC4wNjMuMDM5SDEuNWwuMDA2LS4wMDFsLjAyNS0uMDEyYS41LjUgMCAwIDAgLjExOC0uMTE1Yy4yODctLjM3NS43NzMtLjg3MiAxLjQ2OS0uODcySDMuOWEuNS41IDAgMCAxIC40OTguNTQybC0uMjkgMy40MDhhLjUuNSAwIDAgMCAuNDk3LjU1aDEuODc4Yy0uMDQ4LS4xNjYtLjE5NS0uMzUyLS40NjMtLjU1N2MtLjI3NC0uMjEtLjUyLS41MjgtLjUyLS45NDNjMC0uNTY4LjQ0Ny0uOTQ3Ljg2Mi0xLjE1NEM2LjgwNyAxMC4xMjMgNy4zODcgMTAgOCAxMHMxLjE5My4xMjMgMS42MzguMzQ2Yy40MTUuMjA3Ljg2Mi41ODYuODYyIDEuMTU0YzAgLjQxNS0uMjQ2LjczMy0uNTIuOTQzYy0uMjY4LjIwNS0uNDE1LjM5LS40NjMuNTU3aDEuODc4YS41LjUgMCAwIDAgLjQ5OC0uNTVsLS4wMDEtLjAwN2wtLjI5LTMuNEEuNS41IDAgMCAxIDEyLjEgOC41aC43ODJjLjY5NiAwIDEuMTgyLjQ5NyAxLjQ2OS44NzJjLjA1LjA2NS4wOTEuMDk5LjExOC4xMTVsLjAyNS4wMTJsLjAwNi4wMDFoLjAwM2EuMi4yIDAgMCAwIC4wNjQtLjAzOWEuOS45IDAgMCAwIC4xOTMtLjI3Yy4xNC0uMjguMjQtLjcuMjQtMS4xOTFzLS4xLS45MTItLjI0LTEuMTlhLjkuOSAwIDAgMC0uMTk0LS4yNzFhLjIuMiAwIDAgMC0uMDYzLS4wMzlIMTQuNWwtLjAwNi4wMDFsLS4wMjUuMDEyYS41LjUgMCAwIDAtLjExOC4xMTVjLS4yODcuMzc1LS43NzMuODcyLTEuNDY5Ljg3MkgxMi4xYS41LjUgMCAwIDEtLjQ5OC0uNTQzbC4yOS0zLjQwN2EuNS41IDAgMCAwLS40OTctLjU1SDkuNTE3Yy4wNDguMTY2LjE5NS4zNTIuNDYzLjU1N2MuMjc0LjIxLjUyLjUyOC41Mi45NDNjMCAuNTY4LS40NDcuOTQ3LS44NjIgMS4xNTRDOS4xOTMgNS44NzcgOC42MTMgNiA4IDZzLTEuMTkzLS4xMjMtMS42MzgtLjM0NkM1Ljk0NyA1LjQ0NyA1LjUgNS4wNjggNS41IDQuNWMwLS40MTUuMjQ2LS43MzMuNTItLjk0M2MuMjY4LS4yMDUuNDE1LS4zOS40NjMtLjU1N3oiLz48L3N2Zz4=',
 	type: 'dropdown',
-	dropdownItems: [...customDashboardPageLinks],
+	dropdownItems: customDashboardPageLinks,
 } satisfies SideBarLink;
 
 // Side bar links map
