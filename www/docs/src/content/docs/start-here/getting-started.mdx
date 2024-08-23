@@ -89,6 +89,10 @@ export default defineConfig({
 });
 ```
 
+:::note
+Astro StudioCMS requires SSR mode to work correctly. Make sure to set `output: 'server'` and an adapter that supports SSR in your `astro.config.mjs` file.
+:::
+
 ## Configure your `package.json` scripts
 
 Setup your `package.json` scripts to include the `--remote` flag for build, and optionally for dev. (You can also run the dev command as shown in the ["Running your StudioCMS Project"](#running-your-studiocms-project) section)
@@ -103,10 +107,6 @@ Setup your `package.json` scripts to include the `--remote` flag for build, and 
     }
 }
 ```
-
-:::note
-Astro StudioCMS requires SSR mode to work correctly. Make sure to set `output: 'server'` and an adapter that supports SSR in your `astro.config.mjs` file.
-:::
 
 ## Running your StudioCMS project
 
