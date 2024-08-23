@@ -110,13 +110,23 @@ Astro StudioCMS requires SSR mode to work correctly. Make sure to set `output: '
 
 ## Running your StudioCMS project
 
+### First time Setup (or during updates if the tables schema is updated)
+
+To start your Astro project, run the following commands in your terminal:
+
+    <PackageManagers type="exec" args="astro db link" />
+    <PackageManagers type="exec" args="astro db push" />
+    <PackageManagers type="run" args="dev --remote" />
+
+After running the commands, you should see a message indicating that your project is running at `localhost:4321`. During first time setup of StudioCMS you will also see a message indicating that you need to setup your StudioCMS install at `http://localhost:4321/start`
+
+### Running in Astro Development mode locally
+
 To start your Astro project, run the following command in your terminal:
 
     <PackageManagers type="run" args="dev --remote" />
 
-After running the command, you should see a message indicating that your project is running at `localhost:4321`. Open your browser and navigate to `http://localhost:4321` to see your Astro project in action.
-
-If this is your first time setting up StudioCMS you will also see a message indicating that you need to setup your StudioCMS install at `http://localhost:4321/start`
+After running the command, you should see a message indicating that your project is running at `localhost:4321`.  StudioCMS will now be running on your local machine at `http://localhost:4321`
 
 **Congratulations!** 🥳 You now have Astro StudioCMS installed in your Astro project.
 
