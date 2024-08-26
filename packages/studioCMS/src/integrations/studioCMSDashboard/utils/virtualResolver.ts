@@ -1,4 +1,4 @@
-import { addDts, addVirtualImports, createResolver, defineUtility } from 'astro-integration-kit';
+import { addVirtualImports, createResolver, defineUtility } from 'astro-integration-kit';
 import { fileFactory } from '../../../utils/fileFactory';
 
 const { resolve } = createResolver(import.meta.url);
@@ -101,9 +101,8 @@ export const virtualResolver = defineUtility('astro:config:setup')(
 			imports: virtualImports,
 		});
 
-		addDts(params, {
-			name: opts.name,
-			content: studioDashboardDTS.text(),
-		});
+		const resolvedDts = studioDashboardDTS.text();
+
+		return { resolvedDts };
 	}
 );

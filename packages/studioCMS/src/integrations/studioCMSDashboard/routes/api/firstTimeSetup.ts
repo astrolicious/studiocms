@@ -1,7 +1,7 @@
 import { randomUUID } from 'node:crypto';
 import { PageContent, PageData, Permissions, SiteConfig, User, db, eq } from 'astro:db';
 import AuthSecurityConfig from 'virtual:studiocms-dashboard/AuthSecurityConfig';
-import { reservedNames } from '@matthiesenxyz/integration-utils';
+import { checkIfUnsafe } from '@matthiesenxyz/integration-utils/securityUtils';
 import { scryptAsync } from '@noble/hashes/scrypt';
 import type { APIContext } from 'astro';
 import { CMSSiteConfigId } from '../../../../constVars';
@@ -22,7 +22,7 @@ export async function POST(context: APIContext): Promise<Response> {
 			username.length < 3 ||
 			username.length > 31 ||
 			!/^[a-z0-9_-]+$/.test(username) ||
-			reservedNames().check(username).username()
+			checkIfUnsafe(username).username()
 		) {
 			return new Response(
 				JSON.stringify({
@@ -38,7 +38,7 @@ export async function POST(context: APIContext): Promise<Response> {
 			typeof password !== 'string' ||
 			password.length < 6 ||
 			password.length > 255 ||
-			reservedNames().check(password).password()
+			checkIfUnsafe(password).password()
 		) {
 			return new Response(
 				JSON.stringify({

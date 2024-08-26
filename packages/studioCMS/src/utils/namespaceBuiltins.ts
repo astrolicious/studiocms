@@ -1,5 +1,6 @@
 import { builtinModules as builtins } from 'node:module';
 import type { AstroConfig } from 'astro';
+
 type VitePlugin = Required<AstroConfig['vite']>['plugins'][number];
 
 export function namespaceBuiltinsPlugin(): VitePlugin {

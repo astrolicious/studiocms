@@ -14,7 +14,7 @@
     "typescript": "catalog:"
   },
   "dependencies": {
-    "@astrojs/db": "file:../../vendored/astrojs-db.tgz",
+    "@astrojs/db": "catalog:",
     "@astrojs/cloudflare": "catalog:",
     "astro": "catalog:",
     "@astrolicious/studiocms": "workspace:*"

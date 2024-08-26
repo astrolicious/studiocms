@@ -24,6 +24,9 @@ export default defineIntegration({
 		// Create Resolvers
 		const { resolve } = createResolver(import.meta.url);
 
+		let dtsFile: string;
+		let webVitalDtsFile: string;
+
 		return {
 			hooks: {
 				'astro:config:setup': async (params) => {
@@ -40,10 +43,16 @@ export default defineIntegration({
 					addAstroEnvConfig(params, astroENV);
 
 					// Virtual Imports and DTS File Creation
-					virtualResolver(params, { name });
+					const { resolvedDts } = virtualResolver(params, { name });
+
+					// Set the DTS File
+					dtsFile = resolvedDts;
 
 					// Check for Web Vitals
-					checkForWebVitals(params, { name, LoggerOpts });
+					const { webVitalDtsFile: wvDts } = checkForWebVitals(params, { name, LoggerOpts });
+
+					// Set the Web Vitals DTS File
+					webVitalDtsFile = wvDts;
 
 					// Add Dashboard Integrations
 					studioLogger(LoggerOpts.logInfo, DashboardStrings.AddIntegrations);
@@ -291,6 +300,17 @@ export default defineIntegration({
 
 					// Log that the setup is complete
 					studioLogger(LoggerOpts.logInfo, DashboardStrings.SetupComplete);
+				},
+				'astro:config:done': ({ injectTypes }) => {
+					// Add Virtual DTS Files
+					injectTypes({
+						filename: 'dashboard.d.ts',
+						content: dtsFile,
+					});
+					injectTypes({
+						filename: 'web-vitals.d.ts',
+						content: webVitalDtsFile,
+					});
 				},
 				'astro:server:start': async ({ logger }) => {
 					// Display Console Message if dbStartPage(First Time DB Initialization) is enabled

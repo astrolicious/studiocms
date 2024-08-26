@@ -1,5 +1,5 @@
-import type { DashboardPageLink, SideBarLink } from '..';
 import { PLUGIN_INTEGRATION_ICON } from '../constVars';
+import type { DashboardPageLink, SideBarLink } from '../schemas/types';
 
 export function convertDashboardLinksType(
 	dashboardPageLinks: DashboardPageLink[],

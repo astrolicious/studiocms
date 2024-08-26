@@ -1,20 +1,18 @@
 import { runtimeLogger } from '@inox-tools/runtime-logger';
 import {
-	addDts,
 	addVirtualImports,
 	addVitePlugin,
 	createResolver,
 	defineIntegration,
 } from 'astro-integration-kit';
-// import inoxsitemap from '@inox-tools/sitemap-ext';
+// import inoxsitemap from '@inox-tools/sitemap-ext'; - Disabled for now
 import { studioCMSPluginList } from '.';
 import { version } from '../package.json';
 import { studioCMSDashboard, studioCMSImageHandler, studioCMSRobotsTXT } from './integrations';
 import { optionsResolver, vResolver } from './resolvers';
-import { optionsSchema } from './schemas';
+import { optionsSchema, type StudioCMSOptions } from './schemas';
 import { CoreStrings, robotsTXTPreset } from './strings';
 import { getStudioConfigFileUrl } from './studiocms-config';
-/// <reference types="@astrojs/db" />
 import {
 	addIntegrationArray,
 	addIntegrationArrayWithCheck,
@@ -24,7 +22,6 @@ import {
 	studioLoggerOptsResolver,
 } from './utils';
 import { namespaceBuiltinsPlugin } from './utils/namespaceBuiltins';
-import { updateAstroConfig } from './utils/updateAstroConfig';
 
 // Main Integration
 export default defineIntegration({
@@ -36,6 +33,9 @@ export default defineIntegration({
 			name: '@astrolicious/studiocms',
 			label: 'StudioCMS',
 		});
+
+		let resolvedOptions: StudioCMSOptions;
+		let dtsFile: string;
 
 		// Create Resolver for Virtual Imports
 		const { resolve } = createResolver(import.meta.url);
@@ -54,13 +54,10 @@ export default defineIntegration({
 					addWatchFile(getStudioConfigFileUrl(astroConfig.root));
 
 					// Resolve Options
-					const resolvedOptions = await optionsResolver(params, options);
+					resolvedOptions = await optionsResolver(params, options);
 
 					// Add Namespace Builtins Plugin for vite
 					addVitePlugin(params, { plugin: namespaceBuiltinsPlugin() });
-
-					// Update Astro/Vite Config
-					updateAstroConfig(params);
 
 					// Create Runtime Logger
 					runtimeLogger(params, { name: 'StudioCMS' });
@@ -77,7 +74,7 @@ export default defineIntegration({
 					const { resolve: rootResolve } = createResolver(astroConfig.root.pathname);
 
 					// Create Virtual Resolver
-					const { virtualImportMap, dtsFile } = vResolver({
+					const { virtualImportMap, dtsFile: resolvedDts } = vResolver({
 						overrides: {
 							FormattedDateOverride:
 								resolvedOptions.overrides.FormattedDateOverride &&
@@ -86,13 +83,11 @@ export default defineIntegration({
 						imports: { resolvedOptions, version, astroConfig },
 					});
 
+					dtsFile = resolvedDts;
+
 					// Add Virtual Imports
 					studioLogger(LoggerOpts.logInfo, CoreStrings.AddVirtualImports);
 					addVirtualImports(params, { name, imports: virtualImportMap });
-
-					// Add Virtual DTS File
-					studioLogger(LoggerOpts.logInfo, CoreStrings.AddVirtualDTS);
-					addDts(params, { name, content: dtsFile });
 
 					// Generate Default Frontend Routes if Enabled
 					makeFrontend(params, {
@@ -126,6 +121,7 @@ export default defineIntegration({
 									...resolvedOptions.includedIntegrations.astroRobotsConfig,
 								}),
 							},
+							// - Disabled for now
 							// {
 							// 	enabled: resolvedOptions.includedIntegrations.useInoxSitemap,
 							// 	knownSimilar: ['@astrojs/sitemap', '@inox-tools/sitemap-ext', '@inox-tools/declarative-sitemap'],
@@ -136,6 +132,17 @@ export default defineIntegration({
 
 					// Log Setup Complete
 					studioLogger(LoggerOpts.logInfo, CoreStrings.SetupComplete);
+				},
+				'astro:config:done': async (params) => {
+					// Add Virtual DTS File
+					studioLogger(
+						(await studioLoggerOptsResolver(params.logger, resolvedOptions.verbose)).logInfo,
+						CoreStrings.AddVirtualDTS
+					);
+					params.injectTypes({
+						filename: 'core.d.ts',
+						content: dtsFile,
+					});
 				},
 			},
 		};
