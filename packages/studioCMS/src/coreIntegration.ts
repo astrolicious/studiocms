@@ -1,10 +1,6 @@
 import { runtimeLogger } from '@inox-tools/runtime-logger';
-import {
-	addVirtualImports,
-	addVitePlugin,
-	createResolver,
-	defineIntegration,
-} from 'astro-integration-kit';
+import { nodeNamespaceBuiltinsAstro } from '@matthiesenxyz/integration-utils/astroUtils';
+import { addVirtualImports, createResolver, defineIntegration } from 'astro-integration-kit';
 // import inoxsitemap from '@inox-tools/sitemap-ext'; - Disabled for now
 import { studioCMSPluginList } from '.';
 import { version } from '../package.json';
@@ -21,7 +17,6 @@ import {
 	studioLogger,
 	studioLoggerOptsResolver,
 } from './utils';
-import { namespaceBuiltinsPlugin } from './utils/namespaceBuiltins';
 
 // Main Integration
 export default defineIntegration({
@@ -55,9 +50,6 @@ export default defineIntegration({
 
 					// Resolve Options
 					resolvedOptions = await optionsResolver(params, options);
-
-					// Add Namespace Builtins Plugin for vite
-					addVitePlugin(params, { plugin: namespaceBuiltinsPlugin() });
 
 					// Create Runtime Logger
 					runtimeLogger(params, { name: 'StudioCMS' });
@@ -106,6 +98,7 @@ export default defineIntegration({
 						integrations: [
 							studioCMSDashboard(resolvedOptions),
 							studioCMSImageHandler(resolvedOptions),
+							nodeNamespaceBuiltinsAstro(),
 						],
 					});
 
