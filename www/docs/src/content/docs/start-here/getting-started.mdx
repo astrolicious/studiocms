@@ -93,11 +93,40 @@ export default defineConfig({
 Astro StudioCMS requires SSR mode to work correctly. Make sure to set `output: 'server'` and an adapter that supports SSR in your `astro.config.mjs` file.
 :::
 
-### Running your Astro project
+## Configure your `package.json` scripts
+
+Setup your `package.json` scripts to include the `--remote` flag for build, and optionally for dev. (You can also run the dev command as shown in the ["Running your StudioCMS Project"](#running-your-studiocms-project) section)
+
+```json title="package.json"
+{
+    "name": "my-studiocms-project",
+    "scripts": {
+        "dev": "astro dev --remote",
+        "build": "astro check & astro build --remote",
+        "astro": "astro"
+    }
+}
+```
+
+## Running your StudioCMS project
+
+Thanks to the power of Astro running StudioCMS is as easy as running the dev command for local preview, or building and deploying to your server, for the basics of how to use it locally without building here is what you need to do.
+
+### First time Setup (or during updates if the tables schema is updated)
+
+To start your Astro project, run the following commands in your terminal:
+
+    <PackageManagers type="exec" args="astro db link" />
+    <PackageManagers type="exec" args="astro db push" />
+    <PackageManagers type="run" args="dev --remote" />
+
+After running the commands, you should see a message indicating that your project is running at `localhost:4321`. When first setting up StudioCMS, you will prompted to finish configuring StudioCMS at http://localhost:4321/start
+
+### Running in Astro Development mode locally
 
 To start your Astro project, run the following command in your terminal:
 
-    <PackageManagers type="run" args="dev" />
+    <PackageManagers type="run" args="dev --remote" />
 
 After running the command, you should see a message indicating that your project is running at `localhost:4321`. Open your browser and navigate to `http://localhost:4321` to see your Astro project in action.
 
