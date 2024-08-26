@@ -1,7 +1,7 @@
 import { lucia } from 'studiocms-dashboard:auth';
 import { StudioCMSRoutes } from 'studiocms-dashboard:routeMap';
-import type { APIContext } from 'astro';
 import type { Locals } from 'studiocms:helpers';
+import type { APIContext } from 'astro';
 
 const {
 	authLinks: { loginURL },

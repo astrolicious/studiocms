@@ -10,7 +10,7 @@ import { studioCMSPluginList } from '.';
 import { version } from '../package.json';
 import { studioCMSDashboard, studioCMSImageHandler, studioCMSRobotsTXT } from './integrations';
 import { optionsResolver, vResolver } from './resolvers';
-import { optionsSchema, type StudioCMSOptions } from './schemas';
+import { type StudioCMSOptions, optionsSchema } from './schemas';
 import { CoreStrings, robotsTXTPreset } from './strings';
 import { getStudioConfigFileUrl } from './studiocms-config';
 import {
