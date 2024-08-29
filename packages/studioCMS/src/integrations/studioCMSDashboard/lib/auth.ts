@@ -1,4 +1,3 @@
-/// <reference types="@astrojs/db" />
 import { User, db, sessionTable } from 'astro:db';
 import { Lucia, TimeSpan } from 'lucia';
 import { AstroDBAdapter } from './lucia-astrodb-adapter';

@@ -1,5 +1,6 @@
 import { lucia } from 'studiocms-dashboard:auth';
 import { StudioCMSRoutes } from 'studiocms-dashboard:routeMap';
+import type { Locals } from 'studiocms:helpers';
 import type { APIContext } from 'astro';
 
 const {
@@ -12,19 +13,29 @@ export async function GET(context: APIContext): Promise<Response> {
 }
 
 export async function POST(context: APIContext): Promise<Response> {
-	if (!context.locals.session) {
+	// Map the Locals type from the schema
+	const locals = context.locals as Locals;
+
+	// If the user is not logged in, redirect to the login page
+	if (!locals.session) {
 		return context.redirect(loginURL);
 	}
 
-	await lucia.invalidateSession(context.locals.session.id);
+	// Invalidate the session and create a new session cookie
+	await lucia.invalidateSession(locals.session.id);
 
+	// Create a new session cookie
 	const sessionCookie = lucia.createBlankSessionCookie();
+
+	// Set the cookie in the context
 	context.cookies.set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
 
-	context.locals.session = null;
-	context.locals.isLoggedIn = false;
-	context.locals.user = null;
-	context.locals.dbUser = null;
+	// Set the locals to the default values
+	locals.session = null;
+	locals.isLoggedIn = false;
+	locals.user = null;
+	locals.dbUser = null;
 
+	// Redirect to the base site URL
 	return context.redirect(baseSiteURL);
 }

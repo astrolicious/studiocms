@@ -1,5 +1,4 @@
 import {
-	addDts,
 	addVirtualImports,
 	createResolver,
 	defineUtility,
@@ -48,7 +47,8 @@ export const checkForWebVitals = defineUtility('astro:config:setup')(
                 export const getWebVitals: typeof import('${resolve('./webVital.ts')}').getWebVitals;
             };`);
 
-		// Add the Web Vitals DTS File
-		addDts(params, { name: '@astrolicious/studiocms:web-vitals', content: webVitalDTS.text() });
+		const webVitalDtsFile = webVitalDTS.text();
+
+		return { webVitalDtsFile };
 	}
 );

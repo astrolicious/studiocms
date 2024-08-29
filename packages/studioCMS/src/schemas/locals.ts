@@ -19,6 +19,7 @@ export const LocalsSchema = z.object({
 			updatedAt: z.date().nullable(),
 			createdAt: z.date().nullable(),
 		})
+		.nullable()
 		.optional(),
 	user: z
 		.object({

@@ -8,5 +8,5 @@ const {
 const dashboardURL = dashboardRouteOverride ? fixSlashes(dashboardRouteOverride) : 'dashboard';
 
 export const isDashboardRoute = (pageRoute: string): boolean => {
-	return fixSlashes(pageRoute) === dashboardURL;
+	return fixSlashes(pageRoute).includes(dashboardURL);
 };

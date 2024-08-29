@@ -1,4 +1,4 @@
-import { addDts, addVirtualImports, createResolver, defineUtility } from 'astro-integration-kit';
+import { addVirtualImports, createResolver, defineUtility } from 'astro-integration-kit';
 import { fileFactory } from '../../utils/fileFactory';
 
 export const componentResolver = defineUtility('astro:config:setup')(
@@ -44,9 +44,8 @@ export const componentResolver = defineUtility('astro:config:setup')(
         export const CustomImage: typeof import('${customImageResolved}').default;
         }`);
 
-		addDts(params, {
-			name: options.name,
-			content: customImageDTS.text(),
-		});
+		return {
+			imageHandlerDtsFile: customImageDTS.text(),
+		};
 	}
 );

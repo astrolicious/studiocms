@@ -18,6 +18,9 @@ export default defineIntegration({
 	optionsSchema,
 	setup({ name, options }) {
 		const env = loadEnv('all', process.cwd(), 'CMS');
+
+		let dtsFile: string;
+
 		return {
 			hooks: {
 				'astro:config:setup': async (params) => {
@@ -58,10 +61,13 @@ export default defineIntegration({
 
 					// Setup and Configure CustomImage Component
 					studioLogger(LoggerOpts.logInfo, imageHandlerStrings.CustomImageLog);
-					componentResolver(params, {
+					const { imageHandlerDtsFile } = componentResolver(params, {
 						name,
 						CustomImageOverride: options.overrides.CustomImageOverride,
 					});
+
+					// Return the Custom Image DTS File
+					dtsFile = imageHandlerDtsFile;
 
 					// Setup and Configure Astro Adapters and Image Services based on the Adapter and Image Service Configurations
 					studioLogger(
@@ -109,6 +115,12 @@ export default defineIntegration({
 					else if (adapter?.name === undefined) {
 						studioLogger(LoggerOpts.logWarn, imageHandlerStrings.NoAdapter);
 					}
+				},
+				'astro:config:done': ({ injectTypes }) => {
+					injectTypes({
+						filename: 'imageHandler.d.ts',
+						content: dtsFile,
+					});
 				},
 			},
 		};

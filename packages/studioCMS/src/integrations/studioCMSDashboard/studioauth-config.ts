@@ -49,12 +49,7 @@ export const usernameAndPasswordAuthConfig = defineUtility('astro:config:setup')
 			dbStartPage,
 			dashboardConfig: {
 				dashboardEnabled,
-				AuthConfig: {
-					enabled: authEnabled,
-					providers: {
-						usernameAndPasswordConfig: { allowUserRegistration },
-					},
-				},
+				AuthConfig: { enabled: authEnabled },
 			},
 		} = options;
 
