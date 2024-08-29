@@ -1,6 +1,6 @@
 {
   "name": "@astrolicious/studiocms-blog",
-  "version": "0.1.0-beta.3",
+  "version": "0.1.0-beta.4",
   "description": "Add a blog to your StudioCMS project with ease!",
   "author": {
     "name": "Adam Matthiesen | Jacob Jenkins | Paul Valladares",
@@ -10,7 +10,11 @@
     "type": "git",
     "url": "git+https://github.com/astrolicious/studiocms.git"
   },
-  "contributors": ["Adammatthiesen", "jdtjenkins", "dreyfus92"],
+  "contributors": [
+    "Adammatthiesen",
+    "jdtjenkins",
+    "dreyfus92"
+  ],
   "license": "MIT",
   "keywords": [
     "astro",
@@ -39,7 +43,11 @@
     "access": "public"
   },
   "sideEffects": false,
-  "files": ["index.ts", "schema.ts", "src"],
+  "files": [
+    "index.ts",
+    "schema.ts",
+    "src"
+  ],
   "exports": {
     ".": "./index.ts",
     "./schema": "./schema.ts"

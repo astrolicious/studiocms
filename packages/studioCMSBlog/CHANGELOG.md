@@ -1,5 +1,15 @@
 # @astrolicious/studiocms-blog
 
+## 0.1.0-beta.4
+
+### Patch Changes
+
+- Updated dependencies [f1f64a3]
+- Updated dependencies [b2ddf03]
+- Updated dependencies [ceccec5]
+- Updated dependencies [56ef990]
+  - @astrolicious/studiocms@0.1.0-beta.4
+
 ## 0.1.0-beta.3
 
 ### Patch Changes
