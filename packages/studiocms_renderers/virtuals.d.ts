@@ -12,22 +12,11 @@
  * }
  */
 declare module 'virtual:studiocms/config' {
-	const Config: import('./src/schemas').StudioCMSOptions;
+	const Config: import('@studiocms/core').StudioCMSOptions;
 	export default Config;
 }
 
 declare module 'virtual:studiocms/astromdremarkConfig' {
 	const markdownConfig: import('astro').AstroConfig['markdown'];
 	export default markdownConfig;
-}
-
-declare module 'virtual:studiocms/version' {
-	const Version: string;
-	export default Version;
-}
-
-declare module 'virtual:studiocms/pluginSystem' {
-	export const externalNav: typeof import('./src/index').externalNavigation;
-	export const dashboardPageLinks: typeof import('./src/index').dashboardPageLinksMap;
-	export const pluginList: typeof import('./src/index').studioCMSPluginList;
 }

@@ -49,6 +49,14 @@ catalogs:
     mrmime: ^2.0.0
   studiocms-integration:
     '@inox-tools/runtime-logger': ^0.3.1
+  studiocms-renderer:
+    '@markdoc/markdoc': ^0.4.0
+    '@shikijs/transformers': ^1.14.1
+    marked-alert: ^2.0.1
+    marked-emoji: ^1.4.1
+    marked-footnote: ^1.2.2
+    marked-shiki: ^1.1.0
+    marked-smartypants: ^1.1.7
   studiocms:
     '@iconify/types': ^2.0.0
     '@cloudinary/url-gen': ^1.19.0

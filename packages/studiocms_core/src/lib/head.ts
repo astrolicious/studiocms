@@ -4,6 +4,9 @@ import {
 	type HeadUserConfig,
 } from '../schemas/config/defaultFrontend';
 
+export { HeadConfigSchema };
+export type { HeadConfig, HeadUserConfig };
+
 const HeadSchema = HeadConfigSchema();
 
 /** Create a fully parsed, merged, and sorted head entry array from multiple sources. */

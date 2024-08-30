@@ -1,0 +1,12 @@
+---
+import Config from 'virtual:studiocms/config';
+import { contentRenderer } from '../lib/contentRenderer';
+
+type Props = {
+	content: string;
+};
+
+const { content } = Astro.props;
+---
+
+<Fragment set:html={contentRenderer(content, Config.contentRenderer)} />

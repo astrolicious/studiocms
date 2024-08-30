@@ -215,6 +215,28 @@ catalogs:
     '@inox-tools/runtime-logger':
       specifier: ^0.3.1
       version: 0.3.1
+  studiocms-renderer:
+    '@markdoc/markdoc':
+      specifier: ^0.4.0
+      version: 0.4.0
+    '@shikijs/transformers':
+      specifier: ^1.14.1
+      version: 1.14.1
+    marked-alert:
+      specifier: ^2.0.1
+      version: 2.0.1
+    marked-emoji:
+      specifier: ^1.4.1
+      version: 1.4.1
+    marked-footnote:
+      specifier: ^1.2.2
+      version: 1.2.2
+    marked-shiki:
+      specifier: ^1.1.0
+      version: 1.1.0
+    marked-smartypants:
+      specifier: ^1.1.7
+      version: 1.1.7
   studiocms-shared:
     '@matthiesenxyz/integration-utils':
       specifier: ^0.2.0
@@ -418,6 +440,9 @@ importers:
       '@studiocms/core':
         specifier: workspace:*
         version: link:../studiocms_core
+      '@studiocms/frontend':
+        specifier: workspace:*
+        version: link:../studiocms_frontend
       '@studiocms/robots-txt':
         specifier: workspace:*
         version: link:../studiocms_robotstxt
@@ -463,6 +488,80 @@ importers:
       unpic:
         specifier: catalog:studiocms-shared
         version: 3.18.0
+    devDependencies:
+      typescript:
+        specifier: 'catalog:'
+        version: 5.5.4
+      vite:
+        specifier: 'catalog:'
+        version: 5.4.2(@types/node@22.0.0)
+
+  packages/studiocms_frontend:
+    dependencies:
+      '@matthiesenxyz/integration-utils':
+        specifier: catalog:studiocms-shared
+        version: 0.2.0(astro@4.14.5(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))
+      '@studiocms/core':
+        specifier: workspace:*
+        version: link:../studiocms_core
+      '@studiocms/renderers':
+        specifier: workspace:*
+        version: link:../studiocms_renderers
+      astro:
+        specifier: catalog:min
+        version: 4.14.5(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4)
+      astro-integration-kit:
+        specifier: 'catalog:'
+        version: 0.16.1(astro@4.14.5(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))
+    devDependencies:
+      typescript:
+        specifier: 'catalog:'
+        version: 5.5.4
+      vite:
+        specifier: 'catalog:'
+        version: 5.4.2(@types/node@22.0.0)
+
+  packages/studiocms_renderers:
+    dependencies:
+      '@astrojs/markdown-remark':
+        specifier: 'catalog:'
+        version: 5.2.0
+      '@markdoc/markdoc':
+        specifier: catalog:studiocms-renderer
+        version: 0.4.0(@types/react@18.3.3)
+      '@matthiesenxyz/integration-utils':
+        specifier: catalog:studiocms-shared
+        version: 0.2.0(astro@4.14.5(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))
+      '@shikijs/transformers':
+        specifier: catalog:studiocms-renderer
+        version: 1.14.1
+      '@studiocms/core':
+        specifier: workspace:*
+        version: link:../studiocms_core
+      astro:
+        specifier: catalog:min
+        version: 4.14.5(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4)
+      marked:
+        specifier: catalog:studiocms-shared
+        version: 13.0.3
+      marked-alert:
+        specifier: catalog:studiocms-renderer
+        version: 2.0.1(marked@13.0.3)
+      marked-emoji:
+        specifier: catalog:studiocms-renderer
+        version: 1.4.1(marked@13.0.3)
+      marked-footnote:
+        specifier: catalog:studiocms-renderer
+        version: 1.2.2(marked@13.0.3)
+      marked-shiki:
+        specifier: catalog:studiocms-renderer
+        version: 1.1.0(marked@13.0.3)(shiki@1.14.1)
+      marked-smartypants:
+        specifier: catalog:studiocms-renderer
+        version: 1.1.7(marked@13.0.3)
+      shiki:
+        specifier: catalog:studiocms-shared
+        version: 1.14.1
     devDependencies:
       typescript:
         specifier: 'catalog:'
@@ -2389,6 +2488,9 @@ packages:
 
   '@shikijs/transformers@1.12.0':
     resolution: {integrity: sha512-ZS6RzDCWbnDljViMaeuraGaoMesCzDxzO2Slhpvic6j+Wqq4RXfQgb2ITTSrtBjv2HGCLP22mvXydtWCOKea8g==}
+
+  '@shikijs/transformers@1.14.1':
+    resolution: {integrity: sha512-JJqL8QBVCJh3L61jqqEXgFq1cTycwjcGj7aSmqOEsbxnETM9hRlaB74QuXvY/fVJNjbNt8nvWo0VwAXKvMSLRg==}
 
   '@shoelace-style/animations@1.1.0':
     resolution: {integrity: sha512-Be+cahtZyI2dPKRm8EZSx3YJQ+jLvEcn3xzRP7tM4tqBnvd/eW/64Xh0iOf0t2w5P8iJKfdBbpVNE9naCaOf2g==}
@@ -7530,6 +7632,10 @@ snapshots:
     dependencies:
       shiki: 1.12.0
 
+  '@shikijs/transformers@1.14.1':
+    dependencies:
+      shiki: 1.14.1
+
   '@shoelace-style/animations@1.1.0': {}
 
   '@shoelace-style/localize@3.2.1': {}
@@ -9635,6 +9741,11 @@ snapshots:
     dependencies:
       marked: 13.0.3
       shiki: 1.12.0
+
+  marked-shiki@1.1.0(marked@13.0.3)(shiki@1.14.1):
+    dependencies:
+      marked: 13.0.3
+      shiki: 1.14.1
 
   marked-smartypants@1.1.7(marked@13.0.3):
     dependencies:

@@ -1,0 +1,23 @@
+---
+import { contentHelper } from 'studiocms:helpers/contentHelper';
+import { StudioCMSRenderer } from '@studiocms/renderers';
+import Layout from '../components/Layout.astro';
+
+const { slug } = Astro.params;
+
+if (!slug) {
+	return new Response(null, { status: 404 });
+}
+
+const { title, description, heroImage, content, id } = await contentHelper(slug);
+
+if (!id) {
+	return new Response(null, { status: 404 });
+}
+---
+
+<Layout title={title} description={description} heroImage={heroImage}>
+	<main>
+		<StudioCMSRenderer content={content} />
+	</main>
+</Layout>

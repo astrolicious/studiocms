@@ -16,6 +16,7 @@ import {
 	studioCMSPluginList,
 } from '@studiocms/core';
 import studioCMSCore from '@studiocms/core';
+import studioCMSFrontend from '@studiocms/frontend';
 import studioCMSRobotsTXT from '@studiocms/robots-txt';
 import { createResolver, defineIntegration } from 'astro-integration-kit';
 
@@ -63,7 +64,8 @@ export default defineIntegration({
 					// Setup Integrations (Internal)
 					addIntegrationArray(params, [
 						{ integration: nodeNamespaceBuiltinsAstro() },
-						{ integration: studioCMSCore() },
+						{ integration: studioCMSCore(resolvedOptions) },
+						{ integration: studioCMSFrontend(resolvedOptions) },
 					]);
 
 					// Setup Integrations (External / Optional)
