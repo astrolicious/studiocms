@@ -1,5 +1,5 @@
 ---
-"@astrolicious/studiocms": patch
+"studiocms": patch
 ---
 
 New Mailing system for Beta Feedback form

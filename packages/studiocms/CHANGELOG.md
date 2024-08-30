@@ -1,4 +1,4 @@
-# @astrolicious/studiocms
+# studiocms
 
 ## 0.1.0-beta.4
 

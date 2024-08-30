@@ -1,5 +1,5 @@
 {
-    "name": "@studiocms/robots-txt",
+    "name": "@studiocms/robotstxt",
     "version": "0.1.0-beta.4",
     "description": "RobotsTXT integration for the StudioCMS Integration",
     "author": {

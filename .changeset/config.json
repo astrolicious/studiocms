@@ -3,7 +3,16 @@
   "changelog": "@changesets/cli/changelog",
   "commit": false,
   "fixed": [],
-  "linked": [],
+  "linked": [
+    [
+      "studiocms",
+      "@studiocms/core",
+      "@studiocms/frontend",
+      "@studiocms/imagehandler",
+      "@studiocms/renderers",
+      "@studiocms/robotstxt"
+    ]
+  ],
   "access": "public",
   "baseBranch": "main",
   "updateInternalDependencies": "patch",
