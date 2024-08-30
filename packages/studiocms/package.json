@@ -1,0 +1,57 @@
+{
+  "name": "studiocms",
+  "version": "0.1.0-beta.4",
+  "description": "A dedicated CMS for Astro Studio. Built from the ground up by the Astro community.",
+  "author": {
+    "name": "Adam Matthiesen | Jacob Jenkins | Paul Valladares",
+    "url": "https://astro-studiocms.xyz"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/astrolicious/studiocms.git"
+  },
+  "contributors": [
+    "Adammatthiesen",
+    "jdtjenkins",
+    "dreyfus92"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "astro",
+    "astrocms",
+    "astrodb",
+    "astrolicious",
+    "astrostudio",
+    "astro-integration",
+    "astro-studio",
+    "astro-studiocms",
+    "cms",
+    "studiocms",
+    "withastro"
+  ],
+  "homepage": "https://astro-studiocms.xyz",
+  "publishConfig": {
+    "access": "public"
+  },
+  "sideEffects": false,
+  "files": [
+    "src"
+  ],
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "type": "module",
+  "dependencies": {
+    "@inox-tools/runtime-logger": "catalog:studiocms-integration",
+    "@matthiesenxyz/integration-utils": "catalog:studiocms-shared",
+    "@studiocms/core": "workspace:*",
+    "@studiocms/robots-txt": "workspace:*",
+    "astro-integration-kit": "catalog:"
+  },
+  "peerDependencies": {
+    "@astrojs/db": "catalog:min",
+    "astro": "catalog:min"
+  },
+  "devDependencies": {
+  }
+}

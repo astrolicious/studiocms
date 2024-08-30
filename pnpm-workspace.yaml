@@ -39,6 +39,16 @@ catalogs:
     starlight-typedoc: ^0.15.0
     typedoc: ^0.26.6
     typedoc-plugin-markdown: ^4.2.6
+  studiocms-shared:
+    "@matthiesenxyz/integration-utils": ^0.2.0
+    '@noble/hashes': ^1.4.0
+    lucia: ^3.2.0
+    marked: ^13.0.2
+    shiki: ^1.14.1
+    unpic: ^3.18.0
+    mrmime: ^2.0.0
+  studiocms-integration:
+    '@inox-tools/runtime-logger': ^0.3.1
   studiocms:
     '@iconify/types': ^2.0.0
     '@cloudinary/url-gen': ^1.19.0

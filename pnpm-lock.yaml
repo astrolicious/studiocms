@@ -211,6 +211,32 @@ catalogs:
     unpic:
       specifier: ^3.18.0
       version: 3.18.0
+  studiocms-integration:
+    '@inox-tools/runtime-logger':
+      specifier: ^0.3.1
+      version: 0.3.1
+  studiocms-shared:
+    '@matthiesenxyz/integration-utils':
+      specifier: ^0.2.0
+      version: 0.2.0
+    '@noble/hashes':
+      specifier: ^1.4.0
+      version: 1.4.0
+    lucia:
+      specifier: ^3.2.0
+      version: 3.2.0
+    marked:
+      specifier: ^13.0.2
+      version: 13.0.3
+    mrmime:
+      specifier: ^2.0.0
+      version: 2.0.0
+    shiki:
+      specifier: ^1.14.1
+      version: 1.14.1
+    unpic:
+      specifier: ^3.18.0
+      version: 3.18.0
 
 importers:
 
@@ -232,7 +258,7 @@ importers:
         specifier: 5.5.4
         version: 5.5.4
 
-  packages/studioCMS:
+  packages/astrolicious_studioCMS:
     dependencies:
       '@astrojs/db':
         specifier: catalog:min
@@ -269,7 +295,7 @@ importers:
         version: 0.2.0(astro@4.14.5(@types/node@20.14.13)(rollup@4.21.0)(typescript@5.5.4))
       '@matthiesenxyz/unocss-preset-daisyui':
         specifier: catalog:studiocms
-        version: 0.1.2(daisyui@4.12.10(postcss@8.4.40))(unocss@0.62.3(postcss@8.4.40)(rollup@4.21.0)(vite@5.4.2(@types/node@20.14.13)))
+        version: 0.1.2(daisyui@4.12.10(postcss@8.4.41))(unocss@0.62.3(postcss@8.4.41)(rollup@4.21.0)(vite@5.4.2(@types/node@20.14.13)))
       '@noble/hashes':
         specifier: catalog:studiocms
         version: 1.4.0
@@ -299,7 +325,7 @@ importers:
         version: 0.16.1(astro@4.14.5(@types/node@20.14.13)(rollup@4.21.0)(typescript@5.5.4))
       daisyui:
         specifier: catalog:studiocms
-        version: 4.12.10(postcss@8.4.40)
+        version: 4.12.10(postcss@8.4.41)
       htmx.org:
         specifier: catalog:studiocms
         version: 2.0.1
@@ -338,7 +364,7 @@ importers:
         version: 1.12.0
       unocss:
         specifier: catalog:studiocms
-        version: 0.62.3(postcss@8.4.40)(rollup@4.21.0)(vite@5.4.2(@types/node@20.14.13))
+        version: 0.62.3(postcss@8.4.41)(rollup@4.21.0)(vite@5.4.2(@types/node@20.14.13))
       unpic:
         specifier: catalog:studiocms
         version: 3.18.0
@@ -359,14 +385,14 @@ importers:
         specifier: 'catalog:'
         version: 5.4.2(@types/node@20.14.13)
 
-  packages/studioCMSBlog:
+  packages/astrolicious_studioCMSBlog:
     dependencies:
       '@astrojs/rss':
         specifier: 'catalog:'
         version: 4.0.7
       '@astrolicious/studiocms':
         specifier: workspace:*
-        version: link:../studioCMS
+        version: link:../astrolicious_studioCMS
       astro:
         specifier: catalog:min
         version: 4.14.5(@types/node@20.14.13)(rollup@4.21.0)(typescript@5.5.4)
@@ -378,6 +404,79 @@ importers:
         specifier: 'catalog:'
         version: 20.14.13
 
+  packages/studiocms:
+    dependencies:
+      '@astrojs/db':
+        specifier: catalog:min
+        version: 0.13.2(@cloudflare/workers-types@4.20240725.0)(@types/react@18.3.3)
+      '@inox-tools/runtime-logger':
+        specifier: catalog:studiocms-integration
+        version: 0.3.1(astro@4.14.5(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))
+      '@matthiesenxyz/integration-utils':
+        specifier: catalog:studiocms-shared
+        version: 0.2.0(astro@4.14.5(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))
+      '@studiocms/core':
+        specifier: workspace:*
+        version: link:../studiocms_core
+      '@studiocms/robots-txt':
+        specifier: workspace:*
+        version: link:../studiocms_robotstxt
+      astro:
+        specifier: catalog:min
+        version: 4.14.5(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4)
+      astro-integration-kit:
+        specifier: 'catalog:'
+        version: 0.16.1(astro@4.14.5(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))
+
+  packages/studiocms_core:
+    dependencies:
+      '@astrojs/db':
+        specifier: catalog:min
+        version: 0.13.2(@cloudflare/workers-types@4.20240725.0)(@types/react@18.3.3)
+      '@matthiesenxyz/integration-utils':
+        specifier: catalog:studiocms-shared
+        version: 0.2.0(astro@4.14.5(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))
+      '@noble/hashes':
+        specifier: catalog:studiocms-shared
+        version: 1.4.0
+      '@studiocms/robots-txt':
+        specifier: workspace:*
+        version: link:../studiocms_robotstxt
+      astro:
+        specifier: catalog:min
+        version: 4.14.5(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4)
+      astro-integration-kit:
+        specifier: 'catalog:'
+        version: 0.16.1(astro@4.14.5(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))
+      lucia:
+        specifier: catalog:studiocms-shared
+        version: 3.2.0
+      marked:
+        specifier: catalog:studiocms-shared
+        version: 13.0.3
+      mrmime:
+        specifier: catalog:studiocms-shared
+        version: 2.0.0
+      shiki:
+        specifier: catalog:studiocms-shared
+        version: 1.14.1
+      unpic:
+        specifier: catalog:studiocms-shared
+        version: 3.18.0
+    devDependencies:
+      typescript:
+        specifier: 'catalog:'
+        version: 5.5.4
+      vite:
+        specifier: 'catalog:'
+        version: 5.4.2(@types/node@22.0.0)
+
+  packages/studiocms_robotstxt:
+    dependencies:
+      astro:
+        specifier: catalog:min
+        version: 4.14.5(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4)
+
   playgrounds/cloudflare:
     dependencies:
       '@astrojs/cloudflare':
@@ -388,7 +487,7 @@ importers:
         version: 0.13.2(@cloudflare/workers-types@4.20240725.0)(@types/react@18.3.3)
       '@astrolicious/studiocms':
         specifier: workspace:*
-        version: link:../../packages/studioCMS
+        version: link:../../packages/astrolicious_studioCMS
       astro:
         specifier: 'catalog:'
         version: 4.14.5(@types/node@20.14.13)(rollup@4.21.0)(typescript@5.5.4)
@@ -413,10 +512,10 @@ importers:
         version: 2.0.0(@astrojs/db@0.13.2(@cloudflare/workers-types@4.20240725.0)(@types/react@18.3.3))
       '@astrolicious/studiocms':
         specifier: workspace:*
-        version: link:../../packages/studioCMS
+        version: link:../../packages/astrolicious_studioCMS
       '@astrolicious/studiocms-blog':
         specifier: workspace:*
-        version: link:../../packages/studioCMSBlog
+        version: link:../../packages/astrolicious_studioCMSBlog
       astro:
         specifier: 'catalog:'
         version: 4.14.5(@types/node@20.14.13)(rollup@4.21.0)(typescript@5.5.4)
@@ -673,10 +772,6 @@ packages:
     resolution: {integrity: sha512-BBt3opiCOxUr9euZ5/ro/Xv8/V7yJ5bjYMqG/C1YAo8MIKAnumZalCN+msbci3Pigy4lIQfPUpfMM27HMGaYEA==}
     engines: {node: '>=6.9.0'}
 
-  '@babel/generator@7.25.0':
-    resolution: {integrity: sha512-3LEEcj3PVW8pW2R1SR1M89g/qrYk/m/mB/tLqn7dn4sbBUQyTqnlod+II2U4dqiGtUmkcnAmkMDralTFZttRiw==}
-    engines: {node: '>=6.9.0'}
-
   '@babel/generator@7.25.5':
     resolution: {integrity: sha512-abd43wyLfbWoxC6ahM8xTkqLpGB2iWBVyuKC9/srhFunCd1SDNrV1s72bBpK4hLj8KLzHBBcOblvLQZBNw9r3w==}
     engines: {node: '>=6.9.0'}
@@ -751,11 +846,6 @@ packages:
     resolution: {integrity: sha512-EStJpq4OuY8xYfhGVXngigBJRWxftKX9ksiGDnmlY3o7B/V7KIAc9X4oiK87uPJSc/vs5L869bem5fhZa8caZw==}
     engines: {node: '>=6.9.0'}
 
-  '@babel/parser@7.25.0':
-    resolution: {integrity: sha512-CzdIU9jdP0dg7HdyB+bHvDJGagUv+qtzZt5rYCWwW6tITNqV9odjp6Qu41gkG0ca5UfdDUWrKkiAnHHdGRnOrA==}
-    engines: {node: '>=6.0.0'}
-    hasBin: true
-
   '@babel/parser@7.25.4':
     resolution: {integrity: sha512-nq+eWrOgdtu3jG5Os4TQP3x3cLA8hR8TvJNjD8vnPa20WGycimcparWnLK4jJhElTK6SDyuJo1weMKO/5LpmLA==}
     engines: {node: '>=6.0.0'}
@@ -805,16 +895,8 @@ packages:
     resolution: {integrity: sha512-aOOgh1/5XzKvg1jvVz7AVrx2piJ2XBi227DHmbY6y+bM9H2FlN+IfecYu4Xl0cNiiVejlsCri89LUsbj8vJD9Q==}
     engines: {node: '>=6.9.0'}
 
-  '@babel/traverse@7.25.2':
-    resolution: {integrity: sha512-s4/r+a7xTnny2O6FcZzqgT6nE4/GHEdcqj4qAeglbUOh0TeglEfmNJFAd/OLoVtGd6ZhAO8GCVvCNUO5t/VJVQ==}
-    engines: {node: '>=6.9.0'}
-
   '@babel/traverse@7.25.4':
     resolution: {integrity: sha512-VJ4XsrD+nOvlXyLzmLzUs/0qjFS4sK30te5yEFlvbbUNEgKaVb2BHZUpAL+ttLPQAHNrsI3zZisbfha5Cvr8vg==}
-    engines: {node: '>=6.9.0'}
-
-  '@babel/types@7.25.2':
-    resolution: {integrity: sha512-YTnYtra7W9e6/oAZEHj0bJehPRUlLH9/fbpT5LfB0NhQXyALCRkRs3zH9v07IYhkgpqX6Z78FnuccZr/l4Fs4Q==}
     engines: {node: '>=6.9.0'}
 
   '@babel/types@7.25.4':
@@ -5819,7 +5901,7 @@ snapshots:
       remark-parse: 11.0.0
       remark-rehype: 11.1.0
       remark-smartypants: 3.0.2
-      shiki: 1.12.0
+      shiki: 1.14.1
       unified: 11.0.5
       unist-util-remove-position: 5.0.0
       unist-util-visit: 5.0.0
@@ -5949,14 +6031,14 @@ snapshots:
     dependencies:
       '@ampproject/remapping': 2.3.0
       '@babel/code-frame': 7.24.7
-      '@babel/generator': 7.25.0
+      '@babel/generator': 7.25.5
       '@babel/helper-compilation-targets': 7.25.2
       '@babel/helper-module-transforms': 7.25.2(@babel/core@7.25.2)
       '@babel/helpers': 7.25.0
       '@babel/parser': 7.25.4
       '@babel/template': 7.25.0
       '@babel/traverse': 7.25.4
-      '@babel/types': 7.25.2
+      '@babel/types': 7.25.4
       convert-source-map: 2.0.0
       debug: 4.3.6
       gensync: 1.0.0-beta.2
@@ -5964,13 +6046,6 @@ snapshots:
       semver: 6.3.1
     transitivePeerDependencies:
       - supports-color
-
-  '@babel/generator@7.25.0':
-    dependencies:
-      '@babel/types': 7.25.2
-      '@jridgewell/gen-mapping': 0.3.5
-      '@jridgewell/trace-mapping': 0.3.25
-      jsesc: 2.5.2
 
   '@babel/generator@7.25.5':
     dependencies:
@@ -5981,7 +6056,7 @@ snapshots:
 
   '@babel/helper-annotate-as-pure@7.24.7':
     dependencies:
-      '@babel/types': 7.25.2
+      '@babel/types': 7.25.4
 
   '@babel/helper-compilation-targets@7.25.2':
     dependencies:
@@ -5999,22 +6074,22 @@ snapshots:
       '@babel/helper-optimise-call-expression': 7.24.7
       '@babel/helper-replace-supers': 7.25.0(@babel/core@7.25.2)
       '@babel/helper-skip-transparent-expression-wrappers': 7.24.7
-      '@babel/traverse': 7.25.2
+      '@babel/traverse': 7.25.4
       semver: 6.3.1
     transitivePeerDependencies:
       - supports-color
 
   '@babel/helper-member-expression-to-functions@7.24.8':
     dependencies:
-      '@babel/traverse': 7.25.2
-      '@babel/types': 7.25.2
+      '@babel/traverse': 7.25.4
+      '@babel/types': 7.25.4
     transitivePeerDependencies:
       - supports-color
 
   '@babel/helper-module-imports@7.24.7':
     dependencies:
       '@babel/traverse': 7.25.4
-      '@babel/types': 7.25.2
+      '@babel/types': 7.25.4
     transitivePeerDependencies:
       - supports-color
 
@@ -6030,7 +6105,7 @@ snapshots:
 
   '@babel/helper-optimise-call-expression@7.24.7':
     dependencies:
-      '@babel/types': 7.25.2
+      '@babel/types': 7.25.4
 
   '@babel/helper-plugin-utils@7.24.8': {}
 
@@ -6039,21 +6114,21 @@ snapshots:
       '@babel/core': 7.25.2
       '@babel/helper-member-expression-to-functions': 7.24.8
       '@babel/helper-optimise-call-expression': 7.24.7
-      '@babel/traverse': 7.25.2
+      '@babel/traverse': 7.25.4
     transitivePeerDependencies:
       - supports-color
 
   '@babel/helper-simple-access@7.24.7':
     dependencies:
       '@babel/traverse': 7.25.4
-      '@babel/types': 7.25.2
+      '@babel/types': 7.25.4
     transitivePeerDependencies:
       - supports-color
 
   '@babel/helper-skip-transparent-expression-wrappers@7.24.7':
     dependencies:
-      '@babel/traverse': 7.25.2
-      '@babel/types': 7.25.2
+      '@babel/traverse': 7.25.4
+      '@babel/types': 7.25.4
     transitivePeerDependencies:
       - supports-color
 
@@ -6066,7 +6141,7 @@ snapshots:
   '@babel/helpers@7.25.0':
     dependencies:
       '@babel/template': 7.25.0
-      '@babel/types': 7.25.2
+      '@babel/types': 7.25.4
 
   '@babel/highlight@7.24.7':
     dependencies:
@@ -6074,10 +6149,6 @@ snapshots:
       chalk: 2.4.2
       js-tokens: 4.0.0
       picocolors: 1.0.1
-
-  '@babel/parser@7.25.0':
-    dependencies:
-      '@babel/types': 7.25.2
 
   '@babel/parser@7.25.4':
     dependencies:
@@ -6109,7 +6180,7 @@ snapshots:
       '@babel/helper-module-imports': 7.24.7
       '@babel/helper-plugin-utils': 7.24.8
       '@babel/plugin-syntax-jsx': 7.24.7(@babel/core@7.25.2)
-      '@babel/types': 7.25.2
+      '@babel/types': 7.25.4
     transitivePeerDependencies:
       - supports-color
 
@@ -6145,18 +6216,6 @@ snapshots:
       '@babel/parser': 7.25.4
       '@babel/types': 7.25.4
 
-  '@babel/traverse@7.25.2':
-    dependencies:
-      '@babel/code-frame': 7.24.7
-      '@babel/generator': 7.25.0
-      '@babel/parser': 7.25.0
-      '@babel/template': 7.25.0
-      '@babel/types': 7.25.2
-      debug: 4.3.6
-      globals: 11.12.0
-    transitivePeerDependencies:
-      - supports-color
-
   '@babel/traverse@7.25.4':
     dependencies:
       '@babel/code-frame': 7.24.7
@@ -6168,12 +6227,6 @@ snapshots:
       globals: 11.12.0
     transitivePeerDependencies:
       - supports-color
-
-  '@babel/types@7.25.2':
-    dependencies:
-      '@babel/helper-string-parser': 7.24.8
-      '@babel/helper-validator-identifier': 7.24.7
-      to-fast-properties: 2.0.0
 
   '@babel/types@7.25.4':
     dependencies:
@@ -6750,7 +6803,7 @@ snapshots:
   '@expressive-code/plugin-shiki@0.35.6':
     dependencies:
       '@expressive-code/core': 0.35.6
-      shiki: 1.12.0
+      shiki: 1.14.1
 
   '@expressive-code/plugin-text-markers@0.35.6':
     dependencies:
@@ -6920,12 +6973,25 @@ snapshots:
       astro: 4.14.5(@types/node@20.14.13)(rollup@4.21.0)(typescript@5.5.4)
       astro-integration-kit: 0.16.1(astro@4.14.5(@types/node@20.14.13)(rollup@4.21.0)(typescript@5.5.4))
 
+  '@inox-tools/modular-station@0.3.0(astro@4.14.5(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))':
+    dependencies:
+      '@inox-tools/utils': 0.1.3
+      astro: 4.14.5(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4)
+      astro-integration-kit: 0.16.1(astro@4.14.5(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))
+
   '@inox-tools/runtime-logger@0.3.1(astro@4.14.5(@types/node@20.14.13)(rollup@4.21.0)(typescript@5.5.4))':
     dependencies:
       '@inox-tools/modular-station': 0.3.0(astro@4.14.5(@types/node@20.14.13)(rollup@4.21.0)(typescript@5.5.4))
       '@inox-tools/utils': 0.1.3
       astro: 4.14.5(@types/node@20.14.13)(rollup@4.21.0)(typescript@5.5.4)
       astro-integration-kit: 0.16.1(astro@4.14.5(@types/node@20.14.13)(rollup@4.21.0)(typescript@5.5.4))
+
+  '@inox-tools/runtime-logger@0.3.1(astro@4.14.5(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))':
+    dependencies:
+      '@inox-tools/modular-station': 0.3.0(astro@4.14.5(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))
+      '@inox-tools/utils': 0.1.3
+      astro: 4.14.5(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4)
+      astro-integration-kit: 0.16.1(astro@4.14.5(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))
 
   '@inox-tools/sitemap-ext@0.3.3(@types/node@20.14.13)(astro@4.14.5(@types/node@20.14.13)(rollup@4.21.0)(typescript@5.5.4))':
     dependencies:
@@ -7103,15 +7169,22 @@ snapshots:
       package-json: 10.0.1
       semver: 7.6.3
 
-  '@matthiesenxyz/unocss-preset-daisyui@0.1.2(daisyui@4.12.10(postcss@8.4.40))(unocss@0.62.3(postcss@8.4.40)(rollup@4.21.0)(vite@5.4.2(@types/node@20.14.13)))':
+  '@matthiesenxyz/integration-utils@0.2.0(astro@4.14.5(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))':
     dependencies:
-      autoprefixer: 10.4.19(postcss@8.4.40)
+      astro: 4.14.5(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4)
+      astro-integration-kit: 0.16.1(astro@4.14.5(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))
+      package-json: 10.0.1
+      semver: 7.6.3
+
+  '@matthiesenxyz/unocss-preset-daisyui@0.1.2(daisyui@4.12.10(postcss@8.4.41))(unocss@0.62.3(postcss@8.4.41)(rollup@4.21.0)(vite@5.4.2(@types/node@20.14.13)))':
+    dependencies:
+      autoprefixer: 10.4.19(postcss@8.4.41)
       camelcase: 8.0.0
-      daisyui: 4.12.10(postcss@8.4.40)
+      daisyui: 4.12.10(postcss@8.4.41)
       parsel-js: 1.1.2
-      postcss: 8.4.40
-      postcss-js: 4.0.1(postcss@8.4.40)
-      unocss: 0.62.3(postcss@8.4.40)(rollup@4.21.0)(vite@5.4.2(@types/node@20.14.13))
+      postcss: 8.4.41
+      postcss-js: 4.0.1(postcss@8.4.41)
+      unocss: 0.62.3(postcss@8.4.41)(rollup@4.21.0)(vite@5.4.2(@types/node@20.14.13))
 
   '@mdx-js/mdx@3.0.1':
     dependencies:
@@ -7488,23 +7561,23 @@ snapshots:
   '@types/babel__core@7.20.5':
     dependencies:
       '@babel/parser': 7.25.4
-      '@babel/types': 7.25.2
+      '@babel/types': 7.25.4
       '@types/babel__generator': 7.6.8
       '@types/babel__template': 7.4.4
       '@types/babel__traverse': 7.20.6
 
   '@types/babel__generator@7.6.8':
     dependencies:
-      '@babel/types': 7.25.2
+      '@babel/types': 7.25.4
 
   '@types/babel__template@7.4.4':
     dependencies:
       '@babel/parser': 7.25.4
-      '@babel/types': 7.25.2
+      '@babel/types': 7.25.4
 
   '@types/babel__traverse@7.20.6':
     dependencies:
-      '@babel/types': 7.25.2
+      '@babel/types': 7.25.4
 
   '@types/braces@3.0.4': {}
 
@@ -7554,7 +7627,7 @@ snapshots:
 
   '@types/node-forge@1.3.11':
     dependencies:
-      '@types/node': 20.14.13
+      '@types/node': 22.0.0
 
   '@types/node@12.20.55': {}
 
@@ -7657,14 +7730,14 @@ snapshots:
       gzip-size: 6.0.0
       sirv: 2.0.4
 
-  '@unocss/postcss@0.62.3(postcss@8.4.40)':
+  '@unocss/postcss@0.62.3(postcss@8.4.41)':
     dependencies:
       '@unocss/config': 0.62.3
       '@unocss/core': 0.62.3
       '@unocss/rule-utils': 0.62.3
       css-tree: 2.3.1
       magic-string: 0.30.11
-      postcss: 8.4.40
+      postcss: 8.4.41
       tinyglobby: 0.2.5
     transitivePeerDependencies:
       - supports-color
@@ -8002,6 +8075,12 @@ snapshots:
       pathe: 1.1.2
       recast: 0.23.9
 
+  astro-integration-kit@0.16.1(astro@4.14.5(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4)):
+    dependencies:
+      astro: 4.14.5(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4)
+      pathe: 1.1.2
+      recast: 0.23.9
+
   astro-pages@0.3.0(astro@4.14.5(@types/node@20.14.13)(rollup@4.21.0)(typescript@5.5.4)):
     dependencies:
       astro: 4.14.5(@types/node@20.14.13)(rollup@4.21.0)(typescript@5.5.4)
@@ -8035,11 +8114,11 @@ snapshots:
       '@astrojs/markdown-remark': 5.2.0
       '@astrojs/telemetry': 3.1.0
       '@babel/core': 7.25.2
-      '@babel/generator': 7.25.0
+      '@babel/generator': 7.25.5
       '@babel/parser': 7.25.4
       '@babel/plugin-transform-react-jsx': 7.25.2(@babel/core@7.25.2)
       '@babel/traverse': 7.25.4
-      '@babel/types': 7.25.2
+      '@babel/types': 7.25.4
       '@oslojs/encoding': 0.4.1
       '@rollup/pluginutils': 5.1.0(rollup@4.21.0)
       '@types/babel__core': 7.20.5
@@ -8119,11 +8198,11 @@ snapshots:
       '@astrojs/markdown-remark': 5.2.0
       '@astrojs/telemetry': 3.1.0
       '@babel/core': 7.25.2
-      '@babel/generator': 7.25.0
+      '@babel/generator': 7.25.5
       '@babel/parser': 7.25.4
       '@babel/plugin-transform-react-jsx': 7.25.2(@babel/core@7.25.2)
       '@babel/traverse': 7.25.4
-      '@babel/types': 7.25.2
+      '@babel/types': 7.25.4
       '@oslojs/encoding': 0.4.1
       '@rollup/pluginutils': 5.1.0(rollup@4.21.0)
       '@types/babel__core': 7.20.5
@@ -8208,6 +8287,16 @@ snapshots:
       normalize-range: 0.1.2
       picocolors: 1.0.1
       postcss: 8.4.40
+      postcss-value-parser: 4.2.0
+
+  autoprefixer@10.4.19(postcss@8.4.41):
+    dependencies:
+      browserslist: 4.23.2
+      caniuse-lite: 1.0.30001644
+      fraction.js: 4.3.7
+      normalize-range: 0.1.2
+      picocolors: 1.0.1
+      postcss: 8.4.41
       postcss-value-parser: 4.2.0
 
   axios@1.7.5:
@@ -8487,12 +8576,12 @@ snapshots:
 
   culori@3.3.0: {}
 
-  daisyui@4.12.10(postcss@8.4.40):
+  daisyui@4.12.10(postcss@8.4.41):
     dependencies:
       css-selector-tokenizer: 0.8.0
       culori: 3.3.0
       picocolors: 1.0.1
-      postcss-js: 4.0.1(postcss@8.4.40)
+      postcss-js: 4.0.1(postcss@8.4.41)
     transitivePeerDependencies:
       - postcss
 
@@ -10388,6 +10477,11 @@ snapshots:
       camelcase-css: 2.0.1
       postcss: 8.4.40
 
+  postcss-js@4.0.1(postcss@8.4.41):
+    dependencies:
+      camelcase-css: 2.0.1
+      postcss: 8.4.41
+
   postcss-load-config@4.0.2(postcss@8.4.40):
     dependencies:
       lilconfig: 3.1.2
@@ -11075,7 +11169,7 @@ snapshots:
       lunr: 2.3.9
       markdown-it: 14.1.0
       minimatch: 9.0.5
-      shiki: 1.12.0
+      shiki: 1.14.1
       typescript: 5.5.4
       yaml: 2.5.0
 
@@ -11185,13 +11279,13 @@ snapshots:
 
   universalify@0.1.2: {}
 
-  unocss@0.62.3(postcss@8.4.40)(rollup@4.21.0)(vite@5.4.2(@types/node@20.14.13)):
+  unocss@0.62.3(postcss@8.4.41)(rollup@4.21.0)(vite@5.4.2(@types/node@20.14.13)):
     dependencies:
       '@unocss/astro': 0.62.3(rollup@4.21.0)(vite@5.4.2(@types/node@20.14.13))
       '@unocss/cli': 0.62.3(rollup@4.21.0)
       '@unocss/core': 0.62.3
       '@unocss/extractor-arbitrary-variants': 0.62.3
-      '@unocss/postcss': 0.62.3(postcss@8.4.40)
+      '@unocss/postcss': 0.62.3(postcss@8.4.41)
       '@unocss/preset-attributify': 0.62.3
       '@unocss/preset-icons': 0.62.3
       '@unocss/preset-mini': 0.62.3
