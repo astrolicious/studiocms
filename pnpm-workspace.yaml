@@ -60,7 +60,6 @@ catalogs:
   studiocms-imagehandler:
     '@cloudinary/url-gen': ^1.19.0
     '@unpic/astro': ^0.0.46
-    unpic: ^3.18.0
   studiocms:
     '@iconify/types': ^2.0.0
     '@cloudinary/url-gen': ^1.19.0

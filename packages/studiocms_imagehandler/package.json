@@ -39,7 +39,7 @@
     "@studiocms/core": "workspace:*",
     "@unpic/astro": "catalog:studiocms-imagehandler",
     "astro-integration-kit": "catalog:",
-    "unpic": "catalog:studiocms-imagehandler"
+    "unpic": "catalog:studiocms-shared"
   },
   "peerDependencies": {
     "astro": "catalog:min"
