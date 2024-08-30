@@ -1,7 +1,7 @@
 {
-  "name": "studiocms",
+  "name": "@studiocms/imagehandler",
   "version": "0.1.0-beta.4",
-  "description": "A dedicated CMS for Astro Studio. Built from the ground up by the Astro community.",
+  "description": "Image Handler for the StudioCMS Integration",
   "author": {
     "name": "Adam Matthiesen | Jacob Jenkins | Paul Valladares",
     "url": "https://astro-studiocms.xyz"
@@ -17,17 +17,9 @@
   ],
   "license": "MIT",
   "keywords": [
-    "astro",
-    "astrocms",
-    "astrodb",
-    "astrolicious",
-    "astrostudio",
-    "astro-integration",
-    "astro-studio",
     "astro-studiocms",
     "cms",
-    "studiocms",
-    "withastro"
+    "studiocms"
   ],
   "homepage": "https://astro-studiocms.xyz",
   "publishConfig": {
@@ -42,18 +34,18 @@
   },
   "type": "module",
   "dependencies": {
-    "@inox-tools/runtime-logger": "catalog:studiocms-integration",
+    "@cloudinary/url-gen": "catalog:studiocms-imagehandler",
     "@matthiesenxyz/integration-utils": "catalog:studiocms-shared",
     "@studiocms/core": "workspace:*",
-    "@studiocms/frontend": "workspace:*",
-    "@studiocms/imagehandler": "workspace:*",
-    "@studiocms/robots-txt": "workspace:*",
-    "astro-integration-kit": "catalog:"
+    "@unpic/astro": "catalog:studiocms-imagehandler",
+    "astro-integration-kit": "catalog:",
+    "unpic": "catalog:studiocms-imagehandler"
   },
   "peerDependencies": {
-    "@astrojs/db": "catalog:min",
     "astro": "catalog:min"
   },
   "devDependencies": {
+    "vite": "catalog:",
+    "typescript": "catalog:"
   }
 }
