@@ -13,4 +13,5 @@ export * from './consts';
  * Core StudioCMS Integration
  */
 const coreIntegration = integration;
+
 export default coreIntegration;

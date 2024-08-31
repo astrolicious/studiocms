@@ -70,7 +70,7 @@ export async function contentHelper(
 	pkg?: string
 ): Promise<ContentHelperTempResponse> {
 	const slugToUse = slug;
-	const packageToGet = pkg || '@astrolicious/studiocms';
+	const packageToGet = pkg || 'studiocms';
 
 	const pageData = await db
 		.select()

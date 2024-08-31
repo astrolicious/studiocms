@@ -41,6 +41,7 @@
     "@matthiesenxyz/astrolace": "catalog:studiocms-shared",
     "@studiocms/betaresources": "workspace:*",
     "@studiocms/auth": "workspace:*",
+    "@studiocms/core": "workspace:*",
     "@noble/hashes": "catalog:studiocms-shared",
     "@unocss/astro": "catalog:studiocms-shared",
     "@unocss/reset": "catalog:studiocms-shared",

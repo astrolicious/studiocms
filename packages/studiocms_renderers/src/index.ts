@@ -2,4 +2,9 @@ import integration from './integration';
 
 export { default as StudioCMSRenderer } from './components/StudioCMSRenderer.astro';
 
-export default integration;
+/**
+ * StudioCMS Renderers Integration
+ */
+const studioCMSRenderers = integration;
+
+export default studioCMSRenderers;

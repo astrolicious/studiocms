@@ -3,4 +3,6 @@ import integration from './integration';
 /**
  * StudioCMS Frontend Integration
  */
-export default integration;
+const studioCMSFrontend = integration;
+
+export default studioCMSFrontend;

@@ -3,4 +3,6 @@ import integration from './integration';
 /**
  * StudioCMS Image Handler
  */
-export default integration;
+const studioCMSImageHandler = integration;
+
+export default studioCMSImageHandler;

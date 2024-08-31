@@ -63,7 +63,7 @@ const { pageData, livePreviewBox, isEditPage = false, formActionURL, pageEdit } 
                     id="package" 
                     name="package"
                     label='Package Relation' 
-                    value={pageData && pageData.package || "@astrolicious/studiocms"}>
+                    value={pageData && pageData.package || "studiocms"}>
                     {
                         Array.from(studioCMSPluginList.values()).map((plugin) => (
                             <Option value={plugin.name}>{plugin.label}</Option>

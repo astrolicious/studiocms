@@ -1,14 +1,13 @@
-import {
-	type StudioCMSPluginOptions,
-	defineStudioCMSConfig,
-	defineStudioCMSPlugin,
-} from '@studiocms/core';
-import studioCMSIntegration from './integration';
+import type { StudioCMSPluginOptions } from '@studiocms/core';
+import { defineStudioCMSConfig, defineStudioCMSPlugin } from '@studiocms/core';
+import integration from './integration';
+
+// Config Utility
+export { defineStudioCMSConfig };
 
 // Plugin System
 export { defineStudioCMSPlugin, type StudioCMSPluginOptions };
 
-// Integration
 /**
  * # Astro Studio CMS Integration
  *
@@ -21,8 +20,6 @@ export { defineStudioCMSPlugin, type StudioCMSPluginOptions };
  * > **Note: Astro SSR adapters that are configured for Image Optimization will automatically take full control of the Image Optimization Service. Making the `imageService` option in this integration not have any effect.**
  *
  */
-export const studioCMS = studioCMSIntegration;
-export default studioCMS;
+export const studioCMS = integration;
 
-// Config Utility
-export { defineStudioCMSConfig };
+export default studioCMS;
