@@ -31,7 +31,8 @@
   ],
   "exports": {
     ".": "./src/index.ts",
-    "./svgs/*": "./src/svgs/*"
+    "./svgs/*": "./src/svgs/*",
+    "./pngs/*": "./src/pngs/*"
   },
   "type": "module",
   "dependencies": {
