@@ -16,6 +16,7 @@ import {
 	studioCMSPluginList,
 } from '@studiocms/core';
 import studioCMSCore from '@studiocms/core';
+import studioCMSDashboard from '@studiocms/dashboard';
 import studioCMSFrontend from '@studiocms/frontend';
 import studiocmsImageHandler from '@studiocms/imagehandler';
 import studiocmsRenderers from '@studiocms/renderers';
@@ -70,6 +71,7 @@ export default defineIntegration({
 						{ integration: studioCMSFrontend(resolvedOptions) },
 						{ integration: studiocmsImageHandler(resolvedOptions) },
 						{ integration: studiocmsRenderers() },
+						{ integration: studioCMSDashboard(resolvedOptions) },
 					]);
 
 					// Setup Integrations (External / Optional)

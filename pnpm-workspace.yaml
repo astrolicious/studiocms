@@ -40,10 +40,19 @@ catalogs:
     typedoc: ^0.26.6
     typedoc-plugin-markdown: ^4.2.6
   studiocms-shared:
+    "@matthiesenxyz/astrolace": ^0.3.0
     "@matthiesenxyz/integration-utils": ^0.2.0
+    '@matthiesenxyz/unocss-preset-daisyui': ^0.1.2
     '@noble/hashes': ^1.4.0
+    '@unocss/astro': ^0.62.3
+    '@unocss/reset': ^0.62.3
+    '@types/micromatch': ^4.0.9
+    unocss: ^0.62.3
+    daisyui: ^4.12.10
     lucia: ^3.2.0
+    arctic: ^1.9.1
     marked: ^13.0.2
+    micromatch: ^4.0.7
     shiki: ^1.14.1
     unpic: ^3.18.0
     mrmime: ^2.0.0

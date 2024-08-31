@@ -1,5 +1,8 @@
 import { z } from 'astro/zod';
 
+/**
+ * Zod Schema for Astro.locals
+ */
 export const LocalsSchema = z.object({
 	isLoggedIn: z.boolean(),
 	dbUser: z
@@ -38,4 +41,7 @@ export const LocalsSchema = z.object({
 		.nullable(),
 });
 
+/**
+ * Type for Astro.locals
+ */
 export type Locals = z.infer<typeof LocalsSchema>;

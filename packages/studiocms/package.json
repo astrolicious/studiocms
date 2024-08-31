@@ -45,6 +45,7 @@
     "@inox-tools/runtime-logger": "catalog:studiocms-integration",
     "@matthiesenxyz/integration-utils": "catalog:studiocms-shared",
     "@studiocms/core": "workspace:*",
+    "@studiocms/dashboard": "workspace:*",
     "@studiocms/frontend": "workspace:*",
     "@studiocms/imagehandler": "workspace:*",
     "@studiocms/renderers": "workspace:*",

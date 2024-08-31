@@ -14,6 +14,12 @@ type authHelperResponse = {
 	currentUserSession: Session | undefined;
 };
 
+/**
+ * # Auth Helper Function
+ *
+ * @param locals The Astro.locals object
+ * @returns The current user data and session information and permission level
+ */
 export default async function authHelper(locals: Locals): Promise<authHelperResponse> {
 	let user: authHelperResponse = {
 		id: '',

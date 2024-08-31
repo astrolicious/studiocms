@@ -3,6 +3,13 @@ import { defineUtility } from 'astro-integration-kit';
 import { AstroError } from 'astro/errors';
 import { CoreStrings, DbErrors } from '../strings';
 
+/**
+ * Checks the Users Astro Config for the following:
+ *
+ * - Astro:DB Integration
+ * - SSR Mode (output: "server")
+ * - Site URL is set (can be "http://localhost:4321" for local development)
+ */
 export const checkAstroConfig = defineUtility('astro:config:setup')(async (params) => {
 	// Destructure Params
 	const { config: astroConfig, logger } = params;

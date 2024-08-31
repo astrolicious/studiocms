@@ -1,6 +1,11 @@
 import type { AstroIntegration } from 'astro';
 import { addIntegration, defineUtility, hasIntegration } from 'astro-integration-kit';
 
+/**
+ * Add Integration Array with Check
+ *
+ * Checks if the integration is enabled and if it already exists then adds it to the Astro Config if needed.
+ */
 export const addIntegrationArrayWithCheck = defineUtility('astro:config:setup')(
 	(
 		params,

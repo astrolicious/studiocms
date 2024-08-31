@@ -1,4 +1,4 @@
-import type { RobotsConfig } from '@studiocms/robots-txt';
+import type { RobotsConfig } from '@studiocms/robotstxt';
 
 export const CoreStrings = {
 	Start: 'Setting up StudioCMS Core...',

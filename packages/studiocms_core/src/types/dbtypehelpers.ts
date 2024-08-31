@@ -1,5 +1,8 @@
 import { z } from 'astro/zod';
 
+/**
+ * Zod Schema for PageDataAndContent objects from Astro:DB
+ */
 export const PageDataAndContentSchema = z.object({
 	PageData: z.object({
 		id: z.string(),
@@ -46,4 +49,7 @@ export const PageDataAndContentSchema = z.object({
 	}),
 });
 
+/**
+ * Type for PageDataAndContent objects from Astro:DB
+ */
 export type PageDataAndContent = z.infer<typeof PageDataAndContentSchema>;

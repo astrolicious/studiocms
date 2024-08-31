@@ -10,6 +10,11 @@ import {
 import type { StudioCMSOptions } from '../schemas';
 import { dtsFile } from '../stubs/dts';
 
+/**
+ * Core Virtual Module Generation
+ *
+ * This utility is used to generate the virtual modules for the StudioCMS Core Astro Integration.
+ */
 export const coreVirtualModuleGeneration = defineUtility('astro:config:setup')(
 	(
 		params,
@@ -49,7 +54,7 @@ export const coreVirtualModuleGeneration = defineUtility('astro:config:setup')(
 
 		// Setup the Resolvers
 		const contentHelperResolved = resolve('../helpers/contentHelper.ts');
-		const headDefaultsResolved = resolve('../components/headDefaults.ts');
+		const headDefaultsResolved = resolve('../helpers/headDefaults.ts');
 
 		// Component Resolvers
 		const componentResolvers = {
@@ -88,7 +93,7 @@ export const coreVirtualModuleGeneration = defineUtility('astro:config:setup')(
 		}
 
 		// Create the Virtual Modules Map
-		const virtualModules: Record<string, string> = {
+		const imports: Record<string, string> = {
 			'virtual:studiocms/config': `export default ${stringify(StudioCMSConfig)}`,
 			'virtual:studiocms/version': `export default '${currentVersion}'`,
 			'virtual:studiocms/astromdremarkConfig': `export default ${stringify(astroMarkdown)}`,
@@ -100,7 +105,7 @@ export const coreVirtualModuleGeneration = defineUtility('astro:config:setup')(
 		};
 
 		// Inject the Virtual Imports
-		addVirtualImports(params, { name, imports: virtualModules });
+		addVirtualImports(params, { name, imports });
 
 		// Build the declaration file
 		const dtsFileOutput = dtsFile(
@@ -120,6 +125,7 @@ export const coreVirtualModuleGeneration = defineUtility('astro:config:setup')(
 			}
 		);
 
+		// Return the declaration file to be used in the 'config:setup:done' hook with the injectTypes function
 		return { dtsFileOutput };
 	}
 );

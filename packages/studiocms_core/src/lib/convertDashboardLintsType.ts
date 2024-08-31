@@ -1,6 +1,14 @@
 import { PLUGIN_INTEGRATION_ICON } from '../consts';
 import type { DashboardPageLink, SideBarLink } from '../types';
 
+/**
+ * Convert the dashboard links type to the sidebar links type for the StudioCMS Dashboard from a StudioCMS Plugin
+ *
+ * @param dashboardPageLinks
+ * @param pkgname
+ * @param pluginLabel
+ * @returns The converted sidebar links
+ */
 export function convertDashboardLinksType(
 	dashboardPageLinks: DashboardPageLink[],
 	pkgname: string,

@@ -30,11 +30,13 @@
     "src"
   ],
   "exports": {
-    ".": "./src/index.ts"
+    ".": "./src/index.ts",
+    "./components": "./src/components/index.ts"
   },
   "type": "module",
   "dependencies": {
     "@noble/hashes": "catalog:studiocms-shared",
+    "@matthiesenxyz/astrolace": "catalog:studiocms-shared",
     "@matthiesenxyz/integration-utils": "catalog:studiocms-shared",
     "@studiocms/robotstxt": "workspace:*",
     "astro-integration-kit": "catalog:",

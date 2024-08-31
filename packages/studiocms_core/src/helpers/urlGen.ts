@@ -1,5 +1,15 @@
 import { pathWithBase } from './pathGenerators';
 
+/**
+ * # urlGenFactory Helper Function
+ *
+ * Generate a URL based on the path and route type.
+ *
+ * @param isDashboardRoute
+ * @param path
+ * @param DashboardRouteOverride
+ * @returns
+ */
 export default async function urlGenFactory(
 	isDashboardRoute: boolean,
 	path: string | undefined,

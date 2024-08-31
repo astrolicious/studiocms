@@ -1,5 +1,12 @@
 import { fileFactory } from '@matthiesenxyz/integration-utils/fileFactory';
 
+/**
+ * Generate a d.ts file for the StudioCMS Core Components and Helpers
+ *
+ * @param components
+ * @param helpers
+ * @returns string - to be used with injectTypes in the Astro Integration
+ */
 export const dtsFile = (
 	components: {
 		Avatar: string;

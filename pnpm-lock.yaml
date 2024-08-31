@@ -245,24 +245,51 @@ catalogs:
       specifier: ^1.1.7
       version: 1.1.7
   studiocms-shared:
+    '@matthiesenxyz/astrolace':
+      specifier: ^0.3.0
+      version: 0.3.0
     '@matthiesenxyz/integration-utils':
       specifier: ^0.2.0
       version: 0.2.0
+    '@matthiesenxyz/unocss-preset-daisyui':
+      specifier: ^0.1.2
+      version: 0.1.2
     '@noble/hashes':
       specifier: ^1.4.0
       version: 1.4.0
+    '@types/micromatch':
+      specifier: ^4.0.9
+      version: 4.0.9
+    '@unocss/astro':
+      specifier: ^0.62.3
+      version: 0.62.3
+    '@unocss/reset':
+      specifier: ^0.62.3
+      version: 0.62.3
+    arctic:
+      specifier: ^1.9.1
+      version: 1.9.2
+    daisyui:
+      specifier: ^4.12.10
+      version: 4.12.10
     lucia:
       specifier: ^3.2.0
       version: 3.2.0
     marked:
       specifier: ^13.0.2
       version: 13.0.3
+    micromatch:
+      specifier: ^4.0.7
+      version: 4.0.7
     mrmime:
       specifier: ^2.0.0
       version: 2.0.0
     shiki:
       specifier: ^1.14.1
       version: 1.14.1
+    unocss:
+      specifier: ^0.62.3
+      version: 0.62.3
     unpic:
       specifier: ^3.18.0
       version: 3.18.0
@@ -428,6 +455,9 @@ importers:
       '@studiocms/core':
         specifier: workspace:*
         version: link:../studiocms_core
+      '@studiocms/dashboard':
+        specifier: workspace:*
+        version: link:../studiocms_dashboard
       '@studiocms/frontend':
         specifier: workspace:*
         version: link:../studiocms_frontend
@@ -446,6 +476,65 @@ importers:
       astro-integration-kit:
         specifier: 'catalog:'
         version: 0.16.1(astro@4.14.5(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))
+
+  packages/studiocms_assets:
+    dependencies:
+      '@studiocms/core':
+        specifier: workspace:*
+        version: link:../studiocms_core
+    devDependencies:
+      typescript:
+        specifier: 'catalog:'
+        version: 5.5.4
+      vite:
+        specifier: 'catalog:'
+        version: 5.4.2(@types/node@22.0.0)
+
+  packages/studiocms_auth:
+    dependencies:
+      '@astrojs/db':
+        specifier: catalog:min
+        version: 0.13.2(@cloudflare/workers-types@4.20240725.0)(@types/react@18.3.3)
+      '@matthiesenxyz/integration-utils':
+        specifier: catalog:studiocms-shared
+        version: 0.2.0(astro@4.14.5(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))
+      '@noble/hashes':
+        specifier: catalog:studiocms-shared
+        version: 1.4.0
+      '@studiocms/assets':
+        specifier: workspace:*
+        version: link:../studiocms_assets
+      '@studiocms/core':
+        specifier: workspace:*
+        version: link:../studiocms_core
+      '@studiocms/dashboard':
+        specifier: workspace:*
+        version: link:../studiocms_dashboard
+      arctic:
+        specifier: catalog:studiocms-shared
+        version: 1.9.2
+      astro:
+        specifier: catalog:min
+        version: 4.14.5(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4)
+      astro-integration-kit:
+        specifier: 'catalog:'
+        version: 0.16.1(astro@4.14.5(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))
+      lucia:
+        specifier: catalog:studiocms-shared
+        version: 3.2.0
+      micromatch:
+        specifier: catalog:studiocms-shared
+        version: 4.0.7
+    devDependencies:
+      '@types/micromatch':
+        specifier: catalog:studiocms-shared
+        version: 4.0.9
+      typescript:
+        specifier: 'catalog:'
+        version: 5.5.4
+      vite:
+        specifier: 'catalog:'
+        version: 5.4.2(@types/node@22.0.0)
 
   packages/studiocms_blog:
     dependencies:
@@ -477,6 +566,9 @@ importers:
       '@astrojs/db':
         specifier: catalog:min
         version: 0.13.2(@cloudflare/workers-types@4.20240725.0)(@types/react@18.3.3)
+      '@matthiesenxyz/astrolace':
+        specifier: catalog:studiocms-shared
+        version: 0.3.0(@types/react@18.3.3)(astro@4.14.5(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))
       '@matthiesenxyz/integration-utils':
         specifier: catalog:studiocms-shared
         version: 0.2.0(astro@4.14.5(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))
@@ -507,6 +599,55 @@ importers:
       unpic:
         specifier: catalog:studiocms-shared
         version: 3.18.0
+    devDependencies:
+      typescript:
+        specifier: 'catalog:'
+        version: 5.5.4
+      vite:
+        specifier: 'catalog:'
+        version: 5.4.2(@types/node@22.0.0)
+
+  packages/studiocms_dashboard:
+    dependencies:
+      '@matthiesenxyz/astrolace':
+        specifier: catalog:studiocms-shared
+        version: 0.3.0(@types/react@18.3.3)(astro@4.14.5(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))
+      '@matthiesenxyz/integration-utils':
+        specifier: catalog:studiocms-shared
+        version: 0.2.0(astro@4.14.5(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))
+      '@matthiesenxyz/unocss-preset-daisyui':
+        specifier: catalog:studiocms-shared
+        version: 0.1.2(daisyui@4.12.10(postcss@8.4.41))(unocss@0.62.3(postcss@8.4.41)(rollup@4.21.0)(vite@5.4.2(@types/node@22.0.0)))
+      '@noble/hashes':
+        specifier: catalog:studiocms-shared
+        version: 1.4.0
+      '@studiocms/assets':
+        specifier: workspace:*
+        version: link:../studiocms_assets
+      '@studiocms/auth':
+        specifier: workspace:*
+        version: link:../studiocms_auth
+      '@studiocms/core':
+        specifier: workspace:*
+        version: link:../studiocms_core
+      '@unocss/astro':
+        specifier: catalog:studiocms-shared
+        version: 0.62.3(rollup@4.21.0)(vite@5.4.2(@types/node@22.0.0))
+      '@unocss/reset':
+        specifier: catalog:studiocms-shared
+        version: 0.62.3
+      astro:
+        specifier: catalog:min
+        version: 4.14.5(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4)
+      astro-integration-kit:
+        specifier: 'catalog:'
+        version: 0.16.1(astro@4.14.5(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))
+      daisyui:
+        specifier: catalog:studiocms-shared
+        version: 4.12.10(postcss@8.4.41)
+      unocss:
+        specifier: catalog:studiocms-shared
+        version: 0.62.3(postcss@8.4.41)(rollup@4.21.0)(vite@5.4.2(@types/node@22.0.0))
     devDependencies:
       typescript:
         specifier: 'catalog:'
@@ -7308,6 +7449,16 @@ snapshots:
     transitivePeerDependencies:
       - '@types/react'
 
+  '@matthiesenxyz/astrolace@0.3.0(@types/react@18.3.3)(astro@4.14.5(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))':
+    dependencies:
+      '@shoelace-style/shoelace': 2.16.0(@types/react@18.3.3)
+      astro: 4.14.5(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4)
+      astro-integration-kit: 0.16.1(astro@4.14.5(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))
+      lit: 3.1.4
+      zod: 3.23.8
+    transitivePeerDependencies:
+      - '@types/react'
+
   '@matthiesenxyz/integration-utils@0.2.0(astro@4.14.5(@types/node@20.14.13)(rollup@4.21.0)(typescript@5.5.4))':
     dependencies:
       astro: 4.14.5(@types/node@20.14.13)(rollup@4.21.0)(typescript@5.5.4)
@@ -7331,6 +7482,16 @@ snapshots:
       postcss: 8.4.41
       postcss-js: 4.0.1(postcss@8.4.41)
       unocss: 0.62.3(postcss@8.4.41)(rollup@4.21.0)(vite@5.4.2(@types/node@20.14.13))
+
+  '@matthiesenxyz/unocss-preset-daisyui@0.1.2(daisyui@4.12.10(postcss@8.4.41))(unocss@0.62.3(postcss@8.4.41)(rollup@4.21.0)(vite@5.4.2(@types/node@22.0.0)))':
+    dependencies:
+      autoprefixer: 10.4.19(postcss@8.4.41)
+      camelcase: 8.0.0
+      daisyui: 4.12.10(postcss@8.4.41)
+      parsel-js: 1.1.2
+      postcss: 8.4.41
+      postcss-js: 4.0.1(postcss@8.4.41)
+      unocss: 0.62.3(postcss@8.4.41)(rollup@4.21.0)(vite@5.4.2(@types/node@22.0.0))
 
   '@mdx-js/mdx@3.0.1':
     dependencies:
@@ -7841,6 +8002,17 @@ snapshots:
       - rollup
       - supports-color
 
+  '@unocss/astro@0.62.3(rollup@4.21.0)(vite@5.4.2(@types/node@22.0.0))':
+    dependencies:
+      '@unocss/core': 0.62.3
+      '@unocss/reset': 0.62.3
+      '@unocss/vite': 0.62.3(rollup@4.21.0)(vite@5.4.2(@types/node@22.0.0))
+    optionalDependencies:
+      vite: 5.4.2(@types/node@22.0.0)
+    transitivePeerDependencies:
+      - rollup
+      - supports-color
+
   '@unocss/cli@0.62.3(rollup@4.21.0)':
     dependencies:
       '@ampproject/remapping': 2.3.0
@@ -7986,6 +8158,23 @@ snapshots:
       magic-string: 0.30.11
       tinyglobby: 0.2.5
       vite: 5.4.2(@types/node@20.14.13)
+    transitivePeerDependencies:
+      - rollup
+      - supports-color
+
+  '@unocss/vite@0.62.3(rollup@4.21.0)(vite@5.4.2(@types/node@22.0.0))':
+    dependencies:
+      '@ampproject/remapping': 2.3.0
+      '@rollup/pluginutils': 5.1.0(rollup@4.21.0)
+      '@unocss/config': 0.62.3
+      '@unocss/core': 0.62.3
+      '@unocss/inspector': 0.62.3
+      '@unocss/scope': 0.62.3
+      '@unocss/transformer-directives': 0.62.3
+      chokidar: 3.6.0
+      magic-string: 0.30.11
+      tinyglobby: 0.2.5
+      vite: 5.4.2(@types/node@22.0.0)
     transitivePeerDependencies:
       - rollup
       - supports-color
@@ -11466,6 +11655,35 @@ snapshots:
       '@unocss/vite': 0.62.3(rollup@4.21.0)(vite@5.4.2(@types/node@20.14.13))
     optionalDependencies:
       vite: 5.4.2(@types/node@20.14.13)
+    transitivePeerDependencies:
+      - postcss
+      - rollup
+      - supports-color
+
+  unocss@0.62.3(postcss@8.4.41)(rollup@4.21.0)(vite@5.4.2(@types/node@22.0.0)):
+    dependencies:
+      '@unocss/astro': 0.62.3(rollup@4.21.0)(vite@5.4.2(@types/node@22.0.0))
+      '@unocss/cli': 0.62.3(rollup@4.21.0)
+      '@unocss/core': 0.62.3
+      '@unocss/extractor-arbitrary-variants': 0.62.3
+      '@unocss/postcss': 0.62.3(postcss@8.4.41)
+      '@unocss/preset-attributify': 0.62.3
+      '@unocss/preset-icons': 0.62.3
+      '@unocss/preset-mini': 0.62.3
+      '@unocss/preset-tagify': 0.62.3
+      '@unocss/preset-typography': 0.62.3
+      '@unocss/preset-uno': 0.62.3
+      '@unocss/preset-web-fonts': 0.62.3
+      '@unocss/preset-wind': 0.62.3
+      '@unocss/reset': 0.62.3
+      '@unocss/transformer-attributify-jsx': 0.62.3
+      '@unocss/transformer-attributify-jsx-babel': 0.62.3
+      '@unocss/transformer-compile-class': 0.62.3
+      '@unocss/transformer-directives': 0.62.3
+      '@unocss/transformer-variant-group': 0.62.3
+      '@unocss/vite': 0.62.3(rollup@4.21.0)(vite@5.4.2(@types/node@22.0.0))
+    optionalDependencies:
+      vite: 5.4.2(@types/node@22.0.0)
     transitivePeerDependencies:
       - postcss
       - rollup
