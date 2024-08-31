@@ -39,6 +39,7 @@
     "@matthiesenxyz/integration-utils": "catalog:studiocms-shared",
     "@matthiesenxyz/unocss-preset-daisyui": "catalog:studiocms-shared",
     "@matthiesenxyz/astrolace": "catalog:studiocms-shared",
+    "@studiocms/betaresources": "workspace:*",
     "@noble/hashes": "catalog:studiocms-shared",
     "@unocss/astro": "catalog:studiocms-shared",
     "@unocss/reset": "catalog:studiocms-shared",

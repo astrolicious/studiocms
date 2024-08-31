@@ -8,6 +8,7 @@
       "studiocms",
       "@studiocms/assets",
       "@studiocms/auth",
+      "@studiocms/betaresources",
       "@studiocms/core",
       "@studiocms/dashboard",
       "@studiocms/frontend",

@@ -306,6 +306,22 @@ importers:
         specifier: 'catalog:'
         version: 5.4.2(@types/node@22.0.0)
 
+  packages/studiocms_betaresources:
+    dependencies:
+      '@studiocms/assets':
+        specifier: workspace:*
+        version: link:../studiocms_assets
+      '@studiocms/core':
+        specifier: workspace:*
+        version: link:../studiocms_core
+    devDependencies:
+      typescript:
+        specifier: 'catalog:'
+        version: 5.5.4
+      vite:
+        specifier: 'catalog:'
+        version: 5.4.2(@types/node@22.0.0)
+
   packages/studiocms_blog:
     dependencies:
       '@astrojs/rss':
@@ -397,6 +413,9 @@ importers:
       '@studiocms/auth':
         specifier: workspace:*
         version: link:../studiocms_auth
+      '@studiocms/betaresources':
+        specifier: workspace:*
+        version: link:../studiocms_betaresources
       '@studiocms/core':
         specifier: workspace:*
         version: link:../studiocms_core
