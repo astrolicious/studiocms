@@ -55,6 +55,7 @@ export const coreVirtualModuleGeneration = defineUtility('astro:config:setup')(
 		// Setup the Resolvers
 		const contentHelperResolved = resolve('../helpers/contentHelper.ts');
 		const headDefaultsResolved = resolve('../helpers/headDefaults.ts');
+		const routeMapResolved = resolve('../helpers/routemap.ts');
 
 		// Component Resolvers
 		const componentResolvers = {
@@ -102,6 +103,7 @@ export const coreVirtualModuleGeneration = defineUtility('astro:config:setup')(
 			'studiocms:helpers': virtualHelpers,
 			'studiocms:helpers/contentHelper': `export * from '${contentHelperResolved}';`,
 			'studiocms:helpers/headDefaults': `export * from '${headDefaultsResolved}';`,
+			'studiocms:helpers/routemap': `export * from '${routeMapResolved}';`,
 		};
 
 		// Inject the Virtual Imports
@@ -122,6 +124,7 @@ export const coreVirtualModuleGeneration = defineUtility('astro:config:setup')(
 				pathGenerators: helpersUnnamedResolvers.pathGenerators,
 				contentHelper: contentHelperResolved,
 				headDefaults: headDefaultsResolved,
+				routemap: routeMapResolved,
 			}
 		);
 

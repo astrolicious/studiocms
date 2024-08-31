@@ -21,6 +21,7 @@ export const dtsFile = (
 		pathGenerators: string;
 		contentHelper: string;
 		headDefaults: string;
+		routemap: string;
 	}
 ) => {
 	// Create a new file for the core.d.ts file
@@ -291,6 +292,50 @@ export const dtsFile = (
     export const headDefaults: typeof import('${helpers.headDefaults}').headDefaults;`);
 
 	// End of the headDefaults module
+	DTSFile.addLines('}');
+
+	// Add the routemap module
+	DTSFile.addLines(`declare module 'studiocms:helpers/routemap' {`);
+
+	// getSluggedRoute function
+	DTSFile.addLines(
+		`export const getSluggedRoute: typeof import('${helpers.routemap}').getSluggedRoute;`
+	);
+
+	// getEditRoute function
+	DTSFile.addLines(`export const getEditRoute: typeof import('${helpers.routemap}').getEditRoute;`);
+
+	// getDeleteRoute function
+	DTSFile.addLines(
+		`export const getDeleteRoute: typeof import('${helpers.routemap}').getDeleteRoute;`
+	);
+
+	// makeNonDashboardRoute function
+	DTSFile.addLines(
+		`export const makeNonDashboardRoute: typeof import('${helpers.routemap}').makeNonDashboardRoute;`
+	);
+
+	// makeDashboardRoute function
+	DTSFile.addLines(
+		`export const makeDashboardRoute: typeof import('${helpers.routemap}').makeDashboardRoute;`
+	);
+
+	// makeAPIDashboardRoute function
+	DTSFile.addLines(
+		`export const makeAPIDashboardRoute: typeof import('${helpers.routemap}').makeAPIDashboardRoute;`
+	);
+
+	// StudioCMSRoutes
+	DTSFile.addLines(
+		`export const StudioCMSRoutes: typeof import('${helpers.routemap}').StudioCMSRoutes;`
+	);
+
+	// SideBarLinkMap
+	DTSFile.addLines(
+		`export const sideBarLinkMap: typeof import('${helpers.routemap}').sideBarLinkMap;`
+	);
+
+	// End of the routemap module
 	DTSFile.addLines('}');
 
 	// Return the DTS File

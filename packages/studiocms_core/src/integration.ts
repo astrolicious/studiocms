@@ -43,7 +43,7 @@ export default defineIntegration({
 				'astro:config:done': async ({ injectTypes }) => {
 					// Inject the DTS File
 					injectTypes({
-						filename: 'studiocms-core.d.ts',
+						filename: 'core.d.ts',
 						content: coreDtsFile,
 					});
 				},
