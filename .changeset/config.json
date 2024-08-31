@@ -6,7 +6,10 @@
   "linked": [
     [
       "studiocms",
+      "@studiocms/assets",
+      "@studiocms/auth",
       "@studiocms/core",
+      "@studiocms/dashboard",
       "@studiocms/frontend",
       "@studiocms/imagehandler",
       "@studiocms/renderers",

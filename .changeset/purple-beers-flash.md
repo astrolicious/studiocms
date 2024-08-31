@@ -1,5 +1,5 @@
 ---
-"@astrolicious/studiocms-blog": patch
+"@studiocms/blog": patch
 "studiocms": patch
 ---
 
