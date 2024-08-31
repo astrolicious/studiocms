@@ -2,9 +2,6 @@
   "extends": "astro/tsconfigs/strict",
   "files": [],
   "compilerOptions": {
-    "target": "ESNext",
-    "module": "ESNext",
-    "moduleResolution": "node",
     "composite": true,
     "allowImportingTsExtensions": true,
     "emitDeclarationOnly": true,

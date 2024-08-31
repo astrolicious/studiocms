@@ -1,7 +1,7 @@
 import cloudflare from '@astrojs/cloudflare';
 import db from '@astrojs/db';
-import studioCMS from '@astrolicious/studiocms';
 import { defineConfig } from 'astro/config';
+// import studioCMS from 'studiocms';
 
 // https://astro.build/config
 export default defineConfig({
@@ -15,12 +15,12 @@ export default defineConfig({
 	}),
 	integrations: [
 		db(),
-		studioCMS({
-			dbStartPage: false,
-			authConfig: {
-				mode: 'disable',
-			},
-			verbose: true,
-		}),
+		// studioCMS({
+		// 	dbStartPage: false,
+		// 	authConfig: {
+		// 		mode: 'disable',
+		// 	},
+		// 	verbose: true,
+		// }),
 	],
 });

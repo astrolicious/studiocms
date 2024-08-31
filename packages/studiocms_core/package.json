@@ -31,6 +31,7 @@
   ],
   "exports": {
     ".": "./src/index.ts",
+    "./dbconfig": "./src/db/config.ts",
     "./components": "./src/components/index.ts"
   },
   "type": "module",

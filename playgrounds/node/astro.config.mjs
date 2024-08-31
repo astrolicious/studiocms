@@ -1,9 +1,9 @@
 import db from '@astrojs/db';
 import node from '@astrojs/node';
 import webvitals from '@astrojs/web-vitals';
-// import studioCMS from '@astrolicious/studiocms';
-// import studioCMSBlog from '@astrolicious/studiocms-blog';
+import studioCMSBlog from '@studiocms/blog';
 import { defineConfig } from 'astro/config';
+import studioCMS from 'studiocms';
 
 // https://astro.build/config
 export default defineConfig({

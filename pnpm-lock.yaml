@@ -407,18 +407,12 @@ importers:
       '@noble/hashes':
         specifier: catalog:studiocms-shared
         version: 1.4.0
-      '@studiocms/assets':
-        specifier: workspace:*
-        version: link:../studiocms_assets
       '@studiocms/auth':
         specifier: workspace:*
         version: link:../studiocms_auth
       '@studiocms/betaresources':
         specifier: workspace:*
         version: link:../studiocms_betaresources
-      '@studiocms/core':
-        specifier: workspace:*
-        version: link:../studiocms_core
       '@unocss/astro':
         specifier: catalog:studiocms-shared
         version: 0.62.3(rollup@4.21.0)(vite@5.4.2(@types/node@22.0.0))
@@ -589,9 +583,15 @@ importers:
       '@astrojs/web-vitals':
         specifier: 'catalog:'
         version: 3.0.0(@astrojs/db@0.14.0(@cloudflare/workers-types@4.20240725.0)(@types/react@18.3.3))
+      '@studiocms/blog':
+        specifier: workspace:*
+        version: link:../../packages/studiocms_blog
       astro:
         specifier: 'catalog:'
         version: 4.15.1(@types/node@20.14.13)(rollup@4.21.0)(typescript@5.5.4)
+      studiocms:
+        specifier: workspace:*
+        version: link:../../packages/studiocms
     devDependencies:
       '@types/node':
         specifier: 'catalog:'

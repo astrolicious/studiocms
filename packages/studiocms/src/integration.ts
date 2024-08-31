@@ -21,7 +21,7 @@ import studioCMSFrontend from '@studiocms/frontend';
 import studiocmsImageHandler from '@studiocms/imagehandler';
 import studiocmsRenderers from '@studiocms/renderers';
 import studioCMSRobotsTXT from '@studiocms/robotstxt';
-import { createResolver, defineIntegration } from 'astro-integration-kit';
+import { defineIntegration } from 'astro-integration-kit';
 
 // Main Integration
 export default defineIntegration({
@@ -31,16 +31,13 @@ export default defineIntegration({
 		// Register StudioCMS into the StudioCMS Plugin List
 		studioCMSPluginList.set('studiocms', { name, label: 'StudioCMS' });
 
-		// Create Resolver for Virtual Imports
-		const { resolve } = createResolver(import.meta.url);
-
 		let resolvedOptions: StudioCMSOptions;
 
 		return {
 			hooks: {
 				// Configure `@astrojs/db` integration to include the StudioCMS Database Tables
 				'astro:db:setup': ({ extendDb }) => {
-					extendDb({ configEntrypoint: resolve('./db/config.ts') });
+					extendDb({ configEntrypoint: '@studiocms/core/dbconfig' });
 				},
 				'astro:config:setup': async (params) => {
 					// Destructure Params
