@@ -1,5 +1,6 @@
 import { addVirtualImports, createResolver, defineUtility } from 'astro-integration-kit';
 import {
+	customRendererPlugin,
 	dashboardPageLinksMap,
 	externalNavigation,
 	stringify,
@@ -33,11 +34,18 @@ export const coreVirtualModuleGeneration = defineUtility('astro:config:setup')(
 		// Create Resolver for Virtual Imports
 		const { resolve } = createResolver(import.meta.url);
 
+		// Get customRendererPlugin
+		let customRenderPlugin: string[] = [];
+		if (customRendererPlugin) {
+			customRenderPlugin = Array.from(customRendererPlugin);
+		}
+
 		// Setup the Plugin Module
 		let pluginModule = '';
 		pluginModule += `export const externalNav = new Map(${stringifyMap(externalNavigation)});\n`;
 		pluginModule += `export const dashboardPageLinks = new Map(${stringifyMap(dashboardPageLinksMap)});\n`;
 		pluginModule += `export const pluginList = new Map(${stringifyMap(studioCMSPluginList)});\n`;
+		pluginModule += `export const customRenderers = ${customRenderPlugin};\n`;
 
 		// Setup the Resolvers
 		const contentHelperResolved = resolve('../helpers/contentHelper.ts');

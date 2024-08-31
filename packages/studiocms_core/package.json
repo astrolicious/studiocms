@@ -36,7 +36,7 @@
   "dependencies": {
     "@noble/hashes": "catalog:studiocms-shared",
     "@matthiesenxyz/integration-utils": "catalog:studiocms-shared",
-    "@studiocms/robots-txt": "workspace:*",
+    "@studiocms/robotstxt": "workspace:*",
     "astro-integration-kit": "catalog:",
     "lucia": "catalog:studiocms-shared",
     "marked": "catalog:studiocms-shared",

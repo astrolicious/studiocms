@@ -1,4 +1,4 @@
-import type { RobotsConfig } from '@studiocms/robots-txt';
+import type { RobotsConfig } from '@studiocms/robotstxt';
 import { z } from 'astro/zod';
 
 //

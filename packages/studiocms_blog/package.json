@@ -1,7 +1,7 @@
 {
-  "name": "studiocms",
+  "name": "@studiocms/blog",
   "version": "0.1.0-beta.4",
-  "description": "A dedicated CMS for Astro Studio. Built from the ground up by the Astro community.",
+  "description": "Add a blog to your StudioCMS project with ease!",
   "author": {
     "name": "Adam Matthiesen | Jacob Jenkins | Paul Valladares",
     "url": "https://astro-studiocms.xyz"
@@ -27,7 +27,16 @@
     "astro-studiocms",
     "cms",
     "studiocms",
-    "withastro"
+    "withastro",
+    "blog",
+    "studio-blog",
+    "astro-blog",
+    "astro-studio-blog",
+    "studiocms-blog",
+    "theme",
+    "astro-theme",
+    "studiocms-theme",
+    "astro-studiocms-theme"
   ],
   "homepage": "https://astro-studiocms.xyz",
   "publishConfig": {
@@ -35,26 +44,26 @@
   },
   "sideEffects": false,
   "files": [
+    "index.ts",
+    "schema.ts",
     "src"
   ],
   "exports": {
-    ".": "./src/index.ts"
+    ".": "./index.ts",
+    "./schema": "./schema.ts"
   },
   "type": "module",
   "dependencies": {
-    "@inox-tools/runtime-logger": "catalog:studiocms-integration",
-    "@matthiesenxyz/integration-utils": "catalog:studiocms-shared",
     "@studiocms/core": "workspace:*",
     "@studiocms/frontend": "workspace:*",
-    "@studiocms/imagehandler": "workspace:*",
-    "@studiocms/renderers": "workspace:*",
-    "@studiocms/robotstxt": "workspace:*",
-    "astro-integration-kit": "catalog:"
-  },
-  "peerDependencies": {
-    "@astrojs/db": "catalog:min",
-    "astro": "catalog:min"
+    "@astrojs/rss": "catalog:",
+    "astro-theme-provider": "catalog:"
   },
   "devDependencies": {
+    "@types/node": "catalog:"
+  },
+  "peerDependencies": {
+    "studiocms" : "workspace:*",
+    "astro": "catalog:min"
   }
 }

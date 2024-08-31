@@ -414,25 +414,6 @@ importers:
         specifier: 'catalog:'
         version: 5.4.2(@types/node@20.14.13)
 
-  packages/astrolicious_studioCMSBlog:
-    dependencies:
-      '@astrojs/rss':
-        specifier: 'catalog:'
-        version: 4.0.7
-      '@astrolicious/studiocms':
-        specifier: workspace:*
-        version: link:../astrolicious_studioCMS
-      astro:
-        specifier: catalog:min
-        version: 4.14.5(@types/node@20.14.13)(rollup@4.21.0)(typescript@5.5.4)
-      astro-theme-provider:
-        specifier: 'catalog:'
-        version: 0.6.1(astro@4.14.5(@types/node@20.14.13)(rollup@4.21.0)(typescript@5.5.4))
-    devDependencies:
-      '@types/node':
-        specifier: 'catalog:'
-        version: 20.14.13
-
   packages/studiocms:
     dependencies:
       '@astrojs/db':
@@ -453,7 +434,10 @@ importers:
       '@studiocms/imagehandler':
         specifier: workspace:*
         version: link:../studiocms_imagehandler
-      '@studiocms/robots-txt':
+      '@studiocms/renderers':
+        specifier: workspace:*
+        version: link:../studiocms_renderers
+      '@studiocms/robotstxt':
         specifier: workspace:*
         version: link:../studiocms_robotstxt
       astro:
@@ -462,6 +446,31 @@ importers:
       astro-integration-kit:
         specifier: 'catalog:'
         version: 0.16.1(astro@4.14.5(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))
+
+  packages/studiocms_blog:
+    dependencies:
+      '@astrojs/rss':
+        specifier: 'catalog:'
+        version: 4.0.7
+      '@studiocms/core':
+        specifier: workspace:*
+        version: link:../studiocms_core
+      '@studiocms/frontend':
+        specifier: workspace:*
+        version: link:../studiocms_frontend
+      astro:
+        specifier: catalog:min
+        version: 4.14.5(@types/node@20.14.13)(rollup@4.21.0)(typescript@5.5.4)
+      astro-theme-provider:
+        specifier: 'catalog:'
+        version: 0.6.1(astro@4.14.5(@types/node@20.14.13)(rollup@4.21.0)(typescript@5.5.4))
+      studiocms:
+        specifier: workspace:*
+        version: link:../studiocms
+    devDependencies:
+      '@types/node':
+        specifier: 'catalog:'
+        version: 20.14.13
 
   packages/studiocms_core:
     dependencies:
@@ -474,7 +483,7 @@ importers:
       '@noble/hashes':
         specifier: catalog:studiocms-shared
         version: 1.4.0
-      '@studiocms/robots-txt':
+      '@studiocms/robotstxt':
         specifier: workspace:*
         version: link:../studiocms_robotstxt
       astro:
@@ -582,6 +591,9 @@ importers:
       astro:
         specifier: catalog:min
         version: 4.14.5(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4)
+      astro-integration-kit:
+        specifier: 'catalog:'
+        version: 0.16.1(astro@4.14.5(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))
       marked:
         specifier: catalog:studiocms-shared
         version: 13.0.3
@@ -625,9 +637,6 @@ importers:
       '@astrojs/db':
         specifier: 'catalog:'
         version: 0.13.2(@cloudflare/workers-types@4.20240725.0)(@types/react@18.3.3)
-      '@astrolicious/studiocms':
-        specifier: workspace:*
-        version: link:../../packages/astrolicious_studioCMS
       astro:
         specifier: 'catalog:'
         version: 4.14.5(@types/node@20.14.13)(rollup@4.21.0)(typescript@5.5.4)
@@ -650,12 +659,6 @@ importers:
       '@astrojs/web-vitals':
         specifier: 'catalog:'
         version: 2.0.0(@astrojs/db@0.13.2(@cloudflare/workers-types@4.20240725.0)(@types/react@18.3.3))
-      '@astrolicious/studiocms':
-        specifier: workspace:*
-        version: link:../../packages/astrolicious_studioCMS
-      '@astrolicious/studiocms-blog':
-        specifier: workspace:*
-        version: link:../../packages/astrolicious_studioCMSBlog
       astro:
         specifier: 'catalog:'
         version: 4.14.5(@types/node@20.14.13)(rollup@4.21.0)(typescript@5.5.4)

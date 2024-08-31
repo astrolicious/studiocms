@@ -1,4 +1,4 @@
-import type { SideBarLink, StudioCMSPluginOptions } from '../schemas';
+import type { SideBarLink, StudioCMSPluginOptions } from '../types';
 import { convertDashboardLinksType } from './convertDashboardLintsType';
 
 /**

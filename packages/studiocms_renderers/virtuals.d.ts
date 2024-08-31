@@ -20,3 +20,10 @@ declare module 'virtual:studiocms/astromdremarkConfig' {
 	const markdownConfig: import('astro').AstroConfig['markdown'];
 	export default markdownConfig;
 }
+
+declare module 'virtual:studiocms/pluginSystem' {
+	export const externalNav: typeof import('./src/index').externalNavigation;
+	export const dashboardPageLinks: typeof import('./src/index').dashboardPageLinksMap;
+	export const pluginList: typeof import('./src/index').studioCMSPluginList;
+	export const customRenderers: string[];
+}

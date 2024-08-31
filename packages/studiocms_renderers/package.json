@@ -38,6 +38,7 @@
     "@matthiesenxyz/integration-utils": "catalog:studiocms-shared",
     "@markdoc/markdoc": "catalog:studiocms-renderer",
     "@shikijs/transformers": "catalog:studiocms-renderer",
+    "astro-integration-kit": "catalog:",
     "marked": "catalog:studiocms-shared",
     "marked-alert": "catalog:studiocms-renderer",
     "marked-emoji": "catalog:studiocms-renderer",
