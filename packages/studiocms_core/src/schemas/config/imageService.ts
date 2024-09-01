@@ -65,7 +65,7 @@ export const imageServiceSchema = z
 		 * Note: This option is only used if `useUnpic` is set to `false`
 		 * @default "squoosh"
 		 */
-		astroImageServiceConfig: z.enum(['sharp', 'squoosh', 'no-op']).optional().default('squoosh'),
+		astroImageServiceConfig: z.enum(['sharp', 'no-op']).optional().default('sharp'),
 		/**
 		 * If the user wants to use a custom Supported CDN Plugin, they can specify it here.
 		 *

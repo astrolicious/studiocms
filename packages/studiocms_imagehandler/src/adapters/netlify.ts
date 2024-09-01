@@ -3,7 +3,7 @@ import { StudioCMSOptionsSchema as optionsSchema } from '@studiocms/core/schemas
 import { netlifyImageHandlerStrings } from '@studiocms/core/strings';
 import { imageService as unpicImageService } from '@unpic/astro/service';
 import { defineIntegration } from 'astro-integration-kit';
-import { passthroughImageService, sharpImageService, squooshImageService } from 'astro/config';
+import { passthroughImageService, sharpImageService } from 'astro/config';
 import { name as packageName } from '../../package.json';
 
 export default defineIntegration({
@@ -37,15 +37,7 @@ export default defineIntegration({
 							netlifyImageHandlerStrings.NetlifyImageServiceDisabled
 						);
 						if (cdnPlugin === 'cloudinary-js') {
-							if (astroImageServiceConfig === 'squoosh') {
-								integrationLogger(
-									{ logger, logLevel: 'info', verbose },
-									netlifyImageHandlerStrings.cdnPluginStrings.Squoosh
-								);
-								updateConfig({
-									image: { service: squooshImageService() },
-								});
-							} else if (astroImageServiceConfig === 'sharp') {
+							if (astroImageServiceConfig === 'sharp') {
 								integrationLogger(
 									{ logger, logLevel: 'info', verbose },
 									netlifyImageHandlerStrings.cdnPluginStrings.Sharp
@@ -97,15 +89,7 @@ export default defineIntegration({
 								{ logger, logLevel: 'info', verbose },
 								netlifyImageHandlerStrings.unpicStrings.disabled
 							);
-							if (astroImageServiceConfig === 'squoosh') {
-								integrationLogger(
-									{ logger, logLevel: 'info', verbose },
-									netlifyImageHandlerStrings.Squoosh
-								);
-								updateConfig({
-									image: { service: squooshImageService() },
-								});
-							} else if (astroImageServiceConfig === 'sharp') {
+							if (astroImageServiceConfig === 'sharp') {
 								integrationLogger(
 									{ logger, logLevel: 'info', verbose },
 									netlifyImageHandlerStrings.Sharp

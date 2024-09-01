@@ -31,15 +31,7 @@ export default defineIntegration({
 							cloudflareImageHandlerStrings.CloudflareImageServiceDisabled
 						);
 						if (cdnPlugin === 'cloudinary-js') {
-							if (astroImageServiceConfig === 'squoosh') {
-								integrationLogger(
-									{ logger, logLevel: 'info', verbose },
-									cloudflareImageHandlerStrings.cdnPluginStrings.Squoosh
-								);
-								updateConfig({
-									image: { service: passthroughImageService() },
-								});
-							} else if (astroImageServiceConfig === 'sharp') {
+							if (astroImageServiceConfig === 'sharp') {
 								integrationLogger(
 									{ logger, logLevel: 'info', verbose },
 									cloudflareImageHandlerStrings.cdnPluginStrings.Sharp
@@ -61,15 +53,7 @@ export default defineIntegration({
 								{ logger, logLevel: 'info', verbose },
 								cloudflareImageHandlerStrings.unpicStrings.disabled
 							);
-							if (astroImageServiceConfig === 'squoosh') {
-								integrationLogger(
-									{ logger, logLevel: 'info', verbose },
-									cloudflareImageHandlerStrings.unsupported.Squoosh
-								);
-								updateConfig({
-									image: { service: passthroughImageService() },
-								});
-							} else if (astroImageServiceConfig === 'sharp') {
+							if (astroImageServiceConfig === 'sharp') {
 								integrationLogger(
 									{ logger, logLevel: 'info', verbose },
 									cloudflareImageHandlerStrings.unsupported.Sharp

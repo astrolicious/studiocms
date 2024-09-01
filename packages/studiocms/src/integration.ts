@@ -21,7 +21,8 @@ import studiocmsImageHandler from '@studiocms/imagehandler';
 import studiocmsRenderers from '@studiocms/renderers';
 import studioCMSRobotsTXT from '@studiocms/robotstxt';
 import { defineIntegration } from 'astro-integration-kit';
-import { name } from '../package.json';
+import { name, version } from '../package.json';
+import { updateCheck } from './updateCheck';
 
 // Main Integration
 export default defineIntegration({
@@ -33,9 +34,6 @@ export default defineIntegration({
 
 		// Resolve Options
 		let resolvedOptions: StudioCMSOptions;
-
-		// Create Resolver for resolving relative paths
-		// const { resolve } = createResolver(import.meta.url);
 
 		return {
 			hooks: {
@@ -83,6 +81,10 @@ export default defineIntegration({
 							}),
 						},
 					]);
+				},
+				'astro:server:start': async (params) => {
+					// Check for Updates on Development Server Start
+					updateCheck(params, name, version);
 				},
 			},
 		};

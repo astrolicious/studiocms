@@ -3,7 +3,7 @@ import { StudioCMSOptionsSchema as optionsSchema } from '@studiocms/core/schemas
 import { nodeImageHandlerStrings } from '@studiocms/core/strings';
 import { imageService as unpicImageService } from '@unpic/astro/service';
 import { defineIntegration } from 'astro-integration-kit';
-import { passthroughImageService, sharpImageService, squooshImageService } from 'astro/config';
+import { passthroughImageService, sharpImageService } from 'astro/config';
 import { name as packageName } from '../../package.json';
 
 export default defineIntegration({
@@ -27,15 +27,7 @@ export default defineIntegration({
 
 					// Setup Image Service
 					if (cdnPlugin === 'cloudinary-js') {
-						if (astroImageServiceConfig === 'squoosh') {
-							integrationLogger(
-								{ logger, logLevel: 'info', verbose },
-								nodeImageHandlerStrings.cdnPluginStrings.Squoosh
-							);
-							updateConfig({
-								image: { service: squooshImageService() },
-							});
-						} else if (astroImageServiceConfig === 'sharp') {
+						if (astroImageServiceConfig === 'sharp') {
 							integrationLogger(
 								{ logger, logLevel: 'info', verbose },
 								nodeImageHandlerStrings.cdnPluginStrings.Sharp
@@ -87,15 +79,7 @@ export default defineIntegration({
 							{ logger, logLevel: 'info', verbose },
 							nodeImageHandlerStrings.unpicStrings.disabled
 						);
-						if (astroImageServiceConfig === 'squoosh') {
-							integrationLogger(
-								{ logger, logLevel: 'info', verbose },
-								nodeImageHandlerStrings.Squoosh
-							);
-							updateConfig({
-								image: { service: squooshImageService() },
-							});
-						} else if (astroImageServiceConfig === 'sharp') {
+						if (astroImageServiceConfig === 'sharp') {
 							integrationLogger(
 								{ logger, logLevel: 'info', verbose },
 								nodeImageHandlerStrings.Sharp

@@ -74,6 +74,8 @@
     "marked-smartypants": "catalog:studiocms-renderer",
     "mrmime": "catalog:studiocms-shared",
     "shiki": "catalog:studiocms-shared",
+    "semver": "^7.6.3",
+    "package-json": "^10.0.1",
     "unpic": "catalog:studiocms-shared",
     "unocss": "catalog:studiocms-shared"
   },
@@ -84,6 +86,7 @@
   "devDependencies": {
     "vite": "catalog:",
     "typescript": "catalog:",
-    "@types/micromatch": "catalog:studiocms-shared"
+    "@types/micromatch": "catalog:studiocms-shared",
+    "@types/semver": "^7.5.8"
   }
 }
