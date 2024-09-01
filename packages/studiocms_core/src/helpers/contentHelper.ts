@@ -122,10 +122,7 @@ export async function getPageById(id: string): Promise<ContentHelperTempResponse
  * @returns A Array of all pages in the database in ascending order of their published date.
  */
 export async function getPageList(): Promise<pageDataReponse[]> {
-	const pageData: pageDataReponse[] = await db
-		.select()
-		.from(tsPageData)
-		.orderBy(asc(tsPageData.publishedAt));
+	const pageData = await db.select().from(tsPageData).orderBy(asc(tsPageData.publishedAt));
 
 	if (!pageData) {
 		return [] as pageDataReponse[];

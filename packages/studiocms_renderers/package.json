@@ -30,7 +30,8 @@
     "src"
   ],
   "exports": {
-    ".": "./src/index.ts"
+    ".": "./src/index.ts",
+    "./components": "./src/components/index.ts"
   },
   "type": "module",
   "dependencies": {

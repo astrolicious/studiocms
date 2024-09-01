@@ -12,7 +12,7 @@
  * }
  */
 declare module 'virtual:studiocms/config' {
-	const Config: import('@studiocms/core').StudioCMSOptions;
+	const Config: import('@studiocms/core/schemas').StudioCMSOptions;
 	export default Config;
 }
 
@@ -22,9 +22,9 @@ declare module 'virtual:studiocms/astromdremarkConfig' {
 }
 
 declare module 'virtual:studiocms/pluginSystem' {
-	export const externalNav: typeof import('./src/index').externalNavigation;
-	export const dashboardPageLinks: typeof import('./src/index').dashboardPageLinksMap;
-	export const pluginList: typeof import('./src/index').studioCMSPluginList;
+	export const externalNav: typeof import('@studiocms/core/lib').externalNavigation;
+	export const dashboardPageLinks: typeof import('@studiocms/core/lib').dashboardPageLinksMap;
+	export const pluginList: typeof import('@studiocms/core/lib').studioCMSPluginList;
 	export const customRenderers: string[];
 }
 

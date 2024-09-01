@@ -1,6 +1,6 @@
 import Config from 'virtual:studiocms/config';
 import { dashboardPageLinks } from 'virtual:studiocms/pluginSystem';
-import type { SideBarLink } from '@studiocms/core';
+import type { SideBarLink } from '@studiocms/core/types';
 import urlGenFactory from '../helpers/urlGen';
 
 const {

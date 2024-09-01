@@ -12,6 +12,6 @@
  * }
  */
 declare module 'virtual:studiocms/config' {
-	const Config: import('@studiocms/core').StudioCMSOptions;
+	const Config: import('@studiocms/core/schemas').StudioCMSOptions;
 	export default Config;
 }

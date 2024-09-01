@@ -31,13 +31,13 @@ declare module 'virtual:studiocms/astromdremarkConfig' {
  *
  * Wanting to extend StudioCMS? You can do so by defining a new module in the `virtual:studiocms` namespace within your project with the following format:
  *
- * This module can also be delcared from `studiocms`.
+ * This module can also be delcared from `@studiocms/core/lib`.
  *
  */
 declare module 'virtual:studiocms/pluginSystem' {
-	export const externalNav: typeof import('./src/index').externalNavigation;
-	export const dashboardPageLinks: typeof import('./src/index').dashboardPageLinksMap;
-	export const pluginList: typeof import('./src/index').studioCMSPluginList;
+	export const externalNav: typeof import('./src/lib').externalNavigation;
+	export const dashboardPageLinks: typeof import('./src/lib').dashboardPageLinksMap;
+	export const pluginList: typeof import('./src/lib').studioCMSPluginList;
 	export const customRenderers: string[];
 }
 
@@ -67,8 +67,6 @@ declare module 'studiocms:components' {
 declare module 'studiocms:helpers' {
 	export const authHelper: typeof import('./src/helpers').authHelper;
 	export const urlGenFactory: typeof import('./src/helpers').urlGenFactory;
-	export const toCamelCase: typeof import('./src/helpers').toCamelCase;
-	export const toPascalCase: typeof import('./src/helpers').toPascalCase;
 	export const pathWithBase: typeof import('./src/helpers').pathWithBase;
 	export const fileWithBase: typeof import('./src/helpers').fileWithBase;
 }

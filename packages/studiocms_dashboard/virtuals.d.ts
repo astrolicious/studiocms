@@ -12,7 +12,7 @@
  * }
  */
 declare module 'virtual:studiocms/config' {
-	const Config: import('@studiocms/core').StudioCMSOptions;
+	const Config: import('@studiocms/core/schemas').StudioCMSOptions;
 	export default Config;
 }
 
@@ -27,9 +27,9 @@ declare module 'virtual:studiocms/version' {
 }
 
 declare module 'virtual:studiocms/pluginSystem' {
-	export const externalNav: typeof import('@studiocms/core').externalNavigation;
-	export const dashboardPageLinks: typeof import('@studiocms/core').dashboardPageLinksMap;
-	export const pluginList: typeof import('@studiocms/core').studioCMSPluginList;
+	export const externalNav: typeof import('@studiocms/core/lib').externalNavigation;
+	export const dashboardPageLinks: typeof import('@studiocms/core/lib').dashboardPageLinksMap;
+	export const pluginList: typeof import('@studiocms/core/lib').studioCMSPluginList;
 	export const customRenderers: string[];
 }
 
@@ -43,7 +43,7 @@ interface Window {
 }
 
 declare module 'studiocms:auth/config' {
-	const AuthSecurityConfig: import('@studiocms/core').usernameAndPasswordConfig;
+	const AuthSecurityConfig: import('@studiocms/core/types').usernameAndPasswordConfig;
 	export default AuthSecurityConfig;
 }
 
@@ -57,8 +57,6 @@ declare module 'studiocms:components' {
 declare module 'studiocms:helpers' {
 	export const authHelper: typeof import('@studiocms/core/helpers').authHelper;
 	export const urlGenFactory: typeof import('@studiocms/core/helpers').urlGenFactory;
-	export const toCamelCase: typeof import('@studiocms/core/helpers').toCamelCase;
-	export const toPascalCase: typeof import('@studiocms/core/helpers').toPascalCase;
 	export const pathWithBase: typeof import('@studiocms/core/helpers').pathWithBase;
 	export const fileWithBase: typeof import('@studiocms/core/helpers').fileWithBase;
 }
@@ -94,7 +92,7 @@ declare module 'studiocms:helpers/routemap' {
 }
 
 declare module 'studiocms:renderer' {
-	export const StudioCMSRenderer: typeof import('@studiocms/renderers').StudioCMSRenderer;
+	export const StudioCMSRenderer: typeof import('@studiocms/renderers/components').StudioCMSRenderer;
 }
 
 declare module 'studiocms-dashboard:web-vitals' {

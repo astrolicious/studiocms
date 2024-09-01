@@ -1,5 +1,5 @@
 ---
-// import Config from 'virtual:studiocms/config';
+import Config from 'virtual:studiocms/config';
 import { contentRenderer } from '../lib/contentRenderer';
 
 type Props = {
@@ -9,4 +9,4 @@ type Props = {
 const { content } = Astro.props;
 ---
 
-<Fragment set:html={contentRenderer(content, "marked")} />
+<Fragment set:html={contentRenderer(content, Config.contentRenderer)} />

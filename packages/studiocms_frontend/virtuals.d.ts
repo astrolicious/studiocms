@@ -12,7 +12,7 @@
  * }
  */
 declare module 'virtual:studiocms/config' {
-	const Config: import('@studiocms/core').StudioCMSOptions;
+	const Config: import('@studiocms/core/schemas').StudioCMSOptions;
 	export default Config;
 }
 
@@ -31,8 +31,6 @@ declare module 'studiocms:components' {
 declare module 'studiocms:helpers' {
 	export const authHelper: typeof import('@studiocms/core/helpers').authHelper;
 	export const urlGenFactory: typeof import('@studiocms/core/helpers').urlGenFactory;
-	export const toCamelCase: typeof import('@studiocms/core/helpers').toCamelCase;
-	export const toPascalCase: typeof import('@studiocms/core/helpers').toPascalCase;
 	export const pathWithBase: typeof import('@studiocms/core/helpers').pathWithBase;
 	export const fileWithBase: typeof import('@studiocms/core/helpers').fileWithBase;
 }
