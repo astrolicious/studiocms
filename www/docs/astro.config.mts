@@ -47,8 +47,7 @@ const makeTypeDocOptions = (
 	label: string,
 	urlPath: string,
 	tsconfig: string,
-	entryPoints: string[],
-	readme?: string
+	entryPoints: string[]
 ) => {
 	return {
 		tsconfig,
@@ -60,7 +59,6 @@ const makeTypeDocOptions = (
 		},
 		pagination: true,
 		typeDoc: {
-			readme,
 			jsDocCompatibility: true,
 			skipErrorChecking: true,
 			sourceLinkTemplate: 'https://github.com/astrolicious/studiocms/tree/main/{path}#L{line}',
