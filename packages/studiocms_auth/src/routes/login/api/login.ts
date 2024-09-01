@@ -1,7 +1,7 @@
 import { db, eq } from 'astro:db';
 import AuthSecurityConfig from 'studiocms:auth/config';
 import { scryptAsync } from '@noble/hashes/scrypt';
-import { tsUsers } from '@studiocms/core/dbconfig';
+import { tsUsers } from '@studiocms/core/db/tsTables';
 import { lucia } from '../../../auth';
 
 const { salt: ScryptSalt, opts: ScryptOpts } = AuthSecurityConfig;

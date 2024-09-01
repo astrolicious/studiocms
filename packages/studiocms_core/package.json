@@ -31,7 +31,9 @@
   ],
   "exports": {
     ".": "./src/index.ts",
-    "./dbconfig": "./src/db/config.ts",
+    "./db/config": "./src/db/config.ts",
+    "./db/tables": "./src/db/tables.ts",
+    "./db/tsTables": "./src/db/tsTables.ts",
     "./components": "./src/components/index.ts",
     "./helpers": "./src/helpers/index.ts"
   },

@@ -10,7 +10,7 @@ import {
 	tsPermissions,
 	tsSiteConfig,
 	tsUsers,
-} from '@studiocms/core/dbconfig';
+} from '@studiocms/core/db/tsTables';
 import type { APIContext } from 'astro';
 
 const { salt: ScryptSalt, opts: ScryptOpts } = AuthSecurityConfig;

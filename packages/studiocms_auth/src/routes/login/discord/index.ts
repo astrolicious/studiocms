@@ -1,8 +1,8 @@
-import { authEnvCheck } from 'studiocms-dashboard:auth';
 import Config from 'virtual:studiocms/config';
 import { generateState } from 'arctic';
 import { Discord } from 'arctic';
 import type { APIRoute } from 'astro';
+import { authEnvCheck } from '../../../utils/authEnvCheck';
 
 const {
 	DISCORD: { CLIENT_ID, CLIENT_SECRET, REDIRECT_URI },

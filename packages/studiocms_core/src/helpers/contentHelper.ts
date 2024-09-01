@@ -2,7 +2,7 @@
 import { asc, db, desc, eq } from 'astro:db';
 import { AstroError } from 'astro/errors';
 import { CMSSiteConfigId } from '../consts';
-import { tsPageContent, tsPageData, tsPermissions, tsSiteConfig, tsUsers } from '../db/config';
+import { tsPageContent, tsPageData, tsPermissions, tsSiteConfig, tsUsers } from '../db/tsTables';
 import type { PageDataAndContent } from '../types';
 
 export type UserResponse = PageDataAndContent['User'];

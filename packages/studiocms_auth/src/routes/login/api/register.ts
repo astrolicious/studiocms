@@ -3,7 +3,7 @@ import { db, eq } from 'astro:db';
 import AuthSecurityConfig from 'studiocms:auth/config';
 import { checkIfUnsafe } from '@matthiesenxyz/integration-utils/securityUtils';
 import { scryptAsync } from '@noble/hashes/scrypt';
-import { tsUsers } from '@studiocms/core/dbconfig';
+import { tsUsers } from '@studiocms/core/db/tsTables';
 import type { APIContext } from 'astro';
 import { z } from 'astro/zod';
 import { lucia } from '../../../auth';

@@ -2,7 +2,7 @@ import { randomUUID } from 'node:crypto';
 import { logger } from '@it-astro:logger:studiocms-dashboard';
 import { db, eq } from 'astro:db';
 import { CMSSiteConfigId } from '@studiocms/core';
-import { tsPageContent, tsPageData, tsSiteConfig } from '@studiocms/core/dbconfig';
+import { tsPageContent, tsPageData, tsSiteConfig } from '@studiocms/core/db/tsTables';
 
 type PageDataType = {
 	id: string;

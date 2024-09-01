@@ -1,7 +1,7 @@
 import { logger } from '@it-astro:logger:studiocms-auth';
 import { db, eq } from 'astro:db';
 import Config from 'virtual:studiocms/config';
-import { tsUsers } from '@studiocms/core/dbconfig';
+import { tsUsers } from '@studiocms/core/db/tsTables';
 import type { MiddlewareHandler } from 'astro';
 import { verifyRequestOrigin } from 'lucia';
 import { lucia } from '../auth';

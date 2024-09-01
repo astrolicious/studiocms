@@ -1,5 +1,5 @@
 import { db } from 'astro:db';
-import { tsSessionTable, tsUsers } from '@studiocms/core/dbconfig';
+import { tsSessionTable, tsUsers } from '@studiocms/core/db/tsTables';
 import { Lucia, TimeSpan } from 'lucia';
 import { AstroDBAdapter } from './lucia-astrodb-adapter';
 

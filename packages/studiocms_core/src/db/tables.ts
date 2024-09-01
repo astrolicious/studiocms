@@ -1,7 +1,7 @@
 /// <reference types="@astrojs/db" />
 import { NOW, column, defineTable } from 'astro:db';
 
-// Users Table
+/** StudioCMS - Users Table for Astro DB */
 export const StudioCMSUsers = defineTable({
 	columns: {
 		id: column.text({ primaryKey: true }),
@@ -21,7 +21,7 @@ export const StudioCMSUsers = defineTable({
 	},
 });
 
-// Login Sessions Table
+/** StudioCMS - Session Table for Astro DB */
 export const StudioCMSSessionTable = defineTable({
 	columns: {
 		id: column.text({ primaryKey: true }),
@@ -30,7 +30,7 @@ export const StudioCMSSessionTable = defineTable({
 	},
 });
 
-// Page Data Table
+/** StudioCMS - Pages Data Table for Astro DB */
 export const StudioCMSPageData = defineTable({
 	columns: {
 		id: column.text({ primaryKey: true }),
@@ -49,7 +49,7 @@ export const StudioCMSPageData = defineTable({
 	},
 });
 
-// Page Content Table
+/** StudioCMS - Pages Content Table for Astro DB */
 export const StudioCMSPageContent = defineTable({
 	columns: {
 		id: column.text({ primaryKey: true }),
@@ -59,7 +59,7 @@ export const StudioCMSPageContent = defineTable({
 	},
 });
 
-// Site Config Table
+/** StudioCMS - Site Config Table for Astro DB */
 export const StudioCMSSiteConfig = defineTable({
 	columns: {
 		id: column.number({ primaryKey: true }),
@@ -68,7 +68,7 @@ export const StudioCMSSiteConfig = defineTable({
 	},
 });
 
-// Permissions Table
+/** StudioCMS - Permissions Table for Astro DB */
 export const StudioCMSPermissions = defineTable({
 	columns: {
 		username: column.text(),

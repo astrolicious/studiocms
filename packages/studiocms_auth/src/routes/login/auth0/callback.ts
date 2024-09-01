@@ -2,7 +2,7 @@ import { randomUUID } from 'node:crypto';
 import { db, eq } from 'astro:db';
 import { StudioCMSRoutes } from 'studiocms:helpers/routemap';
 import Config from 'virtual:studiocms/config';
-import { tsUsers } from '@studiocms/core/dbconfig';
+import { tsUsers } from '@studiocms/core/db/tsTables';
 import { Auth0, type Auth0Tokens, OAuth2RequestError } from 'arctic';
 import type { APIContext } from 'astro';
 import { lucia } from '../../../auth';
