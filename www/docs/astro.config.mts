@@ -4,16 +4,40 @@ import { defineConfig } from 'astro/config';
 import { type StarlightTypeDocOptions, createStarlightTypeDocPlugin } from 'starlight-typedoc';
 
 // Create Starlight TypeDoc Plugins for different parts of the Astro StudioCMS Project
-const [studioCMSTypeDoc, studioCMSTypeDocSidebarGroup] = createStarlightTypeDocPlugin();
-const [studioCMSBlogTypeDoc, studioCMSBlogTypeDocSidebarGroup] = createStarlightTypeDocPlugin();
-const [studioCMSAdminTypeDoc, studioCMSAdminTypeDocSidebarGroup] = createStarlightTypeDocPlugin();
-
-// Create Sidebar Groups for the TypeDocs
-const TypeDocSidebarGroup = [
-	studioCMSTypeDocSidebarGroup,
-	studioCMSBlogTypeDocSidebarGroup,
-	studioCMSAdminTypeDocSidebarGroup,
+//// MAIN PROJECT
+// studiocms TypeDoc Plugin
+const [tdStudioCMS, tdStudioCMSSideBar] = createStarlightTypeDocPlugin();
+// @studiocms/auth
+const [tdAuth, tdAuthSideBar] = createStarlightTypeDocPlugin();
+// @studiocms/core
+const [tdCore, tdCoreSideBar] = createStarlightTypeDocPlugin();
+// @studiocms/dashboard
+const [tdDashboard, tdDashboardSideBar] = createStarlightTypeDocPlugin();
+// @studiocms/frontend
+const [tdFrontend, tdFrontendSideBar] = createStarlightTypeDocPlugin();
+// @studiocms/imagehandler
+const [tdImageHandler, tdImageHandlerSideBar] = createStarlightTypeDocPlugin();
+// @studiocms/renderers
+const [tdRenderers, tdRenderersSideBar] = createStarlightTypeDocPlugin();
+// @studiocms/robotstxt
+const [tdRobotsTxt, tdRobotsTxtSideBar] = createStarlightTypeDocPlugin();
+// Starlight TypeDoc Sidebar Group for Main Project
+const MainProjectTypeDocSidebarGroup = [
+	tdAuthSideBar,
+	tdCoreSideBar,
+	tdDashboardSideBar,
+	tdFrontendSideBar,
+	tdImageHandlerSideBar,
+	tdRenderersSideBar,
+	tdRobotsTxtSideBar,
+	tdStudioCMSSideBar,
 ];
+
+//// PLUGINS
+// @studiocms/blog
+const [tdBlog, tdBlogSideBar] = createStarlightTypeDocPlugin();
+// Starlight TypeDoc Sidebar Group for Plugins
+const PluginsTypeDocSidebarGroup = [tdBlogSideBar];
 
 // Define the Site URL
 const site = process.env.COOLIFY_FQDN || 'https://docs.astro-studiocms.xyz/';
@@ -101,53 +125,105 @@ export default defineConfig({
 				},
 			],
 			plugins: [
-				studioCMSTypeDoc(
+				tdStudioCMS(
 					makeTypeDocOptions(
-						'StudioCMS-Core',
-						'typedoc/studiocms-core',
-						'../../packages/studioCMS/tsconfig.json',
+						'studiocms',
+						'typedoc/studiocms',
+						'../../packages/studiocmd/tsconfig.json',
 						[
-							'../../packages/studioCMS/src/index.ts',
-							'../../packages/studioCMS/src/coreIntegration.ts',
-							'../../packages/studioCMS/src/studiocms-config.ts',
-							'../../packages/studioCMS/src/db/config.ts',
-							'../../packages/studioCMS/src/db/tables.ts',
-							'../../packages/studioCMS/src/components/headDefaults.ts',
-							'../../packages/studioCMS/src/utils/renderers/contentRenderer.ts',
-							'../../packages/studioCMS/src/utils/renderers/marked.ts',
-							'../../packages/studioCMS/src/utils/renderers/markdoc.ts',
-							'../../packages/studioCMS/src/utils/renderers/astromd.ts',
-							'../../packages/studioCMS/src/utils/authhelper.ts',
-							'../../packages/studioCMS/src/utils/contentHelper.ts',
-						],
-						'../../packages/studioCMS/README.md'
-					)
-				),
-				studioCMSAdminTypeDoc(
-					makeTypeDocOptions(
-						'StudioCMS-Dashboard',
-						'typedoc/studiocms-dashboard',
-						'../../packages/studioCMS/tsconfig.json',
-						[
-							'../../packages/studioCMS/src/integrations/studioCMSDashboard/index.ts',
-							'../../packages/studioCMS/src/integrations/studioCMSDashboard/schemas.ts',
-							'../../packages/studioCMS/src/integrations/studioCMSDashboard/env.ts',
-							'../../packages/studioCMS/src/integrations/studioCMSDashboard/lib/auth.ts',
-							'../../packages/studioCMS/src/integrations/studioCMSDashboard/middleware/index.ts',
+							'../../packages/studiocms/src/index.ts',
+							'../../packages/studiocms/src/integration.ts',
+							'../../packages/studiocms/src/updateCheck.ts',
 						]
 					)
 				),
-				studioCMSBlogTypeDoc(
+				tdAuth(
 					makeTypeDocOptions(
-						'StudioCMS-Blog',
-						'typedoc/studiocms-blog',
-						'../../packages/studioCMSBlog/tsconfig.json',
+						'@studiocms/auth',
+						'typedoc/studiocms-auth',
+						'../../packages/studiocms_auth/tsconfig.json',
 						[
-							'../../packages/studioCMSBlog/index.ts',
-							'../../packages/studioCMSBlog/schema.ts',
-							'../../packages/studioCMSBlog/src/pages/rss.xml.ts',
-						],
-						'../../packages/studioCMSBlog/README.md'
+							'../../packages/studiocms_auth/src/index.ts',
+							'../../packages/studiocms_auth/src/integration.ts',
+						]
+					)
+				),
+				tdCore(
+					makeTypeDocOptions(
+						'@studiocms/core',
+						'typedoc/studiocms-core',
+						'../../packages/studiocms_core/tsconfig.json',
+						[
+							'../../packages/studiocms_core/src/index.ts',
+							'../../packages/studiocms_core/src/integration.ts',
+						]
+					)
+				),
+				tdDashboard(
+					makeTypeDocOptions(
+						'@studiocms/dashboard',
+						'typedoc/studiocms-dashboard',
+						'../../packages/studiocms_dashboard/tsconfig.json',
+						[
+							'../../packages/studiocms_dashboard/src/index.ts',
+							'../../packages/studiocms_dashboard/src/integration.ts',
+						]
+					)
+				),
+				tdFrontend(
+					makeTypeDocOptions(
+						'@studiocms/frontend',
+						'typedoc/studiocms-frontend',
+						'../../packages/studiocms_frontend/tsconfig.json',
+						[
+							'../../packages/studiocms_frontend/src/index.ts',
+							'../../packages/studiocms_frontend/src/integration.ts',
+						]
+					)
+				),
+				tdImageHandler(
+					makeTypeDocOptions(
+						'@studiocms/imagehandler',
+						'typedoc/studiocms-imagehandler',
+						'../../packages/studiocms_imagehandler/tsconfig.json',
+						[
+							'../../packages/studiocms_imagehandler/src/index.ts',
+							'../../packages/studiocms_imagehandler/src/integration.ts',
+							'../../packages/studiocms_imagehandler/src/supportedAdapters.ts',
+						]
+					)
+				),
+				tdRenderers(
+					makeTypeDocOptions(
+						'@studiocms/renderers',
+						'typedoc/studiocms-renderers',
+						'../../packages/studiocms_renderers/tsconfig.json',
+						[
+							'../../packages/studiocms_renderers/src/index.ts',
+							'../../packages/studiocms_renderers/src/integration.ts',
+						]
+					)
+				),
+				tdRobotsTxt(
+					makeTypeDocOptions(
+						'@studiocms/robotstxt',
+						'typedoc/studiocms-robotstxt',
+						'../../packages/studiocms_robotstxt/tsconfig.json',
+						[
+							'../../packages/studiocms_robotstxt/src/index.ts',
+							'../../packages/studiocms_robotstxt/src/core.ts',
+							'../../packages/studiocms_robotstxt/src/consts.ts',
+							'../../packages/studiocms_robotstxt/src/utils/index.ts',
+							'../../packages/studiocms_robotstxt/src/utils/measureExecutionTime.ts',
+						]
+					)
+				),
+				tdBlog(
+					makeTypeDocOptions(
+						'@studiocms/blog',
+						'typedoc/studiocms-blog',
+						'../../packages/studiocms_blog/tsconfig.json',
+						['../../packages/studiocms_blog/index.ts', '../../packages/studiocms_blog/schema.ts']
 					)
 				),
 			],
@@ -156,7 +232,7 @@ export default defineConfig({
 					label: 'Start Here',
 					items: [
 						{
-							label: 'Getting Started with Astro StudioCMS',
+							label: 'Getting Started with StudioCMS',
 							link: '/start-here/getting-started',
 						},
 						{
@@ -218,7 +294,10 @@ export default defineConfig({
 						text: 'Auto-Generated',
 						variant: 'success',
 					},
-					items: TypeDocSidebarGroup,
+					items: [
+						{ label: 'Main Packages', items: MainProjectTypeDocSidebarGroup, collapsed: true },
+						{ label: 'Plugins', items: PluginsTypeDocSidebarGroup, collapsed: true },
+					],
 				},
 			],
 			lastUpdated: true,
