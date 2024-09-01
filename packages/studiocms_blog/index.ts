@@ -1,13 +1,16 @@
 import defineTheme from 'astro-theme-provider';
 import { defineStudioCMSPlugin } from 'studiocms';
-import { studioCMSBlogSchema } from './schema';
-import { name } from './src/consts';
+import { name } from './package.json';
+import { studioCMSBlogSchema as schema } from './schema';
 
 const studioCMSBlogTheme = defineTheme({
-	name: name,
-	schema: studioCMSBlogSchema,
+	name,
+	schema,
 });
 
+/**
+ * User definable options for the StudioCMS Blog Theme
+ */
 export type ATP_ThemeOptions = Parameters<typeof studioCMSBlogTheme>[0];
 
 /**

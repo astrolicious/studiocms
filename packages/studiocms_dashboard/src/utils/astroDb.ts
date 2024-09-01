@@ -1,7 +1,8 @@
 import { randomUUID } from 'node:crypto';
-import { logger } from '@it-astro:logger:StudioCMS';
-import { StudioCMSPageContent, StudioCMSPageData, StudioCMSSiteConfig, db, eq } from 'astro:db';
+import { logger } from '@it-astro:logger:studiocms-dashboard';
+import { db, eq } from 'astro:db';
 import { CMSSiteConfigId } from '@studiocms/core';
+import { tsPageContent, tsPageData, tsSiteConfig } from '@studiocms/core/dbconfig';
 
 type PageDataType = {
 	id: string;
@@ -71,8 +72,8 @@ export const astroDb = () => {
 				async getBySlug(slug: string, pkg: string): Promise<PageDataType | undefined> {
 					const pageData = await db
 						.select()
-						.from(StudioCMSPageData)
-						.where(eq(StudioCMSPageData.slug, slug))
+						.from(tsPageData)
+						.where(eq(tsPageData.slug, slug))
 						.get();
 
 					if (pageData?.package !== pkg) {
@@ -85,7 +86,7 @@ export const astroDb = () => {
 					const contentLang = 'default';
 
 					const newEntry = await db
-						.insert(StudioCMSPageData)
+						.insert(tsPageData)
 						.values({
 							id: randomUUID(),
 							slug: data.slug,
@@ -97,7 +98,7 @@ export const astroDb = () => {
 							publishedAt: data.publishedAt,
 							showOnNav: data.showOnNav,
 						})
-						.returning({ id: StudioCMSPageData.id })
+						.returning({ id: tsPageData.id })
 						.catch((error) => {
 							logger.error(error);
 							return [];
@@ -107,7 +108,7 @@ export const astroDb = () => {
 				},
 				async update(data: PageDataUpdate) {
 					await db
-						.update(StudioCMSPageData)
+						.update(tsPageData)
 						.set({
 							title: data.title,
 							description: data.description,
@@ -117,13 +118,13 @@ export const astroDb = () => {
 							heroImage: data.heroImage,
 							updatedAt: data.updatedAt,
 						})
-						.where(eq(StudioCMSPageData.id, data.id))
+						.where(eq(tsPageData.id, data.id))
 						.catch((error) => {
 							logger.error(error);
 						});
 				},
 				async delete(id: string) {
-					await db.delete(StudioCMSPageData).where(eq(StudioCMSPageData.id, id));
+					await db.delete(tsPageData).where(eq(tsPageData.id, id));
 				},
 			};
 		},
@@ -131,7 +132,7 @@ export const astroDb = () => {
 			return {
 				async insert(data: PageContentInsert) {
 					await db
-						.insert(StudioCMSPageContent)
+						.insert(tsPageContent)
 						.values({
 							id: randomUUID(),
 							contentId: data.id,
@@ -144,12 +145,12 @@ export const astroDb = () => {
 				},
 				async update(data: PageContentUpdate) {
 					await db
-						.update(StudioCMSPageContent)
+						.update(tsPageContent)
 						.set({ content: data.content })
-						.where(eq(StudioCMSPageContent.contentId, data.id));
+						.where(eq(tsPageContent.contentId, data.id));
 				},
 				async delete(id: string) {
-					await db.delete(StudioCMSPageContent).where(eq(StudioCMSPageContent.contentId, id));
+					await db.delete(tsPageContent).where(eq(tsPageContent.contentId, id));
 				},
 			};
 		},
@@ -157,9 +158,9 @@ export const astroDb = () => {
 			return {
 				async update(data: SiteConfigUpdate): Promise<SiteConfigReturn | undefined> {
 					return await db
-						.update(StudioCMSSiteConfig)
+						.update(tsSiteConfig)
 						.set(data)
-						.where(eq(StudioCMSSiteConfig.id, CMSSiteConfigId))
+						.where(eq(tsSiteConfig.id, CMSSiteConfigId))
 						.returning()
 						.get();
 				},

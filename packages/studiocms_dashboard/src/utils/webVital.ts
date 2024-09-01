@@ -1,4 +1,4 @@
-import { logger } from '@it-astro:logger:StudioCMS';
+import { logger } from '@it-astro:logger:studiocms-dashboard';
 import { AstrojsWebVitals_Metric, db } from 'astro:db';
 
 export type WebVitalsResponseItem = {

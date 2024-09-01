@@ -1,7 +1,7 @@
-import { Permissions, db, sql } from 'astro:db';
-import { lucia } from 'studiocms-dashboard:auth';
+import { db, sql } from 'astro:db';
+import { lucia } from '@studiocms/auth/lucia';
 import type { Session } from 'lucia';
-import type { Locals } from '../types/locals';
+import { tsPermissions } from '../db/config';
 
 type authHelperResponse = {
 	id: string;
@@ -20,7 +20,7 @@ type authHelperResponse = {
  * @param locals The Astro.locals object
  * @returns The current user data and session information and permission level
  */
-export default async function authHelper(locals: Locals): Promise<authHelperResponse> {
+export default async function authHelper(locals: App.Locals): Promise<authHelperResponse> {
 	let user: authHelperResponse = {
 		id: '',
 		permissionLevel: 'unknown',
@@ -36,8 +36,8 @@ export default async function authHelper(locals: Locals): Promise<authHelperResp
 		let permissionLevel: 'admin' | 'editor' | 'visitor' | 'unknown' = 'unknown';
 		const permissions = await db
 			.select()
-			.from(Permissions)
-			.where(sql`lower(${Permissions.username}) = ${locals.dbUser.username.toLowerCase()}`)
+			.from(tsPermissions)
+			.where(sql`lower(${tsPermissions.username}) = ${locals.dbUser.username.toLowerCase()}`)
 			.get();
 
 		if (

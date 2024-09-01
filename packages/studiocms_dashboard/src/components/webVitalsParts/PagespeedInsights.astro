@@ -1,5 +1,5 @@
 ---
-import { Button, Divider, ProgressRing, VisuallyHidden } from 'astrolace:components';
+import { Button, Divider, ProgressRing, VisuallyHidden } from '@matthiesenxyz/astrolace/components';
 
 const FetchURL = Astro.site || '';
 
@@ -63,7 +63,7 @@ const linkToExternalTest = `https://pagespeed.web.dev/analysis?url=${encodeURICo
 </style>
 
 <script>
-import type { SlButton, SlProgressRing } from "astrolace:types";
+import type { SlButton, SlProgressRing } from "@matthiesenxyz/astrolace/types";
 import { generateLighthouseFetchUrl, setProgressRing } from "./webVitalsUtils";
 
 // get the URL to test from the hidden div

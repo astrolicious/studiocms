@@ -32,7 +32,8 @@
   "exports": {
     ".": "./src/index.ts",
     "./dbconfig": "./src/db/config.ts",
-    "./components": "./src/components/index.ts"
+    "./components": "./src/components/index.ts",
+    "./helpers": "./src/helpers/index.ts"
   },
   "type": "module",
   "dependencies": {
@@ -49,6 +50,7 @@
   },
   "peerDependencies": {
     "@astrojs/db": "catalog:min",
+    "@studiocms/auth": "workspace:*",
     "astro": "catalog:min"
   },
   "devDependencies": {

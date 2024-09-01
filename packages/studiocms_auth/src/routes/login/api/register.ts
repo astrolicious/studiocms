@@ -1,8 +1,9 @@
 import { randomUUID } from 'node:crypto';
-import { StudioCMSUsers, db, eq } from 'astro:db';
+import { db, eq } from 'astro:db';
 import AuthSecurityConfig from 'studiocms:auth/config';
 import { checkIfUnsafe } from '@matthiesenxyz/integration-utils/securityUtils';
 import { scryptAsync } from '@noble/hashes/scrypt';
+import { tsUsers } from '@studiocms/core/dbconfig';
 import type { APIContext } from 'astro';
 import { z } from 'astro/zod';
 import { lucia } from '../../../auth';
@@ -67,13 +68,13 @@ export async function POST(context: APIContext): Promise<Response> {
 
 	const existingUsername = await db
 		.select()
-		.from(StudioCMSUsers)
-		.where(eq(StudioCMSUsers.username, username))
+		.from(tsUsers)
+		.where(eq(tsUsers.username, username))
 		.get();
 	const existingEmail = await db
 		.select()
-		.from(StudioCMSUsers)
-		.where(eq(StudioCMSUsers.email, checkemail.data))
+		.from(tsUsers)
+		.where(eq(tsUsers.email, checkemail.data))
 		.get();
 
 	if (existingUsername || existingEmail) {
@@ -105,7 +106,7 @@ export async function POST(context: APIContext): Promise<Response> {
 	const avatar = await createGravatar(checkemail.data);
 
 	const newUserId = await db
-		.insert(StudioCMSUsers)
+		.insert(tsUsers)
 		.values({
 			id: randomUUID(),
 			name: name as string,
@@ -113,15 +114,11 @@ export async function POST(context: APIContext): Promise<Response> {
 			username,
 			avatar,
 		})
-		.returning({ id: StudioCMSUsers.id })
+		.returning({ id: tsUsers.id })
 		.get();
 
 	const serverToken = await scryptAsync(newUserId.id, ScryptSalt, ScryptOpts);
-	const newUser = await db
-		.select()
-		.from(StudioCMSUsers)
-		.where(eq(StudioCMSUsers.username, username))
-		.get();
+	const newUser = await db.select().from(tsUsers).where(eq(tsUsers.username, username)).get();
 	const hashedPassword = await scryptAsync(password, serverToken, ScryptOpts);
 	const hashedPasswordString = Buffer.from(hashedPassword.buffer).toString();
 
@@ -137,11 +134,11 @@ export async function POST(context: APIContext): Promise<Response> {
 	}
 
 	await db
-		.update(StudioCMSUsers)
+		.update(tsUsers)
 		.set({
 			password: hashedPasswordString,
 		})
-		.where(eq(StudioCMSUsers.id, newUser.id));
+		.where(eq(tsUsers.id, newUser.id));
 
 	const session = await lucia.createSession(newUser.id, {});
 	const sessionCookie = lucia.createSessionCookie(session.id);

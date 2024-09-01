@@ -20,7 +20,7 @@ export const getPageRouteReference = (pageRoute: string) => {
 
 	// Check if the route is a plugin
 	for (const entry of PluginList) {
-		if (entry[0] !== '@astrolicious/studiocms') {
+		if (entry[0] !== 'studiocms') {
 			const { name, label } = entry[1];
 
 			for (const externalRoute of ExternalNav) {

@@ -30,10 +30,13 @@
     "src"
   ],
   "exports": {
-    ".": "./src/index.ts"
+    ".": "./src/index.ts",
+    "./lucia": "./src/auth/index.ts"
   },
   "type": "module",
   "dependencies": {
+    "@inox-tools/runtime-logger": "catalog:studiocms-shared",
+    "@matthiesenxyz/astrolace": "catalog:studiocms-shared",
     "@matthiesenxyz/integration-utils": "catalog:studiocms-shared",
     "@noble/hashes": "catalog:studiocms-shared",
     "@studiocms/assets": "workspace:*",

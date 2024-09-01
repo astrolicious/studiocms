@@ -1,14 +1,16 @@
 import { integrationLogger } from '@matthiesenxyz/integration-utils/astroUtils';
 import { createResolver, defineIntegration } from 'astro-integration-kit';
 import { version } from '../package.json';
-import { StudioCMSOptionsSchema } from './schemas';
+import { name } from '../package.json';
+import { StudioCMSOptionsSchema as optionsSchema } from './schemas';
 import { CoreStrings } from './strings';
 import { coreVirtualModuleGeneration } from './utils/coreVirtualModules';
 
 export default defineIntegration({
-	name: '@studiocms/core',
-	optionsSchema: StudioCMSOptionsSchema,
-	setup({ name, options, options: { verbose } }) {
+	name,
+	optionsSchema,
+	setup({ name, options }) {
+		// Declaration for Core DTS File
 		let coreDtsFile: string;
 
 		return {
@@ -21,6 +23,9 @@ export default defineIntegration({
 						},
 						logger,
 					} = params;
+
+					// Destruction Options
+					const { verbose } = options;
 
 					// Create resolver to resolve to the Astro Config
 					const { resolve: astroConfigResolved } = createResolver(astroConfigPath);

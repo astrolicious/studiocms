@@ -1,4 +1,4 @@
-import { logger } from '@it-astro:logger:StudioCMS';
+import { logger } from '@it-astro:logger:studiocms-dashboard';
 import { authHelper } from 'studiocms:helpers';
 import Config from 'virtual:studiocms/config';
 import type { APIContext } from 'astro';

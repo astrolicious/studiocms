@@ -6,9 +6,10 @@ import {
 import { imageService as unpicImageService } from '@unpic/astro/service';
 import { defineIntegration } from 'astro-integration-kit';
 import { passthroughImageService, sharpImageService, squooshImageService } from 'astro/config';
+import { name as packageName } from '../../package.json';
 
 export default defineIntegration({
-	name: '@studioCMS/imagehandler:netlify',
+	name: `${packageName}:netlify`,
 	optionsSchema,
 	setup({ options }) {
 		return {

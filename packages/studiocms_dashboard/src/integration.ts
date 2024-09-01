@@ -1,27 +1,27 @@
+import { runtimeLogger } from '@inox-tools/runtime-logger';
 import astrolace from '@matthiesenxyz/astrolace';
 import { addIntegrationArray } from '@matthiesenxyz/integration-utils/aikUtils';
 import { integrationLogger } from '@matthiesenxyz/integration-utils/astroUtils';
 import studioCMSAuth from '@studiocms/auth';
-import { DashboardStrings, DbErrors, StudioCMSOptionsSchema } from '@studiocms/core';
+import {
+	DashboardStrings,
+	DbErrors,
+	StudioCMSOptionsSchema as optionsSchema,
+} from '@studiocms/core';
 import { createResolver, defineIntegration } from 'astro-integration-kit';
 import UnocssAstroIntegration from 'unocss/astro';
+import { name } from '../package.json';
 import { checkForWebVitals } from './utils/checkForWebVitalsPlugin';
 import { injectRouteArray } from './utils/injectRouteArray';
 
 export default defineIntegration({
-	name: '@studiocms/dashboard',
-	optionsSchema: StudioCMSOptionsSchema,
-	setup({
-		name,
-		options,
-		options: {
-			verbose,
-			dbStartPage,
-			dashboardConfig: { UnoCSSConfigOverride },
-		},
-	}) {
+	name,
+	optionsSchema,
+	setup({ name, options }) {
+		// Create resolver relative to this file
 		const { resolve } = createResolver(import.meta.url);
 
+		// Declaration for Web Vitals DTS File
 		let WEBVITALSDTSFILE: string;
 
 		return {
@@ -29,8 +29,18 @@ export default defineIntegration({
 				'astro:config:setup': async (params) => {
 					// Destructure Params
 					const { logger } = params;
+
+					// Destructure Options
+					const {
+						verbose,
+						dashboardConfig: { UnoCSSConfigOverride },
+					} = options;
+
 					// Log that the setup has started
 					integrationLogger({ logger, logLevel: 'info', verbose }, DashboardStrings.Setup);
+
+					// Inject `@it-astro:logger:{name}` Logger for runtime logging
+					runtimeLogger(params, { name: 'studiocms-dashboard' });
 
 					// Add Dashboard Integrations
 					integrationLogger(
@@ -180,7 +190,7 @@ export default defineIntegration({
 				},
 				'astro:server:start': async ({ logger }) => {
 					// Display Console Message if dbStartPage(First Time DB Initialization) is enabled
-					if (dbStartPage) {
+					if (options.dbStartPage) {
 						integrationLogger({ logger, logLevel: 'warn', verbose: true }, DbErrors.DbStartPage);
 					}
 				},

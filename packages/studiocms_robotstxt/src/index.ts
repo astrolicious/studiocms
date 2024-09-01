@@ -1,4 +1,5 @@
 import type { AstroConfig, AstroIntegration } from 'astro';
+import { name } from '../package.json';
 import type { UsertAgentType } from './consts';
 
 import * as fs from 'node:fs';
@@ -161,7 +162,7 @@ export default function createRobotsIntegration(astroConfig: RobotsConfig): Astr
 	const megeredConfig = { ...defaultConfig, ...astroConfig };
 
 	return {
-		name: '@studiocms/robots-txt',
+		name,
 		hooks: {
 			'astro:config:setup': ({ config: cfg }) => {
 				config = cfg;

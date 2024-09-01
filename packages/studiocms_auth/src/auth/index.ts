@@ -1,8 +1,9 @@
-import { StudioCMSSessionTable, StudioCMSUsers, db } from 'astro:db';
+import { db } from 'astro:db';
+import { tsSessionTable, tsUsers } from '@studiocms/core/dbconfig';
 import { Lucia, TimeSpan } from 'lucia';
 import { AstroDBAdapter } from './lucia-astrodb-adapter';
 
-const adapter = new AstroDBAdapter(db, StudioCMSSessionTable, StudioCMSUsers);
+const adapter = new AstroDBAdapter(db, tsSessionTable, tsUsers);
 export const lucia = new Lucia(adapter, {
 	sessionExpiresIn: new TimeSpan(2, 'w'),
 	sessionCookie: {

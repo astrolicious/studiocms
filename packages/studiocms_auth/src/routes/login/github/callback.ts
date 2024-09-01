@@ -1,7 +1,8 @@
 import { randomUUID } from 'node:crypto';
-import { StudioCMSUsers, db, eq } from 'astro:db';
+import { db, eq } from 'astro:db';
+import { StudioCMSRoutes } from 'studiocms:helpers/routemap';
 import Config from 'virtual:studiocms/config';
-import { StudioCMSRoutes } from '@studiocms/core';
+import { tsUsers } from '@studiocms/core/dbconfig';
 import { GitHub, OAuth2RequestError } from 'arctic';
 import type { APIContext } from 'astro';
 import { lucia } from '../../../auth';
@@ -53,8 +54,8 @@ export async function GET(context: APIContext): Promise<Response> {
 
 		const existingUser = await db
 			.select()
-			.from(StudioCMSUsers)
-			.where(eq(StudioCMSUsers.githubId, githubId))
+			.from(tsUsers)
+			.where(eq(tsUsers.githubId, githubId))
 			.get();
 
 		if (existingUser) {
@@ -66,13 +67,13 @@ export async function GET(context: APIContext): Promise<Response> {
 
 		const existingUserName = await db
 			.select()
-			.from(StudioCMSUsers)
-			.where(eq(StudioCMSUsers.username, username))
+			.from(tsUsers)
+			.where(eq(tsUsers.username, username))
 			.get();
 		const existingUserByEmail = await db
 			.select()
-			.from(StudioCMSUsers)
-			.where(eq(StudioCMSUsers.email, email))
+			.from(tsUsers)
+			.where(eq(tsUsers.email, email))
 			.get();
 
 		if (existingUserName || existingUserByEmail) {
@@ -81,7 +82,7 @@ export async function GET(context: APIContext): Promise<Response> {
 			});
 		}
 		const createdUser = await db
-			.insert(StudioCMSUsers)
+			.insert(tsUsers)
 			.values({
 				id: randomUUID(),
 				githubId,
@@ -91,7 +92,7 @@ export async function GET(context: APIContext): Promise<Response> {
 				email,
 				avatar,
 			})
-			.returning({ id: StudioCMSUsers.id })
+			.returning({ id: tsUsers.id })
 			.get();
 
 		const session = await lucia.createSession(createdUser.id, {});

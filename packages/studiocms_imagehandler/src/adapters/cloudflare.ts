@@ -5,9 +5,10 @@ import {
 } from '@studiocms/core';
 import { defineIntegration } from 'astro-integration-kit';
 import { passthroughImageService } from 'astro/config';
+import { name as packageName } from '../../package.json';
 
 export default defineIntegration({
-	name: '@studioCMS/imagehandler:cloudflare',
+	name: `${packageName}:cloudflare`,
 	optionsSchema,
 	setup({ options }) {
 		return {

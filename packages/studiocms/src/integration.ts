@@ -1,4 +1,3 @@
-import { runtimeLogger } from '@inox-tools/runtime-logger';
 import { addIntegrationArray } from '@matthiesenxyz/integration-utils/aikUtils';
 import {
 	integrationLogger,
@@ -7,11 +6,11 @@ import {
 import {
 	CoreStrings,
 	type StudioCMSOptions,
-	StudioCMSOptionsSchema,
 	addIntegrationArrayWithCheck,
 	checkAstroConfig,
 	configResolver,
 	getStudioConfigFileUrl,
+	StudioCMSOptionsSchema as optionsSchema,
 	robotsTXTPreset,
 	studioCMSPluginList,
 } from '@studiocms/core';
@@ -22,14 +21,15 @@ import studiocmsImageHandler from '@studiocms/imagehandler';
 import studiocmsRenderers from '@studiocms/renderers';
 import studioCMSRobotsTXT from '@studiocms/robotstxt';
 import { defineIntegration } from 'astro-integration-kit';
+import { name } from '../package.json';
 
 // Main Integration
 export default defineIntegration({
-	name: 'studiocms',
-	optionsSchema: StudioCMSOptionsSchema,
+	name,
+	optionsSchema,
 	setup({ name, options }) {
 		// Register StudioCMS into the StudioCMS Plugin List
-		studioCMSPluginList.set('studiocms', { name, label: 'StudioCMS' });
+		studioCMSPluginList.set(name, { name, label: 'StudioCMS' });
 
 		let resolvedOptions: StudioCMSOptions;
 
@@ -48,9 +48,6 @@ export default defineIntegration({
 
 					// Resolve Options
 					resolvedOptions = await configResolver(params, options);
-
-					// Create Runtime compatible Logger
-					runtimeLogger(params, { name: 'StudioCMS' });
 
 					// Setup Logger
 					integrationLogger(

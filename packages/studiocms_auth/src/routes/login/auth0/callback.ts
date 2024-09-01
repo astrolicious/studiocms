@@ -1,7 +1,8 @@
 import { randomUUID } from 'node:crypto';
-import { StudioCMSUsers, db, eq } from 'astro:db';
+import { db, eq } from 'astro:db';
+import { StudioCMSRoutes } from 'studiocms:helpers/routemap';
 import Config from 'virtual:studiocms/config';
-import { StudioCMSRoutes } from '@studiocms/core';
+import { tsUsers } from '@studiocms/core/dbconfig';
 import { Auth0, type Auth0Tokens, OAuth2RequestError } from 'arctic';
 import type { APIContext } from 'astro';
 import { lucia } from '../../../auth';
@@ -53,11 +54,7 @@ export async function GET(context: APIContext): Promise<Response> {
 		const auth0User: Auth0User = await auth0Response.json();
 		const { sub: auth0Id, name, nickname: username, email, picture: avatar } = auth0User;
 
-		const existingUser = await db
-			.select()
-			.from(StudioCMSUsers)
-			.where(eq(StudioCMSUsers.auth0Id, auth0Id))
-			.get();
+		const existingUser = await db.select().from(tsUsers).where(eq(tsUsers.auth0Id, auth0Id)).get();
 
 		if (existingUser) {
 			const session = await lucia.createSession(existingUser.id, {});
@@ -68,13 +65,13 @@ export async function GET(context: APIContext): Promise<Response> {
 
 		const existingUserName = await db
 			.select()
-			.from(StudioCMSUsers)
-			.where(eq(StudioCMSUsers.username, username))
+			.from(tsUsers)
+			.where(eq(tsUsers.username, username))
 			.get();
 		const existingUserByEmail = await db
 			.select()
-			.from(StudioCMSUsers)
-			.where(eq(StudioCMSUsers.email, email))
+			.from(tsUsers)
+			.where(eq(tsUsers.email, email))
 			.get();
 
 		if (existingUserName || existingUserByEmail) {
@@ -83,7 +80,7 @@ export async function GET(context: APIContext): Promise<Response> {
 			});
 		}
 		const createdUser = await db
-			.insert(StudioCMSUsers)
+			.insert(tsUsers)
 			.values({
 				id: randomUUID(),
 				auth0Id,
@@ -92,7 +89,7 @@ export async function GET(context: APIContext): Promise<Response> {
 				email,
 				avatar,
 			})
-			.returning({ id: StudioCMSUsers.id })
+			.returning({ id: tsUsers.id })
 			.get();
 
 		const session = await lucia.createSession(createdUser.id, {});

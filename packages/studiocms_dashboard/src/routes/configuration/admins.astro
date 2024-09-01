@@ -1,9 +1,17 @@
 ---
-import { logger } from '@it-astro:logger:StudioCMS';
-import { Alert, Button, Divider, Icon, Input, Radio, RadioGroup } from 'astrolace:components';
+import { logger } from '@it-astro:logger:studiocms-dashboard';
 import { authHelper, toPascalCase } from 'studiocms:helpers';
 import { getPermissionsList, getSiteConfig } from 'studiocms:helpers/contentHelper';
 import { StudioCMSRoutes } from 'studiocms:helpers/routemap';
+import {
+	Alert,
+	Button,
+	Divider,
+	Icon,
+	Input,
+	Radio,
+	RadioGroup,
+} from '@matthiesenxyz/astrolace/components';
 import check2Circle from '@studiocms/assets/svgs/check2-circle.svg';
 import exclamationOctagon from '@studiocms/assets/svgs/exclamation-octagon.svg';
 import { Layout } from '../../components';

@@ -1,7 +1,7 @@
 ---
-import { Avatar, Button, Divider, Drawer, IconButton } from 'astrolace:components';
 import { authHelper } from 'studiocms:helpers';
 import { StudioCMSRoutes } from 'studiocms:helpers/routemap';
+import { Avatar, Button, Divider, Drawer, IconButton } from '@matthiesenxyz/astrolace/components';
 import githubLogo from '@studiocms/assets/svgs/github-logo.svg';
 import listIcon from '@studiocms/assets/svgs/list.svg';
 import personFillIcon from '@studiocms/assets/svgs/person-fill.svg';
@@ -71,7 +71,6 @@ if (!name) {
         <IconButton 
           src={listIcon.src}
           style="font-size: 2rem;" 
-          size="medium" 
           label="Open Menu"
           class="md:hidden drawer-header-button" />
       )}

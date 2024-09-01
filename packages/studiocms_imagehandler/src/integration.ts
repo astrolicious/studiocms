@@ -4,6 +4,7 @@ import { imageHandlerStrings, StudioCMSOptionsSchema as optionsSchema } from '@s
 import { addIntegration, defineIntegration } from 'astro-integration-kit';
 import { envField } from 'astro/config';
 import { loadEnv } from 'vite';
+import { name } from '../package.json';
 import {
 	cloudflareImageHandler,
 	netlifyImageHandler,
@@ -11,35 +12,34 @@ import {
 	vercelImageHandler,
 } from './adapters';
 import { componentResolver } from './componentResolver';
+import { supportedAdapters } from './supportedAdapters';
 
 export default defineIntegration({
-	name: '@studioCMS/imagehandler',
+	name,
 	optionsSchema,
 	setup({ name, options }) {
+		// Load Environment Variables
 		const env = loadEnv('all', process.cwd(), 'CMS');
 
+		// Define the DTS File
 		let dtsFile: string;
 
 		return {
 			hooks: {
 				'astro:config:setup': async (params) => {
+					// Destructure Params
 					const {
 						config: { adapter },
 						logger,
 					} = params;
 
+					// Destructure Options
 					const {
 						verbose,
 						imageService: { cdnPlugin },
 					} = options;
 
-					const currentAdapters = [
-						'@astrojs/node',
-						'@astrojs/cloudflare',
-						'@astrojs/vercel',
-						'@astrojs/netlify',
-					];
-
+					// Add Astro Environment Configuration
 					addAstroEnvConfig(params, {
 						validateSecrets: false,
 						schema: {
@@ -51,6 +51,7 @@ export default defineIntegration({
 						},
 					});
 
+					// Check for Cloudinary CDN Plugin
 					if (cdnPlugin === 'cloudinary-js') {
 						if (!env.CMS_CLOUDINARY_CLOUDNAME) {
 							integrationLogger(
@@ -79,7 +80,7 @@ export default defineIntegration({
 						`Determining Astro Adapter Configuration... ${adapter && `Detected Adapter: ${adapter.name}`}`
 					);
 
-					// Check for Astro Adapter
+					// - // Check for Astro Adapter and inject the appropriate Image Handler Integration // - //
 
 					// Node Adapter
 					if (adapter?.name === '@astrojs/node') {
@@ -118,7 +119,7 @@ export default defineIntegration({
 					}
 
 					// Unknown Adapter
-					else if (adapter?.name !== undefined && !currentAdapters.includes(adapter.name)) {
+					else if (adapter?.name !== undefined && !supportedAdapters.includes(adapter.name)) {
 						integrationLogger(
 							{ logger, logLevel: 'warn', verbose: true },
 							imageHandlerStrings.UnknownAdapter.part1 +

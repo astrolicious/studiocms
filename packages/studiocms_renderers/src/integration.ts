@@ -1,9 +1,12 @@
 import { customRendererPlugin } from '@studiocms/core';
 import { addVirtualImports, createResolver, defineIntegration } from 'astro-integration-kit';
+import { name } from '../package.json';
+import { rendererDTS } from './stubs/renderer';
 
 export default defineIntegration({
-	name: '@studiocms/renderers',
+	name,
 	setup({ name }) {
+		// Create resolver relative to this file
 		const { resolve } = createResolver(import.meta.url);
 
 		// Get customRendererPlugin List and convert to Array
@@ -36,12 +39,7 @@ export default defineIntegration({
 					// Inject Types for Renderer
 					injectTypes({
 						filename: 'renderer.d.ts',
-						content: `declare module 'studiocms:renderer' {
-                            /** 
-                             * StudioCMS Content Renderer component 
-                            */
-                            export { default as StudioCMSRenderer } from '${ResolveRenderer()}';
-                        }`,
+						content: rendererDTS(ResolveRenderer()),
 					});
 				},
 			},

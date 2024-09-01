@@ -18,9 +18,9 @@ catalog:
 
 catalogs:
   min:
-    astro: ^4.14.5
-    '@astrojs/db': ^0.13.2
-    astro-integration-kit: ^0.16
+    astro: ">=4.15"
+    '@astrojs/db': ">=0.14"
+    astro-integration-kit: ">=0.16"
     vite: ^4 || ^5
   landing:
     motion: ^10.18.0
@@ -40,7 +40,8 @@ catalogs:
     typedoc: ^0.26.6
     typedoc-plugin-markdown: ^4.2.6
   studiocms-shared:
-    "@matthiesenxyz/astrolace": ^0.3.0
+    '@inox-tools/runtime-logger': ^0.3.1
+    "@matthiesenxyz/astrolace": ^0.3.2
     "@matthiesenxyz/integration-utils": ^0.2.0
     '@matthiesenxyz/unocss-preset-daisyui': ^0.1.2
     '@noble/hashes': ^1.4.0
@@ -56,8 +57,6 @@ catalogs:
     shiki: ^1.14.1
     unpic: ^3.18.0
     mrmime: ^2.0.0
-  studiocms-integration:
-    '@inox-tools/runtime-logger': ^0.3.1
   studiocms-renderer:
     '@markdoc/markdoc': ^0.4.0
     '@shikijs/transformers': ^1.14.1

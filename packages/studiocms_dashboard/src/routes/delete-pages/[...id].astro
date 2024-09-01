@@ -1,9 +1,16 @@
 ---
-import { logger } from '@it-astro:logger:StudioCMS';
-import { Alert, Button, Divider, Icon, Input, VisuallyHidden } from 'astrolace:components';
+import { logger } from '@it-astro:logger:studiocms-dashboard';
 import { authHelper } from 'studiocms:helpers';
 import { getPageById, getSiteConfig } from 'studiocms:helpers/contentHelper';
 import { StudioCMSRoutes, getDeleteRoute } from 'studiocms:helpers/routemap';
+import {
+	Alert,
+	Button,
+	Divider,
+	Icon,
+	Input,
+	VisuallyHidden,
+} from '@matthiesenxyz/astrolace/components';
 import check2Circle from '@studiocms/assets/svgs/check2-circle.svg';
 import exclamationOctagon from '@studiocms/assets/svgs/exclamation-octagon.svg';
 import { Layout } from '../../components';
@@ -30,7 +37,7 @@ if (!page) {
 }
 
 const deleteURL = await getDeleteRoute(id);
-const { permissionLevel } = await authHelper(Astro.locals as Locals);
+const { permissionLevel } = await authHelper(Astro.locals);
 
 // Check Permission Level
 if (permissionLevel !== 'admin' && permissionLevel !== 'editor') {

@@ -12,7 +12,7 @@
       "studiocms/*": ["../studiocms/src/*"]
     }
   },
-  "include": ["../../playgrounds/node/.astro/**/*", "./**/*"],
+  "include": ["../../playgrounds/node/.astro/**/*", "./**/*", "./**/*.json"],
   "references": [
     {
       "path": "../studiocms"

@@ -1,17 +1,16 @@
 import { randomUUID } from 'node:crypto';
-import {
-	StudioCMSPageContent,
-	StudioCMSPageData,
-	StudioCMSPermissions,
-	StudioCMSSiteConfig,
-	StudioCMSUsers,
-	db,
-	eq,
-} from 'astro:db';
+import { db, eq } from 'astro:db';
 import AuthSecurityConfig from 'studiocms:auth/config';
 import { checkIfUnsafe } from '@matthiesenxyz/integration-utils/securityUtils';
 import { scryptAsync } from '@noble/hashes/scrypt';
 import { CMSSiteConfigId } from '@studiocms/core';
+import {
+	tsPageContent,
+	tsPageData,
+	tsPermissions,
+	tsSiteConfig,
+	tsUsers,
+} from '@studiocms/core/dbconfig';
 import type { APIContext } from 'astro';
 
 const { salt: ScryptSalt, opts: ScryptOpts } = AuthSecurityConfig;
@@ -61,8 +60,8 @@ export async function POST(context: APIContext): Promise<Response> {
 
 		const existingUser = await db
 			.select()
-			.from(StudioCMSUsers)
-			.where(eq(StudioCMSUsers.username, username))
+			.from(tsUsers)
+			.where(eq(tsUsers.username, username))
 			.get();
 
 		if (existingUser) {
@@ -76,21 +75,17 @@ export async function POST(context: APIContext): Promise<Response> {
 			);
 		}
 		const newCreatedUser = await db
-			.insert(StudioCMSUsers)
+			.insert(tsUsers)
 			.values({
 				id: randomUUID(),
 				name: name as string,
 				username,
 			})
-			.returning({ id: StudioCMSUsers.id })
+			.returning({ id: tsUsers.id })
 			.get();
 
 		const serverToken = await scryptAsync(newCreatedUser.id, ScryptSalt, ScryptOpts);
-		const newUser = await db
-			.select()
-			.from(StudioCMSUsers)
-			.where(eq(StudioCMSUsers.username, username))
-			.get();
+		const newUser = await db.select().from(tsUsers).where(eq(tsUsers.username, username)).get();
 		const hashedPassword = await scryptAsync(password, serverToken, ScryptOpts);
 		const hashedPasswordString = Buffer.from(hashedPassword.buffer).toString();
 
@@ -106,20 +101,20 @@ export async function POST(context: APIContext): Promise<Response> {
 		}
 
 		await db
-			.update(StudioCMSUsers)
+			.update(tsUsers)
 			.set({
 				password: hashedPasswordString,
 			})
-			.where(eq(StudioCMSUsers.id, newUser.id));
+			.where(eq(tsUsers.id, newUser.id));
 
-		await db.insert(StudioCMSPermissions).values({
+		await db.insert(tsPermissions).values({
 			username: username,
 			rank: 'admin',
 		});
 	} else {
 		const oAuthAdmin = formData.get('oauth-admin-name');
 
-		await db.insert(StudioCMSPermissions).values({
+		await db.insert(tsPermissions).values({
 			username: oAuthAdmin as string,
 			rank: 'admin',
 		});
@@ -131,8 +126,8 @@ export async function POST(context: APIContext): Promise<Response> {
 
 	const Config = await db
 		.select()
-		.from(StudioCMSSiteConfig)
-		.where(eq(StudioCMSSiteConfig.id, CMSSiteConfigId))
+		.from(tsSiteConfig)
+		.where(eq(tsSiteConfig.id, CMSSiteConfigId))
 		.get();
 
 	if (Config) {
@@ -148,7 +143,7 @@ export async function POST(context: APIContext): Promise<Response> {
 
 	// Insert Site Config
 	await db
-		.insert(StudioCMSSiteConfig)
+		.insert(tsSiteConfig)
 		.values({
 			title: title as string,
 			description: description as string,
@@ -169,7 +164,7 @@ export async function POST(context: APIContext): Promise<Response> {
 	const LOREM_IPSUM =
 		'## Hello World \nLorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.';
 
-	await db.insert(StudioCMSPageData).values([
+	await db.insert(tsPageData).values([
 		{
 			id: randomUUID(),
 			title: 'Home',
@@ -190,16 +185,8 @@ export async function POST(context: APIContext): Promise<Response> {
 		},
 	]);
 
-	const index = await db
-		.select()
-		.from(StudioCMSPageData)
-		.where(eq(StudioCMSPageData.slug, 'index'))
-		.get();
-	const about = await db
-		.select()
-		.from(StudioCMSPageData)
-		.where(eq(StudioCMSPageData.slug, 'about'))
-		.get();
+	const index = await db.select().from(tsPageData).where(eq(tsPageData.slug, 'index')).get();
+	const about = await db.select().from(tsPageData).where(eq(tsPageData.slug, 'about')).get();
 
 	if (!index || !about) {
 		return new Response(
@@ -214,7 +201,7 @@ export async function POST(context: APIContext): Promise<Response> {
 
 	// Insert Page Content
 	await db
-		.insert(StudioCMSPageContent)
+		.insert(tsPageContent)
 		.values([
 			{
 				id: randomUUID(),

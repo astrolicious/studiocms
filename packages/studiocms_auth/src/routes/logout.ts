@@ -1,4 +1,4 @@
-import { StudioCMSRoutes } from '@studiocms/core';
+import { StudioCMSRoutes } from 'studiocms:helpers/routemap';
 import type { APIContext } from 'astro';
 import { lucia } from '../auth';
 

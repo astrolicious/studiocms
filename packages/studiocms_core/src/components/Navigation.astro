@@ -1,9 +1,10 @@
 ---
-import { Avatar, getPageList, getSiteConfig } from 'studiocms:components';
+import { Avatar } from 'studiocms:components';
 import { StudioCMSRoutes } from 'studiocms:helpers/routemap';
 import { externalNav } from 'virtual:studiocms/pluginSystem';
 import './navigation.css';
 import { pathWithBase } from 'studiocms:helpers';
+import { getPageList, getSiteConfig } from 'studiocms:helpers/contentHelper';
 
 type Props = {
 	topLevelLinkCount?: number;

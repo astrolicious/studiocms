@@ -6,7 +6,7 @@ export const makeFrontend = defineUtility('astro:config:setup')(
 	(
 		params,
 		options: {
-			studioCMSOptions: StudioCMSOptions;
+			options: StudioCMSOptions;
 			routes: {
 				pattern: string;
 				entrypoint: string;
@@ -21,7 +21,7 @@ export const makeFrontend = defineUtility('astro:config:setup')(
 		const {
 			routes,
 			default404Route,
-			studioCMSOptions: {
+			options: {
 				dbStartPage,
 				verbose,
 				defaultFrontEndConfig: { injectDefaultFrontEndRoutes, inject404Route },

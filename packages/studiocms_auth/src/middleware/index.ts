@@ -1,6 +1,7 @@
-import { logger } from '@it-astro:logger:StudioCMS';
-import { StudioCMSUsers, db, eq } from 'astro:db';
+import { logger } from '@it-astro:logger:studiocms-auth';
+import { db, eq } from 'astro:db';
 import Config from 'virtual:studiocms/config';
+import { tsUsers } from '@studiocms/core/dbconfig';
 import type { MiddlewareHandler } from 'astro';
 import { verifyRequestOrigin } from 'lucia';
 import { lucia } from '../auth';
@@ -25,9 +26,13 @@ const {
  */
 const stripSlashes = (str: string): string => str.replace(/^\/+|\/+$/g, '');
 
+// Get the dashboard route
 const dashboardRoute = dashboardRouteOverride ? stripSlashes(dashboardRouteOverride) : 'dashboard';
 
+// Define the middleware router
 const router: Record<string, MiddlewareHandler> = {};
+
+// Route for all paths
 router['/**'] = async (context, next) => {
 	if (context.request.method !== 'GET') {
 		const originHeader = context.request.headers.get('Origin');
@@ -64,13 +69,9 @@ router['/**'] = async (context, next) => {
 	if (session.fresh) {
 		const sessionCookie = lucia.createSessionCookie(session.id);
 		context.cookies.set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
-		const dbUser = await db
-			.select()
-			.from(StudioCMSUsers)
-			.where(eq(StudioCMSUsers.id, user.id))
-			.get();
+		const dbUser = await db.select().from(tsUsers).where(eq(tsUsers.id, user.id)).get();
 
-		locals.dbUser = dbUser;
+		locals.dbUser = dbUser || null;
 		locals.isLoggedIn = true;
 	} else if (session && !session.fresh) {
 		const sessionCookie = lucia.createBlankSessionCookie();
@@ -84,6 +85,7 @@ router['/**'] = async (context, next) => {
 	return next();
 };
 
+// Route for all paths except login and signup
 router[`/${dashboardRoute}/!(login|signup)**`] = async (context, next) => {
 	const locals = context.locals;
 

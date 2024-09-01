@@ -1,10 +1,10 @@
 ---
-import { logger } from '@it-astro:logger:StudioCMS';
-import { Alert, Card, Details, Divider, Icon } from 'astrolace:components';
-import { getSiteConfig } from 'studiocms-dashboard:contentHelper';
+import { logger } from '@it-astro:logger:studiocms-dashboard';
 import { getWebVitals } from 'studiocms-dashboard:web-vitals';
 import { authHelper } from 'studiocms:helpers';
+import { getSiteConfig } from 'studiocms:helpers/contentHelper';
 import { StudioCMSRoutes } from 'studiocms:helpers/routemap';
+import { Alert, Card, Details, Divider, Icon } from '@matthiesenxyz/astrolace/components';
 import check2Circle from '@studiocms/assets/svgs/check2-circle.svg';
 import exclamationTriangle from '@studiocms/assets/svgs/exclamation-triangle.svg';
 import { Layout } from '../components';

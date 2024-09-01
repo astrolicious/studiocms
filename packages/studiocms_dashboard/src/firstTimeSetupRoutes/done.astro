@@ -1,11 +1,11 @@
 ---
 import { Code } from 'astro:components';
-import { Card, Divider } from 'astrolace:components';
+import { Card, Divider } from '@matthiesenxyz/astrolace/components';
 import { Layout } from '../components';
 import { makePageTitle } from '../utils';
 
 const codeBlob = `import { defineConfig } from "astro/config";
-import astroStudioCMS from "@astrolicious/studiocms";
+import studioCMS from "studiocms";
 import db from '@astrojs/db';
 
 // https://astro.build/config
@@ -13,7 +13,7 @@ export default defineConfig({
 	// other config options,
 	integrations: [
 		db(),
-		astroStudioCMS({ 
+		studioCMS({ 
 +			dbStartPage: false,
 		}),
 	],

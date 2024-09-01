@@ -1,11 +1,13 @@
+import { runtimeLogger } from '@inox-tools/runtime-logger';
 import { integrationLogger } from '@matthiesenxyz/integration-utils/astroUtils';
 import {
 	AuthProviderLogStrings,
 	DashboardStrings,
-	StudioCMSOptionsSchema,
 	addAstroEnvConfig,
+	StudioCMSOptionsSchema as optionsSchema,
 } from '@studiocms/core';
 import { createResolver, defineIntegration } from 'astro-integration-kit';
+import { name } from '../package.json';
 import { astroENV } from './astroenv/env';
 import authconfig from './stubs/auth-config';
 import { checkEnvKeys } from './utils/checkENV';
@@ -13,9 +15,10 @@ import { injectAuthRouteArray } from './utils/injectAuthRoutes';
 import { usernameAndPasswordAuthConfig } from './utils/studioauth-config';
 
 export default defineIntegration({
-	name: '@studiocms/auth',
-	optionsSchema: StudioCMSOptionsSchema,
+	name,
+	optionsSchema,
 	setup({ name, options }) {
+		// Create resolver relative to this file
 		const { resolve } = createResolver(import.meta.url);
 
 		return {
@@ -29,6 +32,9 @@ export default defineIntegration({
 						{ logger, logLevel: 'info', verbose: options.verbose },
 						DashboardStrings.Setup
 					);
+
+					// Inject `@it-astro:logger:{name}` Logger for runtime logging
+					runtimeLogger(params, { name: 'studiocms-auth' });
 
 					// Check for Authentication Environment Variables
 					checkEnvKeys(logger, options);

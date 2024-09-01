@@ -1,5 +1,5 @@
-import type { SlProgressRing } from 'astrolace:types';
 import type { WebVitalsResponseItem } from 'studiocms-dashboard:web-vitals';
+import type { SlProgressRing } from '@matthiesenxyz/astrolace/types';
 
 // Misc Utils
 export function msToSeconds(ms: number): number {

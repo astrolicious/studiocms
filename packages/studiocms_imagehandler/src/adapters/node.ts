@@ -3,9 +3,10 @@ import { nodeImageHandlerStrings, StudioCMSOptionsSchema as optionsSchema } from
 import { imageService as unpicImageService } from '@unpic/astro/service';
 import { defineIntegration } from 'astro-integration-kit';
 import { passthroughImageService, sharpImageService, squooshImageService } from 'astro/config';
+import { name as packageName } from '../../package.json';
 
 export default defineIntegration({
-	name: '@studioCMS/imagehandler:node',
+	name: `${packageName}:node`,
 	optionsSchema,
 	setup({ options }) {
 		return {
