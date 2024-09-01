@@ -1,5 +1,5 @@
 import type { SideBarLink, StudioCMSPluginOptions } from '../types';
-import { convertDashboardLinksType } from './convertDashboardLintsType';
+import { convertDashboardLinksType } from './convertDashboardLinksType';
 
 /**
  * # Define StudioCMS Plugin
