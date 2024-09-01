@@ -17,7 +17,6 @@ export const dtsFile = (
 	helpers: {
 		authHelper: string;
 		urlGenFactory: string;
-		formatters: string;
 		pathGenerators: string;
 		contentHelper: string;
 		headDefaults: string;
@@ -106,15 +105,6 @@ export const dtsFile = (
      * @param {string} DashboardRoute - The dashboard route to use (Default: 'dashboard')
     */
     export const urlGenFactory: typeof import('${helpers.urlGenFactory}').default;`);
-
-	// Add the Text Formatters helpers to the module
-	DTSFile.addLines(`
-    /** # Text Formatter Helper Function - Convert a string to Camel Case */
-    export const toCamelCase: typeof import('${helpers.formatters}').toCamelCase;`);
-
-	DTSFile.addLines(`
-    /** # Text Formatter Helper Function - Convert a string to Pascal Case */
-    export const toPascalCase: typeof import('${helpers.formatters}').toPascalCase;`);
 
 	// Add the Path Generators helpers to the module
 	DTSFile.addLines(`

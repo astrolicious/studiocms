@@ -48,7 +48,6 @@ export default defineIntegration({
 					// Inject Routes
 					injectAuthRouteArray(params, {
 						options,
-
 						middleware: resolve('./middleware/index.ts'),
 						providerRoutes: [
 							{

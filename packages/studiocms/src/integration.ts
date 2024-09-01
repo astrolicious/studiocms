@@ -20,7 +20,7 @@ import studioCMSFrontend from '@studiocms/frontend';
 import studiocmsImageHandler from '@studiocms/imagehandler';
 import studiocmsRenderers from '@studiocms/renderers';
 import studioCMSRobotsTXT from '@studiocms/robotstxt';
-import { defineIntegration } from 'astro-integration-kit';
+import { createResolver, defineIntegration } from 'astro-integration-kit';
 import { name } from '../package.json';
 
 // Main Integration
@@ -31,7 +31,11 @@ export default defineIntegration({
 		// Register StudioCMS into the StudioCMS Plugin List
 		studioCMSPluginList.set(name, { name, label: 'StudioCMS' });
 
+		// Resolve Options
 		let resolvedOptions: StudioCMSOptions;
+
+		// Create Resolver for resolving relative paths
+		// const { resolve } = createResolver(import.meta.url);
 
 		return {
 			hooks: {

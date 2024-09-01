@@ -109,13 +109,6 @@ export const injectAuthRouteArray = defineUtility('astro:config:setup')(
 							entrypoint,
 						});
 					}
-				} else {
-					const { disabledMessage } = logs;
-
-					integrationLogger(
-						{ logger, logLevel: 'info', verbose: options.verbose },
-						disabledMessage
-					);
 				}
 			}
 		} else if (!enabled) {

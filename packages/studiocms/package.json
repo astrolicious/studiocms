@@ -42,19 +42,48 @@
   },
   "type": "module",
   "dependencies": {
+    "@cloudinary/url-gen": "catalog:studiocms-imagehandler",
+    "@inox-tools/runtime-logger": "catalog:studiocms-shared",
+    "@matthiesenxyz/astrolace": "catalog:studiocms-shared",
     "@matthiesenxyz/integration-utils": "catalog:studiocms-shared",
+    "@matthiesenxyz/unocss-preset-daisyui": "catalog:studiocms-shared",
+    "@shikijs/transformers": "catalog:studiocms-renderer",
+    "@noble/hashes": "catalog:studiocms-shared",
+    "@unpic/astro": "catalog:studiocms-imagehandler",
+    "micromatch": "catalog:studiocms-shared",
+    "lucia": "catalog:studiocms-shared",
+    "arctic": "catalog:studiocms-shared",
+    "@studiocms/assets": "workspace:*",
+    "@studiocms/auth": "workspace:*",
+    "@studiocms/betaresources": "workspace:*",
     "@studiocms/core": "workspace:*",
     "@studiocms/dashboard": "workspace:*",
     "@studiocms/frontend": "workspace:*",
     "@studiocms/imagehandler": "workspace:*",
     "@studiocms/renderers": "workspace:*",
     "@studiocms/robotstxt": "workspace:*",
-    "astro-integration-kit": "catalog:"
+    "@unocss/astro": "catalog:studiocms-shared",
+    "@unocss/reset": "catalog:studiocms-shared",
+    "astro-integration-kit": "catalog:",
+    "daisyui": "catalog:studiocms-shared",
+    "marked": "catalog:studiocms-shared",
+    "marked-alert": "catalog:studiocms-renderer",
+    "marked-emoji": "catalog:studiocms-renderer",
+    "marked-footnote": "catalog:studiocms-renderer",
+    "marked-shiki": "catalog:studiocms-renderer",
+    "marked-smartypants": "catalog:studiocms-renderer",
+    "mrmime": "catalog:studiocms-shared",
+    "shiki": "catalog:studiocms-shared",
+    "unpic": "catalog:studiocms-shared",
+    "unocss": "catalog:studiocms-shared"
   },
   "peerDependencies": {
     "@astrojs/db": "catalog:min",
     "astro": "catalog:min"
   },
   "devDependencies": {
+    "vite": "catalog:",
+    "typescript": "catalog:",
+    "@types/micromatch": "catalog:studiocms-shared"
   }
 }

@@ -40,9 +40,11 @@ export const coreVirtualModuleGeneration = defineUtility('astro:config:setup')(
 		const { resolve } = createResolver(import.meta.url);
 
 		// Get customRendererPlugin
-		let customRenderPlugin: string[] = [];
+		let customRenderPlugin: string[] | undefined;
 		if (customRendererPlugin) {
 			customRenderPlugin = Array.from(customRendererPlugin);
+		} else {
+			customRenderPlugin = undefined;
 		}
 
 		// Setup the Plugin Module
@@ -50,7 +52,7 @@ export const coreVirtualModuleGeneration = defineUtility('astro:config:setup')(
 		pluginModule += `export const externalNav = new Map(${stringifyMap(externalNavigation)});\n`;
 		pluginModule += `export const dashboardPageLinks = new Map(${stringifyMap(dashboardPageLinksMap)});\n`;
 		pluginModule += `export const pluginList = new Map(${stringifyMap(studioCMSPluginList)});\n`;
-		pluginModule += `export const customRenderers = ${customRenderPlugin};\n`;
+		pluginModule += `export const customRenderers = ${stringify(customRenderPlugin)};\n`;
 
 		// Setup the Resolvers
 		const contentHelperResolved = resolve('../helpers/contentHelper.ts');
@@ -75,11 +77,10 @@ export const coreVirtualModuleGeneration = defineUtility('astro:config:setup')(
 		// Helpers Resolvers
 		const helpersNamedResolvers = {
 			authHelper: resolve('../helpers/authHelper.ts'),
-			urlGenFactory: resolve('../helpers/urlGenFactory.ts'),
+			urlGenFactory: resolve('../helpers/urlGen.ts'),
 		};
 
 		const helpersUnnamedResolvers = {
-			formatters: resolve('../helpers/formatters.ts'),
 			pathGenerators: resolve('../helpers/pathGenerators.ts'),
 		};
 
@@ -89,9 +90,7 @@ export const coreVirtualModuleGeneration = defineUtility('astro:config:setup')(
 			virtualHelpers += `export { default as ${key} } from '${value}';\n`;
 		}
 
-		for (const [value] of Object.entries(helpersUnnamedResolvers)) {
-			virtualHelpers += `export * from '${value}';\n`;
-		}
+		virtualHelpers += `export * from '${resolve('../helpers/pathGenerators.ts')}';\n`;
 
 		// Create the Virtual Modules Map
 		const imports: Record<string, string> = {
@@ -120,7 +119,6 @@ export const coreVirtualModuleGeneration = defineUtility('astro:config:setup')(
 			{
 				authHelper: helpersNamedResolvers.authHelper,
 				urlGenFactory: helpersNamedResolvers.urlGenFactory,
-				formatters: helpersUnnamedResolvers.formatters,
 				pathGenerators: helpersUnnamedResolvers.pathGenerators,
 				contentHelper: contentHelperResolved,
 				headDefaults: headDefaultsResolved,

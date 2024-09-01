@@ -2,6 +2,7 @@ import { runtimeLogger } from '@inox-tools/runtime-logger';
 import astrolace from '@matthiesenxyz/astrolace';
 import { addIntegrationArray } from '@matthiesenxyz/integration-utils/aikUtils';
 import { integrationLogger } from '@matthiesenxyz/integration-utils/astroUtils';
+import { presetDaisy } from '@matthiesenxyz/unocss-preset-daisyui';
 import studioCMSAuth from '@studiocms/auth';
 import {
 	DashboardStrings,
@@ -9,10 +10,22 @@ import {
 	StudioCMSOptionsSchema as optionsSchema,
 } from '@studiocms/core';
 import { createResolver, defineIntegration } from 'astro-integration-kit';
+import {
+	presetTypography,
+	presetUno,
+	presetWebFonts,
+	presetWind,
+	transformerDirectives,
+} from 'unocss';
 import UnocssAstroIntegration from 'unocss/astro';
+import type { DarkModeSelectors } from 'unocss/preset-mini';
 import { name } from '../package.json';
 import { checkForWebVitals } from './utils/checkForWebVitalsPlugin';
 import { injectRouteArray } from './utils/injectRouteArray';
+
+const darkModeSelector: DarkModeSelectors = {
+	dark: '[data-theme="dark"]',
+};
 
 export default defineIntegration({
 	name,
@@ -55,9 +68,31 @@ export default defineIntegration({
 						// Add UnoCSS Integration for the Dashboard
 						{
 							integration: UnocssAstroIntegration({
-								configFile: resolve('./unocss.config.ts'),
+								configFile: false,
 								injectReset: UnoCSSConfigOverride.injectReset,
 								injectEntry: UnoCSSConfigOverride.injectEntry,
+								transformers: [transformerDirectives()],
+								presets: [
+									presetUno({
+										dark: darkModeSelector,
+									}),
+									presetWind({
+										dark: darkModeSelector,
+									}),
+									presetDaisy({
+										themes: ['light', 'dark'],
+										darkTheme: 'dark',
+									}),
+									presetTypography(),
+									presetWebFonts({
+										provider: 'google',
+										fonts: {
+											// Required Fonts for Google Icons
+											sans: 'Roboto',
+											mono: ['Fira Code', 'Fira Mono:400,700'],
+										},
+									}),
+								],
 							}),
 						},
 					]);
