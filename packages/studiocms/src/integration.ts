@@ -3,24 +3,24 @@ import {
 	integrationLogger,
 	nodeNamespaceBuiltinsAstro,
 } from '@matthiesenxyz/integration-utils/astroUtils';
+import studioCMSCore from '@studiocms/core';
+import { getStudioConfigFileUrl, studioCMSPluginList } from '@studiocms/core/lib';
 import {
-	CoreStrings,
 	type StudioCMSOptions,
+	StudioCMSOptionsSchema as optionsSchema,
+} from '@studiocms/core/schemas';
+import { CoreStrings, robotsTXTPreset } from '@studiocms/core/strings';
+import {
 	addIntegrationArrayWithCheck,
 	checkAstroConfig,
 	configResolver,
-	getStudioConfigFileUrl,
-	StudioCMSOptionsSchema as optionsSchema,
-	robotsTXTPreset,
-	studioCMSPluginList,
-} from '@studiocms/core';
-import studioCMSCore from '@studiocms/core';
+} from '@studiocms/core/utils';
 import studioCMSDashboard from '@studiocms/dashboard';
 import studioCMSFrontend from '@studiocms/frontend';
 import studiocmsImageHandler from '@studiocms/imagehandler';
 import studiocmsRenderers from '@studiocms/renderers';
 import studioCMSRobotsTXT from '@studiocms/robotstxt';
-import { createResolver, defineIntegration } from 'astro-integration-kit';
+import { defineIntegration } from 'astro-integration-kit';
 import { name } from '../package.json';
 
 // Main Integration

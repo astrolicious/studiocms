@@ -4,11 +4,8 @@ import { addIntegrationArray } from '@matthiesenxyz/integration-utils/aikUtils';
 import { integrationLogger } from '@matthiesenxyz/integration-utils/astroUtils';
 import { presetDaisy } from '@matthiesenxyz/unocss-preset-daisyui';
 import studioCMSAuth from '@studiocms/auth';
-import {
-	DashboardStrings,
-	DbErrors,
-	StudioCMSOptionsSchema as optionsSchema,
-} from '@studiocms/core';
+import { StudioCMSOptionsSchema as optionsSchema } from '@studiocms/core/schemas';
+import { DashboardStrings, DbErrors } from '@studiocms/core/strings';
 import { createResolver, defineIntegration } from 'astro-integration-kit';
 import {
 	presetTypography,

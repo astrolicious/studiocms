@@ -1,5 +1,6 @@
 import { integrationLogger } from '@matthiesenxyz/integration-utils/astroUtils';
-import { DashboardStrings, type StudioCMSOptions } from '@studiocms/core';
+import type { StudioCMSOptions } from '@studiocms/core/schemas';
+import { DashboardStrings } from '@studiocms/core/strings';
 import { defineUtility } from 'astro-integration-kit';
 
 export const injectAuthRouteArray = defineUtility('astro:config:setup')(

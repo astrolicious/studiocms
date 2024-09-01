@@ -31,11 +31,17 @@
   ],
   "exports": {
     ".": "./src/index.ts",
+    "./components": "./src/components/index.ts",
+    "./lib": "./src/lib/index.ts",
+    "./schemas": "./src/schemas/index.ts",
+    "./types": "./src/types/index.ts",
+    "./utils": "./src/utils/index.ts",
+    "./strings": "./src/strings.ts",
+    "./consts": "./src/consts.ts",
+    "./helpers": "./src/helpers/index.ts",
     "./db/config": "./src/db/config.ts",
     "./db/tables": "./src/db/tables.ts",
-    "./db/tsTables": "./src/db/tsTables.ts",
-    "./components": "./src/components/index.ts",
-    "./helpers": "./src/helpers/index.ts"
+    "./db/tsTables": "./src/db/tsTables.ts"
   },
   "type": "module",
   "dependencies": {

@@ -1,5 +1,6 @@
 import { integrationLogger } from '@matthiesenxyz/integration-utils/astroUtils';
-import { MakeFrontendStrings, type StudioCMSOptions } from '@studiocms/core';
+import type { StudioCMSOptions } from '@studiocms/core/schemas';
+import { MakeFrontendStrings } from '@studiocms/core/strings';
 import { defineUtility } from 'astro-integration-kit';
 
 export const makeFrontend = defineUtility('astro:config:setup')(

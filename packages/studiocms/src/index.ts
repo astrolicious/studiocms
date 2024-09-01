@@ -1,5 +1,5 @@
-import type { StudioCMSPluginOptions } from '@studiocms/core';
-import { defineStudioCMSConfig, defineStudioCMSPlugin } from '@studiocms/core';
+import { defineStudioCMSConfig, defineStudioCMSPlugin } from '@studiocms/core/lib';
+import type { StudioCMSPluginOptions } from '@studiocms/core/types';
 import integration from './integration';
 
 /**

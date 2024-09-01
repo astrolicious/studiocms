@@ -1,5 +1,6 @@
 import { integrationLogger } from '@matthiesenxyz/integration-utils/astroUtils';
-import { CheckENVStrings, type StudioCMSOptions } from '@studiocms/core';
+import type { StudioCMSOptions } from '@studiocms/core/schemas';
+import { CheckENVStrings } from '@studiocms/core/strings';
 import type { AstroIntegrationLogger } from 'astro';
 import { loadEnv } from 'vite';
 

@@ -1,4 +1,4 @@
-import type { StudioCMSOptions } from '@studiocms/core';
+import type { StudioCMSOptions } from '@studiocms/core/schemas';
 import { renderAstroMD } from './astro-remark/astromd';
 import { renderMarkDoc } from './markdoc/markdoc';
 import { renderMarked } from './marked/marked';

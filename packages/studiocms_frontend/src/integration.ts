@@ -1,4 +1,4 @@
-import { StudioCMSOptionsSchema as optionsSchema } from '@studiocms/core';
+import { StudioCMSOptionsSchema as optionsSchema } from '@studiocms/core/schemas';
 import { createResolver, defineIntegration } from 'astro-integration-kit';
 import { name } from '../package.json';
 import { makeFrontend } from './utils/makeFrontend';

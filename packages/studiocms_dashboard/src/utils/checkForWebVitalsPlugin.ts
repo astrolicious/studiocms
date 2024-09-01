@@ -1,6 +1,6 @@
 import { integrationLogger } from '@matthiesenxyz/integration-utils/astroUtils';
 import { fileFactory } from '@matthiesenxyz/integration-utils/fileFactory';
-import { webVitalStrings } from '@studiocms/core';
+import { webVitalStrings } from '@studiocms/core/strings';
 import {
 	addVirtualImports,
 	createResolver,

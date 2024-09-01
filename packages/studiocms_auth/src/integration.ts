@@ -1,11 +1,8 @@
 import { runtimeLogger } from '@inox-tools/runtime-logger';
 import { integrationLogger } from '@matthiesenxyz/integration-utils/astroUtils';
-import {
-	AuthProviderLogStrings,
-	DashboardStrings,
-	addAstroEnvConfig,
-	StudioCMSOptionsSchema as optionsSchema,
-} from '@studiocms/core';
+import { StudioCMSOptionsSchema as optionsSchema } from '@studiocms/core/schemas';
+import { AuthProviderLogStrings, DashboardStrings } from '@studiocms/core/strings';
+import { addAstroEnvConfig } from '@studiocms/core/utils';
 import { createResolver, defineIntegration } from 'astro-integration-kit';
 import { name } from '../package.json';
 import { astroENV } from './astroenv/env';

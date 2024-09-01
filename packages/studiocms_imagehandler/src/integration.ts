@@ -1,6 +1,7 @@
 import { integrationLogger } from '@matthiesenxyz/integration-utils/astroUtils';
-import { addAstroEnvConfig } from '@studiocms/core';
-import { imageHandlerStrings, StudioCMSOptionsSchema as optionsSchema } from '@studiocms/core';
+import { StudioCMSOptionsSchema as optionsSchema } from '@studiocms/core/schemas';
+import { imageHandlerStrings } from '@studiocms/core/strings';
+import { addAstroEnvConfig } from '@studiocms/core/utils';
 import { addIntegration, defineIntegration } from 'astro-integration-kit';
 import { envField } from 'astro/config';
 import { loadEnv } from 'vite';

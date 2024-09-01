@@ -1,4 +1,4 @@
-import type { StudioCMSOptions } from '@studiocms/core';
+import type { StudioCMSOptions } from '@studiocms/core/schemas';
 import { defineUtility } from 'astro-integration-kit';
 
 export const injectRouteArray = defineUtility('astro:config:setup')(

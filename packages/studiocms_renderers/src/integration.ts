@@ -1,4 +1,4 @@
-import { customRendererPlugin } from '@studiocms/core';
+import { customRendererPlugin } from '@studiocms/core/lib';
 import { addVirtualImports, createResolver, defineIntegration } from 'astro-integration-kit';
 import { name } from '../package.json';
 import { rendererDTS } from './stubs/renderer';

@@ -1,4 +1,4 @@
-import * as path from 'node:path';
+import path from 'node:path';
 import type { RobotsConfig } from '.';
 
 import type { AstroIntegrationLogger } from 'astro';

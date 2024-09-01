@@ -1,8 +1,6 @@
 import { integrationLogger } from '@matthiesenxyz/integration-utils/astroUtils';
-import {
-	netlifyImageHandlerStrings,
-	StudioCMSOptionsSchema as optionsSchema,
-} from '@studiocms/core';
+import { StudioCMSOptionsSchema as optionsSchema } from '@studiocms/core/schemas';
+import { netlifyImageHandlerStrings } from '@studiocms/core/strings';
 import { imageService as unpicImageService } from '@unpic/astro/service';
 import { defineIntegration } from 'astro-integration-kit';
 import { passthroughImageService, sharpImageService, squooshImageService } from 'astro/config';

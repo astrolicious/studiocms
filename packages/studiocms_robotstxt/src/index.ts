@@ -2,7 +2,7 @@ import type { AstroConfig, AstroIntegration } from 'astro';
 import { name } from '../package.json';
 import type { UsertAgentType } from './consts';
 
-import * as fs from 'node:fs';
+import fs from 'node:fs';
 import { fileURLToPath } from 'node:url';
 
 import { generateContent, printInfo } from './core';

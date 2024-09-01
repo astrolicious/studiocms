@@ -40,6 +40,7 @@
     "@matthiesenxyz/integration-utils": "catalog:studiocms-shared",
     "@noble/hashes": "catalog:studiocms-shared",
     "@studiocms/assets": "workspace:*",
+    "@studiocms/core": "workspace:*",
     "micromatch": "catalog:studiocms-shared",
     "lucia": "catalog:studiocms-shared",
     "arctic": "catalog:studiocms-shared",
