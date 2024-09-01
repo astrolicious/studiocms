@@ -127,7 +127,7 @@ export default defineConfig({
 					makeTypeDocOptions(
 						'studiocms',
 						'typedoc/studiocms',
-						'../../packages/studiocmd/tsconfig.json',
+						'../../packages/studiocms/tsconfig.json',
 						[
 							'../../packages/studiocms/src/index.ts',
 							'../../packages/studiocms/src/integration.ts',
@@ -146,7 +146,6 @@ export default defineConfig({
 							'../../packages/studiocms_auth/src/utils/authEnvCheck.ts',
 							'../../packages/studiocms_auth/src/utils/checkENV.ts',
 							'../../packages/studiocms_auth/src/utils/injectAuthRoutes.ts',
-							'../../packages/studiocms_auth/src/utils/studioauth-config.ts',
 							'../../packages/studiocms_auth/src/middleware/index.ts',
 							'../../packages/studiocms_auth/src/middleware/router.ts',
 							'../../packages/studiocms_auth/src/auth/index.ts',
@@ -166,11 +165,6 @@ export default defineConfig({
 							'../../packages/studiocms_core/src/consts.ts',
 							'../../packages/studiocms_core/src/strings.ts',
 							'../../packages/studiocms_core/src/utils/index.ts',
-							'../../packages/studiocms_core/src/utils/coreVirtualModules.ts',
-							'../../packages/studiocms_core/src/utils/configResolver.ts',
-							'../../packages/studiocms_core/src/utils/astroEnvConfig.ts',
-							'../../packages/studiocms_core/src/utils/astroConfigCheck.ts',
-							'../../packages/studiocms_core/src/utils/addIntegrationArrayWithCheck.ts',
 							'../../packages/studiocms_core/src/types/index.ts',
 							'../../packages/studiocms_core/src/types/auth-types.ts',
 							'../../packages/studiocms_core/src/types/dbtypehelpers.ts',
