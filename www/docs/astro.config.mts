@@ -34,10 +34,8 @@ const MainProjectTypeDocSidebarGroup = [
 ];
 
 //// PLUGINS
-// @studiocms/blog
-const [tdBlog, tdBlogSideBar] = createStarlightTypeDocPlugin();
 // Starlight TypeDoc Sidebar Group for Plugins
-const PluginsTypeDocSidebarGroup = [tdBlogSideBar];
+const PluginsTypeDocSidebarGroup = [];
 
 // Define the Site URL
 const site = process.env.COOLIFY_FQDN || 'https://docs.astro-studiocms.xyz/';
@@ -143,9 +141,6 @@ export default defineConfig({
 						[
 							'../../packages/studiocms_auth/src/index.ts',
 							'../../packages/studiocms_auth/src/integration.ts',
-							'../../packages/studiocms_auth/src/utils/authEnvCheck.ts',
-							'../../packages/studiocms_auth/src/utils/checkENV.ts',
-							'../../packages/studiocms_auth/src/utils/injectAuthRoutes.ts',
 							'../../packages/studiocms_auth/src/middleware/index.ts',
 							'../../packages/studiocms_auth/src/middleware/router.ts',
 							'../../packages/studiocms_auth/src/auth/index.ts',
@@ -164,7 +159,6 @@ export default defineConfig({
 							'../../packages/studiocms_core/src/integration.ts',
 							'../../packages/studiocms_core/src/consts.ts',
 							'../../packages/studiocms_core/src/strings.ts',
-							'../../packages/studiocms_core/src/utils/index.ts',
 							'../../packages/studiocms_core/src/types/index.ts',
 							'../../packages/studiocms_core/src/types/auth-types.ts',
 							'../../packages/studiocms_core/src/types/dbtypehelpers.ts',
@@ -172,23 +166,7 @@ export default defineConfig({
 							'../../packages/studiocms_core/src/types/pluginOptions.ts',
 							'../../packages/studiocms_core/src/types/sideBarLinkType.ts',
 							'../../packages/studiocms_core/src/schemas/index.ts',
-							'../../packages/studiocms_core/src/schemas/config/index.ts',
-							'../../packages/studiocms_core/src/schemas/config/auth.ts',
-							'../../packages/studiocms_core/src/schemas/config/componentoverrides.ts',
-							'../../packages/studiocms_core/src/schemas/config/dashboard.ts',
-							'../../packages/studiocms_core/src/schemas/config/defaultFrontend.ts',
-							'../../packages/studiocms_core/src/schemas/config/developer.ts',
-							'../../packages/studiocms_core/src/schemas/config/imageService.ts',
-							'../../packages/studiocms_core/src/schemas/config/integrations.ts',
-							'../../packages/studiocms_core/src/schemas/config/marked.ts',
-							'../../packages/studiocms_core/src/schemas/config/unocss.ts',
 							'../../packages/studiocms_core/src/lib/index.ts',
-							'../../packages/studiocms_core/src/lib/configManager.ts',
-							'../../packages/studiocms_core/src/lib/convertDashboardLinksType.ts',
-							'../../packages/studiocms_core/src/lib/defineStudioCMSConfig.ts',
-							'../../packages/studiocms_core/src/lib/head.ts',
-							'../../packages/studiocms_core/src/lib/jsonUtils.ts',
-							'../../packages/studiocms_core/src/lib/pluginSystem.ts',
 							'../../packages/studiocms_core/src/helpers/index.ts',
 							'../../packages/studiocms_core/src/helpers/authHelper.ts',
 							'../../packages/studiocms_core/src/helpers/contentHelper.ts',
@@ -262,14 +240,6 @@ export default defineConfig({
 						]
 					)
 				),
-				tdBlog(
-					makeTypeDocOptions(
-						'@studiocms/blog',
-						'typedoc/studiocms-blog',
-						'../../packages/studiocms_blog/tsconfig.json',
-						['../../packages/studiocms_blog/index.ts', '../../packages/studiocms_blog/schema.ts']
-					)
-				),
 			],
 			sidebar: [
 				{
@@ -340,7 +310,7 @@ export default defineConfig({
 					},
 					items: [
 						{ label: 'Main Packages', items: MainProjectTypeDocSidebarGroup, collapsed: true },
-						{ label: 'Plugins', items: PluginsTypeDocSidebarGroup, collapsed: true },
+						// { label: 'Plugins', items: PluginsTypeDocSidebarGroup, collapsed: true },
 					],
 				},
 			],
