@@ -15,7 +15,6 @@ export const dtsFile = (
 		Navigation: string;
 	},
 	helpers: {
-		authHelper: string;
 		urlGenFactory: string;
 		pathGenerators: string;
 		contentHelper: string;
@@ -77,23 +76,6 @@ export const dtsFile = (
 
 	// Start of the helpers modules
 	DTSFile.addLines(`declare module 'studiocms:helpers' {`);
-
-	// Add the authHelper helper to the module
-	DTSFile.addLines(`
-    /** 
-     * # Auth Helper Function
-     * 
-     * @param locals The Astro.locals object
-     * @returns The current user data and session information
-     * 
-     * @example
-     * ---
-     * import { authHelper, type Locals } from 'studiocms:helpers'
-     * 
-     * const { id, username, name, email, avatar, githubURL, permissionLevel, currentUserSession } = await authHelper(Astro.locals as Locals)
-     * ---
-    */
-    export const authHelper: typeof import('${helpers.authHelper}').default;`);
 
 	// Add the urlGenFactory helper to the module
 	DTSFile.addLines(`

@@ -3,6 +3,7 @@ import {
 	integrationLogger,
 	nodeNamespaceBuiltinsAstro,
 } from '@matthiesenxyz/integration-utils/astroUtils';
+import studioCMSAuth from '@studiocms/auth';
 import studioCMSCore from '@studiocms/core';
 import { getStudioConfigFileUrl, studioCMSPluginList } from '@studiocms/core/lib';
 import {
@@ -67,6 +68,7 @@ export default defineIntegration({
 						{ integration: studioCMSFrontend(resolvedOptions) },
 						{ integration: studiocmsImageHandler(resolvedOptions) },
 						{ integration: studiocmsRenderers() },
+						{ integration: studioCMSAuth(resolvedOptions) },
 						{ integration: studioCMSDashboard(resolvedOptions) },
 					]);
 

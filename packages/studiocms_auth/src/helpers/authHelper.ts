@@ -1,7 +1,7 @@
 import { db, sql } from 'astro:db';
-import { lucia } from '@studiocms/auth/lucia';
+import { tsPermissions } from '@studiocms/core/db/tsTables';
 import type { Session } from 'lucia';
-import { tsPermissions } from '../db/tsTables';
+import { lucia } from '../auth';
 
 type authHelperResponse = {
 	id: string;

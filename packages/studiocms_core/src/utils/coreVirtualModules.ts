@@ -76,7 +76,6 @@ export const coreVirtualModuleGeneration = defineUtility('astro:config:setup')(
 
 		// Helpers Resolvers
 		const helpersNamedResolvers = {
-			authHelper: resolve('../helpers/authHelper.ts'),
 			urlGenFactory: resolve('../helpers/urlGen.ts'),
 		};
 
@@ -117,7 +116,6 @@ export const coreVirtualModuleGeneration = defineUtility('astro:config:setup')(
 				Navigation: componentResolvers.Navigation,
 			},
 			{
-				authHelper: helpersNamedResolvers.authHelper,
 				urlGenFactory: helpersNamedResolvers.urlGenFactory,
 				pathGenerators: helpersUnnamedResolvers.pathGenerators,
 				contentHelper: contentHelperResolved,

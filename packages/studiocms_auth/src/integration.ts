@@ -3,10 +3,11 @@ import { integrationLogger } from '@matthiesenxyz/integration-utils/astroUtils';
 import { StudioCMSOptionsSchema as optionsSchema } from '@studiocms/core/schemas';
 import { AuthProviderLogStrings, DashboardStrings } from '@studiocms/core/strings';
 import { addAstroEnvConfig } from '@studiocms/core/utils';
-import { createResolver, defineIntegration } from 'astro-integration-kit';
+import { addVirtualImports, createResolver, defineIntegration } from 'astro-integration-kit';
 import { name } from '../package.json';
 import { astroENV } from './astroenv/env';
-import authconfig from './stubs/auth-config';
+import authConfigDTS from './stubs/auth-config';
+import authHelperDTS from './stubs/auth-helpers';
 import { checkEnvKeys } from './utils/checkENV';
 import { injectAuthRouteArray } from './utils/injectAuthRoutes';
 import { usernameAndPasswordAuthConfig } from './utils/studioauth-config';
@@ -41,6 +42,14 @@ export default defineIntegration({
 
 					// If Username and Password Auth is enabled Verify the Auth Config File Exists and is setup!
 					usernameAndPasswordAuthConfig(params, { options, name });
+
+					// injectAuthHelper
+					addVirtualImports(params, {
+						name,
+						imports: {
+							'studiocms:auth/helpers': `export { default as authHelper } from '${resolve('./helpers/authHelper.ts')}'`,
+						},
+					});
 
 					// Inject Routes
 					injectAuthRouteArray(params, {
@@ -157,7 +166,11 @@ export default defineIntegration({
 					// Inject Types
 					injectTypes({
 						filename: 'auth-config.d.ts',
-						content: authconfig,
+						content: authConfigDTS,
+					});
+					injectTypes({
+						filename: 'auth-helper.d.ts',
+						content: authHelperDTS,
 					});
 				},
 			},

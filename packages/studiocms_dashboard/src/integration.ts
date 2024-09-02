@@ -3,7 +3,6 @@ import astrolace from '@matthiesenxyz/astrolace';
 import { addIntegrationArray } from '@matthiesenxyz/integration-utils/aikUtils';
 import { integrationLogger } from '@matthiesenxyz/integration-utils/astroUtils';
 import { presetDaisy } from '@matthiesenxyz/unocss-preset-daisyui';
-import studioCMSAuth from '@studiocms/auth';
 import { StudioCMSOptionsSchema as optionsSchema } from '@studiocms/core/schemas';
 import { DashboardStrings, DbErrors } from '@studiocms/core/strings';
 import { createResolver, defineIntegration } from 'astro-integration-kit';
@@ -58,11 +57,7 @@ export default defineIntegration({
 						DashboardStrings.AddIntegrations
 					);
 					addIntegrationArray(params, [
-						// Add Shoelace.style Integration for the Dashboard
-						{ integration: astrolace({ verbose, injectCss: false }) },
-						// Add Auth Integration for the Dashboard
-						{ integration: studioCMSAuth(options) },
-						// Add UnoCSS Integration for the Dashboard
+						{ integration: astrolace({ injectCss: false }) },
 						{
 							integration: UnocssAstroIntegration({
 								configFile: false,

@@ -1,5 +1,5 @@
+import { defineStudioCMSPlugin } from '@studiocms/core/lib';
 import defineTheme from 'astro-theme-provider';
-import { defineStudioCMSPlugin } from 'studiocms';
 import { name } from './package.json';
 import { studioCMSBlogSchema as schema } from './schema';
 

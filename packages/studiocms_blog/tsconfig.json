@@ -6,16 +6,7 @@
     "composite": true,
     "noEmit": false,
     "emitDeclarationOnly": true,
-    "allowImportingTsExtensions": false,
-    "paths": {
-      "studiocms": ["../studiocms/src/index.ts"],
-      "studiocms/*": ["../studiocms/src/*"]
-    }
+    "allowImportingTsExtensions": false
   },
-  "include": ["../../playgrounds/node/.astro/**/*", "./**/*", "./**/*.json"],
-  "references": [
-    {
-      "path": "../studiocms"
-    }
-  ]
+  "include": ["../../playgrounds/node/.astro/**/*", "./**/*", "./**/*.json"]
 }

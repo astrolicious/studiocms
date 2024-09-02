@@ -1,5 +1,5 @@
-import config from 'studiocms-blog:config';
-import { pages } from 'studiocms-blog:context';
+import config from '@studiocms/blog:config';
+import { pages } from '@studiocms/blog:context';
 import { pathWithBase } from 'studiocms:helpers';
 import { contentHelper, getPageList, getSiteConfig } from 'studiocms:helpers/contentHelper';
 import { StudioCMSRenderer } from 'studiocms:renderer';

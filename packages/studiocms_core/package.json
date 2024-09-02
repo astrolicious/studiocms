@@ -58,7 +58,6 @@
   },
   "peerDependencies": {
     "@astrojs/db": "catalog:min",
-    "@studiocms/auth": "workspace:*",
     "astro": "catalog:min"
   },
   "devDependencies": {
