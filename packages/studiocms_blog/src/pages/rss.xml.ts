@@ -5,7 +5,7 @@ import { contentHelper, getPageList, getSiteConfig } from 'studiocms:helpers/con
 import { StudioCMSRenderer } from 'studiocms:renderer';
 import rss from '@astrojs/rss';
 import type { APIContext } from 'astro';
-import { name } from '../../consts';
+import { name } from '../../package.json';
 
 import { experimental_AstroContainer as AstroContainer } from 'astro/container';
 

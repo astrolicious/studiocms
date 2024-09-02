@@ -3,8 +3,8 @@ import { PageList, RSSIcon } from 'studiocms-blog:components';
 import config from 'studiocms-blog:config';
 import { pages } from 'studiocms-blog:context';
 import { BlogLayout } from 'studiocms-blog:layouts';
-import { getPageList } from 'studiocms:components';
-import { name } from '../../consts';
+import { getPageList } from 'studiocms:helpers/contentHelper';
+import { name } from '../../../package.json';
 
 // Set the title and description
 const { description: configDescription, blogIndex } = config;
