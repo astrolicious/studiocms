@@ -19,6 +19,7 @@
     "starlight-links-validator": "catalog:docs",
     "starlight-package-managers": "catalog:docs",
     "starlight-typedoc": "catalog:docs",
+    "starlight-versions": "^0.2.0",
     "typedoc": "catalog:docs",
     "typedoc-plugin-markdown": "catalog:docs",
     "typescript": "catalog:"

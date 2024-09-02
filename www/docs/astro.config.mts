@@ -1,18 +1,20 @@
 import starlight from '@astrojs/starlight';
 import { defineConfig } from 'astro/config';
-// import starlightLinksValidator from 'starlight-links-validator'; // Disabled for now
+import starlightLinksValidator from 'starlight-links-validator';
 import { type StarlightTypeDocOptions, createStarlightTypeDocPlugin } from 'starlight-typedoc';
+import starlightVersions from 'starlight-versions';
 
 // Create Starlight TypeDoc Plugins for different parts of the Astro StudioCMS Project
 //// MAIN PROJECT
+
 // studiocms TypeDoc Plugin
 const [tdStudioCMS, tdStudioCMSSideBar] = createStarlightTypeDocPlugin();
-// @studiocms/auth
-const [tdAuth, tdAuthSideBar] = createStarlightTypeDocPlugin();
 // @studiocms/core
 const [tdCore, tdCoreSideBar] = createStarlightTypeDocPlugin();
 // @studiocms/dashboard
 const [tdDashboard, tdDashboardSideBar] = createStarlightTypeDocPlugin();
+// @studiocms/auth
+const [tdAuth, tdAuthSideBar] = createStarlightTypeDocPlugin();
 // @studiocms/frontend
 const [tdFrontend, tdFrontendSideBar] = createStarlightTypeDocPlugin();
 // @studiocms/imagehandler
@@ -21,24 +23,11 @@ const [tdImageHandler, tdImageHandlerSideBar] = createStarlightTypeDocPlugin();
 const [tdRenderers, tdRenderersSideBar] = createStarlightTypeDocPlugin();
 // @studiocms/robotstxt
 const [tdRobotsTxt, tdRobotsTxtSideBar] = createStarlightTypeDocPlugin();
-// Starlight TypeDoc Sidebar Group for Main Project
-const MainProjectTypeDocSidebarGroup = [
-	tdAuthSideBar,
-	tdCoreSideBar,
-	tdDashboardSideBar,
-	tdFrontendSideBar,
-	tdImageHandlerSideBar,
-	tdRenderersSideBar,
-	tdRobotsTxtSideBar,
-	tdStudioCMSSideBar,
-];
 
 //// PLUGINS
-// Starlight TypeDoc Sidebar Group for Plugins
-const PluginsTypeDocSidebarGroup = [];
 
 // Define the Site URL
-const site = process.env.COOLIFY_FQDN || 'https://docs.astro-studiocms.xyz/';
+const site = 'https://docs.astro-studiocms.xyz/';
 
 // Utility Function for TypeDoc Options
 const makeTypeDocOptions = (
@@ -78,6 +67,9 @@ export default defineConfig({
 				defaultProps: {
 					wrap: true,
 				},
+			},
+			components: {
+				SiteTitle: './src/starlightOverrides/SiteTitle.astro',
 			},
 			logo: {
 				dark: '../assets/logo-light.svg',
@@ -121,6 +113,11 @@ export default defineConfig({
 				},
 			],
 			plugins: [
+				starlightLinksValidator(),
+				starlightVersions({
+					versions: [{ slug: '0.1.0-beta.4', label: 'Beta.4' }],
+					current: { label: 'Beta.5' },
+				}),
 				tdStudioCMS(
 					makeTypeDocOptions(
 						'studiocms',
@@ -189,6 +186,13 @@ export default defineConfig({
 						[
 							'../../packages/studiocms_dashboard/src/index.ts',
 							'../../packages/studiocms_dashboard/src/integration.ts',
+							'../../packages/studiocms_dashboard/src/utils/webVital.ts',
+							'../../packages/studiocms_dashboard/src/utils/simpleResponse.ts',
+							'../../packages/studiocms_dashboard/src/utils/pageListPackageLabel.ts',
+							'../../packages/studiocms_dashboard/src/utils/makePageTitle.ts',
+							'../../packages/studiocms_dashboard/src/utils/isDashboardRoute.ts',
+							'../../packages/studiocms_dashboard/src/utils/astroDb.ts',
+							'../../packages/studiocms_dashboard/src/components/index.ts',
 						]
 					)
 				),
@@ -200,6 +204,7 @@ export default defineConfig({
 						[
 							'../../packages/studiocms_frontend/src/index.ts',
 							'../../packages/studiocms_frontend/src/integration.ts',
+							'../../packages/studiocms_frontend/src/components/index.ts',
 						]
 					)
 				),
@@ -212,6 +217,11 @@ export default defineConfig({
 							'../../packages/studiocms_imagehandler/src/index.ts',
 							'../../packages/studiocms_imagehandler/src/integration.ts',
 							'../../packages/studiocms_imagehandler/src/supportedAdapters.ts',
+							'../../packages/studiocms_imagehandler/src/components/index.ts',
+							'../../packages/studiocms_imagehandler/src/adapters/cloudflare.ts',
+							'../../packages/studiocms_imagehandler/src/adapters/netlify.ts',
+							'../../packages/studiocms_imagehandler/src/adapters/node.ts',
+							'../../packages/studiocms_imagehandler/src/adapters/vercel.ts',
 						]
 					)
 				),
@@ -223,6 +233,11 @@ export default defineConfig({
 						[
 							'../../packages/studiocms_renderers/src/index.ts',
 							'../../packages/studiocms_renderers/src/integration.ts',
+							'../../packages/studiocms_renderers/src/components/index.ts',
+							'../../packages/studiocms_renderers/src/lib/conentRenderer.ts',
+							'../../packages/studiocms_renderers/src/lib/astro-remark/astromd.ts',
+							'../../packages/studiocms_renderers/src/lib/markdoc/markdoc.ts',
+							'../../packages/studiocms_renderers/src/lib/marked/marked.ts',
 						]
 					)
 				),
@@ -235,7 +250,6 @@ export default defineConfig({
 							'../../packages/studiocms_robotstxt/src/index.ts',
 							'../../packages/studiocms_robotstxt/src/core.ts',
 							'../../packages/studiocms_robotstxt/src/consts.ts',
-							'../../packages/studiocms_robotstxt/src/utils/index.ts',
 							'../../packages/studiocms_robotstxt/src/utils/measureExecutionTime.ts',
 						]
 					)
@@ -248,6 +262,7 @@ export default defineConfig({
 						{
 							label: 'Getting Started with StudioCMS',
 							link: '/start-here/getting-started',
+							badge: { text: 'Updated', variant: 'success' },
 						},
 						{
 							label: 'Environment Variables',
@@ -256,6 +271,7 @@ export default defineConfig({
 						{
 							label: 'Configuration',
 							link: '/start-here/configuration',
+							badge: { text: 'Updated', variant: 'success' },
 						},
 						{
 							label: 'Why Astro StudioCMS?',
@@ -294,6 +310,7 @@ export default defineConfig({
 						{
 							label: 'How does it work!?',
 							link: '/how-it-works/',
+							badge: { text: 'Updated', variant: 'success' },
 						},
 					],
 				},
@@ -309,8 +326,14 @@ export default defineConfig({
 						variant: 'success',
 					},
 					items: [
-						{ label: 'Main Packages', items: MainProjectTypeDocSidebarGroup, collapsed: true },
-						// { label: 'Plugins', items: PluginsTypeDocSidebarGroup, collapsed: true },
+						tdStudioCMSSideBar,
+						tdCoreSideBar,
+						tdDashboardSideBar,
+						tdAuthSideBar,
+						tdFrontendSideBar,
+						tdImageHandlerSideBar,
+						tdRenderersSideBar,
+						tdRobotsTxtSideBar,
 					],
 				},
 			],

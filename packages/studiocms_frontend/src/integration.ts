@@ -3,6 +3,9 @@ import { createResolver, defineIntegration } from 'astro-integration-kit';
 import { name } from '../package.json';
 import { makeFrontend } from './utils/makeFrontend';
 
+/**
+ * StudioCMS Frontend Integration
+ */
 export default defineIntegration({
 	name,
 	optionsSchema,

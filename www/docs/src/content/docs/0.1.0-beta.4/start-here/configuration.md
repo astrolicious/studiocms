@@ -1,6 +1,7 @@
 ---
-title: "StudioCMS Config"
-description: "Options for how to define the StudioCMS Config"
+title: StudioCMS Config
+description: Options for how to define the StudioCMS Config
+slug: 0.1.0-beta.4/start-here/configuration
 ---
 
 # Available Options
@@ -12,7 +13,7 @@ There are two ways to configure the StudioCMS Integration, below are examples of
 ```js title="astro.config.mjs"
 import db from '@astrojs/db';
 import node from '@astrojs/node';
-import studioCMS from 'studiocms';
+import studioCMS from '@astrolicious/studiocms';
 import { defineConfig } from 'astro/config';
 
 export default defineConfig({
@@ -36,7 +37,7 @@ This file will be automatically picked up and will overwrite any options passed 
 ```js title="astro.config.mjs"
 import db from '@astrojs/db';
 import node from '@astrojs/node';
-import studioCMS from 'studiocms';
+import studioCMS from '@astrolicious/studiocms';
 import { defineConfig } from 'astro/config';
 
 export default defineConfig({
@@ -48,7 +49,7 @@ export default defineConfig({
 ```
 
 ```js title="studiocms.config.mjs"
-import { defineStudioCMSConfig } from "studiocms";
+import { defineStudioCMSConfig } from "@astrolicious/studiocms";
 
 export default defineStudioCMSConfig({
     dbStartPage: false,

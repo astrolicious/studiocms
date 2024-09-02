@@ -1,9 +1,7 @@
 ---
 title: Getting Started with Astro StudioCMS
 description: Get started building with Astro StudioCMS.
-banner:
-  content: |
-    We've renamed the package to <b>studiocms</b> 🎉
+slug: 0.1.0-beta.4/start-here/getting-started
 ---
 
 import { PackageManagers } from 'starlight-package-managers';
@@ -12,10 +10,10 @@ import { PackageManagers } from 'starlight-package-managers';
 
 To start using Astro StudioCMS, you'll need:
 
-- An Astro project
-- An Astro Studio account
-- An Astro Studio project
-- The Astro StudioCMS integration
+* An Astro project
+* An Astro Studio account
+* An Astro Studio project
+* The Astro StudioCMS integration
 
 ## Creating an Astro Studio account
 
@@ -37,11 +35,13 @@ To get started go to your personal dashboard within Studio and click the "Start 
 
 **Use the Astro Studio CLI** to create from any local Astro project. You can run the following commands to get started:
 
-    <PackageManagers type="exec" pkg="astro" args="db login" comment="Log in to Astro Studio with your GitHub account"/>
-    <PackageManagers type="exec" pkg="astro" args="db link" comment="Link to a new project by following the prompts"/>
-    <PackageManagers type="exec" pkg="astro" args="db push" comment="Push your local db configuration to the remote database"/>
+<PackageManagers type="exec" pkg="astro" args="db login" comment="Log in to Astro Studio with your GitHub account" />
 
-    Once you are logged in and linked successfully, you can run all Astro DB commands to manage your remote database. 
+<PackageManagers type="exec" pkg="astro" args="db link" comment="Link to a new project by following the prompts" />
+
+<PackageManagers type="exec" pkg="astro" args="db push" comment="Push your local db configuration to the remote database" />
+
+Once you are logged in and linked successfully, you can run all Astro DB commands to manage your remote database.
 
 :::note
 See [the Astro DB CLI reference](https://docs.astro.build/en/guides/integrations-guide/db/#astro-db-cli-reference) for all available commands.
@@ -51,7 +51,7 @@ See [the Astro DB CLI reference](https://docs.astro.build/en/guides/integrations
 
 To create a new Astro project, simply run the following command in your terminal:
 
-    <PackageManagers type="create" pkg="astro@latest" />
+<PackageManagers type="create" pkg="astro@latest" />
 
 After running the command, you'll be prompted to answer a few questions about your project. Once completed, the CLI will create a new Astro project in the specified directory.
 
@@ -65,18 +65,18 @@ If you skipped the npm install step during the CLI wizard, then be sure to insta
 
 To add the Astro StudioCMS integration to your project, you'll need to install the Astro StudioCMS package and it's dependencies:
 
-    <PackageManagers type="exec" pkg="astro" args="add db node" />
+<PackageManagers type="exec" pkg="astro" args="add db node" />
 
 Then install StudioCMS
 
-    <PackageManagers pkg="studiocms" />
+<PackageManagers pkg="@astrolicious/studiocms" />
 
 After installing the package, make sure that your `astro.config.mjs` file is correctly importing and calling the integration:
 
 ```js title="astro.config.mjs"
 import db from '@astrojs/db';
 import node from '@astrojs/node';
-import studioCMS from 'studiocms';
+import studioCMS from '@astrolicious/studiocms';
 import { defineConfig } from 'astro/config';
 
 export default defineConfig({
@@ -119,9 +119,11 @@ Thanks to the power of Astro running StudioCMS is as easy as running the dev com
 
 To start your Astro project, run the following commands in your terminal:
 
-    <PackageManagers type="exec" args="astro db link" />
-    <PackageManagers type="exec" args="astro db push" />
-    <PackageManagers type="run" args="dev --remote" />
+<PackageManagers type="exec" args="astro db link" />
+
+<PackageManagers type="exec" args="astro db push" />
+
+<PackageManagers type="run" args="dev --remote" />
 
 After running the commands, you should see a message indicating that your project is running at `localhost:4321`. When first setting up StudioCMS, you will prompted to finish configuring StudioCMS at http://localhost:4321/start
 
@@ -129,7 +131,7 @@ After running the commands, you should see a message indicating that your projec
 
 To start your Astro project, run the following command in your terminal:
 
-    <PackageManagers type="run" args="dev --remote" />
+<PackageManagers type="run" args="dev --remote" />
 
 After running the command, you should see a message indicating that your project is running at `localhost:4321`. Open your browser and navigate to `http://localhost:4321` to see your Astro project in action.
 
@@ -139,8 +141,8 @@ After running the command, you should see a message indicating that your project
 
 Now that you have Astro StudioCMS installed, you can start building your project with Astro StudioCMS.
 
-Check out how to set environment variables in Astro StudioCMS by heading to [Environment Variables](/start-here/environment-variables).
+Check out how to set environment variables in Astro StudioCMS by heading to [Environment Variables](/0.1.0-beta.4/start-here/environment-variables).
 
-To learn more about the API and how to use Astro StudioCMS, check out the [Astro StudioCMS Reference](/typedoc/studiocms-core/index/functions/studiocmscoreintegration/).
+To learn more about the API and how to use Astro StudioCMS, check out the [Astro StudioCMS Reference](/0.1.0-beta.4/typedoc/studiocms-core/index/functions/studiocmscoreintegration/).
 
 You can also learn more about themes and how to author them by using [Astro Theme Provider](https://astro-theme-provider.netlify.app/).
