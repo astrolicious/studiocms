@@ -38,7 +38,8 @@
     "src"
   ],
   "exports": {
-    ".": "./src/index.ts"
+    ".": "./src/index.ts",
+    "./blog": "./src/blog/index.ts"
   },
   "type": "module",
   "dependencies": {
@@ -81,7 +82,13 @@
   },
   "peerDependencies": {
     "@astrojs/db": "catalog:min",
-    "astro": "catalog:min"
+    "astro": "catalog:min",
+    "@studiocms/blog": "workspace:*"
+  },
+  "peerDependenciesMeta": {
+    "@studiocms/blog": {
+      "optional": true
+    }
   },
   "devDependencies": {
     "vite": "catalog:",
