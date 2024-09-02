@@ -1,6 +1,5 @@
 import starlight from '@astrojs/starlight';
 import { defineConfig } from 'astro/config';
-import starlightLinksValidator from 'starlight-links-validator';
 import { type StarlightTypeDocOptions, createStarlightTypeDocPlugin } from 'starlight-typedoc';
 import starlightVersions from 'starlight-versions';
 
@@ -113,7 +112,6 @@ export default defineConfig({
 				},
 			],
 			plugins: [
-				starlightLinksValidator(),
 				starlightVersions({
 					versions: [{ slug: '0.1.0-beta.4', label: 'Beta.4' }],
 					current: { label: 'Beta.5' },

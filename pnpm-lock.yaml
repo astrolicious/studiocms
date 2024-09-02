@@ -61,15 +61,15 @@ catalogs:
     astro-embed:
       specifier: ^0.7.2
       version: 0.7.2
-    starlight-links-validator:
-      specifier: ^0.11.0
-      version: 0.11.0
     starlight-package-managers:
       specifier: ^0.6.0
       version: 0.6.0
     starlight-typedoc:
       specifier: ^0.15.0
       version: 0.15.0
+    starlight-versions:
+      specifier: ^0.2.0
+      version: 0.2.0
     typedoc:
       specifier: ^0.26.6
       version: 0.26.6
@@ -737,9 +737,6 @@ importers:
       sharp:
         specifier: 'catalog:'
         version: 0.33.4
-      starlight-links-validator:
-        specifier: catalog:docs
-        version: 0.11.0(@astrojs/starlight@0.26.1(astro@4.15.1(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4)))(astro@4.15.1(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))
       starlight-package-managers:
         specifier: catalog:docs
         version: 0.6.0(@astrojs/starlight@0.26.1(astro@4.15.1(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4)))(astro@4.15.1(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))
@@ -747,7 +744,7 @@ importers:
         specifier: catalog:docs
         version: 0.15.0(@astrojs/starlight@0.26.1(astro@4.15.1(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4)))(astro@4.15.1(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))(typedoc-plugin-markdown@4.2.6(typedoc@0.26.6(typescript@5.5.4)))(typedoc@0.26.6(typescript@5.5.4))
       starlight-versions:
-        specifier: ^0.2.0
+        specifier: catalog:docs
         version: 0.2.0(@astrojs/starlight@0.26.1(astro@4.15.1(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4)))
       typedoc:
         specifier: catalog:docs
@@ -3951,10 +3948,6 @@ packages:
   inline-style-parser@0.2.3:
     resolution: {integrity: sha512-qlD8YNDqyTKTyuITrDOffsl6Tdhv+UC4hcdAVuQsK4IMQ99nSgd1MIA/Q+jQYoh9r3hVUXhYh7urSRmXPkW04g==}
 
-  is-absolute-url@4.0.1:
-    resolution: {integrity: sha512-/51/TKE88Lmm7Gc4/8btclNXWS+g50wXhYJq8HWIBAGUBnoAdRu1aXeh364t/O7wXDAcTJDP8PNuNKWUDWie+A==}
-    engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
-
   is-alphabetical@2.0.1:
     resolution: {integrity: sha512-FWyyY60MeTNyeSRpkM2Iry0G9hpr7/9kD40mD/cGQEuilcZYS4okz8SN2Q6rLCJ8gbCt6fN+rC+6tMGS99LaxQ==}
 
@@ -5158,13 +5151,6 @@ packages:
 
   stacktracey@2.1.8:
     resolution: {integrity: sha512-Kpij9riA+UNg7TnphqjH7/CzctQ/owJGNbFkfEeve4Z4uxT5+JapVLFXcsurIfN34gnTWZNJ/f7NMG0E8JDzTw==}
-
-  starlight-links-validator@0.11.0:
-    resolution: {integrity: sha512-7mKiP0xAS8ItKy8QAIkmeNYbzI4w0WD0pOYoTPa1xMNbz+qYr/QWT+a40QO/Z2XYJLzzQn47yomupUfI89wheg==}
-    engines: {node: '>=18.14.1'}
-    peerDependencies:
-      '@astrojs/starlight': '>=0.15.0'
-      astro: '>=4.0.0'
 
   starlight-package-managers@0.6.0:
     resolution: {integrity: sha512-2tE0B4ZVEZXZ1LJjcSvVXLfJP8SB2nE+nhiFgSa3fuHUPtnbzmFxLVp7jEKD8jaMXKWPYtlNTy95gJSK9W1sbQ==}
@@ -9397,8 +9383,6 @@ snapshots:
 
   inline-style-parser@0.2.3: {}
 
-  is-absolute-url@4.0.1: {}
-
   is-alphabetical@2.0.1: {}
 
   is-alphanumerical@2.0.1:
@@ -11008,19 +10992,6 @@ snapshots:
     dependencies:
       as-table: 1.0.55
       get-source: 2.0.12
-
-  starlight-links-validator@0.11.0(@astrojs/starlight@0.26.1(astro@4.15.1(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4)))(astro@4.15.1(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4)):
-    dependencies:
-      '@astrojs/starlight': 0.26.1(astro@4.15.1(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))
-      astro: 4.15.1(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4)
-      github-slugger: 2.0.0
-      hast-util-from-html: 2.0.1
-      hast-util-has-property: 3.0.0
-      is-absolute-url: 4.0.1
-      kleur: 4.1.5
-      mdast-util-to-string: 4.0.0
-      picomatch: 4.0.2
-      unist-util-visit: 5.0.0
 
   starlight-package-managers@0.6.0(@astrojs/starlight@0.26.1(astro@4.15.1(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4)))(astro@4.15.1(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4)):
     dependencies:
