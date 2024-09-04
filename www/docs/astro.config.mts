@@ -2,6 +2,7 @@ import starlight from '@astrojs/starlight';
 import { defineConfig } from 'astro/config';
 import { type StarlightTypeDocOptions, createStarlightTypeDocPlugin } from 'starlight-typedoc';
 import starlightVersions from 'starlight-versions';
+import { getCoolifyURL } from '../hostUtils';
 
 // Create Starlight TypeDoc Plugins for different parts of the Astro StudioCMS Project
 //// MAIN PROJECT
@@ -26,7 +27,7 @@ const [tdRobotsTxt, tdRobotsTxtSideBar] = createStarlightTypeDocPlugin();
 //// PLUGINS
 
 // Define the Site URL
-const site = 'https://docs.astro-studiocms.xyz/';
+const site = getCoolifyURL(true) || 'https://docs.astro-studiocms.xyz/';
 
 // Utility Function for TypeDoc Options
 const makeTypeDocOptions = (
