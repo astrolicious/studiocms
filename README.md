@@ -2,13 +2,13 @@
 
 ![Readme's Banner](./www/assets/banner-readme.png)
 
-[![NPM Version](https://img.shields.io/npm/v/@astrolicious/studiocms)](https://npm.im/@astrolicious/studiocms)
+[![NPM Version](https://img.shields.io/npm/v/studiocms)](https://npm.im/studiocms)
 [![Formatted with Biome](https://img.shields.io/badge/Formatted_with-Biome-60a5fa?style=flat&logo=biome)](https://biomejs.dev/)
 [![Built with Astro](https://astro.badg.es/v2/built-with-astro/tiny.svg)](https://astro.build)
 
 This is an SSR CMS built with AstroDB / Lucia Auth / Unpic Image handler for the Astro Ecosystem.
 
-To see how to get started, check out the [studioCMS README](./packages/studioCMS/README.md).
+To see how to get started, check out the [studioCMS README](./packages/studiocmd/README.md).
 
 > [!IMPORTANT]
 > This project is still in early development and it is not yet ready for production use. If you encounter any issues or have ideas for new features, please let us know by [opening an issue](https://github.com/astrolicious/studiocms/issues/new/choose) on our GitHub repository.
@@ -71,7 +71,7 @@ Steps to get a running playground should be the following:
 - clone repo
 - run `pnpm i --frozen-lockfile`
 - change `dbStartPage` in the [node playground's](./playgrounds/node/studiocms.config.mjs) config to `true`
-- read the first time setup instructions listed in the [main package readme](./packages/studioCMS/README.md#first-start-and-setup) then replace the astro db commands with the following:
+- read the first time setup instructions listed in the [main package readme](./packages/studiocms/README.md#first-start-and-setup) then replace the astro db commands with the following:
 
   Commands to run:
 
@@ -84,7 +84,7 @@ Once that process completes successfuly you are ready to navigate to http://loca
 
 It will redirect and ask you to shutdown and change the above mentioned config option `dbStartPage` to `false` at which point that will enable full functionality of the CMS. you can now restart the dev server with `astro dev --remote` to continue viewing your new site!
 
-That will give you a running dev environment of what i work with daily... the only other thing to get the full functionality currently is to configure a gitub oAuth app for the [Dashboard and authentication](./packages/studioCMS/README.md#authentication)
+That will give you a running dev environment of what i work with daily... the only other thing to get the full functionality currently is to configure a gitub oAuth app for the [Dashboard and authentication](./packages/studiocms/README.md#authentication)
 
 To start the playground again use the command `pnpm playground:dev`
 
