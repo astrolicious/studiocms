@@ -63,7 +63,7 @@ pnpm astro add db
 
 ```sh
 # Add Astro-Studio-CMS
-pnpm astro add @astrolicious/studiocms
+pnpm astro add studiocms
 ```
 
 ## Authentication
@@ -100,7 +100,7 @@ Your `astro.config.mjs` should look like the following
 
 ```mjs
 import { defineConfig } from "astro/config";
-import studioCMS from "@astrolicious/studiocms";
+import studioCMS from "studiocms";
 import db from '@astrojs/db';
 import node from "@astrojs/node";
 
