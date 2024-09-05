@@ -1,6 +1,6 @@
 {
   "name": "@studiocms/assets",
-  "version": "0.1.0-beta.4",
+  "version": "0.1.0-beta.5",
   "description": "Assets for the StudioCMS Integration",
   "author": {
     "name": "Adam Matthiesen | Jacob Jenkins | Paul Valladares",
@@ -35,10 +35,8 @@
     "./pngs/*": "./src/pngs/*"
   },
   "type": "module",
-  "dependencies": {
-  },
-  "peerDependencies": {
-  },
+  "dependencies": {},
+  "peerDependencies": {},
   "devDependencies": {
     "vite": "catalog:",
     "typescript": "catalog:"
