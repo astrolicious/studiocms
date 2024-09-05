@@ -1,5 +1,49 @@
 # studiocms
 
+## 0.1.0-beta.5
+
+### Patch Changes
+
+- 0bd2b31: [Refactor/Rename]: Split main package into smaller packages and rename main package.
+
+  This change will allow a better divide between the StudioCMS ecosystem packages. The main Astro Integration is now named `studiocms`.
+
+  Renamed Packages:
+
+  - `studiocms`: The main package that users will download and use.
+  - `@studiocms/blog`: The StudioCMSBlog Plugin
+
+  New Packages and their purposes:
+
+  - `@studiocms/core`: Core components and functions
+  - `@studiocms/assets`: Assets used for the StudioCMS Dashboard and other integrations
+  - `@studiocms/renderers`: StudioCMS renderer system
+  - `@studiocms/imagehandler`: StudioCMS image service and components
+  - `@studiocms/auth`: StudioCMS auth routes and middleware
+  - `@studiocms/frontend`: Userfacing pages and routes
+  - `@studiocms/dashboard`: The main dashboard components, routes, and API endpoints
+  - `@studiocms/robotstxt`: Generation of robots.txt file
+  - `@studiocms/betaresources`: Resources for the beta.
+
+- 0bd2b31: [Breaking]: Update AstroDB Table Schemas to use prefixed table names (i.e. `Permissions` -> `StudioCMSPermissions` )
+
+  This change will require migration to a new database or a full wipe of the current database.
+
+  It is recommended to link to a new database and push the new schema changes and migrate your data from the old one.
+
+- Updated dependencies [0bd2b31]
+- Updated dependencies [0bd2b31]
+  - @studiocms/betaresources@0.1.0-beta.5
+  - @studiocms/imagehandler@0.1.0-beta.5
+  - @studiocms/dashboard@0.1.0-beta.5
+  - @studiocms/renderers@0.1.0-beta.5
+  - @studiocms/robotstxt@0.1.0-beta.5
+  - @studiocms/frontend@0.1.0-beta.5
+  - @studiocms/assets@0.1.0-beta.5
+  - @studiocms/auth@0.1.0-beta.5
+  - @studiocms/blog@0.1.0-beta.5
+  - @studiocms/core@0.1.0-beta.5
+
 ## 0.1.0-beta.4
 
 ### Patch Changes

@@ -19,6 +19,7 @@
     "web": "0.0.1"
   },
   "changesets": [
+    "cool-pans-clean",
     "curly-papayas-double",
     "early-sheep-obey",
     "eighty-chicken-fail",
@@ -30,6 +31,7 @@
     "seven-pants-approve",
     "six-days-invent",
     "spotty-baboons-exercise",
+    "spotty-plants-impress",
     "wicked-apes-help"
   ]
 }
