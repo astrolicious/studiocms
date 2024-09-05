@@ -8,7 +8,7 @@
 
 This is an SSR CMS built with AstroDB / Lucia Auth / Unpic Image handler for the Astro Ecosystem.
 
-To see how to get started, check out the [studioCMS README](./packages/studiocmd/README.md).
+To see how to get started, check out the [studioCMS README](./packages/studiocms/README.md).
 
 > [!IMPORTANT]
 > This project is still in early development and it is not yet ready for production use. If you encounter any issues or have ideas for new features, please let us know by [opening an issue](https://github.com/astrolicious/studiocms/issues/new/choose) on our GitHub repository.
