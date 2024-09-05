@@ -20,8 +20,8 @@
     "@astrojs/db": "catalog:",
     "@astrojs/node": "catalog:",
     "@astrojs/web-vitals": "catalog:",
-    "@astrolicious/studiocms": "workspace:*",
-    "@astrolicious/studiocms-blog": "workspace:*",
-    "astro": "catalog:"
+    "astro": "catalog:",
+    "studiocms": "workspace:*",
+    "@studiocms/blog": "workspace:*"
   }
 }

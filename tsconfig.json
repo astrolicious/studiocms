@@ -14,10 +14,37 @@
   },
   "references": [
     {
-      "path": "packages/studioCMS"
+      "path": "packages/studiocms"
     },
     {
-      "path": "packages/studioCMSBlog"
+      "path": "packages/studiocms_assets"
+    },
+    {
+      "path": "packages/studiocms_auth"
+    },
+    {
+      "path": "packages/studiocms_betaresources"
+    },
+    {
+      "path": "packages/studiocms_core"
+    },
+    {
+      "path": "packages/studiocms_dashboard"
+    },
+    {
+      "path": "packages/studiocms_frontend"
+    },
+    {
+      "path": "packages/studiocms_imagehandler"
+    },
+    {
+      "path": "packages/studiocms_renderers"
+    },
+    {
+      "path": "packages/studiocms_robotstxt"
+    },
+    {
+      "path": "packages/studiocms_blog"
     }
   ]
 }

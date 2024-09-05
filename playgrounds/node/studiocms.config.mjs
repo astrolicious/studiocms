@@ -1,4 +1,4 @@
-import { defineStudioCMSConfig } from '@astrolicious/studiocms';
+import { defineStudioCMSConfig } from 'studiocms';
 
 export default defineStudioCMSConfig({
 	dbStartPage: false,

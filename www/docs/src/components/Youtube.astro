@@ -1,8 +1,15 @@
 ---
 import { YouTube } from 'astro-embed';
+
+interface Props {
+	id: string;
+	title: string;
+}
+
+const { id, title } = Astro.props;
 ---
 <div>
-    <YouTube id="Ukh3Zb9VjIM" title="Welcome to StudioCMS"/>
+    <YouTube id={id} title={title} />
 </div>
 
 <style>

@@ -1,5 +1,5 @@
 ---
-title: "@astrolicious/studiocms-blog"
+title: "@studiocms/blog"
 description: "StudioCMS Blog Integration"
 ---
 
@@ -15,28 +15,29 @@ This Astro integration enables the StudioCMS Blog feature in your Astro project.
 ## Installation
 
 <Tabs>
-  {/* <TabItem label="Astro Method">
+  <TabItem label="Astro Method">
 <Steps>
 1. Install the package and add to your astro config using the following command:
 
-   <PackageManagers type="exec" pkg="astro" args="add @astrolicious/studiocms-blog" />
+   <PackageManagers type="exec" pkg="astro" args="add @studiocms/blog" />
 
 2. Update your config file as shown under [Example Config](#example-config) below.
 </Steps>
-  </TabItem> */}
+  </TabItem>
   <TabItem label="Manual Method">
 <Steps>
 1. Install the package using the following command:
 
-   <PackageManagers pkg="@astrolicious/studiocms-blog" />
+   <PackageManagers pkg="@studiocms/blog" />
 
-2. Add `@astrolicious/studiocms-blog` to your astro config file:
+2. Add `@studiocms/blog` to your astro config file:
 
    ```js title="astro.config.mjs" ins={3, 15-20}
-   import node from '@astrojs/node';
-   import studioCMS from '@astrolicious/studiocms';
-   import studioCMSBlog from '@astrolicious/studiocms-blog';
    import { defineConfig } from 'astro/config';
+   import node from '@astrojs/node';
+   import db from '@astrojs/db';
+   import studioCMS from 'studiocms';
+   import studioCMSBlog from '@studiocms/blog';
 
    export default defineConfig({
       site: 'https://demo.astro-studiocms.xyz/',
@@ -75,8 +76,8 @@ This integration will add the following new routes to your StudioCMS Controlled 
 ```js title="astro.config.mjs"
 import { defineConfig } from 'astro/config';
 import db from '@astrojs/db';
-import studioCMS from '@astrolicious/studiocms';
-import studioCMSBlog from '@astrolicious/studiocms-blog';
+import studioCMS from 'studiocms';
+import studioCMSBlog from '@studiocms/blog';
 
 // https://astro.build/config
 export default defineConfig({

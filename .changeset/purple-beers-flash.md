@@ -1,6 +1,6 @@
 ---
-"@astrolicious/studiocms-blog": patch
-"@astrolicious/studiocms": patch
+"@studiocms/blog": patch
+"studiocms": patch
 ---
 
 Lint project code

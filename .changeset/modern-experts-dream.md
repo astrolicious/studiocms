@@ -1,5 +1,5 @@
 ---
-"@astrolicious/studiocms": patch
+"studiocms": patch
 ---
 
 - StudioCMS-Dashboard:

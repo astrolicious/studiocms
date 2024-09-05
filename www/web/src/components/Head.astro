@@ -10,7 +10,7 @@ import ThemeManager from './ThemeManager.astro';
   <link rel='icon' type='image/svg+xml' href='/favicon.svg' />
   <meta name='viewport' content='width=device-width' />
   <meta name='generator' content={Astro.generator} />
-  <link
+  <!-- <link
     rel="preload"
     href="/font/BalooChettan2-Bold.woff2"
     as="font"
@@ -23,7 +23,7 @@ import ThemeManager from './ThemeManager.astro';
     as="font"
     type="font/woff2"
     crossorigin
-  />
+  /> -->
   <title>Astro-StudioCMS</title>
   <ThemeManager defaultTheme="dark" />
   <script 
@@ -43,28 +43,39 @@ import ThemeManager from './ThemeManager.astro';
       },
     }}
   />
-  <!-- <AstroFont
+  <AstroFont
     config={[
       {
-        src: [],
+        src: [
+          {
+            path: './font/BalooChettan2-Bold.woff2',
+            weight: '400',
+            style: 'normal',
+          },
+          {
+            path: './font/BalooChettan2-Bold.woff2',
+            weight: '800',
+            style: 'normal',
+          }
+        ],
         name: 'BalooChettan',
-        googleFontsURL:
-          'https://fonts.googleapis.com/css2?family=Baloo+Chettan+2:wght@400..800&display=swap',
-        preload: true,
+        preload: false,
         display: 'swap',
         selector: 'body',
         fallback: 'sans-serif',
       },
       {
-        src: [],
+        src: [{
+          path: './font/ZenKakuGothicNew-Regular.woff2',
+          weight: '400',
+          style: 'normal',
+        }],
         name: 'zenkaku',
-        googleFontsURL:
-          'https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New&display=swap',
-        preload: true,
+        preload: false,
         display: 'swap',
         selector: 'body',
         fallback: 'sans-serif',
       },
     ]}
-  /> -->
+  />
 </head>

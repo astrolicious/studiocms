@@ -1,6 +1,9 @@
 ---
 title: Getting Started with Astro StudioCMS
 description: Get started building with Astro StudioCMS.
+banner:
+  content: |
+    We've renamed the package to <b>studiocms</b> 🎉
 ---
 
 import { PackageManagers } from 'starlight-package-managers';
@@ -62,18 +65,14 @@ If you skipped the npm install step during the CLI wizard, then be sure to insta
 
 To add the Astro StudioCMS integration to your project, you'll need to install the Astro StudioCMS package and it's dependencies:
 
-    <PackageManagers type="exec" pkg="astro" args="add db node" />
-
-Then install StudioCMS
-
-    <PackageManagers pkg="@astrolicious/studiocms" />
+    <PackageManagers type="exec" pkg="astro" args="add db node studiocms" />
 
 After installing the package, make sure that your `astro.config.mjs` file is correctly importing and calling the integration:
 
 ```js title="astro.config.mjs"
 import db from '@astrojs/db';
 import node from '@astrojs/node';
-import studioCMS from '@astrolicious/studiocms';
+import studioCMS from 'studiocms';
 import { defineConfig } from 'astro/config';
 
 export default defineConfig({

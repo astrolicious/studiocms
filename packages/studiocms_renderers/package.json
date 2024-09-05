@@ -1,0 +1,59 @@
+{
+  "name": "@studiocms/renderers",
+  "version": "0.1.0-beta.4",
+  "description": "Renderers component for the StudioCMS Integration",
+  "author": {
+    "name": "Adam Matthiesen | Jacob Jenkins | Paul Valladares",
+    "url": "https://astro-studiocms.xyz"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/astrolicious/studiocms.git"
+  },
+  "contributors": [
+    "Adammatthiesen",
+    "jdtjenkins",
+    "dreyfus92"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "astro-studiocms",
+    "cms",
+    "studiocms"
+  ],
+  "homepage": "https://astro-studiocms.xyz",
+  "publishConfig": {
+    "access": "public"
+  },
+  "sideEffects": false,
+  "files": [
+    "src"
+  ],
+  "exports": {
+    ".": "./src/index.ts",
+    "./components": "./src/components/index.ts"
+  },
+  "type": "module",
+  "dependencies": {
+    "@astrojs/markdown-remark": "catalog:",
+    "@matthiesenxyz/integration-utils": "catalog:studiocms-shared",
+    "@markdoc/markdoc": "catalog:studiocms-renderer",
+    "@shikijs/transformers": "catalog:studiocms-renderer",
+    "astro-integration-kit": "catalog:",
+    "marked": "catalog:studiocms-shared",
+    "marked-alert": "catalog:studiocms-renderer",
+    "marked-emoji": "catalog:studiocms-renderer",
+    "marked-footnote": "catalog:studiocms-renderer",
+    "marked-shiki": "catalog:studiocms-renderer",
+    "marked-smartypants": "catalog:studiocms-renderer",
+    "shiki": "catalog:studiocms-shared"
+  },
+  "peerDependencies": {
+    "@studiocms/core": "workspace:*",
+    "astro": "catalog:min"
+  },
+  "devDependencies": {
+    "vite": "catalog:",
+    "typescript": "catalog:"
+  }
+}

@@ -1,15 +1,15 @@
 catalog:
-  '@astrojs/db': ^0.13.2 
+  '@astrojs/db': ^0.14.0 
   '@astrojs/markdown-remark': ^5.2.0
   '@astrojs/rss': ^4.0.7
   '@astrojs/check': ^0.9.3
   '@astrojs/tailwind': ^5.1.0
   '@astrojs/starlight': ^0.26.1
-  '@astrojs/web-vitals': ^2.0.0
+  '@astrojs/web-vitals': ^3.0.0
   '@astrojs/node': ^8.3.3
   '@astrojs/cloudflare': ^11.0.1
   '@types/node': ^20.14.11
-  astro: ^4.14.5
+  astro: ^4.15.1
   astro-integration-kit: ^0.16.1
   astro-theme-provider: ^0.6.1
   typescript: ^5.5.4
@@ -18,9 +18,9 @@ catalog:
 
 catalogs:
   min:
-    astro: ^4.14.5
-    '@astrojs/db': ^0.13.2
-    astro-integration-kit: ^0.16
+    astro: ">=4.15"
+    '@astrojs/db': ">=0.14"
+    astro-integration-kit: ">=0.16"
     vite: ^4 || ^5
   landing:
     motion: ^10.18.0
@@ -34,46 +34,40 @@ catalogs:
   docs:
     '@shoelace-style/shoelace': ^2.16.0
     astro-embed: ^0.7.2
-    starlight-links-validator: ^0.10.1
+    starlight-versions: ^0.2.0
     starlight-package-managers: ^0.6.0
     starlight-typedoc: ^0.15.0
     typedoc: ^0.26.6
     typedoc-plugin-markdown: ^4.2.6
-  studiocms:
-    '@iconify/types': ^2.0.0
-    '@cloudinary/url-gen': ^1.19.0
-    '@iconify-json/mdi': ^1.1.67
-    '@iconify-json/logos': ^1.1.43
-    '@iconify/utils': ^2.1.25
-    '@inox-tools/sitemap-ext': ^0.3.3
+  studiocms-shared:
     '@inox-tools/runtime-logger': ^0.3.1
-    '@matthiesenxyz/astrolace': ^0.3.0
+    "@matthiesenxyz/astrolace": ^0.3.2
     "@matthiesenxyz/integration-utils": ^0.2.0
     '@matthiesenxyz/unocss-preset-daisyui': ^0.1.2
-    '@markdoc/markdoc': ^0.4.0
     '@noble/hashes': ^1.4.0
-    '@shikijs/transformers': ^1.10.3
-    '@shoelace-style/shoelace': ^2.15.1
-    '@types/micromatch': ^4.0.9
     '@unocss/astro': ^0.62.3
     '@unocss/reset': ^0.62.3
+    '@types/micromatch': ^4.0.9
     unocss: ^0.62.3
-    '@unpic/astro': ^0.0.46
-    unpic: ^3.18.0
-    arctic: ^1.9.1
     daisyui: ^4.12.10
-    htmx.org: ^2.0.0
     lucia: ^3.2.0
+    arctic: ^1.9.1
     marked: ^13.0.2
+    micromatch: ^4.0.7
+    shiki: ^1.14.1
+    unpic: ^3.18.0
+    mrmime: ^2.0.0
+  studiocms-renderer:
+    '@markdoc/markdoc': ^0.4.0
+    '@shikijs/transformers': ^1.14.1
     marked-alert: ^2.0.1
     marked-emoji: ^1.4.1
     marked-footnote: ^1.2.2
     marked-shiki: ^1.1.0
     marked-smartypants: ^1.1.7
-    micromatch: ^4.0.7
-    mrmime: ^2.0.0
-    oslo: ^1.2.1
-    shiki: ^1.10.3
+  studiocms-imagehandler:
+    '@cloudinary/url-gen': ^1.19.0
+    '@unpic/astro': ^0.0.46
 
 packages:
   - "packages/*"

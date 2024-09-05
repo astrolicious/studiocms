@@ -8,7 +8,7 @@
   },
   "files": {
     "ignoreUnknown": true,
-    "ignore": ["**/.astro/**", "**/package.json"]
+    "ignore": ["**/.astro/**", "**/package.json", "**/scripts/htmx.*"]
   },
   "formatter": {
     "lineWidth": 100

@@ -16,9 +16,9 @@
     "astro": "catalog:",
     "astro-embed": "catalog:docs",
     "sharp": "catalog:",
-    "starlight-links-validator": "catalog:docs",
     "starlight-package-managers": "catalog:docs",
     "starlight-typedoc": "catalog:docs",
+    "starlight-versions": "catalog:docs",
     "typedoc": "catalog:docs",
     "typedoc-plugin-markdown": "catalog:docs",
     "typescript": "catalog:"

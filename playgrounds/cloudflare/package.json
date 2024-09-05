@@ -16,7 +16,6 @@
   "dependencies": {
     "@astrojs/db": "catalog:",
     "@astrojs/cloudflare": "catalog:",
-    "astro": "catalog:",
-    "@astrolicious/studiocms": "workspace:*"
+    "astro": "catalog:"
   }
 }
