@@ -1,7 +1,7 @@
 import { loadRenderers } from 'astro:container';
 import rendererConfig from 'studiocms:renderer/config';
 // import reactRenderer from '@astrojs/react/server.js';
-// import { getContainerRenderer } from '@astrojs/react';
+import { getContainerRenderer } from '@astrojs/react';
 import Markdoc from '@markdoc/markdoc';
 import { experimental_AstroContainer as AstroContainer } from 'astro/container';
 import ReactWrapper from './ReactWrapper.astro';
@@ -36,9 +36,7 @@ export async function renderMarkDoc(input: string): Promise<string> {
 		case 'react': {
 			try {
 				// Make a new Astro container with the React renderer
-				const renderers = await loadRenderers([
-					(await import('@astrojs/react')).getContainerRenderer(),
-				]);
+				const renderers = await loadRenderers([getContainerRenderer()]);
 				const container = await AstroContainer.create({ renderers });
 				// container.addServerRenderer(reactRenderer);
 				// container.addClientRenderer({
