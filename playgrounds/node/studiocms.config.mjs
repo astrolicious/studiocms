@@ -11,11 +11,6 @@ export default defineStudioCMSConfig({
 				highlighter: 'disabled',
 			},
 		},
-		markdocConfig: {
-			reactComponents: {
-				components,
-			},
-		},
 	},
 	defaultFrontEndConfig: {
 		favicon: '/favicon.svg',
