@@ -18,8 +18,8 @@ import {
 } from '@studiocms/core/utils';
 import studioCMSDashboard from '@studiocms/dashboard';
 import studioCMSFrontend from '@studiocms/frontend';
-import studiocmsImageHandler from '@studiocms/imagehandler';
-import studiocmsRenderers from '@studiocms/renderers';
+import studioCMSImageHandler from '@studiocms/imagehandler';
+import studioCMSRenderers from '@studiocms/renderers';
 import studioCMSRobotsTXT from '@studiocms/robotstxt';
 import { defineIntegration } from 'astro-integration-kit';
 import { name, version } from '../package.json';
@@ -61,13 +61,16 @@ export default defineIntegration({
 					// Check Astro Config for required settings
 					checkAstroConfig(params);
 
+					// Get Configs for Internal Integrations
+					const { rendererConfig } = resolvedOptions;
+
 					// Setup Integrations (Internal)
 					addIntegrationArray(params, [
 						{ integration: nodeNamespaceBuiltinsAstro() },
 						{ integration: studioCMSCore(resolvedOptions) },
 						{ integration: studioCMSFrontend(resolvedOptions) },
-						{ integration: studiocmsImageHandler(resolvedOptions) },
-						{ integration: studiocmsRenderers() },
+						{ integration: studioCMSImageHandler(resolvedOptions) },
+						{ integration: studioCMSRenderers(rendererConfig) },
 						{ integration: studioCMSAuth(resolvedOptions) },
 						{ integration: studioCMSDashboard(resolvedOptions) },
 					]);

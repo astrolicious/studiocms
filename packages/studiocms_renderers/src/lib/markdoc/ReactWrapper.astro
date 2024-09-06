@@ -1,0 +1,10 @@
+---
+import MarkDocReactRenderer from './markDocReactRenderer';
+
+interface Props {
+	content: string;
+}
+
+const { content } = Astro.props;
+---
+<MarkDocReactRenderer content={content} />

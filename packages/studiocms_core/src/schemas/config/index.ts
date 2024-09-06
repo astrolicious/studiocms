@@ -4,7 +4,12 @@ import { dashboardConfigSchema } from './dashboard';
 import { DefaultFrontEndConfigSchema } from './defaultFrontend';
 import { imageServiceSchema } from './imageService';
 import { includedIntegrationsSchema } from './integrations';
-import { markedConfigSchema } from './marked';
+import { type StudioCMSRendererConfig, StudioCMSRendererConfigSchema } from './rendererConfig';
+
+//
+// Exported Schemas for use in other internal packages
+//
+export { StudioCMSRendererConfigSchema, type StudioCMSRendererConfig };
 
 //
 // MAIN SCHEMA
@@ -18,26 +23,11 @@ export const StudioCMSOptionsSchema = z
 		 */
 		dbStartPage: z.boolean().optional().default(true),
 		/**
-		 * The Markdown Content Renderer to use for rendering pages and posts
+		 * Renderer Configuration
 		 *
-		 * Marked is A markdown parser and compiler. Built for speed.
-		 * @see https://marked.js.org/ for more info about marked.
-		 *
-		 * Astro is the built-in Astro remark-markdown plugin.
-		 * @see https://www.npmjs.com/package/@astrojs/markdown-remark
-		 *
-		 * Markdoc is a powerful, flexible, Markdown-based authoring framework. Built by Stripe.
-		 * @see https://markdoc.dev/ for more info about markdoc.
-		 *
+		 * Allows customization of the current renderer being used
 		 */
-		contentRenderer: z.enum(['marked', 'astro', 'markdoc']).optional().default('marked'),
-		/**
-		 * Allows customization of the Marked Configuration
-		 *
-		 * Marked is a markdown parser and compiler. Built for speed. It is used to convert markdown strings into HTML for rendering content on StudioCMS pages.
-		 * @see https://marked.js.org/ for more info about marked.
-		 */
-		markedConfig: markedConfigSchema,
+		rendererConfig: StudioCMSRendererConfigSchema,
 		/**
 		 * Allows customization of the Image Service Options
 		 */

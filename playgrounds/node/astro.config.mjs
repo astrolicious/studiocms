@@ -4,11 +4,11 @@ import webvitals from '@astrojs/web-vitals';
 import studioCMSBlog from '@studiocms/blog';
 import { defineConfig } from 'astro/config';
 import studioCMS from 'studiocms';
-import { getCoolifyURL } from '../../www/hostUtils';
+// import { getCoolifyURL } from '../../www/hostUtils';
 
 // https://astro.build/config
 export default defineConfig({
-	site: getCoolifyURL(true) || 'https://demo.astro-studiocms.xyz/',
+	site: 'https://demo.astro-studiocms.xyz/',
 	output: 'server',
 	adapter: node({ mode: 'standalone' }),
 	integrations: [

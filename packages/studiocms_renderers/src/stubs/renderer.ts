@@ -10,7 +10,7 @@ export const rendererDTS = (rendererPath: string) => {
         /**
          * StudioCMS Content Renderer component
         */
-        export { default as StudioCMSRenderer } from '${rendererPath}';`);
+        export const StudioCMSRenderer: typeof import('${rendererPath}').default;`);
 	renderer.addLines('}');
 
 	const rendererDTS = renderer.text();

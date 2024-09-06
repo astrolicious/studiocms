@@ -1,12 +1,14 @@
 ---
-import Config from 'virtual:studiocms/config';
+import rendererConfig from 'studiocms:renderer/config';
+import type { StudioCMSRendererConfig } from '@studiocms/core/schemas';
 import { contentRenderer } from '../lib/contentRenderer';
 
 type Props = {
 	content: string;
+	renderer?: StudioCMSRendererConfig['renderer'];
 };
 
-const { content } = Astro.props;
+const { content, renderer = rendererConfig.renderer } = Astro.props;
 ---
 
-<Fragment set:html={contentRenderer(content, Config.contentRenderer)} />
+<Fragment set:html={contentRenderer(content, renderer)} />

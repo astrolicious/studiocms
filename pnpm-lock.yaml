@@ -116,9 +116,6 @@ catalogs:
       specifier: ^0.0.46
       version: 0.0.46
   studiocms-renderer:
-    '@markdoc/markdoc':
-      specifier: ^0.4.0
-      version: 0.4.0
     '@shikijs/transformers':
       specifier: ^1.14.1
       version: 1.14.1
@@ -141,6 +138,9 @@ catalogs:
     '@inox-tools/runtime-logger':
       specifier: ^0.3.1
       version: 0.3.1
+    '@markdoc/markdoc':
+      specifier: ^0.4.0
+      version: 0.4.0
     '@matthiesenxyz/astrolace':
       specifier: ^0.3.2
       version: 0.3.2
@@ -214,16 +214,19 @@ importers:
     dependencies:
       '@astrojs/db':
         specifier: catalog:min
-        version: 0.14.0(@cloudflare/workers-types@4.20240725.0)(@types/react@18.3.3)
+        version: 0.14.0(@cloudflare/workers-types@4.20240725.0)(@types/react@18.3.5)(react@18.3.1)
       '@cloudinary/url-gen':
         specifier: catalog:studiocms-imagehandler
         version: 1.19.0
       '@inox-tools/runtime-logger':
         specifier: catalog:studiocms-shared
         version: 0.3.1(astro@4.15.1(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))
+      '@markdoc/markdoc':
+        specifier: catalog:studiocms-shared
+        version: 0.4.0(@types/react@18.3.5)(react@18.3.1)
       '@matthiesenxyz/astrolace':
         specifier: catalog:studiocms-shared
-        version: 0.3.2(@types/react@18.3.3)(astro@4.15.1(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))
+        version: 0.3.2(@types/react@18.3.5)(astro@4.15.1(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))
       '@matthiesenxyz/integration-utils':
         specifier: catalog:studiocms-shared
         version: 0.2.0(astro@4.15.1(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))
@@ -344,6 +347,10 @@ importers:
         version: 5.4.2(@types/node@22.0.0)
 
   packages/studiocms_assets:
+    dependencies:
+      astro:
+        specifier: catalog:min
+        version: 4.15.1(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4)
     devDependencies:
       typescript:
         specifier: 'catalog:'
@@ -356,13 +363,13 @@ importers:
     dependencies:
       '@astrojs/db':
         specifier: catalog:min
-        version: 0.14.0(@cloudflare/workers-types@4.20240725.0)(@types/react@18.3.3)
+        version: 0.14.0(@cloudflare/workers-types@4.20240725.0)(@types/react@18.3.5)(react@18.3.1)
       '@inox-tools/runtime-logger':
         specifier: catalog:studiocms-shared
         version: 0.3.1(astro@4.15.1(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))
       '@matthiesenxyz/astrolace':
         specifier: catalog:studiocms-shared
-        version: 0.3.2(@types/react@18.3.3)(astro@4.15.1(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))
+        version: 0.3.2(@types/react@18.3.5)(astro@4.15.1(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))
       '@matthiesenxyz/integration-utils':
         specifier: catalog:studiocms-shared
         version: 0.2.0(astro@4.15.1(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))
@@ -449,10 +456,13 @@ importers:
     dependencies:
       '@astrojs/db':
         specifier: catalog:min
-        version: 0.14.0(@cloudflare/workers-types@4.20240725.0)(@types/react@18.3.3)
+        version: 0.14.0(@cloudflare/workers-types@4.20240725.0)(@types/react@18.3.5)(react@18.3.1)
+      '@markdoc/markdoc':
+        specifier: catalog:studiocms-shared
+        version: 0.4.0(@types/react@18.3.5)(react@18.3.1)
       '@matthiesenxyz/astrolace':
         specifier: catalog:studiocms-shared
-        version: 0.3.2(@types/react@18.3.3)(astro@4.15.1(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))
+        version: 0.3.2(@types/react@18.3.5)(astro@4.15.1(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))
       '@matthiesenxyz/integration-utils':
         specifier: catalog:studiocms-shared
         version: 0.2.0(astro@4.15.1(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))
@@ -498,7 +508,7 @@ importers:
         version: 0.3.1(astro@4.15.1(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))
       '@matthiesenxyz/astrolace':
         specifier: catalog:studiocms-shared
-        version: 0.3.2(@types/react@18.3.3)(astro@4.15.1(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))
+        version: 0.3.2(@types/react@18.3.5)(astro@4.15.1(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))
       '@matthiesenxyz/integration-utils':
         specifier: catalog:studiocms-shared
         version: 0.2.0(astro@4.15.1(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))
@@ -517,6 +527,9 @@ importers:
       '@studiocms/core':
         specifier: workspace:*
         version: link:../studiocms_core
+      '@studiocms/renderers':
+        specifier: workspace:*
+        version: link:../studiocms_renderers
       '@unocss/astro':
         specifier: catalog:studiocms-shared
         version: 0.62.3(rollup@4.21.0)(vite@5.4.2(@types/node@22.0.0))
@@ -604,9 +617,12 @@ importers:
       '@astrojs/markdown-remark':
         specifier: 'catalog:'
         version: 5.2.0
+      '@astrojs/react':
+        specifier: ^3.6.2
+        version: 3.6.2(@types/react-dom@18.3.0)(@types/react@18.3.5)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(vite@5.4.2(@types/node@22.0.0))
       '@markdoc/markdoc':
-        specifier: catalog:studiocms-renderer
-        version: 0.4.0(@types/react@18.3.3)
+        specifier: catalog:studiocms-shared
+        version: 0.4.0(@types/react@18.3.5)(react@18.3.1)
       '@matthiesenxyz/integration-utils':
         specifier: catalog:studiocms-shared
         version: 0.2.0(astro@4.15.1(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))
@@ -616,6 +632,9 @@ importers:
       '@studiocms/core':
         specifier: workspace:*
         version: link:../studiocms_core
+      '@types/react':
+        specifier: ^18.3.5
+        version: 18.3.5
       astro:
         specifier: catalog:min
         version: 4.15.1(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4)
@@ -640,6 +659,12 @@ importers:
       marked-smartypants:
         specifier: catalog:studiocms-renderer
         version: 1.1.7(marked@13.0.3)
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      react-dom:
+        specifier: ^18.3.1
+        version: 18.3.1(react@18.3.1)
       shiki:
         specifier: catalog:studiocms-shared
         version: 1.14.1
@@ -664,7 +689,7 @@ importers:
         version: 11.0.1(astro@4.15.1(@types/node@20.14.13)(rollup@4.21.0)(typescript@5.5.4))
       '@astrojs/db':
         specifier: 'catalog:'
-        version: 0.14.0(@cloudflare/workers-types@4.20240725.0)(@types/react@18.3.3)
+        version: 0.14.0(@cloudflare/workers-types@4.20240725.0)(@types/react@18.3.5)(react@18.3.1)
       astro:
         specifier: 'catalog:'
         version: 4.15.1(@types/node@20.14.13)(rollup@4.21.0)(typescript@5.5.4)
@@ -680,13 +705,13 @@ importers:
     dependencies:
       '@astrojs/db':
         specifier: 'catalog:'
-        version: 0.14.0(@cloudflare/workers-types@4.20240725.0)(@types/react@18.3.3)
+        version: 0.14.0(@cloudflare/workers-types@4.20240725.0)(@types/react@18.3.5)(react@18.3.1)
       '@astrojs/node':
         specifier: 'catalog:'
         version: 8.3.3(astro@4.15.1(@types/node@20.14.13)(rollup@4.21.0)(typescript@5.5.4))
       '@astrojs/web-vitals':
         specifier: 'catalog:'
-        version: 3.0.0(@astrojs/db@0.14.0(@cloudflare/workers-types@4.20240725.0)(@types/react@18.3.3))
+        version: 3.0.0(@astrojs/db@0.14.0(@cloudflare/workers-types@4.20240725.0)(@types/react@18.3.5)(react@18.3.1))
       '@studiocms/blog':
         specifier: workspace:*
         version: link:../../packages/studiocms_blog
@@ -714,7 +739,7 @@ importers:
         version: 0.26.1(astro@4.15.1(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))
       '@shoelace-style/shoelace':
         specifier: catalog:docs
-        version: 2.16.0(@types/react@18.3.3)
+        version: 2.16.0(@types/react@18.3.5)
       astro:
         specifier: 'catalog:'
         version: 4.15.1(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4)
@@ -899,6 +924,15 @@ packages:
     resolution: {integrity: sha512-Z9IYjuXSArkAUx3N6xj6+Bnvx8OdUSHA8YoOgyepp3+zJmtVYJIl/I18GozdJVW1p5u/CNpl3Km7/gwTJK85cw==}
     engines: {node: ^18.17.1 || ^20.3.0 || >=21.0.0}
 
+  '@astrojs/react@3.6.2':
+    resolution: {integrity: sha512-fK29lYI7zK/KG4ZBy956x4dmauZcZ18osFkuyGa8r3gmmCQa2NZ9XNu9WaVYEUm0j89f4Gii4tbxLoyM8nk2MA==}
+    engines: {node: ^18.17.1 || ^20.3.0 || >=21.0.0}
+    peerDependencies:
+      '@types/react': ^17.0.50 || ^18.0.21
+      '@types/react-dom': ^17.0.17 || ^18.0.6
+      react: ^17.0.2 || ^18.0.0 || ^19.0.0-beta
+      react-dom: ^17.0.2 || ^18.0.0 || ^19.0.0-beta
+
   '@astrojs/rss@4.0.7':
     resolution: {integrity: sha512-ZEG55XFB19l+DplUvBISmz04UbjDtKliRO4Y5+ERRhAMjgCVVobEBNE6ZwWG1h6orWUocy4nfPihKXDyB73x9g==}
 
@@ -1039,6 +1073,18 @@ packages:
 
   '@babel/plugin-transform-modules-commonjs@7.24.8':
     resolution: {integrity: sha512-WHsk9H8XxRs3JXKWFiqtQebdh9b/pTk4EgueygFzYlTKAg0Ud985mSevdNjdXdFBATSKVJGQXP1tv6aGbssLKA==}
+    engines: {node: '>=6.9.0'}
+    peerDependencies:
+      '@babel/core': ^7.0.0-0
+
+  '@babel/plugin-transform-react-jsx-self@7.24.7':
+    resolution: {integrity: sha512-fOPQYbGSgH0HUp4UJO4sMBFjY6DuWq+2i8rixyUMb3CdGixs/gccURvYOAhajBdKDoGajFr3mUq5rH3phtkGzw==}
+    engines: {node: '>=6.9.0'}
+    peerDependencies:
+      '@babel/core': ^7.0.0-0
+
+  '@babel/plugin-transform-react-jsx-source@7.24.7':
+    resolution: {integrity: sha512-J2z+MWzZHVOemyLweMqngXrgGC42jQ//R0KdxqkIz/OrbVIIlhFI3WigZ5fO+nwFvBlncr4MGapd8vTyc7RPNQ==}
     engines: {node: '>=6.9.0'}
     peerDependencies:
       '@babel/core': ^7.0.0-0
@@ -2636,8 +2682,11 @@ packages:
   '@types/prop-types@15.7.12':
     resolution: {integrity: sha512-5zvhXYtRNRluoE/jAp4GVsSduVUzNWKkOZrCDBWYtE7biZywwdC2AcEzg+cSMLFRfVgeAFqpfNabiPjxFddV1Q==}
 
-  '@types/react@18.3.3':
-    resolution: {integrity: sha512-hti/R0pS0q1/xx+TsI73XIqk26eBsISZ2R0wUijXIngRK9R/e7Xw/cXVxQK7R5JjW+SV4zGcn5hXjudkN/pLIw==}
+  '@types/react-dom@18.3.0':
+    resolution: {integrity: sha512-EhwApuTmMBmXuFOikhQLIBUn6uFg81SwLMOAUgodJF14SOBOCMdU04gDoYi0WOJJHD144TL32z4yDqCW3dnkQg==}
+
+  '@types/react@18.3.5':
+    resolution: {integrity: sha512-WeqMfGJLGuLCqHGYRGHxnKrXcTitc6L/nBUWfWPcTarG3t9PsquqUMuVeXZeca+mglY4Vo5GZjCi0A3Or2lnxA==}
 
   '@types/sax@1.2.7':
     resolution: {integrity: sha512-rO73L89PJxeYM3s3pPPjiPgVVcymqU490g0YO5n5By0k2Erzj6tay/4lr1CHAAU4JyOWd1rpQ8bCf6cZfHU96A==}
@@ -2765,6 +2814,12 @@ packages:
 
   '@unpic/placeholder@0.1.2':
     resolution: {integrity: sha512-O++tS97biojo5sqn5TeTt+jUjl5gWOdIQuOXe8YluTJWq4L0GM6VuTkaspNpsmxHfioJw/6YBirzOpG4t87l8Q==}
+
+  '@vitejs/plugin-react@4.3.1':
+    resolution: {integrity: sha512-m/V2syj5CuVnaxcUJOQRel/Wr31FFXRFlnOoq1TVtkCxsY5veGMTEmpWHndrhB2U8ScHtCQB1e+4hWYExQc6Lg==}
+    engines: {node: ^14.18.0 || >=16.0.0}
+    peerDependencies:
+      vite: ^4.2.0 || ^5.0.0
 
   '@volar/kit@2.4.0':
     resolution: {integrity: sha512-uqwtPKhrbnP+3f8hs+ltDYXLZ6Wdbs54IzkaPocasI4aBhqWLht5qXctE1MqpZU52wbH359E0u9nhxEFmyon+w==}
@@ -4161,6 +4216,10 @@ packages:
   longest-streak@3.1.0:
     resolution: {integrity: sha512-9Ri+o0JYgehTaVBBDoMqIl8GXtbWg711O3srftcHhZ0dqnETqLaoIK0x17fUw9rFSlK/0NlsKe0Ahhyl5pXE2g==}
 
+  loose-envify@1.4.0:
+    resolution: {integrity: sha512-lyuxPGr/Wfhrlem2CL/UcnUc1zcqKAImBDzukY7Y5F/yQiNdko6+fRLevlw1HgMySw7f611UIY408EtxRSoK3Q==}
+    hasBin: true
+
   lru-cache@10.4.3:
     resolution: {integrity: sha512-JNAzZcXrCt42VGLuYz0zfAzDfAvJWW6AfYlDBQyDV5DClI2m5sAmK+OIO7s59XfsRsWHp02jAJrRadPRGTt6SQ==}
 
@@ -4875,6 +4934,19 @@ packages:
     resolution: {integrity: sha512-y3bGgqKj3QBdxLbLkomlohkvsA8gdAiUQlSBJnBhfn+BPxg4bc62d8TcBW15wavDfgexCgccckhcZvywyQYPOw==}
     hasBin: true
 
+  react-dom@18.3.1:
+    resolution: {integrity: sha512-5m4nQKp+rZRb09LNH59GM4BxTh9251/ylbKIbpe7TpGxfJ+9kv6BLkLBXIjjspbgbnIBNqlI23tRnTWT0snUIw==}
+    peerDependencies:
+      react: ^18.3.1
+
+  react-refresh@0.14.2:
+    resolution: {integrity: sha512-jCvmsr+1IUSMUyzOkRcvnVbX3ZYC6g9TDrDbFuFmRDq7PD4yaGbLKNQL6k2jnArV8hjYxh7hVhAZB6s9HDGpZA==}
+    engines: {node: '>=0.10.0'}
+
+  react@18.3.1:
+    resolution: {integrity: sha512-wS+hAgJShR0KhEvPJArfuPVN1+Hz1t0Y6n5jLrGQbkb4urgPE/0Rve+1kMB1v/oWgHgm4WIcV+i7F2pTVj+2iQ==}
+    engines: {node: '>=0.10.0'}
+
   read-cache@1.0.0:
     resolution: {integrity: sha512-Owdv/Ft7IjOgm/i0xvNDZ1LrRANRfew4b2prF3OWMQLxLfu3bS8FVhCsrSCMK4lR56Y9ya+AThoTpDCTxCmpRA==}
 
@@ -5030,6 +5102,9 @@ packages:
 
   sax@1.4.1:
     resolution: {integrity: sha512-+aWOz7yVScEGoKNd4PA10LZ8sk0A/z5+nXQG5giUO5rprX9jgYsTdov9qCchZiPIZezbZH+jRut8nPodFAX4Jg==}
+
+  scheduler@0.23.2:
+    resolution: {integrity: sha512-UOShsPwz7NrMUqhR6t0hWjFduvOzbtv7toDH1/hIrfRNIDBnnBWd0CwJTGvTpngVlmwGCdP9/Zl/tVrDqcuYzQ==}
 
   section-matter@1.0.0:
     resolution: {integrity: sha512-vfD3pmTzGpufjScBh50YHKzEu2lxBWhVEHsNGoEXmCmn2hKGfeNLYMzCJpe8cD7gqX7TJluOVpBkAequ6dgMmA==}
@@ -5366,6 +5441,9 @@ packages:
 
   uhyphen@0.2.0:
     resolution: {integrity: sha512-qz3o9CHXmJJPGBdqzab7qAYuW8kQGKNEuoHFYrBwV6hWIMcpAmxDLXojcHfFr9US1Pe6zUswEIJIbLI610fuqA==}
+
+  ultrahtml@1.5.3:
+    resolution: {integrity: sha512-GykOvZwgDWZlTQMtp5jrD4BVL+gNn2NVlVafjcFUJ7taY20tqYdwdoWBFy6GBJsNTZe1GkGPkSl5knQAjtgceg==}
 
   unconfig@0.5.5:
     resolution: {integrity: sha512-VQZ5PT9HDX+qag0XdgQi8tJepPhXiR/yVOkn707gJDKo31lGjRilPREiQJ9Z6zd/Ugpv6ZvO5VxVIcatldYcNQ==}
@@ -5906,13 +5984,13 @@ snapshots:
 
   '@astrojs/compiler@2.10.3': {}
 
-  '@astrojs/db@0.14.0(@cloudflare/workers-types@4.20240725.0)(@types/react@18.3.3)':
+  '@astrojs/db@0.14.0(@cloudflare/workers-types@4.20240725.0)(@types/react@18.3.5)(react@18.3.1)':
     dependencies:
       '@astrojs/studio': 0.1.1
       '@libsql/client': 0.10.0
       async-listen: 3.0.1
       deep-diff: 1.0.2
-      drizzle-orm: 0.31.4(@cloudflare/workers-types@4.20240725.0)(@libsql/client@0.10.0)(@types/react@18.3.3)
+      drizzle-orm: 0.31.4(@cloudflare/workers-types@4.20240725.0)(@libsql/client@0.10.0)(@types/react@18.3.5)(react@18.3.1)
       github-slugger: 2.0.0
       kleur: 4.1.5
       nanoid: 5.0.7
@@ -6059,6 +6137,18 @@ snapshots:
     dependencies:
       prismjs: 1.29.0
 
+  '@astrojs/react@3.6.2(@types/react-dom@18.3.0)(@types/react@18.3.5)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(vite@5.4.2(@types/node@22.0.0))':
+    dependencies:
+      '@types/react': 18.3.5
+      '@types/react-dom': 18.3.0
+      '@vitejs/plugin-react': 4.3.1(vite@5.4.2(@types/node@22.0.0))
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
+      ultrahtml: 1.5.3
+    transitivePeerDependencies:
+      - supports-color
+      - vite
+
   '@astrojs/rss@4.0.7':
     dependencies:
       fast-xml-parser: 4.4.1
@@ -6127,9 +6217,9 @@ snapshots:
 
   '@astrojs/underscore-redirects@0.3.4': {}
 
-  '@astrojs/web-vitals@3.0.0(@astrojs/db@0.14.0(@cloudflare/workers-types@4.20240725.0)(@types/react@18.3.3))':
+  '@astrojs/web-vitals@3.0.0(@astrojs/db@0.14.0(@cloudflare/workers-types@4.20240725.0)(@types/react@18.3.5)(react@18.3.1))':
     dependencies:
-      '@astrojs/db': 0.14.0(@cloudflare/workers-types@4.20240725.0)(@types/react@18.3.3)
+      '@astrojs/db': 0.14.0(@cloudflare/workers-types@4.20240725.0)(@types/react@18.3.5)(react@18.3.1)
       web-vitals: 4.2.3
 
   '@astrojs/yaml2ts@0.2.1':
@@ -6288,6 +6378,16 @@ snapshots:
       '@babel/helper-simple-access': 7.24.7
     transitivePeerDependencies:
       - supports-color
+
+  '@babel/plugin-transform-react-jsx-self@7.24.7(@babel/core@7.25.2)':
+    dependencies:
+      '@babel/core': 7.25.2
+      '@babel/helper-plugin-utils': 7.24.8
+
+  '@babel/plugin-transform-react-jsx-source@7.24.7(@babel/core@7.25.2)':
+    dependencies:
+      '@babel/core': 7.25.2
+      '@babel/helper-plugin-utils': 7.24.8
 
   '@babel/plugin-transform-react-jsx@7.25.2(@babel/core@7.25.2)':
     dependencies:
@@ -7169,9 +7269,9 @@ snapshots:
 
   '@lit-labs/ssr-dom-shim@1.2.0': {}
 
-  '@lit/react@1.0.5(@types/react@18.3.3)':
+  '@lit/react@1.0.5(@types/react@18.3.5)':
     dependencies:
-      '@types/react': 18.3.3
+      '@types/react': 18.3.5
 
   '@lit/reactive-element@2.0.4':
     dependencies:
@@ -7193,14 +7293,15 @@ snapshots:
       globby: 11.1.0
       read-yaml-file: 1.1.0
 
-  '@markdoc/markdoc@0.4.0(@types/react@18.3.3)':
+  '@markdoc/markdoc@0.4.0(@types/react@18.3.5)(react@18.3.1)':
     optionalDependencies:
       '@types/markdown-it': 12.2.3
-      '@types/react': 18.3.3
+      '@types/react': 18.3.5
+      react: 18.3.1
 
-  '@matthiesenxyz/astrolace@0.3.2(@types/react@18.3.3)(astro@4.15.1(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))':
+  '@matthiesenxyz/astrolace@0.3.2(@types/react@18.3.5)(astro@4.15.1(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))':
     dependencies:
-      '@shoelace-style/shoelace': 2.16.0(@types/react@18.3.3)
+      '@shoelace-style/shoelace': 2.16.0(@types/react@18.3.5)
       astro: 4.15.1(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4)
       astro-integration-kit: 0.16.1(astro@4.15.1(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))
       lit: 3.1.4
@@ -7569,11 +7670,11 @@ snapshots:
 
   '@shoelace-style/localize@3.2.1': {}
 
-  '@shoelace-style/shoelace@2.16.0(@types/react@18.3.3)':
+  '@shoelace-style/shoelace@2.16.0(@types/react@18.3.5)':
     dependencies:
       '@ctrl/tinycolor': 4.1.0
       '@floating-ui/dom': 1.6.8
-      '@lit/react': 1.0.5(@types/react@18.3.3)
+      '@lit/react': 1.0.5(@types/react@18.3.5)
       '@shoelace-style/animations': 1.1.0
       '@shoelace-style/localize': 3.2.1
       composed-offset-position: 0.0.4
@@ -7682,7 +7783,11 @@ snapshots:
 
   '@types/prop-types@15.7.12': {}
 
-  '@types/react@18.3.3':
+  '@types/react-dom@18.3.0':
+    dependencies:
+      '@types/react': 18.3.5
+
+  '@types/react@18.3.5':
     dependencies:
       '@types/prop-types': 15.7.12
       csstype: 3.1.3
@@ -7896,6 +8001,17 @@ snapshots:
   '@unpic/placeholder@0.1.2':
     dependencies:
       blurhash: 2.0.5
+
+  '@vitejs/plugin-react@4.3.1(vite@5.4.2(@types/node@22.0.0))':
+    dependencies:
+      '@babel/core': 7.25.2
+      '@babel/plugin-transform-react-jsx-self': 7.24.7(@babel/core@7.25.2)
+      '@babel/plugin-transform-react-jsx-source': 7.24.7(@babel/core@7.25.2)
+      '@types/babel__core': 7.20.5
+      react-refresh: 0.14.2
+      vite: 5.4.2(@types/node@22.0.0)
+    transitivePeerDependencies:
+      - supports-color
 
   '@volar/kit@2.4.0(typescript@5.5.4)':
     dependencies:
@@ -8705,11 +8821,12 @@ snapshots:
       domelementtype: 2.3.0
       domhandler: 5.0.3
 
-  drizzle-orm@0.31.4(@cloudflare/workers-types@4.20240725.0)(@libsql/client@0.10.0)(@types/react@18.3.3):
+  drizzle-orm@0.31.4(@cloudflare/workers-types@4.20240725.0)(@libsql/client@0.10.0)(@types/react@18.3.5)(react@18.3.1):
     optionalDependencies:
       '@cloudflare/workers-types': 4.20240725.0
       '@libsql/client': 0.10.0
-      '@types/react': 18.3.3
+      '@types/react': 18.3.5
+      react: 18.3.1
 
   dset@3.1.3: {}
 
@@ -9577,6 +9694,10 @@ snapshots:
       is-unicode-supported: 1.3.0
 
   longest-streak@3.1.0: {}
+
+  loose-envify@1.4.0:
+    dependencies:
+      js-tokens: 4.0.0
 
   lru-cache@10.4.3: {}
 
@@ -10593,6 +10714,18 @@ snapshots:
       minimist: 1.2.8
       strip-json-comments: 2.0.1
 
+  react-dom@18.3.1(react@18.3.1):
+    dependencies:
+      loose-envify: 1.4.0
+      react: 18.3.1
+      scheduler: 0.23.2
+
+  react-refresh@0.14.2: {}
+
+  react@18.3.1:
+    dependencies:
+      loose-envify: 1.4.0
+
   read-cache@1.0.0:
     dependencies:
       pify: 2.3.0
@@ -10851,6 +10984,10 @@ snapshots:
   safer-buffer@2.1.2: {}
 
   sax@1.4.1: {}
+
+  scheduler@0.23.2:
+    dependencies:
+      loose-envify: 1.4.0
 
   section-matter@1.0.0:
     dependencies:
@@ -11219,6 +11356,8 @@ snapshots:
   ufo@1.5.4: {}
 
   uhyphen@0.2.0: {}
+
+  ultrahtml@1.5.3: {}
 
   unconfig@0.5.5:
     dependencies:
