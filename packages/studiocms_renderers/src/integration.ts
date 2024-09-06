@@ -1,5 +1,5 @@
 import { customRendererPlugin, stringify } from '@studiocms/core/lib';
-import { StudioCMSRendererConfigSchema as optionsSchema } from '@studiocms/core/schemas';
+import { StudioCMSRendererConfigSchema } from '@studiocms/core/schemas';
 import { addVirtualImports, createResolver, defineIntegration } from 'astro-integration-kit';
 import { name } from '../package.json';
 import { rendererDTS } from './stubs/renderer';
@@ -8,7 +8,7 @@ import { rendererAstroMarkdownDTS } from './stubs/renderer-markdownConfig';
 
 export default defineIntegration({
 	name,
-	optionsSchema,
+	optionsSchema: StudioCMSRendererConfigSchema,
 	setup({ name, options }) {
 		// Create resolver relative to this file
 		const { resolve } = createResolver(import.meta.url);

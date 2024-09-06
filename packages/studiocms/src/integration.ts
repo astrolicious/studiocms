@@ -61,16 +61,13 @@ export default defineIntegration({
 					// Check Astro Config for required settings
 					checkAstroConfig(params);
 
-					// Get Configs for Internal Integrations
-					const { rendererConfig } = resolvedOptions;
-
 					// Setup Integrations (Internal)
 					addIntegrationArray(params, [
 						{ integration: nodeNamespaceBuiltinsAstro() },
 						{ integration: studioCMSCore(resolvedOptions) },
 						{ integration: studioCMSFrontend(resolvedOptions) },
 						{ integration: studioCMSImageHandler(resolvedOptions) },
-						{ integration: studioCMSRenderers(rendererConfig) },
+						{ integration: studioCMSRenderers(resolvedOptions.rendererConfig) },
 						{ integration: studioCMSAuth(resolvedOptions) },
 						{ integration: studioCMSDashboard(resolvedOptions) },
 					]);

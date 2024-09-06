@@ -11,7 +11,7 @@ type markdocReactComponents = {} | undefined;
 // MARKDOC RENDER TYPE SCHEMA
 //
 export const markdocRenderTypeSchema = z
-	.union([z.literal('html'), z.literal('react')])
+	.union([z.literal('html'), z.literal('react'), z.literal('react-static')])
 	.optional()
 	.default('html');
 

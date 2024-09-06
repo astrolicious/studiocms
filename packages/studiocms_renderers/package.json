@@ -39,6 +39,7 @@
     "@astrojs/markdown-remark": "catalog:",
     "@matthiesenxyz/integration-utils": "catalog:studiocms-shared",
     "@markdoc/markdoc": "catalog:studiocms-shared",
+    "@studiocms/core": "workspace:*",
     "@shikijs/transformers": "catalog:studiocms-renderer",
     "astro-integration-kit": "catalog:",
     "marked": "catalog:studiocms-shared",
@@ -50,7 +51,6 @@
     "shiki": "catalog:studiocms-shared"
   },
   "peerDependencies": {
-    "@studiocms/core": "workspace:*",
     "astro": "catalog:min",
     "@astrojs/react": "^3.6.2",
     "react": "^18.3.1",
@@ -73,6 +73,10 @@
   },
   "devDependencies": {
     "vite": "catalog:",
-    "typescript": "catalog:"
+    "typescript": "catalog:",
+    "@astrojs/react": "^3.6.2",
+    "react": "^18.3.1",
+    "@types/react": "^18.3.5",
+    "react-dom": "^18.3.1"
   }
 }
