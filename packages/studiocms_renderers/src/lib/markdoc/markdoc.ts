@@ -34,27 +34,22 @@ export async function renderMarkDoc(input: string): Promise<string> {
 		case 'react-static':
 			return Markdoc.renderers.reactStatic(content);
 		case 'react': {
-			try {
-				// Make a new Astro container with the React renderer
-				const renderers = await loadRenderers([getContainerRenderer()]);
-				const container = await AstroContainer.create({ renderers });
-				// container.addServerRenderer(reactRenderer);
-				// container.addClientRenderer({
-				// 	name: '@astrojs/react',
-				// 	entrypoint: '@astrojs/react/client.js',
-				// });
+			// Make a new Astro container with the React renderer
+			const renderers = await loadRenderers([getContainerRenderer()]);
+			const container = await AstroContainer.create({ renderers });
+			// container.addServerRenderer(reactRenderer);
+			// container.addClientRenderer({
+			// 	name: '@astrojs/react',
+			// 	entrypoint: '@astrojs/react/client.js',
+			// });
 
-				// Render the content to a HTML string
-				const containerOutput = await container.renderToString(ReactWrapper, {
-					props: { content: content },
-				});
+			// Render the content to a HTML string
+			const containerOutput = await container.renderToString(ReactWrapper, {
+				props: { content: content },
+			});
 
-				// Return the rendered content
-				return containerOutput || '';
-			} catch (error) {
-				console.error('Error rendering MarkDoc with React renderer', error);
-				return '';
-			}
+			// Return the rendered content
+			return containerOutput || '';
 		}
 		default:
 			throw new Error(`Unknown render type: ${renderType}`);
