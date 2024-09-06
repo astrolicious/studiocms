@@ -32,7 +32,8 @@
   "exports": {
     ".": "./src/index.ts",
     "./components": "./src/components/index.ts",
-    "./contentrenderer": "./src/lib/contentrenderer.ts"
+    "./contentrenderer": "./src/lib/contentrenderer.ts",
+    "./markdocReact": "./src/lib/markdoc/markdocReact.ts"
   },
   "type": "module",
   "dependencies": {
@@ -53,10 +54,10 @@
   },
   "peerDependencies": {
     "astro": "catalog:min",
-    "@astrojs/react": "^3.6.2",
-    "react": "^18.3.1",
-    "@types/react": "^18.3.5",
-    "react-dom": "^18.3.1"
+    "@astrojs/react": "catalog:studiocms-shared",
+    "react": "catalog:studiocms-shared",
+    "@types/react": "catalog:studiocms-shared",
+    "react-dom": "catalog:studiocms-shared"
   },
   "peerDependenciesMeta": {
     "@astrojs/react": {

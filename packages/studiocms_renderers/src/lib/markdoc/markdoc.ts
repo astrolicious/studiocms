@@ -1,14 +1,31 @@
 import rendererConfig from 'studiocms:renderer/config';
-// import reactRenderer from '@astrojs/react/server.js';
-import Markdoc from '@markdoc/markdoc';
-import { experimental_AstroContainer as AstroContainer } from 'astro/container';
-import React from 'react';
-import ReactWrapper from './ReactWrapper.astro';
+import Markdoc, { type RenderableTreeNode } from '@markdoc/markdoc';
+import type { markdocRenderer } from '@studiocms/core/schemas/renderer';
 
 // Destructure the Markdoc configuration from the rendererConfig
 const {
-	markdocConfig: { argParse, transformConfig, renderType, reactComponents },
+	markdocConfig: { argParse, transformConfig, renderType },
 } = rendererConfig;
+
+function renderHTML(): markdocRenderer {
+	return {
+		name: 'html',
+		renderer: async (content: RenderableTreeNode) => {
+			return Markdoc.renderers.html(content);
+		},
+	};
+}
+
+function renderReactStatic(): markdocRenderer {
+	return {
+		name: 'react-static',
+		renderer: async (content: RenderableTreeNode) => {
+			return Markdoc.renderers.reactStatic(content);
+		},
+	};
+}
+
+const renderers = [renderHTML(), renderReactStatic()];
 
 /**
  * Render a Markdown string into HTML using the Markdoc renderer
@@ -25,43 +42,21 @@ export async function renderMarkDoc(input: string): Promise<string> {
 
 	// Transform the AST into content
 	const content = Markdoc.transform(ast, transformConfig);
-
-	// Render the content based on the render type
-	switch (renderType) {
-		case 'html':
-			return Markdoc.renderers.html(content);
-		case 'react-static':
-			return Markdoc.renderers.reactStatic(content);
-		case 'react': {
-			return await import('@astrojs/react/server.js')
-				.then(async (module) => {
-					const container = await AstroContainer.create();
-					container.addServerRenderer({
-						name: '@astrojs/react',
-						renderer: module.default,
-					});
-					container.addClientRenderer({
-						name: '@astrojs/react',
-						entrypoint: '@astrojs/react/client.js',
-					});
-
-					// Return the rendered content
-					return await container.renderToString(ReactWrapper, {
-						props: {
-							content: Markdoc.renderers.react(content, React, {
-								components: reactComponents,
-							}),
-						},
-					});
-				})
-				.catch((error) => {
-					console.error("[MarkDoc] Error importing '@astrojs/react/server.js'", error);
-					return '';
-				});
-		}
-		default:
-			throw new Error(`Unknown render type: ${renderType}`);
+	const renderer = renderers.find((r) => r.name === renderType);
+	if (renderer) {
+		return renderer.renderer(content);
 	}
+	if (
+		renderType !== 'html' &&
+		renderType !== 'react-static' &&
+		renderType.name &&
+		renderType.renderer
+	) {
+		return renderType.renderer(content).catch((e) => {
+			throw new Error(`Failed to render content with custom renderer: [${renderType.name}]: ${e}`);
+		});
+	}
+	throw new Error(`Unknown render type: ${renderType}`);
 }
 
 export default renderMarkDoc;

@@ -1,6 +1,5 @@
 import db from '@astrojs/db';
 import node from '@astrojs/node';
-// import react from '@astrojs/react';
 import webvitals from '@astrojs/web-vitals';
 import studioCMSBlog from '@studiocms/blog';
 import { defineConfig } from 'astro/config';
@@ -13,7 +12,6 @@ export default defineConfig({
 	output: 'server',
 	adapter: node({ mode: 'standalone' }),
 	integrations: [
-		// react(),
 		db(),
 		webvitals(),
 		studioCMS(), // StudioCMS Integration options can be found in `studiocms.config.mjs`

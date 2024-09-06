@@ -1,8 +1,9 @@
 import { z } from 'astro/zod';
-import { markdocConfigSchema } from './markdoc';
+import { markdocConfigSchema, type markdocRenderer } from './markdoc';
 import { markedConfigSchema } from './marked';
 
 export type Renderer = (content: string) => Promise<string>;
+export type { markdocRenderer };
 
 export type CustomRenderer = {
 	name: string;

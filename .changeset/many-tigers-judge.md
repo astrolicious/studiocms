@@ -13,7 +13,7 @@ studioCMS({
             /**
              * The MarkDoc Content Renderer to use for rendering pages and posts
              *
-             * Can be one of the following: `html`, `react`, `react-static`
+             * Can be one of the following: `html`, `react-static`, or a custom renderer
              */
             renderType: 'html',
             /**
@@ -37,13 +37,33 @@ studioCMS({
                 partials: {},
                 validation: {};
             },
-            /**
-             * The MarkDoc React Components to use for rendering pages and posts
-             */
-            reactComponents: {},
         }
     }
 })
 ```
 
-- Add support for MarkDoc `renderType` of `html`, and `react-static`
+- Add support for MarkDoc `renderType` of `html`, and `react-static`, and custom renderers such as the provided markdocReactRenderer from `@studiocms/renderers/markdocReact`:
+
+```ts
+import { defineConfig } from 'astro/config';
+import react from '@astrojs/react';
+import studioCMS from 'studiocms';
+import markDocRenderReact from '@studiocms/renderers/markdocReact';
+
+// https://astro.build/config
+export default defineConfig({
+	//...Rest of Config
+	integrations: [
+        //...Rest of Config
+		react(),
+		studioCMS({
+            //...Rest of Config
+            rendererConfig: {
+                markdocConfig: {
+                    renderType: markDocRenderReact(components: {}), // Also applies to users with a `studiocms.config.mjs` file.
+                }
+            }
+        }),
+	],
+});
+```

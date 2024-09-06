@@ -1,11 +1,13 @@
-import type { ConfigType, ParserArgs } from '@markdoc/markdoc';
+import type { ConfigType, ParserArgs, RenderableTreeNode } from '@markdoc/markdoc';
 import { z } from 'astro/zod';
 
 type markdocParserArgs = ParserArgs;
 type markdocTransformConfig = ConfigType;
 
-// biome-ignore lint/complexity/noBannedTypes: This is a valid use case for `any`
-type markdocReactComponents = {} | undefined;
+export type markdocRenderer = {
+	name: string;
+	renderer: (content: RenderableTreeNode) => Promise<string>;
+};
 
 //
 // MARKDOC CONFIG SCHEMA
@@ -15,10 +17,10 @@ export const markdocConfigSchema = z
 		/**
 		 * The MarkDoc Content Renderer to use for rendering pages and posts
 		 *
-		 * Can be one of the following: `html`, `react-static`
+		 * Can be one of the following: `html`, `react-static`, or a custom renderer
 		 */
 		renderType: z
-			.union([z.literal('html'), z.literal('react-static'), z.literal('react')])
+			.union([z.literal('html'), z.literal('react-static'), z.custom<markdocRenderer>()])
 			.optional()
 			.default('html'),
 		/**
@@ -31,10 +33,6 @@ export const markdocConfigSchema = z
 		 * @see https://markdoc.dev/docs/config
 		 */
 		transformConfig: z.custom<markdocTransformConfig>().optional(),
-		/**
-		 * The MarkDoc React Components to use for rendering pages and posts
-		 */
-		reactComponents: z.custom<markdocReactComponents>().optional(),
 	})
 	.optional()
 	.default({});
