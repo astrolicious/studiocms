@@ -33,7 +33,6 @@ export async function renderMarkDoc(input: string): Promise<string> {
 		case 'react-static':
 			return Markdoc.renderers.reactStatic(content);
 		case 'react': {
-			// Make a new Astro container with the React renderer
 			return await import('@astrojs/react/server.js')
 				.then(async (module) => {
 					const container = await AstroContainer.create();
@@ -46,18 +45,14 @@ export async function renderMarkDoc(input: string): Promise<string> {
 						entrypoint: '@astrojs/react/client.js',
 					});
 
-					// Render the content to a React component
-					const renderedContent = Markdoc.renderers.react(content, React, {
-						components: reactComponents,
-					});
-
-					// Render the content to a HTML string
-					const containerOutput = await container.renderToString(ReactWrapper, {
-						props: { content: renderedContent },
-					});
-
 					// Return the rendered content
-					return containerOutput || '';
+					return await container.renderToString(ReactWrapper, {
+						props: {
+							content: Markdoc.renderers.react(content, React, {
+								components: reactComponents,
+							}),
+						},
+					});
 				})
 				.catch((error) => {
 					console.error("[MarkDoc] Error importing '@astrojs/react/server.js'", error);
