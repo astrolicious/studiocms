@@ -5,8 +5,9 @@ import React from 'react';
 
 const { reactComponents } = rendererConfig.markdocConfig;
 
-export function MarkDocReactRenderer(content: RenderableTreeNode) {
-	return Markdoc.renderers.react(content, React, { components: reactComponents });
+export function MarkDocReactRenderer({ content }: { content: RenderableTreeNode }) {
+	const renderedContent = Markdoc.renderers.react(content, React, { components: reactComponents });
+	return renderedContent;
 }
 
 export default MarkDocReactRenderer;

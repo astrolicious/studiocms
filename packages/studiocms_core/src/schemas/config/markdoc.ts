@@ -18,7 +18,7 @@ export const markdocConfigSchema = z
 		 * Can be one of the following: `html`, `react-static`
 		 */
 		renderType: z
-			.union([z.literal('html'), z.literal('react-static') /* z.literal('react')*/])
+			.union([z.literal('html'), z.literal('react-static'), z.literal('react')])
 			.optional()
 			.default('html'),
 		/**

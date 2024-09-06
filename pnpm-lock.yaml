@@ -617,6 +617,9 @@ importers:
       '@astrojs/markdown-remark':
         specifier: 'catalog:'
         version: 5.2.0
+      '@astrojs/react':
+        specifier: ^3.6.2
+        version: 3.6.2(@types/react-dom@18.3.0)(@types/react@18.3.5)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(vite@5.4.2(@types/node@22.0.0))
       '@inox-tools/runtime-logger':
         specifier: catalog:studiocms-shared
         version: 0.3.1(astro@4.15.1(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))
@@ -632,6 +635,9 @@ importers:
       '@studiocms/core':
         specifier: workspace:*
         version: link:../studiocms_core
+      '@types/react':
+        specifier: ^18.3.5
+        version: 18.3.5
       astro:
         specifier: catalog:min
         version: 4.15.1(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4)
@@ -656,22 +662,16 @@ importers:
       marked-smartypants:
         specifier: catalog:studiocms-renderer
         version: 1.1.7(marked@13.0.3)
-      shiki:
-        specifier: catalog:studiocms-shared
-        version: 1.14.1
-    devDependencies:
-      '@astrojs/react':
-        specifier: ^3.6.2
-        version: 3.6.2(@types/react-dom@18.3.0)(@types/react@18.3.5)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(vite@5.4.2(@types/node@22.0.0))
-      '@types/react':
-        specifier: ^18.3.5
-        version: 18.3.5
       react:
         specifier: ^18.3.1
         version: 18.3.1
       react-dom:
         specifier: ^18.3.1
         version: 18.3.1(react@18.3.1)
+      shiki:
+        specifier: catalog:studiocms-shared
+        version: 1.14.1
+    devDependencies:
       typescript:
         specifier: 'catalog:'
         version: 5.5.4

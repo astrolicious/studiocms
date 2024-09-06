@@ -1,10 +1,10 @@
-// import { loadRenderers } from 'astro:container';
+import { loadRenderers } from 'astro:container';
 import rendererConfig from 'studiocms:renderer/config';
 // import reactRenderer from '@astrojs/react/server.js';
-// import { getContainerRenderer as reactRenderer } from '@astrojs/react';
+// import { getContainerRenderer } from '@astrojs/react';
 import Markdoc from '@markdoc/markdoc';
-// import { experimental_AstroContainer as AstroContainer } from 'astro/container';
-// import ReactWrapper from './ReactWrapper.astro';
+import { experimental_AstroContainer as AstroContainer } from 'astro/container';
+import ReactWrapper from './ReactWrapper.astro';
 
 // Destructure the Markdoc configuration from the rendererConfig
 const {
@@ -33,24 +33,31 @@ export async function renderMarkDoc(input: string): Promise<string> {
 			return Markdoc.renderers.html(content);
 		case 'react-static':
 			return Markdoc.renderers.reactStatic(content);
-		// case 'react': {
-		// 	// Make a new Astro container with the React renderer
-		// 	// const renderers = await loadRenderers([reactRenderer()]);
-		// 	const container = await AstroContainer.create();
-		// 	container.addServerRenderer(reactRenderer);
-		// 	container.addClientRenderer({
-		// 		name: '@astrojs/react',
-		// 		entrypoint: '@astrojs/react/client.js',
-		// 	});
+		case 'react': {
+			try {
+				// Make a new Astro container with the React renderer
+				const renderers = await loadRenderers([
+					(await import('@astrojs/react')).getContainerRenderer(),
+				]);
+				const container = await AstroContainer.create({ renderers });
+				// container.addServerRenderer(reactRenderer);
+				// container.addClientRenderer({
+				// 	name: '@astrojs/react',
+				// 	entrypoint: '@astrojs/react/client.js',
+				// });
 
-		// 	// Render the content to a HTML string
-		// 	const containerOutput = await container.renderToString(ReactWrapper, {
-		// 		props: { content: content },
-		// 	});
+				// Render the content to a HTML string
+				const containerOutput = await container.renderToString(ReactWrapper, {
+					props: { content: content },
+				});
 
-		// 	// Return the rendered content
-		// 	return containerOutput || '';
-		// }
+				// Return the rendered content
+				return containerOutput || '';
+			} catch (error) {
+				console.error('Error rendering MarkDoc with React renderer', error);
+				return '';
+			}
+		}
 		default:
 			throw new Error(`Unknown render type: ${renderType}`);
 	}
