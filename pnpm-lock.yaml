@@ -108,6 +108,16 @@ catalogs:
     astro:
       specifier: '>=4.15'
       version: 4.15.1
+  studiocms:
+    '@types/semver':
+      specifier: ^7.5.8
+      version: 7.5.8
+    package-json:
+      specifier: ^10.0.1
+      version: 10.0.1
+    semver:
+      specifier: ^7.6.3
+      version: 7.6.3
   studiocms-imagehandler:
     '@cloudinary/url-gen':
       specifier: ^1.19.0
@@ -330,10 +340,10 @@ importers:
         specifier: catalog:studiocms-shared
         version: 2.0.0
       package-json:
-        specifier: ^10.0.1
+        specifier: catalog:studiocms
         version: 10.0.1
       semver:
-        specifier: ^7.6.3
+        specifier: catalog:studiocms
         version: 7.6.3
       shiki:
         specifier: catalog:studiocms-shared
@@ -349,7 +359,7 @@ importers:
         specifier: catalog:studiocms-shared
         version: 4.0.9
       '@types/semver':
-        specifier: ^7.5.8
+        specifier: catalog:studiocms
         version: 7.5.8
       typescript:
         specifier: 'catalog:'

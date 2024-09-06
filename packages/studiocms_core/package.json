@@ -46,10 +46,10 @@
   },
   "type": "module",
   "dependencies": {
-    "@noble/hashes": "catalog:studiocms-shared",
+    "@markdoc/markdoc": "catalog:studiocms-shared",
     "@matthiesenxyz/astrolace": "catalog:studiocms-shared",
     "@matthiesenxyz/integration-utils": "catalog:studiocms-shared",
-    "@markdoc/markdoc": "catalog:studiocms-shared",
+    "@noble/hashes": "catalog:studiocms-shared",
     "@studiocms/robotstxt": "workspace:*",
     "astro-integration-kit": "catalog:",
     "lucia": "catalog:studiocms-shared",

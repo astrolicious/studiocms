@@ -12,9 +12,9 @@ catalog:
   astro: ^4.15.1
   astro-integration-kit: ^0.16.1
   astro-theme-provider: ^0.6.1
+  sharp: ^0.33.4
   typescript: ^5.5.4
   vite: ^5.4.2
-  sharp: ^0.33.4
 
 catalogs:
   min:
@@ -39,6 +39,10 @@ catalogs:
     starlight-typedoc: ^0.15.0
     typedoc: ^0.26.6
     typedoc-plugin-markdown: ^4.2.6
+  studiocms:
+    '@types/semver': ^7.5.8
+    package-json: ^10.0.1
+    semver: ^7.6.3
   studiocms-shared:
     '@inox-tools/runtime-logger': ^0.3.1
     "@matthiesenxyz/astrolace": ^0.3.2
@@ -51,8 +55,8 @@ catalogs:
     '@types/micromatch': ^4.0.9
     "@astrojs/react": ^3.6.2
     "@types/react": ^18.3.5
-    "react-dom": ^18.3.1
     react: ^18.3.1
+    react-dom: ^18.3.1
     unocss: ^0.62.3
     daisyui: ^4.12.10
     lucia: ^3.2.0

@@ -41,8 +41,8 @@
     "@inox-tools/runtime-logger": "catalog:studiocms-shared",
     "@matthiesenxyz/integration-utils": "catalog:studiocms-shared",
     "@markdoc/markdoc": "catalog:studiocms-shared",
-    "@studiocms/core": "workspace:*",
     "@shikijs/transformers": "catalog:studiocms-renderer",
+    "@studiocms/core": "workspace:*",
     "astro-integration-kit": "catalog:",
     "marked": "catalog:studiocms-shared",
     "marked-alert": "catalog:studiocms-renderer",
@@ -53,20 +53,20 @@
     "shiki": "catalog:studiocms-shared"
   },
   "peerDependencies": {
-    "astro": "catalog:min",
     "@astrojs/react": "catalog:studiocms-shared",
-    "react": "catalog:studiocms-shared",
     "@types/react": "catalog:studiocms-shared",
+    "astro": "catalog:min",
+    "react": "catalog:studiocms-shared",
     "react-dom": "catalog:studiocms-shared"
   },
   "peerDependenciesMeta": {
     "@astrojs/react": {
       "optional": true
     },
-    "react": {
+    "@types/react": {
       "optional": true
     },
-    "@types/react": {
+    "react": {
       "optional": true
     },
     "react-dom": {
