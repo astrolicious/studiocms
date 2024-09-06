@@ -5,7 +5,6 @@ export default defineStudioCMSConfig({
 	verbose: true,
 	dateLocale: 'en-us',
 	rendererConfig: {
-		renderer: 'marked',
 		markedConfig: {
 			highlighterConfig: {
 				highlighter: 'disabled',

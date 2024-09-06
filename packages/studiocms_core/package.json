@@ -34,6 +34,7 @@
     "./components": "./src/components/index.ts",
     "./lib": "./src/lib/index.ts",
     "./schemas": "./src/schemas/index.ts",
+    "./schemas/renderer": "./src/schemas/config/rendererConfig.ts",
     "./types": "./src/types/index.ts",
     "./utils": "./src/utils/index.ts",
     "./strings": "./src/strings.ts",

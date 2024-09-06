@@ -37,6 +37,9 @@ export const emojiMap = Object.entries(emojiList).reduce(
 /**
  * Render Markdown Content using Marked
  *
+ * Marked is A markdown parser and compiler. Built for speed.
+ * @see https://marked.js.org/ for more info about marked.
+ *
  * @param input Markdown Content
  * @returns Converted HTML Content
  */
@@ -156,3 +159,5 @@ export async function renderMarked(input: string): Promise<string> {
 
 	return content;
 }
+
+export default renderMarked;

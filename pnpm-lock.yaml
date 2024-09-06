@@ -617,6 +617,9 @@ importers:
       '@astrojs/markdown-remark':
         specifier: 'catalog:'
         version: 5.2.0
+      '@inox-tools/runtime-logger':
+        specifier: catalog:studiocms-shared
+        version: 0.3.1(astro@4.15.1(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))
       '@markdoc/markdoc':
         specifier: catalog:studiocms-shared
         version: 0.4.0(@types/react@18.3.5)(react@18.3.1)

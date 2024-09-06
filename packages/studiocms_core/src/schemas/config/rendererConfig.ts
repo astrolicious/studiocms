@@ -2,6 +2,13 @@ import { z } from 'astro/zod';
 import { markdocConfigSchema } from './markdoc';
 import { markedConfigSchema } from './marked';
 
+export type Renderer = (content: string) => Promise<string>;
+
+export type CustomRenderer = {
+	name: string;
+	renderer: Renderer;
+};
+
 /**
  * StudioCMS Renderer Configuration Schema
  *
@@ -23,7 +30,12 @@ export const StudioCMSRendererConfigSchema = z
 		 *
 		 */
 		renderer: z
-			.union([z.literal('astro'), z.literal('marked'), z.literal('markdoc')])
+			.union([
+				z.literal('marked'),
+				z.literal('astro'),
+				z.literal('markdoc'),
+				z.custom<CustomRenderer>(),
+			])
 			.optional()
 			.default('marked'),
 		/**

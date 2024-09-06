@@ -1,7 +1,7 @@
 import {
 	type StudioCMSRendererConfig,
 	StudioCMSRendererConfigSchema,
-} from '@studiocms/core/schemas';
+} from '@studiocms/core/schemas/renderer';
 import integration from './integration';
 
 /**

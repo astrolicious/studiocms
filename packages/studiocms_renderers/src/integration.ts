@@ -1,5 +1,6 @@
-import { customRendererPlugin, stringify } from '@studiocms/core/lib';
-import { StudioCMSRendererConfigSchema } from '@studiocms/core/schemas';
+import { runtimeLogger } from '@inox-tools/runtime-logger';
+import { stringify } from '@studiocms/core/lib';
+import { StudioCMSRendererConfigSchema } from '@studiocms/core/schemas/renderer';
 import { addVirtualImports, createResolver, defineIntegration } from 'astro-integration-kit';
 import { name } from '../package.json';
 import { rendererDTS } from './stubs/renderer';
@@ -13,21 +14,7 @@ export default defineIntegration({
 		// Create resolver relative to this file
 		const { resolve } = createResolver(import.meta.url);
 
-		// Get customRendererPlugin List and convert to Array
-		let customRenderPlugin: string[] = [];
-		if (customRendererPlugin) {
-			customRenderPlugin = Array.from(customRendererPlugin);
-		}
-
-		// Resolve Renderer Path
-		const ResolveRenderer = () => {
-			let rendererPath: string;
-			if (customRendererPlugin.size > 0 && customRenderPlugin[0]) {
-				rendererPath = customRenderPlugin[0];
-				return rendererPath;
-			}
-			return resolve('./components/StudioCMSRenderer.astro');
-		};
+		const RendererComponent = resolve('./components/StudioCMSRenderer.astro');
 
 		return {
 			hooks: {
@@ -35,10 +22,13 @@ export default defineIntegration({
 					const {
 						config: { markdown: astroMarkdown },
 					} = params;
+
+					runtimeLogger(params, { name: 'studiocms-renderer' });
+
 					addVirtualImports(params, {
 						name,
 						imports: {
-							'studiocms:renderer': `export { default as StudioCMSRenderer } from '${ResolveRenderer()}';`,
+							'studiocms:renderer': `export { default as StudioCMSRenderer } from '${RendererComponent}';`,
 							'studiocms:renderer/config': `export default ${stringify(options)}`,
 							'studiocms:renderer/astroMarkdownConfig': `export default ${stringify(astroMarkdown)}`,
 						},
@@ -48,7 +38,7 @@ export default defineIntegration({
 					// Inject Types for Renderer
 					injectTypes({
 						filename: 'renderer.d.ts',
-						content: rendererDTS(ResolveRenderer()),
+						content: rendererDTS(RendererComponent),
 					});
 					injectTypes({
 						filename: 'config.d.ts',

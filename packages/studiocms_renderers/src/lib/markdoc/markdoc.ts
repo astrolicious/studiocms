@@ -11,6 +11,15 @@ const {
 	markdocConfig: { argParse, transformConfig, renderType },
 } = rendererConfig;
 
+/**
+ * Render a Markdown string into HTML using the Markdoc renderer
+ *
+ * Markdoc is a powerful, flexible, Markdown-based authoring framework. Built by Stripe.
+ * @see https://markdoc.dev/ for more info about markdoc.
+ *
+ * @param input - The Markdown string to render
+ * @returns The rendered HTML string
+ */
 export async function renderMarkDoc(input: string): Promise<string> {
 	// Parse the input string into an AST
 	const ast = Markdoc.parse(input, argParse);
@@ -46,3 +55,5 @@ export async function renderMarkDoc(input: string): Promise<string> {
 			throw new Error(`Unknown render type: ${renderType}`);
 	}
 }
+
+export default renderMarkDoc;

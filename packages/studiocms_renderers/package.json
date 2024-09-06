@@ -32,11 +32,15 @@
   "exports": {
     ".": "./src/index.ts",
     "./components": "./src/components/index.ts",
-    "./contentrenderer": "./src/lib/contentrenderer.ts"
+    "./contentrenderer": "./src/lib/contentrenderer.ts",
+    "./marked": "./src/lib/marked/marked.ts",
+    "./astro": "./src/lib/astro-remark/astromd.ts",
+    "./markdoc": "./src/lib/markdoc/markdoc.ts"
   },
   "type": "module",
   "dependencies": {
     "@astrojs/markdown-remark": "catalog:",
+    "@inox-tools/runtime-logger": "catalog:studiocms-shared",
     "@matthiesenxyz/integration-utils": "catalog:studiocms-shared",
     "@markdoc/markdoc": "catalog:studiocms-shared",
     "@studiocms/core": "workspace:*",

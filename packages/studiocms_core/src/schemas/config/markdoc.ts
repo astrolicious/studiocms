@@ -1,19 +1,11 @@
-import type { Config, ParserArgs } from '@markdoc/markdoc';
+import type { ConfigType, ParserArgs } from '@markdoc/markdoc';
 import { z } from 'astro/zod';
 
 type markdocParserArgs = ParserArgs;
-type markdocTransformConfig = Config;
+type markdocTransformConfig = ConfigType;
 
 // biome-ignore lint/complexity/noBannedTypes: This is a valid use case for `any`
 type markdocReactComponents = {} | undefined;
-
-//
-// MARKDOC RENDER TYPE SCHEMA
-//
-export const markdocRenderTypeSchema = z
-	.union([z.literal('html'), z.literal('react'), z.literal('react-static')])
-	.optional()
-	.default('html');
 
 //
 // MARKDOC CONFIG SCHEMA
@@ -23,9 +15,12 @@ export const markdocConfigSchema = z
 		/**
 		 * The MarkDoc Content Renderer to use for rendering pages and posts
 		 *
-		 * Can be one of the following: `html`, `react`
+		 * Can be one of the following: `html`, `react-static`
 		 */
-		renderType: markdocRenderTypeSchema,
+		renderType: z
+			.union([z.literal('html'), z.literal('react-static') /* z.literal('react')*/])
+			.optional()
+			.default('html'),
 		/**
 		 * The MarkDoc Arg Parse to use for rendering pages and posts
 		 */
