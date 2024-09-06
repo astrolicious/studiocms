@@ -49,21 +49,31 @@
     "marked-footnote": "catalog:studiocms-renderer",
     "marked-shiki": "catalog:studiocms-renderer",
     "marked-smartypants": "catalog:studiocms-renderer",
-    "shiki": "catalog:studiocms-shared",
+    "shiki": "catalog:studiocms-shared"
+  },
+  "peerDependencies": {
+    "astro": "catalog:min",
     "@astrojs/react": "^3.6.2",
     "react": "^18.3.1",
     "@types/react": "^18.3.5",
     "react-dom": "^18.3.1"
   },
-  "peerDependencies": {
-    "astro": "catalog:min"
+  "peerDependenciesMeta": {
+    "@astrojs/react": {
+      "optional": true
+    },
+    "react": {
+      "optional": true
+    },
+    "@types/react": {
+      "optional": true
+    },
+    "react-dom": {
+      "optional": true
+    }
   },
   "devDependencies": {
     "vite": "catalog:",
-    "typescript": "catalog:",
-    "@astrojs/react": "^3.6.2",
-    "react": "^18.3.1",
-    "@types/react": "^18.3.5",
-    "react-dom": "^18.3.1"
+    "typescript": "catalog:"
   }
 }

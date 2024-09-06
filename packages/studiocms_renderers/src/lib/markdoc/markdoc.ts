@@ -1,14 +1,13 @@
-import { loadRenderers } from 'astro:container';
 import rendererConfig from 'studiocms:renderer/config';
 // import reactRenderer from '@astrojs/react/server.js';
-import { getContainerRenderer } from '@astrojs/react';
 import Markdoc from '@markdoc/markdoc';
 import { experimental_AstroContainer as AstroContainer } from 'astro/container';
+import React from 'react';
 import ReactWrapper from './ReactWrapper.astro';
 
 // Destructure the Markdoc configuration from the rendererConfig
 const {
-	markdocConfig: { argParse, transformConfig, renderType },
+	markdocConfig: { argParse, transformConfig, renderType, reactComponents },
 } = rendererConfig;
 
 /**
@@ -35,21 +34,35 @@ export async function renderMarkDoc(input: string): Promise<string> {
 			return Markdoc.renderers.reactStatic(content);
 		case 'react': {
 			// Make a new Astro container with the React renderer
-			const renderers = await loadRenderers([getContainerRenderer()]);
-			const container = await AstroContainer.create({ renderers });
-			// container.addServerRenderer(reactRenderer);
-			// container.addClientRenderer({
-			// 	name: '@astrojs/react',
-			// 	entrypoint: '@astrojs/react/client.js',
-			// });
+			return await import('@astrojs/react/server.js')
+				.then(async (module) => {
+					const container = await AstroContainer.create();
+					container.addServerRenderer({
+						name: '@astrojs/react',
+						renderer: module.default,
+					});
+					container.addClientRenderer({
+						name: '@astrojs/react',
+						entrypoint: '@astrojs/react/client.js',
+					});
 
-			// Render the content to a HTML string
-			const containerOutput = await container.renderToString(ReactWrapper, {
-				props: { content: content },
-			});
+					// Render the content to a React component
+					const renderedContent = Markdoc.renderers.react(content, React, {
+						components: reactComponents,
+					});
 
-			// Return the rendered content
-			return containerOutput || '';
+					// Render the content to a HTML string
+					const containerOutput = await container.renderToString(ReactWrapper, {
+						props: { content: renderedContent },
+					});
+
+					// Return the rendered content
+					return containerOutput || '';
+				})
+				.catch((error) => {
+					console.error("[MarkDoc] Error importing '@astrojs/react/server.js'", error);
+					return '';
+				});
 		}
 		default:
 			throw new Error(`Unknown render type: ${renderType}`);

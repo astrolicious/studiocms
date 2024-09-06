@@ -2,13 +2,11 @@
 import { MarkDocReactRenderer } from './MarkDocReactRenderer.jsx';
 
 interface Props {
-	content: string;
+	content: React.ReactNode;
 }
 
 const { content } = Astro.props;
-
-const reactProps = {
-	content,
-};
 ---
-<MarkDocReactRenderer {...reactProps} client:only="react" />
+<MarkDocReactRenderer client:load>
+	<div>{content}</div>
+</MarkDocReactRenderer>

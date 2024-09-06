@@ -712,15 +712,27 @@ importers:
       '@astrojs/node':
         specifier: 'catalog:'
         version: 8.3.3(astro@4.15.1(@types/node@20.14.13)(rollup@4.21.0)(typescript@5.5.4))
+      '@astrojs/react':
+        specifier: ^3.6.2
+        version: 3.6.2(@types/react-dom@18.3.0)(@types/react@18.3.5)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(vite@5.4.2(@types/node@20.14.13))
       '@astrojs/web-vitals':
         specifier: 'catalog:'
         version: 3.0.0(@astrojs/db@0.14.0(@cloudflare/workers-types@4.20240725.0)(@types/react@18.3.5)(react@18.3.1))
       '@studiocms/blog':
         specifier: workspace:*
         version: link:../../packages/studiocms_blog
+      '@types/react':
+        specifier: ^18.3.5
+        version: 18.3.5
       astro:
         specifier: 'catalog:'
         version: 4.15.1(@types/node@20.14.13)(rollup@4.21.0)(typescript@5.5.4)
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      react-dom:
+        specifier: ^18.3.1
+        version: 18.3.1(react@18.3.1)
       studiocms:
         specifier: workspace:*
         version: link:../../packages/studiocms
@@ -6140,6 +6152,18 @@ snapshots:
     dependencies:
       prismjs: 1.29.0
 
+  '@astrojs/react@3.6.2(@types/react-dom@18.3.0)(@types/react@18.3.5)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(vite@5.4.2(@types/node@20.14.13))':
+    dependencies:
+      '@types/react': 18.3.5
+      '@types/react-dom': 18.3.0
+      '@vitejs/plugin-react': 4.3.1(vite@5.4.2(@types/node@20.14.13))
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
+      ultrahtml: 1.5.3
+    transitivePeerDependencies:
+      - supports-color
+      - vite
+
   '@astrojs/react@3.6.2(@types/react-dom@18.3.0)(@types/react@18.3.5)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(vite@5.4.2(@types/node@22.0.0))':
     dependencies:
       '@types/react': 18.3.5
@@ -8004,6 +8028,17 @@ snapshots:
   '@unpic/placeholder@0.1.2':
     dependencies:
       blurhash: 2.0.5
+
+  '@vitejs/plugin-react@4.3.1(vite@5.4.2(@types/node@20.14.13))':
+    dependencies:
+      '@babel/core': 7.25.2
+      '@babel/plugin-transform-react-jsx-self': 7.24.7(@babel/core@7.25.2)
+      '@babel/plugin-transform-react-jsx-source': 7.24.7(@babel/core@7.25.2)
+      '@types/babel__core': 7.20.5
+      react-refresh: 0.14.2
+      vite: 5.4.2(@types/node@20.14.13)
+    transitivePeerDependencies:
+      - supports-color
 
   '@vitejs/plugin-react@4.3.1(vite@5.4.2(@types/node@22.0.0))':
     dependencies:
