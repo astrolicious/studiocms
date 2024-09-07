@@ -2,20 +2,22 @@
 title: markedConfig
 description: A reference page for markedConfig
 sidebar:
-  order: 2
+  order: 2.1
 ---
 
-`markedConfig` is an object that is used to determine how content should be rendered in the `astroStudioCMS`. This is used to setup your content data.
+`markedConfig` is an object that is used to determine how content should be rendered in the `studioCMS`. This is used to setup your content data.
 
 ## Usage
 
-```js title="astro.config.mjs"  {2-6}
-astroStudioCMS({
-  markedConfig: {
-    highlighterConfig: {
-      highlighter: "disabled",
+```js title="astro.config.mjs"  {3-7}
+studioCMS({
+  rendererConfig: {
+    markedConfig: {
+      highlighterConfig: {
+        highlighter: "disabled",
+      },
     },
-  },
+  }
 }),
 ```
 

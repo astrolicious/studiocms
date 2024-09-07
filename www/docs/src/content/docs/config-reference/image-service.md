@@ -5,12 +5,12 @@ sidebar:
   order: 3
 ---
 
-`imageService` is an object value that is used to determine how images should be rendered in the `astroStudioCMS`. This is used to setup your image data.
+`imageService` is an object value that is used to determine how images should be rendered in the `studioCMS`. This is used to setup your image data.
 
 ## Usage
 
 ```js title="astro.config.mjs"  {2-11}
-astroStudioCMS({
+studioCMS({
   imageService: {
     useUnpic: false,
     unpicConfig {
@@ -40,7 +40,7 @@ Allows the user to customize the `@unpic/astro` image optimization service.
 
 #### `fallbackService`
 
-- **Type:** `'sharp' | 'squoosh' | undefined`
+- **Type:** `'sharp' | undefined`
 - **Default:** `undefined`
 
 Falls back to the value of `astroImageServiceConfig` if not set here.
@@ -68,10 +68,10 @@ CDN-specific options for the `@unpic/astro` image optimization service.
 
 ### `astroImageServiceConfig`
 
-- **Type:** `'sharp' | 'squoosh' | undefined`
-- **Default:** `'squoosh'`
+- **Type:** `'sharp' | undefined`
+- **Default:** `'sharp'`
 
-If the `useUnpic` option is enabled, this option allows the user to choose between the `sharp` and `squoosh` image optimization services.
+If the `useUnpic` option is enabled, this option allows the user to choose between the `sharp` image optimization services.
 
 ### `cdnPlugin`
 

@@ -1,6 +1,8 @@
 ---
 title: "StudioCMS Config"
 description: "Options for how to define the StudioCMS Config"
+sidebar:
+   order: 3
 ---
 
 # Available Options

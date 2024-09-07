@@ -2,15 +2,15 @@
 title: dashboardConfig
 description: A reference page for dashboard
 sidebar:
-  order: 4
+  order: 5
 ---
 
-`dashboardConfig` option let's customize the dashboard for the `astroStudioCMS`. This is used to setup your dashboard data.
+`dashboardConfig` option let's customize the dashboard for the `studioCMS`. This is used to setup your dashboard data.
 
 ## Usage
 
 ```js title="astro.config.mjs"  {2-24}
-astroStudioCMS({
+studioCMS({
   dashboardConfig: {
     dashboardEnabled: true,
     faviconURL: "/favicon.ico",
@@ -42,7 +42,7 @@ astroStudioCMS({
 - **Type:** `boolean | undefined`
 - **Default:** `true`
 
-Allows the user to enable or disable the Astro StudioCMS dashboard but still provide all the helper's and utilities to those who are customizing their setup, doing so will disable the dashboard and you will need to manage your content via the Astro Studio Dashboard at [Astro Studio](http://studio.astro.build).
+Allows the user to enable or disable the StudioCMS dashboard but still provide all the helper's and utilities to those who are customizing their setup, doing so will disable the dashboard and you will need to manage your content via the Astro Studio Dashboard at [Astro Studio](http://studio.astro.build).
 
 
 ### `faviconURL`
@@ -156,7 +156,7 @@ Developer Options/Configuration.
 - **Type:** `boolean | undefined`
 - **Default:** `false`
 
-Allows the user to enable Astro's ZeroJS View Transition API for the Astro Studio CMS Dashboard.
+Allows the user to enable Astro's ZeroJS View Transition API for the Studio CMS Dashboard.
 
 #### `testingAndDemoMode`
 

@@ -2,15 +2,15 @@
 title: includedIntegrations
 description: A reference page for includedIntegrations
 sidebar:
-  order: 5
+  order: 6
 ---
 
-`includedIntegrations` is an object that is used to determine which Astro Integrations should be included in the `astroStudioCMS`. Currently there are three Integrations that can be included: `useAstroRobots`, `astroRobotsConfig`, and `useInoxSitemap`.
+`includedIntegrations` is an object that is used to determine which Astro Integrations should be included in the `studioCMS`. Currently there are three Integrations that can be included: `useAstroRobots`, `astroRobotsConfig`, and `useInoxSitemap`.
 
 ## Usage
 
 ```js title="astro.config.mjs"  {2-6}
-astroStudioCMS({
+studioCMS({
   includedIntegrations: {
     useAstroRobots: true,
     astroRobotsConfig: {},

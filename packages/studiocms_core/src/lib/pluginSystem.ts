@@ -72,6 +72,6 @@ export const dashboardPageLinksMap = new Map<string, SideBarLink[]>();
  * A Set of Custom Renderer Plugins used to register with the StudioCMS Core to replace the built in Markdown renderer.
  *
  * Note: This may require additional setup and configuration to work properly.
- * @deprecated This feature has been moved to the StudioCMS Renderer Configuration.
+ * ## Deprecated This feature has been moved to the StudioCMS Renderer Configuration.
  */
 export const customRendererPlugin = new Set<string>();

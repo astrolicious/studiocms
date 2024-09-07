@@ -1,6 +1,8 @@
 ---
 title: Environment Variables
 description: A brief overview of the environment variables used in Astro StudioCMS.
+sidebar:
+   order: 2
 ---
 
 For Astro StudioCMS to work correctly, you must set up the correct environment variables. These variables are essential for establishing a secure connection to Astro DB and authenticating with the Astro StudioCMS API. Without correctly configuring these environment variables, the application will not function as intended.

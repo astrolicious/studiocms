@@ -1,0 +1,89 @@
+{
+  "sidebar": [
+    {
+      "label": "Start Here",
+      "items": [
+        {
+          "label": "Getting Started with StudioCMS",
+          "link": "/start-here/getting-started",
+          "badge": {
+            "text": "Updated",
+            "variant": "success"
+          }
+        },
+        {
+          "label": "Environment Variables",
+          "link": "/start-here/environment-variables"
+        },
+        {
+          "label": "Configuration",
+          "link": "/start-here/configuration",
+          "badge": {
+            "text": "Updated",
+            "variant": "success"
+          }
+        },
+        {
+          "label": "Why Astro StudioCMS?",
+          "link": "/start-here/why-studiocms"
+        },
+        {
+          "label": "Gallery",
+          "link": "/start-here/gallery"
+        }
+      ]
+    },
+    {
+      "label": "Plugins",
+      "items": [
+        {
+          "label": "Web Vitals",
+          "link": "/plugins/web-vitals",
+          "badge": {
+            "text": "AstroJS",
+            "variant": "success"
+          }
+        },
+        {
+          "label": "Blog Integration",
+          "link": "/plugins/studiocms-blog",
+          "badge": {
+            "text": "StudioCMS",
+            "variant": "tip"
+          }
+        }
+      ]
+    },
+    {
+      "label": "Understanding StudioCMS",
+      "items": [
+        {
+          "label": "How does it work!?",
+          "link": "/how-it-works/",
+          "badge": {
+            "text": "Updated",
+            "variant": "success"
+          }
+        }
+      ]
+    },
+    {
+      "label": "Configuration Reference",
+      "autogenerate": {
+        "directory": "config-reference"
+      },
+      "collapsed": true
+    },
+    {
+      "label": "TypeDoc",
+      "badge": {
+        "text": "Auto-Generated",
+        "variant": "success"
+      },
+      "autogenerate": {
+        "directory": "typedoc"
+      },
+      "collapsed": true
+    }
+  ]
+}

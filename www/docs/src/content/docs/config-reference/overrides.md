@@ -2,15 +2,15 @@
 title: overrides
 description: A reference page for overrides
 sidebar:
-  order: 6
+  order: 7
 ---
 
-`overrides` is an object that is used to override the default configuration of the `astroStudioCMS`.
+`overrides` is an object that is used to override the default configuration of the `studioCMS`.
 
 ## Usage
 
 ```js title="astro.config.mjs"  {2-6}
-astroStudioCMS({
+studioCMS({
   overrides: {
     CustomImageOverride: "./src/components/MyCustomImage.astro",
     FormattedDateOverride: "./src/components/MyCustomFormattedDate.astro",
@@ -23,11 +23,11 @@ astroStudioCMS({
 - **Type:** `string | undefined`
 - **Default:** `undefined`
 
-The path to a custom image component that will be used to render images in the `Astro-Studio-CMS`.
+The path to a custom image component that will be used to render images in the `studioCMS`.
 
 ### `FormattedDateOverride`
 
 - **Type:** `string | undefined`
 - **Default:** `undefined`
 
-The path to a custom formatted date component that will be used to render dates in the `Astro-Studio-CMS`.
+The path to a custom formatted date component that will be used to render dates in the `studioCMS`.
