@@ -1,12 +1,21 @@
 import Config from 'virtual:studiocms/config';
-
-const fixSlashes = (str: string) => str.replace(/^\/+|\/+$/g, '');
+import { removeLeadingTrailingSlashes } from '@studiocms/core/lib';
 
 const {
 	dashboardConfig: { dashboardRouteOverride },
 } = Config;
-const dashboardURL = dashboardRouteOverride ? fixSlashes(dashboardRouteOverride) : 'dashboard';
 
+// Get the User set or Default dashboard URL
+const dashboardURL = dashboardRouteOverride
+	? removeLeadingTrailingSlashes(dashboardRouteOverride)
+	: 'dashboard';
+
+/**
+ * Checks if a route is a dashboard route
+ *
+ * @param {string} pageRoute - The route to check if it is a dashboard route
+ * @returns {boolean} - Returns true if the route is a dashboard route
+ */
 export const isDashboardRoute = (pageRoute: string): boolean => {
-	return fixSlashes(pageRoute).includes(dashboardURL);
+	return removeLeadingTrailingSlashes(pageRoute).includes(dashboardURL);
 };

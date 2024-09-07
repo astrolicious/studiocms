@@ -2,7 +2,7 @@ import { integrationLogger } from '@matthiesenxyz/integration-utils/astroUtils';
 import { CheckENVStrings } from '@studiocms/core/strings';
 import type { AstroIntegrationLogger } from 'astro';
 import { loadEnv } from 'vite';
-import type { StudioCMSAuthOptions } from '../integration';
+import type { StudioCMSAuthOptions } from '../schema';
 
 const KeyList = {
 	Github: {

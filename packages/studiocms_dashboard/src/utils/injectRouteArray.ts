@@ -1,5 +1,6 @@
+import { removeLeadingTrailingSlashes } from '@studiocms/core/lib';
 import { defineUtility } from 'astro-integration-kit';
-import type { StudioCMSDashboardOptions } from '../integration';
+import type { StudioCMSDashboardOptions } from '../schema';
 
 export const injectRouteArray = defineUtility('astro:config:setup')(
 	(
@@ -24,7 +25,7 @@ export const injectRouteArray = defineUtility('astro:config:setup')(
 		} = opts;
 
 		const defaultDashboardRoute = dashboardRouteOverride
-			? dashboardRouteOverride.replace(/^\//, '')
+			? removeLeadingTrailingSlashes(dashboardRouteOverride)
 			: 'dashboard';
 
 		const makeDashboardRoute = (path: string) => {

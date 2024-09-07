@@ -4,7 +4,7 @@ import { integrationLogger } from '@matthiesenxyz/integration-utils/astroUtils';
 import { authConfigStrings } from '@studiocms/core/strings';
 import type { AuthConfigMap, usernameAndPasswordConfig } from '@studiocms/core/types';
 import { addVirtualImports, createResolver, defineUtility } from 'astro-integration-kit';
-import type { StudioCMSAuthOptions } from '../integration';
+import type { StudioCMSAuthOptions } from '../schema';
 
 /**
  * Get the URL to the StudioCMS auth config file
