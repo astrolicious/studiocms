@@ -1,14 +1,14 @@
 import { integrationLogger } from '@matthiesenxyz/integration-utils/astroUtils';
-import { StudioCMSOptionsSchema as optionsSchema } from '@studiocms/core/schemas';
 import { vercelImageHandlerStrings } from '@studiocms/core/strings';
 import { imageService as unpicImageService } from '@unpic/astro/service';
 import { defineIntegration } from 'astro-integration-kit';
 import { passthroughImageService, sharpImageService } from 'astro/config';
 import { name as packageName } from '../../package.json';
+import { StudioCMSImageHandlerOptionsSchema } from '../schema';
 
 export default defineIntegration({
 	name: `${packageName}:vercel`,
-	optionsSchema,
+	optionsSchema: StudioCMSImageHandlerOptionsSchema,
 	setup({ options }) {
 		return {
 			hooks: {

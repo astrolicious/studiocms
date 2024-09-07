@@ -1,13 +1,13 @@
 import { integrationLogger } from '@matthiesenxyz/integration-utils/astroUtils';
-import type { StudioCMSOptions } from '@studiocms/core/schemas';
 import { DashboardStrings } from '@studiocms/core/strings';
 import { defineUtility } from 'astro-integration-kit';
+import type { StudioCMSAuthOptions } from '../integration';
 
 export const injectAuthRouteArray = defineUtility('astro:config:setup')(
 	(
 		params,
 		opts: {
-			options: StudioCMSOptions;
+			options: StudioCMSAuthOptions;
 			middleware: string;
 			providerRoutes: {
 				enabled: boolean;

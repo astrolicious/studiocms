@@ -1,13 +1,13 @@
 import { integrationLogger } from '@matthiesenxyz/integration-utils/astroUtils';
-import { StudioCMSOptionsSchema as optionsSchema } from '@studiocms/core/schemas';
 import { cloudflareImageHandlerStrings } from '@studiocms/core/strings';
 import { defineIntegration } from 'astro-integration-kit';
 import { passthroughImageService } from 'astro/config';
 import { name as packageName } from '../../package.json';
+import { StudioCMSImageHandlerOptionsSchema } from '../schema';
 
 export default defineIntegration({
 	name: `${packageName}:cloudflare`,
-	optionsSchema,
+	optionsSchema: StudioCMSImageHandlerOptionsSchema,
 	setup({ options }) {
 		return {
 			hooks: {

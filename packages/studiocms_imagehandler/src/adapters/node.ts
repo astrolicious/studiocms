@@ -1,18 +1,18 @@
 import { integrationLogger } from '@matthiesenxyz/integration-utils/astroUtils';
-import { StudioCMSOptionsSchema as optionsSchema } from '@studiocms/core/schemas';
 import { nodeImageHandlerStrings } from '@studiocms/core/strings';
 import { imageService as unpicImageService } from '@unpic/astro/service';
 import { defineIntegration } from 'astro-integration-kit';
 import { passthroughImageService, sharpImageService } from 'astro/config';
 import { name as packageName } from '../../package.json';
+import { StudioCMSImageHandlerOptionsSchema } from '../schema';
 
 export default defineIntegration({
 	name: `${packageName}:node`,
-	optionsSchema,
+	optionsSchema: StudioCMSImageHandlerOptionsSchema,
 	setup({ options }) {
 		return {
 			hooks: {
-				'astro:config:setup': async (params) => {
+				'astro:config:setup': (params) => {
 					const { updateConfig, logger } = params;
 
 					const {

@@ -1,11 +1,11 @@
-import type { StudioCMSOptions } from '@studiocms/core/schemas';
 import { defineUtility } from 'astro-integration-kit';
+import type { StudioCMSDashboardOptions } from '../integration';
 
 export const injectRouteArray = defineUtility('astro:config:setup')(
 	(
 		params,
 		opts: {
-			options: StudioCMSOptions;
+			options: StudioCMSDashboardOptions;
 			routes: {
 				enabled: boolean;
 				pattern: string;

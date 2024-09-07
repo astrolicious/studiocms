@@ -1,11 +1,11 @@
 import { runtimeLogger } from '@inox-tools/runtime-logger';
 import { integrationLogger } from '@matthiesenxyz/integration-utils/astroUtils';
-import { StudioCMSOptionsSchema as optionsSchema } from '@studiocms/core/schemas';
 import { AuthProviderLogStrings, DashboardStrings } from '@studiocms/core/strings';
 import { addAstroEnvConfig } from '@studiocms/core/utils';
 import { addVirtualImports, createResolver, defineIntegration } from 'astro-integration-kit';
 import { name } from '../package.json';
 import { astroENV } from './astroenv/env';
+import { StudioCMSAuthOptionsSchema } from './schema';
 import authConfigDTS from './stubs/auth-config';
 import authHelperDTS from './stubs/auth-helpers';
 import { checkEnvKeys } from './utils/checkENV';
@@ -14,7 +14,7 @@ import { usernameAndPasswordAuthConfig } from './utils/studioauth-config';
 
 export default defineIntegration({
 	name,
-	optionsSchema,
+	optionsSchema: StudioCMSAuthOptionsSchema,
 	setup({ name, options }) {
 		// Create resolver relative to this file
 		const { resolve } = createResolver(import.meta.url);

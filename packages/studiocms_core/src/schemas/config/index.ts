@@ -10,6 +10,7 @@ import { type StudioCMSRendererConfig, StudioCMSRendererConfigSchema } from './r
 // Exported Schemas for use in other internal packages
 //
 export { StudioCMSRendererConfigSchema, type StudioCMSRendererConfig };
+export { dashboardConfigSchema, DefaultFrontEndConfigSchema, imageServiceSchema, overridesSchema };
 
 //
 // MAIN SCHEMA

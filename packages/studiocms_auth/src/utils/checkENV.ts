@@ -1,8 +1,8 @@
 import { integrationLogger } from '@matthiesenxyz/integration-utils/astroUtils';
-import type { StudioCMSOptions } from '@studiocms/core/schemas';
 import { CheckENVStrings } from '@studiocms/core/strings';
 import type { AstroIntegrationLogger } from 'astro';
 import { loadEnv } from 'vite';
+import type { StudioCMSAuthOptions } from '../integration';
 
 const KeyList = {
 	Github: {
@@ -30,7 +30,10 @@ const KeyList = {
 
 const env = loadEnv('all', process.cwd(), 'CMS');
 
-export const checkEnvKeys = async (logger: AstroIntegrationLogger, options: StudioCMSOptions) => {
+export const checkEnvKeys = async (
+	logger: AstroIntegrationLogger,
+	options: StudioCMSAuthOptions
+) => {
 	const {
 		verbose,
 		dashboardConfig: {
