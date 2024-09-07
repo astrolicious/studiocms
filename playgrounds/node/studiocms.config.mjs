@@ -10,9 +10,6 @@ export default defineStudioCMSConfig({
 				highlighter: 'disabled',
 			},
 		},
-		markdocConfig: {
-			renderType: 
-		}
 	},
 	defaultFrontEndConfig: {
 		favicon: '/favicon.svg',
