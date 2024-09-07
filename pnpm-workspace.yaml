@@ -35,10 +35,10 @@ catalogs:
     '@shoelace-style/shoelace': ^2.16.0
     astro-embed: ^0.7.2
     starlight-versions: ^0.2.0
-    starlight-package-managers: ^0.6.0
-    starlight-typedoc: ^0.15.0
+    starlight-package-managers: ^0.7.0
+    starlight-typedoc: ^0.16.0
     typedoc: ^0.26.6
-    typedoc-plugin-markdown: ^4.2.6
+    typedoc-plugin-markdown: ^4.2.7
   studiocms:
     '@types/semver': ^7.5.8
     package-json: ^10.0.1

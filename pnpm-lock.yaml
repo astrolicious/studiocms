@@ -62,11 +62,11 @@ catalogs:
       specifier: ^0.7.2
       version: 0.7.2
     starlight-package-managers:
-      specifier: ^0.6.0
-      version: 0.6.0
+      specifier: ^0.7.0
+      version: 0.7.0
     starlight-typedoc:
-      specifier: ^0.15.0
-      version: 0.15.0
+      specifier: ^0.16.0
+      version: 0.16.0
     starlight-versions:
       specifier: ^0.2.0
       version: 0.2.0
@@ -74,8 +74,8 @@ catalogs:
       specifier: ^0.26.6
       version: 0.26.6
     typedoc-plugin-markdown:
-      specifier: ^4.2.6
-      version: 4.2.6
+      specifier: ^4.2.7
+      version: 4.2.7
   landing:
     astro-font:
       specifier: ^0.1.81
@@ -776,10 +776,10 @@ importers:
         version: 0.33.4
       starlight-package-managers:
         specifier: catalog:docs
-        version: 0.6.0(@astrojs/starlight@0.26.1(astro@4.15.1(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4)))(astro@4.15.1(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))
+        version: 0.7.0(@astrojs/starlight@0.26.1(astro@4.15.1(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4)))(astro@4.15.1(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))
       starlight-typedoc:
         specifier: catalog:docs
-        version: 0.15.0(@astrojs/starlight@0.26.1(astro@4.15.1(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4)))(astro@4.15.1(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))(typedoc-plugin-markdown@4.2.6(typedoc@0.26.6(typescript@5.5.4)))(typedoc@0.26.6(typescript@5.5.4))
+        version: 0.16.0(@astrojs/starlight@0.26.1(astro@4.15.1(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4)))(astro@4.15.1(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))(typedoc-plugin-markdown@4.2.7(typedoc@0.26.6(typescript@5.5.4)))(typedoc@0.26.6(typescript@5.5.4))
       starlight-versions:
         specifier: catalog:docs
         version: 0.2.0(@astrojs/starlight@0.26.1(astro@4.15.1(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4)))
@@ -788,7 +788,7 @@ importers:
         version: 0.26.6(typescript@5.5.4)
       typedoc-plugin-markdown:
         specifier: catalog:docs
-        version: 4.2.6(typedoc@0.26.6(typescript@5.5.4))
+        version: 4.2.7(typedoc@0.26.6(typescript@5.5.4))
       typescript:
         specifier: 'catalog:'
         version: 5.5.4
@@ -5239,21 +5239,21 @@ packages:
   stacktracey@2.1.8:
     resolution: {integrity: sha512-Kpij9riA+UNg7TnphqjH7/CzctQ/owJGNbFkfEeve4Z4uxT5+JapVLFXcsurIfN34gnTWZNJ/f7NMG0E8JDzTw==}
 
-  starlight-package-managers@0.6.0:
-    resolution: {integrity: sha512-2tE0B4ZVEZXZ1LJjcSvVXLfJP8SB2nE+nhiFgSa3fuHUPtnbzmFxLVp7jEKD8jaMXKWPYtlNTy95gJSK9W1sbQ==}
+  starlight-package-managers@0.7.0:
+    resolution: {integrity: sha512-7T0Wd4OhtyTxr7yxplO1gt1B0Ped4dxRQ0T3uOp7qM+5UmQiyQE6PMxwmN+4hVuaVQ1zpDdZR6nQrptewS+m9g==}
     engines: {node: '>=18.14.1'}
     peerDependencies:
       '@astrojs/starlight': '>=0.22.0'
       astro: '>=4.2.7'
 
-  starlight-typedoc@0.15.0:
-    resolution: {integrity: sha512-9xj7Zq8FohFMgGjeGrAZaPSXfVSNaNfEb5E4xbV1Mf/dU5Iau+QdNqJGd3utgLfI7Ire9Fo8AJZMYG+ncJr5Yg==}
+  starlight-typedoc@0.16.0:
+    resolution: {integrity: sha512-9B2kmX8S2J3cHenlf+TqVV+ogIrOolf8UxMu0f/lWDX/XVQDAjr44j0/y8k7Nfc+V6TmndsJbRIOpAmPAIvxAg==}
     engines: {node: '>=18.14.1'}
     peerDependencies:
       '@astrojs/starlight': '>=0.15.0'
       astro: '>=4.0.0'
       typedoc: '>=0.26.5'
-      typedoc-plugin-markdown: '>=4.0.0'
+      typedoc-plugin-markdown: '>=4.1.1'
 
   starlight-versions@0.2.0:
     resolution: {integrity: sha512-vUkO1D7RKgYKxSdZfQkUWgFrXkC3KBn4abbBKSanUfsjDvKx40S0L9oBeYq7Ebj1nc9g1FrQ6eRdHVMs68ABZw==}
@@ -5434,8 +5434,8 @@ packages:
     resolution: {integrity: sha512-RAH822pAdBgcNMAfWnCBU3CFZcfZ/i1eZjwFU/dsLKumyuuP3niueg2UAukXYF0E2AAoc82ZSSf9J0WQBinzHA==}
     engines: {node: '>=12.20'}
 
-  typedoc-plugin-markdown@4.2.6:
-    resolution: {integrity: sha512-k33o2lZSGpL3GjH28eW+RsujzCYFP0L5GNqpK+wa4CBcMOxpj8WV7SydNRLS6eSa2UvaPvNVJTaAZ6Tm+8GXoA==}
+  typedoc-plugin-markdown@4.2.7:
+    resolution: {integrity: sha512-bLsQdweSm48P9j6kGqQ3/4GCH5zu2EnURSkkxqirNc+uVFE9YK825ogDw+WbNkRHIV6eZK/1U43gT7YfglyYOg==}
     engines: {node: '>= 18'}
     peerDependencies:
       typedoc: 0.26.x
@@ -11142,18 +11142,18 @@ snapshots:
       as-table: 1.0.55
       get-source: 2.0.12
 
-  starlight-package-managers@0.6.0(@astrojs/starlight@0.26.1(astro@4.15.1(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4)))(astro@4.15.1(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4)):
+  starlight-package-managers@0.7.0(@astrojs/starlight@0.26.1(astro@4.15.1(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4)))(astro@4.15.1(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4)):
     dependencies:
       '@astrojs/starlight': 0.26.1(astro@4.15.1(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))
       astro: 4.15.1(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4)
 
-  starlight-typedoc@0.15.0(@astrojs/starlight@0.26.1(astro@4.15.1(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4)))(astro@4.15.1(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))(typedoc-plugin-markdown@4.2.6(typedoc@0.26.6(typescript@5.5.4)))(typedoc@0.26.6(typescript@5.5.4)):
+  starlight-typedoc@0.16.0(@astrojs/starlight@0.26.1(astro@4.15.1(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4)))(astro@4.15.1(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))(typedoc-plugin-markdown@4.2.7(typedoc@0.26.6(typescript@5.5.4)))(typedoc@0.26.6(typescript@5.5.4)):
     dependencies:
       '@astrojs/starlight': 0.26.1(astro@4.15.1(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))
       astro: 4.15.1(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4)
       github-slugger: 2.0.0
       typedoc: 0.26.6(typescript@5.5.4)
-      typedoc-plugin-markdown: 4.2.6(typedoc@0.26.6(typescript@5.5.4))
+      typedoc-plugin-markdown: 4.2.7(typedoc@0.26.6(typescript@5.5.4))
 
   starlight-versions@0.2.0(@astrojs/starlight@0.26.1(astro@4.15.1(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))):
     dependencies:
@@ -11355,7 +11355,7 @@ snapshots:
 
   type-fest@2.19.0: {}
 
-  typedoc-plugin-markdown@4.2.6(typedoc@0.26.6(typescript@5.5.4)):
+  typedoc-plugin-markdown@4.2.7(typedoc@0.26.6(typescript@5.5.4)):
     dependencies:
       typedoc: 0.26.6(typescript@5.5.4)
 
