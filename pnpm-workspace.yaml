@@ -1,15 +1,15 @@
 catalog:
-  '@astrojs/db': ^0.14.0 
+  '@astrojs/db': ^0.14.1
   '@astrojs/markdown-remark': ^5.2.0
   '@astrojs/rss': ^4.0.7
   '@astrojs/check': ^0.9.3
   '@astrojs/tailwind': ^5.1.0
-  '@astrojs/starlight': ^0.26.1
+  '@astrojs/starlight': ^0.27.0
   '@astrojs/web-vitals': ^3.0.0
   '@astrojs/node': ^8.3.3
-  '@astrojs/cloudflare': ^11.0.1
+  '@astrojs/cloudflare': ^11.0.4
   '@types/node': ^20.14.11
-  astro: ^4.15.1
+  astro: ^4.15.4
   astro-integration-kit: ^0.16.1
   astro-theme-provider: ^0.6.1
   sharp: ^0.33.4
