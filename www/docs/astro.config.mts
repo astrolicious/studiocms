@@ -358,6 +358,15 @@ export default defineConfig({
 					autogenerate: { directory: 'plugins' },
 				},
 				{
+					label: 'Customizing StudioCMS',
+					items: [
+						{
+							label: '@studiocms/renderers',
+							autogenerate: { directory: 'customizing/studiocms-renderers' },
+						},
+					],
+				},
+				{
 					label: 'Understanding StudioCMS',
 					autogenerate: { directory: 'how-it-works' },
 				},
