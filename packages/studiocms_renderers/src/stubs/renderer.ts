@@ -1,5 +1,8 @@
 import { fileFactory } from '@matthiesenxyz/integration-utils/fileFactory';
 
+/**
+ * Generate the `renderer.d.ts` file
+ */
 export const rendererDTS = (rendererPath: string) => {
 	const renderer = fileFactory();
 

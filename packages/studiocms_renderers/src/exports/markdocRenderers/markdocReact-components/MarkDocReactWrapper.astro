@@ -1,4 +1,5 @@
 ---
+import React from 'react';
 import { MarkDocReactRenderer } from './MarkDocReactRenderer.jsx';
 
 interface Props {
@@ -8,5 +9,5 @@ interface Props {
 const { content } = Astro.props;
 ---
 <MarkDocReactRenderer client:load>
-	<div>{content}</div>
+	{content}
 </MarkDocReactRenderer>

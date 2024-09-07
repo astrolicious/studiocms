@@ -7,6 +7,9 @@ import { rendererDTS } from './stubs/renderer';
 import { rendererConfigDTS } from './stubs/renderer-config';
 import { rendererAstroMarkdownDTS } from './stubs/renderer-markdownConfig';
 
+/**
+ * StudioCMS Renderers Integration
+ */
 export default defineIntegration({
 	name,
 	optionsSchema: StudioCMSRendererConfigSchema,
@@ -14,17 +17,21 @@ export default defineIntegration({
 		// Create resolver relative to this file
 		const { resolve } = createResolver(import.meta.url);
 
+		// Import the Renderer Component
 		const RendererComponent = resolve('./components/StudioCMSRenderer.astro');
 
 		return {
 			hooks: {
 				'astro:config:setup': async (params) => {
+					// Destructure the params
 					const {
 						config: { markdown: astroMarkdown },
 					} = params;
 
+					// Setup the runtime logger
 					runtimeLogger(params, { name: 'studiocms-renderer' });
 
+					// Add Virtual Imports
 					addVirtualImports(params, {
 						name,
 						imports: {
@@ -40,10 +47,14 @@ export default defineIntegration({
 						filename: 'renderer.d.ts',
 						content: rendererDTS(RendererComponent),
 					});
+
+					// Inject Types for Renderer Config
 					injectTypes({
 						filename: 'config.d.ts',
 						content: rendererConfigDTS(),
 					});
+
+					// Inject Types for Astro Markdown Config
 					injectTypes({
 						filename: 'astroMarkdownConfig.d.ts',
 						content: rendererAstroMarkdownDTS(),

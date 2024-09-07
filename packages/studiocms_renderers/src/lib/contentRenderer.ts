@@ -1,6 +1,11 @@
 import type { Renderer } from '@studiocms/core/schemas/renderer';
 
-type ContentRenderer = {
+/**
+ * Content Renderer Type
+ *
+ * Renders content based on the renderer configuration
+ */
+export type ContentRenderer = {
 	content: string;
 	renderer: Renderer;
 };
@@ -13,6 +18,17 @@ type ContentRenderer = {
  * @param content - The content to render
  * @param renderer - The renderer function to use
  * @returns The rendered content
+ *
+ * @example
+ * function sampleRenderer(content: string): Promise<string> {
+ *   // Assuming the renderer function processes the content and returns a string
+ *   return `<p>${content}</p>`;
+ * }
+ *
+ * const renderedContent = contentRenderer({
+ *   content: 'Hello, world!',
+ *   renderer: sampleRenderer,
+ * });
  */
 export async function contentRenderer({ content, renderer }: ContentRenderer): Promise<string> {
 	// Assuming the renderer function processes the content and returns a string
@@ -20,14 +36,3 @@ export async function contentRenderer({ content, renderer }: ContentRenderer): P
 }
 
 export default contentRenderer;
-
-// Sample renderer function
-// function sampleRenderer(content: string): string {
-//     return `<p>${content}</p>`;
-// }
-
-// Using contentRenderer with the sample renderer
-// const renderedContent = contentRenderer({
-//     content: 'Hello, world!',
-//     renderer: sampleRenderer,
-// });

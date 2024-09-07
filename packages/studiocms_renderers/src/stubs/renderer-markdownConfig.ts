@@ -1,5 +1,8 @@
 import { fileFactory } from '@matthiesenxyz/integration-utils/fileFactory';
 
+/**
+ * Generate the `astroMarkdownConfig.d.ts` file
+ */
 export const rendererAstroMarkdownDTS = () => {
 	const renderer = fileFactory();
 

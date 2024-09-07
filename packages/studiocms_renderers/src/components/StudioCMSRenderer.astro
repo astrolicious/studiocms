@@ -2,10 +2,10 @@
 import { logger } from '@it-astro:logger:studiocms-renderer';
 import rendererConfig from 'studiocms:renderer/config';
 import type { StudioCMSRendererConfig } from '@studiocms/core/schemas/renderer';
-import renderAstroMD from '../lib/astro-remark/astromd';
+import renderAstroMD from '../lib/astro-remark';
 import builtInContentRenderer from '../lib/contentRenderer';
-import renderMarkDoc from '../lib/markdoc/markdoc';
-import renderMarked from '../lib/marked/marked';
+import renderMarkDoc from '../lib/markdoc';
+import renderMarked from '../lib/marked';
 
 type Props = {
 	content: string;

@@ -17,7 +17,7 @@ export async function renderAstroMD(content: string) {
 	const processor = await createMarkdownProcessor(astroMarkdownConfig as AstroMarkdownOptions);
 
 	const result = await processor.render(content);
-	return new HTMLString(result.code).toString();
+	return `${new HTMLString(result.code)}`;
 }
 
 export default renderAstroMD;

@@ -3,8 +3,15 @@ import Markdoc, { type RenderableTreeNode } from '@markdoc/markdoc';
 import type { markdocRenderer } from '@studiocms/core/schemas/renderer';
 import { experimental_AstroContainer as AstroContainer } from 'astro/container';
 import React from 'react';
-import ReactWrapper from './ReactWrapper.astro';
+import ReactWrapper from './markdocReact-components/MarkDocReactWrapper.astro';
 
+/**
+ * MarkDoc React Components
+ *
+ * The React components to use for rendering the content
+ *
+ * @type {Object} - The React components to use for rendering the content
+ */
 // biome-ignore lint/complexity/noBannedTypes: This is a valid use case for `any`
 export type markdocReactComponents = {} | undefined;
 

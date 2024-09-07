@@ -42,13 +42,13 @@ studioCMS({
 })
 ```
 
-- Add support for MarkDoc `renderType` of `html`, and `react-static`, and custom renderers such as the provided markdocReactRenderer from `@studiocms/renderers/markdocReact`:
+- Add support for MarkDoc `renderType` of `html`, and `react-static`, and custom renderers such as the provided `markdocReactRenderer` from `@studiocms/renderers/exports/markdoc/react`:
 
 ```ts
 import { defineConfig } from 'astro/config';
 import react from '@astrojs/react';
 import studioCMS from 'studiocms';
-import markDocRenderReact from '@studiocms/renderers/markdocReact';
+import markDocRenderReact from '@studiocms/renderers/exports/markdoc/react';
 
 // https://astro.build/config
 export default defineConfig({

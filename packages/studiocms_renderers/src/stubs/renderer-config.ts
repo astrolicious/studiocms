@@ -1,8 +1,12 @@
 import { fileFactory } from '@matthiesenxyz/integration-utils/fileFactory';
 import { createResolver } from 'astro-integration-kit';
 
+// Create resolver relative to this file
 const { resolve } = createResolver(import.meta.url);
 
+/**
+ * Generate the `config.d.ts` file
+ */
 export const rendererConfigDTS = () => {
 	const renderer = fileFactory();
 
