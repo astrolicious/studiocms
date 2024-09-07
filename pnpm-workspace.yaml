@@ -33,7 +33,11 @@ catalogs:
     astro-seo: ^0.8.4
   docs:
     '@shoelace-style/shoelace': ^2.16.0
+    "@types/hast": ^3.0.4
     astro-embed: ^0.7.2
+    hast: ^1.0.0
+    hast-util-select: ^6.0.2
+    rehype: ^13.0.1
     starlight-versions: ^0.2.0
     starlight-package-managers: ^0.7.0
     starlight-typedoc: ^0.16.0

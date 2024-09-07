@@ -5,8 +5,6 @@ import starlightVersions from 'starlight-versions';
 import { getCoolifyURL } from '../hostUtils';
 
 // Create Starlight TypeDoc Plugins for different parts of the Astro StudioCMS Project
-//// MAIN PROJECT
-
 // studiocms TypeDoc Plugin
 const [tdStudioCMS, tdStudioCMSSideBar] = createStarlightTypeDocPlugin();
 // @studiocms/core
@@ -23,8 +21,6 @@ const [tdImageHandler, tdImageHandlerSideBar] = createStarlightTypeDocPlugin();
 const [tdRenderers, tdRenderersSideBar] = createStarlightTypeDocPlugin();
 // @studiocms/robotstxt
 const [tdRobotsTxt, tdRobotsTxtSideBar] = createStarlightTypeDocPlugin();
-
-//// PLUGINS
 
 // Define the Site URL
 const site = getCoolifyURL(true) || 'https://docs.astro-studiocms.xyz/';

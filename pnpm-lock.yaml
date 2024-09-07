@@ -58,9 +58,18 @@ catalogs:
     '@shoelace-style/shoelace':
       specifier: ^2.16.0
       version: 2.16.0
+    '@types/hast':
+      specifier: ^3.0.4
+      version: 3.0.4
     astro-embed:
       specifier: ^0.7.2
       version: 0.7.2
+    hast:
+      specifier: ^1.0.0
+      version: 1.0.0
+    rehype:
+      specifier: ^13.0.1
+      version: 13.0.1
     starlight-package-managers:
       specifier: ^0.7.0
       version: 0.7.0
@@ -765,12 +774,24 @@ importers:
       '@shoelace-style/shoelace':
         specifier: catalog:docs
         version: 2.16.0(@types/react@18.3.5)
+      '@types/hast':
+        specifier: catalog:docs
+        version: 3.0.4
       astro:
         specifier: 'catalog:'
         version: 4.15.4(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4)
       astro-embed:
         specifier: catalog:docs
         version: 0.7.2(astro@4.15.4(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))
+      hast:
+        specifier: catalog:docs
+        version: 1.0.0
+      hast-util-select:
+        specifier: ^6.0.2
+        version: 6.0.2
+      rehype:
+        specifier: catalog:docs
+        version: 13.0.1
       sharp:
         specifier: 'catalog:'
         version: 0.33.4
@@ -3976,6 +3997,10 @@ packages:
 
   hast-util-whitespace@3.0.0:
     resolution: {integrity: sha512-88JUN06ipLwsnv+dVn+OIYOvAuvBMy/Qoi6O7mQHxdPXpjy+Cd6xRkWwux7DKO+4sYILtLBRIKgsdpS2gQc7qw==}
+
+  hast@1.0.0:
+    resolution: {integrity: sha512-vFUqlRV5C+xqP76Wwq2SrM0kipnmpxJm7OfvVXpB35Fp+Fn4MV+ozr+JZr5qFvyR1q/U+Foim2x+3P+x9S1PLA==}
+    deprecated: Renamed to rehype
 
   hastscript@8.0.0:
     resolution: {integrity: sha512-dMOtzCEd3ABUeSIISmrETiKuyydk1w0pa+gE/uormcTpSYuaNJPbX1NU3JLyscSLjwAQM8bWMhhIlnCqnRvDTw==}
@@ -9718,6 +9743,8 @@ snapshots:
   hast-util-whitespace@3.0.0:
     dependencies:
       '@types/hast': 3.0.4
+
+  hast@1.0.0: {}
 
   hastscript@8.0.0:
     dependencies:
