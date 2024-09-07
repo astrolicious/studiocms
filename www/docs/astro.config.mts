@@ -114,8 +114,12 @@ export default defineConfig({
 					pagination: true,
 					typeDoc: {
 						skipErrorChecking: true,
+						gitRemote: 'https://github.com/astrolicious/studiocms/blob',
+						gitRevision: 'main',
+						includeVersion: true,
+						sourceLinkExternal: true,
 						sourceLinkTemplate:
-							'https://github.com/astrolicious/studiocms/tree/main/{path}#L{line}',
+							'https://github.com/astrolicious/studiocms/blob/{gitRevision}/{path}#L{line}',
 					},
 				}),
 				tdAuth({
@@ -140,8 +144,12 @@ export default defineConfig({
 					pagination: true,
 					typeDoc: {
 						skipErrorChecking: true,
+						gitRemote: 'https://github.com/astrolicious/studiocms/blob',
+						gitRevision: 'main',
+						includeVersion: true,
+						sourceLinkExternal: true,
 						sourceLinkTemplate:
-							'https://github.com/astrolicious/studiocms/tree/main/{path}#L{line}',
+							'https://github.com/astrolicious/studiocms/blob/{gitRevision}/{path}#L{line}',
 					},
 				}),
 				tdCore({
@@ -197,8 +205,12 @@ export default defineConfig({
 					pagination: true,
 					typeDoc: {
 						skipErrorChecking: true,
+						gitRemote: 'https://github.com/astrolicious/studiocms/blob',
+						gitRevision: 'main',
+						includeVersion: true,
+						sourceLinkExternal: true,
 						sourceLinkTemplate:
-							'https://github.com/astrolicious/studiocms/tree/main/{path}#L{line}',
+							'https://github.com/astrolicious/studiocms/blob/{gitRevision}/{path}#L{line}',
 					},
 				}),
 				tdDashboard({
@@ -222,8 +234,12 @@ export default defineConfig({
 					pagination: true,
 					typeDoc: {
 						skipErrorChecking: true,
+						gitRemote: 'https://github.com/astrolicious/studiocms/blob',
+						gitRevision: 'main',
+						includeVersion: true,
+						sourceLinkExternal: true,
 						sourceLinkTemplate:
-							'https://github.com/astrolicious/studiocms/tree/main/{path}#L{line}',
+							'https://github.com/astrolicious/studiocms/blob/{gitRevision}/{path}#L{line}',
 					},
 				}),
 				tdFrontend({
@@ -241,8 +257,12 @@ export default defineConfig({
 					pagination: true,
 					typeDoc: {
 						skipErrorChecking: true,
+						gitRemote: 'https://github.com/astrolicious/studiocms/blob',
+						gitRevision: 'main',
+						includeVersion: true,
+						sourceLinkExternal: true,
 						sourceLinkTemplate:
-							'https://github.com/astrolicious/studiocms/tree/main/{path}#L{line}',
+							'https://github.com/astrolicious/studiocms/blob/{gitRevision}/{path}#L{line}',
 					},
 				}),
 				tdImageHandler({
@@ -265,8 +285,12 @@ export default defineConfig({
 					pagination: true,
 					typeDoc: {
 						skipErrorChecking: true,
+						gitRemote: 'https://github.com/astrolicious/studiocms/blob',
+						gitRevision: 'main',
+						includeVersion: true,
+						sourceLinkExternal: true,
 						sourceLinkTemplate:
-							'https://github.com/astrolicious/studiocms/tree/main/{path}#L{line}',
+							'https://github.com/astrolicious/studiocms/blob/{gitRevision}/{path}#L{line}',
 					},
 				}),
 				tdRenderers({
@@ -295,8 +319,12 @@ export default defineConfig({
 					pagination: true,
 					typeDoc: {
 						skipErrorChecking: true,
+						gitRemote: 'https://github.com/astrolicious/studiocms/blob',
+						gitRevision: 'main',
+						includeVersion: true,
+						sourceLinkExternal: true,
 						sourceLinkTemplate:
-							'https://github.com/astrolicious/studiocms/tree/main/{path}#L{line}',
+							'https://github.com/astrolicious/studiocms/blob/{gitRevision}/{path}#L{line}',
 					},
 				}),
 				tdRobotsTxt({
@@ -315,8 +343,12 @@ export default defineConfig({
 					pagination: true,
 					typeDoc: {
 						skipErrorChecking: true,
+						gitRemote: 'https://github.com/astrolicious/studiocms/blob',
+						gitRevision: 'main',
+						includeVersion: true,
+						sourceLinkExternal: true,
 						sourceLinkTemplate:
-							'https://github.com/astrolicious/studiocms/tree/main/{path}#L{line}',
+							'https://github.com/astrolicious/studiocms/blob/{gitRevision}/{path}#L{line}',
 					},
 				}),
 			],
