@@ -5,11 +5,7 @@
       "items": [
         {
           "label": "Getting Started with StudioCMS",
-          "link": "/start-here/getting-started",
-          "badge": {
-            "text": "Updated",
-            "variant": "success"
-          }
+          "link": "/start-here/getting-started"
         },
         {
           "label": "Environment Variables",
@@ -17,11 +13,7 @@
         },
         {
           "label": "Configuration",
-          "link": "/start-here/configuration",
-          "badge": {
-            "text": "Updated",
-            "variant": "success"
-          }
+          "link": "/start-here/configuration"
         },
         {
           "label": "Why Astro StudioCMS?",
@@ -59,11 +51,7 @@
       "items": [
         {
           "label": "How does it work!?",
-          "link": "/how-it-works/",
-          "badge": {
-            "text": "Updated",
-            "variant": "success"
-          }
+          "link": "/how-it-works/"
         }
       ]
     },

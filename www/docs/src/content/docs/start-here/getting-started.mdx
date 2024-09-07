@@ -3,6 +3,9 @@ title: Getting Started with StudioCMS
 description: Get started building with StudioCMS.
 sidebar:
    order: 1
+   badge:
+     text: "Updated"
+     variant: "success"
 banner:
   content: |
     We've renamed the package to <b>studiocms</b> 🎉
@@ -17,15 +20,14 @@ import StudioHeading from '~/components/StudioHeading.astro';
 To start using StudioCMS, you'll need:
 
 - An Astro project
-- An Astro Studio account
-- An Astro Studio project
+- An Astro Studio account or (*Self*) Hosted libSQL server
 - The Astro StudioCMS integration
 
 ## Understanding Options for `@astrojs/db`
 
 ### Using libSQL
 
-With the latest version of `@astrojs/db` v0.14.0, you can now link to any libSQL server from any platform that exposes the libSQL remote protocol of the server, or can be self-hosted.
+With the latest version of `@astrojs/db` (`v0.14.0`), you can now link to any libSQL server from any platform that exposes the libSQL remote protocol of the server, or can be self-hosted.
 
 To use libSQL with Astro Db, you will need to set the following environment variables:
 

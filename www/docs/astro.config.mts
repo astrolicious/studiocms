@@ -369,8 +369,8 @@ export default defineConfig({
 				{
 					label: 'TypeDoc',
 					badge: {
-						text: 'Auto-Generated',
-						variant: 'success',
+						text: 'Auto Generated',
+						variant: 'tip',
 					},
 					items: [
 						tdStudioCMSSideBar,
