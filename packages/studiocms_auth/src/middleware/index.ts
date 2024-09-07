@@ -2,6 +2,7 @@ import { logger } from '@it-astro:logger:studiocms-auth';
 import { db, eq } from 'astro:db';
 import Config from 'virtual:studiocms/config';
 import { tsUsers } from '@studiocms/core/db/tsTables';
+import { removeLeadingTrailingSlashes } from '@studiocms/core/lib';
 import type { MiddlewareHandler } from 'astro';
 import { verifyRequestOrigin } from 'lucia';
 import { lucia } from '../auth';
@@ -14,20 +15,10 @@ const {
 	},
 } = Config;
 
-/**
- * This function is used to remove any trailing and leading slashes from a string
- *
- * @param {string} str - The string to remove slashes from
- *
- * @returns {string} - The string without any trailing or leading slashes
- *
- * @example
- * stripSlashes('/dashboard/') // 'dashboard'
- */
-const stripSlashes = (str: string): string => str.replace(/^\/+|\/+$/g, '');
-
 // Get the dashboard route
-const dashboardRoute = dashboardRouteOverride ? stripSlashes(dashboardRouteOverride) : 'dashboard';
+const dashboardRoute = dashboardRouteOverride
+	? removeLeadingTrailingSlashes(dashboardRouteOverride)
+	: 'dashboard';
 
 // Define the middleware router
 const router: Record<string, MiddlewareHandler> = {};
