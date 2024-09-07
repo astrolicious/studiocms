@@ -12,6 +12,7 @@ banner:
 ---
 
 import { PackageManagers } from 'starlight-package-managers';
+import { Aside } from '@astrojs/starlight/components';
 import ReadMore from '~/components/ReadMore.astro';
 import StudioHeading from '~/components/StudioHeading.astro';
 
@@ -44,9 +45,9 @@ The [commands for deploying and pushing changes](https://docs.astro.build/en/gui
 ### Using Astro Studio
 </StudioHeading>
 
-:::note
+<Aside type="note" title="Closed Beta">
 Astro Studio is currently in closed beta. You'll need an invite to create an account. For now if you do not have an account, you can use the [libSQL option](#using-libsql) to get started using another libSQL provider.
-:::
+</Aside>
 
 <StudioHeading>
 #### Creating an Astro Studio account
@@ -115,9 +116,9 @@ export default defineConfig({
 });
 ```
 
-:::note
+<Aside type="note" title="SSR Only">
 StudioCMS requires SSR mode to work correctly. Make sure to set `output: 'server'` and an adapter that supports SSR in your `astro.config.mjs` file.
-:::
+</Aside>
 
 ## Configure your `package.json` scripts
 
