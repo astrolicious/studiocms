@@ -73,17 +73,6 @@
         "directory": "config-reference"
       },
       "collapsed": true
-    },
-    {
-      "label": "TypeDoc",
-      "badge": {
-        "text": "Auto-Generated",
-        "variant": "success"
-      },
-      "autogenerate": {
-        "directory": "typedoc"
-      },
-      "collapsed": true
     }
   ]
 }
