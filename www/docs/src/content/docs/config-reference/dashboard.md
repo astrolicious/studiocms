@@ -5,7 +5,7 @@ sidebar:
   order: 5
 ---
 
-`dashboardConfig` option let's customize the dashboard for the `studioCMS`. This is used to setup your dashboard data.
+`dashboardConfig` option aloows you to customize the dashboard for the `studioCMS`. This is used to setup your dashboard data.
 
 ## Usage
 
@@ -42,7 +42,7 @@ studioCMS({
 - **Type:** `boolean | undefined`
 - **Default:** `true`
 
-Allows the user to enable or disable the StudioCMS dashboard but still provide all the helper's and utilities to those who are customizing their setup, doing so will disable the dashboard and you will need to manage your content via the Astro Studio Dashboard at [Astro Studio](http://studio.astro.build).
+Allows enabling or disabling of the Astro StudioCMS dashboard but still provide all the helpers and utilities to those who are customizing their setup. By disabling it will disable the dashboard and you will need to manage your content via the Astro Studio Dashboard at [Astro Studio](http://studio.astro.build) or with whatever access your libSQL server provides.
 
 
 ### `faviconURL`
