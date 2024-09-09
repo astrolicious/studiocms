@@ -5,6 +5,8 @@ sidebar:
   order: 1
 ---
 
+import ReadMore from '~/components/ReadMore.astro';
+
 StudioCMS Integration config options schema Reference
 
 ## `dbStartPage`
@@ -30,7 +32,7 @@ studioCMS({
 
 ### Usage
 
-[see `rendererConfig` for full options](/config-reference/renderer-config)
+<ReadMore>[see `rendererConfig` for full options](/config-reference/renderer-config)</ReadMore>
 
 ## `imageService`
 
@@ -38,7 +40,7 @@ studioCMS({
 
 ### Usage
 
-[see `imageService` for full options](/config-reference/image-service)
+<ReadMore>[see `imageService` for full options](/config-reference/image-service)</ReadMore>
 
 ## `defaultFrontEndConfig`
 
@@ -46,7 +48,7 @@ studioCMS({
 
 ### Usage
 
-[see `defaultFrontEndConfig` for full options](/config-reference/default-frontend-config)
+<ReadMore>[see `defaultFrontEndConfig` for full options](/config-reference/default-frontend-config)</ReadMore>
 
 ## `dashboardConfig`
 
@@ -54,7 +56,7 @@ studioCMS({
 
 ### Usage
 
-[see `dashboardConfig` for full options](/config-reference/dashboard)
+<ReadMore>[see `dashboardConfig` for full options](/config-reference/dashboard)</ReadMore>
 
 ## `includedIntegrations`
 
@@ -62,7 +64,7 @@ studioCMS({
 
 ### Usage
 
-[see `includedIntegrations` for full options](/config-reference/included-integrations)
+<ReadMore>[see `includedIntegrations` for full options](/config-reference/included-integrations)</ReadMore>
 
 ## `dateLocale`
 
@@ -76,7 +78,7 @@ Date locale used for formatting dates
 ### Usage
 
 ```js title="astro.config.mjs"  {2}
-astroStudioCMS({
+studioCMS({
     dateLocale: 'en-us',
 })
 ```
@@ -87,7 +89,7 @@ astroStudioCMS({
 
 ### Usage
 
-[see `overrides` for full options](/config-reference/overrides)
+<ReadMore>[see `overrides` for full options](/config-reference/overrides)</ReadMore>
 
 ## `verbose`
 
