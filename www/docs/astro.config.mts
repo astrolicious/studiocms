@@ -306,6 +306,7 @@ export default defineConfig({
 						getFilePathToPackage('studiocms_renderers', 'src/lib/markdoc/markdocHTML.ts'),
 						getFilePathToPackage('studiocms_renderers', 'src/lib/markdoc/markdocReactStatic.ts'),
 						getFilePathToPackage('studiocms_renderers', 'src/lib/marked/index.ts'),
+						getFilePathToPackage('studiocms_renderers', 'src/lib/mdx/index.ts'),
 					],
 					output: 'typedoc/studiocms-renderers',
 					sidebar: {
