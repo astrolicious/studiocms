@@ -1,6 +1,7 @@
 ---
-title: "StudioCMS Config"
-description: "Options for how to define the StudioCMS Config"
+title: StudioCMS Config
+description: Options for how to define the StudioCMS Config
+slug: 0.1.0-beta.5/start-here/configuration
 ---
 
 # Available Options

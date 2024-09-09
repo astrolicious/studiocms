@@ -31,10 +31,6 @@ export const coreVirtualModuleGeneration = defineUtility('astro:config:setup')(
 	) => {
 		// Destructure Params and Options
 		const { StudioCMSConfig, currentVersion, overrides } = options;
-		const { config: astroConfig } = params;
-
-		// Get the Markdown Remark Config
-		const { markdown: astroMarkdown } = astroConfig;
 
 		// Create Resolver for Virtual Imports
 		const { resolve } = createResolver(import.meta.url);
@@ -95,7 +91,6 @@ export const coreVirtualModuleGeneration = defineUtility('astro:config:setup')(
 		const imports: Record<string, string> = {
 			'virtual:studiocms/config': `export default ${stringify(StudioCMSConfig)}`,
 			'virtual:studiocms/version': `export default '${currentVersion}'`,
-			'virtual:studiocms/astromdremarkConfig': `export default ${stringify(astroMarkdown)}`,
 			'virtual:studiocms/pluginSystem': pluginModule,
 			'studiocms:components': virtualComponents,
 			'studiocms:helpers': virtualHelpers,

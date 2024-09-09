@@ -1,6 +1,11 @@
 ---
 title: "How does it work!?"
-description: "Learn how Astro StudioCMS helps you manage and deliver your content by exploring a comprehensive breakdown of it's fundamental components."
+description: "Learn how StudioCMS helps you manage and deliver your content by exploring a comprehensive breakdown of it's fundamental components."
+sidebar:
+   order: 1
+   badge:
+     text: "Updated"
+     variant: "success"
 ---
 
 # Introduction
@@ -49,7 +54,6 @@ Modules without the `virtual:` prefix have full typings defined and injected int
 - **`virtual:studiocms/config`**: Provides the resolved configuration for the StudioCMS integration ecosystem.
 - **`virtual:studiocms/version`**: Provides the current version of the StudioCMS integration ecosystem.
 - **`virtual:studiocms/pluginSystem`**: Provides the plugin system interfaces during runtime for StudioCMS.
-- **`virtual:studiocms/astromdremarkConfig`**: Provides the configuration for Astro Markdown support.
 - **`studiocms:components`**: Provides the front-end exported components for StudioCMS.
 - **`studiocms:helpers`**: Provides the front-end exported helper functions for StudioCMS.
 - **`studiocms:helpers/contentHelper`**: Provides the exported content helper functions for StudioCMS.
@@ -84,3 +88,13 @@ The StudioCMS ImageHandler is an integration that provides a custom image compon
 #### ImageHandler Virtual Modules
 
 - **`studiocms:imageHandler/components`**: The Virtual module that provides the exported image components for the StudioCMS ImageHandler.
+
+### StudioCMS: Renderers
+
+The StudioCMS Renderers integration provides the renderers for the StudioCMS ecosystem. This integration is used to determine how content should be rendered in StudioCMS.
+
+#### Renderers Virtual Modules
+
+- **`studiocms:renderer`**: Provides the main renderer component for the StudioCMS ecosystem.
+- **`studiocms:renderer/config`**: Provides the configuration for the StudioCMS renderer.
+- **`studiocms:renderer/astroMarkdownConfig`**: Provides the configuration for Astro Markdown support.

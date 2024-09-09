@@ -1,13 +1,13 @@
 import { integrationLogger } from '@matthiesenxyz/integration-utils/astroUtils';
-import type { StudioCMSOptions } from '@studiocms/core/schemas';
 import { MakeFrontendStrings } from '@studiocms/core/strings';
 import { defineUtility } from 'astro-integration-kit';
+import type { StudioCMSDashboardOptions } from '../integration';
 
 export const makeFrontend = defineUtility('astro:config:setup')(
 	(
 		params,
 		options: {
-			options: StudioCMSOptions;
+			options: StudioCMSDashboardOptions;
 			routes: {
 				pattern: string;
 				entrypoint: string;

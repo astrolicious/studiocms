@@ -2,9 +2,15 @@ import { defineStudioCMSConfig } from 'studiocms';
 
 export default defineStudioCMSConfig({
 	dbStartPage: false,
-	contentRenderer: 'marked',
 	verbose: true,
 	dateLocale: 'en-us',
+	rendererConfig: {
+		markedConfig: {
+			highlighterConfig: {
+				highlighter: 'disabled',
+			},
+		},
+	},
 	defaultFrontEndConfig: {
 		favicon: '/favicon.svg',
 		htmlDefaultHead: [
@@ -24,11 +30,6 @@ export default defineStudioCMSConfig({
 	},
 	imageService: {
 		useUnpic: true,
-	},
-	markedConfig: {
-		highlighterConfig: {
-			highlighter: 'disabled',
-		},
 	},
 	dashboardConfig: {
 		AuthConfig: {

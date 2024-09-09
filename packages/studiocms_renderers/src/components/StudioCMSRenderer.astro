@@ -1,12 +1,40 @@
 ---
-import Config from 'virtual:studiocms/config';
-import { contentRenderer } from '../lib/contentRenderer';
+import { logger } from '@it-astro:logger:studiocms-renderer';
+import rendererConfig from 'studiocms:renderer/config';
+import type { StudioCMSRendererConfig } from '@studiocms/core/schemas/renderer';
+import renderAstroMD from '../lib/astro-remark';
+import builtInContentRenderer from '../lib/contentRenderer';
+import renderMarkDoc from '../lib/markdoc';
+import renderMarked from '../lib/marked';
 
 type Props = {
 	content: string;
+	renderer?: StudioCMSRendererConfig['renderer'];
 };
 
-const { content } = Astro.props;
+const { content, renderer = rendererConfig.renderer } = Astro.props;
+
+function rendererSelect(renderer: StudioCMSRendererConfig['renderer']) {
+	if (renderer === 'marked') {
+		logger.debug('Using built-in renderer: marked');
+		return renderMarked;
+	}
+	if (renderer === 'astro') {
+		logger.debug('Using built-in renderer: astro remark');
+		return renderAstroMD;
+	}
+	if (renderer === 'markdoc') {
+		logger.debug('Using built-in renderer: markdoc');
+		return renderMarkDoc;
+	}
+	if (renderer.renderer) {
+		logger.debug(`Using custom renderer: ${renderer.name}`);
+		return renderer.renderer;
+	}
+	return renderMarked;
+}
+
+const renderedContent = builtInContentRenderer({ content, renderer: rendererSelect(renderer) });
 ---
 
-<Fragment set:html={contentRenderer(content, Config.contentRenderer)} />
+<Fragment set:html={renderedContent} />

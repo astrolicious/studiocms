@@ -1,4 +1,4 @@
-import Config from 'virtual:studiocms/config';
+import rendererConfig from 'studiocms:renderer/config';
 import {
 	transformerMetaHighlight,
 	transformerMetaWordHighlight,
@@ -18,22 +18,12 @@ import { createHighlighterCore } from 'shiki/core';
 import getWasm from 'shiki/wasm';
 import emojiList from './emoji-en-US.json';
 
-const {
-	markedConfig: {
-		loadmarkedExtensions,
-		highlighterConfig: {
-			highlighter: selectedHighlighter,
-			shikiConfig: { theme: shikiTheme, loadThemes: shikiLoadThemes, loadLangs: shikiLoadLangs },
-		},
-		includedExtensions: {
-			markedAlert: mAlertExt,
-			markedEmoji: mEmojiExt,
-			markedFootnote: mFootnoteExt,
-			markedSmartypants: mSmartypantsExt,
-		},
-	},
-} = Config;
+// Load markedConfig from rendererConfig
+const { loadmarkedExtensions, includedExtensions, highlighterConfig } = rendererConfig.markedConfig;
 
+/**
+ * Create a Map of Emoji Names to Emoji Characters
+ */
 export const emojiMap = Object.entries(emojiList).reduce(
 	(ret, [emoji, names]) => {
 		for (const name of names) {
@@ -44,32 +34,43 @@ export const emojiMap = Object.entries(emojiList).reduce(
 	{} as Record<string, string>
 );
 
+/**
+ * Render Markdown Content using Marked
+ *
+ * Marked is A markdown parser and compiler. Built for speed.
+ * @see https://marked.js.org/ for more info about marked.
+ *
+ * @param input Markdown Content
+ * @returns Converted HTML Content
+ */
 export async function renderMarked(input: string): Promise<string> {
 	const customMarkedExtList: MarkedExtension[] = [];
 
 	// MarkedAlert Extension
-	if (mAlertExt) {
+	if (includedExtensions.markedAlert) {
 		customMarkedExtList.push(markedAlert());
 	}
 
 	// MarkedEmoji Extension
-	if (mEmojiExt) {
+	if (includedExtensions.markedEmoji) {
 		customMarkedExtList.push(markedEmoji({ emojis: emojiMap, unicode: true }));
 	}
 
 	// MarkedFootnote Extension
-	if (mFootnoteExt) {
+	if (includedExtensions.markedFootnote) {
 		customMarkedExtList.push(markedFootnote());
 	}
 
 	// MarkedSmartypants Extension
-	if (mSmartypantsExt) {
+	if (includedExtensions.markedSmartypants) {
 		customMarkedExtList.push(markedSmartypants());
 	}
 
 	// Setup Marked Highlighter
-	if (selectedHighlighter === 'shiki') {
+	if (highlighterConfig.highlighter === 'shiki') {
 		// Create Shiki Highlighter
+
+		const { shikiConfig } = highlighterConfig;
 
 		// Load Shiki Themes
 		const shikiThemeConfig = [];
@@ -86,8 +87,8 @@ export async function renderMarked(input: string): Promise<string> {
 		shikiThemeConfig.push(...studioCMSDefaultThemes);
 
 		// Add any additional UserLoaded Themes to the Config
-		if (shikiLoadThemes) {
-			shikiThemeConfig.push(...shikiLoadThemes);
+		if (shikiConfig.loadThemes) {
+			shikiThemeConfig.push(...shikiConfig.loadThemes);
 		}
 
 		// Load Shiki Languages
@@ -113,8 +114,8 @@ export async function renderMarked(input: string): Promise<string> {
 		shikiLangsConfig.push(...studioCMSDefaultLangs);
 
 		// Add any additional UserLoaded Languages to the Config
-		if (shikiLoadLangs) {
-			shikiLangsConfig.push(...shikiLoadLangs);
+		if (shikiConfig.loadLangs) {
+			shikiLangsConfig.push(...shikiConfig.loadLangs);
 		}
 
 		// Create Shiki Highlighter
@@ -130,7 +131,7 @@ export async function renderMarked(input: string): Promise<string> {
 				highlight(code, lang, props) {
 					return shikiHighlighter.codeToHtml(code, {
 						lang,
-						theme: shikiTheme,
+						theme: shikiConfig.theme,
 						meta: { __raw: props.join(' ') }, // required by `transformerMeta*`
 						transformers: [
 							transformerNotationDiff(),
@@ -158,3 +159,5 @@ export async function renderMarked(input: string): Promise<string> {
 
 	return content;
 }
+
+export default renderMarked;

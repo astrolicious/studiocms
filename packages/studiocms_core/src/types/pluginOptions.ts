@@ -39,6 +39,7 @@ export type StudioCMSPluginOptions = {
 		dashboardPageLinks?: DashboardPageLink[];
 		/**
 		 * The custom renderer plugin path - This is used to replace the built-in Markdown renderer. Recommended for advanced users.
+		 * ## Deprecated This option has moved to the StudioCMSRendererConfig.
 		 */
 		customRendererPluginPath?: string;
 	};

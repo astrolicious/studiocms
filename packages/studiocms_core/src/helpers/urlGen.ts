@@ -1,3 +1,4 @@
+import { removeLeadingTrailingSlashes } from '../lib/removeLeadingTrailingSlashes';
 import { pathWithBase } from './pathGenerators';
 
 /**
@@ -19,7 +20,7 @@ export default async function urlGenFactory(
 	let dashboardRoute = 'dashboard';
 
 	if (DashboardRouteOverride) {
-		dashboardRoute = DashboardRouteOverride.replace(/^\//, '');
+		dashboardRoute = removeLeadingTrailingSlashes(DashboardRouteOverride);
 	}
 
 	if (path) {

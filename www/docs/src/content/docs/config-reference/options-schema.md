@@ -14,7 +14,7 @@ Project Initialization Page - Used during First time setup to create your databa
 - **Type:** `boolean`
 - **Default:** `true`
 
-`dbStartPage` Should the Start page be injected into the `astroStudioCMS`. This is used to setup your DB data.
+`dbStartPage` Should the Start page be injected into the `studioCMS`. This is used to setup your DB data.
 
 ### Usage
 
@@ -24,30 +24,13 @@ studioCMS({
 })
 ```
 
-## `contentRenderer`
+## `rendererConfig`
 
-The Markdown Content Renderer to use for rendering pages within StudioCMS
-
-- **Type:** `'marked'` | `'markdoc'` | `'astro'`
-- **Default:** `'marked'`
-
-`contentRenderer` determines how Markdown content should be rendered in `astroStudioCMS`. This is used to setup your content data. The default value is `marked` but you can also use `markdoc` or `astro` which uses Astro's built-in Remark processor.
+`rendererConfig` is an object that is used to determine how content should be rendered in `studiocms`.
 
 ### Usage
 
-```js title="astro.config.mjs"  {2}
-  astroStudioCMS({
-      contentRenderer: 'marked',
-  })
-```
-
-## `markedConfig`
-
-`markedConfig` is an object that is used to determine how content should be rendered in the `astroStudioCMS`. This is used to setup your content data.
-
-### Usage
-
-[see `markedConfig` for full options](/config-reference/marked-config)
+[see `rendererConfig` for full options](/config-reference/renderer-config)
 
 ## `imageService`
 
@@ -59,7 +42,7 @@ The Markdown Content Renderer to use for rendering pages within StudioCMS
 
 ## `defaultFrontEndConfig`
 
-`defaultFrontEndConfig` Determines how the default Dashboard routes should be rendered in `astroStudioCMS`. This is used to setup your user facing front-end.
+`defaultFrontEndConfig` Determines how the default Dashboard routes should be rendered in `studioCMS`. This is used to setup your user facing front-end.
 
 ### Usage
 
@@ -67,7 +50,7 @@ The Markdown Content Renderer to use for rendering pages within StudioCMS
 
 ## `dashboardConfig`
 
-`dashboardConfig` option lets you customize the dashboard for `astroStudioCMS`. This is used to setup your dashboard data.
+`dashboardConfig` option lets you customize the dashboard for `studioCMS`. This is used to setup your dashboard data.
 
 ### Usage
 
@@ -75,7 +58,7 @@ The Markdown Content Renderer to use for rendering pages within StudioCMS
 
 ## `includedIntegrations`
 
-`includedIntegrations` defines which Astro Integrations should be included in `astroStudioCMS`. Currently there are three Integrations that can be included: `useAstroRobots`, `astroRobotsConfig`, and `useInoxSitemap`.
+`includedIntegrations` defines which Astro Integrations should be included in `studioCMS`. Currently there are three Integrations that can be included: `useAstroRobots`, `astroRobotsConfig`, and `useInoxSitemap`.
 
 ### Usage
 
@@ -88,7 +71,7 @@ Date locale used for formatting dates
 - **Type:** `string`
 - **Default:** `en-us`
 
-`dateLocale` specifies how dates should be formatted in `astroStudioCMS`.
+`dateLocale` specifies how dates should be formatted in `studioCMS`.
 
 ### Usage
 
@@ -100,7 +83,7 @@ astroStudioCMS({
 
 ## `overrides`
 
-`overrides` Used to override the default configuration of the `astroStudioCMS`.
+`overrides` Used to override the default configuration of the `studioCMS`.
 
 ### Usage
 
@@ -116,7 +99,7 @@ astroStudioCMS({
 ### Usage
 
 ```js title="astro.config.mjs"  {2}
-astroStudioCMS({
-  verbose: true, // DEFAULT - This enables verbose logging in AstroStudioCMS.
+studioCMS({
+  verbose: true, // DEFAULT - This enables verbose logging in studioCMS.
 }),
 ```

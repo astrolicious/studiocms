@@ -18,8 +18,8 @@ import {
 } from '@studiocms/core/utils';
 import studioCMSDashboard from '@studiocms/dashboard';
 import studioCMSFrontend from '@studiocms/frontend';
-import studiocmsImageHandler from '@studiocms/imagehandler';
-import studiocmsRenderers from '@studiocms/renderers';
+import studioCMSImageHandler from '@studiocms/imagehandler';
+import studioCMSRenderers from '@studiocms/renderers';
 import studioCMSRobotsTXT from '@studiocms/robotstxt';
 import { defineIntegration } from 'astro-integration-kit';
 import { name, version } from '../package.json';
@@ -50,13 +50,25 @@ export default defineIntegration({
 					addWatchFile(getStudioConfigFileUrl(astroConfig.root));
 
 					// Resolve Options
-					resolvedOptions = await configResolver(params, options);
+					const ResolvedOptions = await configResolver(params, options);
+
+					// Set Resolved Options
+					resolvedOptions = ResolvedOptions;
+
+					// Break out resolved options
+					const {
+						verbose,
+						rendererConfig,
+						dbStartPage,
+						dashboardConfig,
+						defaultFrontEndConfig,
+						imageService,
+						overrides,
+						includedIntegrations,
+					} = ResolvedOptions;
 
 					// Setup Logger
-					integrationLogger(
-						{ logger, logLevel: 'info', verbose: resolvedOptions.verbose },
-						CoreStrings.Start
-					);
+					integrationLogger({ logger, logLevel: 'info', verbose }, CoreStrings.Start);
 
 					// Check Astro Config for required settings
 					checkAstroConfig(params);
@@ -65,21 +77,45 @@ export default defineIntegration({
 					addIntegrationArray(params, [
 						{ integration: nodeNamespaceBuiltinsAstro() },
 						{ integration: studioCMSCore(resolvedOptions) },
-						{ integration: studioCMSFrontend(resolvedOptions) },
-						{ integration: studiocmsImageHandler(resolvedOptions) },
-						{ integration: studiocmsRenderers() },
-						{ integration: studioCMSAuth(resolvedOptions) },
-						{ integration: studioCMSDashboard(resolvedOptions) },
+						{ integration: studioCMSRenderers(rendererConfig) },
+						{
+							integration: studioCMSFrontend({
+								verbose,
+								dbStartPage,
+								defaultFrontEndConfig,
+							}),
+						},
+						{
+							integration: studioCMSImageHandler({
+								verbose,
+								imageService,
+								overrides,
+							}),
+						},
+						{
+							integration: studioCMSAuth({
+								verbose,
+								dbStartPage,
+								dashboardConfig,
+							}),
+						},
+						{
+							integration: studioCMSDashboard({
+								verbose,
+								dbStartPage,
+								dashboardConfig,
+							}),
+						},
 					]);
 
 					// Setup Integrations (External / Optional)
 					addIntegrationArrayWithCheck(params, [
 						{
-							enabled: resolvedOptions.includedIntegrations.useAstroRobots,
+							enabled: includedIntegrations.useAstroRobots,
 							knownSimilar: ['astro-robots', 'astro-robots-txt'],
 							integration: studioCMSRobotsTXT({
 								...robotsTXTPreset,
-								...resolvedOptions.includedIntegrations.astroRobotsConfig,
+								...includedIntegrations.astroRobotsConfig,
 							}),
 						},
 					]);

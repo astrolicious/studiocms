@@ -1,12 +1,10 @@
 import starlight from '@astrojs/starlight';
 import { defineConfig } from 'astro/config';
-import { type StarlightTypeDocOptions, createStarlightTypeDocPlugin } from 'starlight-typedoc';
+import { createStarlightTypeDocPlugin } from 'starlight-typedoc';
 import starlightVersions from 'starlight-versions';
 import { getCoolifyURL } from '../hostUtils';
 
 // Create Starlight TypeDoc Plugins for different parts of the Astro StudioCMS Project
-//// MAIN PROJECT
-
 // studiocms TypeDoc Plugin
 const [tdStudioCMS, tdStudioCMSSideBar] = createStarlightTypeDocPlugin();
 // @studiocms/core
@@ -24,34 +22,13 @@ const [tdRenderers, tdRenderersSideBar] = createStarlightTypeDocPlugin();
 // @studiocms/robotstxt
 const [tdRobotsTxt, tdRobotsTxtSideBar] = createStarlightTypeDocPlugin();
 
-//// PLUGINS
-
 // Define the Site URL
 const site = getCoolifyURL(true) || 'https://docs.astro-studiocms.xyz/';
 
-// Utility Function for TypeDoc Options
-const makeTypeDocOptions = (
-	label: string,
-	urlPath: string,
-	tsconfig: string,
-	entryPoints: string[]
-) => {
-	return {
-		tsconfig,
-		entryPoints,
-		output: urlPath,
-		sidebar: {
-			label,
-			collapsed: true,
-		},
-		pagination: true,
-		typeDoc: {
-			jsDocCompatibility: true,
-			skipErrorChecking: true,
-			sourceLinkTemplate: 'https://github.com/astrolicious/studiocms/tree/main/{path}#L{line}',
-		},
-	} as StarlightTypeDocOptions;
-};
+// Utility function to create TypeDoc related paths
+function getFilePathToPackage(name: string, path: string) {
+	return `../../packages/${name}/${path}`;
+}
 
 export default defineConfig({
 	site,
@@ -61,6 +38,8 @@ export default defineConfig({
 			description:
 				'A dedicated CMS for Astro Studio. Built from the ground up by the Astro community.',
 			favicon: '/logo-dark.svg',
+			lastUpdated: true,
+			credits: true,
 			tagline: 'A dedicated CMS for Astro Studio. Built from the ground up by the Astro community.',
 			expressiveCode: {
 				themes: ['houston', 'starlight-light'],
@@ -80,11 +59,7 @@ export default defineConfig({
 				discord: 'https://chat.astrolicious.dev',
 				youtube: 'https://www.youtube.com/@AstroStudioCMS',
 			},
-			customCss: [
-				// Relative path to your custom CSS file
-				'./src/styles/custom.css',
-			],
-			credits: true,
+			customCss: ['./src/styles/custom.css'],
 			editLink: {
 				baseUrl: 'https://github.com/astrolicious/studiocms/tree/main/www/docs',
 			},
@@ -114,204 +89,286 @@ export default defineConfig({
 			],
 			plugins: [
 				starlightVersions({
-					versions: [{ slug: '0.1.0-beta.4', label: 'Beta.4' }],
-					current: { label: 'Beta.5' },
+					versions: [
+						{ slug: '0.1.0-beta.4', label: 'Beta.4' },
+						{ slug: '0.1.0-beta.5', label: 'Beta.5' },
+					],
+					current: { label: 'Latest' },
 				}),
-				tdStudioCMS(
-					makeTypeDocOptions(
-						'studiocms',
-						'typedoc/studiocms',
-						'../../packages/studiocms/tsconfig.json',
-						[
-							'../../packages/studiocms/src/index.ts',
-							'../../packages/studiocms/src/integration.ts',
-							'../../packages/studiocms/src/updateCheck.ts',
-						]
-					)
-				),
-				tdAuth(
-					makeTypeDocOptions(
-						'@studiocms/auth',
-						'typedoc/studiocms-auth',
-						'../../packages/studiocms_auth/tsconfig.json',
-						[
-							'../../packages/studiocms_auth/src/index.ts',
-							'../../packages/studiocms_auth/src/integration.ts',
-							'../../packages/studiocms_auth/src/middleware/index.ts',
-							'../../packages/studiocms_auth/src/middleware/router.ts',
-							'../../packages/studiocms_auth/src/auth/index.ts',
-							'../../packages/studiocms_auth/src/auth/lucia-astrodb-adapter.ts',
-							'../../packages/studiocms_auth/src/astroenv/env.ts',
-						]
-					)
-				),
-				tdCore(
-					makeTypeDocOptions(
-						'@studiocms/core',
-						'typedoc/studiocms-core',
-						'../../packages/studiocms_core/tsconfig.json',
-						[
-							'../../packages/studiocms_core/src/index.ts',
-							'../../packages/studiocms_core/src/integration.ts',
-							'../../packages/studiocms_core/src/consts.ts',
-							'../../packages/studiocms_core/src/strings.ts',
-							'../../packages/studiocms_core/src/types/index.ts',
-							'../../packages/studiocms_core/src/types/auth-types.ts',
-							'../../packages/studiocms_core/src/types/dbtypehelpers.ts',
-							'../../packages/studiocms_core/src/types/locals.ts',
-							'../../packages/studiocms_core/src/types/pluginOptions.ts',
-							'../../packages/studiocms_core/src/types/sideBarLinkType.ts',
-							'../../packages/studiocms_core/src/schemas/index.ts',
-							'../../packages/studiocms_core/src/lib/index.ts',
-							'../../packages/studiocms_core/src/helpers/index.ts',
-							'../../packages/studiocms_core/src/helpers/authHelper.ts',
-							'../../packages/studiocms_core/src/helpers/contentHelper.ts',
-							'../../packages/studiocms_core/src/helpers/headDefaults.ts',
-							'../../packages/studiocms_core/src/helpers/pathGenerators.ts',
-							'../../packages/studiocms_core/src/helpers/routemap.ts',
-							'../../packages/studiocms_core/src/helpers/urlGen.ts',
-							'../../packages/studiocms_core/src/db/config.ts',
-							'../../packages/studiocms_core/src/db/tables.ts',
-							'../../packages/studiocms_core/src/db/tsTables.ts',
-							'../../packages/studiocms_core/src/components/index.ts',
-						]
-					)
-				),
-				tdDashboard(
-					makeTypeDocOptions(
-						'@studiocms/dashboard',
-						'typedoc/studiocms-dashboard',
-						'../../packages/studiocms_dashboard/tsconfig.json',
-						[
-							'../../packages/studiocms_dashboard/src/index.ts',
-							'../../packages/studiocms_dashboard/src/integration.ts',
-							'../../packages/studiocms_dashboard/src/utils/webVital.ts',
-							'../../packages/studiocms_dashboard/src/utils/simpleResponse.ts',
-							'../../packages/studiocms_dashboard/src/utils/pageListPackageLabel.ts',
-							'../../packages/studiocms_dashboard/src/utils/makePageTitle.ts',
-							'../../packages/studiocms_dashboard/src/utils/isDashboardRoute.ts',
-							'../../packages/studiocms_dashboard/src/utils/astroDb.ts',
-							'../../packages/studiocms_dashboard/src/components/index.ts',
-						]
-					)
-				),
-				tdFrontend(
-					makeTypeDocOptions(
-						'@studiocms/frontend',
-						'typedoc/studiocms-frontend',
-						'../../packages/studiocms_frontend/tsconfig.json',
-						[
-							'../../packages/studiocms_frontend/src/index.ts',
-							'../../packages/studiocms_frontend/src/integration.ts',
-							'../../packages/studiocms_frontend/src/components/index.ts',
-						]
-					)
-				),
-				tdImageHandler(
-					makeTypeDocOptions(
-						'@studiocms/imagehandler',
-						'typedoc/studiocms-imagehandler',
-						'../../packages/studiocms_imagehandler/tsconfig.json',
-						[
-							'../../packages/studiocms_imagehandler/src/index.ts',
-							'../../packages/studiocms_imagehandler/src/integration.ts',
-							'../../packages/studiocms_imagehandler/src/supportedAdapters.ts',
-							'../../packages/studiocms_imagehandler/src/components/index.ts',
-							'../../packages/studiocms_imagehandler/src/adapters/cloudflare.ts',
-							'../../packages/studiocms_imagehandler/src/adapters/netlify.ts',
-							'../../packages/studiocms_imagehandler/src/adapters/node.ts',
-							'../../packages/studiocms_imagehandler/src/adapters/vercel.ts',
-						]
-					)
-				),
-				tdRenderers(
-					makeTypeDocOptions(
-						'@studiocms/renderers',
-						'typedoc/studiocms-renderers',
-						'../../packages/studiocms_renderers/tsconfig.json',
-						[
-							'../../packages/studiocms_renderers/src/index.ts',
-							'../../packages/studiocms_renderers/src/integration.ts',
-							'../../packages/studiocms_renderers/src/components/index.ts',
-							'../../packages/studiocms_renderers/src/lib/conentRenderer.ts',
-							'../../packages/studiocms_renderers/src/lib/astro-remark/astromd.ts',
-							'../../packages/studiocms_renderers/src/lib/markdoc/markdoc.ts',
-							'../../packages/studiocms_renderers/src/lib/marked/marked.ts',
-						]
-					)
-				),
-				tdRobotsTxt(
-					makeTypeDocOptions(
-						'@studiocms/robotstxt',
-						'typedoc/studiocms-robotstxt',
-						'../../packages/studiocms_robotstxt/tsconfig.json',
-						[
-							'../../packages/studiocms_robotstxt/src/index.ts',
-							'../../packages/studiocms_robotstxt/src/core.ts',
-							'../../packages/studiocms_robotstxt/src/consts.ts',
-							'../../packages/studiocms_robotstxt/src/utils/measureExecutionTime.ts',
-						]
-					)
-				),
+				tdStudioCMS({
+					tsconfig: getFilePathToPackage('studiocms', 'tsconfig.json'),
+					entryPoints: [
+						getFilePathToPackage('studiocms', 'src/index.ts'),
+						getFilePathToPackage('studiocms', 'src/integration.ts'),
+						getFilePathToPackage('studiocms', 'src/updateCheck.ts'),
+					],
+					output: 'typedoc/studiocms',
+					sidebar: {
+						label: 'studiocms',
+						collapsed: true,
+					},
+					pagination: true,
+					typeDoc: {
+						skipErrorChecking: true,
+						gitRemote: 'https://github.com/astrolicious/studiocms/blob',
+						gitRevision: 'main',
+						includeVersion: true,
+						sourceLinkExternal: true,
+						sourceLinkTemplate:
+							'https://github.com/astrolicious/studiocms/blob/{gitRevision}/{path}#L{line}',
+					},
+				}),
+				tdAuth({
+					tsconfig: getFilePathToPackage('studiocms_auth', 'tsconfig.json'),
+					entryPoints: [
+						getFilePathToPackage('studiocms_auth', 'src/index.ts'),
+						getFilePathToPackage('studiocms_auth', 'src/integration.ts'),
+						getFilePathToPackage('studiocms_auth', 'src/middleware/index.ts'),
+						getFilePathToPackage('studiocms_auth', 'src/middleware/router.ts'),
+						getFilePathToPackage('studiocms_auth', 'src/auth/index.ts'),
+						getFilePathToPackage('studiocms_auth', 'src/auth/lucia-astrodb-adapter.ts'),
+						getFilePathToPackage('studiocms_auth', 'src/helpers/authHelper.ts'),
+						getFilePathToPackage('studiocms_auth', 'src/astroenv/env.ts'),
+						getFilePathToPackage('studiocms_auth', 'src/utils/authEnvCheck.ts'),
+						getFilePathToPackage('studiocms_auth', 'src/utils/checkENV.ts'),
+					],
+					output: 'typedoc/studiocms-auth',
+					sidebar: {
+						label: '@studiocms/auth',
+						collapsed: true,
+					},
+					pagination: true,
+					typeDoc: {
+						skipErrorChecking: true,
+						gitRemote: 'https://github.com/astrolicious/studiocms/blob',
+						gitRevision: 'main',
+						includeVersion: true,
+						sourceLinkExternal: true,
+						sourceLinkTemplate:
+							'https://github.com/astrolicious/studiocms/blob/{gitRevision}/{path}#L{line}',
+					},
+				}),
+				tdCore({
+					tsconfig: getFilePathToPackage('studiocms_core', 'tsconfig.json'),
+					entryPoints: [
+						getFilePathToPackage('studiocms_core', 'src/index.ts'),
+						getFilePathToPackage('studiocms_core', 'src/integration.ts'),
+						getFilePathToPackage('studiocms_core', 'src/consts.ts'),
+						getFilePathToPackage('studiocms_core', 'src/strings.ts'),
+						getFilePathToPackage('studiocms_core', 'src/types/index.ts'),
+						getFilePathToPackage('studiocms_core', 'src/types/auth-types.ts'),
+						getFilePathToPackage('studiocms_core', 'src/types/dbtypehelpers.ts'),
+						getFilePathToPackage('studiocms_core', 'src/types/locals.ts'),
+						getFilePathToPackage('studiocms_core', 'src/types/pluginOptions.ts'),
+						getFilePathToPackage('studiocms_core', 'src/types/sideBarLinkType.ts'),
+						getFilePathToPackage('studiocms_core', 'src/schemas/index.ts'),
+						getFilePathToPackage('studiocms_core', 'src/schemas/config/auth.ts'),
+						getFilePathToPackage('studiocms_core', 'src/schemas/config/componentoverrides.ts'),
+						getFilePathToPackage('studiocms_core', 'src/schemas/config/dashboard.ts'),
+						getFilePathToPackage('studiocms_core', 'src/schemas/config/defaultFrontend.ts'),
+						getFilePathToPackage('studiocms_core', 'src/schemas/config/developer.ts'),
+						getFilePathToPackage('studiocms_core', 'src/schemas/config/imageService.ts'),
+						getFilePathToPackage('studiocms_core', 'src/schemas/config/index.ts'),
+						getFilePathToPackage('studiocms_core', 'src/schemas/config/integrations.ts'),
+						getFilePathToPackage('studiocms_core', 'src/schemas/config/markdoc.ts'),
+						getFilePathToPackage('studiocms_core', 'src/schemas/config/marked.ts'),
+						getFilePathToPackage('studiocms_core', 'src/schemas/config/rendererConfig.ts'),
+						getFilePathToPackage('studiocms_core', 'src/schemas/config/unocss.ts'),
+						getFilePathToPackage('studiocms_core', 'src/lib/index.ts'),
+						getFilePathToPackage('studiocms_core', 'src/lib/configManager.ts'),
+						getFilePathToPackage('studiocms_core', 'src/lib/convertDashboardLinksType.ts'),
+						getFilePathToPackage('studiocms_core', 'src/lib/defineStudioCMSConfig.ts'),
+						getFilePathToPackage('studiocms_core', 'src/lib/head.ts'),
+						getFilePathToPackage('studiocms_core', 'src/lib/jsonUtils.ts'),
+						getFilePathToPackage('studiocms_core', 'src/lib/pluginSystem.ts'),
+						getFilePathToPackage('studiocms_core', 'src/helpers/index.ts'),
+						getFilePathToPackage('studiocms_core', 'src/helpers/authHelper.ts'),
+						getFilePathToPackage('studiocms_core', 'src/helpers/contentHelper.ts'),
+						getFilePathToPackage('studiocms_core', 'src/helpers/headDefaults.ts'),
+						getFilePathToPackage('studiocms_core', 'src/helpers/pathGenerators.ts'),
+						getFilePathToPackage('studiocms_core', 'src/helpers/routemap.ts'),
+						getFilePathToPackage('studiocms_core', 'src/helpers/urlGen.ts'),
+						getFilePathToPackage('studiocms_core', 'src/db/config.ts'),
+						getFilePathToPackage('studiocms_core', 'src/db/tables.ts'),
+						getFilePathToPackage('studiocms_core', 'src/db/tsTables.ts'),
+						getFilePathToPackage('studiocms_core', 'src/components/index.ts'),
+					],
+					output: 'typedoc/studiocms_core',
+					sidebar: {
+						label: '@studiocms/core',
+						collapsed: true,
+					},
+					pagination: true,
+					typeDoc: {
+						skipErrorChecking: true,
+						gitRemote: 'https://github.com/astrolicious/studiocms/blob',
+						gitRevision: 'main',
+						includeVersion: true,
+						sourceLinkExternal: true,
+						sourceLinkTemplate:
+							'https://github.com/astrolicious/studiocms/blob/{gitRevision}/{path}#L{line}',
+					},
+				}),
+				tdDashboard({
+					tsconfig: getFilePathToPackage('studiocms_dashboard', 'tsconfig.json'),
+					entryPoints: [
+						getFilePathToPackage('studiocms_dashboard', 'src/index.ts'),
+						getFilePathToPackage('studiocms_dashboard', 'src/integration.ts'),
+						getFilePathToPackage('studiocms_dashboard', 'src/utils/webVital.ts'),
+						getFilePathToPackage('studiocms_dashboard', 'src/utils/simpleResponse.ts'),
+						getFilePathToPackage('studiocms_dashboard', 'src/utils/pageListPackageLabel.ts'),
+						getFilePathToPackage('studiocms_dashboard', 'src/utils/makePageTitle.ts'),
+						getFilePathToPackage('studiocms_dashboard', 'src/utils/isDashboardRoute.ts'),
+						getFilePathToPackage('studiocms_dashboard', 'src/utils/astroDb.ts'),
+						getFilePathToPackage('studiocms_dashboard', 'src/components/index.ts'),
+					],
+					output: 'typedoc/studiocms-dashboard',
+					sidebar: {
+						label: '@studiocms/dashboard',
+						collapsed: true,
+					},
+					pagination: true,
+					typeDoc: {
+						skipErrorChecking: true,
+						gitRemote: 'https://github.com/astrolicious/studiocms/blob',
+						gitRevision: 'main',
+						includeVersion: true,
+						sourceLinkExternal: true,
+						sourceLinkTemplate:
+							'https://github.com/astrolicious/studiocms/blob/{gitRevision}/{path}#L{line}',
+					},
+				}),
+				tdFrontend({
+					tsconfig: getFilePathToPackage('studiocms_frontend', 'tsconfig.json'),
+					entryPoints: [
+						getFilePathToPackage('studiocms_frontend', 'src/index.ts'),
+						getFilePathToPackage('studiocms_frontend', 'src/integration.ts'),
+						getFilePathToPackage('studiocms_frontend', 'src/components/index.ts'),
+					],
+					output: 'typedoc/studiocms-frontend',
+					sidebar: {
+						label: '@studiocms/frontend',
+						collapsed: true,
+					},
+					pagination: true,
+					typeDoc: {
+						skipErrorChecking: true,
+						gitRemote: 'https://github.com/astrolicious/studiocms/blob',
+						gitRevision: 'main',
+						includeVersion: true,
+						sourceLinkExternal: true,
+						sourceLinkTemplate:
+							'https://github.com/astrolicious/studiocms/blob/{gitRevision}/{path}#L{line}',
+					},
+				}),
+				tdImageHandler({
+					tsconfig: getFilePathToPackage('studiocms_imagehandler', 'tsconfig.json'),
+					entryPoints: [
+						getFilePathToPackage('studiocms_imagehandler', 'src/index.ts'),
+						getFilePathToPackage('studiocms_imagehandler', 'src/integration.ts'),
+						getFilePathToPackage('studiocms_imagehandler', 'src/supportedAdapters.ts'),
+						getFilePathToPackage('studiocms_imagehandler', 'src/components/index.ts'),
+						getFilePathToPackage('studiocms_imagehandler', 'src/adapters/cloudflare.ts'),
+						getFilePathToPackage('studiocms_imagehandler', 'src/adapters/netlify.ts'),
+						getFilePathToPackage('studiocms_imagehandler', 'src/adapters/node.ts'),
+						getFilePathToPackage('studiocms_imagehandler', 'src/adapters/vercel.ts'),
+					],
+					output: 'typedoc/studiocms-imagehandler',
+					sidebar: {
+						label: '@studiocms/imagehandler',
+						collapsed: true,
+					},
+					pagination: true,
+					typeDoc: {
+						skipErrorChecking: true,
+						gitRemote: 'https://github.com/astrolicious/studiocms/blob',
+						gitRevision: 'main',
+						includeVersion: true,
+						sourceLinkExternal: true,
+						sourceLinkTemplate:
+							'https://github.com/astrolicious/studiocms/blob/{gitRevision}/{path}#L{line}',
+					},
+				}),
+				tdRenderers({
+					tsconfig: getFilePathToPackage('studiocms_renderers', 'tsconfig.json'),
+					entryPoints: [
+						getFilePathToPackage('studiocms_renderers', 'src/index.ts'),
+						getFilePathToPackage('studiocms_renderers', 'src/integration.ts'),
+						getFilePathToPackage('studiocms_renderers', 'src/components/index.ts'),
+						getFilePathToPackage('studiocms_renderers', 'src/exports/index.ts'),
+						getFilePathToPackage(
+							'studiocms_renderers',
+							'src/exports/markdocRenderers/markdocReact.ts'
+						),
+						getFilePathToPackage('studiocms_renderers', 'src/lib/contentRenderer.ts'),
+						getFilePathToPackage('studiocms_renderers', 'src/lib/astro-remark/index.ts'),
+						getFilePathToPackage('studiocms_renderers', 'src/lib/markdoc/index.ts'),
+						getFilePathToPackage('studiocms_renderers', 'src/lib/markdoc/markdocHTML.ts'),
+						getFilePathToPackage('studiocms_renderers', 'src/lib/markdoc/markdocReactStatic.ts'),
+						getFilePathToPackage('studiocms_renderers', 'src/lib/marked/index.ts'),
+					],
+					output: 'typedoc/studiocms-renderers',
+					sidebar: {
+						label: '@studiocms/renderers',
+						collapsed: true,
+					},
+					pagination: true,
+					typeDoc: {
+						skipErrorChecking: true,
+						gitRemote: 'https://github.com/astrolicious/studiocms/blob',
+						gitRevision: 'main',
+						includeVersion: true,
+						sourceLinkExternal: true,
+						sourceLinkTemplate:
+							'https://github.com/astrolicious/studiocms/blob/{gitRevision}/{path}#L{line}',
+					},
+				}),
+				tdRobotsTxt({
+					tsconfig: getFilePathToPackage('studiocms_robotstxt', 'tsconfig.json'),
+					entryPoints: [
+						getFilePathToPackage('studiocms_robotstxt', 'src/index.ts'),
+						getFilePathToPackage('studiocms_robotstxt', 'src/core.ts'),
+						getFilePathToPackage('studiocms_robotstxt', 'src/consts.ts'),
+						getFilePathToPackage('studiocms_robotstxt', 'src/utils/measureExecutionTime.ts'),
+					],
+					output: 'typedoc/studiocms-robotstxt',
+					sidebar: {
+						label: '@studiocms/robotstxt',
+						collapsed: true,
+					},
+					pagination: true,
+					typeDoc: {
+						skipErrorChecking: true,
+						gitRemote: 'https://github.com/astrolicious/studiocms/blob',
+						gitRevision: 'main',
+						includeVersion: true,
+						sourceLinkExternal: true,
+						sourceLinkTemplate:
+							'https://github.com/astrolicious/studiocms/blob/{gitRevision}/{path}#L{line}',
+					},
+				}),
 			],
 			sidebar: [
 				{
 					label: 'Start Here',
-					items: [
-						{
-							label: 'Getting Started with StudioCMS',
-							link: '/start-here/getting-started',
-							badge: { text: 'Updated', variant: 'success' },
-						},
-						{
-							label: 'Environment Variables',
-							link: '/start-here/environment-variables',
-						},
-						{
-							label: 'Configuration',
-							link: '/start-here/configuration',
-							badge: { text: 'Updated', variant: 'success' },
-						},
-						{
-							label: 'Why Astro StudioCMS?',
-							link: '/start-here/why-studiocms',
-						},
-						{
-							label: 'Gallery',
-							link: '/start-here/gallery',
-						},
-					],
+					autogenerate: { directory: 'start-here' },
 				},
 				{
 					label: 'Plugins',
+					autogenerate: { directory: 'plugins' },
+				},
+				{
+					label: 'Customizing StudioCMS',
 					items: [
 						{
-							label: 'Web Vitals',
-							link: '/plugins/web-vitals',
-							badge: {
-								text: 'AstroJS',
-								variant: 'success',
-							},
-						},
-						{
-							label: 'Blog Integration',
-							link: '/plugins/studiocms-blog',
-							badge: {
-								text: 'StudioCMS',
-								variant: 'tip',
-							},
+							label: '@studiocms/renderers',
+							autogenerate: { directory: 'customizing/studiocms-renderers' },
 						},
 					],
 				},
 				{
 					label: 'Understanding StudioCMS',
-					items: [
-						{
-							label: 'How does it work!?',
-							link: '/how-it-works/',
-							badge: { text: 'Updated', variant: 'success' },
-						},
-					],
+					autogenerate: { directory: 'how-it-works' },
 				},
 				{
 					label: 'Configuration Reference',
@@ -321,8 +378,8 @@ export default defineConfig({
 				{
 					label: 'TypeDoc',
 					badge: {
-						text: 'Auto-Generated',
-						variant: 'success',
+						text: 'Auto Generated',
+						variant: 'tip',
 					},
 					items: [
 						tdStudioCMSSideBar,
@@ -336,7 +393,6 @@ export default defineConfig({
 					],
 				},
 			],
-			lastUpdated: true,
 		}),
 	],
 });

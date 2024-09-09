@@ -3,7 +3,6 @@ import astrolace from '@matthiesenxyz/astrolace';
 import { addIntegrationArray } from '@matthiesenxyz/integration-utils/aikUtils';
 import { integrationLogger } from '@matthiesenxyz/integration-utils/astroUtils';
 import { presetDaisy } from '@matthiesenxyz/unocss-preset-daisyui';
-import { StudioCMSOptionsSchema as optionsSchema } from '@studiocms/core/schemas';
 import { DashboardStrings, DbErrors } from '@studiocms/core/strings';
 import { createResolver, defineIntegration } from 'astro-integration-kit';
 import {
@@ -16,6 +15,7 @@ import {
 import UnocssAstroIntegration from 'unocss/astro';
 import type { DarkModeSelectors } from 'unocss/preset-mini';
 import { name } from '../package.json';
+import { StudioCMSDashboardOptionsSchema } from './schema';
 import { checkForWebVitals } from './utils/checkForWebVitalsPlugin';
 import { injectRouteArray } from './utils/injectRouteArray';
 
@@ -25,7 +25,7 @@ const darkModeSelector: DarkModeSelectors = {
 
 export default defineIntegration({
 	name,
-	optionsSchema,
+	optionsSchema: StudioCMSDashboardOptionsSchema,
 	setup({ name, options }) {
 		// Create resolver relative to this file
 		const { resolve } = createResolver(import.meta.url);

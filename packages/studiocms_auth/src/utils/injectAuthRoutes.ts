@@ -1,13 +1,14 @@
 import { integrationLogger } from '@matthiesenxyz/integration-utils/astroUtils';
-import type { StudioCMSOptions } from '@studiocms/core/schemas';
+import { removeLeadingTrailingSlashes } from '@studiocms/core/lib';
 import { DashboardStrings } from '@studiocms/core/strings';
 import { defineUtility } from 'astro-integration-kit';
+import type { StudioCMSAuthOptions } from '../schema';
 
 export const injectAuthRouteArray = defineUtility('astro:config:setup')(
 	(
 		params,
 		opts: {
-			options: StudioCMSOptions;
+			options: StudioCMSAuthOptions;
 			middleware: string;
 			providerRoutes: {
 				enabled: boolean;
@@ -79,7 +80,7 @@ export const injectAuthRouteArray = defineUtility('astro:config:setup')(
 
 			// Make the Default Dashboard Route
 			const defaultDashboardRoute = dashboardRouteOverride
-				? dashboardRouteOverride.replace(/^\//, '')
+				? removeLeadingTrailingSlashes(dashboardRouteOverride)
 				: 'dashboard';
 
 			// Utility Function to Make a Dashboard Route

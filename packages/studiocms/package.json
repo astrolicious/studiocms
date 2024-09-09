@@ -45,15 +45,12 @@
   "dependencies": {
     "@cloudinary/url-gen": "catalog:studiocms-imagehandler",
     "@inox-tools/runtime-logger": "catalog:studiocms-shared",
+    "@markdoc/markdoc": "catalog:studiocms-shared",
     "@matthiesenxyz/astrolace": "catalog:studiocms-shared",
     "@matthiesenxyz/integration-utils": "catalog:studiocms-shared",
     "@matthiesenxyz/unocss-preset-daisyui": "catalog:studiocms-shared",
-    "@shikijs/transformers": "catalog:studiocms-renderer",
     "@noble/hashes": "catalog:studiocms-shared",
-    "@unpic/astro": "catalog:studiocms-imagehandler",
-    "micromatch": "catalog:studiocms-shared",
-    "lucia": "catalog:studiocms-shared",
-    "arctic": "catalog:studiocms-shared",
+    "@shikijs/transformers": "catalog:studiocms-renderer",
     "@studiocms/assets": "workspace:*",
     "@studiocms/auth": "workspace:*",
     "@studiocms/betaresources": "workspace:*",
@@ -65,20 +62,24 @@
     "@studiocms/robotstxt": "workspace:*",
     "@unocss/astro": "catalog:studiocms-shared",
     "@unocss/reset": "catalog:studiocms-shared",
+    "@unpic/astro": "catalog:studiocms-imagehandler",
     "astro-integration-kit": "catalog:",
+    "arctic": "catalog:studiocms-shared",
     "daisyui": "catalog:studiocms-shared",
+    "lucia": "catalog:studiocms-shared",
     "marked": "catalog:studiocms-shared",
     "marked-alert": "catalog:studiocms-renderer",
     "marked-emoji": "catalog:studiocms-renderer",
     "marked-footnote": "catalog:studiocms-renderer",
     "marked-shiki": "catalog:studiocms-renderer",
     "marked-smartypants": "catalog:studiocms-renderer",
+    "micromatch": "catalog:studiocms-shared",
     "mrmime": "catalog:studiocms-shared",
+    "package-json": "catalog:studiocms",
+    "semver": "catalog:studiocms",
     "shiki": "catalog:studiocms-shared",
-    "semver": "^7.6.3",
-    "package-json": "^10.0.1",
-    "unpic": "catalog:studiocms-shared",
-    "unocss": "catalog:studiocms-shared"
+    "unocss": "catalog:studiocms-shared",
+    "unpic": "catalog:studiocms-shared"
   },
   "peerDependencies": {
     "@astrojs/db": "catalog:min",
@@ -94,6 +95,6 @@
     "vite": "catalog:",
     "typescript": "catalog:",
     "@types/micromatch": "catalog:studiocms-shared",
-    "@types/semver": "^7.5.8"
+    "@types/semver": "catalog:studiocms"
   }
 }

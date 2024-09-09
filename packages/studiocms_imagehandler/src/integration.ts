@@ -1,5 +1,4 @@
 import { integrationLogger } from '@matthiesenxyz/integration-utils/astroUtils';
-import { StudioCMSOptionsSchema as optionsSchema } from '@studiocms/core/schemas';
 import { imageHandlerStrings } from '@studiocms/core/strings';
 import { addAstroEnvConfig } from '@studiocms/core/utils';
 import { addIntegration, defineIntegration } from 'astro-integration-kit';
@@ -13,11 +12,12 @@ import {
 	vercelImageHandler,
 } from './adapters';
 import { componentResolver } from './componentResolver';
+import { StudioCMSImageHandlerOptionsSchema } from './schema';
 import { supportedAdapters } from './supportedAdapters';
 
 export default defineIntegration({
 	name,
-	optionsSchema,
+	optionsSchema: StudioCMSImageHandlerOptionsSchema,
 	setup({ name, options }) {
 		// Load Environment Variables
 		const env = loadEnv('all', process.cwd(), 'CMS');
@@ -27,7 +27,7 @@ export default defineIntegration({
 
 		return {
 			hooks: {
-				'astro:config:setup': async (params) => {
+				'astro:config:setup': (params) => {
 					// Destructure Params
 					const {
 						config: { adapter },

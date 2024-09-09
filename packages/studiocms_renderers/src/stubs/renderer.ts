@@ -1,5 +1,8 @@
 import { fileFactory } from '@matthiesenxyz/integration-utils/fileFactory';
 
+/**
+ * Generate the `renderer.d.ts` file
+ */
 export const rendererDTS = (rendererPath: string) => {
 	const renderer = fileFactory();
 
@@ -10,7 +13,7 @@ export const rendererDTS = (rendererPath: string) => {
         /**
          * StudioCMS Content Renderer component
         */
-        export { default as StudioCMSRenderer } from '${rendererPath}';`);
+        export const StudioCMSRenderer: typeof import('${rendererPath}').default;`);
 	renderer.addLines('}');
 
 	const rendererDTS = renderer.text();

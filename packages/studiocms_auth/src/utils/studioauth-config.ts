@@ -1,10 +1,10 @@
 import { randomUUID } from 'node:crypto';
 import { readFileSync, writeFile } from 'node:fs';
 import { integrationLogger } from '@matthiesenxyz/integration-utils/astroUtils';
-import type { StudioCMSOptions } from '@studiocms/core/schemas';
 import { authConfigStrings } from '@studiocms/core/strings';
 import type { AuthConfigMap, usernameAndPasswordConfig } from '@studiocms/core/types';
 import { addVirtualImports, createResolver, defineUtility } from 'astro-integration-kit';
+import type { StudioCMSAuthOptions } from '../schema';
 
 /**
  * Get the URL to the StudioCMS auth config file
@@ -39,7 +39,7 @@ export const usernameAndPasswordAuthConfig = defineUtility('astro:config:setup')
 	async (
 		params,
 		opts: {
-			options: StudioCMSOptions;
+			options: StudioCMSAuthOptions;
 			name: string;
 		}
 	) => {

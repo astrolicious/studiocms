@@ -1,6 +1,6 @@
-import { StudioCMSOptionsSchema as optionsSchema } from '@studiocms/core/schemas';
 import { createResolver, defineIntegration } from 'astro-integration-kit';
 import { name } from '../package.json';
+import { StudioCMSFrontEndOptionsSchema } from './schema';
 import { makeFrontend } from './utils/makeFrontend';
 
 /**
@@ -8,7 +8,7 @@ import { makeFrontend } from './utils/makeFrontend';
  */
 export default defineIntegration({
 	name,
-	optionsSchema,
+	optionsSchema: StudioCMSFrontEndOptionsSchema,
 	setup({ options }) {
 		// Create resolver relative to this file
 		const { resolve } = createResolver(import.meta.url);

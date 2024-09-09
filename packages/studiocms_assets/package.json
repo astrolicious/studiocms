@@ -36,7 +36,9 @@
   },
   "type": "module",
   "dependencies": {},
-  "peerDependencies": {},
+  "peerDependencies": {
+    "astro": "catalog:min"
+  },
   "devDependencies": {
     "vite": "catalog:",
     "typescript": "catalog:"
