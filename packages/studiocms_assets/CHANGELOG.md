@@ -1,5 +1,11 @@
 # @studiocms/assets
 
+## 0.1.0-beta.6
+
+### Patch Changes
+
+- 12bed03: Update dependencies
+
 ## 0.1.0-beta.5
 
 ### Patch Changes

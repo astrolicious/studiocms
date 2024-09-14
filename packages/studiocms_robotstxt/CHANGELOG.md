@@ -1,5 +1,7 @@
 # @studiocms/robotstxt
 
+## 0.1.0-beta.6
+
 ## 0.1.0-beta.5
 
 ### Patch Changes

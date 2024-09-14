@@ -1,5 +1,86 @@
 # @astrolicious/studiocms
 
+## 0.1.0-beta.6
+
+### Patch Changes
+
+- 12bed03: Update dependencies
+- 12bed03: [Code Scanning Fix] Polynomial regular expression used on uncontrolled data
+
+  - Replace function used for leading and trailing slashes (Non-Breaking)
+
+- 1383e80: [Update] Add MDX Renderer:
+
+  - Add mdxConfig schema and renderer option for new MDX renderer
+  - Add renderer to StudioCMSRenderer
+
+- 12bed03: [Refactor]: Update virtual module generation
+
+  - Move `virtual:studiocms/astromdremarkConfig` and rename to `studiocms:renderer/astroMarkdownConfig` from the `@studiocms/core` to `@studiocms/renderers`
+  - New virtual module for the rendererConfig `studiocms:renderer/config`
+
+- 12bed03: [Refactor]: Update main config schema for renderers.
+
+  - Removed `contentRenderer` and `markedConfig` from the main options
+  - Added config for MarkDoc
+  - Created new `rendererConfig` section:
+
+  ```ts
+  // astro.config.mjs
+  // https://astro.build/config
+  export default defineConfig({
+    // ...Rest of Astro Config
+    integrations: [
+      studiocms({
+        // ...Rest of StudioCMS Config
+        // (This is the same if you use the 'studiocms.config.mjs' file)
+        rendererConfig: {
+          renderer: "marked", // Can also be 'astro', or 'markdoc'
+          markedConfig: {
+            /* MarkedJS Config */
+          },
+          markdocConfig: {
+            /* MarkDoc Config */
+          },
+        },
+      }),
+    ],
+  });
+  ```
+
+- 12bed03: [Migrate/Deprecation]: customRendererPlugin moved to StudioCMSRendererConfig
+
+  - Deprecation of StudioCMSPluginOptions defined CustomRenderers
+  - Add new option to define renderers from StudioCMSOptions config:
+
+  ```ts
+  // astro.config.mjs
+  function simpleHTMLRenderer(content: string) {
+    return {
+      name: "simple-html-renderer",
+      renderer: async (content: string) => {
+        return `<p>${content}</p>`;
+      },
+    };
+  }
+
+  // https://astro.build/config
+  export default defineConfig({
+    // ...Rest of Astro Config
+    integrations: [
+      studiocms({
+        // ...Rest of StudioCMS Config
+        // (This is the same if you use the 'studiocms.config.mjs' file)
+        rendererConfig: {
+          renderer: simpleHTMLRenderer,
+        },
+      }),
+    ],
+  });
+  ```
+
+  - @studiocms/robotstxt@0.1.0-beta.6
+
 ## 0.1.0-beta.5
 
 ### Patch Changes
