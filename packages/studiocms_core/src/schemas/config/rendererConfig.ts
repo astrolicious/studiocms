@@ -1,6 +1,7 @@
 import { z } from 'astro/zod';
 import { markdocConfigSchema, type markdocRenderer } from './markdoc';
 import { markedConfigSchema } from './marked';
+import { mdxConfigSchema } from './mdx';
 
 export type Renderer = (content: string) => Promise<string>;
 export type { markdocRenderer };
@@ -35,6 +36,7 @@ export const StudioCMSRendererConfigSchema = z
 				z.literal('marked'),
 				z.literal('astro'),
 				z.literal('markdoc'),
+				z.literal('mdx'),
 				z.custom<CustomRenderer>(),
 			])
 			.optional()
@@ -53,6 +55,13 @@ export const StudioCMSRendererConfigSchema = z
 		 * @see https://markdoc.dev/ for more info about markdoc.
 		 */
 		markdocConfig: markdocConfigSchema,
+		/**
+		 * Allows customization of the MDX Configuration
+		 *
+		 * MDX is a JSX in Markdown loader, parser, and renderer for ambitious projects.
+		 * @see https://mdxjs.com/ for more info about MDX.
+		 */
+		mdxConfig: mdxConfigSchema,
 	})
 	.optional()
 	.default({});
