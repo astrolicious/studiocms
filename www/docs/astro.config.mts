@@ -34,13 +34,12 @@ export default defineConfig({
 	site,
 	integrations: [
 		starlight({
-			title: 'Astro StudioCMS',
-			description:
-				'A dedicated CMS for Astro Studio. Built from the ground up by the Astro community.',
+			title: 'StudioCMS',
+			description: 'A dedicated CMS for Astro DB. Built from the ground up by the Astro community.',
 			favicon: '/logo-dark.svg',
 			lastUpdated: true,
 			credits: true,
-			tagline: 'A dedicated CMS for Astro Studio. Built from the ground up by the Astro community.',
+			tagline: 'A dedicated CMS for Astro DB. Built from the ground up by the Astro community.',
 			expressiveCode: {
 				themes: ['houston', 'starlight-light'],
 				defaultProps: {

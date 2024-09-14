@@ -15,14 +15,15 @@ import { PackageManagers } from 'starlight-package-managers';
 import { Aside } from '@astrojs/starlight/components';
 import ReadMore from '~/components/ReadMore.astro';
 import StudioHeading from '~/components/StudioHeading.astro';
+import StudioSunset from '~/components/StudioSunset.astro';
 
 ## Let's get started
 
 To start using StudioCMS, you'll need:
 
 - An Astro project
-- An Astro Studio account or (*Self*) Hosted libSQL server
-- The Astro StudioCMS integration
+- A libSQL Provider or Self-hosted libSQL server
+- The StudioCMS integration
 
 ## Understanding Options for `@astrojs/db`
 
@@ -37,7 +38,7 @@ To use libSQL with Astro Db, you will need to set the following environment vari
 
 <ReadMore>For more information about these environment varibales, see [Using libSQL with @astrojs/db](/start-here/environment-variables/#if-using-libsql-with-astrojsdb)</ReadMore>
 
-The [commands for deploying and pushing changes](https://docs.astro.build/en/guides/astro-db/#deploy-with-a-studio-connection) to your database are the same when using libSQL as when connecting to an Astro Studio hosted database. However, both of your environment variables need to be set locally when running commands with the `--remote` option like `astro build` and `astro db push`.
+The [commands for deploying and pushing changes](https://docs.astro.build/en/guides/astro-db/#libsql) to your database are the same when using libSQL as when connecting to an Astro Studio hosted database. However, both of your environment variables need to be set locally when running commands with the `--remote` option like `astro build` and `astro db push`.
 
 <ReadMore>See Astro's [Astro DB LibSQL Docs](https://docs.astro.build/en/guides/astro-db/#libsql) for more information</ReadMore>
 
@@ -45,35 +46,7 @@ The [commands for deploying and pushing changes](https://docs.astro.build/en/gui
 ### Using Astro Studio
 </StudioHeading>
 
-<Aside type="danger" title="Closed Beta">
-Astro Studio is currently in closed beta. If you have not already been invited, then unfortunently you will need to wait until it re-opens, or if you do not have an account, you can use the [libSQL option](#using-libsql) to get started using another libSQL provider.
-</Aside>
-
-<StudioHeading>
-#### Creating an Astro Studio account
-</StudioHeading>
-
-You can create an Astro Studio account by visiting [Astro Studio](https://studio.astro.build/).
-
-Once created, you'll be able to access the Astro Studio dashboard and manage your projects.
-
-<StudioHeading>
-#### Creating a new Studio project
-</StudioHeading>
-
-There are two ways to create a project in Astro Studio:
-
-To get started go to your personal dashboard within Studio and click the "Start a Project" button and follow the instructions. Astro Studio will connect to your GitHub repository and create a new hosted database for your project.
-
-**Use the Astro Studio CLI** to create from any local Astro project. You can run the following commands to get started:
-
-    <PackageManagers type="exec" pkg="astro" args="db login" comment="Log in to Astro Studio with your GitHub account"/>
-    <PackageManagers type="exec" pkg="astro" args="db link" comment="Link to a new project by following the prompts"/>
-    <PackageManagers type="exec" pkg="astro" args="db push" comment="Push your local db configuration to the remote database"/>
-
-    Once you are logged in and linked successfully, you can run all Astro DB commands to manage your remote database. 
-
-<ReadMore>See [the Astro DB CLI reference](https://docs.astro.build/en/guides/integrations-guide/db/#astro-db-cli-reference) for all available commands.</ReadMore>
+<StudioSunset />
 
 ## Creating a new Astro project
 
@@ -143,8 +116,7 @@ Thanks to the power of Astro running StudioCMS is as easy as running the dev com
 
 To start your Astro project, run the following commands in your terminal:
 
-    <PackageManagers type="exec" args="astro db link #If using Astro Studio" />
-    <PackageManagers type="exec" args="astro db push" />
+    <PackageManagers type="exec" args="astro db push # Add '--remote' if using a remote database" />
     <PackageManagers type="run" args="dev --remote" />
 
 After running the commands, you should see a message indicating that your project is running at `localhost:4321`. When first setting up StudioCMS, you will prompted to finish configuring StudioCMS at http://localhost:4321/start

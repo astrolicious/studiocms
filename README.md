@@ -1,4 +1,4 @@
-# Astro Studio CMS
+# StudioCMS
 
 ![Readme's Banner](./www/assets/banner-readme.png)
 
@@ -8,7 +8,7 @@
 
 This is an SSR CMS built with AstroDB / Lucia Auth / Unpic Image handler for the Astro Ecosystem.
 
-To see how to get started, check out the [studioCMS README](./packages/studiocms/README.md).
+To see how to get started, check out the [StudioCMS README](./packages/studiocms/README.md).
 
 > [!IMPORTANT]
 > This project is still in early development and it is not yet ready for production use. If you encounter any issues or have ideas for new features, please let us know by [opening an issue](https://github.com/astrolicious/studiocms/issues/new/choose) on our GitHub repository.
@@ -60,7 +60,7 @@ To use the dev server the command is `moon run playground:dev`
 
 ## How to use the playgrounds
 
-At the moment these are the current steps for setting up the main studioCMS playground.
+At the moment these are the current steps for setting up the main StudioCMS playground.
 
 This is intended for testing and development, since we have not yet released a package to play with use these instruction _at your own risk_ This project is still very experimental
 
