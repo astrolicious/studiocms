@@ -127,6 +127,13 @@ catalogs:
     semver:
       specifier: ^7.6.3
       version: 7.6.3
+  studiocms-core:
+    mdast-util-to-hast:
+      specifier: ^13.2.0
+      version: 13.2.0
+    remark-rehype:
+      specifier: ^11.1.0
+      version: 11.1.0
   studiocms-imagehandler:
     '@cloudinary/url-gen':
       specifier: ^1.19.0
@@ -135,6 +142,9 @@ catalogs:
       specifier: ^0.0.46
       version: 0.0.46
   studiocms-renderer:
+    '@mdx-js/mdx':
+      specifier: ^3.0.1
+      version: 3.0.1
     '@shikijs/transformers':
       specifier: ^1.14.1
       version: 1.14.1
@@ -153,6 +163,12 @@ catalogs:
     marked-smartypants:
       specifier: ^1.1.7
       version: 1.1.7
+    rehype-highlight:
+      specifier: ^7.0.0
+      version: 7.0.0
+    remark-gfm:
+      specifier: ^4.0.0
+      version: 4.0.0
   studiocms-shared:
     '@astrojs/react':
       specifier: ^3.6.2
@@ -181,6 +197,9 @@ catalogs:
     '@types/react':
       specifier: ^18.3.5
       version: 18.3.5
+    '@types/react-dom':
+      specifier: ^18.3.0
+      version: 18.3.0
     '@unocss/astro':
       specifier: ^0.62.3
       version: 0.62.3
@@ -214,6 +233,9 @@ catalogs:
     shiki:
       specifier: ^1.14.1
       version: 1.14.1
+    unified:
+      specifier: ^11.0.5
+      version: 11.0.5
     unocss:
       specifier: ^0.62.3
       version: 0.62.3
@@ -515,12 +537,21 @@ importers:
       marked:
         specifier: catalog:studiocms-shared
         version: 13.0.3
+      mdast-util-to-hast:
+        specifier: catalog:studiocms-core
+        version: 13.2.0
       mrmime:
         specifier: catalog:studiocms-shared
         version: 2.0.0
+      remark-rehype:
+        specifier: catalog:studiocms-core
+        version: 11.1.0
       shiki:
         specifier: catalog:studiocms-shared
         version: 1.14.1
+      unified:
+        specifier: catalog:studiocms-shared
+        version: 11.0.5
       unpic:
         specifier: catalog:studiocms-shared
         version: 3.18.0
@@ -660,15 +691,15 @@ importers:
       '@matthiesenxyz/integration-utils':
         specifier: catalog:studiocms-shared
         version: 0.2.0(astro@4.15.1(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))
+      '@mdx-js/mdx':
+        specifier: catalog:studiocms-renderer
+        version: 3.0.1
       '@shikijs/transformers':
         specifier: catalog:studiocms-renderer
         version: 1.14.1
       '@studiocms/core':
         specifier: workspace:*
         version: link:../studiocms_core
-      '@types/react':
-        specifier: catalog:studiocms-shared
-        version: 18.3.5
       astro:
         specifier: catalog:min
         version: 4.15.1(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4)
@@ -699,10 +730,25 @@ importers:
       react-dom:
         specifier: catalog:studiocms-shared
         version: 18.3.1(react@18.3.1)
+      rehype-highlight:
+        specifier: catalog:studiocms-renderer
+        version: 7.0.0
+      remark-gfm:
+        specifier: catalog:studiocms-renderer
+        version: 4.0.0
       shiki:
         specifier: catalog:studiocms-shared
         version: 1.14.1
+      unified:
+        specifier: catalog:studiocms-shared
+        version: 11.0.5
     devDependencies:
+      '@types/react':
+        specifier: catalog:studiocms-shared
+        version: 18.3.5
+      '@types/react-dom':
+        specifier: catalog:studiocms-shared
+        version: 18.3.0
       typescript:
         specifier: 'catalog:'
         version: 5.5.4
@@ -4011,6 +4057,10 @@ packages:
   hey-listen@1.0.8:
     resolution: {integrity: sha512-COpmrF2NOg4TBWUJ5UVyaCU2A88wEMkUPK4hNqyCkqHbxT92BbvfjoSozkAIIm6XhicGlJHhFdullInrdhwU8Q==}
 
+  highlight.js@11.9.0:
+    resolution: {integrity: sha512-fJ7cW7fQGCYAkgv4CPfwFHrfd/cLS4Hau96JuJ+ZTOWhjnhoeN1ub1tFmALm/+lW5z4WCAuAV9bm05AP0mS6Gw==}
+    engines: {node: '>=12.0.0'}
+
   html-escaper@3.0.3:
     resolution: {integrity: sha512-RuMffC89BOWQoY0WKGpIhn5gX3iI54O6nRA0yC124NYVtzjmFWBIiFd8M0x+ZdX0P9R4lADg1mgP8C7PxGOWuQ==}
 
@@ -4295,6 +4345,9 @@ packages:
   loose-envify@1.4.0:
     resolution: {integrity: sha512-lyuxPGr/Wfhrlem2CL/UcnUc1zcqKAImBDzukY7Y5F/yQiNdko6+fRLevlw1HgMySw7f611UIY408EtxRSoK3Q==}
     hasBin: true
+
+  lowlight@3.1.0:
+    resolution: {integrity: sha512-CEbNVoSikAxwDMDPjXlqlFYiZLkDJHwyGu/MfOsJnF3d7f3tds5J3z8s/l9TMXhzfsJCCJEAsD78842mwmg0PQ==}
 
   lru-cache@10.4.3:
     resolution: {integrity: sha512-JNAzZcXrCt42VGLuYz0zfAzDfAvJWW6AfYlDBQyDV5DClI2m5sAmK+OIO7s59XfsRsWHp02jAJrRadPRGTt6SQ==}
@@ -5054,6 +5107,9 @@ packages:
 
   rehype-format@5.0.0:
     resolution: {integrity: sha512-kM4II8krCHmUhxrlvzFSptvaWh280Fr7UGNJU5DCMuvmAwGCNmGfi9CvFAQK6JDjsNoRMWQStglK3zKJH685Wg==}
+
+  rehype-highlight@7.0.0:
+    resolution: {integrity: sha512-QtobgRgYoQaK6p1eSr2SD1i61f7bjF2kZHAQHxeCHAuJf7ZUDMvQ7owDq9YTkmar5m5TSUol+2D3bp3KfJf/oA==}
 
   rehype-minify-whitespace@6.0.0:
     resolution: {integrity: sha512-i9It4YHR0Sf3GsnlR5jFUKXRr9oayvEk9GKQUkwZv6hs70OH9q3OCZrq9PpLvIGKt3W+JxBOxCidNVpH/6rWdA==}
@@ -9600,7 +9656,7 @@ snapshots:
       devlop: 1.1.0
       hastscript: 8.0.0
       property-information: 6.5.0
-      vfile: 6.0.2
+      vfile: 6.0.3
       vfile-location: 5.0.3
       web-namespaces: 2.0.1
 
@@ -9640,7 +9696,7 @@ snapshots:
       parse5: 7.1.2
       unist-util-position: 5.0.0
       unist-util-visit: 5.0.0
-      vfile: 6.0.2
+      vfile: 6.0.3
       web-namespaces: 2.0.1
       zwitch: 2.0.4
 
@@ -9763,6 +9819,8 @@ snapshots:
       space-separated-tokens: 2.0.2
 
   hey-listen@1.0.8: {}
+
+  highlight.js@11.9.0: {}
 
   html-escaper@3.0.3: {}
 
@@ -10041,6 +10099,12 @@ snapshots:
     dependencies:
       js-tokens: 4.0.0
 
+  lowlight@3.1.0:
+    dependencies:
+      '@types/hast': 3.0.4
+      devlop: 1.1.0
+      highlight.js: 11.9.0
+
   lru-cache@10.4.3: {}
 
   lru-cache@4.1.5:
@@ -10285,7 +10349,7 @@ snapshots:
       trim-lines: 3.0.1
       unist-util-position: 5.0.0
       unist-util-visit: 5.0.0
-      vfile: 6.0.2
+      vfile: 6.0.3
 
   mdast-util-to-markdown@2.1.0:
     dependencies:
@@ -11121,6 +11185,14 @@ snapshots:
       rehype-minify-whitespace: 6.0.0
       unist-util-visit-parents: 6.0.1
 
+  rehype-highlight@7.0.0:
+    dependencies:
+      '@types/hast': 3.0.4
+      hast-util-to-text: 4.0.2
+      lowlight: 3.1.0
+      unist-util-visit: 5.0.0
+      vfile: 6.0.3
+
   rehype-minify-whitespace@6.0.0:
     dependencies:
       '@types/hast': 3.0.4
@@ -11205,7 +11277,7 @@ snapshots:
       '@types/mdast': 4.0.4
       mdast-util-to-hast: 13.2.0
       unified: 11.0.5
-      vfile: 6.0.2
+      vfile: 6.0.3
 
   remark-smartypants@3.0.2:
     dependencies:
@@ -11751,7 +11823,7 @@ snapshots:
       extend: 3.0.2
       is-plain-obj: 4.1.0
       trough: 2.2.0
-      vfile: 6.0.2
+      vfile: 6.0.3
 
   unist-util-find-after@5.0.0:
     dependencies:
@@ -11850,7 +11922,7 @@ snapshots:
   vfile-location@5.0.3:
     dependencies:
       '@types/unist': 3.0.2
-      vfile: 6.0.2
+      vfile: 6.0.3
 
   vfile-message@4.0.2:
     dependencies:
