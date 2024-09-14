@@ -19,10 +19,8 @@
     "motion": "catalog:landing",
     "powerglitch": "catalog:landing",
     "tailwind-merge": "catalog:landing",
+    "tailwind-scrollbar": "catalog:landing",
     "tailwindcss": "catalog:landing",
     "typescript": "catalog:"
-  },
-  "devDependencies": {
-    "tailwind-scrollbar": "catalog:landing"
   }
 }
