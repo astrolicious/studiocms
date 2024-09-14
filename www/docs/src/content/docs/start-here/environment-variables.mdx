@@ -8,6 +8,7 @@ sidebar:
      variant: "success"
 ---
 import StudioHeading from '~/components/StudioHeading.astro';
+import StudioSunset from '~/components/StudioSunset.astro';
 import { Aside } from '@astrojs/starlight/components';
 
 For StudioCMS to work correctly, you must set up the correct environment variables. These variables are essential for establishing a secure connection to Astro DB and authenticating with the StudioCMS API. Without correctly configuring these environment variables, the application will not function as intended.
@@ -25,6 +26,8 @@ StudioCMS makes use of Astro's new Experimental [`astro:env`](https://docs.astro
 <StudioHeading>
 ### If using Astro's `Studio` with `@astrojs/db`
 </StudioHeading>
+
+<StudioSunset />
 
 `ASTRO_STUDIO_APP_TOKEN` - Token provided from the [Astro Studio Dashboard](https://studio.astro.build)
 

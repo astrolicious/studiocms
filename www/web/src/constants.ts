@@ -2,7 +2,8 @@ export const marqueeKeywords = [
 	'#CMS',
 	'#Astrolicious',
 	'#Astro',
-	'#AstroStudio',
+	'#AstroDB',
+	'#libSQL',
 	'#SQL',
 	'#NWTWWHB',
 	'#DB',
@@ -40,15 +41,15 @@ export const features = [
 		icon: 'document-text',
 	},
 	{
-		feature: 'Secure Studio Database',
+		feature: 'Secure libSQL Database',
 		description:
-			'All data is securely housed within the Astro Studio database, ensuring accessibility only to authorized users with studio.astro.build login credentials.',
+			'All data is securely housed within your libSQL database, ensuring accessibility to your data to only authorized users to your libSQL provider or Self-hosted server.',
 		icon: 'database-lock',
 	},
 	{
 		feature: 'Built-in Authentication',
 		description:
-			'Features built-in authentication with support for multiple platforms including Local and Github, enhancing security and user management (currently in development).',
+			'Features built-in authentication with support for multiple platforms including Local and Github, enhancing security and user management.',
 		icon: 'lock-closed',
 	},
 	{

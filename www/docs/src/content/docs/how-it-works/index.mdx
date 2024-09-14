@@ -10,7 +10,7 @@ sidebar:
 
 # Introduction
 
-StudioCMS is a powerful CMS built for Astro that allows you to manage and serve your content using [Astro Studio](https://studio.astro.build/). It's designed to be easy-to-use and flexible enough to handle any type of content.
+StudioCMS is a powerful CMS built for Astro that allows you to manage and serve your content using [Astro DB](https://docs.astro.build/en/guides/astro-db/). It's designed to be easy-to-use and flexible enough to handle any type of content.
 
 Extending StudioCMS is easy too! You can create your own plugins to add new features to StudioCMS.
 
@@ -18,7 +18,7 @@ Extending StudioCMS is easy too! You can create your own plugins to add new feat
 
 StudioCMS is divided into multiple parts:
 
-- **studiocms**: The primary integration that hooks into your Astro project and provides the ability to interact with Astro Studio (through the `@astrojs/db` integration).
+- **studiocms**: The primary integration that hooks into your Astro project and provides the ability to interact with Astro DB (through the `@astrojs/db` integration).
 - **@studiocms/core**: The core integration that provides the foundation for StudioCMS. It provides the database configurations, and adds various features including virtual imports, logging, etc.
 - **@studiocms/auth**: An integration that provides authentication configuration options for the StudioCMS Dashboard.
 - **@studiocms/assets**: An integration that provides the assets for the StudioCMS Dashboard.
@@ -37,7 +37,7 @@ StudioCMS Core is an Astro Integration which provides a comprehensive CMS soluti
 
 #### Features
 
-- **@astrojs/db**: StudioCMS Core uses the `@astrojs/db` integration to connect to Astro Studio.
+- **@astrojs/db**: StudioCMS Core uses the `@astrojs/db` integration to connect to a libSQL database.
 - **Virtual Imports**: StudioCMS Core adds several [virtual modules](https://vitejs.dev/guide/api-plugin#virtual-modules-convention) packed with features that give you full control over your dynamic content.
 - **Logging**: StudioCMS Core logs all changes to Astro Studio. This can be enabled in your config file.
 - **Default Frontend Routes**: The StudioCMS Core integration adds default frontend routes to your Astro project to allow for easy access to the StudioCMS dashboard.
@@ -66,7 +66,7 @@ The StudioCMS Dashboard is a web interface that allows you to manage your Studio
 
 #### Tech Stack
 
-- **Dashboard**: The StudioCMS Dashboard provides a user-friendly interface for managing your AstroStudioCMS project.
+- **Dashboard**: The StudioCMS Dashboard provides a user-friendly interface for managing your StudioCMS project.
 - **UnoCSS**: The StudioCMS Dashboard uses UnoCSS for styling and theming.
 - **DaisyUI**: The StudioCMS Dashboard uses DaisyUI for styling and theming.
 - **AuthConfig**: The StudioCMS Dashboard provides authentication configuration options.
