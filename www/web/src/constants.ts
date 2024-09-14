@@ -2,7 +2,7 @@ export const marqueeKeywords = [
 	'#CMS',
 	'#Astrolicious',
 	'#Astro',
-	'#AstroDb',
+	'#AstroDB',
 	'#libSQL',
 	'#SQL',
 	'#NWTWWHB',
