@@ -1,5 +1,19 @@
 # @studiocms/frontend
 
+## 0.1.0-beta.6
+
+### Patch Changes
+
+- Updated dependencies [12bed03]
+- Updated dependencies [12bed03]
+- Updated dependencies [12bed03]
+- Updated dependencies [1383e80]
+- Updated dependencies [12bed03]
+- Updated dependencies [12bed03]
+- Updated dependencies [12bed03]
+  - @studiocms/renderers@0.1.0-beta.6
+  - @studiocms/core@0.1.0-beta.6
+
 ## 0.1.0-beta.5
 
 ### Patch Changes

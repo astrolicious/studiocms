@@ -1,5 +1,24 @@
 # @studiocms/auth
 
+## 0.1.0-beta.6
+
+### Patch Changes
+
+- 12bed03: [Code Scanning Fix] Polynomial regular expression used on uncontrolled data
+
+  - Replace function used for leading and trailing slashes (Non-Breaking)
+
+- Updated dependencies [12bed03]
+- Updated dependencies [12bed03]
+- Updated dependencies [1383e80]
+- Updated dependencies [12bed03]
+- Updated dependencies [12bed03]
+- Updated dependencies [4f8e60b]
+- Updated dependencies [12bed03]
+  - @studiocms/dashboard@0.1.0-beta.6
+  - @studiocms/assets@0.1.0-beta.6
+  - @studiocms/core@0.1.0-beta.6
+
 ## 0.1.0-beta.5
 
 ### Patch Changes

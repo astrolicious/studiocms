@@ -1,5 +1,154 @@
 # @studiocms/renderers
 
+## 0.1.0-beta.6
+
+### Patch Changes
+
+- 12bed03: Update dependencies
+- 12bed03: [MarkDoc] Update MarkDoc support
+
+  - Add advanced config options for MarkDoc
+
+  ```ts
+  studioCMS({
+      rendererConfig: {
+          markdocConfig: {
+              /**
+               * The MarkDoc Content Renderer to use for rendering pages and posts
+               *
+               * Can be one of the following: `html`, `react-static`, or a custom renderer
+               */
+              renderType: 'html',
+              /**
+               * The MarkDoc Arg Parse to use for rendering pages and posts
+               */
+              argsParse: {
+                  file: 'string',
+                  slots: false,
+                  location: false,
+              },
+              /**
+               * The MarkDoc Transform Config to use for rendering pages and posts
+               *
+               * @see https://markdoc.dev/docs/config
+               */
+              transformConfig: {
+                  nodes: {},
+                  tags: {},
+                  variables: {},
+                  functions: {},
+                  partials: {},
+                  validation: {};
+              },
+          }
+      }
+  })
+  ```
+
+  - Add support for MarkDoc `renderType` of `html`, and `react-static`, and custom renderers such as the provided `markdocReactRenderer` from `@studiocms/renderers/exports/markdoc/react`:
+
+  ```ts
+  import { defineConfig } from 'astro/config';
+  import react from '@astrojs/react';
+  import studioCMS from 'studiocms';
+  import markDocRenderReact from '@studiocms/renderers/exports/markdoc/react';
+
+  // https://astro.build/config
+  export default defineConfig({
+  	//...Rest of Config
+  	integrations: [
+          //...Rest of Config
+  		react(),
+  		studioCMS({
+              //...Rest of Config
+              rendererConfig: {
+                  markdocConfig: {
+                      renderType: markDocRenderReact(components: {}), // Also applies to users with a `studiocms.config.mjs` file.
+                  }
+              }
+          }),
+  	],
+  });
+  ```
+
+- 1383e80: [Update] Add MDX Renderer:
+
+  - Add mdxConfig schema and renderer option for new MDX renderer
+  - Add renderer to StudioCMSRenderer
+
+- 12bed03: [Refactor]: Update virtual module generation
+
+  - Move `virtual:studiocms/astromdremarkConfig` and rename to `studiocms:renderer/astroMarkdownConfig` from the `@studiocms/core` to `@studiocms/renderers`
+  - New virtual module for the rendererConfig `studiocms:renderer/config`
+
+- 12bed03: [Refactor]: Update main config schema for renderers.
+
+  - Removed `contentRenderer` and `markedConfig` from the main options
+  - Added config for MarkDoc
+  - Created new `rendererConfig` section:
+
+  ```ts
+  // astro.config.mjs
+  // https://astro.build/config
+  export default defineConfig({
+    // ...Rest of Astro Config
+    integrations: [
+      studiocms({
+        // ...Rest of StudioCMS Config
+        // (This is the same if you use the 'studiocms.config.mjs' file)
+        rendererConfig: {
+          renderer: "marked", // Can also be 'astro', or 'markdoc'
+          markedConfig: {
+            /* MarkedJS Config */
+          },
+          markdocConfig: {
+            /* MarkDoc Config */
+          },
+        },
+      }),
+    ],
+  });
+  ```
+
+- 12bed03: [Migrate/Deprecation]: customRendererPlugin moved to StudioCMSRendererConfig
+
+  - Deprecation of StudioCMSPluginOptions defined CustomRenderers
+  - Add new option to define renderers from StudioCMSOptions config:
+
+  ```ts
+  // astro.config.mjs
+  function simpleHTMLRenderer(content: string) {
+    return {
+      name: "simple-html-renderer",
+      renderer: async (content: string) => {
+        return `<p>${content}</p>`;
+      },
+    };
+  }
+
+  // https://astro.build/config
+  export default defineConfig({
+    // ...Rest of Astro Config
+    integrations: [
+      studiocms({
+        // ...Rest of StudioCMS Config
+        // (This is the same if you use the 'studiocms.config.mjs' file)
+        rendererConfig: {
+          renderer: simpleHTMLRenderer,
+        },
+      }),
+    ],
+  });
+  ```
+
+- Updated dependencies [12bed03]
+- Updated dependencies [12bed03]
+- Updated dependencies [1383e80]
+- Updated dependencies [12bed03]
+- Updated dependencies [12bed03]
+- Updated dependencies [12bed03]
+  - @studiocms/core@0.1.0-beta.6
+
 ## 0.1.0-beta.5
 
 ### Patch Changes

@@ -1,5 +1,92 @@
 # studiocms
 
+## 0.1.0-beta.6
+
+### Patch Changes
+
+- 12bed03: Update dependencies
+- ecb682a: Update readme, and package.json naming as well as references to Astro Studio to AstroDB.
+- 585c5e4: Update readmes to reflect new package name
+- ecb682a: [Update readme]: Update Astro Studio references to AstroDB as Studio is closing down.
+- 12bed03: [Refactor]: Update main config schema for renderers.
+
+  - Removed `contentRenderer` and `markedConfig` from the main options
+  - Added config for MarkDoc
+  - Created new `rendererConfig` section:
+
+  ```ts
+  // astro.config.mjs
+  // https://astro.build/config
+  export default defineConfig({
+    // ...Rest of Astro Config
+    integrations: [
+      studiocms({
+        // ...Rest of StudioCMS Config
+        // (This is the same if you use the 'studiocms.config.mjs' file)
+        rendererConfig: {
+          renderer: "marked", // Can also be 'astro', or 'markdoc'
+          markedConfig: {
+            /* MarkedJS Config */
+          },
+          markdocConfig: {
+            /* MarkDoc Config */
+          },
+        },
+      }),
+    ],
+  });
+  ```
+
+- 12bed03: [Migrate/Deprecation]: customRendererPlugin moved to StudioCMSRendererConfig
+
+  - Deprecation of StudioCMSPluginOptions defined CustomRenderers
+  - Add new option to define renderers from StudioCMSOptions config:
+
+  ```ts
+  // astro.config.mjs
+  function simpleHTMLRenderer(content: string) {
+    return {
+      name: "simple-html-renderer",
+      renderer: async (content: string) => {
+        return `<p>${content}</p>`;
+      },
+    };
+  }
+
+  // https://astro.build/config
+  export default defineConfig({
+    // ...Rest of Astro Config
+    integrations: [
+      studiocms({
+        // ...Rest of StudioCMS Config
+        // (This is the same if you use the 'studiocms.config.mjs' file)
+        rendererConfig: {
+          renderer: simpleHTMLRenderer,
+        },
+      }),
+    ],
+  });
+  ```
+
+- Updated dependencies [12bed03]
+- Updated dependencies [12bed03]
+- Updated dependencies [12bed03]
+- Updated dependencies [1383e80]
+- Updated dependencies [12bed03]
+- Updated dependencies [12bed03]
+- Updated dependencies [4f8e60b]
+- Updated dependencies [12bed03]
+  - @studiocms/dashboard@0.1.0-beta.6
+  - @studiocms/renderers@0.1.0-beta.6
+  - @studiocms/assets@0.1.0-beta.6
+  - @studiocms/core@0.1.0-beta.6
+  - @studiocms/auth@0.1.0-beta.6
+  - @studiocms/frontend@0.1.0-beta.6
+  - @studiocms/betaresources@0.1.0-beta.6
+  - @studiocms/blog@0.1.0-beta.6
+  - @studiocms/imagehandler@0.1.0-beta.6
+  - @studiocms/robotstxt@0.1.0-beta.6
+
 ## 0.1.0-beta.5
 
 ### Patch Changes
