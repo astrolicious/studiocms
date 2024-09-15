@@ -25,6 +25,24 @@ The default renderer for StudioCMS is the `marked` renderer. This renderer is us
 
 <ReadMore>see [Marked Configuration](/config-reference/marked-config/) for more information on how to configure the Marked renderer.</ReadMore>
 
+## MDX Renderer
+
+Custom MDX renderer that allows the end user to provide a highly customizable MDX experience
+
+### Usage
+
+```js title="astro.config.mjs" {3}
+  studioCMS({
+      rendererConfig: {
+        renderer: 'mdx'
+      },
+  })
+```
+
+### Configuration
+
+<ReadMore>See [MDX Configuration](/config-reference/mdx-config/) for more information on how to configure the MDX renderer.</ReadMore>
+
 ## MarkDoc Renderer
 
 In addition to `Marked`, StudioCMS provides an alternative with Markdoc, offering users a choice for their markdown processing needs.
@@ -65,4 +83,4 @@ The default Astro renderer for their markdown content. This renderer adapts the 
 
 ### Configuration
 
-<ReadMore>see [Astro's Markdown Configuration](https://docs.astro.build/en/reference/configuration-reference/#markdown-options) for more information on how to configure the Astro Remark renderer.</ReadMore>
+<ReadMore>See [Astro's Markdown Configuration](https://docs.astro.build/en/reference/configuration-reference/#markdown-options) for more information on how to configure the Astro Remark renderer.</ReadMore>
