@@ -22,7 +22,7 @@ jobs:
 
       - name: Get changed files
         id: changed-files-pr
-        uses: tj-actions/changed-files@c65cd883420fd2eb864698a825fc4162dd94482c # v44
+        uses: tj-actions/changed-files@48d8f15b2aaa3d255ca5af3eba4870f807ce6b3c # v45
         with:
           files_yaml: |
             docs:
@@ -106,7 +106,7 @@ jobs:
 
       - name: Get changed files
         id: changed-files-push
-        uses: tj-actions/changed-files@c65cd883420fd2eb864698a825fc4162dd94482c # v44
+        uses: tj-actions/changed-files@48d8f15b2aaa3d255ca5af3eba4870f807ce6b3c # v45
         with:
           files_yaml: |
             landing:
