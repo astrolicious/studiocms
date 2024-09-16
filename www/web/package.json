@@ -18,6 +18,7 @@
     "astro-seo": "catalog:landing",
     "motion": "catalog:landing",
     "powerglitch": "catalog:landing",
+    "sharp": "^0.33.4",
     "tailwind-merge": "catalog:landing",
     "tailwind-scrollbar": "catalog:landing",
     "tailwindcss": "catalog:landing",

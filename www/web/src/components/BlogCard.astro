@@ -1,0 +1,30 @@
+---
+import type { ImageMetadata } from 'astro';
+import { getImage, Image } from 'astro:assets';
+
+export interface Props {
+    title: string;
+    description: string;
+
+    // This _may_ be able to use the new typed routes??? Dunno, never used it myself... One for Adam
+    href: string;
+    imageSrc: ImageMetadata;
+    imageAlt: string;
+}
+
+const {
+    title, 
+    description,
+    href,
+    imageSrc,
+    imageAlt,
+} = Astro.props
+---
+
+<a {href}>
+    <section class="p-4 group">
+        <Image src={imageSrc} alt={imageAlt} class="aspect-video rounded-lg grayscale-[50%] shadow group-hover:grayscale-0 transition-all" />
+        <h2 class="text-2xl my-2 font-black group-hover:text-indigo-400 transition-colors">{ title }</h2>
+        <p class="group-hover:text-indigo-400 transition-colors">{ description }</p>
+    </section>
+</a>

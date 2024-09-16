@@ -1,0 +1,28 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BlogCard from '../../components/BlogCard.astro';
+import { getCollection } from 'astro:content';
+
+const blogPosts = await getCollection('blog')
+
+---
+
+<BaseLayout>
+    <section class='container mx-auto py-20 min-h-[calc(100vh_-_70px)]'>
+        <h1 class="text-5xl font-bold">Blog</h1>
+        <hr class="my-8 border-1 border-gray-900 dark:border-slate-50">
+        <div class="grid grid-cols-3">
+            {
+                blogPosts.map(post => (
+                    <BlogCard
+                        title={post.data.title}
+                        description={post.data.description}
+                        href={`/blog/${ post.slug }`}
+                        imageSrc={ post.data.hero.image }
+                        imageAlt={ post.data.hero.alt }
+                    />
+                ))
+            }
+        </div>
+    </section>
+</BaseLayout>
