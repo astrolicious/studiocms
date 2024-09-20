@@ -1,24 +1,18 @@
 ---
+import { Image, getImage } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
-import { getImage, Image } from 'astro:assets';
 
 export interface Props {
-    title: string;
-    description: string;
+	title: string;
+	description: string;
 
-    // This _may_ be able to use the new typed routes??? Dunno, never used it myself... One for Adam
-    href: string;
-    imageSrc: ImageMetadata;
-    imageAlt: string;
+	// This _may_ be able to use the new typed routes??? Dunno, never used it myself... One for Adam
+	href: string;
+	imageSrc: ImageMetadata;
+	imageAlt: string;
 }
 
-const {
-    title, 
-    description,
-    href,
-    imageSrc,
-    imageAlt,
-} = Astro.props
+const { title, description, href, imageSrc, imageAlt } = Astro.props;
 ---
 
 <a {href}>

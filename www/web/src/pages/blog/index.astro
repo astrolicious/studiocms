@@ -1,10 +1,9 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import BlogCard from '../../components/BlogCard.astro';
 import { getCollection } from 'astro:content';
+import BlogCard from '../../components/BlogCard.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
 
-const blogPosts = await getCollection('blog')
-
+const blogPosts = await getCollection('blog');
 ---
 
 <BaseLayout>
