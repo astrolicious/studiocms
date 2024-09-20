@@ -5,7 +5,7 @@ import { getCoolifyURL } from '../hostUtils';
 
 // https://astro.build/config
 export default defineConfig({
-	site: getCoolifyURL(true) || 'https://astro-studiocms.xyz',
+	site: getCoolifyURL(true) || 'https://studiocms.xyz',
 	image: {
 		remotePatterns: [
 			{

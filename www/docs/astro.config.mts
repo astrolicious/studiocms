@@ -23,7 +23,7 @@ const [tdRenderers, tdRenderersSideBar] = createStarlightTypeDocPlugin();
 const [tdRobotsTxt, tdRobotsTxtSideBar] = createStarlightTypeDocPlugin();
 
 // Define the Site URL
-const site = getCoolifyURL(true) || 'https://docs.astro-studiocms.xyz/';
+const site = getCoolifyURL(true) || 'https://docs.studiocms.xyz/';
 
 // Utility function to create TypeDoc related paths
 function getFilePathToPackage(name: string, path: string) {
