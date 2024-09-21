@@ -1,9 +1,9 @@
 ---
-import { Image } from 'astro:assets';
-import { type CollectionEntry, getEntry } from 'astro:content';
+import { Image } from "astro:assets";
+import { type CollectionEntry, getEntry } from "astro:content";
 
 export interface Props {
-	post: CollectionEntry<'blog'>;
+	post: CollectionEntry<"blog">;
 }
 
 const { post } = Astro.props;
@@ -23,9 +23,9 @@ const { name, avatar } = authorData.data;
 
 <a {href}>
     <section class="group">
-        <Image src={ image } alt={ alt } class="aspect-video rounded-lg grayscale-[50%] shadow group-hover:grayscale-0 transition-all" />
+        <Image src={ image } alt={ alt } class="aspect-video rounded-lg" />
         <h2 class="text-2xl my-2 font-black group-hover:text-indigo-400 transition-colors">{ title }</h2>
-        <p class="mb-4 text-ellipsis group-hover:text-indigo-400 transition-colors">{ description }</p>
+        <p class="mb-4 text-ellipsis ">{ description }</p>
 
         <div class="flex gap-4 items-center">
             <Image
@@ -34,8 +34,8 @@ const { name, avatar } = authorData.data;
                 class="aspect-square rounded-full shadow w-[50px]"
             />
             <div>
-                <p class="mb-1 font-semibold group-hover:text-indigo-400 transition-colors ">{ name }</p>
-                <p class="text-sm group-hover:text-indigo-400 transition-colors">{ publishDate.getDay() } { publishDate.toLocaleDateString('en-US', { month: 'long' }) } { publishDate.getFullYear() }</p>
+                <p class="mb-1 font-semibold">{ name }</p>
+                <p class="text-sm">{ publishDate.getDay() } { publishDate.toLocaleDateString('en-US', { month: 'long' }) } { publishDate.getFullYear() }</p>
             </div> 
         </div>
     </section>
