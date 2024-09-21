@@ -10,6 +10,7 @@ projects:
   web: 'www/web'
   docs: 'www/docs'
   ui: 'packages/studiocms_ui'
+  ui-playground: 'playgrounds/ui'
 
 # https://moonrepo.dev/docs/config/workspace#constraints
 constraints:

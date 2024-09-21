@@ -1,15 +1,26 @@
 ---
 type Props = {
-  label: string;
-  type: 'text' | 'password';
+  label?: string;
+  type?: 'text' | 'password';
+  placeholder?: string;
 };
 
-const { label, type } = Astro.props;
+const { 
+  label,
+  type = 'text',
+  placeholder,
+} = Astro.props;
 ---
 
 <label for={`input-${label}`} class="input-label">
   <span class="label">{label}</span>
-  <input name={`input-${label}`} id={`input-${label}`} type={type} class="input" />
+  <input
+    placeholder={placeholder}
+    name={`input-${label}`}
+    id={`input-${label}`}
+    type={type}
+    class="input"
+  />
 </label>
 <style>
   .input-label {
@@ -17,6 +28,7 @@ const { label, type } = Astro.props;
     display: flex;
     flex-direction: column;
     gap: .25rem;
+    margin-top: .5rem;
   }
 
   .label {
@@ -28,11 +40,11 @@ const { label, type } = Astro.props;
     border-radius: 8px;
     border: 1px solid var(--border);
     background: var(--background-step-2);
-    color: var(--text);
+    color: var(--text-normal);
   }
 
   .input:active, .input:focus {
-    border: 1px solid var(--primary);
+    border: 1px solid var(--primary-base);
     outline: none;
   }
 </style>

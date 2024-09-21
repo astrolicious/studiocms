@@ -764,6 +764,9 @@ importers:
 
   packages/studiocms_ui:
     dependencies:
+      '@fontsource-variable/onest':
+        specifier: 5.1.0
+        version: 5.1.0
       astro:
         specifier: catalog:min
         version: 4.15.1(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4)
@@ -814,6 +817,28 @@ importers:
       studiocms:
         specifier: workspace:*
         version: link:../../packages/studiocms
+    devDependencies:
+      '@types/node':
+        specifier: 'catalog:'
+        version: 20.14.13
+      typescript:
+        specifier: 'catalog:'
+        version: 5.5.4
+
+  playgrounds/ui:
+    dependencies:
+      '@astrojs/node':
+        specifier: 'catalog:'
+        version: 8.3.3(astro@4.15.4(@types/node@20.14.13)(rollup@4.21.0)(typescript@5.5.4))
+      '@fontsource-variable/onest':
+        specifier: 5.1.0
+        version: 5.1.0
+      '@studiocms/ui':
+        specifier: workspace:*
+        version: link:../../packages/studiocms_ui
+      astro:
+        specifier: 'catalog:'
+        version: 4.15.4(@types/node@20.14.13)(rollup@4.21.0)(typescript@5.5.4)
     devDependencies:
       '@types/node':
         specifier: 'catalog:'
@@ -2013,6 +2038,9 @@ packages:
 
   '@floating-ui/utils@0.2.5':
     resolution: {integrity: sha512-sTcG+QZ6fdEUObICavU+aB3Mp8HY4n14wYHdxK4fXjPmv3PXZZeY5RaguJmGyeH/CJQhX3fqKUtS4qc1LoHwhQ==}
+
+  '@fontsource-variable/onest@5.1.0':
+    resolution: {integrity: sha512-8jspwmuPWtC2p4gxmjUIQ2JugqCcClFwlD1DEJt+gARgZMm3PI62rYivoKVUDB3Q6hdQxeL5wdzjxCOnzTU5BA==}
 
   '@iconify/tools@4.0.5':
     resolution: {integrity: sha512-l8KoA1lxlN/FFjlMd3vjfD7BtcX/QnFWtlBapILMlJSBgM5zhDYak/ldw/LkKG3258q/0YmXa48sO/QpxX7ptg==}
@@ -7228,6 +7256,8 @@ snapshots:
       '@floating-ui/utils': 0.2.5
 
   '@floating-ui/utils@0.2.5': {}
+
+  '@fontsource-variable/onest@5.1.0': {}
 
   '@iconify/tools@4.0.5':
     dependencies:

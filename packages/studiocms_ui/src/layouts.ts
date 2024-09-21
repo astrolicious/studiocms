@@ -1,1 +1,0 @@
-export { default as ExampleLayout } from './layouts/ExampleLayout.astro';

@@ -13,11 +13,10 @@
 - Tooltips based on popover api
 - Selects
 - Skeleton
-- code based on astro's code component
+- code based on astro's code component (check :D (fuck cf))
 - Textarea
 - Markdown editor (WYSIWYG (thanks Otter <3))
 - User
 
-- Maybe implement tailwind's reset / adjust as needed?
 - Implement tailwind's prose
 - Maybe starlight props.css

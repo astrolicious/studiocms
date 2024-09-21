@@ -42,13 +42,15 @@ const {
     align-items: center;
     text-align: center;
 
+    position: relative;
+
     /* TODO: Move gaps & radii to spacings.css */
     gap: .5rem;
 
     outline: none;
     border: none;
 
-    font-weight: 500;
+    font-weight: 400;
 
     border-radius: .5rem;
 
@@ -56,13 +58,18 @@ const {
 
     cursor: pointer;
 
-    border-style: solid;
-
     /* Default colorway */
 
     background-color: var(--default-base);
     border-color: var(--border);
     color: var(--text-muted);
+
+    min-width: fit-content;
+  }
+
+  .button.outlined {
+    border-width: 1px;
+    border-style: solid;
   }
 
   .button:hover {
@@ -73,12 +80,8 @@ const {
     background-color: var(--default-active);
   }
 
-  .button.outlined {
-    border-width: 1px;
-  }
-
   .button.sm {
-    height: 36px;
+    height: 32px;
     padding: .5rem .75rem;
 
     font-size: .825em;
@@ -101,16 +104,12 @@ const {
   .button.primary {
     background-color: var(--primary-base);
     border-color: var(--primary-base);
-    color: var(--text-normal);
-  }
-
-  .button.primary {
-    background-color: var(--primary-base);
-    color: var(--text-normal);
+    color: var(--text-inverted);
   }
 
   .button.primary.outlined {
     background-color: var(--default-base);
+    color: var(--text-normal);
   }
 
   .button.primary:hover {
@@ -137,6 +136,7 @@ const {
 
   .button.success.outlined {
     background-color: var(--default-base);
+    color: var(--text-normal);
   }
 
   .button.success:hover {
@@ -158,27 +158,28 @@ const {
   .button.danger {
     background-color: var(--danger-base);
     border-color: var(--danger-base);
-    color: var(--text-dark);
+    color: var(--text-light);
   }
 
   .button.danger.outlined {
     background-color: var(--default-base);
+    color: var(--text-normal);
   }
 
   .button.danger:hover {
     background-color: var(--danger-hover);
   }
 
-  .button.danger:hover {
-    background-color: var(--danger-active);
+  .button.danger.outlined:hover {
+    background-color: var(--default-hover);
   }
 
   .button.danger:active {
     background-color: var(--danger-active);
   }
 
-  .button.danger:active {
-    background-color: var(--danger-active);
+  .button.danger.outlined:active {
+    background-color: var(--default-active);
   }
 
   .button.full {

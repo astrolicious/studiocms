@@ -1,0 +1,121 @@
+---
+import '@fontsource-variable/onest/index.css';
+import '@studiocms/ui/css/global.css';
+
+import {
+  Button,
+  Center,
+  Divider,
+  Input,
+  Row
+} from '@studiocms/ui/components';
+
+import Icon from '@/utils/Icon.astro';
+import ButtonTests from '../components/ButtonTests.astro';
+---
+
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Component Tests</title>
+  </head>
+  <body>
+    <Button as="button" id={'color-toggle'}>
+      <Icon name={'sun'} id={'sun-icon'} />
+      <Icon name={'moon'} id={'moon-icon'} class={'hidden'} />
+    </Button>
+    <h1>Button</h1>
+    <ButtonTests />
+    <h1>Divider</h1>
+    <Divider>
+      Divider Content
+    </Divider>
+    <h1>Input</h1>
+    <Input
+      label='Text Input'
+      type='text'
+    />
+    <Input
+      label='Password Input'
+      type='password'
+    />
+    <h1>Row</h1>
+    <Row
+      gapSize='md'
+      alignCenter
+    >
+      <Input
+        label='Row-ed Input'
+        type='text'
+      />
+      <Input
+        label='Row-ed Input 2'
+        type='text'
+      />
+    </Row>
+    <h1>Center Tag</h1>
+    <Center>
+      Centered Stuff
+    </Center>
+  </body>
+</html>
+<style is:global>
+  body {
+    margin: 1rem;
+  }
+
+  h1:not(:first-of-type) {
+    margin-top: 2rem;
+  }
+
+  .flex {
+    display: flex;
+    gap: 1rem;
+  }
+
+  .row {
+    flex-direction: row;
+  }
+
+  .col {
+    flex-direction: row;
+  }
+
+  .align-center {
+    align-items: center;
+  }
+
+  .hidden {
+    display: none;
+  }
+
+  #color-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: fit-content;
+    height: fit-content;
+    position: fixed;
+    top: 2rem;
+    right: 2rem;
+  }
+</style>
+<script>
+  const toggle = document.getElementById('color-toggle')! as HTMLElement;
+  const sunIcon = document.getElementById('sun-icon')! as HTMLElement;
+  const moonIcon = document.getElementById('sun-icon')! as HTMLElement;
+
+  toggle.addEventListener('click', () => {
+    if (document.documentElement.dataset.theme === 'dark') {
+      document.documentElement.dataset.theme = 'light';
+      sunIcon.classList.remove('hidden');
+      moonIcon.classList.add('hidden');
+    } else {
+      document.documentElement.dataset.theme = 'dark';
+      moonIcon.classList.remove('hidden');
+      sunIcon.classList.add('hidden');
+    }
+  });
+</script>

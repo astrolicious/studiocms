@@ -38,7 +38,11 @@
   "type": "module",
   "exports": {
     "./components": "./src/components.ts",
-    "./layouts": "./src/layouts.ts"
+    "./layouts/*": "./src/layouts/*",
+    "./css/*": "./src/css/*"
+  },
+  "dependencies": {
+    "@fontsource-variable/onest": "5.1.0"
   },
   "packageManager": "pnpm@9.5.0",
   "peerDependencies": {

@@ -12,6 +12,7 @@
     "playground:login": "pnpm --filter node-playground db:login",
     "playground:link": "pnpm --filter node-playground db:link",
     "playground:push": "pnpm --filter node-playground db:push",
+    "ui:dev": "pnpm --filter ui-playground dev",
     "build": "pnpm --filter node-playground build",
     "cf:dev": "pnpm --filter cloudflare-playground dev",
     "cf:build": "pnpm --filter cloudflare-playground build",
