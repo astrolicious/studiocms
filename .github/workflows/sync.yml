@@ -3,6 +3,7 @@ name: "Sync: Git Mirror"
 on:
   - push
   - delete
+  - workflow_dispatch
 
 jobs:
   sync:
