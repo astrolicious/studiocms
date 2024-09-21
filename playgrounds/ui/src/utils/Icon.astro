@@ -4,22 +4,20 @@ import type { HTMLAttributes } from 'astro/types';
 // biome-ignore lint/suspicious/noExplicitAny: <explanation>
 type AstroComponent = (_props: Record<string, any>) => any;
 
-type currentIcons =
-  | 'sun'
-  | 'moon';
+type currentIcons = 'sun' | 'moon';
 
 export type { currentIcons };
 
 // Map of icon names to Astro components
 const Components: Record<currentIcons, AstroComponent> = {
-  sun: (await import('@/icons/Sun.astro')).default,
-  moon: (await import('@/icons/Moon.astro')).default,
+	sun: (await import('@/icons/Sun.astro')).default,
+	moon: (await import('@/icons/Moon.astro')).default,
 };
 
 interface Props extends HTMLAttributes<'svg'> {
-  name: currentIcons;
-  width?: number;
-  height?: number;
+	name: currentIcons;
+	width?: number;
+	height?: number;
 }
 
 const { name, width, height, ...props } = Astro.props;

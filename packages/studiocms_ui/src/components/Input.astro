@@ -1,15 +1,11 @@
 ---
 type Props = {
-  label?: string;
-  type?: 'text' | 'password';
-  placeholder?: string;
+	label?: string;
+	type?: 'text' | 'password';
+	placeholder?: string;
 };
 
-const { 
-  label,
-  type = 'text',
-  placeholder,
-} = Astro.props;
+const { label, type = 'text', placeholder } = Astro.props;
 ---
 
 <label for={`input-${label}`} class="input-label">

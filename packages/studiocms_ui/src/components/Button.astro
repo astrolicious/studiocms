@@ -2,21 +2,21 @@
 import type { HTMLTag, Polymorphic } from 'astro/types';
 
 type Props<As extends HTMLTag> = Polymorphic<{ as: As }> & {
-  size?: 'sm' | 'md' | 'lg';
-  fullWidth?: boolean;
-  color?: 'default' | 'primary' | 'success' | 'danger';
-  variant?: 'solid' | 'outlined';
-  class?: string;
+	size?: 'sm' | 'md' | 'lg';
+	fullWidth?: boolean;
+	color?: 'default' | 'primary' | 'success' | 'danger';
+	variant?: 'solid' | 'outlined';
+	class?: string;
 };
 
-const { 
-  size = 'md',
-  fullWidth = false,
-  color = 'default',
-  variant = 'default',
-  as: As = 'button',
-  class: className,
-  ...props
+const {
+	size = 'md',
+	fullWidth = false,
+	color = 'default',
+	variant = 'default',
+	as: As = 'button',
+	class: className,
+	...props
 } = Astro.props;
 ---
 

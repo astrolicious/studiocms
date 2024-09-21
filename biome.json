@@ -8,10 +8,11 @@
   },
   "files": {
     "ignoreUnknown": true,
-    "ignore": ["**/.astro/**", "**/package.json"]
+    "ignore": ["**/.astro/**", "**/package.json", "**/dist/**"]
   },
   "formatter": {
-    "lineWidth": 100
+    "lineWidth": 100,
+    "lineEnding": "lf"
   },
   "javascript": {
     "formatter": {
