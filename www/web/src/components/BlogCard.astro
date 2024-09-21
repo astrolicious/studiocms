@@ -1,9 +1,9 @@
 ---
-import { Image } from "astro:assets";
-import { type CollectionEntry, getEntry } from "astro:content";
+import { Image } from 'astro:assets';
+import { type CollectionEntry, getEntry } from 'astro:content';
 
 export interface Props {
-	post: CollectionEntry<"blog">;
+	post: CollectionEntry<'blog'>;
 }
 
 const { post } = Astro.props;
