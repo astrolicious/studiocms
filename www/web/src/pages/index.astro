@@ -1,20 +1,20 @@
 ---
-import { Icon } from 'astro-icon/components';
-import FeatureCard from '../components/FeatureCard.astro';
-import Hero from '../components/Hero.astro';
-import Marquee from '../components/Marquee.astro';
-import Separator from '../components/Separator.astro';
-import BaseLayout from '../layouts/BaseLayout.astro';
+import { Icon } from "astro-icon/components";
+import FeatureCard from "../components/FeatureCard.astro";
+import Hero from "../components/Hero.astro";
+import Marquee from "../components/Marquee.astro";
+import Separator from "../components/Separator.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
 
-import { getCollection } from 'astro:content';
-import TestimonialCard from '../components/TestimonialCard.astro';
-import { GITHUB_URL, SPONSOR_URL } from '../constants';
+import { getCollection } from "astro:content";
+import TestimonialCard from "../components/TestimonialCard.astro";
+import { GITHUB_URL, SPONSOR_URL } from "../constants";
 
-const features = (await getCollection('features')).sort(
-	({ data: { sortOrder: a } }, { data: { sortOrder: b } }) => a - b
+const features = (await getCollection("features")).sort(
+	({ data: { sortOrder: a } }, { data: { sortOrder: b } }) => a - b,
 );
 
-const testimonials = await getCollection('testimonials');
+const testimonials = await getCollection("testimonials");
 ---
 
 <script>
@@ -32,7 +32,7 @@ const testimonials = await getCollection('testimonials');
 <BaseLayout>
   <Hero />
   <span class='sr-only'>Features section</span>
-  <section class='container mx-auto px-8 py-10'>
+  <section class='studiocms-container mx-auto px-8 py-10'>
     <h2 class='mb-4 md:mb-8 text-center text-5xl font-bold'>Features</h2>
     <div class='grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3'>
       {features.map(({ data }) => <FeatureCard {...data} />)}
@@ -43,7 +43,7 @@ const testimonials = await getCollection('testimonials');
     <Marquee />
   </section>
   <span class='sr-only'>Pricing section</span>
-  <section class='container mx-auto py-10 px-8'>
+  <section class='studiocms-container mx-auto py-10 px-8'>
     <div class='mx-auto flex flex-col items-center justify-center pb-10'>
       <h2 class='mb-4 text-5xl font-bold'>Pricing</h2>
       <p class='text-xl text-center max-w-[60ch]'>

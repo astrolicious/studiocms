@@ -23,5 +23,8 @@
     "tailwind-scrollbar": "catalog:landing",
     "tailwindcss": "catalog:landing",
     "typescript": "catalog:"
+  },
+  "devDependencies": {
+    "@tailwindcss/typography": "^0.5.15"
   }
 }

@@ -1,30 +1,43 @@
 ---
-import type { ImageMetadata } from 'astro';
-import { getImage, Image } from 'astro:assets';
+import { Image } from "astro:assets";
+import { type CollectionEntry, getEntry } from "astro:content";
+import type { ImageMetadata } from "astro";
 
 export interface Props {
-    title: string;
-    description: string;
-
-    // This _may_ be able to use the new typed routes??? Dunno, never used it myself... One for Adam
-    href: string;
-    imageSrc: ImageMetadata;
-    imageAlt: string;
+	post: CollectionEntry<"blog">;
 }
 
+const { post } = Astro.props;
+
+const href = `/blog/${post.slug}`;
 const {
-    title, 
-    description,
-    href,
-    imageSrc,
-    imageAlt,
-} = Astro.props
+	title,
+	description,
+	publishDate,
+	hero: { image, alt },
+	author,
+} = post.data;
+
+const authorData = await getEntry(author);
+const { name, avatar } = authorData.data;
 ---
 
 <a {href}>
-    <section class="p-4 group">
-        <Image src={imageSrc} alt={imageAlt} class="aspect-video rounded-lg grayscale-[50%] shadow group-hover:grayscale-0 transition-all" />
+    <section class="group">
+        <Image src={ image } alt={ alt } class="aspect-video rounded-lg grayscale-[50%] shadow group-hover:grayscale-0 transition-all" />
         <h2 class="text-2xl my-2 font-black group-hover:text-indigo-400 transition-colors">{ title }</h2>
-        <p class="group-hover:text-indigo-400 transition-colors">{ description }</p>
+        <p class="mb-4 text-ellipsis group-hover:text-indigo-400 transition-colors">{ description }</p>
+
+        <div class="flex gap-4 items-center">
+            <Image
+                src={ avatar }
+                alt={ name }
+                class="aspect-square rounded-full shadow w-[50px]"
+            />
+            <div>
+                <p class="mb-1 font-semibold group-hover:text-indigo-400 transition-colors ">{ name }</p>
+                <p class="text-sm group-hover:text-indigo-400 transition-colors">{ publishDate.getDay() } { publishDate.toLocaleDateString('en-US', { month: 'long' }) } { publishDate.getFullYear() }</p>
+            </div> 
+        </div>
     </section>
 </a>
