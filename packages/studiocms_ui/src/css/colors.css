@@ -1,0 +1,73 @@
+[data-theme="light"],
+[data-theme="light"] * {
+  color-scheme: light;
+}
+
+[data-theme="dark"],
+[data-theme="dark"] * {
+  color-scheme: dark;
+}
+
+:root {
+  /* Default Styles (Dark Mode) */
+  --background-base: #101010;
+  --background-step-1: #151515;
+  --background-step-2: #191919;
+  --background-step-3: #242424;
+
+  --text-normal: #ffffff;
+  --text-muted: #8a8a8a;
+  --text-inverted: #000000;
+
+  --border: #29292d;
+
+  --default-base: #242424;
+  --default-hover: #272727;
+  --default-active: #303030;
+
+  --primary-base: #aa87f4;
+  --primary-hover: #a07cee;
+  --primary-active: #956fe9;
+
+  --success-base: #22c55e;
+  --success-hover: #2add6c;
+  --success-active: #3df17f;
+
+  --danger-base: #bd0249;
+  --danger-hover: #da0e5c;
+  --danger-active: #ec1d6d;
+
+  /* Non-specific variables */
+  --text-light: #ffffff;
+  --text-dark: #000000;
+}
+
+[data-theme="light"] {
+  /* Light Mode Styles */
+  --background-base: #ebebeb;
+  --background-step-1: #dcdcdc;
+  --background-step-2: #d0d0d0;
+  --background-step-3: #bcbcbc;
+
+  --text-normal: #000000;
+  --text-muted: #3e3e3e;
+  --text-inverted: #ffffff;
+
+  --border: #adaab2;
+
+  --default-base: #bcbcbc;
+  --default-hover: #cecece;
+  --default-active: #e7e7e7;
+
+  --primary-base: #7c45f0;
+  --primary-hover: #7039e7;
+  --primary-active: #5f26da;
+
+  --success-base: #32c067;
+  --success-hover: #48d47b;
+  --success-active: #3df17f;
+
+  --danger-base: #bd0249;
+  --danger-hover: #da0e5c;
+  --danger-active: #ec1d6d;
+}

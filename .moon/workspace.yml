@@ -3,13 +3,13 @@ $schema: 'https://moonrepo.dev/schemas/workspace.json'
 
 projects:
   root: '.'
-  studioCMS: 'packages/studioCMS'
-  studioCMSBlog: 'packages/studioCMSBlog'
-  ghost-to-studio: 'packages/ghost-to-studio'
+  studioCMS: 'packages/studiocms'
+  studioCMSBlog: 'packages/studiocms_blog'
   playground: 'playgrounds/node'
   cloudflare-playground: 'playgrounds/cloudflare'
   web: 'www/web'
   docs: 'www/docs'
+  ui: 'packages/studiocms_ui'
 
 # https://moonrepo.dev/docs/config/workspace#constraints
 constraints:

@@ -1,0 +1,50 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+}
+
+html {
+  color-scheme: dark;
+  /* TODO */
+  accent-color: var(--sl-color-accent);
+}
+
+html[data-theme="light"] {
+  color-scheme: light;
+}
+
+/* TODO: */
+body {
+  -webkit-font-smoothing: antialiased;
+  color: var(--text-normal);
+  background-color: var(--background-base);
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+code {
+  overflow-wrap: anywhere;
+}
+
+/* TODO: Move to layout */
+/* line-height: var(--sl-line-height); */
+code {
+  font-family: var(--__sl-font-mono);
+}

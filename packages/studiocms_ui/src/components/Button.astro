@@ -1,0 +1,187 @@
+---
+import type { HTMLTag, Polymorphic } from 'astro/types';
+
+type Props<As extends HTMLTag> = Polymorphic<{ as: As }> & {
+  size?: 'sm' | 'md' | 'lg';
+  fullWidth?: boolean;
+  color?: 'default' | 'primary' | 'success' | 'danger';
+  variant?: 'solid' | 'outlined';
+  class?: string;
+};
+
+const { 
+  size = 'md',
+  fullWidth = false,
+  color = 'default',
+  variant = 'default',
+  as: As = 'button',
+  class: className,
+  ...props
+} = Astro.props;
+---
+
+<As
+  class="button"
+  class:list={[
+    fullWidth && 'full',
+    className, 
+    size,
+    color,
+    variant
+  ]}
+  {...props}
+>
+  <slot name="start-content" />
+  <slot />
+  <slot name="end-content" />
+</As>
+<style>
+  .button {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    text-align: center;
+
+    /* TODO: Move gaps & radii to spacings.css */
+    gap: .5rem;
+
+    outline: none;
+    border: none;
+
+    font-weight: 500;
+
+    border-radius: .5rem;
+
+    transition: background-color .1s ease;
+
+    cursor: pointer;
+
+    border-style: solid;
+
+    /* Default colorway */
+
+    background-color: var(--default-base);
+    border-color: var(--border);
+    color: var(--text-muted);
+  }
+
+  .button:hover {
+    background-color: var(--default-hover);
+  }
+
+  .button:active {
+    background-color: var(--default-active);
+  }
+
+  .button.outlined {
+    border-width: 1px;
+  }
+
+  .button.sm {
+    height: 36px;
+    padding: .5rem .75rem;
+
+    font-size: .825em;
+  }
+
+  .button.md {
+    height: 40px;
+    padding: .5rem .75rem;
+
+    font-size: .825em;
+  }
+
+  .button.lg {
+    height: 48px;
+    padding: .75rem 1rem;
+
+    font-size: 1em;
+  }
+
+  .button.primary {
+    background-color: var(--primary-base);
+    border-color: var(--primary-base);
+    color: var(--text-normal);
+  }
+
+  .button.primary {
+    background-color: var(--primary-base);
+    color: var(--text-normal);
+  }
+
+  .button.primary.outlined {
+    background-color: var(--default-base);
+  }
+
+  .button.primary:hover {
+    background-color: var(--primary-hover);
+  }
+
+  .button.primary.outlined:hover {
+    background-color: var(--default-hover);
+  }
+
+  .button.primary:active {
+    background-color: var(--primary-active);
+  }
+
+  .button.primary.outlined:active {
+    background-color: var(--default-active);
+  }
+
+  .button.success {
+    background-color: var(--success-base);
+    border-color: var(--success-base);
+    color: var(--text-dark);
+  }
+
+  .button.success.outlined {
+    background-color: var(--default-base);
+  }
+
+  .button.success:hover {
+    background-color: var(--success-hover);
+  }
+
+  .button.success.outlined:hover {
+    background-color: var(--default-hover);
+  }
+
+  .button.success:active {
+    background-color: var(--success-active);
+  }
+
+  .button.success.outlined:active {
+    background-color: var(--default-active);
+  }
+
+  .button.danger {
+    background-color: var(--danger-base);
+    border-color: var(--danger-base);
+    color: var(--text-dark);
+  }
+
+  .button.danger.outlined {
+    background-color: var(--default-base);
+  }
+
+  .button.danger:hover {
+    background-color: var(--danger-hover);
+  }
+
+  .button.danger:hover {
+    background-color: var(--danger-active);
+  }
+
+  .button.danger:active {
+    background-color: var(--danger-active);
+  }
+
+  .button.danger:active {
+    background-color: var(--danger-active);
+  }
+
+  .button.full {
+    width: 100%;
+  }
+</style>
