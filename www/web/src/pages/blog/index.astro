@@ -12,9 +12,10 @@ const blogPosts = await getCollection('blog');
         <p class="mb-12 text-lg">Get the latest news from StudioCMS</p>
         <div class="grid md:grid-cols-3 gap-4">
             {
-                blogPosts.map(post => (
+                blogPosts.map((post, index) => (
                     <BlogCard
                         post={ post }
+                        index={ index }
                     />
                 ))
             }

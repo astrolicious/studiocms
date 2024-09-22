@@ -35,6 +35,7 @@ const author = await getEntry(post.data.author);
                         src={ post.data.hero.image }
                         alt={ post.data.hero.alt }
                         class="aspect-video"
+                        loading={'eager'}
                     />
                     <div class="absolute top-0 left-0 h-full w-full bg-transparent md:bg-gradient-to-b md:from-transparent md:to-[#303030]/60"></div>
                 </div>
@@ -50,6 +51,7 @@ const author = await getEntry(post.data.author);
                                     src={ author.data.avatar }
                                     alt={ author.data.name }
                                     class="aspect-square rounded-full shadow w-[50px]"
+                                    loading={'eager'}
                                 />
                                 <p class="dark:md:drop-shadow-md">{ author.data.name }</p>
                             </div>

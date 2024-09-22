@@ -4,9 +4,10 @@ import { type CollectionEntry, getEntry } from 'astro:content';
 
 export interface Props {
 	post: CollectionEntry<'blog'>;
+	index: number;
 }
 
-const { post } = Astro.props;
+const { post, index } = Astro.props;
 
 const href = `/blog/${post.slug}`;
 const {
@@ -23,7 +24,7 @@ const { name, avatar } = authorData.data;
 
 <a {href}>
     <section class="group">
-        <Image src={ image } alt={ alt } class="aspect-video rounded-lg" />
+        <Image src={ image } alt={ alt } class="aspect-video rounded-lg" loading={index < 6 ? 'eager' : 'lazy'} />
         <h2 class="text-2xl my-2 font-black group-hover:text-indigo-400 transition-colors">{ title }</h2>
         <p class="mb-4 text-ellipsis ">{ description }</p>
 
@@ -32,6 +33,7 @@ const { name, avatar } = authorData.data;
                 src={ avatar }
                 alt={ name }
                 class="aspect-square rounded-full shadow w-[50px]"
+                loading={index < 6 ? 'eager' : 'lazy'}
             />
             <div>
                 <p class="mb-1 font-semibold">{ name }</p>
