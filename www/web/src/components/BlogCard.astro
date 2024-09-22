@@ -35,7 +35,7 @@ const { name, avatar } = authorData.data;
             />
             <div>
                 <p class="mb-1 font-semibold">{ name }</p>
-                <p class="text-sm">{ publishDate.getDay() } { publishDate.toLocaleDateString('en-US', { month: 'long' }) } { publishDate.getFullYear() }</p>
+                <p class="text-sm">{ publishDate.toLocaleDateString('en-US', { day: '2-digit', month: 'long', year: 'numeric' }) }</p>
             </div> 
         </div>
     </section>
