@@ -10,3 +10,7 @@ To use the dev server the command is:
 
 **Moon**: `moon run ui-playground:dev`
 **pnpm**: `pnpm ui:dev`
+
+## Quick note about `src/ideas/*`
+In here are code snippets saved while discussing the implementation of certain functionality for the dashboard redesign. See
+[#294](https://github.com/astrolicious/studiocms/discussions/294).

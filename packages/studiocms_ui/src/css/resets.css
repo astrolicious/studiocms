@@ -7,7 +7,7 @@
 html {
   color-scheme: dark;
   /* TODO */
-  accent-color: var(--sl-color-accent);
+  accent-color: var(--primary-base);
 }
 
 html,
@@ -44,8 +44,7 @@ code {
   overflow-wrap: anywhere;
 }
 
-/* TODO: Move to layout */
-/* line-height: var(--sl-line-height); */
+/* TODO: Move to layout & add mono font */
 code {
   font-family: var(--__sl-font-mono);
 }

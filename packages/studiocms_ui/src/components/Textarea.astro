@@ -3,9 +3,10 @@ import { generateID } from '../utils/generateID';
 
 type Props = {
 	label?: string;
-	type?: 'text' | 'password';
 	placeholder?: string;
   isRequired?: boolean;
+  fullWidth?: boolean;
+  resize?: boolean;
   name?: string;
   disabled?: boolean;
   defaultValue?: string;
@@ -14,63 +15,77 @@ type Props = {
 const {
   label,
   placeholder,
-  name = generateID('input'),
-  type = 'text',
+  isRequired,
+  fullWidth,
+  resize,
+  name = generateID('textarea'),
+  disabled,
   defaultValue,
-  isRequired = false,
-  disabled = false,
 } = Astro.props;
 ---
-
-<label for={name} class="input-label" class:list={[disabled && "disabled"]}>
+<label 
+  for={name} 
+  class="textarea-label"
+  class:list={[
+    fullWidth && "full",
+    resize && "resize",
+    disabled && "disabled",
+  ]}
+>
   <span class="label">
     {label} <span class="req-star">{isRequired && "*"}</span>
   </span>
-  <input
+  <textarea
     placeholder={placeholder}
     name={name}
     id={name}
-    type={type}
-    class="input"
+    class="textarea"
     required={isRequired}
     disabled={disabled}
-    value={defaultValue}
-  />
+    
+  >{defaultValue}</textarea>
 </label>
 <style>
-  .input-label {
+  .textarea-label {
     width: 100%;
     display: flex;
     flex-direction: column;
     gap: .25rem;
     margin-top: .5rem;
+    width: 80ch;
   }
 
-  .input-label.disabled {
+  .textarea-label.disabled {
     opacity: .5;
     pointer-events: none;
+  }
+
+  .textarea-label.full {
+    width: 100%;
   }
 
   .label {
     font-size: 14px;
   }
 
-  .input {
+  .textarea {
     padding: .65rem 1rem;
     border-radius: 8px;
     border: 1px solid var(--border);
     background: var(--background-step-2);
     color: var(--text-normal);
-    transition: all .15s ease;
+    transition: border .15s ease;
+    resize: none;
+    min-height: 12ch;
   }
 
-  .input:active, .input:focus {
+  .resize .textarea {
+    resize: both;
+  }
+
+  .textarea:active, .textarea:focus {
     border: 1px solid var(--primary-base);
     outline: none;
-  }
-
-  .disabled .input:active {
-    border: 1px solid var(--border);
   }
 
   .req-star {

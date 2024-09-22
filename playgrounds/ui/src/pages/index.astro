@@ -2,8 +2,9 @@
 import '@fontsource-variable/onest/index.css';
 import '@studiocms/ui/css/global.css';
 
-import { Button, Center, Divider, Input, Row } from '@studiocms/ui/components';
+import { Button, Center, Checkbox, Divider, Input, Row, Textarea } from '@studiocms/ui/components';
 
+import CheckboxTests from '@/components/CheckboxTests.astro';
 import Icon from '@/utils/Icon.astro';
 import ButtonTests from '../components/ButtonTests.astro';
 ---
@@ -30,10 +31,17 @@ import ButtonTests from '../components/ButtonTests.astro';
     <Input
       label='Text Input'
       type='text'
+      isRequired
     />
     <Input
       label='Password Input'
       type='password'
+    />
+    <Input
+      label='Disabled Input with default Text'
+      type='text'
+      disabled
+      defaultValue='Disabled Input Text'
     />
     <h1>Row</h1>
     <Row
@@ -49,10 +57,30 @@ import ButtonTests from '../components/ButtonTests.astro';
         type='text'
       />
     </Row>
-    <h1>Center Tag</h1>
+    <h1>Center</h1>
     <Center>
       Centered Stuff
     </Center>
+    <h1>Textarea</h1>
+    <Textarea
+      label='Normal (Required)'
+      placeholder='Placeholder'
+      isRequired
+    />
+    <Textarea
+      label='Normal (With Resize)'
+      placeholder='Placeholder'
+      resize
+    />
+    <Textarea
+      label='Disabled (With default value & full size)'
+      placeholder='Placeholder'
+      fullWidth
+      defaultValue={'This is some text content, \nwith Multiline'}
+      disabled
+    />
+    <h1>Checkbox</h1>
+    <CheckboxTests />
   </body>
 </html>
 <style is:global>
@@ -99,17 +127,17 @@ import ButtonTests from '../components/ButtonTests.astro';
 <script>
   const toggle = document.getElementById('color-toggle')! as HTMLElement;
   const sunIcon = document.getElementById('sun-icon')! as HTMLElement;
-  const moonIcon = document.getElementById('sun-icon')! as HTMLElement;
+  const moonIcon = document.getElementById('moon-icon')! as HTMLElement;
 
   toggle.addEventListener('click', () => {
     if (document.documentElement.dataset.theme === 'dark') {
       document.documentElement.dataset.theme = 'light';
-      sunIcon.classList.remove('hidden');
-      moonIcon.classList.add('hidden');
+      sunIcon.classList.add('hidden');
+      moonIcon.classList.remove('hidden');
     } else {
       document.documentElement.dataset.theme = 'dark';
-      moonIcon.classList.remove('hidden');
-      sunIcon.classList.add('hidden');
+      moonIcon.classList.add('hidden');
+      sunIcon.classList.remove('hidden');
     }
   });
 </script>

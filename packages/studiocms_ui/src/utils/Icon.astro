@@ -1,0 +1,26 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+
+// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+type AstroComponent = (_props: Record<string, any>) => any;
+
+type currentIcons = 'checkmark';
+
+export type { currentIcons };
+
+// Map of icon names to Astro components
+const Components: Record<currentIcons, AstroComponent> = {
+	checkmark: (await import('../icons/Checkmark.astro')).default,
+};
+
+interface Props extends HTMLAttributes<'svg'> {
+	name: currentIcons;
+	width?: number;
+	height?: number;
+}
+
+const { name, width, height, ...props } = Astro.props;
+
+const Tag = Components[name];
+---
+<Tag width={width} height={height} {...props} />

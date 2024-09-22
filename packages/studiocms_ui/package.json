@@ -39,7 +39,8 @@
   "exports": {
     "./components": "./src/components.ts",
     "./layouts/*": "./src/layouts/*",
-    "./css/*": "./src/css/*"
+    "./css/*": "./src/css/*",
+    "./utils/*": "./src/utils/*"
   },
   "dependencies": {
     "@fontsource-variable/onest": "5.1.0"

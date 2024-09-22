@@ -7,6 +7,7 @@ type Props<As extends HTMLTag> = Polymorphic<{ as: As }> & {
 	color?: 'default' | 'primary' | 'success' | 'danger';
 	variant?: 'solid' | 'outlined';
 	class?: string;
+  disabled?: boolean;
 };
 
 const {
@@ -16,6 +17,7 @@ const {
 	variant = 'default',
 	as: As = 'button',
 	class: className,
+  disabled = false,
 	...props
 } = Astro.props;
 ---
@@ -24,11 +26,13 @@ const {
   class="button"
   class:list={[
     fullWidth && 'full',
+    disabled && 'disabled',
     className, 
     size,
     color,
-    variant
+    variant,
   ]}
+  disabled={disabled}
   {...props}
 >
   <slot name="start-content" />
@@ -65,6 +69,11 @@ const {
     color: var(--text-muted);
 
     min-width: fit-content;
+  }
+
+  .button.disabled {
+    pointer-events: none;
+    opacity: .5;
   }
 
   .button.outlined {
