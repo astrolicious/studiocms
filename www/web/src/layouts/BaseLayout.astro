@@ -3,13 +3,19 @@ import Footer from '../components/Footer.astro';
 import Head from '../components/Head.astro';
 import Navbar from '../components/Navbar.astro';
 import '../styles/global.css';
+
+interface Props {
+	title?: string;
+}
+
+const { title } = Astro.props;
 ---
 
 <html
   class='scrollbar scrollbar-thumb-white scrollbar-track-[#1a172e] text-[--purple-900] dark:text-[--white-50]'
   lang='en'
 >
-  <Head />
+  <Head {title} />
   <body>
     <Navbar />
     <slot />

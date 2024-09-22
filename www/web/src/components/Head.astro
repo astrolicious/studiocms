@@ -3,6 +3,12 @@ import { AstroFont } from 'astro-font';
 import { SEO } from 'astro-seo';
 const OgBanner = new URL('/og.png', Astro.url);
 import ThemeManager from './ThemeManager.astro';
+
+interface Props {
+	title?: string;
+}
+
+const { title } = Astro.props;
 ---
 
 <head>
@@ -10,7 +16,7 @@ import ThemeManager from './ThemeManager.astro';
   <link rel='icon' type='image/svg+xml' href='/favicon.svg' />
   <meta name='viewport' content='width=device-width' />
   <meta name='generator' content={Astro.generator} />
-  <title>StudioCMS</title>
+  <title>StudioCMS{ title && ` - ${title}`}</title>
   <ThemeManager defaultTheme="dark" />
   <script 
     is:inline 
@@ -19,11 +25,11 @@ import ThemeManager from './ThemeManager.astro';
     data-website-id="e3a84c8d-d45a-49d9-932b-00eeb63f8c48">
   </script>
   <SEO
-    title='StudioCMS'
+    title={`StudioCMS${title && ` - ${title}`}`}
     description='A dedicated CMS for Astro DB.'
     openGraph={{
       basic: {
-        title: 'StudioCMS',
+        title: `StudioCMS${title && ` - ${title}`}`,
         type: 'Website',
         image: OgBanner.href,
       },
@@ -45,7 +51,7 @@ import ThemeManager from './ThemeManager.astro';
           }
         ],
         name: 'BalooChettan',
-        preload: false,
+        preload: true,
         display: 'swap',
         selector: 'body',
         fallback: 'sans-serif',
