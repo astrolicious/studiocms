@@ -1,33 +1,41 @@
 ---
 title: Goodbye, Astro Studio!
 description: Astro Studio is gone but StudioCMS isn't!
-publishDate: 2024-09-16
+publishDate: 2024-09-21
 hero:
   image: "./assets/bye-bye-studio.png"
   alt: Goodbye Astro Studio
-author: jacob-jenkins
+author: adam-matthiesen
 ---
+# StudioCMS: Thriving Beyond Astro Studio
 
-## Goodbye Astro Studio, this is our name now!
+With the recent announcement from Astro that Astro Studio will be winding down, we understand that many in the Astro community may be wondering what this means for projects and platforms built around AstroDB, including our very own **StudioCMS**. While Astro Studio, the hosted libSQL database platform, may be closing its doors, **StudioCMS will not only survive but continue to thrive, grow, and serve the Astro ecosystem**—with even more determination than before.
 
-In the vast, unpredictable world of web development, there’s one thing that sets us apart: **we don’t give up**. Not now, not ever. **StudioCMS**, built for Astro, is more than a tool — it’s a testament to resilience, an ode to never backing down.
+### StudioCMS and the Legacy of Astro Studio
 
-When the winds of change blow, we don’t sway. When challenges arise, we don’t flinch. **StudioCMS** was built to weather the storm, to stare adversity in the face and say, **“Is that all you’ve got?”**
+StudioCMS was inspired by Astro Studio’s vision of providing a powerful SQL-based backend within the Astro ecosystem. Though Astro Studio will soon wind down, the **concept and ambition behind StudioCMS** remain stronger than ever. Our mission has always been to offer an intuitive, streamlined CMS specifically for the Astro community, and that mission extends well beyond Astro Studio’s lifespan.
 
-Sure, there are other CMS platforms out there. Some might seem bigger, shinier, or more popular. But here's the truth: they can’t hold a candle to the **spirit** we’ve infused into StudioCMS. We don’t care if they doubt us, if they say it’s impossible. We take “no” and turn it into fuel. We take setbacks and turn them into **comebacks**.
+### What’s Next for StudioCMS
 
-### Built to Thrive in the Fire
+While Astro Studio’s hosted database platform will sunset, **StudioCMS is built to adapt**. With AstroDB’s new direction of allowing connections to any libSQL database (including platforms like Turso), we see this as an opportunity to continue delivering an optimized CMS experience, regardless of the underlying database infrastructure.
 
-StudioCMS wasn’t created in the safety of the sidelines. No. We forged it in the fire of innovation, in the crucible of **determination**. Every line of code is a **battle cry**, every feature is a statement that says, “We will NOT back down.”
+Our roadmap remains laser-focused on providing:
+- **Flexibility**: StudioCMS will support any libSQL-compatible backend, including Turso, self-hosted solutions, or alternative databases that fit your needs.
+- **Seamless integration with Astro projects**: As always, StudioCMS is designed to feel native within the Astro workflow, enabling both developers and content creators to manage content effortlessly.
+- **Community-driven development**: We will continue to build StudioCMS in collaboration with the Astro community, ensuring that it evolves based on your feedback and needs.
 
-You see, StudioCMS isn’t just a CMS. It’s a **movement**, a declaration that **we are here to stay**. When things get tough, we don’t quit. We rise. When we’re knocked down, we stand taller. When others run from the challenge, we **run toward it**.
+### A Tribute to Astro Studio and a Look Ahead
 
-They can try to copy us, outshine us, even push us aside. But guess what? **You can’t keep us down.** Nu uh. No siree! We don’t fold, we double down. And we come back stronger. Every. Single. Time.
+Astro Studio was a major inspiration behind the creation of StudioCMS, and its approach to easy, scalable SQL data storage was pivotal for us. While we bid farewell to Astro Studio, we’re excited about the opportunity this shift provides. By broadening the scope to connect with any libSQL database, **StudioCMS will continue to grow and flourish** as a dedicated CMS solution for Astro.
 
-### The Future is Ours
+### Our Commitment to the Astro Community
 
-The web is a battlefield, but StudioCMS was **born for this fight**. We will **innovate**, we will **evolve**, and we will continue to rise with every new challenge. We’re not just a CMS — we’re **the CMS** that refuses to quit, refuses to be beaten, and refuses to be anything less than **legendary**.
+We are deeply committed to the **Astro ecosystem** and the community that has made it so vibrant. StudioCMS will continue to push forward with its mission to become the main CMS solution for Astro developers, empowering content creators and development teams alike to collaborate seamlessly on Astro-powered projects.
 
-You want resilience? You want determination? You want a CMS that embodies the spirit of **never giving up**? Then welcome to StudioCMS — where we **don’t just survive, we thrive.**
+To the Astro Studio users and the wider Astro community, we invite you to join us on this journey of innovation and growth. Together, we’ll ensure that StudioCMS remains a vital part of the ecosystem, thriving well into the future.
 
-**We’re not going anywhere.** Ready to join us?
+**Join us on this journey!**
+
+Stay tuned for updates as we provide information on how StudioCMS will transition to support the new changes in AstroDB. We’re excited to build a platform that stands the test of time and evolves alongside the Astro framework.
+
+For more details on getting started or to join the conversation, visit our [GitHub repository](https://github.com/astrolicious/studiocms) or [Discord server](https://chat.astrolicious.dev/).
