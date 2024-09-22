@@ -3,11 +3,24 @@ $schema: 'https://moonrepo.dev/schemas/workspace.json'
 
 projects:
   root: '.'
-  studioCMS: 'packages/studioCMS'
-  studioCMSBlog: 'packages/studioCMSBlog'
-  ghost-to-studio: 'packages/ghost-to-studio'
+  # Packages
+  studiocms: 'packages/studioCMS'
+  studiocms_assets: 'packages/studiocms_assets'
+  studiocms_auth: 'packages/studiocms_auth'
+  studiocms_betaresources: 'packages/studiocms_betaresources'
+  studiocms_blog: 'packages/studiocms_blog'
+  studiocms_core: 'packages/studiocms_core'
+  studiocms_dashboard: 'packages/studiocms_dashboard'
+  studiocms_frontend: 'packages/studiocms_frontend'
+  studiocms_imagehandler: 'packages/studiocms_imagehandler'
+  studiocms_renderers: 'packages/studiocms_renderers'
+  studiocms_robotstxt: 'packages/studiocms_robotstxt'
+
+  # Playgrounds
   playground: 'playgrounds/node'
   cloudflare-playground: 'playgrounds/cloudflare'
+
+  # Web Sites & Docs
   web: 'www/web'
   docs: 'www/docs'
 
