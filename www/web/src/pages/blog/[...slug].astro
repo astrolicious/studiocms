@@ -23,7 +23,7 @@ const { Content } = await post.render();
 const author = await getEntry(post.data.author);
 ---
 
-<BaseLayout>
+<BaseLayout title={ post.data.title }>
     <div class="p-8 pt-4">
         <section class='studiocms-container mx-auto min-h-[calc(100vh_-_70px)]'>
             <div class="breadcrumbs mb-4 text-lg">
