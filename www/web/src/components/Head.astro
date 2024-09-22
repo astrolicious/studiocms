@@ -21,13 +21,18 @@ const { title } = Astro.props;
   <script 
     is:inline 
     defer 
-    src="https://analytics.astro-studiocms.xyz/script.js" 
+    src="https://analytics.studiocms.xyz/script.js" 
     data-website-id="e3a84c8d-d45a-49d9-932b-00eeb63f8c48">
   </script>
   <SEO
     title={`StudioCMS${title && ` - ${title}`}`}
     description='A dedicated CMS for Astro DB.'
     openGraph={{
+      image: {
+        height: 1080,
+        width: 1920,
+        type: 'image/png',
+      },
       basic: {
         title: `StudioCMS${title && ` - ${title}`}`,
         type: 'Website',
