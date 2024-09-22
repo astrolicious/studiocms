@@ -4,10 +4,10 @@
 
 <!-- Done -->
 - Button
-
-<!-- Checkboxy-Stuff -->
 - Textarea
 - Checkboxes
+
+<!-- Checkboxy-Stuff -->
 - Radio inputs
 - Toggle
 

@@ -8,8 +8,8 @@
     "allowImportingTsExtensions": false,
     "emitDeclarationOnly": false,
     "paths": {
-      "ui-playground/*": ["../../playgrounds/ui/src/*"],
-    },
+      "ui-playground/*": ["../../playgrounds/ui/src/*"]
+    }
   },
   "references": [
     {

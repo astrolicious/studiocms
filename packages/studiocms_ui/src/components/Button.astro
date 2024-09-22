@@ -7,7 +7,7 @@ type Props<As extends HTMLTag> = Polymorphic<{ as: As }> & {
 	color?: 'default' | 'primary' | 'success' | 'danger';
 	variant?: 'solid' | 'outlined';
 	class?: string;
-  disabled?: boolean;
+	disabled?: boolean;
 };
 
 const {
@@ -17,7 +17,7 @@ const {
 	variant = 'default',
 	as: As = 'button',
 	class: className,
-  disabled = false,
+	disabled = false,
 	...props
 } = Astro.props;
 ---

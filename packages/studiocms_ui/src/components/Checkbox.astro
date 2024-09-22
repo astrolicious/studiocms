@@ -3,29 +3,29 @@ import Icon from '../utils/Icon.astro';
 import { generateID } from '../utils/generateID';
 
 type Props = {
-  label: string;
+	label: string;
 	size?: 'sm' | 'md' | 'lg';
 	color?: 'default' | 'primary' | 'success' | 'danger';
-  defaultChecked?: boolean;
-  disabled?: boolean;
-  name?: string;
-  isRequired?: boolean;
+	defaultChecked?: boolean;
+	disabled?: boolean;
+	name?: string;
+	isRequired?: boolean;
 };
 
 const {
-  size = 'md',
-  color = 'default',
-  defaultChecked,
-  disabled,
-  name = generateID('checkbox'),
-  label,
-  isRequired
+	size = 'md',
+	color = 'default',
+	defaultChecked,
+	disabled,
+	name = generateID('checkbox'),
+	label,
+	isRequired,
 } = Astro.props;
 
 const iconSizes = {
-  'sm': 14,
-  'md': 16,
-  'lg': 24,
+	sm: 14,
+	md: 16,
+	lg: 24,
 };
 ---
 <label 

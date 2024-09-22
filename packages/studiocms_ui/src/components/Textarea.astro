@@ -4,23 +4,23 @@ import { generateID } from '../utils/generateID';
 type Props = {
 	label?: string;
 	placeholder?: string;
-  isRequired?: boolean;
-  fullWidth?: boolean;
-  resize?: boolean;
-  name?: string;
-  disabled?: boolean;
-  defaultValue?: string;
+	isRequired?: boolean;
+	fullWidth?: boolean;
+	resize?: boolean;
+	name?: string;
+	disabled?: boolean;
+	defaultValue?: string;
 };
 
 const {
-  label,
-  placeholder,
-  isRequired,
-  fullWidth,
-  resize,
-  name = generateID('textarea'),
-  disabled,
-  defaultValue,
+	label,
+	placeholder,
+	isRequired,
+	fullWidth,
+	resize,
+	name = generateID('textarea'),
+	disabled,
+	defaultValue,
 } = Astro.props;
 ---
 <label 

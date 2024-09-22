@@ -5,20 +5,20 @@ type Props = {
 	label?: string;
 	type?: 'text' | 'password';
 	placeholder?: string;
-  isRequired?: boolean;
-  name?: string;
-  disabled?: boolean;
-  defaultValue?: string;
+	isRequired?: boolean;
+	name?: string;
+	disabled?: boolean;
+	defaultValue?: string;
 };
 
 const {
-  label,
-  placeholder,
-  name = generateID('input'),
-  type = 'text',
-  defaultValue,
-  isRequired = false,
-  disabled = false,
+	label,
+	placeholder,
+	name = generateID('input'),
+	type = 'text',
+	defaultValue,
+	isRequired = false,
+	disabled = false,
 } = Astro.props;
 ---
 
