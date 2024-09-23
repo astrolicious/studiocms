@@ -77,19 +77,19 @@ const iconSizes = {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: var(--default-base);
-    border: 2px solid var(--default-base);
+    background-color: hsl(var(--default-base));
+    border: 2px solid hsl(var(--default-base));
     border-radius: .5rem;
     cursor: pointer;
     transition: all .15s ease;
   }
 
   .checkmark-label:hover .checkmark-container {
-    background-color: var(--default-hover);
+    background-color: hsl(var(--default-hover));
   }
 
   .checkmark-label:active .checkmark-container {
-    background-color: var(--default-active);
+    background-color: hsl(var(--default-active));
     scale: .9;
   }
 
@@ -117,27 +117,27 @@ const iconSizes = {
   }
 
   .primary .checkmark-container:has(.checkbox:checked) {
-    border-color: var(--primary-base);
-    background-color: var(--primary-base);
+    border-color: hsl(var(--primary-base));
+    background-color: hsl(var(--primary-base));
   }
 
   .success .checkmark-container:has(.checkbox:checked) {
-    border-color: var(--success-base);
-    background-color: var(--success-base);
+    border-color: hsl(var(--success-base));
+    background-color: hsl(var(--success-base));
   }
 
   .warning .checkmark-container:has(.checkbox:checked) {
-    border-color: var(--warning-base);
-    background-color: var(--warning-base);
+    border-color: hsl(var(--warning-base));
+    background-color: hsl(var(--warning-base));
   }
 
   .danger .checkmark-container:has(.checkbox:checked) {
-    border-color: var(--danger-base);
-    background-color: var(--danger-base);
+    border-color: hsl(var(--danger-base));
+    background-color: hsl(var(--danger-base));
   }
 
   .req-star {
-    color: var(--danger-base);
+    color: hsl(var(--danger-base));
     font-weight: 700;
   }
 
@@ -151,23 +151,23 @@ const iconSizes = {
 
   .checkmark polyline {
     transition: all .15s ease;
-    color: var(--text-normal);
+    color: hsl(var(--text-normal));
   }
 
   .primary .checkmark polyline {
-    color: var(--text-inverted);
+    color: hsl(var(--text-inverted));
   }
 
   .success .checkmark polyline {
-    color: var(--text-dark);
+    color: hsl(var(--text-dark));
   }
 
   .warning .checkmark polyline {
-    color: var(--text-dark);
+    color: hsl(var(--text-dark));
   }
 
   .danger .checkmark polyline {
-    color: var(--text-light);
+    color: hsl(var(--text-light));
   }
 
   .checkmark-container:has(.checkbox:checked) {

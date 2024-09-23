@@ -6,7 +6,7 @@ type Props<As extends HTMLTag = 'button'> = Omit<Polymorphic<{ as: As }>, 'as'> 
 	size?: 'sm' | 'md' | 'lg';
 	fullWidth?: boolean;
 	color?: 'default' | 'primary' | 'success' | 'warning' | 'danger';
-	variant?: 'solid' | 'outlined';
+	variant?: 'solid' | 'outlined' | 'flat';
 	class?: string;
 	disabled?: boolean;
 };
@@ -41,6 +41,7 @@ const {
   <slot name="end-content" />
 </As>
 <style>
+  /* Default Styles */
   .button {
     display: flex;
     flex-direction: row;
@@ -59,17 +60,19 @@ const {
 
     border-radius: .5rem;
 
-    transition: background-color .1s ease;
+    transition: all .15s ease;
 
     cursor: pointer;
 
     /* Default colorway */
 
-    background-color: var(--default-base);
-    border-color: var(--border);
-    color: var(--text-muted);
+    background-color: hsl(var(--default-base));
+    border-color: hsl(var(--border));
+    color: hsl(var(--text-muted));
 
     min-width: fit-content;
+
+    will-change: transform;
   }
 
   .button.disabled {
@@ -83,13 +86,27 @@ const {
   }
 
   .button:hover {
-    background-color: var(--default-hover);
+    background-color: hsl(var(--default-hover));
   }
 
   .button:active {
-    background-color: var(--default-active);
+    background-color: hsl(var(--default-active));
+    transform: scale(.95);
   }
 
+  .button.flat {
+    background: hsla(var(--default-flat));
+  }
+
+  .button.flat:hover {
+    background: hsla(var(--default-flat-hover));
+  }
+
+  .button.flat:active {
+    background: hsla(var(--default-flat-active));
+  }
+
+  /* Sizes */
   .button.sm {
     height: 32px;
     padding: .5rem .75rem;
@@ -101,7 +118,7 @@ const {
     height: 40px;
     padding: .5rem .75rem;
 
-    font-size: .825em;
+    font-size: .875em;
   }
 
   .button.lg {
@@ -111,112 +128,168 @@ const {
     font-size: 1em;
   }
 
+  /* Primary Colorway */
   .button.primary {
-    background-color: var(--primary-base);
-    border-color: var(--primary-base);
-    color: var(--text-inverted);
-  }
-
-  .button.primary.outlined {
-    background-color: var(--default-base);
-    color: var(--text-normal);
+    background-color: hsl(var(--primary-base));
+    border-color: hsl(var(--primary-base));
+    color: hsl(var(--text-inverted));
   }
 
   .button.primary:hover {
-    background-color: var(--primary-hover);
-  }
-
-  .button.primary.outlined:hover {
-    background-color: var(--default-hover);
+    background-color: hsl(var(--primary-hover));
   }
 
   .button.primary:active {
-    background-color: var(--primary-active);
+    background-color: hsl(var(--primary-active));
+  }
+
+  .button.primary.outlined {
+    background-color: hsl(var(--default-base));
+    color: hsl(var(--text-normal));
+  }
+
+  .button.primary.outlined:hover {
+    background-color: hsl(var(--default-hover));
   }
 
   .button.primary.outlined:active {
-    background-color: var(--default-active);
+    background-color: hsl(var(--default-active));
   }
 
+  .button.primary.flat {
+    background-color: hsla(var(--primary-flat));
+    color: hsl(var(--primary-base));
+  }
+
+  .button.primary.flat:hover {
+    background-color: hsla(var(--primary-flat-hover));
+  }
+
+  .button.primary.flat:active {
+    background-color: hsla(var(--primary-flat-active));
+  }
+
+  /* Success Colorway */
   .button.success {
-    background-color: var(--success-base);
-    border-color: var(--success-base);
-    color: var(--text-dark);
-  }
-
-  .button.success.outlined {
-    background-color: var(--default-base);
-    color: var(--text-normal);
+    background-color: hsl(var(--success-base));
+    border-color: hsl(var(--success-base));
+    color: hsl(var(--text-dark));
   }
 
   .button.success:hover {
-    background-color: var(--success-hover);
-  }
-
-  .button.success.outlined:hover {
-    background-color: var(--default-hover);
+    background-color: hsl(var(--success-hover));
   }
 
   .button.success:active {
-    background-color: var(--success-active);
+    background-color: hsl(var(--success-active));
+  }
+
+  .button.success.outlined {
+    background-color: hsl(var(--default-base));
+    color: hsl(var(--text-normal));
+  }
+
+  .button.success.outlined:hover {
+    background-color: hsl(var(--default-hover));
   }
 
   .button.success.outlined:active {
-    background-color: var(--default-active);
+    background-color: hsl(var(--default-active));
   }
 
+  .button.success.flat {
+    background-color: hsla(var(--success-flat));
+    color: hsl(var(--success-base));
+  }
+
+  .button.success.flat:hover {
+    background-color: hsla(var(--success-flat-hover));
+  }
+
+  .button.success.flat:active {
+    background-color: hsla(var(--success-flat-active));
+  }
+
+  /* Warning Colorway */
   .button.warning {
-    background-color: var(--warning-base);
-    border-color: var(--warning-base);
-    color: var(--text-dark);
-  }
-
-  .button.warning.outlined {
-    background-color: var(--default-base);
-    color: var(--text-normal);
+    background-color: hsl(var(--warning-base));
+    border-color: hsl(var(--warning-base));
+    color: hsl(var(--text-dark));
   }
 
   .button.warning:hover {
-    background-color: var(--warning-hover);
-  }
-
-  .button.warning.outlined:hover {
-    background-color: var(--default-hover);
+    background-color: hsl(var(--warning-hover));
   }
 
   .button.warning:active {
-    background-color: var(--warning-active);
+    background-color: hsl(var(--warning-active));
+  }
+
+  .button.warning.outlined {
+    background-color: hsl(var(--default-base));
+    color: hsl(var(--text-normal));
+  }
+
+  .button.warning.outlined:hover {
+    background-color: hsl(var(--default-hover));
   }
 
   .button.warning.outlined:active {
-    background-color: var(--default-active);
+    background-color: hsl(var(--default-active));
   }
 
+  .button.warning.flat {
+    background-color: hsla(var(--warning-flat));
+    color: hsl(var(--warning-base));
+  }
+
+  .button.warning.flat:hover {
+    background-color: hsla(var(--warning-flat-hover));
+  }
+
+  .button.warning.flat:active {
+    background-color: hsla(var(--warning-flat-active));
+  }
+
+  /* Danger Colorway */
   .button.danger {
-    background-color: var(--danger-base);
-    border-color: var(--danger-base);
-    color: var(--text-light);
-  }
-
-  .button.danger.outlined {
-    background-color: var(--default-base);
-    color: var(--text-normal);
+    background-color: hsl(var(--danger-base));
+    border-color: hsl(var(--danger-base));
+    color: hsl(var(--text-light));
   }
 
   .button.danger:hover {
-    background-color: var(--danger-hover);
-  }
-
-  .button.danger.outlined:hover {
-    background-color: var(--default-hover);
+    background-color: hsl(var(--danger-hover));
   }
 
   .button.danger:active {
-    background-color: var(--danger-active);
+    background-color: hsl(var(--danger-active));
+  }
+
+  .button.danger.outlined {
+    background-color: hsl(var(--default-base));
+    color: hsl(var(--text-normal));
+  }
+
+  .button.danger.outlined:hover {
+    background-color: hsl(var(--default-hover));
   }
 
   .button.danger.outlined:active {
-    background-color: var(--default-active);
+    background-color: hsl(var(--default-active));
+  }
+
+  .button.danger.flat {
+    background-color: hsla(var(--danger-flat));
+    color: hsl(var(--danger-base));
+  }
+
+  .button.danger.flat:hover {
+    background-color: hsla(var(--danger-flat-hover));
+  }
+
+  .button.danger.flat:active {
+    background-color: hsla(var(--danger-flat-active));
   }
 
   .button.full {

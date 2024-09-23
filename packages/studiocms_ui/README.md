@@ -12,7 +12,7 @@
 - Card
 
 ### Based on popover API
-- Tooltips based on popover
+- Tooltips based on popover (& anchor positioning, but it's not baseline yet so guess that's that)
 - Modals
 - Select
 - Date Picker (This is a longer thing)

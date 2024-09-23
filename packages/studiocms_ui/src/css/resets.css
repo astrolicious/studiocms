@@ -7,7 +7,7 @@
 html {
   color-scheme: dark;
   /* TODO */
-  accent-color: var(--primary-base);
+  accent-color: hsl(var(--primary-base));
 }
 
 html,
@@ -22,8 +22,8 @@ html[data-theme="light"] {
 body {
   font-family: 'Onest Variable', sans-serif;
   -webkit-font-smoothing: antialiased;
-  color: var(--text-normal);
-  background-color: var(--background-base);
+  color: hsl(var(--text-normal));
+  background-color: hsl(var(--background-base));
 }
 
 input,
@@ -47,4 +47,11 @@ code {
 /* TODO: Move to layout & add mono font */
 code {
   font-family: var(--__sl-font-mono);
+}
+
+button {
+  border: none;
+  outline: none;
+  background: none;
+  padding: 0;
 }

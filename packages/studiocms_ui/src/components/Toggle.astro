@@ -61,6 +61,10 @@ const {
     pointer-events: none;
   }
 
+  .toggle-label:active .toggle-switch {
+    transform: scale(.85);
+  }
+
   .toggle-container {
     --toggle-height: 12px;
     --toggle-width: 40px;
@@ -68,7 +72,7 @@ const {
     align-items: center;
     cursor: pointer;
     transition: all .15s ease;
-    background-color: var(--default-base);
+    background-color: hsl(var(--default-base));
     width: var(--toggle-width);
     height: var(--toggle-height);
     border-radius: var(--toggle-height);
@@ -78,16 +82,17 @@ const {
     --switch: calc(var(--toggle-height) * 1.75);
     height: var(--switch);
     width: var(--switch);
-    background-color: var(--text-muted);
+    background-color: hsl(var(--text-muted));
     border-radius: var(--toggle-height);
     position: relative;
     left: 0;
     transition: all .15s ease;
+    will-change: transform;
   }
 
   .toggle-container:has(.checkbox:checked) .toggle-switch {
     left: calc(100% - var(--switch));
-    background-color: var(--text-normal);
+    background-color: hsl(var(--text-normal));
   }
 
   .toggle-label.sm .toggle-container {
@@ -109,23 +114,23 @@ const {
   }
 
   .toggle-label.primary .toggle-container:has(.checkbox:checked) {
-    background-color: var(--primary-base);
+    background-color: hsl(var(--primary-base));
   }
 
   .toggle-label.success .toggle-container:has(.checkbox:checked) {
-    background-color: var(--success-base);
+    background-color: hsl(var(--success-base));
   }
 
   .toggle-label.warning .toggle-container:has(.checkbox:checked) {
-    background-color: var(--warning-base);
+    background-color: hsl(var(--warning-base));
   }
 
   .toggle-label.danger .toggle-container:has(.checkbox:checked) {
-    background-color: var(--danger-base);
+    background-color: hsl(var(--danger-base));
   }
 
   .req-star {
-    color: var(--danger-base);
+    color: hsl(var(--danger-base));
     font-weight: 700;
   }
 

@@ -9,5 +9,7 @@ export { default as Toggle } from './Toggle.astro';
 export { default as RadioGroup } from './RadioGroup.astro';
 export { default as Toaster } from './Toast/Toaster.astro';
 export { default as Card } from './Card.astro';
+export { default as Modal } from './Modal/Modal.astro';
 
 export { toast } from './Toast/toast';
+export { ModalHelper } from './Modal/modal';

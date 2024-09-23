@@ -60,23 +60,23 @@ const {
   .input {
     padding: .65rem 1rem;
     border-radius: 8px;
-    border: 1px solid var(--border);
-    background: var(--background-step-2);
-    color: var(--text-normal);
+    border: 1px solid hsl(var(--border));
+    background: hsl(var(--background-step-2));
+    color: hsl(var(--text-normal));
     transition: all .15s ease;
   }
 
   .input:active, .input:focus {
-    border: 1px solid var(--primary-base);
+    border: 1px solid hsl(var(--primary-base));
     outline: none;
   }
 
   .disabled .input:active {
-    border: 1px solid var(--border);
+    border: 1px solid hsl(var(--border));
   }
 
   .req-star {
-    color: var(--danger-base);
+    color: hsl(var(--danger-base));
     font-weight: 700;
   }
 </style>

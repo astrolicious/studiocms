@@ -10,76 +10,97 @@
 
 :root {
   /* Default Styles (Dark Mode) */
-  --background-base: #101010;
-  --background-step-1: #151515;
-  --background-step-2: #191919;
-  --background-step-3: #242424;
+  --background-base: 0, 0%, 6%;
+  --background-step-1: 0, 0%, 8%;
+  --background-step-2: 0, 0%, 10%;
+  --background-step-3: 0, 0%, 14%;
 
-  --text-normal: #ffffff;
-  --text-muted: #8a8a8a;
-  --text-inverted: #000000;
+  --text-normal: 0, 0%, 100%;
+  --text-muted: 0, 0%, 54%;
+  --text-inverted: 0, 0%, 0%;
 
-  --border: #29292d;
+  --border: 240, 5%, 17%;
   
-  --shadow: #000;
+  --shadow: 0, 0%, 0%;
 
-  --default-base: #242424;
-  --default-hover: #272727;
-  --default-active: #303030;
+  --default-base: 0, 0%, 14%;
+  --default-hover: 0, 0%, 15%;
+  --default-active: 0, 0%, 19%;
 
-  --primary-base: #aa87f4;
-  --primary-hover: #a07cee;
-  --primary-active: #956fe9;
+  --primary-base: 259, 83%, 74%;
+  --primary-hover: 259, 77%, 71%;
+  --primary-active: 259, 73%, 67%;
 
-  --success-base: #22c55e;
-  --success-hover: #2add6c;
-  --success-active: #3df17f;
+  --success-base: 142, 71%, 45%;
+  --success-hover: 142, 72%, 52%;
+  --success-active: 142, 87%, 59%;
 
-  --warning-base: #facc15;
-  --warning-hover: #fcd63d;
-  --warning-active: #ffe16b;
+  --warning-base: 48, 96%, 53%;
+  --warning-hover: 48, 97%, 61%;
+  --warning-active: 48, 100%, 71%;
 
-  --danger-base: #bd0249;
-  --danger-hover: #da0e5c;
-  --danger-active: #ec1d6d;
+  --danger-base: 337, 98%, 37%;
+  --danger-hover: 337, 88%, 45%;
+  --danger-active: 337, 84%, 52%;
 
   /* Non-specific variables */
-  --text-light: #ffffff;
-  --text-dark: #000000;
+  --text-light: 0, 0%, 100%;
+  --text-dark: 0, 0%, 0%;
+
+  /* Flat colorways since they use variables */
+  --default-flat: var(--default-base), .5;
+  --default-flat-hover: var(--default-base), .75;
+  --default-flat-active: var(--default-base), .85;
+
+  --primary-flat: var(--primary-base), .1;
+  --primary-flat-hover: var(--primary-base), .25;
+  --primary-flat-active: var(--primary-base), .35;
+
+  --success-flat: var(--success-base), .1;
+  --success-flat-hover: var(--success-base), .25;
+  --success-flat-active: var(--success-base), .35;
+
+  --warning-flat: var(--warning-base), .1;
+  --warning-flat-hover: var(--warning-base), .25;
+  --warning-flat-active: var(--warning-base), .35;
+
+  --danger-flat: var(--danger-base), .1;
+  --danger-flat-hover: var(--danger-base), .25;
+  --danger-flat-active: var(--danger-base), .35;
 }
 
 [data-theme="light"] {
   /* Light Mode Styles */
-  --background-base: #ebebeb;
-  --background-step-1: #dcdcdc;
-  --background-step-2: #d0d0d0;
-  --background-step-3: #bcbcbc;
+  --background-base: 0, 0%, 97%;
+  --background-step-1: 0, 0%, 90%;
+  --background-step-2: 0, 0%, 85%;
+  --background-step-3: 0, 0%, 80%;
 
-  --text-normal: #000000;
-  --text-muted: #3e3e3e;
-  --text-inverted: #ffffff;
+  --text-normal: 0, 0%, 0%;
+  --text-muted: 0, 0%, 24%;
+  --text-inverted: 0, 0%, 100%;
 
-  --border: #adaab2;
+  --border: 263, 5%, 68%;
 
-  --shadow: #a5a5a58a;
+  --shadow: 0, 0%, 65%;
 
-  --default-base: #bcbcbc;
-  --default-hover: #cecece;
-  --default-active: #e7e7e7;
+  --default-base: 0, 0%, 74%;
+  --default-hover: 0, 0%, 81%;
+  --default-active: 0, 0%, 91%;
 
-  --primary-base: #7c45f0;
-  --primary-hover: #7039e7;
-  --primary-active: #5f26da;
+  --primary-base: 259, 85%, 61%;
+  --primary-hover: 259, 78%, 56%;
+  --primary-active: 259, 71%, 50%;
 
-  --success-base: #32c067;
-  --success-hover: #48d47b;
-  --success-active: #3df17f;
+  --success-base: 142, 59%, 47%;
+  --success-hover: 142, 62%, 56%;
+  --success-active: 142, 87%, 59%;
 
-  --warning-base: #facc15;
-  --warning-hover: #fcd63d;
-  --warning-active: #ffe16b;
+  --warning-base: 48, 92%, 46%;
+  --warning-hover: 48, 88%, 43%;
+  --warning-active: 48, 85%, 40%;
 
-  --danger-base: #bd0249;
-  --danger-hover: #da0e5c;
-  --danger-active: #ec1d6d;
+  --danger-base: 337, 98%, 37%;
+  --danger-hover: 337, 88%, 45%;
+  --danger-active: 337, 84%, 52%;
 }

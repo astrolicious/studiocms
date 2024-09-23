@@ -47,12 +47,11 @@ const {
 </label>
 <style>
   .textarea-label {
-    width: 100%;
     display: flex;
     flex-direction: column;
     gap: .25rem;
     margin-top: .5rem;
-    width: 80ch;
+    max-width: 80ch;
   }
 
   .textarea-label.disabled {
@@ -62,6 +61,7 @@ const {
 
   .textarea-label.full {
     width: 100%;
+    max-width: none;
   }
 
   .label {
@@ -71,9 +71,9 @@ const {
   .textarea {
     padding: .65rem 1rem;
     border-radius: 8px;
-    border: 1px solid var(--border);
-    background: var(--background-step-2);
-    color: var(--text-normal);
+    border: 1px solid hsl(var(--border));
+    background: hsl(var(--background-step-2));
+    color: hsl(var(--text-normal));
     transition: border .15s ease;
     resize: none;
     min-height: 12ch;
@@ -84,12 +84,12 @@ const {
   }
 
   .textarea:active, .textarea:focus {
-    border: 1px solid var(--primary-base);
+    border: 1px solid hsl(var(--primary-base));
     outline: none;
   }
 
   .req-star {
-    color: var(--danger-base);
+    color: hsl(var(--danger-base));
     font-weight: 700;
   }
 </style>

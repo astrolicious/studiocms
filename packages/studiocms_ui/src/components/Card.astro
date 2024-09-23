@@ -23,8 +23,8 @@ const { as: As = 'div', class: className, fullWidth, fullHeight, ...props } = As
 </As>
 <style>
   .card {
-    border: 1px solid var(--border);
-    background-color: var(--background-base);
+    border: 1px solid hsl(var(--border));
+    background-color: hsl(var(--background-base));
     border-radius: .5rem;
     width: fit-content;
     height: fit-content;
@@ -50,7 +50,7 @@ const { as: As = 'div', class: className, fullWidth, fullHeight, ...props } = As
   }
 
   .card-footer:has(*) {
-    border-top: 1px solid var(--border);
+    border-top: 1px solid hsl(var(--border));
     padding: 1rem;
   }
 </style>

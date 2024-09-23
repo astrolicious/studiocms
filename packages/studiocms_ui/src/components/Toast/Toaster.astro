@@ -79,9 +79,9 @@ const {
     pointer-events: all;
     padding: 1rem;
     border-radius: .5rem;
-    border: 1px solid var(--border);
-    background-color: var(--background-base);
-    box-shadow: 0px 4px 4px var(--shadow);
+    border: 1px solid hsl(var(--border));
+    background-color: hsl(var(--background-base));
+    box-shadow: 0px 4px 4px hsl(var(--shadow));
     display: flex;
     flex-direction: column;
     gap: .5rem;
@@ -108,19 +108,19 @@ const {
   }
 
   .toast-header-left-side svg {
-    color: var(--primary-base);
+    color: hsl(var(--primary-base));
   }
 
   .toast-container.success .toast-header-left-side svg {
-    color: var(--success-base);
+    color: hsl(var(--success-base));
   }
 
   .toast-container.warning .toast-header-left-side svg {
-    color: var(--warning-base);
+    color: hsl(var(--warning-base));
   }
 
   .toast-container.danger .toast-header-left-side svg {
-    color: var(--danger-base);
+    color: hsl(var(--danger-base));
   }
 
   .toast-progress-bar {
@@ -129,20 +129,20 @@ const {
     width: 100%;
     bottom: 0;
     left: 0%;
-    background-color: var(--primary-base);
+    background-color: hsl(var(--primary-base));
     animation: toast-progress forwards linear;
   }
 
   .toast-container.success .toast-progress-bar {
-    background-color: var(--success-base);
+    background-color: hsl(var(--success-base));
   }
 
   .toast-container.warning .toast-progress-bar {
-    background-color: var(--warning-base);
+    background-color: hsl(var(--warning-base));
   }
 
   .toast-container.danger .toast-progress-bar {
-    background-color: var(--danger-base);
+    background-color: hsl(var(--danger-base));
   }
 
   .close-icon-container {
@@ -157,7 +157,7 @@ const {
   }
 
   .close-icon-container:hover {
-    background-color: var(--default-base);
+    background-color: hsl(var(--default-base));
   }
 
   .toast-container.closing {
@@ -182,7 +182,7 @@ const {
       max-height: 500px;
       margin-bottom: var(--gap);
       padding: 1rem;
-      border: 1px solid var(--border);
+      border: 1px solid hsl(var(--border));
     }
     62.5% {
       scale: .75;
@@ -190,7 +190,7 @@ const {
       max-height: 500px;
       margin-bottom: var(--gap);
       padding: 1rem;
-      border: 1px solid var(--border);
+      border: 1px solid hsl(var(--border));
     }
     100% {
       scale: .75;
@@ -198,7 +198,7 @@ const {
       max-height: 0px;
       margin-bottom: 0;
       padding: 0;
-      border: 0px solid var(--border);
+      border: 0px solid hsl(var(--border));
     }
   }
 
@@ -268,7 +268,7 @@ const {
     toastHeader.appendChild(toastHeaderLeftSide);
     
     if (props.closeButton) {
-      const closeIconContainer = document.createElement('div');
+      const closeIconContainer = document.createElement('button');
       closeIconContainer.classList.add('close-icon-container')
       closeIconContainer.addEventListener('click', () => removeToast(toastID));
       closeIconContainer.innerHTML = getIconString('x-mark', 'close-icon', 24, 24);
