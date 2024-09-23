@@ -29,7 +29,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "1.8.3",
-    "@moonrepo/cli": "1.27.2",
+    "@moonrepo/cli": "1.28.3",
     "@changesets/cli": "2.27.7",
     "@changesets/config": "3.0.2",
     "typescript": "5.5.4"
