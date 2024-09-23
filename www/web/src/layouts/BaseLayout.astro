@@ -13,7 +13,7 @@ const { title, ogImage } = Astro.props;
 
 let OgImage: URL | undefined = undefined;
 if (ogImage) {
-	OgImage = new URL(ogImage, Astro.url);
+	OgImage = new URL(ogImage, Astro.url.origin);
 }
 ---
 
