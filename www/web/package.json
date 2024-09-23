@@ -15,7 +15,6 @@
     "astro": "catalog:",
     "astro-font": "catalog:landing",
     "astro-icon": "catalog:landing",
-    "astro-seo": "catalog:landing",
     "motion": "catalog:landing",
     "powerglitch": "catalog:landing",
     "sharp": "^0.33.4",
