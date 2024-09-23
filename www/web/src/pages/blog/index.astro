@@ -4,6 +4,10 @@ import BlogCard from '../../components/BlogCard.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
 const blogPosts = await getCollection('blog');
+
+blogPosts.sort(({ data: { publishDate: a } }, { data: { publishDate: b } }) => {
+	return b.getTime() - a.getTime();
+});
 ---
 
 <BaseLayout title='Blog'>
@@ -12,12 +16,7 @@ const blogPosts = await getCollection('blog');
         <p class="mb-12 text-lg">Get the latest news from StudioCMS</p>
         <div class="grid md:grid-cols-3 gap-4">
             {
-                blogPosts.map((post, index) => (
-                    <BlogCard
-                        post={ post }
-                        index={ index }
-                    />
-                ))
+                blogPosts.map((post, index) => <BlogCard {post} {index} />)
             }
         </div>
     </section>
