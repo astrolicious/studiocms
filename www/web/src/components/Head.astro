@@ -1,7 +1,7 @@
 ---
 import { AstroFont } from 'astro-font';
 import { SEO } from 'astro-seo';
-const OgBanner = new URL('/og.png', Astro.url);
+const OgBanner = new URL('/og.png?v=1', Astro.url);
 import ThemeManager from './ThemeManager.astro';
 
 interface Props {
@@ -9,6 +9,8 @@ interface Props {
 }
 
 const { title } = Astro.props;
+
+const studioTitle = `StudioCMS${title ? ` - ${title}` : ''}`;
 ---
 
 <head>
@@ -16,7 +18,7 @@ const { title } = Astro.props;
   <link rel='icon' type='image/svg+xml' href='/favicon.svg' />
   <meta name='viewport' content='width=device-width' />
   <meta name='generator' content={Astro.generator} />
-  <title>StudioCMS{ title && ` - ${title}`}</title>
+  <title>{studioTitle}</title>
   <ThemeManager defaultTheme="dark" />
   <script 
     is:inline 
@@ -25,7 +27,7 @@ const { title } = Astro.props;
     data-website-id="e3a84c8d-d45a-49d9-932b-00eeb63f8c48">
   </script>
   <SEO
-    title={`StudioCMS${title && ` - ${title}`}`}
+    title={studioTitle}
     description='A dedicated CMS for Astro DB.'
     openGraph={{
       image: {
@@ -34,7 +36,7 @@ const { title } = Astro.props;
         type: 'image/png',
       },
       basic: {
-        title: `StudioCMS${title && ` - ${title}`}`,
+        title: studioTitle,
         type: 'Website',
         image: OgBanner.href,
       },
