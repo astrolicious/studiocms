@@ -5,20 +5,14 @@ import Button from '../Button.astro';
 type ModalButton = 'cancel' | 'confirm';
 
 type Props = {
-  id: string;
-  size?: 'sm' | 'md' | 'lg';
-  dismissable?: boolean;
-  buttons?: ModalButton[];
-  isForm?: boolean;
+	id: string;
+	size?: 'sm' | 'md' | 'lg';
+	dismissable?: boolean;
+	buttons?: ModalButton[];
+	isForm?: boolean;
 };
 
-const { 
-  id,
-  size = 'md',
-  dismissable = true,
-  isForm = false,
-  buttons = []
-} = Astro.props;
+const { id, size = 'md', dismissable = true, isForm = false, buttons = [] } = Astro.props;
 ---
 <!-- Should: Be centered on mobile, scroll happens inside, blur bg -->
 <dialog 

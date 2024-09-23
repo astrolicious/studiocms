@@ -1,124 +1,125 @@
 class ModalHelper {
-  public element: HTMLDialogElement;
-  public cancelButton: HTMLButtonElement | undefined;
-  public confirmButton: HTMLButtonElement | undefined;
+	public element: HTMLDialogElement;
+	public cancelButton: HTMLButtonElement | undefined;
+	public confirmButton: HTMLButtonElement | undefined;
 
-  private isForm = false;
-  private modalForm: HTMLFormElement;
+	private isForm = false;
+	private modalForm: HTMLFormElement;
 
-  constructor(id: string) {
-    const element = document.getElementById(id) as HTMLDialogElement;
+	constructor(id: string) {
+		const element = document.getElementById(id) as HTMLDialogElement;
 
-    if (!element) {
-      throw new Error(`No modal with ID ${id} found.`);
-    }
+		if (!element) {
+			throw new Error(`No modal with ID ${id} found.`);
+		}
 
-    this.element = element as HTMLDialogElement;
-    this.modalForm = document.getElementById(`${id}-form-element`) as HTMLFormElement;
+		this.element = element as HTMLDialogElement;
+		this.modalForm = document.getElementById(`${id}-form-element`) as HTMLFormElement;
 
-    const isDismissable = this.element.dataset.dismissable === 'true';
-    const isForm = this.element.dataset.form === 'true';
+		const isDismissable = this.element.dataset.dismissable === 'true';
+		const isForm = this.element.dataset.form === 'true';
 
-    if (isDismissable) {
-      this.addDismissiveClickListener();
-    }
+		if (isDismissable) {
+			this.addDismissiveClickListener();
+		}
 
-    if (isForm) this.isForm = true;
-    
-    this.addButtonListeners(id, isDismissable);
-  }
+		if (isForm) this.isForm = true;
 
-  private addButtonListeners = (id: string, dismissable: boolean) => {
-    if (dismissable) {
-      const xMarkButton = document.getElementById(`${id}-btn-x`) as HTMLButtonElement;
-      xMarkButton.addEventListener('click', this.hide);
-    }
+		this.addButtonListeners(id, isDismissable);
+	}
 
-    if (!this.element.dataset.buttons) return;
+	private addButtonListeners = (id: string, dismissable: boolean) => {
+		if (dismissable) {
+			const xMarkButton = document.getElementById(`${id}-btn-x`) as HTMLButtonElement;
+			xMarkButton.addEventListener('click', this.hide);
+		}
 
-    const usedButtons = this.element.dataset.buttons.split(";");
+		if (!this.element.dataset.buttons) return;
 
-    if (usedButtons.includes('cancel')) {
-      this.cancelButton = document.getElementById(`${id}-btn-cancel`) as HTMLButtonElement;
-      this.cancelButton.addEventListener('click', this.hide);
-    }
+		const usedButtons = this.element.dataset.buttons.split(';');
 
-    if (usedButtons.includes('confirm')) {
-      this.confirmButton = document.getElementById(`${id}-btn-confirm`) as HTMLButtonElement;
-      this.confirmButton.addEventListener('click', this.hide);
-    }
-  }
+		if (usedButtons.includes('cancel')) {
+			this.cancelButton = document.getElementById(`${id}-btn-cancel`) as HTMLButtonElement;
+			this.cancelButton.addEventListener('click', this.hide);
+		}
 
-  private addDismissiveClickListener = () => {
-    this.element.addEventListener('click', (e: MouseEvent) => {
-      if (!e.target) return;
+		if (usedButtons.includes('confirm')) {
+			this.confirmButton = document.getElementById(`${id}-btn-confirm`) as HTMLButtonElement;
+			this.confirmButton.addEventListener('click', this.hide);
+		}
+	};
 
-      const { left, right, top, bottom } = this.element.getBoundingClientRect();
+	private addDismissiveClickListener = () => {
+		this.element.addEventListener('click', (e: MouseEvent) => {
+			if (!e.target) return;
 
-      const clickWithinModalBox = e.clientX < right && e.clientX > left && e.clientY < bottom && e.clientY > top;
+			const { left, right, top, bottom } = this.element.getBoundingClientRect();
 
-      if (!clickWithinModalBox) {
-        this.element.close();
-      }
-    });
-  }
+			const clickWithinModalBox =
+				e.clientX < right && e.clientX > left && e.clientY < bottom && e.clientY > top;
 
-  public show = () => {
-    this.element.showModal();
-  }
+			if (!clickWithinModalBox) {
+				this.element.close();
+			}
+		});
+	};
 
-  public hide = () => {
-    this.element.close();
-  }
+	public show = () => {
+		this.element.showModal();
+	};
 
-  public bindTrigger = (elementID: string) => {
-    const element = document.getElementById(elementID);
+	public hide = () => {
+		this.element.close();
+	};
 
-    if (!element) {
-      throw new Error(`No element with ID ${elementID} found.`);
-    }
+	public bindTrigger = (elementID: string) => {
+		const element = document.getElementById(elementID);
 
-    element.addEventListener('click', this.show);
-  }
+		if (!element) {
+			throw new Error(`No element with ID ${elementID} found.`);
+		}
 
-  public registerCancelCallback = (func: () => void) => {
-    if (!this.cancelButton) {
-      throw new Error('Unable to register cancel callback without a cancel button.');
-    }
+		element.addEventListener('click', this.show);
+	};
 
-    this.cancelButton.removeEventListener('click', this.hide);
+	public registerCancelCallback = (func: () => void) => {
+		if (!this.cancelButton) {
+			throw new Error('Unable to register cancel callback without a cancel button.');
+		}
 
-    this.cancelButton.addEventListener('click', () => {
-      func();
-      this.hide();
-    });
-  }
+		this.cancelButton.removeEventListener('click', this.hide);
 
-  public registerConfirmCallback = (func: (data?: FormData | undefined) => void) => {
-    if (!this.confirmButton) {
-      throw new Error('Unable to register cancel callback without a confirmation button.');
-    }
+		this.cancelButton.addEventListener('click', () => {
+			func();
+			this.hide();
+		});
+	};
 
-    this.confirmButton.removeEventListener('click', this.hide);
+	public registerConfirmCallback = (func: (data?: FormData | undefined) => void) => {
+		if (!this.confirmButton) {
+			throw new Error('Unable to register cancel callback without a confirmation button.');
+		}
 
-    if (this.isForm) {
-      this.modalForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-  
-        const formData = new FormData(this.modalForm);
+		this.confirmButton.removeEventListener('click', this.hide);
 
-        func(formData);
-        this.hide();
-  
-        setTimeout(() => this.modalForm.reset(), 450);
-      });
-    } else {
-      this.confirmButton.addEventListener('click', () => {
-        func();
-        this.hide();
-      });
-    }
-  }
+		if (this.isForm) {
+			this.modalForm.addEventListener('submit', (e) => {
+				e.preventDefault();
+
+				const formData = new FormData(this.modalForm);
+
+				func(formData);
+				this.hide();
+
+				setTimeout(() => this.modalForm.reset(), 450);
+			});
+		} else {
+			this.confirmButton.addEventListener('click', () => {
+				func();
+				this.hide();
+			});
+		}
+	};
 }
 
 export { ModalHelper };
