@@ -1,25 +1,38 @@
 ---
 import { AstroFont } from 'astro-font';
-import { SEO } from 'astro-seo';
-const OgBanner = new URL('/og.png?v=1', Astro.url);
+const OgBanner = new URL('/og.png', Astro.url);
 import ThemeManager from './ThemeManager.astro';
 
 interface Props {
 	title?: string;
+	ogImage?: URL | undefined;
 }
 
-const { title } = Astro.props;
+const { title, ogImage = OgBanner } = Astro.props;
 
 const studioTitle = `StudioCMS${title ? ` - ${title}` : ''}`;
+const description = 'A dedicated CMS for Astro DB.';
 ---
 
 <head>
   <meta charset='utf-8' />
   <link rel='icon' type='image/svg+xml' href='/favicon.svg' />
-  <meta name='viewport' content='width=device-width' />
+  <meta name='viewport' content='width=device-width, initial-scale=1' />
   <meta name='generator' content={Astro.generator} />
   <title>{studioTitle}</title>
-  <meta name='description' content='A dedicated CMS for Astro DB.' />
+  <meta name='description' content={description} />
+  <link rel="canonical" href={Astro.url} />
+  <meta property='og:title' content={studioTitle} />
+  <meta property='og:description' content={description} />
+  <meta property='og:image' content={ogImage} />
+  <meta property='og:url' content={Astro.url} />
+  <meta property='og:type' content='website' />
+  <meta name='twitter:card' content='summary_large_image' />
+  <meta name="twitter:url" content={Astro.url} />
+  <meta name='twitter:title' content={studioTitle} />
+  <meta name='twitter:description' content={description} />
+  <meta name='twitter:image' content={ogImage} />
+
   <ThemeManager defaultTheme="dark" />
   <script 
     is:inline 
@@ -27,22 +40,6 @@ const studioTitle = `StudioCMS${title ? ` - ${title}` : ''}`;
     src="https://analytics.studiocms.xyz/script.js" 
     data-website-id="e3a84c8d-d45a-49d9-932b-00eeb63f8c48">
   </script>
-  <SEO
-    title='StudioCMS'
-    description='A dedicated CMS for Astro DB.'
-    openGraph={{
-      image: {
-        height: 1080,
-        width: 1920,
-        type: 'image/png',
-      },
-      basic: {
-        title: 'StudioCMS',
-        type: 'Website',
-        image: OgBanner.href,
-      },
-    }}
-  />
   <AstroFont
     config={[
       {

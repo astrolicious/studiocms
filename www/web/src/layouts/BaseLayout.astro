@@ -6,16 +6,22 @@ import '../styles/global.css';
 
 interface Props {
 	title?: string;
+	ogImage?: string;
 }
 
-const { title } = Astro.props;
+const { title, ogImage } = Astro.props;
+
+let OgImage: URL | undefined = undefined;
+if (ogImage) {
+	OgImage = new URL(ogImage, Astro.url);
+}
 ---
 
 <html
   class='scrollbar scrollbar-thumb-white scrollbar-track-[#1a172e] text-[--purple-900] dark:text-[--white-50]'
   lang='en'
 >
-  <Head {title} />
+  <Head {title} ogImage={OgImage}/>
   <body>
     <Navbar />
     <slot />

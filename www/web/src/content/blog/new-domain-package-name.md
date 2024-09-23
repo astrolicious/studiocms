@@ -3,7 +3,7 @@ title: 'New Domain, Modular Structure & NPM Package Names!'
 description: Updated Domain, and new npm Packages.
 publishDate: 2024-09-23
 hero:
-  image: "./assets/newdomain-packagename.webp"
+  image: "./assets/newdomain-packagename.png"
   alt: 'New Domain, Modular Structure and package name'
 author: adam-matthiesen
 ---
