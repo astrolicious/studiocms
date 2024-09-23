@@ -19,6 +19,7 @@ const studioTitle = `StudioCMS${title ? ` - ${title}` : ''}`;
   <meta name='viewport' content='width=device-width' />
   <meta name='generator' content={Astro.generator} />
   <title>{studioTitle}</title>
+  <meta name='description' content='A dedicated CMS for Astro DB.' />
   <ThemeManager defaultTheme="dark" />
   <script 
     is:inline 
@@ -27,7 +28,7 @@ const studioTitle = `StudioCMS${title ? ` - ${title}` : ''}`;
     data-website-id="e3a84c8d-d45a-49d9-932b-00eeb63f8c48">
   </script>
   <SEO
-    title={studioTitle}
+    title='StudioCMS'
     description='A dedicated CMS for Astro DB.'
     openGraph={{
       image: {
@@ -36,7 +37,7 @@ const studioTitle = `StudioCMS${title ? ` - ${title}` : ''}`;
         type: 'image/png',
       },
       basic: {
-        title: studioTitle,
+        title: 'StudioCMS',
         type: 'Website',
         image: OgBanner.href,
       },
