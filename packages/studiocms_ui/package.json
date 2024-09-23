@@ -40,7 +40,8 @@
     "./components": "./src/components.ts",
     "./layouts/*": "./src/layouts/*",
     "./css/*": "./src/css/*",
-    "./utils/*": "./src/utils/*"
+    "./utils/*": "./src/utils/*",
+    "./types": "./src/types/index.ts"
   },
   "dependencies": {
     "@fontsource-variable/onest": "5.1.0"

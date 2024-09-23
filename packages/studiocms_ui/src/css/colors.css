@@ -20,6 +20,8 @@
   --text-inverted: #000000;
 
   --border: #29292d;
+  
+  --shadow: #000;
 
   --default-base: #242424;
   --default-hover: #272727;
@@ -32,6 +34,10 @@
   --success-base: #22c55e;
   --success-hover: #2add6c;
   --success-active: #3df17f;
+
+  --warning-base: #facc15;
+  --warning-hover: #fcd63d;
+  --warning-active: #ffe16b;
 
   --danger-base: #bd0249;
   --danger-hover: #da0e5c;
@@ -55,6 +61,8 @@
 
   --border: #adaab2;
 
+  --shadow: #a5a5a58a;
+
   --default-base: #bcbcbc;
   --default-hover: #cecece;
   --default-active: #e7e7e7;
@@ -66,6 +74,10 @@
   --success-base: #32c067;
   --success-hover: #48d47b;
   --success-active: #3df17f;
+
+  --warning-base: #facc15;
+  --warning-hover: #fcd63d;
+  --warning-active: #ffe16b;
 
   --danger-base: #bd0249;
   --danger-hover: #da0e5c;

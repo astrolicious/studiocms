@@ -5,7 +5,7 @@ import { generateID } from '../utils/generateID';
 type Props = {
 	label: string;
 	size?: 'sm' | 'md' | 'lg';
-	color?: 'default' | 'primary' | 'success' | 'danger';
+	color?: 'default' | 'primary' | 'success' | 'warning' | 'danger';
 	defaultChecked?: boolean;
 	disabled?: boolean;
 	name?: string;
@@ -90,7 +90,7 @@ const iconSizes = {
 
   .checkmark-label:active .checkmark-container {
     background-color: var(--default-active);
-    scale: .95;
+    scale: .9;
   }
 
   .checkmark-label.sm {
@@ -126,6 +126,11 @@ const iconSizes = {
     background-color: var(--success-base);
   }
 
+  .warning .checkmark-container:has(.checkbox:checked) {
+    border-color: var(--warning-base);
+    background-color: var(--warning-base);
+  }
+
   .danger .checkmark-container:has(.checkbox:checked) {
     border-color: var(--danger-base);
     background-color: var(--danger-base);
@@ -154,6 +159,10 @@ const iconSizes = {
   }
 
   .success .checkmark polyline {
+    color: var(--text-dark);
+  }
+
+  .warning .checkmark polyline {
     color: var(--text-dark);
   }
 

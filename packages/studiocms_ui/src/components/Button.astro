@@ -1,10 +1,11 @@
 ---
 import type { HTMLTag, Polymorphic } from 'astro/types';
 
-type Props<As extends HTMLTag> = Polymorphic<{ as: As }> & {
+type Props<As extends HTMLTag = 'button'> = Omit<Polymorphic<{ as: As }>, 'as'> & {
+	as?: As;
 	size?: 'sm' | 'md' | 'lg';
 	fullWidth?: boolean;
-	color?: 'default' | 'primary' | 'success' | 'danger';
+	color?: 'default' | 'primary' | 'success' | 'warning' | 'danger';
 	variant?: 'solid' | 'outlined';
 	class?: string;
 	disabled?: boolean;
@@ -161,6 +162,33 @@ const {
   }
 
   .button.success.outlined:active {
+    background-color: var(--default-active);
+  }
+
+  .button.warning {
+    background-color: var(--warning-base);
+    border-color: var(--warning-base);
+    color: var(--text-dark);
+  }
+
+  .button.warning.outlined {
+    background-color: var(--default-base);
+    color: var(--text-normal);
+  }
+
+  .button.warning:hover {
+    background-color: var(--warning-hover);
+  }
+
+  .button.warning.outlined:hover {
+    background-color: var(--default-hover);
+  }
+
+  .button.warning:active {
+    background-color: var(--warning-active);
+  }
+
+  .button.warning.outlined:active {
     background-color: var(--default-active);
   }
 

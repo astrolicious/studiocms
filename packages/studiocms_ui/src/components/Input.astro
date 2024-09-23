@@ -9,6 +9,7 @@ type Props = {
 	name?: string;
 	disabled?: boolean;
 	defaultValue?: string;
+	class?: string;
 };
 
 const {
@@ -19,10 +20,11 @@ const {
 	defaultValue,
 	isRequired = false,
 	disabled = false,
+	class: className,
 } = Astro.props;
 ---
 
-<label for={name} class="input-label" class:list={[disabled && "disabled"]}>
+<label for={name} class="input-label" class:list={[disabled && "disabled", className]}>
   <span class="label">
     {label} <span class="req-star">{isRequired && "*"}</span>
   </span>

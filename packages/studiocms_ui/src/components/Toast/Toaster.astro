@@ -1,0 +1,314 @@
+---
+type Props = {
+	position?:
+		| 'top-left'
+		| 'top-right'
+		| 'top-center'
+		| 'bottom-left'
+		| 'bottom-right'
+		| 'bottom-center';
+	class?: string;
+	duration?: number;
+	visibleToasts?: number;
+	expand?: boolean;
+	closeButton?: boolean;
+	offset?: number;
+	gap?: number;
+};
+
+const {
+	position = 'top-center',
+	class: className,
+	duration = 4000,
+	visibleToasts = 3,
+	expand = false,
+	closeButton = false,
+	offset = 32,
+	gap = 8,
+} = Astro.props;
+---
+<div 
+  id="toaster" 
+  class:list={[
+    expand && "expand",
+    closeButton && "closeable",
+    position,
+    className,
+  ]},
+>
+  <div 
+    id="toast-drawer"
+    data-visible={visibleToasts}
+    data-offset={offset}
+    data-gap={gap}
+    data-duration={duration}
+    style={[
+      `${position.includes("top-") ? 'top:' : 'bottom:'} ${offset}px;`,
+      position.includes("-left") && `left: ${offset}px`,
+      position.includes("-right") && `right: ${offset}px`,
+      position.includes("-center") && `left: 50%; transform: translateX(-50%);`,
+      `--gap: ${gap}px`,
+    ].filter(Boolean).join("")}
+  />
+</div>
+<style is:global>
+  #toaster {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    pointer-events: none;
+  }
+  
+  #toast-drawer {
+    width: 420px;
+    height: fit-content;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+  }
+
+  #toaster.top-left #toast-drawer, #toaster.bottom-left #toast-drawer {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .toast-container {
+    pointer-events: all;
+    padding: 1rem;
+    border-radius: .5rem;
+    border: 1px solid var(--border);
+    background-color: var(--background-base);
+    box-shadow: 0px 4px 4px var(--shadow);
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: var(--gap);
+    animation: toast-pop-in .25s ease forwards;
+  }
+
+  .toast-header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .toast-header-left-side {
+    display: flex;
+    flex-direction: row;
+    gap: .5rem;
+    align-items: center;
+    font-weight: 500;
+    font-size: 1.125em;
+  }
+
+  .toast-header-left-side svg {
+    color: var(--primary-base);
+  }
+
+  .toast-container.success .toast-header-left-side svg {
+    color: var(--success-base);
+  }
+
+  .toast-container.warning .toast-header-left-side svg {
+    color: var(--warning-base);
+  }
+
+  .toast-container.danger .toast-header-left-side svg {
+    color: var(--danger-base);
+  }
+
+  .toast-progress-bar {
+    position: absolute;
+    height: 4px;
+    width: 100%;
+    bottom: 0;
+    left: 0%;
+    background-color: var(--primary-base);
+    animation: toast-progress forwards linear;
+  }
+
+  .toast-container.success .toast-progress-bar {
+    background-color: var(--success-base);
+  }
+
+  .toast-container.warning .toast-progress-bar {
+    background-color: var(--warning-base);
+  }
+
+  .toast-container.danger .toast-progress-bar {
+    background-color: var(--danger-base);
+  }
+
+  .close-icon-container {
+    cursor: pointer;
+    height: 1.5rem;
+    width: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color .15s ease;
+    border-radius: .25rem;
+  }
+
+  .close-icon-container:hover {
+    background-color: var(--default-base);
+  }
+
+  .toast-container.closing {
+    animation: toast-closing .25s ease forwards;
+  }
+
+  @keyframes toast-pop-in {
+    0% {
+      opacity: 0;
+      scale: .75;
+    }
+    100% {
+      opacity: 1;
+      scale: 1;
+    }
+  }
+
+  @keyframes toast-closing {
+    0% {
+      opacity: 1;
+      scale: 1;
+      max-height: 500px;
+      margin-bottom: var(--gap);
+      padding: 1rem;
+      border: 1px solid var(--border);
+    }
+    62.5% {
+      scale: .75;
+      opacity: 0;
+      max-height: 500px;
+      margin-bottom: var(--gap);
+      padding: 1rem;
+      border: 1px solid var(--border);
+    }
+    100% {
+      scale: .75;
+      opacity: 0;
+      max-height: 0px;
+      margin-bottom: 0;
+      padding: 0;
+      border: 0px solid var(--border);
+    }
+  }
+
+  @keyframes toast-progress {
+    0% {
+      left: 0%;
+    }
+    100% {
+      left: -100%;
+    }
+  }
+</style>
+<script>
+  import type { ToastProps } from '../../types';
+  import { generateID } from '../../utils/generateID';
+  import { getIconString, type ValidIconString } from '../../utils/iconStrings';
+
+  let activeToasts: string[] = [];
+
+  function removeToast(toastID: string) {
+    const toastEl = document.getElementById(toastID);
+
+    if (!toastEl) return;
+
+    activeToasts = activeToasts.filter(x => x !== toastID);
+    
+    toastEl.classList.add('closing');
+    
+    setTimeout(() => toastEl.remove(), 400);
+    // TODO: Add class to scale down, lower opacity, then remove from DOM
+  }
+
+  function createToast(props: ToastProps) {
+    const toastParent = document.getElementById('toast-drawer')! as HTMLDivElement;
+    
+    const toastContainer = document.createElement('div');
+    const toastID = generateID('toast');
+    toastContainer.id = toastID;
+    toastContainer.classList.add('toast-container', props.type, `${props.closeButton && "closeable"}`);
+
+    const toastHeader = document.createElement('div');
+    toastHeader.classList.add('toast-header');
+
+    const toastHeaderLeftSide = document.createElement('div');
+    toastHeaderLeftSide.classList.add('toast-header-left-side')
+    
+    const toastTitle = document.createElement('span');
+    toastTitle.textContent = props.title;
+    toastTitle.classList.add('toast-title');
+
+    let iconString: ValidIconString;
+
+    if (props.type === 'success') {
+      iconString = 'check-circle';
+    } else if (props.type === 'danger') {
+      iconString = 'exclamation-circle';
+    } else if (props.type === 'warning') {
+      iconString = 'exclamation-triangle';
+    } else {
+      iconString = 'information-circle';
+    }
+
+    const toastIcon = getIconString(iconString, 'toast-icon', 24, 24);
+    toastHeaderLeftSide.innerHTML = toastIcon;
+
+    toastHeaderLeftSide.appendChild(toastTitle);
+    toastHeader.appendChild(toastHeaderLeftSide);
+    
+    if (props.closeButton) {
+      const closeIconContainer = document.createElement('div');
+      closeIconContainer.classList.add('close-icon-container')
+      closeIconContainer.addEventListener('click', () => removeToast(toastID));
+      closeIconContainer.innerHTML = getIconString('x-mark', 'close-icon', 24, 24);
+
+      toastHeader.appendChild(closeIconContainer);
+    }
+    // TODO: Close button if applicable
+
+    toastContainer.appendChild(toastHeader);
+
+    if (props.description) {
+      const toastDesc = document.createElement('span');
+      toastDesc.textContent = props.description;
+      toastDesc.classList.add('toast-desc');
+
+      toastContainer.appendChild(toastDesc);
+    }
+
+    if (!props.persistent) {
+      const toastProgressBar = document.createElement('div');
+      toastProgressBar.classList.add('toast-progress-bar');
+      toastProgressBar.style.animationDuration = props.duration ? `${props.duration}ms` : `${toastParent.dataset.duration || 4000}ms`;
+
+      toastContainer.appendChild(toastProgressBar);
+    }
+
+    toastParent.appendChild(toastContainer);
+
+    activeToasts.push(toastID);
+
+    if (!props.persistent) {
+      setTimeout(
+        () => removeToast(toastID),
+        props.duration || (toastParent.dataset.duration ? parseInt(toastParent.dataset.duration) : 4000)
+      );
+    }
+  }
+
+  document.addEventListener('createtoast', (e: CustomEvent<ToastProps>) => {
+    e.stopImmediatePropagation();
+    createToast(e.detail);
+  });
+</script>

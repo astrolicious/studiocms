@@ -2,43 +2,43 @@
 
 ## TODO
 
-<!-- Done -->
+### Done
 - Button
 - Textarea
 - Checkboxes
-
-<!-- Checkboxy-Stuff -->
-- Radio inputs
 - Toggle
+- Radio inputs
+- Toast
+- Card
 
-<!-- Based on popover API -->
+### Based on popover API
 - Tooltips based on popover
 - Modals
 - Select
-- Toast
 - Date Picker (This is a longer thing)
+- Dropdown
 
-<!-- Loading stuffs -->
+### Loading stuffs
 - Skeleton
 - Spinners / Loading stuff
 
-<!-- Navigation -->
+### Navigation
 - Sidebar (Normal & Double)
 
-<!-- Other Stuff -->
+### Other Stuff
 - Default Link Styles
 - User
 - Image dropzone
 
-<!-- Otter Stuff -->
+### Otter Stuff
 - code based on astro's code component (check :D (fuck cf))
 - Markdown editor (WYSIWYG (thanks Otter <3))
 
-<!-- Layouts -->
+### Layouts
 - Single Nav
 - Double Nav
 - Root
 
-<!-- Maybe's -->
+### Maybe's
 - Implement tailwind's prose
 - Maybe starlight props.css

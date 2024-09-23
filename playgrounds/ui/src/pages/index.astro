@@ -2,9 +2,12 @@
 import '@fontsource-variable/onest/index.css';
 import '@studiocms/ui/css/global.css';
 
-import { Button, Center, Checkbox, Divider, Input, Row, Textarea } from '@studiocms/ui/components';
+import { Button, Card, Center, Divider, Input, Row, Textarea } from '@studiocms/ui/components';
 
 import CheckboxTests from '@/components/CheckboxTests.astro';
+import RadioGroupTests from '@/components/RadioGroupTests.astro';
+import ToastTests from '@/components/ToastTests.astro';
+import ToggleTests from '@/components/ToggleTests.astro';
 import Icon from '@/utils/Icon.astro';
 import ButtonTests from '../components/ButtonTests.astro';
 ---
@@ -17,7 +20,7 @@ import ButtonTests from '../components/ButtonTests.astro';
     <title>Component Tests</title>
   </head>
   <body>
-    <Button as="button" id={'color-toggle'}>
+    <Button id={'color-toggle'}>
       <Icon name={'sun'} id={'sun-icon'} />
       <Icon name={'moon'} id={'moon-icon'} class={'hidden'} />
     </Button>
@@ -81,6 +84,39 @@ import ButtonTests from '../components/ButtonTests.astro';
     />
     <h1>Checkbox</h1>
     <CheckboxTests />
+    <h1>Toggle</h1>
+    <ToggleTests />
+    <h1>Radio</h1>
+    <RadioGroupTests />
+    <h1>Toast</h1>
+    <ToastTests />
+    <h1>Card</h1>
+    <Row>
+      <Card>
+        <span slot="header">
+          <h2>Header</h2>
+        </span>
+        <span>Card with Header & Footer</span>
+        <span slot="footer">©️ 2024 StudioCMS</span>
+      </Card>
+      <Card fullHeight>
+        <span slot="header">
+          <h2>Header</h2>
+        </span>
+        <span>Card with Header & no Footer</span>
+      </Card>
+      <Card>
+        <span>Card with Footer & no Header</span>
+        <span slot="footer">©️ 2024 StudioCMS</span>
+      </Card>
+    </Row>
+    <Card class='mt' fullWidth>
+      <span slot="header">
+        <h2>Header</h2>
+      </span>
+      <span>Full-size Card</span>
+      <span slot="footer">©️ 2024 StudioCMS</span>
+    </Card>
   </body>
 </html>
 <style is:global>
@@ -122,6 +158,11 @@ import ButtonTests from '../components/ButtonTests.astro';
     position: fixed;
     top: 2rem;
     right: 2rem;
+    z-index: 50;
+  }
+
+  .mt {
+    margin-top: 1rem;
   }
 </style>
 <script>

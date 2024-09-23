@@ -1,0 +1,139 @@
+---
+import { generateID } from '../utils/generateID';
+
+type Props = {
+	label: string;
+	size?: 'sm' | 'md' | 'lg';
+	color?: 'default' | 'primary' | 'success' | 'warning' | 'danger';
+	defaultChecked?: boolean;
+	disabled?: boolean;
+	name?: string;
+	isRequired?: boolean;
+};
+
+const {
+	size = 'md',
+	color = 'default',
+	defaultChecked,
+	disabled,
+	name = generateID('checkbox'),
+	label,
+	isRequired,
+} = Astro.props;
+---
+<label
+  class="toggle-label"
+  for={name}
+  class:list={[
+    disabled && "disabled",
+    color,
+    size,
+  ]}
+>
+  <div class="toggle-container">
+    <div class="toggle-switch" />
+    <input
+      type="checkbox"
+      name={name}
+      id={name}
+      checked={defaultChecked}
+      disabled={disabled}
+      required={isRequired}
+      class="checkbox"
+    />
+  </div>
+  <span>
+    {label} <span class="req-star">{isRequired && "*"}</span>
+  </span>
+</label>
+<style>
+  .toggle-label {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: .5rem;
+    position: relative;
+    margin: .25rem 0;
+  }
+
+  .toggle-label.disabled {
+    opacity: .5;
+    pointer-events: none;
+  }
+
+  .toggle-container {
+    --toggle-height: 12px;
+    --toggle-width: 40px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    transition: all .15s ease;
+    background-color: var(--default-base);
+    width: var(--toggle-width);
+    height: var(--toggle-height);
+    border-radius: var(--toggle-height);
+  }
+
+  .toggle-switch {
+    --switch: calc(var(--toggle-height) * 1.75);
+    height: var(--switch);
+    width: var(--switch);
+    background-color: var(--text-muted);
+    border-radius: var(--toggle-height);
+    position: relative;
+    left: 0;
+    transition: all .15s ease;
+  }
+
+  .toggle-container:has(.checkbox:checked) .toggle-switch {
+    left: calc(100% - var(--switch));
+    background-color: var(--text-normal);
+  }
+
+  .toggle-label.sm .toggle-container {
+    --toggle-height: 10px;
+    --toggle-width: 32px;
+  }
+
+  .toggle-label.sm .toggle-switch {
+    --switch: calc(var(--toggle-height) * 1.65);
+  }
+
+  .toggle-label.lg .toggle-container {
+    --toggle-height: 16px;
+    --toggle-width: 48px;
+  }
+
+  .toggle-label.lg .toggle-switch {
+    --switch: calc(var(--toggle-height) * 1.65);
+  }
+
+  .toggle-label.primary .toggle-container:has(.checkbox:checked) {
+    background-color: var(--primary-base);
+  }
+
+  .toggle-label.success .toggle-container:has(.checkbox:checked) {
+    background-color: var(--success-base);
+  }
+
+  .toggle-label.warning .toggle-container:has(.checkbox:checked) {
+    background-color: var(--warning-base);
+  }
+
+  .toggle-label.danger .toggle-container:has(.checkbox:checked) {
+    background-color: var(--danger-base);
+  }
+
+  .req-star {
+    color: var(--danger-base);
+    font-weight: 700;
+  }
+
+  .checkbox {
+    width: 0;
+    height: 0;
+    visibility: hidden;
+    opacity: 0;
+    margin: 0;
+  }
+</style>

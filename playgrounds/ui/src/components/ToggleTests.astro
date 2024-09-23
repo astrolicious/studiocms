@@ -1,74 +1,74 @@
 ---
-import { Checkbox, Row } from '@studiocms/ui/components';
+import { Row, Toggle } from '@studiocms/ui/components';
 ---
 <h2>Sizes</h2>
 <Row alignCenter>
-  <Checkbox
+  <Toggle
     label='Small & Checked by default'
     defaultChecked
     size='sm'
   />
-  <Checkbox
+  <Toggle
     label='Normal & Required'
     isRequired
   />
-  <Checkbox
+  <Toggle
     label='Large'
     size='lg'
   />
 </Row>
 <h2>Colors</h2>
 <Row alignCenter>
-  <Checkbox
+  <Toggle
     label='Default'
   />
-  <Checkbox
+  <Toggle
     label='Primary'
     color='primary'
   />
-  <Checkbox
+  <Toggle
     label='Success'
     color='success'
   />
-  <Checkbox
+  <Toggle
     label='Warning'
     color='warning'
   />
-  <Checkbox
+  <Toggle
     label='Danger'
     color='danger'
   />
 </Row>
 <h2>Disabled</h2>
 <Row alignCenter>
-  <Checkbox
+  <Toggle
     label='Unchecked'
     disabled
   />
-  <Checkbox
+  <Toggle
     label='Default'
     disabled
     defaultChecked
   />
-  <Checkbox
+  <Toggle
     label='Primary'
     color='primary'
     disabled
     defaultChecked
   />
-  <Checkbox
+  <Toggle
     label='Success'
     color='success'
     disabled
     defaultChecked
   />
-  <Checkbox
+  <Toggle
     label='Warning'
     color='warning'
     disabled
     defaultChecked
   />
-  <Checkbox
+  <Toggle
     label='Danger'
     color='danger'
     disabled
