@@ -11,7 +11,7 @@ author: adam-matthiesen
 
 Greetings, StudioCMS users!
 
-We are excited to announce some updates to the StudioCMS project that reflect our growing commitment to becoming a more recognizable and robust tool for the Astro ecosystem. While we’re still proudly a part of the Astrolicious organization, we’ve made changes to our branding that will make StudioCMS stand out more as a dedicated **offering**.
+We are excited to announce some updates to the StudioCMS project that reflect our growing commitment to becoming a more recognizable and robust tool for the Astro ecosystem. While we’re still proudly a part of the Astrolicious organization, we’ve made changes to our branding that will make StudioCMS stand out more as a dedicated offering.
 
 Here’s what’s new:
 
