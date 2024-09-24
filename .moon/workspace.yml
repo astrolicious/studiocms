@@ -18,7 +18,7 @@ projects:
 
   # Playgrounds
   playground: 'playgrounds/node'
-  cloudflare-playground: 'playgrounds/cloudflare'
+  # cloudflare-playground: 'playgrounds/cloudflare' - Removed for now till we start experimenting with Cloudflare again.
 
   # Web Sites & Docs
   web: 'www/web'
