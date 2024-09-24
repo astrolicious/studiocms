@@ -1,5 +1,14 @@
 # @astrolicious/studiocms
 
+## 0.1.0-beta.7
+
+### Patch Changes
+
+- 880311a: linted CSS files thanks to new version of BiomeJS (`v1.9.2`)
+- 880311a: Update URL from `astro-studiocms.xyz` to `studiocms.xyz`
+- Updated dependencies [880311a]
+  - @studiocms/robotstxt@0.1.0-beta.7
+
 ## 0.1.0-beta.6
 
 ### Patch Changes
