@@ -15,6 +15,7 @@ function setHTTPS(url: string) {
 }
 
 function splitListandSelectFirst(list: string) {
+	if (list.indexOf(',') === -1) return list;
 	return list.split(',')[0];
 }
 
