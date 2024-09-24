@@ -4,7 +4,7 @@ $schema: 'https://moonrepo.dev/schemas/workspace.json'
 projects:
   root: '.'
   # Packages
-  studiocms: 'packages/studioCMS'
+  studiocms: 'packages/studiocms'
   studiocms_assets: 'packages/studiocms_assets'
   studiocms_auth: 'packages/studiocms_auth'
   studiocms_betaresources: 'packages/studiocms_betaresources'
