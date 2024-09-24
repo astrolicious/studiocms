@@ -4,12 +4,11 @@ catalog:
   '@astrojs/rss': ^4.0.7
   '@astrojs/check': ^0.9.3
   '@astrojs/tailwind': ^5.1.0
-  '@astrojs/starlight': ^0.27.0
+  '@astrojs/starlight': ^0.28.2
   '@astrojs/web-vitals': ^3.0.0
   '@astrojs/node': ^8.3.3
-  '@astrojs/cloudflare': ^11.0.4
   '@types/node': ^20.14.11
-  astro: ^4.15.4
+  astro: ^4.15.9
   astro-integration-kit: ^0.16.1
   astro-theme-provider: ^0.6.1
   sharp: ^0.33.4
@@ -37,7 +36,7 @@ catalogs:
     hast: ^1.0.0
     hast-util-select: ^6.0.2
     rehype: ^13.0.1
-    starlight-versions: ^0.2.0
+    starlight-versions: ^0.3.0
     starlight-package-managers: ^0.7.0
     starlight-typedoc: ^0.16.0
     typedoc: ^0.26.6

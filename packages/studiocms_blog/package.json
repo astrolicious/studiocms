@@ -4,7 +4,7 @@
   "description": "Add a blog to your StudioCMS project with ease!",
   "author": {
     "name": "Adam Matthiesen | Jacob Jenkins | Paul Valladares",
-    "url": "https://astro-studiocms.xyz"
+    "url": "https://studiocms.xyz"
   },
   "repository": {
     "type": "git",
@@ -38,7 +38,7 @@
     "studiocms-theme",
     "astro-studiocms-theme"
   ],
-  "homepage": "https://astro-studiocms.xyz",
+  "homepage": "https://studiocms.xyz",
   "publishConfig": {
     "access": "public"
   },

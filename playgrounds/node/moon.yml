@@ -5,7 +5,7 @@ toolchain:
     syncProjectReferences: false
 
 dependsOn:
-- studioCMS
+- studiocms
 tasks:
   astro:
     command: astro

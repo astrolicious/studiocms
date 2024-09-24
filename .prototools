@@ -1,6 +1,6 @@
-biome = "1.8.3"
-moon = "1.27.2"
-node = "20.12.2"
+biome = "1.9.2"
+moon = "1.28.3"
+node = "20.14.0"
 pnpm = "9.5.0"
 
 [plugins]

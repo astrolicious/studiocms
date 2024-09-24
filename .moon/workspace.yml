@@ -4,7 +4,7 @@ $schema: 'https://moonrepo.dev/schemas/workspace.json'
 projects:
   root: '.'
   # Packages
-  studiocms: 'packages/studioCMS'
+  studiocms: 'packages/studiocms'
   studiocms_assets: 'packages/studiocms_assets'
   studiocms_auth: 'packages/studiocms_auth'
   studiocms_betaresources: 'packages/studiocms_betaresources'
@@ -18,7 +18,7 @@ projects:
 
   # Playgrounds
   playground: 'playgrounds/node'
-  cloudflare-playground: 'playgrounds/cloudflare'
+  # cloudflare-playground: 'playgrounds/cloudflare' - Removed for now till we start experimenting with Cloudflare again.
 
   # Web Sites & Docs
   web: 'www/web'

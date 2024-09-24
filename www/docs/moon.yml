@@ -4,30 +4,23 @@ toolchain:
   typescript:
     syncProjectReferences: false
 
-dependsOn:
-- studioCMS
 tasks:
   astro:
     command: astro
     platform: node
   dev:
-    command: 
-      - astro 
-      - dev
-      - --remote
+    command: 'astro dev'
     local: true
     platform: node
   start:
-    command: 
-      - astro 
-      - dev
-      - --remote
+    command: 'astro dev'
+    local: true
+    platform: node
+  preview:
+    command: 'astro preview'
     local: true
     platform: node
   build:
-    command: 
-      - astro 
-      - build
-      - --remote
+    command: 'astro check && astro build'
     local: true
     platform: node

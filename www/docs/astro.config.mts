@@ -91,6 +91,7 @@ export default defineConfig({
 					versions: [
 						{ slug: '0.1.0-beta.4', label: 'Beta.4' },
 						{ slug: '0.1.0-beta.5', label: 'Beta.5' },
+						{ slug: '0.1.0-beta.6', label: 'Beta.6' },
 					],
 					current: { label: 'Latest' },
 				}),

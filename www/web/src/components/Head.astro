@@ -1,8 +1,9 @@
 ---
+import { join } from 'node:path';
 import { AstroFont } from 'astro-font';
-const OgBanner = new URL('/og.png', Astro.url);
 import ThemeManager from './ThemeManager.astro';
 
+const OgBanner = new URL('/og.png', Astro.url);
 interface Props {
 	title?: string;
 	ogImage?: URL | undefined;
@@ -45,30 +46,30 @@ const description = 'A dedicated CMS for Astro DB.';
       {
         src: [
           {
-            path: './font/BalooChettan2-Bold.woff2',
+            path: join(process.cwd(), 'public', 'font', 'BalooChettan2-Bold.woff2'),
             weight: '400',
             style: 'normal',
           },
           {
-            path: './font/BalooChettan2-Bold.woff2',
+            path: join(process.cwd(), 'public', 'font', 'BalooChettan2-Bold.woff2'),
             weight: '800',
-            style: 'normal',
+            style: 'bold',
           }
         ],
         name: 'BalooChettan',
         preload: true,
         display: 'swap',
-        selector: 'body',
+        selector: 'h1, h2, h3, h4, h5, h6',
         fallback: 'sans-serif',
       },
       {
         src: [{
-          path: './font/ZenKakuGothicNew-Regular.woff2',
+          path: join(process.cwd(), 'public', 'font', 'ZenKakuGothicNew-Regular.woff2'),
           weight: '400',
           style: 'normal',
         }],
         name: 'zenkaku',
-        preload: false,
+        preload: true,
         display: 'swap',
         selector: 'body',
         fallback: 'sans-serif',
