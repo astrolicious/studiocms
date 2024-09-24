@@ -22,8 +22,8 @@ catalogs:
       specifier: ^4.0.7
       version: 4.0.7
     '@astrojs/starlight':
-      specifier: ^0.27.0
-      version: 0.27.0
+      specifier: ^0.28.2
+      version: 0.28.2
     '@astrojs/tailwind':
       specifier: ^5.1.0
       version: 5.1.0
@@ -34,8 +34,8 @@ catalogs:
       specifier: ^20.14.11
       version: 20.14.13
     astro:
-      specifier: ^4.15.4
-      version: 4.15.4
+      specifier: ^4.15.9
+      version: 4.15.9
     astro-integration-kit:
       specifier: ^0.16.1
       version: 0.16.1
@@ -74,8 +74,8 @@ catalogs:
       specifier: ^0.16.0
       version: 0.16.0
     starlight-versions:
-      specifier: ^0.2.0
-      version: 0.2.0
+      specifier: ^0.3.0
+      version: 0.3.0
     typedoc:
       specifier: ^0.26.6
       version: 0.26.6
@@ -570,7 +570,7 @@ importers:
         version: 0.2.0(astro@4.15.1(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))
       '@matthiesenxyz/unocss-preset-daisyui':
         specifier: catalog:studiocms-shared
-        version: 0.1.2(daisyui@4.12.10(postcss@8.4.41))(unocss@0.62.3(postcss@8.4.41)(rollup@4.21.0)(vite@5.4.2(@types/node@22.0.0)))
+        version: 0.1.2(daisyui@4.12.10(postcss@8.4.47))(unocss@0.62.3(postcss@8.4.47)(rollup@4.21.0)(vite@5.4.2(@types/node@22.0.0)))
       '@noble/hashes':
         specifier: catalog:studiocms-shared
         version: 1.4.0
@@ -600,10 +600,10 @@ importers:
         version: 0.16.1(astro@4.15.1(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))
       daisyui:
         specifier: catalog:studiocms-shared
-        version: 4.12.10(postcss@8.4.41)
+        version: 4.12.10(postcss@8.4.47)
       unocss:
         specifier: catalog:studiocms-shared
-        version: 0.62.3(postcss@8.4.41)(rollup@4.21.0)(vite@5.4.2(@types/node@22.0.0))
+        version: 0.62.3(postcss@8.4.47)(rollup@4.21.0)(vite@5.4.2(@types/node@22.0.0))
     devDependencies:
       typescript:
         specifier: 'catalog:'
@@ -763,7 +763,7 @@ importers:
         version: 0.14.1(@cloudflare/workers-types@4.20240725.0)(@types/react@18.3.5)(react@18.3.1)
       '@astrojs/node':
         specifier: 'catalog:'
-        version: 8.3.3(astro@4.15.4(@types/node@20.14.13)(rollup@4.21.0)(typescript@5.5.4))
+        version: 8.3.3(astro@4.15.9(@types/node@20.14.13)(rollup@4.21.0)(typescript@5.5.4))
       '@astrojs/web-vitals':
         specifier: 'catalog:'
         version: 3.0.0(@astrojs/db@0.14.1(@cloudflare/workers-types@4.20240725.0)(@types/react@18.3.5)(react@18.3.1))
@@ -772,7 +772,7 @@ importers:
         version: link:../../packages/studiocms_blog
       astro:
         specifier: 'catalog:'
-        version: 4.15.4(@types/node@20.14.13)(rollup@4.21.0)(typescript@5.5.4)
+        version: 4.15.9(@types/node@20.14.13)(rollup@4.21.0)(typescript@5.5.4)
       studiocms:
         specifier: workspace:*
         version: link:../../packages/studiocms
@@ -791,7 +791,7 @@ importers:
         version: 0.9.3(typescript@5.5.4)
       '@astrojs/starlight':
         specifier: 'catalog:'
-        version: 0.27.0(astro@4.15.4(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))
+        version: 0.28.2(astro@4.15.9(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))
       '@shoelace-style/shoelace':
         specifier: catalog:docs
         version: 2.16.0(@types/react@18.3.5)
@@ -800,10 +800,10 @@ importers:
         version: 3.0.4
       astro:
         specifier: 'catalog:'
-        version: 4.15.4(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4)
+        version: 4.15.9(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4)
       astro-embed:
         specifier: catalog:docs
-        version: 0.7.2(astro@4.15.4(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))
+        version: 0.7.2(astro@4.15.9(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))
       hast:
         specifier: catalog:docs
         version: 1.0.0
@@ -818,13 +818,13 @@ importers:
         version: 0.33.4
       starlight-package-managers:
         specifier: catalog:docs
-        version: 0.7.0(@astrojs/starlight@0.27.0(astro@4.15.4(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4)))(astro@4.15.4(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))
+        version: 0.7.0(@astrojs/starlight@0.28.2(astro@4.15.9(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4)))(astro@4.15.9(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))
       starlight-typedoc:
         specifier: catalog:docs
-        version: 0.16.0(@astrojs/starlight@0.27.0(astro@4.15.4(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4)))(astro@4.15.4(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))(typedoc-plugin-markdown@4.2.7(typedoc@0.26.6(typescript@5.5.4)))(typedoc@0.26.6(typescript@5.5.4))
+        version: 0.16.0(@astrojs/starlight@0.28.2(astro@4.15.9(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4)))(astro@4.15.9(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))(typedoc-plugin-markdown@4.2.7(typedoc@0.26.6(typescript@5.5.4)))(typedoc@0.26.6(typescript@5.5.4))
       starlight-versions:
         specifier: catalog:docs
-        version: 0.2.0(@astrojs/starlight@0.27.0(astro@4.15.4(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4)))
+        version: 0.3.0(@astrojs/starlight@0.28.2(astro@4.15.9(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4)))
       typedoc:
         specifier: catalog:docs
         version: 0.26.6(typescript@5.5.4)
@@ -842,10 +842,10 @@ importers:
         version: 0.9.3(typescript@5.5.4)
       '@astrojs/tailwind':
         specifier: 'catalog:'
-        version: 5.1.0(astro@4.15.4(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))(tailwindcss@3.4.7)
+        version: 5.1.0(astro@4.15.9(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))(tailwindcss@3.4.7)
       astro:
         specifier: 'catalog:'
-        version: 4.15.4(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4)
+        version: 4.15.9(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4)
       astro-font:
         specifier: catalog:landing
         version: 0.1.81
@@ -983,10 +983,10 @@ packages:
   '@astrojs/sitemap@3.1.6':
     resolution: {integrity: sha512-1Qp2NvAzVImqA6y+LubKi1DVhve/hXXgFvB0szxiipzh7BvtuKe4oJJ9dXSqaubaTkt4nMa6dv6RCCAYeB6xaQ==}
 
-  '@astrojs/starlight@0.27.0':
-    resolution: {integrity: sha512-W06VHc4VVohKE6g1CytSF64WQ97nv/hlHHf2+vKGh/+I9nDdom/M7RXqkyLx7FBlLCbgsSvLYZUkh8cQ/mMOzQ==}
+  '@astrojs/starlight@0.28.2':
+    resolution: {integrity: sha512-Q1/Ujl2EzWX71qwqdt/0KP3wOyX6Rvyzcep/zD3hRCtw/Vi2TReh4Q2wLwz7mnbuYU9H7YvBKYknbkmjC+K/0w==}
     peerDependencies:
-      astro: ^4.8.6
+      astro: ^4.14.0
 
   '@astrojs/studio@0.1.1':
     resolution: {integrity: sha512-X4PxYQZmkXhgw9rlNKVeCzU6q+U9Cy3k3J5oP4jOTmqTE8TyjCadAad3NweDJCY9Rhgv/w+qhGfjl2JG2lcTaw==}
@@ -2266,6 +2266,9 @@ packages:
   '@oslojs/encoding@0.4.1':
     resolution: {integrity: sha512-hkjo6MuIK/kQR5CrGNdAPZhS01ZCXuWDRJ187zh6qqF2+yMHZpD9fAYpX8q2bOO6Ryhl3XpCT6kUX76N8hhm4Q==}
 
+  '@oslojs/encoding@1.1.0':
+    resolution: {integrity: sha512-70wQhgYmndg4GCPxPPxPGevRKqTIJ2Nh4OkiMWmDAVYsTQ+Ta7Sq+rPevXyXGdzr30/qZBnyOalCszoMxlyldQ==}
+
   '@pagefind/darwin-arm64@1.1.0':
     resolution: {integrity: sha512-SLsXNLtSilGZjvqis8sX42fBWsWAVkcDh1oerxwqbac84HbiwxpxOC2jm8hRwcR0Z55HPZPWO77XeRix/8GwTg==}
     cpu: [arm64]
@@ -2813,8 +2816,8 @@ packages:
     engines: {node: ^18.17.1 || ^20.3.0 || >=21.0.0, npm: '>=9.6.5', pnpm: '>=7.1.0'}
     hasBin: true
 
-  astro@4.15.4:
-    resolution: {integrity: sha512-wqy+m3qygt9DmCSqMsckxyK4ccCUFtti2d/WlLkEpAlqHgyDIg20zRTLHO2v/H4YeSlJ8sAcN0RW2FhOeYbINg==}
+  astro@4.15.9:
+    resolution: {integrity: sha512-51oXq9qrZ5OPWYmEXt1kGrvWmVeWsx28SgBTzi2XW6iwcnW/wC5ONm6ol6qBGSCF93tQvZplXvuzpaw1injECA==}
     engines: {node: ^18.17.1 || ^20.3.0 || >=21.0.0, npm: '>=9.6.5', pnpm: '>=7.1.0'}
     hasBin: true
 
@@ -3121,6 +3124,15 @@ packages:
 
   debug@4.3.6:
     resolution: {integrity: sha512-O/09Bd4Z1fBrU4VzkhFqVgpPzaGbw6Sm9FEkBT1A/YBXQFGuuSxa1dN2nxgxS34JmKXqYx8CZAwEVoJFImUXIg==}
+    engines: {node: '>=6.0'}
+    peerDependencies:
+      supports-color: '*'
+    peerDependenciesMeta:
+      supports-color:
+        optional: true
+
+  debug@4.3.7:
+    resolution: {integrity: sha512-Er2nc/H7RrMXZBFCEim6TCmMk02Z8vLC2Rbi1KEBggpo0fS6l0S1nnapwmIi3yW/+GOJap1Krg4w0Hg80oCqgQ==}
     engines: {node: '>=6.0'}
     peerDependencies:
       supports-color: '*'
@@ -3711,6 +3723,9 @@ packages:
 
   human-id@1.0.2:
     resolution: {integrity: sha512-UNopramDEhHJD+VR+ehk8rOslwSfByxPIZyJRfV739NDhN5LF1fa1MqnzKm2lGTQRjNrjK19Q5fhkgIfjlVUKw==}
+
+  i18next@23.15.1:
+    resolution: {integrity: sha512-wB4abZ3uK7EWodYisHl/asf8UYEhrI/vj/8aoSsrj/ZDxj4/UXPOa1KvFt1Fq5hkUHquNqwFlDprmjZ8iySgYA==}
 
   iconv-lite@0.4.24:
     resolution: {integrity: sha512-v3MXnZAcvnywkTUEZomIActle7RXXeedOR31wwl7VlyoXO4Qi9arvSenNQWne1TcRwhCL1HwLI21bEqdpj8/rA==}
@@ -4595,6 +4610,10 @@ packages:
     resolution: {integrity: sha512-TesUflQ0WKZqAvg52PWL6kHgLKP6xB6heTOdoYM0Wt2UHyxNa4K25EZZMgKns3BH1RLVbZCREPpLY0rhnNoHVQ==}
     engines: {node: ^10 || ^12 || >=14}
 
+  postcss@8.4.47:
+    resolution: {integrity: sha512-56rxCq7G/XfB4EkXq9Egn5GCqugWvDFjafDOThIdMBsI15iqPqR5r15TfSr1YPYeEI19YeaXMCbY6u88Y76GLQ==}
+    engines: {node: ^10 || ^12 || >=14}
+
   powerglitch@2.3.3:
     resolution: {integrity: sha512-S4XmfeZl0cnD70iZ6cxfU9O3QBWjn09gmHReJW0nQWLcfZQB8a3B9CxmuYZCyvDCXD4o75d9y/qiC+WZtN1IyA==}
 
@@ -4900,6 +4919,10 @@ packages:
     resolution: {integrity: sha512-itJW8lvSA0TXEphiRoawsCksnlf8SyvmFzIhltqAHluXd88pkCd+cXJVHTDwdCr0IzwptSm035IHQktUu1QUMg==}
     engines: {node: '>=0.10.0'}
 
+  source-map-js@1.2.1:
+    resolution: {integrity: sha512-UXWMKhLOwVKb728IUtQPXxfYU+usdybtUrK/8uGE8CQMvrhOpwvzDBwj0QhSL7MQc7vIsISBG8VQ8+IDQxpfQA==}
+    engines: {node: '>=0.10.0'}
+
   source-map@0.6.1:
     resolution: {integrity: sha512-UjgapumWlbMhkBgzT7Ykc5YXUT46F0iKu8SGXq0bcwP5dz/h0Plj6enJqjz1Zbq2l5WaqYnrVbwWOWMyF3F47g==}
     engines: {node: '>=0.10.0'}
@@ -4933,11 +4956,11 @@ packages:
       typedoc: '>=0.26.5'
       typedoc-plugin-markdown: '>=4.1.1'
 
-  starlight-versions@0.2.0:
-    resolution: {integrity: sha512-vUkO1D7RKgYKxSdZfQkUWgFrXkC3KBn4abbBKSanUfsjDvKx40S0L9oBeYq7Ebj1nc9g1FrQ6eRdHVMs68ABZw==}
+  starlight-versions@0.3.0:
+    resolution: {integrity: sha512-6PIAYYpb9w5ioCBLNRR+S6bQ0W9MRkZrAiCXLf8TlZE+RWB2vcInHv+00Fu8u3ZYK6kkHQO2IurHv0Zq5vKUlQ==}
     engines: {node: '>=18'}
     peerDependencies:
-      '@astrojs/starlight': '>=0.25.0'
+      '@astrojs/starlight': '>=0.28.0'
 
   statuses@2.0.1:
     resolution: {integrity: sha512-RwNA9Z/7PrK06rYLIzFMlaF+l73iwpzsqRIFgbMLbTcLD6cOao82TaWefPXQvB2fOC4AjuYSEndS7N/mTCbkdQ==}
@@ -5261,6 +5284,37 @@ packages:
       terser:
         optional: true
 
+  vite@5.4.7:
+    resolution: {integrity: sha512-5l2zxqMEPVENgvzTuBpHer2awaetimj2BGkhBPdnwKbPNOlHsODU+oiazEZzLK7KhAnOrO+XGYJYn4ZlUhDtDQ==}
+    engines: {node: ^18.0.0 || >=20.0.0}
+    hasBin: true
+    peerDependencies:
+      '@types/node': ^18.0.0 || >=20.0.0
+      less: '*'
+      lightningcss: ^1.21.0
+      sass: '*'
+      sass-embedded: '*'
+      stylus: '*'
+      sugarss: '*'
+      terser: ^5.4.0
+    peerDependenciesMeta:
+      '@types/node':
+        optional: true
+      less:
+        optional: true
+      lightningcss:
+        optional: true
+      sass:
+        optional: true
+      sass-embedded:
+        optional: true
+      stylus:
+        optional: true
+      sugarss:
+        optional: true
+      terser:
+        optional: true
+
   vitefu@0.2.5:
     resolution: {integrity: sha512-SgHtMLoqaeeGnd2evZ849ZbACbnwQCIwRH57t18FxcXoZop0uQu0uzlIhJBlF/eWVzuce0sHeqPcDo+evVcg8Q==}
     peerDependencies:
@@ -5525,38 +5579,38 @@ snapshots:
 
   '@antfu/utils@0.7.10': {}
 
-  '@astro-community/astro-embed-integration@0.7.1(astro@4.15.4(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))':
+  '@astro-community/astro-embed-integration@0.7.1(astro@4.15.9(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))':
     dependencies:
       '@astro-community/astro-embed-link-preview': 0.2.1
-      '@astro-community/astro-embed-twitter': 0.5.4(astro@4.15.4(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))
-      '@astro-community/astro-embed-vimeo': 0.3.7(astro@4.15.4(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))
-      '@astro-community/astro-embed-youtube': 0.5.2(astro@4.15.4(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))
+      '@astro-community/astro-embed-twitter': 0.5.4(astro@4.15.9(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))
+      '@astro-community/astro-embed-vimeo': 0.3.7(astro@4.15.9(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))
+      '@astro-community/astro-embed-youtube': 0.5.2(astro@4.15.9(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))
       '@types/unist': 2.0.10
-      astro: 4.15.4(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4)
-      astro-auto-import: 0.4.2(astro@4.15.4(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))
+      astro: 4.15.9(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4)
+      astro-auto-import: 0.4.2(astro@4.15.9(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))
       unist-util-select: 4.0.3
 
   '@astro-community/astro-embed-link-preview@0.2.1':
     dependencies:
       '@astro-community/astro-embed-utils': 0.1.3
 
-  '@astro-community/astro-embed-twitter@0.5.4(astro@4.15.4(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))':
+  '@astro-community/astro-embed-twitter@0.5.4(astro@4.15.9(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))':
     dependencies:
       '@astro-community/astro-embed-utils': 0.1.3
-      astro: 4.15.4(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4)
+      astro: 4.15.9(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4)
 
   '@astro-community/astro-embed-utils@0.1.3':
     dependencies:
       linkedom: 0.14.26
 
-  '@astro-community/astro-embed-vimeo@0.3.7(astro@4.15.4(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))':
+  '@astro-community/astro-embed-vimeo@0.3.7(astro@4.15.9(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))':
     dependencies:
       '@astro-community/astro-embed-utils': 0.1.3
-      astro: 4.15.4(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4)
+      astro: 4.15.9(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4)
 
-  '@astro-community/astro-embed-youtube@0.5.2(astro@4.15.4(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))':
+  '@astro-community/astro-embed-youtube@0.5.2(astro@4.15.9(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))':
     dependencies:
-      astro: 4.15.4(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4)
+      astro: 4.15.9(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4)
       lite-youtube-embed: 0.3.2
 
   '@astrojs/check@0.9.3(typescript@5.5.4)':
@@ -5716,12 +5770,12 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@astrojs/mdx@3.1.3(astro@4.15.4(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))':
+  '@astrojs/mdx@3.1.3(astro@4.15.9(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))':
     dependencies:
       '@astrojs/markdown-remark': 5.2.0
       '@mdx-js/mdx': 3.0.1
       acorn: 8.12.1
-      astro: 4.15.4(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4)
+      astro: 4.15.9(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4)
       es-module-lexer: 1.5.4
       estree-util-visit: 2.0.0
       github-slugger: 2.0.0
@@ -5737,9 +5791,9 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@astrojs/node@8.3.3(astro@4.15.4(@types/node@20.14.13)(rollup@4.21.0)(typescript@5.5.4))':
+  '@astrojs/node@8.3.3(astro@4.15.9(@types/node@20.14.13)(rollup@4.21.0)(typescript@5.5.4))':
     dependencies:
-      astro: 4.15.4(@types/node@20.14.13)(rollup@4.21.0)(typescript@5.5.4)
+      astro: 4.15.9(@types/node@20.14.13)(rollup@4.21.0)(typescript@5.5.4)
       send: 0.18.0
       server-destroy: 1.0.1
     transitivePeerDependencies:
@@ -5772,20 +5826,21 @@ snapshots:
       stream-replace-string: 2.0.0
       zod: 3.23.8
 
-  '@astrojs/starlight@0.27.0(astro@4.15.4(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))':
+  '@astrojs/starlight@0.28.2(astro@4.15.9(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))':
     dependencies:
-      '@astrojs/mdx': 3.1.3(astro@4.15.4(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))
+      '@astrojs/mdx': 3.1.3(astro@4.15.9(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))
       '@astrojs/sitemap': 3.1.6
       '@pagefind/default-ui': 1.1.0
       '@types/hast': 3.0.4
       '@types/mdast': 4.0.4
-      astro: 4.15.4(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4)
-      astro-expressive-code: 0.35.6(astro@4.15.4(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))
+      astro: 4.15.9(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4)
+      astro-expressive-code: 0.35.6(astro@4.15.9(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))
       bcp-47: 2.1.0
       hast-util-from-html: 2.0.1
       hast-util-select: 6.0.2
       hast-util-to-string: 3.0.0
       hastscript: 9.0.0
+      i18next: 23.15.1
       mdast-util-directive: 3.0.0
       mdast-util-to-markdown: 2.1.0
       mdast-util-to-string: 4.0.0
@@ -5805,9 +5860,9 @@ snapshots:
       kleur: 4.1.5
       ora: 8.1.0
 
-  '@astrojs/tailwind@5.1.0(astro@4.15.4(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))(tailwindcss@3.4.7)':
+  '@astrojs/tailwind@5.1.0(astro@4.15.9(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))(tailwindcss@3.4.7)':
     dependencies:
-      astro: 4.15.4(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4)
+      astro: 4.15.9(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4)
       autoprefixer: 10.4.19(postcss@8.4.40)
       postcss: 8.4.40
       postcss-load-config: 4.0.2(postcss@8.4.40)
@@ -6825,6 +6880,16 @@ snapshots:
       postcss-js: 4.0.1(postcss@8.4.41)
       unocss: 0.62.3(postcss@8.4.41)(rollup@4.21.0)(vite@5.4.2(@types/node@22.0.0))
 
+  '@matthiesenxyz/unocss-preset-daisyui@0.1.2(daisyui@4.12.10(postcss@8.4.47))(unocss@0.62.3(postcss@8.4.47)(rollup@4.21.0)(vite@5.4.2(@types/node@22.0.0)))':
+    dependencies:
+      autoprefixer: 10.4.19(postcss@8.4.41)
+      camelcase: 8.0.0
+      daisyui: 4.12.10(postcss@8.4.47)
+      parsel-js: 1.1.2
+      postcss: 8.4.41
+      postcss-js: 4.0.1(postcss@8.4.41)
+      unocss: 0.62.3(postcss@8.4.47)(rollup@4.21.0)(vite@5.4.2(@types/node@22.0.0))
+
   '@mdx-js/mdx@3.0.1':
     dependencies:
       '@types/estree': 1.0.5
@@ -7066,6 +7131,8 @@ snapshots:
       fastq: 1.17.1
 
   '@oslojs/encoding@0.4.1': {}
+
+  '@oslojs/encoding@1.1.0': {}
 
   '@pagefind/darwin-arm64@1.1.0':
     optional: true
@@ -7392,6 +7459,18 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
+  '@unocss/postcss@0.62.3(postcss@8.4.47)':
+    dependencies:
+      '@unocss/config': 0.62.3
+      '@unocss/core': 0.62.3
+      '@unocss/rule-utils': 0.62.3
+      css-tree: 2.3.1
+      magic-string: 0.30.11
+      postcss: 8.4.47
+      tinyglobby: 0.2.5
+    transitivePeerDependencies:
+      - supports-color
+
   '@unocss/preset-attributify@0.62.3':
     dependencies:
       '@unocss/core': 0.62.3
@@ -7639,24 +7718,24 @@ snapshots:
 
   astring@1.8.6: {}
 
-  astro-auto-import@0.4.2(astro@4.15.4(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4)):
+  astro-auto-import@0.4.2(astro@4.15.9(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4)):
     dependencies:
       '@types/node': 18.19.42
       acorn: 8.12.1
-      astro: 4.15.4(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4)
+      astro: 4.15.9(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4)
 
-  astro-embed@0.7.2(astro@4.15.4(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4)):
+  astro-embed@0.7.2(astro@4.15.9(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4)):
     dependencies:
-      '@astro-community/astro-embed-integration': 0.7.1(astro@4.15.4(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))
+      '@astro-community/astro-embed-integration': 0.7.1(astro@4.15.9(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))
       '@astro-community/astro-embed-link-preview': 0.2.1
-      '@astro-community/astro-embed-twitter': 0.5.4(astro@4.15.4(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))
-      '@astro-community/astro-embed-vimeo': 0.3.7(astro@4.15.4(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))
-      '@astro-community/astro-embed-youtube': 0.5.2(astro@4.15.4(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))
-      astro: 4.15.4(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4)
+      '@astro-community/astro-embed-twitter': 0.5.4(astro@4.15.9(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))
+      '@astro-community/astro-embed-vimeo': 0.3.7(astro@4.15.9(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))
+      '@astro-community/astro-embed-youtube': 0.5.2(astro@4.15.9(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))
+      astro: 4.15.9(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4)
 
-  astro-expressive-code@0.35.6(astro@4.15.4(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4)):
+  astro-expressive-code@0.35.6(astro@4.15.9(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4)):
     dependencies:
-      astro: 4.15.4(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4)
+      astro: 4.15.9(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4)
       rehype-expressive-code: 0.35.6
 
   astro-font@0.1.81: {}
@@ -7866,7 +7945,7 @@ snapshots:
       - terser
       - typescript
 
-  astro@4.15.4(@types/node@20.14.13)(rollup@4.21.0)(typescript@5.5.4):
+  astro@4.15.9(@types/node@20.14.13)(rollup@4.21.0)(typescript@5.5.4):
     dependencies:
       '@astrojs/compiler': 2.10.3
       '@astrojs/internal-helpers': 0.4.1
@@ -7875,7 +7954,7 @@ snapshots:
       '@babel/core': 7.25.2
       '@babel/plugin-transform-react-jsx': 7.25.2(@babel/core@7.25.2)
       '@babel/types': 7.25.6
-      '@oslojs/encoding': 0.4.1
+      '@oslojs/encoding': 1.1.0
       '@rollup/pluginutils': 5.1.0(rollup@4.21.0)
       '@types/babel__core': 7.20.5
       '@types/cookie': 0.6.0
@@ -7888,7 +7967,7 @@ snapshots:
       common-ancestor-path: 1.0.1
       cookie: 0.6.0
       cssesc: 3.0.0
-      debug: 4.3.6
+      debug: 4.3.7
       deterministic-object-hash: 2.0.2
       devalue: 5.0.0
       diff: 5.2.0
@@ -7914,7 +7993,6 @@ snapshots:
       ora: 8.1.0
       p-limit: 6.1.0
       p-queue: 8.0.1
-      path-to-regexp: 6.2.2
       preferred-pm: 4.0.0
       prompts: 2.4.2
       rehype: 13.0.1
@@ -7926,8 +8004,8 @@ snapshots:
       tsconfck: 3.1.3(typescript@5.5.4)
       unist-util-visit: 5.0.0
       vfile: 6.0.3
-      vite: 5.4.2(@types/node@20.14.13)
-      vitefu: 1.0.2(vite@5.4.2(@types/node@20.14.13))
+      vite: 5.4.7(@types/node@20.14.13)
+      vitefu: 1.0.2(vite@5.4.7(@types/node@20.14.13))
       which-pm: 3.0.0
       xxhash-wasm: 1.0.2
       yargs-parser: 21.1.1
@@ -7949,7 +8027,7 @@ snapshots:
       - terser
       - typescript
 
-  astro@4.15.4(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4):
+  astro@4.15.9(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4):
     dependencies:
       '@astrojs/compiler': 2.10.3
       '@astrojs/internal-helpers': 0.4.1
@@ -7958,7 +8036,7 @@ snapshots:
       '@babel/core': 7.25.2
       '@babel/plugin-transform-react-jsx': 7.25.2(@babel/core@7.25.2)
       '@babel/types': 7.25.6
-      '@oslojs/encoding': 0.4.1
+      '@oslojs/encoding': 1.1.0
       '@rollup/pluginutils': 5.1.0(rollup@4.21.0)
       '@types/babel__core': 7.20.5
       '@types/cookie': 0.6.0
@@ -7971,7 +8049,7 @@ snapshots:
       common-ancestor-path: 1.0.1
       cookie: 0.6.0
       cssesc: 3.0.0
-      debug: 4.3.6
+      debug: 4.3.7
       deterministic-object-hash: 2.0.2
       devalue: 5.0.0
       diff: 5.2.0
@@ -7997,7 +8075,6 @@ snapshots:
       ora: 8.1.0
       p-limit: 6.1.0
       p-queue: 8.0.1
-      path-to-regexp: 6.2.2
       preferred-pm: 4.0.0
       prompts: 2.4.2
       rehype: 13.0.1
@@ -8009,8 +8086,8 @@ snapshots:
       tsconfck: 3.1.3(typescript@5.5.4)
       unist-util-visit: 5.0.0
       vfile: 6.0.3
-      vite: 5.4.2(@types/node@22.0.0)
-      vitefu: 1.0.2(vite@5.4.2(@types/node@22.0.0))
+      vite: 5.4.7(@types/node@22.0.0)
+      vitefu: 1.0.2(vite@5.4.7(@types/node@22.0.0))
       which-pm: 3.0.0
       xxhash-wasm: 1.0.2
       yargs-parser: 21.1.1
@@ -8331,6 +8408,15 @@ snapshots:
     transitivePeerDependencies:
       - postcss
 
+  daisyui@4.12.10(postcss@8.4.47):
+    dependencies:
+      css-selector-tokenizer: 0.8.0
+      culori: 3.3.0
+      picocolors: 1.0.1
+      postcss-js: 4.0.1(postcss@8.4.47)
+    transitivePeerDependencies:
+      - postcss
+
   data-uri-to-buffer@4.0.1: {}
 
   debug@2.6.9:
@@ -8340,6 +8426,10 @@ snapshots:
   debug@4.3.6:
     dependencies:
       ms: 2.1.2
+
+  debug@4.3.7:
+    dependencies:
+      ms: 2.1.3
 
   decode-named-character-reference@1.0.2:
     dependencies:
@@ -8979,6 +9069,10 @@ snapshots:
       toidentifier: 1.0.1
 
   human-id@1.0.2: {}
+
+  i18next@23.15.1:
+    dependencies:
+      '@babel/runtime': 7.25.0
 
   iconv-lite@0.4.24:
     dependencies:
@@ -10107,6 +10201,11 @@ snapshots:
       camelcase-css: 2.0.1
       postcss: 8.4.41
 
+  postcss-js@4.0.1(postcss@8.4.47):
+    dependencies:
+      camelcase-css: 2.0.1
+      postcss: 8.4.47
+
   postcss-load-config@4.0.2(postcss@8.4.40):
     dependencies:
       lilconfig: 3.1.2
@@ -10147,6 +10246,12 @@ snapshots:
       nanoid: 3.3.7
       picocolors: 1.0.1
       source-map-js: 1.2.0
+
+  postcss@8.4.47:
+    dependencies:
+      nanoid: 3.3.7
+      picocolors: 1.1.0
+      source-map-js: 1.2.1
 
   powerglitch@2.3.3: {}
 
@@ -10596,6 +10701,8 @@ snapshots:
 
   source-map-js@1.2.0: {}
 
+  source-map-js@1.2.1: {}
+
   source-map@0.6.1: {}
 
   source-map@0.7.4: {}
@@ -10609,22 +10716,22 @@ snapshots:
 
   sprintf-js@1.0.3: {}
 
-  starlight-package-managers@0.7.0(@astrojs/starlight@0.27.0(astro@4.15.4(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4)))(astro@4.15.4(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4)):
+  starlight-package-managers@0.7.0(@astrojs/starlight@0.28.2(astro@4.15.9(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4)))(astro@4.15.9(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4)):
     dependencies:
-      '@astrojs/starlight': 0.27.0(astro@4.15.4(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))
-      astro: 4.15.4(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4)
+      '@astrojs/starlight': 0.28.2(astro@4.15.9(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))
+      astro: 4.15.9(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4)
 
-  starlight-typedoc@0.16.0(@astrojs/starlight@0.27.0(astro@4.15.4(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4)))(astro@4.15.4(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))(typedoc-plugin-markdown@4.2.7(typedoc@0.26.6(typescript@5.5.4)))(typedoc@0.26.6(typescript@5.5.4)):
+  starlight-typedoc@0.16.0(@astrojs/starlight@0.28.2(astro@4.15.9(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4)))(astro@4.15.9(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))(typedoc-plugin-markdown@4.2.7(typedoc@0.26.6(typescript@5.5.4)))(typedoc@0.26.6(typescript@5.5.4)):
     dependencies:
-      '@astrojs/starlight': 0.27.0(astro@4.15.4(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))
-      astro: 4.15.4(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4)
+      '@astrojs/starlight': 0.28.2(astro@4.15.9(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))
+      astro: 4.15.9(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4)
       github-slugger: 2.0.0
       typedoc: 0.26.6(typescript@5.5.4)
       typedoc-plugin-markdown: 4.2.7(typedoc@0.26.6(typescript@5.5.4))
 
-  starlight-versions@0.2.0(@astrojs/starlight@0.27.0(astro@4.15.4(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))):
+  starlight-versions@0.3.0(@astrojs/starlight@0.28.2(astro@4.15.9(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))):
     dependencies:
-      '@astrojs/starlight': 0.27.0(astro@4.15.4(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))
+      '@astrojs/starlight': 0.28.2(astro@4.15.9(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))
       '@pagefind/default-ui': 1.1.0
       github-slugger: 2.0.0
       mdast-util-mdx-jsx: 3.1.2
@@ -10952,6 +11059,35 @@ snapshots:
       - rollup
       - supports-color
 
+  unocss@0.62.3(postcss@8.4.47)(rollup@4.21.0)(vite@5.4.2(@types/node@22.0.0)):
+    dependencies:
+      '@unocss/astro': 0.62.3(rollup@4.21.0)(vite@5.4.2(@types/node@22.0.0))
+      '@unocss/cli': 0.62.3(rollup@4.21.0)
+      '@unocss/core': 0.62.3
+      '@unocss/extractor-arbitrary-variants': 0.62.3
+      '@unocss/postcss': 0.62.3(postcss@8.4.47)
+      '@unocss/preset-attributify': 0.62.3
+      '@unocss/preset-icons': 0.62.3
+      '@unocss/preset-mini': 0.62.3
+      '@unocss/preset-tagify': 0.62.3
+      '@unocss/preset-typography': 0.62.3
+      '@unocss/preset-uno': 0.62.3
+      '@unocss/preset-web-fonts': 0.62.3
+      '@unocss/preset-wind': 0.62.3
+      '@unocss/reset': 0.62.3
+      '@unocss/transformer-attributify-jsx': 0.62.3
+      '@unocss/transformer-attributify-jsx-babel': 0.62.3
+      '@unocss/transformer-compile-class': 0.62.3
+      '@unocss/transformer-directives': 0.62.3
+      '@unocss/transformer-variant-group': 0.62.3
+      '@unocss/vite': 0.62.3(rollup@4.21.0)(vite@5.4.2(@types/node@22.0.0))
+    optionalDependencies:
+      vite: 5.4.2(@types/node@22.0.0)
+    transitivePeerDependencies:
+      - postcss
+      - rollup
+      - supports-color
+
   unpic@3.18.0: {}
 
   update-browserslist-db@1.1.0(browserslist@4.23.2):
@@ -11001,6 +11137,24 @@ snapshots:
       '@types/node': 22.0.0
       fsevents: 2.3.3
 
+  vite@5.4.7(@types/node@20.14.13):
+    dependencies:
+      esbuild: 0.21.5
+      postcss: 8.4.47
+      rollup: 4.21.0
+    optionalDependencies:
+      '@types/node': 20.14.13
+      fsevents: 2.3.3
+
+  vite@5.4.7(@types/node@22.0.0):
+    dependencies:
+      esbuild: 0.21.5
+      postcss: 8.4.47
+      rollup: 4.21.0
+    optionalDependencies:
+      '@types/node': 22.0.0
+      fsevents: 2.3.3
+
   vitefu@0.2.5(vite@5.4.2(@types/node@20.14.13)):
     optionalDependencies:
       vite: 5.4.2(@types/node@20.14.13)
@@ -11009,13 +11163,13 @@ snapshots:
     optionalDependencies:
       vite: 5.4.2(@types/node@22.0.0)
 
-  vitefu@1.0.2(vite@5.4.2(@types/node@20.14.13)):
+  vitefu@1.0.2(vite@5.4.7(@types/node@20.14.13)):
     optionalDependencies:
-      vite: 5.4.2(@types/node@20.14.13)
+      vite: 5.4.7(@types/node@20.14.13)
 
-  vitefu@1.0.2(vite@5.4.2(@types/node@22.0.0)):
+  vitefu@1.0.2(vite@5.4.7(@types/node@22.0.0)):
     optionalDependencies:
-      vite: 5.4.2(@types/node@22.0.0)
+      vite: 5.4.7(@types/node@22.0.0)
 
   volar-service-css@0.0.61(@volar/language-service@2.4.0):
     dependencies:
