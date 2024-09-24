@@ -12,26 +12,6 @@
 
 	body {
 		@apply bg-slate-100 text-[--purple-900] dark:bg-[--purple-900] dark:text-slate-100;
-		font-family: "zenkaku" sans-serif;
-	}
-
-	@font-face {
-		font-family: "zenkaku" sans-serif;
-		src: url("/font/ZenKakuGothicNew-Regular.woff2") format("woff2");
-	}
-
-	@font-face {
-		font-family: "BalooChettan" sans-serif;
-		src: url("/font/BalooChettan2-Bold.woff2") format("woff2");
-	}
-
-	h1,
-	h2,
-	h3,
-	h4,
-	h5,
-	h6 {
-		font-family: "BalooChettan" sans-serif;
 	}
 
 	p,
