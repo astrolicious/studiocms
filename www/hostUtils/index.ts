@@ -21,12 +21,12 @@ function splitListandSelectFirst(list: string) {
 /**
  * Get the Domain of the Coolify URL from the coolify runtime environment
  *
- * Requires the COOLIFY_URL environment variable to be set as per the coolify docs:
+ * Requires the COOLIFY_FQDN environment variable to be set as per the coolify docs:
  *
  * @see https://coolify.io/docs/knowledge-base/environment-variables#predefined-variables
  */
 export const getCoolifyURL = (returnHttps?: boolean) => {
-	const urlList = process.env.COOLIFY_URL;
+	const urlList = process.env.COOLIFY_FQDN;
 	if (!urlList) {
 		return undefined;
 	}
