@@ -4,7 +4,7 @@
   "description": "Auth components for the StudioCMS Integration",
   "author": {
     "name": "Adam Matthiesen | Jacob Jenkins | Paul Valladares",
-    "url": "https://astro-studiocms.xyz"
+    "url": "https://studiocms.xyz"
   },
   "repository": {
     "type": "git",
@@ -21,7 +21,7 @@
     "cms",
     "studiocms"
   ],
-  "homepage": "https://astro-studiocms.xyz",
+  "homepage": "https://studiocms.xyz",
   "publishConfig": {
     "access": "public"
   },

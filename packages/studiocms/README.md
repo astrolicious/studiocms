@@ -1,6 +1,6 @@
 # Introducing StudioCMS: A Community-Driven CMS for Astro DB
 
-As part of our efforts, we're excited to introduce StudioCMS - a dedicated content management system (CMS) built on top of Astro's latest feature, [Astro DB](https://studio.astro.build). This project was developed by [Adam](https://github.com/Adammatthiesen), [Dreyfus](https://github.com/dreyfus92), and [Jumper](https://github.com/jdtjenkins), three passionate members of the Astro community.
+As part of our efforts, we're excited to introduce StudioCMS - a dedicated content management system (CMS) built on top of Astro's latest feature, [Astro DB](https://docs.astro.build/en/guides/astro-db/). This project was developed by [Adam](https://github.com/Adammatthiesen), [Dreyfus](https://github.com/dreyfus92), and [Jumper](https://github.com/jdtjenkins), three passionate members of the Astro community.
 
 ## Why another CMS?
 
@@ -45,7 +45,7 @@ So don't be a stranger - come join us on this journey and help us realize the fu
 
 ## Get Started
 
-Follow the documentation to [get started with StudioCMS](https://docs.astro-studiocms.xyz/start-here/getting-started).
+Follow the documentation to [get started with StudioCMS](https://docs.studiocms.xyz/start-here/getting-started).
 
 ## Get Involved
 

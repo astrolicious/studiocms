@@ -4,7 +4,7 @@
   "description": "A dedicated CMS for Astro DB. Built from the ground up by the Astro community.",
   "author": {
     "name": "Adam Matthiesen | Jacob Jenkins | Paul Valladares",
-    "url": "https://astro-studiocms.xyz"
+    "url": "https://studiocms.xyz"
   },
   "repository": {
     "type": "git",
@@ -29,7 +29,7 @@
     "studiocms",
     "withastro"
   ],
-  "homepage": "https://astro-studiocms.xyz",
+  "homepage": "https://studiocms.xyz",
   "publishConfig": {
     "access": "public"
   },
