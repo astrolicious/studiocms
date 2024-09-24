@@ -74,9 +74,13 @@ const {
     border: 1px solid hsl(var(--border));
     background: hsl(var(--background-step-2));
     color: hsl(var(--text-normal));
-    transition: border .15s ease;
+    transition: all .15s ease;
     resize: none;
     min-height: 12ch;
+  }
+
+  .textarea:hover {
+    background: hsl(var(--background-step-3));
   }
 
   .resize .textarea {
@@ -86,6 +90,7 @@ const {
   .textarea:active, .textarea:focus {
     border: 1px solid hsl(var(--primary-base));
     outline: none;
+    background: hsl(var(--background-step-2));
   }
 
   .req-star {

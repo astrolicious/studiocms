@@ -1,5 +1,5 @@
 ---
-import { Button, Input, Modal, Row } from '@studiocms/ui/components';
+import { Button, Input, Modal, Row, Select } from '@studiocms/ui/components';
 ---
 <Modal id="modal-1" buttons={['confirm', 'cancel']}>
   <h2 slot="header">Medium Modal, both Buttons</h2>
@@ -29,6 +29,15 @@ import { Button, Input, Modal, Row } from '@studiocms/ui/components';
   <h2 slot="header">Feedback</h2>
   <div slot="default">
     <Input label="Input" type="text" name="text-input" />
+    <Select
+      fullWidth
+      options={[
+        { label: "Dog", value: 'dog' },
+        { label: "Cat", value: 'cat' },
+        { label: "Tortoise", value: 'tortoise' },
+      ]}
+      label='Favorite Animal?'
+    />
   </div>
 </Modal>
 

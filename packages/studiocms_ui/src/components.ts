@@ -10,3 +10,4 @@ export { RadioGroup } from './components/index';
 export { Toaster, toast } from './components/index';
 export { Card } from './components/index';
 export { Modal, ModalHelper } from './components/index';
+export { Select } from './components/index';

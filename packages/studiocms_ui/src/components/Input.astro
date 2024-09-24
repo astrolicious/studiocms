@@ -66,9 +66,14 @@ const {
     transition: all .15s ease;
   }
 
+  .input:hover {
+    background: hsl(var(--background-step-3));
+  }
+
   .input:active, .input:focus {
     border: 1px solid hsl(var(--primary-base));
     outline: none;
+    background: hsl(var(--background-step-2));
   }
 
   .disabled .input:active {
