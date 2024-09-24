@@ -164,14 +164,8 @@ export default defineIntegration({
 				},
 				'astro:config:done': async ({ injectTypes }) => {
 					// Inject Types
-					injectTypes({
-						filename: 'auth-config.d.ts',
-						content: authConfigDTS,
-					});
-					injectTypes({
-						filename: 'auth-helper.d.ts',
-						content: authHelperDTS,
-					});
+					injectTypes(authConfigDTS);
+					injectTypes(authHelperDTS);
 				},
 			},
 		};
