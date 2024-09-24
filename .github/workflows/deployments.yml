@@ -50,7 +50,7 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: `New deployment for the Docs has been queued and should be available shortly.  To view the deployment once it is ready, click [here](https://pr${context.payload.pull_request.number}-docs.astro-studiocms.xyz/)`
+              body: `New deployment for the Docs has been queued and should be available shortly.  To view the deployment once it is ready, click [here](https://pr${context.payload.pull_request.number}-docs.studiocms.xyz/)`
             })
     
       - name: Landing Page Deployment (PR Demo)
@@ -70,7 +70,7 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: `New deployment for the Landing Page has been queued and should be available shortly.  To view the deployment once it is ready, click [here](https://pr${context.payload.pull_request.number}-www.astro-studiocms.xyz/)`
+              body: `New deployment for the Landing Page has been queued and should be available shortly.  To view the deployment once it is ready, click [here](https://pr${context.payload.pull_request.number}-www.studiocms.xyz/)`
             })
 
 
@@ -91,7 +91,7 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: `New deployment for the Packages/Playground DEMO has been queued and should be available shortly.  To view the deployment once it is ready, click [here](https://pr${context.payload.pull_request.number}-demo.astro-studiocms.xyz/)`
+              body: `New deployment for the Packages/Playground DEMO has been queued and should be available shortly.  To view the deployment once it is ready, click [here](https://pr${context.payload.pull_request.number}-demo.studiocms.xyz/)`
             })
           
   redeploy:
@@ -101,8 +101,6 @@ jobs:
     steps:
       - name: Checkout Repo
         uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4
-        with:
-          fetch-depth: 2
 
       - name: Get changed files
         id: changed-files-push

@@ -10,11 +10,8 @@
   "lockFileMaintenance": {
     "enabled": true
   },
-  "ignorePaths": [
-    "**/node_modules/**",
-    "**/bower_components/**",
-    "packages/ghost-to-studio/package.json"
-  ],
+  "postUpdateOptions": ["pnpmDedupe"],
+  "ignorePaths": ["**/node_modules/**", "**/bower_components/**"],
   "labels": ["dependencies"],
   "additionalBranchPrefix": "{{parentDir}}-",
   "gitIgnoredAuthors": ["github+renovate@astro-studiocms.xyz"],

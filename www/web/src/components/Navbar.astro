@@ -1,28 +1,66 @@
 ---
 import { Icon } from 'astro-icon/components';
-import { DOCS_URL, GITHUB_URL } from '../constants';
+import { DISCORD_URL, DOCS_URL, GITHUB_URL } from '../constants';
 import ThemeSelect from './ThemeSelect.astro';
 ---
 
 <nav
-  class='h-navbar flex w-full items-center justify-between border-b border-[--purple-900] border-slate-300 dark:border-white bg-slate-100 px-8 text-gray-900 dark:bg-[--purple-900] dark:text-slate-100'
+  class='flex w-full items-center justify-between py-8 bg-slate-100 px-8 text-gray-900 dark:bg-[--purple-900] dark:text-slate-100'
 >
-  <div class="container mx-auto flex flex-center justify-between">
-    <div class='flex w-fit items-center justify-center gap-x-4'>
-      <Icon name='logo' class='h-8 w-8 stroke-slate-100 text-[--purple-900]' />
+  <div class="studiocms-container mx-auto flex flex-center justify-between">
+    <a href="/" class='flex w-fit items-center justify-center gap-x-4'>
+      <Icon name='logo' class='h-8 w-8 stroke-slate-100 text-[--purple-900] dark:text-white' />
       <p class="hidden md:block">StudioCMS</p>
-    </div>
+    </a>
     <div>
       <ul class='flex items-center gap-x-4'>
+        <li>
+          <a 
+            href="/blog"
+            class='underline-offset-4 hover:underline' 
+            aria-label='Blog link'
+            title="Blog"
+            ><Icon
+            name='blog'
+            class='h-8 w-8 transition duration-200 ease-in-out hover:scale-110'
+          /></a>
+        </li>
         <li>
           <a 
             href={DOCS_URL} 
             class='underline-offset-4 hover:underline' 
             rel='external nofollow' 
             aria-label='Docs link'
+            title="Docs"
             >
             <Icon
               name='docs'
+              class='h-8 w-8 transition duration-200 ease-in-out hover:scale-110'
+            /></a>
+        </li>
+        <li>
+          <a 
+            href='/roadmap' 
+            class='underline-offset-4 hover:underline' 
+            rel='external nofollow' 
+            aria-label='Roadmap link'
+            title="Roadmap"
+            >
+            <Icon
+              name='map'
+              class='h-8 w-8 transition duration-200 ease-in-out hover:scale-110'
+            /></a>
+        </li>
+        <li>
+          <a
+            href={DISCORD_URL}
+            class="underline-offset-4 hover:underline"
+            rel='external nofollow'
+            aria-label='Discord link'
+            title="Discord"
+            >
+            <Icon
+              name='discord'
               class='h-8 w-8 transition duration-200 ease-in-out hover:scale-110'
             /></a>
         </li>
@@ -32,6 +70,7 @@ import ThemeSelect from './ThemeSelect.astro';
             href={GITHUB_URL}
             rel='external nofollow'
             aria-label='GitHub link'
+            title="GitHub"
             ><Icon
               name='github'
               class='h-8 w-8 transition duration-200 ease-in-out hover:scale-110'

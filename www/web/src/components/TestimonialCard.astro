@@ -3,11 +3,11 @@ import { Image } from 'astro:assets';
 
 interface Props {
 	name: string;
-	avatarSrc: string;
+	avatar: ImageMetadata;
 	comment: string;
 }
 
-const { name, avatarSrc, comment } = Astro.props;
+const { name, avatar, comment } = Astro.props;
 ---
 
 <div
@@ -17,7 +17,7 @@ const { name, avatarSrc, comment } = Astro.props;
 >
   <div class='flex items-center gap-x-4'>
     <Image
-      src={avatarSrc}
+      src={avatar}
       alt={name}
       width='70'
       height='70'

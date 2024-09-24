@@ -1,0 +1,44 @@
+---
+import { Image } from 'astro:assets';
+import { type CollectionEntry, getEntry } from 'astro:content';
+
+export interface Props {
+	post: CollectionEntry<'blog'>;
+	index: number;
+}
+
+const { post, index } = Astro.props;
+
+const href = `/blog/${post.slug}`;
+const {
+	title,
+	description,
+	publishDate,
+	hero: { image, alt },
+	author,
+} = post.data;
+
+const authorData = await getEntry(author);
+const { name, avatar } = authorData.data;
+---
+
+<a {href}>
+    <section class="group">
+        <Image src={ image } alt={ alt } class="aspect-video rounded-lg" loading={index < 6 ? 'eager' : 'lazy'} />
+        <h2 class="text-2xl my-2 font-black group-hover:text-indigo-400 transition-colors">{ title }</h2>
+        <p class="mb-4 text-ellipsis ">{ description }</p>
+
+        <div class="flex gap-4 items-center">
+            <Image
+                src={ avatar }
+                alt={ name }
+                class="aspect-square rounded-full shadow w-[50px]"
+                loading={index < 6 ? 'eager' : 'lazy'}
+            />
+            <div>
+                <p class="mb-1 font-semibold">{ name }</p>
+                <p class="text-sm">{ publishDate.toLocaleDateString('en-US', { day: '2-digit', month: 'long', year: 'numeric' }) }</p>
+            </div> 
+        </div>
+    </section>
+</a>
