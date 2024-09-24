@@ -1,4 +1,4 @@
-name: Changeset Release and Snapshot
+name: Changeset Snapshot
 
 on:
   workflow_dispatch:

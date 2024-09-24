@@ -1,6 +1,7 @@
 name: Changeset Release
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
@@ -44,7 +45,7 @@ jobs:
 
       - name: Create Release Pull Request or Publish to npm
         id: changesets
-        uses: matthiesenxyz/changeset@v1
+        uses: changesets/action@v1
         with:
             commit: "👷 [ci]: Version Packages"
             title: "👷 [ci]: Ready for Release"
