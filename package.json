@@ -14,6 +14,7 @@
     "playground:push": "pnpm --filter node-playground db:push",
     "ui:dev": "pnpm --filter ui-playground dev",
     "ui:build": "pnpm --filter ui-playground build",
+    "ui:preview": "pnpm --filter ui-playground preview",
     "build": "pnpm --filter node-playground build",
     "lint": "biome check .",
     "lint:fix": "biome check --write .",

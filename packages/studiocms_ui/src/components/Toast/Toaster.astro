@@ -33,6 +33,8 @@ const {
     position,
     className,
   ]},
+  style={[
+  ].filter(Boolean).join("")}
 >
   <div 
     id="toast-drawer"
@@ -44,7 +46,9 @@ const {
       position.includes("-left") && `left: ${offset}px`,
       position.includes("-right") && `right: ${offset}px`,
       position.includes("-center") && `left: 50%; transform: translateX(-50%);`,
-      `--gap: ${gap}px`,
+      `--gap: ${gap}px;`,
+      `padding-left: ${offset}px;`,
+      `padding-right: ${offset}px;`,
     ].filter(Boolean).join("")}
   />
 </div>
@@ -60,7 +64,8 @@ const {
   }
   
   #toast-drawer {
-    width: 420px;
+    max-width: 420px;
+    width: 100%;
     height: fit-content;
     position: absolute;
     display: flex;

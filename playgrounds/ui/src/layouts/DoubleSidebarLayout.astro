@@ -29,7 +29,7 @@ const { title, description, image, headers, lang = 'en', defaultTheme = 'dark' }
           <Icon name="arrow-left" height={24} width={24} />
         </Button>
         <Button variant="solid" color="primary" class="to-content" id={'to-content'}>
-          To Content
+          Content
         </Button>
       </div>
     </DoubleSidebar>
@@ -70,5 +70,20 @@ const { title, description, image, headers, lang = 'en', defaultTheme = 'dark' }
     position: absolute;
     top: 1rem;
     left: 1rem;
+    display: none;
+  }
+
+  .show-inner {
+    display: none;
+  }
+
+  @media screen and (max-width: 1200px) {
+    .nav-back {
+      display: flex;
+    }
+
+    .show-inner {
+      display: flex;
+    }
   }
 </style>

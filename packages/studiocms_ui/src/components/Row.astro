@@ -10,7 +10,7 @@ const { alignCenter, gapSize = 'md' } = Astro.props;
 <div class="row" class:list={[alignCenter && "align", gapSize]}>
   <slot />
 </div>
-<style>
+<style is:global>
   .row {
     display: flex;
     flex-direction: row;

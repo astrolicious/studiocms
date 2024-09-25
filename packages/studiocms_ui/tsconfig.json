@@ -22,5 +22,6 @@
     "../../playgrounds/ui/.astro/**/*",
     "./**/*",
     "./src/**/*.json"
-  ]
+  ],
+  "exclude": ["../../playgrounds/ui/dist/**"]
 }
