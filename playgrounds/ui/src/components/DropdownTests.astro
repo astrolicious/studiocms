@@ -54,6 +54,32 @@ import { Button, Dropdown, Row } from '@studiocms/ui/components';
       Dropdown (colored)
     </Button>
   </Dropdown>
+  <Dropdown
+    options={[
+      { label: 'Default', value: 'default', color: 'default' },
+      { label: 'Primary', value: 'primary', color: 'primary' },
+    ]}
+    id="dropdown-5"
+    align='center'
+    triggerOn='right'
+  >
+    <Button color='primary'>
+      Dropdown (right-click)
+    </Button>
+  </Dropdown>
+  <Dropdown
+    options={[
+      { label: 'Default', value: 'default', color: 'default' },
+      { label: 'Primary', value: 'primary', color: 'primary' },
+    ]}
+    id="dropdown-6"
+    align='center'
+    triggerOn='both'
+  >
+    <Button color='primary'>
+      Dropdown (right-click)
+    </Button>
+  </Dropdown>
 </Row>
 <script>
   import { DropdownHelper } from "@studiocms/ui/components";
@@ -75,6 +101,16 @@ import { Button, Dropdown, Row } from '@studiocms/ui/components';
 
   const dropdown4 = new DropdownHelper('dropdown-4');
   dropdown4.registerClickCallback((value) => {
+    console.log(value);
+  });
+
+  const dropdown5 = new DropdownHelper('dropdown-5');
+  dropdown5.registerClickCallback((value) => {
+    console.log(value);
+  });
+
+  const dropdown6 = new DropdownHelper('dropdown-6');
+  dropdown6.registerClickCallback((value) => {
     console.log(value);
   });
 </script>

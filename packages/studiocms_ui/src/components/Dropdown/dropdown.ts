@@ -4,6 +4,7 @@ class DropdownHelper {
 	dropdown: HTMLUListElement;
 
 	alignment: 'start' | 'center' | 'end';
+	triggerOn: 'left' | 'right' | 'both';
 	active = false;
 
 	constructor(id: string) {
@@ -14,11 +15,26 @@ class DropdownHelper {
 		}
 
 		this.alignment = this.container.dataset.align as 'start' | 'center' | 'end';
+		this.triggerOn = this.container.dataset.trigger as 'left' | 'right' | 'both';
 
 		this.toggle = document.getElementById(`${id}-toggle-btn`) as HTMLDivElement;
 		this.dropdown = document.getElementById(`${id}-dropdown`) as HTMLUListElement;
 
-		this.toggle.addEventListener('click', this.toggleDropdown);
+		if (this.triggerOn === 'left') {
+			this.toggle.addEventListener('click', this.toggleDropdown);
+		} else if (this.triggerOn === 'both') {
+			this.toggle.addEventListener('click', this.toggleDropdown);
+			this.toggle.addEventListener('contextmenu', (e) => {
+				e.preventDefault();
+				this.toggleDropdown();
+			});
+		} else {
+			this.toggle.addEventListener('contextmenu', (e) => {
+				e.preventDefault();
+				this.toggleDropdown();
+			});
+		}
+
 		window.addEventListener('scroll', this.hideDropdown);
 
 		this.hideOnClickOutside(this.container);

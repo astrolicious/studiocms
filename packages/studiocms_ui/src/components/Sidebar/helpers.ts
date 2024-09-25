@@ -23,6 +23,34 @@ class SingleSidebarHelper {
 			this.sidebar.classList.toggle('active');
 		});
 	}
+
+	public hideSidebarOnClick = (elementID: string) => {
+		const element = document.getElementById(elementID);
+
+		if (!element) {
+			throw new Error(`No item with ID ${elementID} found.`);
+		}
+
+		element.addEventListener('click', this.hideSidebar);
+	};
+
+	public showSidebarOnClick = (elementID: string) => {
+		const element = document.getElementById(elementID);
+
+		if (!element) {
+			throw new Error(`No item with ID ${elementID} found.`);
+		}
+
+		element.addEventListener('click', this.showSidebar);
+	};
+
+	public hideSidebar = () => {
+		this.sidebar.classList.remove('active');
+	};
+
+	public showSidebar = () => {
+		this.sidebar.classList.add('active');
+	};
 }
 
 class DoubleSidebarHelper {

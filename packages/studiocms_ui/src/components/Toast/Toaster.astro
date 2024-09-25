@@ -9,7 +9,6 @@ type Props = {
 		| 'bottom-center';
 	class?: string;
 	duration?: number;
-	visibleToasts?: number;
 	expand?: boolean;
 	closeButton?: boolean;
 	offset?: number;
@@ -20,7 +19,6 @@ const {
 	position = 'top-center',
 	class: className,
 	duration = 4000,
-	visibleToasts = 3,
 	expand = false,
 	closeButton = false,
 	offset = 32,
@@ -38,7 +36,6 @@ const {
 >
   <div 
     id="toast-drawer"
-    data-visible={visibleToasts}
     data-offset={offset}
     data-gap={gap}
     data-duration={duration}

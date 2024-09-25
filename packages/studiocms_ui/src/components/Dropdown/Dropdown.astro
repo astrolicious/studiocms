@@ -17,11 +17,18 @@ type Props = {
 	disabled?: boolean;
 	id: string;
 	align?: 'start' | 'center' | 'end';
+	triggerOn?: 'left' | 'right' | 'both';
 };
 
-const { options, disabled = false, align = 'center', id } = Astro.props;
+const { options, disabled = false, align = 'center', id, triggerOn = 'left' } = Astro.props;
 ---
-<div class="dropdown-container" class:list={[disabled && 'disabled']} data-align={align} id={`${id}-container`}>
+<div 
+  class="dropdown-container"
+  class:list={[disabled && 'disabled']}
+  data-align={align}
+  id={`${id}-container`}
+  data-trigger={triggerOn}
+>
   <div class="dropdown-toggle" id={`${id}-toggle-btn`}>
     <slot />
   </div>
