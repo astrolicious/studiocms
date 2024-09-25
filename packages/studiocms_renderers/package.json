@@ -40,6 +40,7 @@
   "dependencies": {
     "@astrojs/markdown-remark": "catalog:",
     "@inox-tools/runtime-logger": "catalog:studiocms-shared",
+    "@matthiesenxyz/astrodtsbuilder": "catalog:studiocms-shared",
     "@matthiesenxyz/integration-utils": "catalog:studiocms-shared",
     "@markdoc/markdoc": "catalog:studiocms-shared",
     "@mdx-js/mdx": "catalog:studiocms-renderer",

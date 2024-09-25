@@ -35,6 +35,7 @@
   "type": "module",
   "dependencies": {
     "@cloudinary/url-gen": "catalog:studiocms-imagehandler",
+    "@matthiesenxyz/astrodtsbuilder": "catalog:studiocms-shared",
     "@matthiesenxyz/integration-utils": "catalog:studiocms-shared",
     "@studiocms/core": "workspace:*",
     "@unpic/astro": "catalog:studiocms-imagehandler",

@@ -1,6 +1,7 @@
 import { integrationLogger } from '@matthiesenxyz/integration-utils/astroUtils';
 import { imageHandlerStrings } from '@studiocms/core/strings';
 import { addAstroEnvConfig } from '@studiocms/core/utils';
+import type { InjectedType } from 'astro';
 import { addIntegration, defineIntegration } from 'astro-integration-kit';
 import { envField } from 'astro/config';
 import { loadEnv } from 'vite';
@@ -23,7 +24,7 @@ export default defineIntegration({
 		const env = loadEnv('all', process.cwd(), 'CMS');
 
 		// Define the DTS File
-		let dtsFile: string;
+		let dtsFile: InjectedType;
 
 		return {
 			hooks: {
@@ -138,10 +139,7 @@ export default defineIntegration({
 					}
 				},
 				'astro:config:done': ({ injectTypes }) => {
-					injectTypes({
-						filename: 'imageHandler.d.ts',
-						content: dtsFile,
-					});
+					injectTypes(dtsFile);
 				},
 			},
 		};
