@@ -32,6 +32,7 @@ jobs:
             packages:
               - packages/**
               - playgrounds/node/**
+              - playgrounds/ui/**
     
       - name: Docs Deployment (PR Demo)
         if: steps.changed-files-pr.outputs.docs_any_changed == 'true'
@@ -93,6 +94,27 @@ jobs:
               repo: context.repo.repo,
               body: `New deployment for the Packages/Playground DEMO has been queued and should be available shortly.  To view the deployment once it is ready, click [here](https://pr${context.payload.pull_request.number}-demo.studiocms.xyz/)`
             })
+
+
+      - name: Ui-Testing Deployment (PR Demo)
+        if: steps.changed-files-pr.outputs.packages_any_changed == 'true'
+        uses: distributhor/workflow-webhook@f5a294e144d6ef44cfac4d3d5e20b613bcee0d4b # v3
+        with:
+          webhook_type: 'json-extended'
+          webhook_url: ${{ secrets.STUDIOCMS_DEPLOYMENT_WEBHOOK }}
+          webhook_secret: ${{ secrets.UI_DEPLOYMENT_SECRET }}
+
+      - name: Ui-Testing Deployment Queue Comment
+        if: steps.changed-files-pr.outputs.packages_any_changed == 'true'
+        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `New deployment for the Ui-Testing Demo has been queued and should be available shortly.  To view the deployment once it is ready, click [here](https://pr${context.payload.pull_request.number}-ui-testing.studiocms.xyz/)`
+            })
           
   redeploy:
     name: Check for Changes on Push to main
@@ -101,7 +123,9 @@ jobs:
     steps:
       - name: Checkout Repo
         uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4
-
+        with:
+          fetch-depth: 0
+          
       - name: Get changed files
         id: changed-files-push
         uses: tj-actions/changed-files@48d8f15b2aaa3d255ca5af3eba4870f807ce6b3c # v45
@@ -112,6 +136,7 @@ jobs:
             packagesanddocs:
               - packages/**
               - playgrounds/node/**
+              - playgrounds/ui/**
               - www/docs/**
               
       - name: Docs Deployment (Prod | Pkg Typedoc)
@@ -138,3 +163,11 @@ jobs:
           webhook_url: ${{ secrets.STUDIOCMS_DEPLOYMENT_WEBHOOK }}
           webhook_secret: ${{ secrets.DEMO_DEPLOYMENT_SECRET }}
     
+      - name: Ui-Testing Deployment (Prod)
+        if: steps.changed-files-push.outputs.packagesanddocs_any_changed == 'true'
+        uses: distributhor/workflow-webhook@f5a294e144d6ef44cfac4d3d5e20b613bcee0d4b # v3
+        with:
+          webhook_type: 'json-extended'
+          webhook_url: ${{ secrets.STUDIOCMS_DEPLOYMENT_WEBHOOK }}
+          webhook_secret: ${{ secrets.UI_DEPLOYMENT_SECRET }}
+      
