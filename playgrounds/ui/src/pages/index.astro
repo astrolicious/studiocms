@@ -104,6 +104,15 @@ import ButtonTests from '../components/ButtonTests.astro';
     <DropdownTests />
     <h1>User</h1>
     <User name="Louis Escher" description='UI/UX & Developer' avatar='https://avatars.githubusercontent.com/u/66965600?v=4' />
+    <h1>Layouts</h1>
+    <Row>
+      <Button as='a' color='primary' href="/sidebar">
+        Sidebar (Single)
+      </Button>
+      <Button as='a' color='primary' href="/double-sidebar">
+        Sidebar (Double)
+      </Button>
+    </Row>
   </body>
 </html>
 <style is:global>

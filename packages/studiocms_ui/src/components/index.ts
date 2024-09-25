@@ -14,6 +14,10 @@ export { default as Select } from './Select.astro';
 export { default as Dropdown } from './Dropdown/Dropdown.astro';
 export { default as User } from './User.astro';
 
+export { default as Sidebar } from './Sidebar/Single.astro';
+export { default as DoubleSidebar } from './Sidebar/Double.astro';
+export { SingleSidebarHelper, DoubleSidebarHelper } from './Sidebar/helpers';
+
 export { toast } from './Toast/toast';
 export { ModalHelper } from './Modal/modal';
 export { DropdownHelper } from './Dropdown/dropdown';

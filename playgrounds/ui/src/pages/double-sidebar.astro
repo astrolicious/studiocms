@@ -1,0 +1,38 @@
+---
+import DoubleSidebarLayout from '@/layouts/DoubleSidebarLayout.astro';
+import Icon from '@/utils/Icon.astro';
+import { Button } from '@studiocms/ui/components';
+---
+
+<DoubleSidebarLayout
+  title="Double Sidebar"
+  description="Double Sidebar"
+>
+  <Button variant="outlined" color="primary" class="nav-toggle" id={'nav-open'}>
+    <Icon name="hamburger" height={24} width={24} />
+  </Button>
+  Amogus
+</DoubleSidebarLayout>
+<script>
+  import { DoubleSidebarHelper } from "@studiocms/ui/components";
+
+  const dbsb = new DoubleSidebarHelper('nav-open', 'nav-back');
+
+  dbsb.showInnerOnClick('show-inner');
+  dbsb.showContentOnClick('to-content');
+</script>
+<style>
+  .nav-toggle {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    display: none;
+    z-index: 5;
+  }
+
+  @media screen and (max-width: 840px) {
+    .nav-toggle {
+      display: flex;
+    }
+  }
+</style>

@@ -13,3 +13,10 @@ export { Modal, ModalHelper } from './components/index';
 export { Select } from './components/index';
 export { Dropdown, DropdownHelper } from './components/index';
 export { User } from './components/index';
+
+export {
+	Sidebar,
+	DoubleSidebar,
+	SingleSidebarHelper,
+	DoubleSidebarHelper,
+} from './components/index';

@@ -1,4 +1,5 @@
 /// <reference path="../.astro/types.d.ts" />
+
 import type { ToastProps } from './types';
 
 interface CustomEventMap {

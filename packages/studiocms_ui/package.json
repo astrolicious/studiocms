@@ -38,7 +38,7 @@
   "type": "module",
   "exports": {
     "./components": "./src/components.ts",
-    "./layouts/*": "./src/layouts/*",
+    "./layouts": "./src/layouts.ts",
     "./css/*": "./src/css/*",
     "./utils/*": "./src/utils/*",
     "./types": "./src/types/index.ts"
