@@ -1,4 +1,5 @@
 ---
+import type { StudioCMSColorway } from '../utils/colors';
 import { generateID } from '../utils/generateID';
 
 type Option = {
@@ -8,7 +9,7 @@ type Option = {
 
 type Props = {
 	label: string;
-	color?: 'default' | 'primary' | 'success' | 'warning' | 'danger';
+	color?: StudioCMSColorway;
 	defaultValue?: Option['value'];
 	options: Option[];
 	disabled?: boolean;

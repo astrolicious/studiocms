@@ -81,7 +81,6 @@ const {
     display: flex;
     flex-direction: column;
     gap: .25rem;
-    margin-top: .5rem;
     min-width: 200px;
     position: relative;
   }
@@ -137,13 +136,13 @@ const {
     padding: 0;
     flex-direction: column;
     border-radius: .5rem;
-    background-color: hsl(var(--background-step-2), .5);
-    backdrop-filter: blur(4px);
+    background-color: hsl(var(--background-step-2));
     overflow: hidden;
     top: calc(100% + .25rem);
     left: 0;
     display: none;
     z-index: 90;
+    box-shadow: 0px 4px 8px hsl(var(--shadow), .5);
   }
 
   .select-dropdown.active {
@@ -168,7 +167,7 @@ const {
   }
 
   .select-option:hover {
-    background-color: hsl(var(--background-step-3), .5);
+    background-color: hsl(var(--background-step-3));
   }
 
   .select-option.selected {
@@ -194,7 +193,7 @@ const {
   const button = document.getElementById(`${id}-select-btn`);
   const valueSpan = document.getElementById(`${id}-value-span`);
   const dropdown = document.getElementById(`${id}-dropdown`);
-  const optionElements = document.querySelectorAll('li');
+  const optionElements = container.querySelectorAll('li');
 
   let active = false;
 
@@ -285,6 +284,6 @@ const {
     document.addEventListener('click', outsideClickListener);
   }
 
- // source (2018-03-11): https://github.com/jquery/jquery/blob/master/src/css/hiddenVisibleSelectors.js 
+  // source (2018-03-11): https://github.com/jquery/jquery/blob/master/src/css/hiddenVisibleSelectors.js 
   const isVisible = elem => !!elem && !!(elem.offsetWidth || elem.offsetHeight || elem.getClientRects().length);
 </script>

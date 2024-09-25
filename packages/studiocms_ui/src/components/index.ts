@@ -11,6 +11,9 @@ export { default as Toaster } from './Toast/Toaster.astro';
 export { default as Card } from './Card.astro';
 export { default as Modal } from './Modal/Modal.astro';
 export { default as Select } from './Select.astro';
+export { default as Dropdown } from './Dropdown/Dropdown.astro';
+export { default as User } from './User.astro';
 
 export { toast } from './Toast/toast';
 export { ModalHelper } from './Modal/modal';
+export { DropdownHelper } from './Dropdown/dropdown';

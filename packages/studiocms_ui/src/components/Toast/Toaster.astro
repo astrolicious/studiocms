@@ -81,7 +81,7 @@ const {
     border-radius: .5rem;
     border: 1px solid hsl(var(--border));
     background-color: hsl(var(--background-base));
-    box-shadow: 0px 4px 4px hsl(var(--shadow));
+    box-shadow: 0px 4px 8px hsl(var(--shadow), .5);
     display: flex;
     flex-direction: column;
     gap: .5rem;
@@ -228,7 +228,6 @@ const {
     toastEl.classList.add('closing');
     
     setTimeout(() => toastEl.remove(), 400);
-    // TODO: Add class to scale down, lower opacity, then remove from DOM
   }
 
   function createToast(props: ToastProps) {
@@ -275,7 +274,6 @@ const {
 
       toastHeader.appendChild(closeIconContainer);
     }
-    // TODO: Close button if applicable
 
     toastContainer.appendChild(toastHeader);
 

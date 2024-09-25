@@ -1,11 +1,12 @@
 ---
 import type { HTMLTag, Polymorphic } from 'astro/types';
+import type { StudioCMSColorway } from '../utils/colors';
 
 type Props<As extends HTMLTag = 'button'> = Omit<Polymorphic<{ as: As }>, 'as'> & {
 	as?: As;
 	size?: 'sm' | 'md' | 'lg';
 	fullWidth?: boolean;
-	color?: 'default' | 'primary' | 'success' | 'warning' | 'danger';
+	color?: StudioCMSColorway;
 	variant?: 'solid' | 'outlined' | 'flat';
 	class?: string;
 	disabled?: boolean;

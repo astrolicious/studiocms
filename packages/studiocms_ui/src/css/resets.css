@@ -6,7 +6,6 @@
 
 html {
   color-scheme: dark;
-  /* TODO */
   accent-color: hsl(var(--primary-base));
 }
 

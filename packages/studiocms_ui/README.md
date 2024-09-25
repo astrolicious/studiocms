@@ -11,6 +11,13 @@
 - Toast
 - Card
 - Modals
+- Select
+- Dropdown
+- User
+
+### TODO for Merge
+- Sidebar (Normal & Double)
+- All Layouts
 
 ### Based on popover API
 - Tooltips based on popover & anchor positioning (not supported at time of writing, need a custom solution)

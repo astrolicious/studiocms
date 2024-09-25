@@ -11,3 +11,5 @@ export { Toaster, toast } from './components/index';
 export { Card } from './components/index';
 export { Modal, ModalHelper } from './components/index';
 export { Select } from './components/index';
+export { Dropdown, DropdownHelper } from './components/index';
+export { User } from './components/index';

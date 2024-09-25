@@ -1,11 +1,12 @@
 ---
 import Icon from '../utils/Icon.astro';
+import type { StudioCMSColorway } from '../utils/colors';
 import { generateID } from '../utils/generateID';
 
 type Props = {
 	label: string;
 	size?: 'sm' | 'md' | 'lg';
-	color?: 'default' | 'primary' | 'success' | 'warning' | 'danger';
+	color?: StudioCMSColorway;
 	defaultChecked?: boolean;
 	disabled?: boolean;
 	name?: string;
