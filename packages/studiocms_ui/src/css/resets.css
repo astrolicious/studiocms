@@ -1,35 +1,35 @@
 *,
 *::before,
 *::after {
-  box-sizing: border-box !important;
+	box-sizing: border-box !important;
 }
 
 html {
-  color-scheme: dark;
-  accent-color: hsl(var(--primary-base));
+	color-scheme: dark;
+	accent-color: hsl(var(--primary-base));
 }
 
 html,
 body {
-  margin: 0;
+	margin: 0;
 }
 
 html[data-theme="light"] {
-  color-scheme: light;
+	color-scheme: light;
 }
 
 body {
-  font-family: 'Onest Variable', sans-serif;
-  -webkit-font-smoothing: antialiased;
-  color: hsl(var(--text-normal));
-  background-color: hsl(var(--background-base));
+	font-family: "Onest Variable", sans-serif;
+	-webkit-font-smoothing: antialiased;
+	color: hsl(var(--text-normal));
+	background-color: hsl(var(--background-base));
 }
 
 input,
 button,
 textarea,
 select {
-  font: inherit;
+	font: inherit;
 }
 
 p,
@@ -40,17 +40,17 @@ h4,
 h5,
 h6,
 code {
-  overflow-wrap: anywhere;
+	overflow-wrap: anywhere;
 }
 
 /* TODO: Move to layout & add mono font */
 code {
-  font-family: var(--__sl-font-mono);
+	font-family: var(--__sl-font-mono);
 }
 
 button {
-  border: none;
-  outline: none;
-  background: none;
-  padding: 0;
+	border: none;
+	outline: none;
+	background: none;
+	padding: 0;
 }

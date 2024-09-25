@@ -15,7 +15,7 @@
     "allowJs": true,
     "jsx": "preserve",
     "strict": true,
-    "outDir": "../../.moon/cache/types/playgrounds/node",
+    "outDir": "../../.moon/cache/types/playgrounds/ui",
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]

@@ -13,7 +13,8 @@
       "@studiocms/frontend",
       "@studiocms/imagehandler",
       "@studiocms/renderers",
-      "@studiocms/robotstxt"
+      "@studiocms/robotstxt",
+      "@studiocms/ui"
     ]
   ],
   "linked": [],
