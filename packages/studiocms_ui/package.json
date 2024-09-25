@@ -32,9 +32,6 @@
     "src"
   ],
   "license": "MIT",
-  "engines": {
-    "node": "20.12.2"
-  },
   "type": "module",
   "exports": {
     "./components": "./src/components.ts",
