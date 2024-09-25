@@ -51,6 +51,7 @@ catalogs:
   studiocms-shared:
     '@inox-tools/runtime-logger': ^0.3.1
     "@matthiesenxyz/astrolace": ^0.3.2
+    "@matthiesenxyz/astrodtsbuilder": ^0.1.2
     "@matthiesenxyz/integration-utils": ^0.2.0
     '@matthiesenxyz/unocss-preset-daisyui': ^0.1.2
     '@markdoc/markdoc': ^0.4.0

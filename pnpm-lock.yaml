@@ -173,6 +173,9 @@ catalogs:
     '@markdoc/markdoc':
       specifier: ^0.4.0
       version: 0.4.0
+    '@matthiesenxyz/astrodtsbuilder':
+      specifier: ^0.1.2
+      version: 0.1.2
     '@matthiesenxyz/astrolace':
       specifier: ^0.3.2
       version: 0.3.2
@@ -414,6 +417,9 @@ importers:
       '@inox-tools/runtime-logger':
         specifier: catalog:studiocms-shared
         version: 0.3.1(astro@4.15.1(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))
+      '@matthiesenxyz/astrodtsbuilder':
+        specifier: catalog:studiocms-shared
+        version: 0.1.2(astro@4.15.1(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))
       '@matthiesenxyz/astrolace':
         specifier: catalog:studiocms-shared
         version: 0.3.2(@types/react@18.3.5)(astro@4.15.1(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))
@@ -507,6 +513,9 @@ importers:
       '@markdoc/markdoc':
         specifier: catalog:studiocms-shared
         version: 0.4.0(@types/react@18.3.5)(react@18.3.1)
+      '@matthiesenxyz/astrodtsbuilder':
+        specifier: catalog:studiocms-shared
+        version: 0.1.2(astro@4.15.1(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))
       '@matthiesenxyz/astrolace':
         specifier: catalog:studiocms-shared
         version: 0.3.2(@types/react@18.3.5)(astro@4.15.1(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))
@@ -562,6 +571,9 @@ importers:
       '@inox-tools/runtime-logger':
         specifier: catalog:studiocms-shared
         version: 0.3.1(astro@4.15.1(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))
+      '@matthiesenxyz/astrodtsbuilder':
+        specifier: catalog:studiocms-shared
+        version: 0.1.2(astro@4.15.1(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))
       '@matthiesenxyz/astrolace':
         specifier: catalog:studiocms-shared
         version: 0.3.2(@types/react@18.3.5)(astro@4.15.1(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))
@@ -642,6 +654,9 @@ importers:
       '@cloudinary/url-gen':
         specifier: catalog:studiocms-imagehandler
         version: 1.19.0
+      '@matthiesenxyz/astrodtsbuilder':
+        specifier: catalog:studiocms-shared
+        version: 0.1.2(astro@4.15.1(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))
       '@matthiesenxyz/integration-utils':
         specifier: catalog:studiocms-shared
         version: 0.2.0(astro@4.15.1(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))
@@ -682,6 +697,9 @@ importers:
       '@markdoc/markdoc':
         specifier: catalog:studiocms-shared
         version: 0.4.0(@types/react@18.3.5)(react@18.3.1)
+      '@matthiesenxyz/astrodtsbuilder':
+        specifier: catalog:studiocms-shared
+        version: 0.1.2(astro@4.15.1(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))
       '@matthiesenxyz/integration-utils':
         specifier: catalog:studiocms-shared
         version: 0.2.0(astro@4.15.1(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))
@@ -1993,6 +2011,11 @@ packages:
         optional: true
       react:
         optional: true
+
+  '@matthiesenxyz/astrodtsbuilder@0.1.2':
+    resolution: {integrity: sha512-Sy8R9Kd4WIsYrHm0D+uHMf/5QLyttMdJSVrR4wdXSjVExLC/k4myBUh2mHzUVKbfCvtgsVl/EUEYJiQYeWscIQ==}
+    peerDependencies:
+      astro: ^4.14
 
   '@matthiesenxyz/astrolace@0.3.2':
     resolution: {integrity: sha512-w1fO4FGxf6xB57otJS1JdsLe8xv1R9og3ci3dTE0Nm2NsoKvv96nqC6HRX7BOEAWNthoprvkD1k1VxHOGpz/nw==}
@@ -6852,6 +6875,10 @@ snapshots:
       '@types/markdown-it': 12.2.3
       '@types/react': 18.3.5
       react: 18.3.1
+
+  '@matthiesenxyz/astrodtsbuilder@0.1.2(astro@4.15.1(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))':
+    dependencies:
+      astro: 4.15.1(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4)
 
   '@matthiesenxyz/astrolace@0.3.2(@types/react@18.3.5)(astro@4.15.1(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))':
     dependencies:

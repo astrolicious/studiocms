@@ -48,6 +48,7 @@
   "dependencies": {
     "@markdoc/markdoc": "catalog:studiocms-shared",
     "@matthiesenxyz/astrolace": "catalog:studiocms-shared",
+    "@matthiesenxyz/astrodtsbuilder": "catalog:studiocms-shared",
     "@matthiesenxyz/integration-utils": "catalog:studiocms-shared",
     "@noble/hashes": "catalog:studiocms-shared",
     "@studiocms/robotstxt": "workspace:*",

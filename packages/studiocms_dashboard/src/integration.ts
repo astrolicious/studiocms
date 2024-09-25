@@ -4,6 +4,7 @@ import { addIntegrationArray } from '@matthiesenxyz/integration-utils/aikUtils';
 import { integrationLogger } from '@matthiesenxyz/integration-utils/astroUtils';
 import { presetDaisy } from '@matthiesenxyz/unocss-preset-daisyui';
 import { DashboardStrings, DbErrors } from '@studiocms/core/strings';
+import type { InjectedType } from 'astro';
 import { createResolver, defineIntegration } from 'astro-integration-kit';
 import {
 	presetTypography,
@@ -31,7 +32,7 @@ export default defineIntegration({
 		const { resolve } = createResolver(import.meta.url);
 
 		// Declaration for Web Vitals DTS File
-		let WEBVITALSDTSFILE: string;
+		let WEBVITALSDTSFILE: InjectedType;
 
 		return {
 			hooks: {
@@ -210,10 +211,7 @@ export default defineIntegration({
 				},
 				'astro:config:done': async ({ injectTypes }) => {
 					// Inject the Web Vitals DTS File
-					injectTypes({
-						filename: 'web-vitals.d.ts',
-						content: WEBVITALSDTSFILE,
-					});
+					injectTypes(WEBVITALSDTSFILE);
 				},
 				'astro:server:start': async ({ logger }) => {
 					// Display Console Message if dbStartPage(First Time DB Initialization) is enabled

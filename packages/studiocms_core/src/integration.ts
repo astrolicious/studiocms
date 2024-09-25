@@ -1,4 +1,5 @@
 import { integrationLogger } from '@matthiesenxyz/integration-utils/astroUtils';
+import type { InjectedType } from 'astro';
 import { createResolver, defineIntegration } from 'astro-integration-kit';
 import { version } from '../package.json';
 import { name } from '../package.json';
@@ -11,7 +12,7 @@ export default defineIntegration({
 	optionsSchema,
 	setup({ name, options }) {
 		// Declaration for Core DTS File
-		let coreDtsFile: string;
+		let coreDtsFile: InjectedType;
 
 		return {
 			hooks: {
@@ -47,10 +48,7 @@ export default defineIntegration({
 				},
 				'astro:config:done': async ({ injectTypes }) => {
 					// Inject the DTS File
-					injectTypes({
-						filename: 'core.d.ts',
-						content: coreDtsFile,
-					});
+					injectTypes(coreDtsFile);
 				},
 			},
 		};
