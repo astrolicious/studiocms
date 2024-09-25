@@ -43,22 +43,13 @@ export default defineIntegration({
 				},
 				'astro:config:done': async ({ injectTypes }) => {
 					// Inject Types for Renderer
-					injectTypes({
-						filename: 'renderer.d.ts',
-						content: rendererDTS(RendererComponent),
-					});
+					injectTypes(rendererDTS(RendererComponent));
 
 					// Inject Types for Renderer Config
-					injectTypes({
-						filename: 'config.d.ts',
-						content: rendererConfigDTS(),
-					});
+					injectTypes(rendererConfigDTS());
 
 					// Inject Types for Astro Markdown Config
-					injectTypes({
-						filename: 'astroMarkdownConfig.d.ts',
-						content: rendererAstroMarkdownDTS(),
-					});
+					injectTypes(rendererAstroMarkdownDTS());
 				},
 			},
 		};

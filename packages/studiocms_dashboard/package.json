@@ -1,10 +1,10 @@
 {
   "name": "@studiocms/dashboard",
-  "version": "0.1.0-beta.6",
+  "version": "0.1.0-beta.7",
   "description": "Dashboard Integration for the StudioCMS Integration",
   "author": {
     "name": "Adam Matthiesen | Jacob Jenkins | Paul Valladares",
-    "url": "https://astro-studiocms.xyz"
+    "url": "https://studiocms.xyz"
   },
   "repository": {
     "type": "git",
@@ -21,7 +21,7 @@
     "cms",
     "studiocms"
   ],
-  "homepage": "https://astro-studiocms.xyz",
+  "homepage": "https://studiocms.xyz",
   "publishConfig": {
     "access": "public"
   },
@@ -37,6 +37,7 @@
   "type": "module",
   "dependencies": {
     "@inox-tools/runtime-logger": "catalog:studiocms-shared",
+    "@matthiesenxyz/astrodtsbuilder": "catalog:studiocms-shared",
     "@matthiesenxyz/integration-utils": "catalog:studiocms-shared",
     "@matthiesenxyz/unocss-preset-daisyui": "catalog:studiocms-shared",
     "@matthiesenxyz/astrolace": "catalog:studiocms-shared",

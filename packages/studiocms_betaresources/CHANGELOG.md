@@ -1,5 +1,15 @@
 # @studiocms/betaresources
 
+## 0.1.0-beta.7
+
+### Patch Changes
+
+- 880311a: Update URL from `astro-studiocms.xyz` to `studiocms.xyz`
+- Updated dependencies [880311a]
+- Updated dependencies [880311a]
+  - @studiocms/core@0.1.0-beta.7
+  - @studiocms/assets@0.1.0-beta.7
+
 ## 0.1.0-beta.6
 
 ### Patch Changes

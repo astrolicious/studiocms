@@ -1,0 +1,74 @@
+---
+import { Image, getImage } from 'astro:assets';
+import { getCollection, getEntry } from 'astro:content';
+import type { GetStaticPaths } from 'astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export const getStaticPaths = (async () => {
+	const blogPosts = await getCollection('blog');
+
+	return blogPosts.map((post) => ({
+		params: {
+			slug: post.slug,
+		},
+		props: {
+			post,
+		},
+	}));
+}) satisfies GetStaticPaths;
+
+const { post } = Astro.props;
+const { Content } = await post.render();
+
+const author = await getEntry(post.data.author);
+
+const postOgImage = await getImage({ src: post.data.hero.image, format: 'webp' });
+---
+
+<BaseLayout title={ post.data.title } ogImage={postOgImage.src}>
+    <div class="p-8 pt-4">
+        <section class='studiocms-container mx-auto min-h-[calc(100vh_-_70px)]'>
+            <div class="breadcrumbs mb-4 text-lg">
+                <a href="/blog" class="hover:text-indigo-400 transition-colors">Back to Blog</a>
+            </div>
+            <div class="relative">
+                <div class="relative rounded-[20px] overflow-hidden shadow dark:shadow-white">
+                    <Image
+                        src={ post.data.hero.image }
+                        alt={ post.data.hero.alt }
+                        class="aspect-video"
+                        loading={'eager'}
+                    />
+                    <div class="absolute top-0 left-0 h-full w-full bg-transparent md:bg-gradient-to-b md:from-transparent md:to-[#303030]/60"></div>
+                </div>
+                <div class="md:absolute top-0 left-0 h-full w-full md:text-slate-100 pt-8 md:p-8 flex items-start justify-end flex-col">
+                    <h1 class="text-2xl md:text-5xl font-bold mb-4 dark:md:drop-shadow-md">{ post.data.title }</h1>
+                    <h2 class="text-lg md:text-3xl mb-8 dark:md:drop-shadow-md">{ post.data.description }</h2>
+    
+                    <div class="flex items-start flex-col md:flex-row gap-4">
+                        <div>
+                            <h3 class="font-semibold dark:md:drop-shadow-md mb-1">Written by</h3>
+                            <div class="flex gap-2 items-center">
+                                <Image
+                                    src={ author.data.avatar }
+                                    alt={ author.data.name }
+                                    class="aspect-square rounded-full shadow w-[50px]"
+                                    loading={'eager'}
+                                />
+                                <p class="dark:md:drop-shadow-md">{ author.data.name }</p>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold dark:md:drop-shadow-md mb-1">Date published</h3>
+                            <p class="mb-4 dark:md:drop-shadow-md mt-4">{ post.data.publishDate.toLocaleDateString('en-US', { day: '2-digit', month: 'long', year: 'numeric' }) }</p>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <article class="my-10 mx-auto prose dark:prose-invert lg:prose-xl">
+                <Content />
+            </article>
+        </section>
+    </div>
+</BaseLayout>

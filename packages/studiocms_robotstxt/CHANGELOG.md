@@ -1,5 +1,11 @@
 # @studiocms/robotstxt
 
+## 0.1.0-beta.7
+
+### Patch Changes
+
+- 880311a: Update URL from `astro-studiocms.xyz` to `studiocms.xyz`
+
 ## 0.1.0-beta.6
 
 ## 0.1.0-beta.5

@@ -17,7 +17,7 @@ export default defineStudioCMSConfig({
 			{
 				tag: 'script',
 				attrs: {
-					src: 'https://analytics.astro-studiocms.xyz/script.js',
+					src: 'https://analytics.studiocms.xyz/script.js',
 					'data-website-id': '23a84c25-40fd-4303-a191-aba4bfaf3ff1',
 					defer: true,
 				},
@@ -35,10 +35,10 @@ export default defineStudioCMSConfig({
 		AuthConfig: {
 			enabled: true,
 			providers: {
-				auth0: true,
-				discord: true,
+				auth0: false,
+				discord: false,
 				github: true,
-				google: true,
+				google: false,
 				usernameAndPassword: true,
 				usernameAndPasswordConfig: {
 					allowUserRegistration: true,

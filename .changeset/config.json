@@ -20,5 +20,5 @@
   "access": "public",
   "baseBranch": "main",
   "updateInternalDependencies": "patch",
-  "ignore": ["web", "docs", "node-playground", "cloudflare-playground"]
+  "ignore": ["web", "docs", "node-playground"]
 }

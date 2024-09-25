@@ -1,26 +1,29 @@
-:root, html, body {
-    min-height: 100vh;
-    min-width: 100vw;
-    height: 100%;
-    overflow-y: auto;
-    overflow-x: hidden;
-    scrollbar-width: thin;
+:root,
+html,
+body {
+	min-height: 100vh;
+	min-width: 100vw;
+	height: 100%;
+	overflow-y: auto;
+	overflow-x: hidden;
+	scrollbar-width: thin;
 }
 
 main {
-    min-height: 100vh;
+	min-height: 100vh;
 }
 
-:root, ::-webkit-scrollbar {
-    width: 2px;
+:root,
+::-webkit-scrollbar {
+	width: 2px;
 }
 
 .scrollbar {
-    overflow-y: auto;
-    overflow-x: hidden;
-    scrollbar-width: thin;
+	overflow-y: auto;
+	overflow-x: hidden;
+	scrollbar-width: thin;
 }
 
 .scrollbar ::-webkit-scrollbar {
-    width: 2px;
+	width: 2px;
 }
