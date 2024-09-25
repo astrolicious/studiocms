@@ -47,6 +47,7 @@ const { options, disabled = false, align = 'center', id, triggerOn = 'left' } = 
     ))}
   </ul>
 </div>
+<!-- TODO: Move all css files to stylesheets (and all components to folders) -->
 <style is:global>
   .dropdown-toggle {
     width: fit-content;
@@ -167,7 +168,7 @@ const { options, disabled = false, align = 'center', id, triggerOn = 'left' } = 
   }
 
   .dropdown-option {
-    padding: .5rem;
+    padding: .75rem;
     cursor: pointer;
     font-size: .975em;
     transition: all .15s ease;

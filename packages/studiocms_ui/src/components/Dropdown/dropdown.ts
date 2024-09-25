@@ -69,10 +69,12 @@ class DropdownHelper {
 			return;
 		}
 
+		// TODO: Figure out dropdowns on mobile: 100% of parent
+		// On desktop: max-width: min-content;
 		const { bottom, left, right, width, x, y, height } = this.toggle.getBoundingClientRect();
 		const { width: dropdownWidth } = this.dropdown.getBoundingClientRect();
 
-		const optionHeight = 36;
+		const optionHeight = 44;
 		const totalBorderSize = 2;
 		const margin = 4;
 
