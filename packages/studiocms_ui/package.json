@@ -43,7 +43,6 @@
   "dependencies": {
     "@fontsource-variable/onest": "5.1.0"
   },
-  "packageManager": "pnpm@9.5.0",
   "peerDependencies": {
     "astro": "catalog:min"
   },
