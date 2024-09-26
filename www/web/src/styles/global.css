@@ -61,7 +61,8 @@
 		}
 	}
 
-	code::before, code::after {
+	code::before,
+	code::after {
 		content: "" !important;
 	}
 }
