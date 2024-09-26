@@ -6,8 +6,6 @@ type AstroComponent = (_props: Record<string, any>) => any;
 
 type UIIcons = 'checkmark' | 'x-mark' | 'chevron-up-down' | 'user';
 
-export type { UIIcons };
-
 // Map of icon names to Astro components
 const Components: Record<UIIcons, AstroComponent> = {
 	checkmark: (await import('../icons/Checkmark.astro')).default,

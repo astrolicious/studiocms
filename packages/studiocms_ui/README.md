@@ -91,7 +91,9 @@ A dropdown component. Use it like this:
   ]}
   id='dropdown'
 >
+   <div slot="icon-start"><!-- Icon goes here --></div>
   <div>Your Trigger goes here!</div>
+   <div slot="icon-end"><!-- Icon goes here --></div>
 </Dropdown>
 ```
 **This component needs a helper to function.** Add it in a script tag:
@@ -114,9 +116,6 @@ type Option = {
   value: string;
   disabled?: boolean;
   color?: 'default' | 'primary' | 'success' | 'warning' | 'danger';
-  // It is not currently recommended to use icons as there are very few of them.
-  icon?: UIIcons;
-  iconPosition?: 'start' | 'end';
 };
 
 type Props = {

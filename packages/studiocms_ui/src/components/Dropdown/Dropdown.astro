@@ -1,16 +1,12 @@
 ---
 import './Dropdown.css';
 
-import type { UIIcons } from '../../utils/Icon.astro';
-import Icon from '../../utils/Icon.astro';
 import type { StudioCMSColorway } from '../../utils/colors';
 
 type Option = {
 	label: string;
 	value: string;
 	disabled?: boolean;
-	icon?: UIIcons;
-	iconPosition?: 'start' | 'end';
 	color?: StudioCMSColorway;
 };
 
@@ -40,11 +36,11 @@ const { options, disabled = false, align = 'center', id, triggerOn = 'left' } = 
         class="dropdown-option"
         role="option"
         data-value={x.value}
-        class:list={[x.disabled && "disabled", x.color, x.iconPosition]}
+        class:list={[x.disabled && "disabled", x.color]}
       >
-        {x.icon && (!x.iconPosition || x.iconPosition === 'start') && ( <Icon class="icon" name={x.icon} width={20} height={20} /> )}
+        <slot name="icon-start" />
         <span>{x.label}</span>
-        {x.icon && x.iconPosition === 'end' && ( <Icon class="icon" name={x.icon} width={20} height={20} /> )}
+        <slot name="icon-end" />
       </li>
     ))}
   </ul>
