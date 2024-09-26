@@ -554,7 +554,6 @@ Optionally, you can pass an avatar to be shown instead of the default placeholde
 - Spinners / Loading stuff
 
 ### Other Stuff
-- Default Link Styles
 - Image dropzone
 
 ### Otter Stuff
