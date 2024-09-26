@@ -1,10 +1,9 @@
 class SingleSidebarHelper {
 	sidebar: HTMLElement;
-	navbarToggle: HTMLElement;
+	navbarToggle?: HTMLElement | undefined;
 
-	constructor(toggleID: string) {
+	constructor(toggleID?: string) {
 		const sidebarContainer = document.getElementById('sidebar');
-		const navToggle = document.getElementById(toggleID);
 
 		if (!sidebarContainer) {
 			throw new Error(
@@ -12,16 +11,21 @@ class SingleSidebarHelper {
 			);
 		}
 
-		if (!navToggle) {
-			throw new Error(`No item with ID ${toggleID} found.`);
-		}
-
 		this.sidebar = sidebarContainer;
-		this.navbarToggle = navToggle;
 
-		this.navbarToggle.addEventListener('click', () => {
-			this.sidebar.classList.toggle('active');
-		});
+		if (toggleID) {
+			const navToggle = document.getElementById(toggleID);
+
+			if (!navToggle) {
+				throw new Error(`No item with ID ${toggleID} found.`);
+			}
+
+			this.navbarToggle = navToggle;
+
+			this.navbarToggle.addEventListener('click', () => {
+				this.sidebar.classList.toggle('active');
+			});
+		}
 	}
 
 	public hideSidebarOnClick = (elementID: string) => {
@@ -55,9 +59,10 @@ class SingleSidebarHelper {
 
 class DoubleSidebarHelper {
 	sidebarsContainer: HTMLElement;
-	navbarOpen: HTMLElement;
+	sidebarOpen: HTMLElement;
 	backToOuter: HTMLElement;
 
+	// TODO: Rework into similar to single sidebar
 	constructor(openNavID: string, backToOuterID: string) {
 		const sidebarsContainer = document.getElementById('sidebars');
 		const navOpen = document.getElementById(openNavID);
@@ -78,10 +83,10 @@ class DoubleSidebarHelper {
 		}
 
 		this.sidebarsContainer = sidebarsContainer;
-		this.navbarOpen = navOpen;
+		this.sidebarOpen = navOpen;
 		this.backToOuter = backToOuter;
 
-		this.navbarOpen.addEventListener('click', () => {
+		this.sidebarOpen.addEventListener('click', () => {
 			this.sidebarsContainer.classList.add('active', 'inner');
 		});
 
@@ -97,7 +102,7 @@ class DoubleSidebarHelper {
 			throw new Error(`No item with ID ${elementID} found.`);
 		}
 
-		element.addEventListener('click', this.hideInnerNavbar);
+		element.addEventListener('click', this.hideSidebar);
 	};
 
 	public showInnerOnClick = (elementID: string) => {
@@ -107,15 +112,20 @@ class DoubleSidebarHelper {
 			throw new Error(`No item with ID ${elementID} found.`);
 		}
 
-		element.addEventListener('click', this.showInnerNavbar);
+		element.addEventListener('click', this.showInnerSidebar);
 	};
 
-	public showInnerNavbar = () => {
-		this.sidebarsContainer.classList.add('inner');
+	public showInnerSidebar = () => {
+		this.sidebarsContainer.classList.add('inner', 'active');
 	};
 
-	public hideInnerNavbar = () => {
-		this.sidebarsContainer.classList.remove('active');
+	public showOuterSidebar = () => {
+		this.sidebarsContainer.classList.add('active');
+		this.sidebarsContainer.classList.remove('inner');
+	};
+
+	public hideSidebar = () => {
+		this.sidebarsContainer.classList.remove('inner', 'active');
 	};
 }
 

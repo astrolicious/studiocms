@@ -7,12 +7,13 @@ import { generateID } from '../../utils/generateID';
 type Option = {
 	label: string;
 	value: string;
+	disabled?: boolean;
 };
 
 type Props = {
 	label: string;
 	color?: StudioCMSColorway;
-	defaultValue?: Option['value'];
+	defaultValue?: string;
 	options: Option[];
 	disabled?: boolean;
 	name?: string;
@@ -47,8 +48,12 @@ const {
     {label} <span class="req-star">{isRequired && "*"}</span>
   </span>
   <div class="radio-inputs">
-    {options.map(({ label, value }) => (
-      <label for={value} class="radio-label">
+    {options.map(({ label, value, disabled: individuallyDisabled }) => (
+      <label
+        for={value}
+        class="radio-label"
+        class:list={[ individuallyDisabled && "disabled" ]}
+      >
         <div class="radio-box-container">
           <div class="radio-box" />
         </div>
@@ -59,7 +64,7 @@ const {
           id={value} 
           name={name} 
           checked={value === defaultValue} 
-          disabled={disabled}
+          disabled={disabled || individuallyDisabled}
           required={isRequired}
         />
         <span>{label}</span>
@@ -67,5 +72,3 @@ const {
     ))}
   </div>
 </div>
-<style is:global>
-</style>

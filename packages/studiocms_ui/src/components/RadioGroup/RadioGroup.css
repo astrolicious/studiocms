@@ -9,6 +9,12 @@
 	color: hsl(var(--text-muted));
 }
 
+.radio-label.disabled {
+	opacity: 0.5;
+	color: hsl(var(--text-muted));
+	pointer-events: none;
+}
+
 .req-star {
 	color: hsl(var(--danger-base));
 	font-weight: 700;

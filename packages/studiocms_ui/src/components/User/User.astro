@@ -7,11 +7,12 @@ type Props = {
 	name: string;
 	description: string;
 	avatar?: string;
+	class?: string;
 };
 
-const { name, description, avatar } = Astro.props;
+const { name, description, avatar, class: className } = Astro.props;
 ---
-<div class="user-container">
+<div class="user-container" class:list={[ className ]}>
   <div class="avatar-container">
     <!-- TODO: Astro Image or Unpic? -->
     {avatar ? (
