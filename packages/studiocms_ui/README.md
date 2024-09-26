@@ -551,7 +551,7 @@ Optionally, you can pass an avatar to be shown instead of the default placeholde
 
 ### Loading Stuff
 - Skeleton
-- Spinners / Loading stuff
+- Spinners
 
 ### Other Stuff
 - Image dropzone
