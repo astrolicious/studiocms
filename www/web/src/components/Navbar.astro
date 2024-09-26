@@ -10,59 +10,55 @@ import ThemeSelect from './ThemeSelect.astro';
   <div class="studiocms-container mx-auto flex flex-center justify-between">
     <a href="/" class='flex w-fit items-center justify-center gap-x-4'>
       <Icon name='logo' class='h-8 w-8 stroke-slate-100 text-[--purple-900] dark:text-white' />
-      <p class="hidden md:block">StudioCMS</p>
+      <span class="hidden md:block font-bold text-2xl">StudioCMS</span>
     </a>
     <div>
       <ul class='flex items-center gap-x-4'>
         <li>
           <a 
             href="/blog"
-            class='underline-offset-4 hover:underline' 
+            class='font-medium text-lg hover:underline' 
             aria-label='Blog link'
             title="Blog"
-            ><Icon
-            name='blog'
-            class='h-8 w-8 transition duration-200 ease-in-out hover:scale-110'
-          /></a>
+          >
+            Blog
+          </a>
         </li>
         <li>
           <a 
             href={DOCS_URL} 
-            class='underline-offset-4 hover:underline' 
+            class='font-medium text-lg hover:underline' 
             rel='external nofollow' 
             aria-label='Docs link'
             title="Docs"
-            >
-            <Icon
-              name='docs'
-              class='h-8 w-8 transition duration-200 ease-in-out hover:scale-110'
-            /></a>
+          >
+            Docs
+          </a>
         </li>
         <li>
           <a 
             href='/roadmap' 
-            class='underline-offset-4 hover:underline' 
+            class='font-medium text-lg hover:underline mr-8' 
             rel='external nofollow' 
             aria-label='Roadmap link'
             title="Roadmap"
-            >
-            <Icon
-              name='map'
-              class='h-8 w-8 transition duration-200 ease-in-out hover:scale-110'
-            /></a>
+          >
+            Roadmap
+          </a>
         </li>
         <li>
           <a
             href={DISCORD_URL}
-            class="underline-offset-4 hover:underline"
+            class=""
             rel='external nofollow'
             aria-label='Discord link'
             title="Discord"
-            >
+          >
             <Icon
               name='discord'
               class='h-8 w-8 transition duration-200 ease-in-out hover:scale-110'
-            /></a>
+            />
+          </a>
         </li>
         <li>
           <a
@@ -71,11 +67,12 @@ import ThemeSelect from './ThemeSelect.astro';
             rel='external nofollow'
             aria-label='GitHub link'
             title="GitHub"
-            ><Icon
+            >
+            <Icon
               name='github'
               class='h-8 w-8 transition duration-200 ease-in-out hover:scale-110'
-            /></a
-          >
+            />
+          </a>
         </li>
         <li>
           <ThemeSelect />

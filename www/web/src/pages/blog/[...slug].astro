@@ -2,6 +2,7 @@
 import { Image, getImage } from 'astro:assets';
 import { getCollection, getEntry } from 'astro:content';
 import type { GetStaticPaths } from 'astro';
+import { Icon } from 'astro-icon/components';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
 export const getStaticPaths = (async () => {
@@ -29,38 +30,44 @@ const postOgImage = await getImage({ src: post.data.hero.image, format: 'webp' }
     <div class="p-8 pt-4">
         <section class='studiocms-container mx-auto min-h-[calc(100vh_-_70px)]'>
             <div class="breadcrumbs mb-4 text-lg">
-                <a href="/blog" class="hover:text-indigo-400 transition-colors">Back to Blog</a>
+                <a href="/blog" class="hover:text-indigo-400 transition-colors flex flex-row gap-2 items-center">
+                    <Icon name="heroicons:arrow-left" class={'w-6 h-6'} />
+                    <span>Back to Blog</span>
+                </a>
             </div>
-            <div class="relative">
-                <div class="relative rounded-[20px] overflow-hidden shadow dark:shadow-white">
+            <div class="relative flex flex-col h-full aspect-video text-white justify-end overflow-hidden rounded-[20px] border border-neutral-800">
+                <div class="md:absolute top-0 left-0 w-full relative overflow-hidden shadow z-0">
                     <Image
                         src={ post.data.hero.image }
                         alt={ post.data.hero.alt }
                         class="aspect-video"
                         loading={'eager'}
                     />
-                    <div class="absolute top-0 left-0 h-full w-full bg-transparent md:bg-gradient-to-b md:from-transparent md:to-[#303030]/60"></div>
                 </div>
-                <div class="md:absolute top-0 left-0 h-full w-full md:text-slate-100 pt-8 md:p-8 flex items-start justify-end flex-col">
-                    <h1 class="text-2xl md:text-5xl font-bold mb-4 dark:md:drop-shadow-md">{ post.data.title }</h1>
-                    <h2 class="text-lg md:text-3xl mb-8 dark:md:drop-shadow-md">{ post.data.description }</h2>
+                <div class="z-40 pt-8 md:p-8 flex items-start justify-end flex-col h-full">
+                    <div class="author-contents-bg" />
+                    <h1 class="text-2xl md:text-4xl font-bold mb-2 text-shadow-md dark:shadow-black">{ post.data.title }</h1>
+                    <h2 class="text-lg md:text-xl mb-8 text-shadow-md dark:shadow-black">{ post.data.description }</h2>
     
                     <div class="flex items-start flex-col md:flex-row gap-4">
                         <div>
-                            <h3 class="font-semibold dark:md:drop-shadow-md mb-1">Written by</h3>
-                            <div class="flex gap-2 items-center">
+                            <!-- <h3 class="font-semibold dark:md:drop-shadow-md mb-1">Written by</h3> -->
+                            <div class="flex gap-4 items-center">
                                 <Image
                                     src={ author.data.avatar }
                                     alt={ author.data.name }
                                     class="aspect-square rounded-full shadow w-[50px]"
                                     loading={'eager'}
                                 />
-                                <p class="dark:md:drop-shadow-md">{ author.data.name }</p>
+                                <div>
+                                    <p class="dark:md:drop-shadow-md font-medium text-lg">{ author.data.name }</p>
+                                    <p class="dark:md:drop-shadow-md text-sm">{ post.data.publishDate.toLocaleDateString('en-US', { day: '2-digit', month: 'long', year: 'numeric' }) }</p>
+                                </div>
                             </div>
                         </div>
                         <div>
-                            <h3 class="font-semibold dark:md:drop-shadow-md mb-1">Date published</h3>
-                            <p class="mb-4 dark:md:drop-shadow-md mt-4">{ post.data.publishDate.toLocaleDateString('en-US', { day: '2-digit', month: 'long', year: 'numeric' }) }</p>
+                            <!-- <h3 class="font-semibold dark:md:drop-shadow-md mb-1">Date published</h3> -->
+                            <!-- <p class="mb-4 dark:md:drop-shadow-md mt-4">{ post.data.publishDate.toLocaleDateString('en-US', { day: '2-digit', month: 'long', year: 'numeric' }) }</p> -->
 
                         </div>
                     </div>
@@ -72,3 +79,18 @@ const postOgImage = await getImage({ src: post.data.hero.image, format: 'webp' }
         </section>
     </div>
 </BaseLayout>
+<style>
+    .author-contents-bg {
+        /* Careful when playing around with these colors! The effect tends to look worse the lighter the colors get. */
+        background: linear-gradient(rgba(0,0,0, 0.05), rgba(0,0,0, .5));
+        mask-image: linear-gradient(to top, rgba(0, 0, 0, .8) 55%, rgba(0, 0, 0, 0.6) 70%, rgba(0, 0, 0, 0) 100%);
+        backdrop-filter: blur(20px);
+        width: 100%;
+        height: 50%;
+        @apply bg-transparent md:bg-gradient-to-b md:from-[#00000080] md:to-[#101010];
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        z-index: -1;
+    }
+</style>

@@ -29,9 +29,13 @@ export default {
 			height: {
 				navbar: '70px',
 				footer: '120px',
-				hero: 'calc(100vh - 60px)',
+				hero: 'calc(100vh - 128px)',
 			},
 		},
 	},
-	plugins: [require('tailwind-scrollbar'), require('@tailwindcss/typography')],
+	plugins: [
+		require('tailwind-scrollbar'),
+		require('@tailwindcss/typography'),
+		require('./src/plugins/text-shadow'),
+	],
 };
