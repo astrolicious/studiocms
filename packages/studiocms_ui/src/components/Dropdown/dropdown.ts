@@ -69,9 +69,19 @@ class DropdownHelper {
 			return;
 		}
 
+		const isMobile = window.matchMedia('screen and (max-width: 840px)').matches;
+
 		// TODO: Figure out dropdowns on mobile: 100% of parent
 		// On desktop: max-width: min-content;
-		const { bottom, left, right, width, x, y, height } = this.toggle.getBoundingClientRect();
+		const {
+			bottom,
+			left,
+			right,
+			width: parentWidth,
+			x,
+			y,
+			height,
+		} = this.toggle.getBoundingClientRect();
 		const { width: dropdownWidth } = this.dropdown.getBoundingClientRect();
 
 		const optionHeight = 44;
@@ -85,7 +95,7 @@ class DropdownHelper {
 			left,
 			right,
 			bottom: bottom + margin + dropdownHeight,
-			width: dropdownWidth, // Account for scaling of animation
+			width: isMobile ? parentWidth : dropdownWidth, // Account for scaling of animation
 			height: dropdownHeight,
 			x,
 			y: y + height + margin,
@@ -93,12 +103,20 @@ class DropdownHelper {
 
 		this.active = true;
 
-		if (this.alignment === 'end') {
-			this.dropdown.style.left = `calc(${width}px - ${CustomRect.width}px)`;
-		}
+		if (isMobile) {
+			console.log('match');
+			this.dropdown.style.maxWidth = `${parentWidth}px`;
+			this.dropdown.style.minWidth = 'unset';
+			this.dropdown.style.width = `${parentWidth}px`;
+			this.dropdown.style.left = `calc(${parentWidth / 2}px - ${CustomRect.width / 2}px)`;
+		} else {
+			if (this.alignment === 'end') {
+				this.dropdown.style.left = `calc(${parentWidth}px - ${CustomRect.width}px)`;
+			}
 
-		if (this.alignment === 'center') {
-			this.dropdown.style.left = `calc(${width / 2}px - ${CustomRect.width / 2}px)`;
+			if (this.alignment === 'center') {
+				this.dropdown.style.left = `calc(${parentWidth / 2}px - ${CustomRect.width / 2}px)`;
+			}
 		}
 
 		if (

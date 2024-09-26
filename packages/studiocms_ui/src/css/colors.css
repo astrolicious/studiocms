@@ -27,11 +27,11 @@
 	--default-hover: 0, 0%, 15%;
 	--default-active: 0, 0%, 19%;
 
-	--primary-base: 259, 83%, 74%;
+	--primary-base: 259, 83%, 73%;
 	--primary-hover: 259, 77%, 71%;
 	--primary-active: 259, 73%, 67%;
 
-	--success-base: 142, 71%, 45%;
+	--success-base: 142, 71%, 46%;
 	--success-hover: 142, 72%, 52%;
 	--success-active: 142, 87%, 59%;
 
@@ -39,9 +39,9 @@
 	--warning-hover: 48, 97%, 61%;
 	--warning-active: 48, 100%, 71%;
 
-	--danger-base: 337, 98%, 37%;
-	--danger-hover: 337, 88%, 45%;
-	--danger-active: 337, 84%, 52%;
+	--danger-base: 339, 97%, 31%;
+	--danger-hover: 337, 98%, 37%;
+	--danger-active: 337, 88%, 45%;
 
 	/* Non-specific variables */
 	--text-light: 0, 0%, 100%;
@@ -100,7 +100,7 @@
 	--warning-hover: 48, 88%, 43%;
 	--warning-active: 48, 85%, 40%;
 
-	--danger-base: 337, 98%, 37%;
-	--danger-hover: 337, 88%, 45%;
-	--danger-active: 337, 84%, 52%;
+	--danger-base: 339, 97%, 31%;
+	--danger-hover: 337, 98%, 37%;
+	--danger-active: 337, 88%, 45%;
 }

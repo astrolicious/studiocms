@@ -1,0 +1,14 @@
+---
+import './Row.css';
+
+type Props = {
+	alignCenter?: boolean;
+	gapSize?: 'sm' | 'md' | 'lg';
+};
+
+const { alignCenter, gapSize = 'md' } = Astro.props;
+---
+
+<div class="row" class:list={[alignCenter && "align", gapSize]}>
+  <slot />
+</div>
