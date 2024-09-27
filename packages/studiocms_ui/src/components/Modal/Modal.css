@@ -29,9 +29,8 @@ body:has(.modal[open]) {
 }
 
 .modal[open]::backdrop {
-	filter: blur(4px);
-	background-color: rgba(0, 0, 0, 0.5);
-	animation: backdrop 1s ease-in-out forwards;
+	background-color: rgba(0, 0, 0, 0.75);
+	animation: backdrop .3s ease-in-out forwards;
 }
 
 .modal-header:has(*) {
