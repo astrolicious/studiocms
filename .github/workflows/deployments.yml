@@ -1,32 +1,30 @@
 name: StudioCMS Deployments
 
-permissions:
-  pull-requests: write
-
 on:
   pull_request:
-    branches:
-      - main
+    types:
+      - opened
+      - ready_for_review
 
+permissions:
+  pull-requests: write
+  
 jobs:
   deploymentmessage:
     name: Send deployment links
     runs-on: ubuntu-latest
-    if: contains(fromJSON('["pull_request"]'), github.event_name)
     steps:
       - name: Deployment Queued Comment
         uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7
         with:
           script: |
-            let commentBody = 'Thank you for submitting your Pull Request, the following links will become available for preview shortly:';
-            commentBody += `\n\n- [StudioCMS Landing Page](https://pr${context.payload.pull_request.number}-www.studiocms.xyz/)`
-            commentBody += `\n- [StudioCMS Documentation](https://pr${context.payload.pull_request.number}-docs.studiocms.xyz/)`
-            commentBody += `\n- [StudioCMS Demo (node-playground)](https://pr${context.payload.pull_request.number}-demo.studiocms.xyz/)` (Also deployed with package changes)
-            commentBody += `\n- [StudioCMS Ui Demo (ui-playground)](https://pr${context.payload.pull_request.number}-ui-testing.studiocms.xyz/)`
-            
             github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: commentBody
+              body: `Thank you for submitting your Pull Request, the following links will become available for preview shortly:\n\n
+              - [StudioCMS Landing Page](https://pr${context.payload.pull_request.number}-www.studiocms.xyz/)\n
+              - [StudioCMS Documentation](https://pr${context.payload.pull_request.number}-docs.studiocms.xyz/)\n
+              - [StudioCMS Demo (node-playground)](https://pr${context.payload.pull_request.number}-demo.studiocms.xyz/) (Also deployed with package changes)\n
+              - [StudioCMS Ui Demo (ui-playground)](https://pr${context.payload.pull_request.number}-ui-testing.studiocms.xyz/)`
             })
