@@ -36,7 +36,7 @@
 	/* Blob Stuff from Hero */
 
 	#blob {
-		animation: change-blob 10s linear infinite;
+		animation: change-blob 7.5s linear infinite;
 		transition: d 0.5s ease;
 		transform-origin: center;
 	}
@@ -53,7 +53,7 @@
 		}
 
 		50% {
-			opacity: 0.85;
+			opacity: 0.75;
 		}
 	}
 
