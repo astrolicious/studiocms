@@ -7,6 +7,7 @@ on:
 permissions:
   pull-requests: write
   actions: write
+  issues: write
 
 jobs:
   welcome:
@@ -22,16 +23,15 @@ jobs:
               const res = await github.rest.search.issuesAndPullRequests({
                 q: `is:pr is:closed author:${creator} repo:${owner}/${repo}`
               })
-    
+
               const mergedPRs = res.data.items.filter(pr => pr.number !== context.payload.pull_request.number)
-    
+
               if (mergedPRs.length === 0) {
-                try {
                   await github.rest.issues.createComment({
                     issue_number: context.issue.number,
                     owner: context.repo.owner,
                     repo: context.repo.repo,
-                    body: `**Welcome** @${creator}, to the Contributor Squad! 🎉\n\nIf you haven't already, please join our Discord, https://chat.astrolicious.dev community to stay in the loop for any future help we may need!`
+                    body: `**Welcome** @${creator}, to the Contributor Squad! 🎉\n\nIf you haven't already, please join our [Discord community](https://chat.studiocms.xyz), to stay in the loop for any future help we may need!`
                   })
                   
                   await fetch(`${{ secrets.DISCORD_FTPR }}`, {
@@ -46,7 +46,7 @@ jobs:
                       embeds: [
                         {
                           "id": 661098315,
-                          "description": "New Contributor - ${{ inputs.creator }} has had their first PR merged! 🎉\nMerged PR: [PR# ${{ inputs.mergedPR }}](https://github.com/astrolicious/studiocms/pull/${{ inputs.mergedPR }})",
+                          "description": `New Contributor - ${creator} has had their first PR merged! 🎉\nMerged PR: [PR# ${context.issue.number}](https://github.com/astrolicious/studiocms/pull/${context.issue.number})`,
                           "fields": [],
                           "author": {
                             "name": "StudioCMS Contributor Alert",
@@ -57,12 +57,7 @@ jobs:
                       ],
                       components: [],
                       actions: {}
-                    })
                   })
-                } catch (error) {
-                    if (error.code !== 404) {
-                        throw error
-                    }
-                }
+                })
               }
             }
