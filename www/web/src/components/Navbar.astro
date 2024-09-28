@@ -14,7 +14,7 @@ import ThemeSelect from './ThemeSelect.astro';
     </a>
     <div>
       <ul class='flex items-center gap-x-4'>
-        <li>
+        <li class="text-link">
           <a 
             href="/blog"
             class='font-medium text-lg hover:underline' 
@@ -24,7 +24,7 @@ import ThemeSelect from './ThemeSelect.astro';
             Blog
           </a>
         </li>
-        <li>
+        <li class="text-link">
           <a 
             href={DOCS_URL} 
             class='font-medium text-lg hover:underline' 
@@ -35,7 +35,7 @@ import ThemeSelect from './ThemeSelect.astro';
             Docs
           </a>
         </li>
-        <li>
+        <li class="text-link">
           <a 
             href='/roadmap' 
             class='font-medium text-lg hover:underline mr-8' 
@@ -49,7 +49,7 @@ import ThemeSelect from './ThemeSelect.astro';
         <li>
           <a
             href={DISCORD_URL}
-            class=""
+            class="navbar-icon"
             rel='external nofollow'
             aria-label='Discord link'
             title="Discord"
@@ -62,7 +62,7 @@ import ThemeSelect from './ThemeSelect.astro';
         </li>
         <li>
           <a
-            class='hover:underline'
+            class="navbar-icon"
             href={GITHUB_URL}
             rel='external nofollow'
             aria-label='GitHub link'
@@ -77,7 +77,86 @@ import ThemeSelect from './ThemeSelect.astro';
         <li>
           <ThemeSelect />
         </li>
+        <li class="relative">
+          <div id="mobile-dropdown-icon-container">
+            <Icon
+              name='heroicons:bars-3'
+              class='h-8 w-8 transition duration-200 ease-in-out cursor-pointer'
+            />
+          </div>
+          <div id="mobile-dropdown-container">
+            <a 
+              href="/blog"
+              class='font-medium text-lg hover:underline' 
+              aria-label='Blog link'
+              title="Blog"
+            >
+              Blog
+            </a>
+            <a 
+              href={DOCS_URL} 
+              class='font-medium text-lg hover:underline' 
+              rel='external nofollow' 
+              aria-label='Docs link'
+              title="Docs"
+            >
+              Docs
+            </a>
+            <a 
+              href='/roadmap' 
+              class='font-medium text-lg hover:underline mr-8' 
+              rel='external nofollow' 
+              aria-label='Roadmap link'
+              title="Roadmap"
+            >
+              Roadmap
+            </a>
+            <div class="dropdown-icons">
+              <a
+                href={DISCORD_URL}
+                class="dropdown-icon"
+                rel='external nofollow'
+                aria-label='Discord link'
+                title="Discord"
+              >
+                <Icon
+                  name='discord'
+                  class='h-8 w-8 transition duration-200 ease-in-out hover:scale-110'
+                />
+              </a>
+              <a
+                class="dropdown-icon"
+                href={GITHUB_URL}
+                rel='external nofollow'
+                aria-label='GitHub link'
+                title="GitHub"
+                >
+                <Icon
+                  name='github'
+                  class='h-8 w-8 transition duration-200 ease-in-out hover:scale-110'
+                />
+              </a>
+            </div>
+          </div>
+        </li>
       </ul>
     </div>
   </div>
 </nav>
+<script>
+  const toggle = document.getElementById('mobile-dropdown-icon-container') as HTMLDivElement;
+  const dropdown = document.getElementById('mobile-dropdown-container') as HTMLDivElement;
+
+  toggle.addEventListener('click', (e) => {
+    e.stopPropagation();
+    dropdown.classList.toggle('active');
+  });
+
+  document.body.addEventListener('click', (event) => {
+    if (!event.target) return;
+
+    if (!dropdown.contains(event.target as Node) && event.target !== toggle) {
+      dropdown.classList.remove('active');
+    }
+  });
+</script>
