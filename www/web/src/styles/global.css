@@ -93,7 +93,7 @@
 	background-color: #151515;
 	border-radius: 8px;
 	border: 1px solid #29292d;
-	z-index: 20;
+	z-index: 9999;
 	box-shadow: 0px 4px 4px #000;
 	display: none;
 
