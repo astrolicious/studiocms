@@ -59,14 +59,10 @@ class SingleSidebarHelper {
 
 class DoubleSidebarHelper {
 	sidebarsContainer: HTMLElement;
-	sidebarOpen: HTMLElement;
-	backToOuter: HTMLElement;
 
 	// TODO: Rework into similar to single sidebar
-	constructor(openNavID: string, backToOuterID: string) {
+	constructor() {
 		const sidebarsContainer = document.getElementById('sidebars');
-		const navOpen = document.getElementById(openNavID);
-		const backToOuter = document.getElementById(backToOuterID);
 
 		if (!sidebarsContainer) {
 			throw new Error(
@@ -74,28 +70,10 @@ class DoubleSidebarHelper {
 			);
 		}
 
-		if (!navOpen) {
-			throw new Error(`No item with ID ${openNavID} found.`);
-		}
-
-		if (!backToOuter) {
-			throw new Error(`No item with ID ${backToOuterID} found.`);
-		}
-
 		this.sidebarsContainer = sidebarsContainer;
-		this.sidebarOpen = navOpen;
-		this.backToOuter = backToOuter;
-
-		this.sidebarOpen.addEventListener('click', () => {
-			this.sidebarsContainer.classList.add('active', 'inner');
-		});
-
-		this.backToOuter.addEventListener('click', () => {
-			this.sidebarsContainer.classList.remove('inner');
-		});
 	}
 
-	public showContentOnClick = (elementID: string) => {
+	public hideSidebarOnClick = (elementID: string) => {
 		const element = document.getElementById(elementID);
 
 		if (!element) {
@@ -103,6 +81,16 @@ class DoubleSidebarHelper {
 		}
 
 		element.addEventListener('click', this.hideSidebar);
+	};
+
+	public showOuterOnClick = (elementID: string) => {
+		const element = document.getElementById(elementID);
+
+		if (!element) {
+			throw new Error(`No item with ID ${elementID} found.`);
+		}
+
+		element.addEventListener('click', this.showOuterSidebar);
 	};
 
 	public showInnerOnClick = (elementID: string) => {

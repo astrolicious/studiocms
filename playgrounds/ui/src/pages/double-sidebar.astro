@@ -16,10 +16,12 @@ import { Button } from '@studiocms/ui/components';
 <script>
   import { DoubleSidebarHelper } from "@studiocms/ui/components";
 
-  const dbsb = new DoubleSidebarHelper('nav-open', 'nav-back');
+  const doubleSidebar = new DoubleSidebarHelper();
 
-  dbsb.showInnerOnClick('show-inner');
-  dbsb.showContentOnClick('to-content');
+  doubleSidebar.showInnerOnClick('nav-open')
+  doubleSidebar.showInnerOnClick('show-inner');
+  doubleSidebar.showOuterOnClick('nav-back');
+  doubleSidebar.hideSidebarOnClick('to-content');
 </script>
 <style>
   .nav-toggle {
@@ -27,7 +29,6 @@ import { Button } from '@studiocms/ui/components';
     top: 1rem !important;
     left: 1rem !important;
     display: none !important;
-    z-index: 5 !important;
   }
 
   @media screen and (max-width: 840px) {
