@@ -1,9 +1,13 @@
+import { fontFamily as _fontFamily } from 'tailwindcss/defaultTheme';
 /** @type {import('tailwindcss').Config} */
 export default {
 	content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
 	darkMode: ['selector', '[data-theme="dark"]'],
 	theme: {
 		extend: {
+			fontFamily: {
+				sans: ['Onest Variable', ..._fontFamily.sans],
+			},
 			animation: {
 				marquee: 'marquee 60s linear infinite',
 				marquee2: 'marquee2 60s linear infinite',
@@ -25,9 +29,13 @@ export default {
 			height: {
 				navbar: '70px',
 				footer: '120px',
-				hero: 'calc(100vh - 60px)',
+				hero: 'calc(100vh - 128px)',
 			},
 		},
 	},
-	plugins: [require('tailwind-scrollbar'), require('@tailwindcss/typography')],
+	plugins: [
+		require('tailwind-scrollbar'),
+		require('@tailwindcss/typography'),
+		require('./src/plugins/text-shadow'),
+	],
 };

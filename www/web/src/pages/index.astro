@@ -56,18 +56,18 @@ const testimonials = await getCollection('testimonials');
       class='mx-auto flex py-8 flex-col items-center justify-center gap-x-16 gap-y-10 md:flex-row'
     >
       <a
-        class='flex items-center gap-x-4 transition-all duration-200 ease-in-out hover:scale-105 hover:cursor-pointer hover:text-yellow-400 bg-slate-300 dark:bg-slate-900/90 rounded-lg px-6 py-4'
+        class='flex items-center gap-x-4 transition-all duration-200 ease-in-out hover:scale-105 hover:cursor-pointer hover:text-yellow-400 bg-slate-300 dark:bg-neutral-900/90 rounded-lg px-4 py-3'
         href={GITHUB_URL}
       >
-        <h3 class='text-center text-4xl'>Star it</h3>
-        <Icon name='star' class='text-4xl' />
+        <h3 class='text-center text-2xl relative top-px'>Star it</h3>
+        <Icon name='star' class='text-2xl' />
       </a>
       <Separator orientation='vertical' extraClasses='h-3/5' />
       <a
         class='flex items-center gap-x-4 transition-all duration-200 ease-in-out hover:scale-105 hover:cursor-pointer hover:text-green-400'
         href={SPONSOR_URL}
       >
-        <h3 class='text-center text-4xl'>Sponsor it</h3>
+        <h3 class='text-center text-2xl'>Sponsor it</h3>
         <Icon name='sponsor' class='text-4xl' />
       </a>
     </div>

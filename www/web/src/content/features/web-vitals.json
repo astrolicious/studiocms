@@ -3,5 +3,5 @@
   "sortOrder": 8,
   "feature": "Web Vitals",
   "description": "Integration with '@astrojs/web-vitals' for monitoring and providing insights into web performance metrics, ensuring optimal user experiences.",
-  "icon": "webvital"
+  "icon": "heroicons:chart-bar-square"
 }

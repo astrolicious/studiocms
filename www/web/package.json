@@ -12,18 +12,17 @@
   "dependencies": {
     "@astrojs/check": "catalog:",
     "@astrojs/tailwind": "catalog:",
+    "@fontsource-variable/onest": "catalog:landing",
+    "@iconify-json/heroicons": "catalog:studiocms-shared",
     "astro": "catalog:",
-    "astro-font": "catalog:landing",
     "astro-icon": "catalog:landing",
     "motion": "catalog:landing",
     "powerglitch": "catalog:landing",
-    "sharp": "^0.33.4",
+    "sharp": "catalog:",
     "tailwind-merge": "catalog:landing",
     "tailwind-scrollbar": "catalog:landing",
+    "@tailwindcss/typography": "catalog:landing",
     "tailwindcss": "catalog:landing",
     "typescript": "catalog:"
-  },
-  "devDependencies": {
-    "@tailwindcss/typography": "^0.5.15"
   }
 }
