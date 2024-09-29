@@ -36,7 +36,7 @@ const postOgImage = await getImage({ src: post.data.hero.image, format: 'webp' }
                 </a>
             </div>
             <div class="relative flex flex-col h-full aspect-video text-white justify-end overflow-hidden rounded-[20px] border border-neutral-800">
-                <div class="md:absolute top-0 left-0 w-full relative overflow-hidden shadow z-0">
+                <div class="absolute top-0 left-0 w-full overflow-hidden shadow z-0">
                     <Image
                         src={ post.data.hero.image }
                         alt={ post.data.hero.alt }
@@ -44,7 +44,7 @@ const postOgImage = await getImage({ src: post.data.hero.image, format: 'webp' }
                         loading={'eager'}
                     />
                 </div>
-                <div class="z-40 pt-8 md:p-8 flex items-start justify-end flex-col h-full">
+                <div class="z-40 pt-8 p-2 md:p-8 hidden items-start justify-end flex-col h-full md:flex">
                     <div class="author-contents-bg" />
                     <h1 class="text-2xl md:text-4xl font-bold mb-2 text-shadow-md dark:shadow-black">{ post.data.title }</h1>
                     <h2 class="text-lg md:text-xl mb-8 text-shadow-md dark:shadow-black">{ post.data.description }</h2>
@@ -65,10 +65,27 @@ const postOgImage = await getImage({ src: post.data.hero.image, format: 'webp' }
                                 </div>
                             </div>
                         </div>
-                        <div>
-                            <!-- <h3 class="font-semibold dark:md:drop-shadow-md mb-1">Date published</h3> -->
-                            <!-- <p class="mb-4 dark:md:drop-shadow-md mt-4">{ post.data.publishDate.toLocaleDateString('en-US', { day: '2-digit', month: 'long', year: 'numeric' }) }</p> -->
+                    </div>
+                </div>
+            </div>
+            <div class="z-40 pt-8 p-2 md:p-8 flex md:hidden items-start justify-end flex-col h-full">
+                <h1 class="text-2xl md:text-4xl font-bold mb-2 text-shadow-md dark:shadow-black">{ post.data.title }</h1>
+                <h2 class="text-lg md:text-xl mb-8 text-shadow-md dark:shadow-black">{ post.data.description }</h2>
 
+                <div class="flex items-start flex-col md:flex-row gap-4">
+                    <div>
+                        <!-- <h3 class="font-semibold dark:md:drop-shadow-md mb-1">Written by</h3> -->
+                        <div class="flex gap-4 items-center">
+                            <Image
+                                src={ author.data.avatar }
+                                alt={ author.data.name }
+                                class="aspect-square rounded-full shadow w-[50px]"
+                                loading={'eager'}
+                            />
+                            <div>
+                                <p class="dark:md:drop-shadow-md font-medium text-lg">{ author.data.name }</p>
+                                <p class="dark:md:drop-shadow-md text-sm">{ post.data.publishDate.toLocaleDateString('en-US', { day: '2-digit', month: 'long', year: 'numeric' }) }</p>
+                            </div>
                         </div>
                     </div>
                 </div>
