@@ -22,4 +22,11 @@ export default defineConfig({
 			},
 		}),
 	],
+	image: {
+		remotePatterns: [
+			{
+				protocol: 'https',
+			},
+		],
+	},
 });
