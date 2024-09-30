@@ -7,7 +7,7 @@ hero:
   alt: Goodbye Astro Studio
 author: adam-matthiesen
 ---
-# StudioCMS: Thriving Beyond Astro Studio
+## StudioCMS: Thriving Beyond Astro Studio
 
 With the recent announcement from Astro that Astro Studio will be winding down, we understand that many in the Astro community may be wondering what this means for projects and platforms built around AstroDB, including our very own **StudioCMS**. While Astro Studio, the hosted libSQL database platform, may be closing its doors, **StudioCMS will not only survive but continue to thrive, grow, and serve the Astro ecosystem**—with even more determination than before.
 

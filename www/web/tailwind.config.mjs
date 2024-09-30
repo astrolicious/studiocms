@@ -29,7 +29,7 @@ export default {
 			height: {
 				navbar: '70px',
 				footer: '120px',
-				hero: 'calc(100vh - 128px)',
+				hero: 'calc(100vh - 256px)',
 			},
 		},
 	},
