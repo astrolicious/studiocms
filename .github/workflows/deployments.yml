@@ -1,10 +1,6 @@
 name: StudioCMS Deployments
 
-on:
-  pull_request:
-    types:
-      - opened
-      - ready_for_review
+on: pull_request_target
 
 permissions:
   pull-requests: write

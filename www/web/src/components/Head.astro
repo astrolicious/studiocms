@@ -1,18 +1,18 @@
 ---
-import { join } from 'node:path';
-import { AstroFont } from 'astro-font';
 import ThemeManager from './ThemeManager.astro';
+import '@fontsource-variable/onest';
+import onestWoff2 from '@fontsource-variable/onest/files/onest-latin-wght-normal.woff2?url';
 
 const OgBanner = new URL('/og.png', Astro.url);
 interface Props {
 	title?: string;
+	desc?: string;
 	ogImage?: URL | undefined;
 }
 
-const { title, ogImage = OgBanner } = Astro.props;
+const { title, desc = 'A dedicated CMS for Astro DB.', ogImage = OgBanner } = Astro.props;
 
 const studioTitle = `StudioCMS${title ? ` - ${title}` : ''}`;
-const description = 'A dedicated CMS for Astro DB.';
 ---
 
 <head>
@@ -21,18 +21,19 @@ const description = 'A dedicated CMS for Astro DB.';
   <meta name='viewport' content='width=device-width, initial-scale=1' />
   <meta name='generator' content={Astro.generator} />
   <title>{studioTitle}</title>
-  <meta name='description' content={description} />
+  <meta name='description' content={desc} />
   <link rel="canonical" href={Astro.url} />
   <meta property='og:title' content={studioTitle} />
-  <meta property='og:description' content={description} />
+  <meta property='og:description' content={desc} />
   <meta property='og:image' content={ogImage} />
   <meta property='og:url' content={Astro.url} />
   <meta property='og:type' content='website' />
   <meta name='twitter:card' content='summary_large_image' />
   <meta name="twitter:url" content={Astro.url} />
   <meta name='twitter:title' content={studioTitle} />
-  <meta name='twitter:description' content={description} />
+  <meta name='twitter:description' content={desc} />
   <meta name='twitter:image' content={ogImage} />
+  <link rel="preload" as="font" type="font/woff2" crossorigin="anonymous" href={onestWoff2} />
 
   <ThemeManager defaultTheme="dark" />
   <script 
@@ -41,39 +42,4 @@ const description = 'A dedicated CMS for Astro DB.';
     src="https://analytics.studiocms.xyz/script.js" 
     data-website-id="e3a84c8d-d45a-49d9-932b-00eeb63f8c48">
   </script>
-  <AstroFont
-    config={[
-      {
-        src: [
-          {
-            path: join(process.cwd(), 'public', 'font', 'BalooChettan2-Bold.woff2'),
-            weight: '400',
-            style: 'normal',
-          },
-          {
-            path: join(process.cwd(), 'public', 'font', 'BalooChettan2-Bold.woff2'),
-            weight: '800',
-            style: 'bold',
-          }
-        ],
-        name: 'BalooChettan',
-        preload: true,
-        display: 'swap',
-        selector: 'h1, h2, h3, h4, h5, h6',
-        fallback: 'sans-serif',
-      },
-      {
-        src: [{
-          path: join(process.cwd(), 'public', 'font', 'ZenKakuGothicNew-Regular.woff2'),
-          weight: '400',
-          style: 'normal',
-        }],
-        name: 'zenkaku',
-        preload: true,
-        display: 'swap',
-        selector: 'body',
-        fallback: 'sans-serif',
-      },
-    ]}
-  />
 </head>

@@ -83,9 +83,12 @@ catalogs:
       specifier: ^4.2.7
       version: 4.2.7
   landing:
-    astro-font:
-      specifier: ^0.1.81
-      version: 0.1.81
+    '@fontsource-variable/onest':
+      specifier: 5.1.0
+      version: 5.1.0
+    '@tailwindcss/typography':
+      specifier: ^0.5.15
+      version: 0.5.15
     astro-icon:
       specifier: ^1.1.1
       version: 1.1.1
@@ -167,6 +170,9 @@ catalogs:
     '@astrojs/react':
       specifier: ^3.6.2
       version: 3.6.2
+    '@iconify-json/heroicons':
+      specifier: ^1.2.0
+      version: 1.2.0
     '@inox-tools/runtime-logger':
       specifier: ^0.3.1
       version: 0.3.1
@@ -899,12 +905,18 @@ importers:
       '@astrojs/tailwind':
         specifier: 'catalog:'
         version: 5.1.0(astro@4.15.9(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))(tailwindcss@3.4.7)
+      '@fontsource-variable/onest':
+        specifier: catalog:landing
+        version: 5.1.0
+      '@iconify-json/heroicons':
+        specifier: catalog:studiocms-shared
+        version: 1.2.0
+      '@tailwindcss/typography':
+        specifier: catalog:landing
+        version: 0.5.15(tailwindcss@3.4.7)
       astro:
         specifier: 'catalog:'
         version: 4.15.9(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4)
-      astro-font:
-        specifier: catalog:landing
-        version: 0.1.81
       astro-icon:
         specifier: catalog:landing
         version: 1.1.1
@@ -915,8 +927,8 @@ importers:
         specifier: catalog:landing
         version: 2.3.3
       sharp:
-        specifier: ^0.33.4
-        version: 0.33.5
+        specifier: 'catalog:'
+        version: 0.33.4
       tailwind-merge:
         specifier: catalog:landing
         version: 2.5.2
@@ -929,10 +941,6 @@ importers:
       typescript:
         specifier: 'catalog:'
         version: 5.5.4
-    devDependencies:
-      '@tailwindcss/typography':
-        specifier: ^0.5.15
-        version: 0.5.15(tailwindcss@3.4.7)
 
 packages:
 
@@ -1676,6 +1684,9 @@ packages:
 
   '@fontsource-variable/onest@5.1.0':
     resolution: {integrity: sha512-8jspwmuPWtC2p4gxmjUIQ2JugqCcClFwlD1DEJt+gARgZMm3PI62rYivoKVUDB3Q6hdQxeL5wdzjxCOnzTU5BA==}
+
+  '@iconify-json/heroicons@1.2.0':
+    resolution: {integrity: sha512-EmvGN0L9EUJCmQ82rkLGZ4tkz0YGQfZV7ugKT6UvHni/bxNitQrD0gLj6NJj2W9zsSoXyNHyCX236+EJmO4pmA==}
 
   '@iconify/tools@4.0.5':
     resolution: {integrity: sha512-l8KoA1lxlN/FFjlMd3vjfD7BtcX/QnFWtlBapILMlJSBgM5zhDYak/ldw/LkKG3258q/0YmXa48sO/QpxX7ptg==}
@@ -2835,9 +2846,6 @@ packages:
     resolution: {integrity: sha512-1U4KrvFuodaCV3z4I1bIR16SdhQlPkolGsYTtiANxPZUVv/KitGSCTjzksrkPonn1XuwVqvnwmUUVzTLWngnBA==}
     peerDependencies:
       astro: ^4.0.0-beta || ^3.3.0
-
-  astro-font@0.1.81:
-    resolution: {integrity: sha512-rbrv/+ZSYdgyjBlhkAqfCjMxqqo6iEwnSo/rAdDt/POILsF0ChxMFhefIIzKEukrRGtVjEj1lrLRYk+AdV9scQ==}
 
   astro-icon@1.1.1:
     resolution: {integrity: sha512-HKBesWk2Faw/0+klLX+epQVqdTfSzZz/9+5vxXUjTJaN/HnpDf608gRPgHh7ZtwBPNJMEFoU5GLegxoDcT56OQ==}
@@ -6560,6 +6568,10 @@ snapshots:
 
   '@fontsource-variable/onest@5.1.0': {}
 
+  '@iconify-json/heroicons@1.2.0':
+    dependencies:
+      '@iconify/types': 2.0.0
+
   '@iconify/tools@4.0.5':
     dependencies:
       '@iconify/types': 2.0.0
@@ -7757,8 +7769,6 @@ snapshots:
     dependencies:
       astro: 4.15.9(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4)
       rehype-expressive-code: 0.35.6
-
-  astro-font@0.1.81: {}
 
   astro-icon@1.1.1:
     dependencies:

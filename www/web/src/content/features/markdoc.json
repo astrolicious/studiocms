@@ -3,5 +3,5 @@
   "sortOrder": 4,
   "feature": "Markdoc Integration",
   "description": "Provides an alternative to 'Marked' with Markdoc, offering users a choice for their markdown processing needs.",
-  "icon": "document-text"
+  "icon": "heroicons:document-text"
 }

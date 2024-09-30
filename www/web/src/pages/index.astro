@@ -7,6 +7,7 @@ import Separator from '../components/Separator.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 
 import { getCollection } from 'astro:content';
+import Image from 'astro/components/Image.astro';
 import TestimonialCard from '../components/TestimonialCard.astro';
 import { GITHUB_URL, SPONSOR_URL } from '../constants';
 
@@ -31,6 +32,16 @@ const testimonials = await getCollection('testimonials');
 
 <BaseLayout>
   <Hero />
+  <span class="sr-only">Sponsor Section</span>
+  <section class='studiocms-container mx-auto px-8 py-10 relative -translate-y-20 md:-translate-y-32'>
+    <h3 class='text-center text-3xl font-semibold block'>Sponsored by</h3>
+    <div class='flex flex-row flex-wrap align-center justify-center mb-12 relative'>
+      <a href="https://turso.tech/" target="_blank" rel="sponsored">
+        <Image src={'/sponsors/turso.svg'} alt={'Turso Logo'} width={410} height={120} class='dark:block hidden' />
+        <Image src={'/sponsors/turso-dark.svg'} alt={'Turso Logo'} width={410} height={120} class='block dark:hidden' />
+      </a>
+    </div>
+  </section>
   <span class='sr-only'>Features section</span>
   <section class='studiocms-container mx-auto px-8 py-10'>
     <h2 class='mb-4 md:mb-8 text-center text-5xl font-bold'>Features</h2>
@@ -56,18 +67,18 @@ const testimonials = await getCollection('testimonials');
       class='mx-auto flex py-8 flex-col items-center justify-center gap-x-16 gap-y-10 md:flex-row'
     >
       <a
-        class='flex items-center gap-x-4 transition-all duration-200 ease-in-out hover:scale-105 hover:cursor-pointer hover:text-yellow-400 bg-slate-300 dark:bg-slate-900/90 rounded-lg px-6 py-4'
+        class='flex items-center gap-x-4 transition-all duration-200 ease-in-out hover:scale-105 hover:cursor-pointer hover:text-yellow-400 bg-slate-300 dark:bg-neutral-900/90 rounded-lg px-4 py-3'
         href={GITHUB_URL}
       >
-        <h3 class='text-center text-4xl'>Star it</h3>
-        <Icon name='star' class='text-4xl' />
+        <h3 class='text-center text-2xl relative top-px'>Star it</h3>
+        <Icon name='star' class='text-2xl' />
       </a>
       <Separator orientation='vertical' extraClasses='h-3/5' />
       <a
         class='flex items-center gap-x-4 transition-all duration-200 ease-in-out hover:scale-105 hover:cursor-pointer hover:text-green-400'
         href={SPONSOR_URL}
       >
-        <h3 class='text-center text-4xl'>Sponsor it</h3>
+        <h3 class='text-center text-2xl'>Sponsor it</h3>
         <Icon name='sponsor' class='text-4xl' />
       </a>
     </div>

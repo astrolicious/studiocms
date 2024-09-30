@@ -8,11 +8,11 @@ import Blob from './Blob.astro';
 >
   <div class='panel relative z-10 rounded-[30px]'>
     <Blob />
-    <div class='panel-inner flex flex-col items-center px-4 py-8 md:p-16'>
+    <div class='panel-inner flex flex-col items-center px-4 py-8 md:p-16 z-20'>
       <h1 class='mb-8 text-center text-5xl font-extrabold md:text-8xl'>
         StudioCMS
       </h1>
-      <p class='mb-2 text-center text-lg font-bold md:text-xl'>
+      <p class='mb-2 text-center text-lg font-medium md:text-xl'>
         A dedicated CMS for Astro DB.
       </p>
       <p class='mb-4 text-center text-lg md:text-xl'>
@@ -21,24 +21,3 @@ import Blob from './Blob.astro';
     </div>
   </div>
 </section>
-
-<script>
-  const blob = document.getElementById('blob')!
-  const panel = document.querySelector('.panel')
-
-  document.addEventListener('mousemove', (event) => {
-    const blobWidth = blob.offsetWidth
-    const blobHeight = blob.offsetHeight
-
-    const rect = panel?.getBoundingClientRect()!
-    const mouseX = event.clientX - rect.left
-    const mouseY = event.clientY - rect.top
-
-    const blobX = mouseX - blobWidth / 2
-    const blobY = mouseY - blobHeight / 2
-
-    // Update the position of the blob element
-    blob.style.left = blobX + 'px'
-    blob.style.top = blobY + 'px'
-  })
-</script>

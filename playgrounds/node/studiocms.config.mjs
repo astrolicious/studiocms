@@ -29,7 +29,8 @@ export default defineStudioCMSConfig({
 		useInoxSitemap: true,
 	},
 	imageService: {
-		useUnpic: true,
+		useUnpic: false,
+		astroImageServiceConfig: 'no-op',
 	},
 	dashboardConfig: {
 		AuthConfig: {

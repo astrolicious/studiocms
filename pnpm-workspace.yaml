@@ -27,8 +27,10 @@ catalogs:
     tailwindcss: ^3.4.4
     tailwind-merge: ^2.5.2
     tailwind-scrollbar: ^3.1.0
-    astro-font: ^0.1.81
+    '@tailwindcss/typography': ^0.5.15
+    '@fontsource-variable/onest': 5.1.0
     astro-icon: ^1.1.1
+    '@iconify-json/heroicons': ^1.2.0
   docs:
     '@shoelace-style/shoelace': ^2.16.0
     "@types/hast": ^3.0.4
@@ -50,6 +52,7 @@ catalogs:
     mdast-util-to-hast: ^13.2.0
   studiocms-shared:
     '@inox-tools/runtime-logger': ^0.3.1
+    '@iconify-json/heroicons': ^1.2.0
     "@matthiesenxyz/astrolace": ^0.3.2
     "@matthiesenxyz/astrodtsbuilder": ^0.1.2
     "@matthiesenxyz/integration-utils": ^0.2.0
