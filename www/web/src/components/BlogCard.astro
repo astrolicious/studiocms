@@ -25,7 +25,7 @@ const { name, avatar } = authorData.data;
 <a {href}>
     <section class="group flex flex-col justify-between h-full">
         <div>
-            <Image src={ image } alt={ alt } class="aspect-video rounded-lg" loading={index < 6 ? 'eager' : 'lazy'} />
+            <Image src={ image } alt={ alt } class="aspect-video rounded-lg border border-neutral-800" loading={index < 6 ? 'eager' : 'lazy'} />
             <h2 class="text-2xl my-2 font-bold group-hover:text-indigo-400 transition-colors">{ title }</h2>
             <span class="mb-4 block text-ellipsis ">{ description }</span>
         </div>
