@@ -21,7 +21,7 @@ Not much, actually! We'll continue to operate as we do now, with the only differ
 
 *Speaking of, should you want to sponsor us too, feel free! You can do so on our [GitHub repository](https://github.com/astrolicious/studiocms), right hand side, "Sponsor this project" section* 😉
 
-## What's next?!
+## What's next?
 Our main goal has not changed, and we'll continue to strive to bring you the best CMS for Astro possible! We've got some big things in the works, including a **dashboard redesign** *(championed by yours truly)* and adjacent **UI library**, a backend rewrite which ties into the former, and lots of other little things - you might have noticed our **small landing page rework** recently! 
 
 Feel free to check out any active PRs on [GitHub](https://github.com/astrolicious/studiocms) or join our [Discord Server](https://chat.studiocms.xyz/) for more information on what's happening in the StudioCMS ecosystem at the moment.
