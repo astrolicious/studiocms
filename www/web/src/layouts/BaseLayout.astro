@@ -6,10 +6,11 @@ import '../styles/global.css';
 
 interface Props {
 	title?: string;
+	desc?: string;
 	ogImage?: string;
 }
 
-const { title, ogImage } = Astro.props;
+const { title, desc, ogImage } = Astro.props;
 
 let OgImage: URL | undefined = undefined;
 if (ogImage) {
@@ -21,7 +22,7 @@ if (ogImage) {
   class='scrollbar scrollbar-thumb-white scrollbar-track-[#1a172e] text-[--purple-900] dark:text-[--white-50]'
   lang='en'
 >
-  <Head {title} ogImage={OgImage}/>
+  <Head {title} {desc} ogImage={OgImage}/>
   <body>
     <Navbar />
     <slot />
