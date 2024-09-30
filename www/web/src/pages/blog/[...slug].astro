@@ -26,7 +26,7 @@ const author = await getEntry(post.data.author);
 const postOgImage = await getImage({ src: post.data.hero.image, format: 'webp' });
 ---
 
-<BaseLayout title={ post.data.title } ogImage={postOgImage.src}>
+<BaseLayout title={post.data.title} desc={post.data.description} ogImage={postOgImage.src}>
     <div class="p-8 pt-4">
         <section class='studiocms-container mx-auto min-h-[calc(100vh_-_70px)]'>
             <div class="breadcrumbs mb-4 text-lg">
@@ -38,30 +38,30 @@ const postOgImage = await getImage({ src: post.data.hero.image, format: 'webp' }
             <div class="relative flex flex-col h-full aspect-video text-white justify-end overflow-hidden rounded-[20px] border border-neutral-800">
                 <div class="absolute top-0 left-0 w-full overflow-hidden shadow z-0">
                     <Image
-                        src={ post.data.hero.image }
-                        alt={ post.data.hero.alt }
+                        src={post.data.hero.image}
+                        alt={post.data.hero.alt}
                         class="aspect-video"
                         loading={'eager'}
                     />
                 </div>
                 <div class="z-40 pt-8 p-2 md:p-8 hidden items-start justify-end flex-col h-full md:flex">
                     <div class="author-contents-bg" />
-                    <h1 class="text-2xl md:text-4xl font-bold mb-2 text-shadow-md dark:shadow-black">{ post.data.title }</h1>
-                    <h2 class="text-lg md:text-xl mb-8 text-shadow-md dark:shadow-black">{ post.data.description }</h2>
+                    <h1 class="text-2xl md:text-4xl font-bold mb-2 text-shadow-md dark:shadow-black">{post.data.title}</h1>
+                    <h2 class="text-lg md:text-xl mb-8 text-shadow-md dark:shadow-black">{post.data.description}</h2>
     
                     <div class="flex items-start flex-col md:flex-row gap-4">
                         <div>
                             <!-- <h3 class="font-semibold dark:md:drop-shadow-md mb-1">Written by</h3> -->
                             <div class="flex gap-4 items-center">
                                 <Image
-                                    src={ author.data.avatar }
-                                    alt={ author.data.name }
+                                    src={author.data.avatar}
+                                    alt={author.data.name}
                                     class="aspect-square rounded-full shadow w-[50px]"
                                     loading={'eager'}
                                 />
                                 <div>
-                                    <p class="dark:md:drop-shadow-md font-medium text-lg">{ author.data.name }</p>
-                                    <p class="dark:md:drop-shadow-md text-sm">{ post.data.publishDate.toLocaleDateString('en-US', { day: '2-digit', month: 'long', year: 'numeric' }) }</p>
+                                    <p class="dark:md:drop-shadow-md font-medium text-lg">{author.data.name}</p>
+                                    <p class="dark:md:drop-shadow-md text-sm">{post.data.publishDate.toLocaleDateString('en-US', { day: '2-digit', month: 'long', year: 'numeric' })}</p>
                                 </div>
                             </div>
                         </div>
@@ -69,22 +69,22 @@ const postOgImage = await getImage({ src: post.data.hero.image, format: 'webp' }
                 </div>
             </div>
             <div class="z-40 pt-8 p-2 md:p-8 flex md:hidden items-start justify-end flex-col h-full">
-                <h1 class="text-2xl md:text-4xl font-bold mb-2 text-shadow-md dark:shadow-black">{ post.data.title }</h1>
-                <h2 class="text-lg md:text-xl mb-8 text-shadow-md dark:shadow-black">{ post.data.description }</h2>
+                <h1 class="text-2xl md:text-4xl font-bold mb-2 text-shadow-md dark:shadow-black">{post.data.title}</h1>
+                <h2 class="text-lg md:text-xl mb-8 text-shadow-md dark:shadow-black">{post.data.description}</h2>
 
                 <div class="flex items-start flex-col md:flex-row gap-4">
                     <div>
                         <!-- <h3 class="font-semibold dark:md:drop-shadow-md mb-1">Written by</h3> -->
                         <div class="flex gap-4 items-center">
                             <Image
-                                src={ author.data.avatar }
-                                alt={ author.data.name }
+                                src={author.data.avatar}
+                                alt={author.data.name}
                                 class="aspect-square rounded-full shadow w-[50px]"
                                 loading={'eager'}
                             />
                             <div>
-                                <p class="dark:md:drop-shadow-md font-medium text-lg">{ author.data.name }</p>
-                                <p class="dark:md:drop-shadow-md text-sm">{ post.data.publishDate.toLocaleDateString('en-US', { day: '2-digit', month: 'long', year: 'numeric' }) }</p>
+                                <p class="dark:md:drop-shadow-md font-medium text-lg">{author.data.name}</p>
+                                <p class="dark:md:drop-shadow-md text-sm">{post.data.publishDate.toLocaleDateString('en-US', { day: '2-digit', month: 'long', year: 'numeric' })}</p>
                             </div>
                         </div>
                     </div>
