@@ -15,7 +15,7 @@ To see how to get started, check out the [StudioCMS README](./packages/studiocms
 
 ## Sponsor
 
-<img src="https://turso.tech/logokit/turso-logo-illustrated.svg" width="400px" />
+<a href="https://turso.tech" rel="sponsored" target="_blank"><img src="https://turso.tech/logokit/turso-logo-illustrated.svg" width="400px" /></a>
 
 ## Contributing
 
