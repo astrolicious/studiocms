@@ -6,15 +6,11 @@ import onestWoff2 from '@fontsource-variable/onest/files/onest-latin-wght-normal
 const OgBanner = new URL('/og.png', Astro.url);
 interface Props {
 	title?: string;
-  desc?: string;
+	desc?: string;
 	ogImage?: URL | undefined;
 }
 
-const { 
-  title,
-  desc = 'A dedicated CMS for Astro DB.',
-  ogImage = OgBanner
-} = Astro.props;
+const { title, desc = 'A dedicated CMS for Astro DB.', ogImage = OgBanner } = Astro.props;
 
 const studioTitle = `StudioCMS${title ? ` - ${title}` : ''}`;
 ---
