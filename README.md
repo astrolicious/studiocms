@@ -13,6 +13,10 @@ To see how to get started, check out the [StudioCMS README](./packages/studiocms
 > [!IMPORTANT]
 > This project is still in early development and it is not yet ready for production use. If you encounter any issues or have ideas for new features, please let us know by [opening an issue](https://github.com/astrolicious/studiocms/issues/new/choose) on our GitHub repository.
 
+## Sponsors
+
+<img src="https://turso.tech/logokit/turso-logo-illustrated.svg" width="400px" />
+
 ## Contributing
 
 We welcome contributions from the community! Whether it's bug reports, feature requests, or code contributions, we appreciate your help in making this project better.
