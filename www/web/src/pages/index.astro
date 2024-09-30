@@ -36,9 +36,8 @@ const testimonials = await getCollection('testimonials');
   <section class='studiocms-container mx-auto px-8 py-10 relative -translate-y-20 md:-translate-y-32'>
     <h3 class='text-center text-3xl font-semibold block'>Sponsored by</h3>
     <div class='flex flex-row flex-wrap align-center justify-center mb-12 relative'>
-      <div>
-        <Image src={'/sponsors/turso.svg'} alt={'Turso Logo'} width={410} height={120} />
-      </div>
+      <Image src={'/sponsors/turso.svg'} alt={'Turso Logo'} width={410} height={120} class='dark:block hidden' />
+      <Image src={'/sponsors/turso-dark.svg'} alt={'Turso Logo'} width={410} height={120} class='block dark:hidden' />
     </div>
   </section>
   <span class='sr-only'>Features section</span>
