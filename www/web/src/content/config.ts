@@ -9,10 +9,12 @@ const blogCollection = defineCollection({
 				message: 'Description must be less than 50 characters',
 			}),
 			publishDate: z.date(),
-			hero: z.object({
-				image: image(),
-				alt: z.string(),
-			}),
+			hero: z
+				.object({
+					image: image(),
+					alt: z.string(),
+				})
+				.optional(),
 			author: reference('authors'),
 			tags: z.array(z.string()).optional(),
 		}),

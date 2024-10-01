@@ -2,9 +2,6 @@
 title: Goodbye, Astro Studio!
 description: Astro Studio is gone but StudioCMS isn't!
 publishDate: 2024-09-21
-hero:
-  image: "./assets/bye-bye-studio.png"
-  alt: Goodbye Astro Studio
 author: adam-matthiesen
 ---
 ## StudioCMS: Thriving Beyond Astro Studio

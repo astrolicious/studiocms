@@ -37,8 +37,8 @@ const testimonials = await getCollection('testimonials');
     <h3 class='text-center text-3xl font-semibold block'>Sponsored by</h3>
     <div class='flex flex-row flex-wrap align-center justify-center mb-12 relative'>
       <a href="https://turso.tech/" target="_blank" rel="sponsored">
-        <Image src={'/sponsors/turso.svg'} alt={'Turso Logo'} width={410} height={120} class='dark:block hidden' />
-        <Image src={'/sponsors/turso-dark.svg'} alt={'Turso Logo'} width={410} height={120} class='block dark:hidden' />
+        <Image src={'/sponsors/turso.svg'} alt={'Turso Logo'} width={410} height={120} class='dark:block hidden' loading={'eager'} />
+        <Image src={'/sponsors/turso-dark.svg'} alt={'Turso Logo'} width={410} height={120} class='block dark:hidden' loading={'eager'} />
       </a>
     </div>
   </section>

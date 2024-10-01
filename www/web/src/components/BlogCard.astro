@@ -1,6 +1,7 @@
 ---
-import { Image } from 'astro:assets';
+import { Image, getImage } from 'astro:assets';
 import { type CollectionEntry, getEntry } from 'astro:content';
+import { ogPropsGenerator } from '../lib/ogHelper';
 
 export interface Props {
 	post: CollectionEntry<'blog'>;
@@ -10,22 +11,18 @@ export interface Props {
 const { post, index } = Astro.props;
 
 const href = `/blog/${post.slug}`;
-const {
-	title,
-	description,
-	publishDate,
-	hero: { image, alt },
-	author,
-} = post.data;
+const { title, description, publishDate, author } = post.data;
 
 const authorData = await getEntry(author);
 const { name, avatar } = authorData.data;
+
+const imageProps = await ogPropsGenerator(post);
 ---
 
 <a {href}>
     <section class="group flex flex-col justify-between h-full">
         <div>
-            <Image src={ image } alt={ alt } class="aspect-video rounded-lg border border-neutral-800" loading={index < 6 ? 'eager' : 'lazy'} />
+            <Image {...imageProps} class="aspect-video rounded-lg border border-neutral-800" loading={index < 6 ? 'eager' : 'lazy'} />
             <h2 class="text-2xl my-2 font-bold group-hover:text-indigo-400 transition-colors">{ title }</h2>
             <span class="mb-4 block text-ellipsis ">{ description }</span>
         </div>
