@@ -15,6 +15,19 @@ const blogCollection = defineCollection({
 					alt: z.string(),
 				})
 				.optional(),
+			ogVariant: z
+				.union([
+					z.literal('accent'),
+					z.literal('blue-purple'),
+					z.literal('blue-yellow'),
+					z.literal('fall'),
+					z.literal('green-accent'),
+					z.literal('red'),
+					z.literal('spring'),
+					z.literal('summer'),
+					z.literal('winter'),
+				])
+				.optional(),
 			author: reference('authors'),
 			tags: z.array(z.string()).optional(),
 		}),

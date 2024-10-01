@@ -2,6 +2,7 @@
 title: Goodbye, Astro Studio!
 description: Astro Studio is gone but StudioCMS isn't!
 publishDate: 2024-09-21
+ogVariant: fall
 author: adam-matthiesen
 ---
 ## StudioCMS: Thriving Beyond Astro Studio

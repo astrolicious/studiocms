@@ -8,7 +8,7 @@
   },
   "files": {
     "ignoreUnknown": true,
-    "ignore": ["**/.astro/**", "**/package.json", "**/dist/**", "**/base64strings.ts"]
+    "ignore": ["**/.astro/**", "**/package.json", "**/dist/**", "**/ogBackgrounds/**"]
   },
   "formatter": {
     "lineWidth": 100,
