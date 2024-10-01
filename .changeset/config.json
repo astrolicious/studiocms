@@ -13,12 +13,13 @@
       "@studiocms/frontend",
       "@studiocms/imagehandler",
       "@studiocms/renderers",
-      "@studiocms/robotstxt"
+      "@studiocms/robotstxt",
+      "@studiocms/ui"
     ]
   ],
   "linked": [],
   "access": "public",
   "baseBranch": "main",
   "updateInternalDependencies": "patch",
-  "ignore": ["web", "docs", "node-playground"]
+  "ignore": ["web", "docs", "node-playground", "ui-playground"]
 }

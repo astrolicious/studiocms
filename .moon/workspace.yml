@@ -15,9 +15,11 @@ projects:
   studiocms_imagehandler: 'packages/studiocms_imagehandler'
   studiocms_renderers: 'packages/studiocms_renderers'
   studiocms_robotstxt: 'packages/studiocms_robotstxt'
+  studiocms_ui: 'packages/studiocms_ui'
 
   # Playgrounds
   playground: 'playgrounds/node'
+  ui-playground: 'playgrounds/ui'
   # cloudflare-playground: 'playgrounds/cloudflare' - Removed for now till we start experimenting with Cloudflare again.
 
   # Web Sites & Docs

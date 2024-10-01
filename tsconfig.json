@@ -1,5 +1,19 @@
 {
-  "include": ["**/*"],
+  "include": [
+    "**/*",
+    "packages/studiocms/**/*",
+    "packages/studiocms_assets/**/*",
+    "packages/studiocms_auth/**/*",
+    "packages/studiocms_betaresources/**/*",
+    "packages/studiocms_blog/**/*",
+    "packages/studiocms_core/**/*",
+    "packages/studiocms_dashboard/**/*",
+    "packages/studiocms_frontend/**/*",
+    "packages/studiocms_imagehandler/**/*",
+    "packages/studiocms_renderers/**/*",
+    "packages/studiocms_robotstxt/**/*",
+    "packages/studiocms_ui/**/*"
+  ],
   "compilerOptions": {
     "composite": true,
     "declaration": true,
@@ -10,7 +24,31 @@
     "noEmitOnError": true,
     "skipLibCheck": true,
     "outDir": ".moon/cache/types",
-    "paths": {}
+    "paths": {
+      "studiocms": ["packages/studiocms/src/index.ts"],
+      "studiocms/*": ["packages/studiocms/src/*"],
+      "@studiocms/assets": ["packages/studiocms_assets/src/index.ts"],
+      "@studiocms/assets/*": ["packages/studiocms_assets/src/*"],
+      "@studiocms/auth": ["packages/studiocms_auth/src/index.ts"],
+      "@studiocms/auth/*": ["packages/studiocms_auth/src/*"],
+      "@studiocms/betaresources": ["packages/studiocms_betaresources/src/index.ts"],
+      "@studiocms/betaresources/*": ["packages/studiocms_betaresources/src/*"],
+      "@studiocms/blog": ["packages/studiocms_blog/index.ts"],
+      "@studiocms/blog/*": ["packages/studiocms_blog/src/*"],
+      "@studiocms/core": ["packages/studiocms_core/src/index.ts"],
+      "@studiocms/core/*": ["packages/studiocms_core/src/*"],
+      "@studiocms/dashboard": ["packages/studiocms_dashboard/src/index.ts"],
+      "@studiocms/dashboard/*": ["packages/studiocms_dashboard/src/*"],
+      "@studiocms/frontend": ["packages/studiocms_frontend/src/index.ts"],
+      "@studiocms/frontend/*": ["packages/studiocms_frontend/src/*"],
+      "@studiocms/imagehandler": ["packages/studiocms_imagehandler/src/index.ts"],
+      "@studiocms/imagehandler/*": ["packages/studiocms_imagehandler/src/*"],
+      "@studiocms/renderers": ["packages/studiocms_renderers/src/index.ts"],
+      "@studiocms/renderers/*": ["packages/studiocms_renderers/src/*"],
+      "@studiocms/robotstxt": ["packages/studiocms_robotstxt/src/index.ts"],
+      "@studiocms/robotstxt/*": ["packages/studiocms_robotstxt/src/*"],
+      "@studiocms/ui/*": ["packages/studiocms_ui/src/*"]
+    }
   },
   "references": [
     {
@@ -24,6 +62,9 @@
     },
     {
       "path": "packages/studiocms_betaresources"
+    },
+    {
+      "path": "packages/studiocms_blog"
     },
     {
       "path": "packages/studiocms_core"
@@ -44,7 +85,7 @@
       "path": "packages/studiocms_robotstxt"
     },
     {
-      "path": "packages/studiocms_blog"
+      "path": "packages/studiocms_ui"
     }
   ]
 }
