@@ -16,8 +16,18 @@ jobs:
         with:
           ref: ${{ github.head_ref }}
           token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Install Tools & Dependencies
-        uses: ./.github/actions/install
+
+      - name: Setup PNPM
+        uses: pnpm/action-setup@v3
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+      - name: Install dependencies
+        run: pnpm i
+        shell: bash
+
       - name: Format code
         run: pnpm run lint:fix
       - name: Commit changes
