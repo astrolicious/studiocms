@@ -1,6 +1,7 @@
 ---
 import './User.css';
 
+import { Image } from 'astro:assets';
 import Icon from '../../utils/Icon.astro';
 
 type Props = {
@@ -14,9 +15,9 @@ const { name, description, avatar, class: className } = Astro.props;
 ---
 <div class="user-container" class:list={[ className ]}>
   <div class="avatar-container">
-    <!-- TODO: Astro Image or Unpic? -->
+    <!-- Astro Image or Unpic -->
     {avatar ? (
-      <img src={avatar} class="avatar-img" />
+      <Image src={avatar} inferSize alt={name} class="avatar-img" />
     ) : (
       <Icon name='user' width={32} height={32} />
     )}

@@ -60,7 +60,6 @@ class SingleSidebarHelper {
 class DoubleSidebarHelper {
 	sidebarsContainer: HTMLElement;
 
-	// TODO: Rework into similar to single sidebar
 	constructor() {
 		const sidebarsContainer = document.getElementById('sidebars');
 
