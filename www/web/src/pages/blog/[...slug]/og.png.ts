@@ -19,7 +19,7 @@ export const getStaticPaths = (async () => {
 	}));
 }) satisfies GetStaticPaths;
 
-export const GET: APIRoute = async ({ props, url, site }: APIContext) => {
+export const GET: APIRoute = async ({ props, site }: APIContext) => {
 	const { post } = props;
 
 	const font400File = await fetch(
@@ -38,7 +38,7 @@ export const GET: APIRoute = async ({ props, url, site }: APIContext) => {
 		template: html(
 			decode(
 				await astroContainer.renderToString(OgImageTemplate, {
-					props: { post, origin: url.origin },
+					props: { post, origin: site },
 				})
 			)
 		),
