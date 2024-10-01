@@ -25,12 +25,21 @@ export const GET: APIRoute = async ({ props }: APIContext) => {
 	);
 	const font400Data = await font400File.arrayBuffer();
 
+	const font700File = await fetch(
+		'https://cdn.jsdelivr.net/fontsource/fonts/onest@latest/latin-700-normal.ttf'
+	);
+
+	const font700Data = await font700File.arrayBuffer();
+
 	return await satoriAstroOG({
-		template: html`<div style='width: 100%; height: 100%; position: relative; display:flex'>
+		template: html`
+			<div style='width: 100%; height: 100%; position: relative; display:flex'>
 				<img src=${ogBG} width="3840" height="2160" style='width: 100%; height: 100%; object-fit: cover; display: flex;' />
-				<div style="left: 50%; top: 45%; transform: translate(-50%, -50%); position: absolute; color: white; font-size: 250px; font-family: Onest; font-weight: 700; word-wrap: break-word; display: flex; flex-direction: column; justify-items: center; align-items: center;">StudioCMS
-				<p style="font-size: 100px; margin: 0; font-family: Onest; font-weight: 400;">${post.data.description}</p>
-				</div></div>`,
+				<div style="left: 50%; top: 45%; transform: translate(-50%, -50%); position: absolute; color: white; font-size: 250px; font-family: Onest; font-weight: 700; word-wrap: break-word; display: flex; flex-direction: column; justify-items: center; align-items: center;">
+					StudioCMS
+					<p style="font-size: 100px; margin: 0; font-family: Onest; font-weight: 400;">${post.data.description}</p>
+				</div>
+			</div>`,
 		width: 3840,
 		height: 2160,
 	}).toResponse({
@@ -40,6 +49,11 @@ export const GET: APIRoute = async ({ props }: APIContext) => {
 					name: 'Onset',
 					data: font400Data,
 					weight: 400,
+				},
+				{
+					name: 'Onset',
+					data: font700Data,
+					weight: 700,
 				},
 			],
 		},
