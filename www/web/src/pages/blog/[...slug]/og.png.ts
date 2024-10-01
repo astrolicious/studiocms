@@ -21,9 +21,16 @@ export const getStaticPaths = (async () => {
 
 export const GET: APIRoute = async ({ props, url, site }: APIContext) => {
 	const { post } = props;
-	const getPublicFonts = async (path: string) => {
-		return await (await fetch(new URL(path, site))).arrayBuffer();
-	};
+
+	const font400File = await fetch(
+		'https://cdn.jsdelivr.net/fontsource/fonts/onest@latest/latin-400-normal.ttf'
+	);
+	const font400Data = await font400File.arrayBuffer();
+
+	const font700File = await fetch(
+		'https://cdn.jsdelivr.net/fontsource/fonts/onest@latest/latin-700-normal.ttf'
+	);
+	const font700Data = await font700File.arrayBuffer();
 
 	const astroContainer = await AstroContainer.create();
 
@@ -42,13 +49,13 @@ export const GET: APIRoute = async ({ props, url, site }: APIContext) => {
 			fonts: [
 				{
 					name: 'Onset',
-					data: await getPublicFonts('/font/Onest-Bold.ttf'),
-					weight: 700,
+					data: font400Data,
+					weight: 400,
 				},
 				{
 					name: 'Onset',
-					data: await getPublicFonts('/font/Onest-Regular.ttf'),
-					weight: 400,
+					data: font700Data,
+					weight: 700,
 				},
 			],
 		},
