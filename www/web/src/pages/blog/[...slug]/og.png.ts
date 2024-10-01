@@ -21,12 +21,12 @@ export const GET: APIRoute = async ({ props }: APIContext) => {
 	const { post } = props;
 
 	const font400File = await fetch(
-		'https://cdn.jsdelivr.net/fontsource/fonts/onest@latest/latin-ext-400-normal.ttf'
+		'https://cdn.jsdelivr.net/fontsource/fonts/onest@latest/latin-400-normal.ttf'
 	);
 	const font400Data = await font400File.arrayBuffer();
 
 	const font800File = await fetch(
-		'https://cdn.jsdelivr.net/fontsource/fonts/onest@latest/latin-ext-800-normal.ttf'
+		'https://cdn.jsdelivr.net/fontsource/fonts/onest@latest/latin-800-normal.ttf'
 	);
 
 	const font800Data = await font800File.arrayBuffer();
