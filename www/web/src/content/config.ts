@@ -40,19 +40,19 @@ const featuresCollection = defineCollection({
 	}),
 });
 
-const testimonialsCollection = defineCollection({
-	type: 'data',
-	schema: ({ image }) =>
-		z.object({
-			name: z.string(),
-			comment: z.string(),
-			avatar: image(),
-		}),
-});
+// const testimonialsCollection = defineCollection({
+// 	type: 'data',
+// 	schema: ({ image }) =>
+// 		z.object({
+// 			name: z.string(),
+// 			comment: z.string(),
+// 			avatar: image(),
+// 		}),
+// });
 
 export const collections = {
 	blog: blogCollection,
 	authors: authorsCollection,
 	features: featuresCollection,
-	testimonials: testimonialsCollection,
+	// testimonials: testimonialsCollection,
 };

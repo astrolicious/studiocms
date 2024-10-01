@@ -4,7 +4,6 @@ import { getCollection, getEntry } from 'astro:content';
 import type { GetStaticPaths } from 'astro';
 import { Icon } from 'astro-icon/components';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
-import { ogPropsGenerator } from '../../../lib/ogHelper';
 
 export const getStaticPaths = (async () => {
 	const blogPosts = await getCollection('blog');
@@ -24,7 +23,22 @@ const { Content } = await post.render();
 
 const author = await getEntry(post.data.author);
 
-const imageProps = await ogPropsGenerator(post);
+let postOgImage = `/blog/${post.slug}/og.png`;
+let postOgDescription = post.data.description;
+
+if (post.data.hero) {
+	const heroImage = post.data.hero.image;
+	const heroImageWebp = (await getImage({ src: heroImage, format: 'webp' })).src;
+	postOgImage = heroImageWebp;
+	postOgDescription = post.data.hero.alt;
+}
+
+const imageProps = {
+	src: postOgImage,
+	alt: postOgDescription,
+	width: 3840,
+	height: 2160,
+};
 ---
 
 <BaseLayout title={post.data.title} desc={post.data.description} ogImage={imageProps.src}>

@@ -1,7 +1,6 @@
 ---
 import { Image, getImage } from 'astro:assets';
 import { type CollectionEntry, getEntry } from 'astro:content';
-import { ogPropsGenerator } from '../lib/ogHelper';
 
 export interface Props {
 	post: CollectionEntry<'blog'>;
@@ -16,7 +15,22 @@ const { title, description, publishDate, author } = post.data;
 const authorData = await getEntry(author);
 const { name, avatar } = authorData.data;
 
-const imageProps = await ogPropsGenerator(post);
+let postOgImage = `/blog/${post.slug}/og.png`;
+let postOgDescription = post.data.description;
+
+if (post.data.hero) {
+	const heroImage = post.data.hero.image;
+	const heroImageWebp = (await getImage({ src: heroImage, format: 'webp' })).src;
+	postOgImage = heroImageWebp;
+	postOgDescription = post.data.hero.alt;
+}
+
+const imageProps = {
+	src: postOgImage,
+	alt: postOgDescription,
+	width: 3840,
+	height: 2160,
+};
 ---
 
 <a {href}>

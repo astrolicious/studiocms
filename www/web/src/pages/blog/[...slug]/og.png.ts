@@ -1,9 +1,7 @@
 import { getCollection } from 'astro:content';
 import type { APIContext, APIRoute, GetStaticPaths } from 'astro';
-import { experimental_AstroContainer as AstroContainer } from 'astro/container';
-import { decode } from 'html-entities';
 import { html } from 'satori-html';
-import OgImageTemplate from '../../../components/OgImageTemplate.astro';
+import { ogBG } from '../../../lib/base64strings';
 import { satoriAstroOG } from '../../../lib/satoriOG';
 
 export const getStaticPaths = (async () => {
@@ -19,7 +17,7 @@ export const getStaticPaths = (async () => {
 	}));
 }) satisfies GetStaticPaths;
 
-export const GET: APIRoute = async ({ props, site }: APIContext) => {
+export const GET: APIRoute = async ({ props }: APIContext) => {
 	const { post } = props;
 
 	const font400File = await fetch(
@@ -27,21 +25,12 @@ export const GET: APIRoute = async ({ props, site }: APIContext) => {
 	);
 	const font400Data = await font400File.arrayBuffer();
 
-	const font700File = await fetch(
-		'https://cdn.jsdelivr.net/fontsource/fonts/onest@latest/latin-700-normal.ttf'
-	);
-	const font700Data = await font700File.arrayBuffer();
-
-	const astroContainer = await AstroContainer.create();
-
 	return await satoriAstroOG({
-		template: html(
-			decode(
-				await astroContainer.renderToString(OgImageTemplate, {
-					props: { post, origin: site },
-				})
-			)
-		),
+		template: html`<div style='width: 100%; height: 100%; position: relative; display:flex'>
+				<img src='${ogBG}' width="3840" height="2160" style='width: 100%; height: 100%; object-fit: cover; display: flex;' />
+				<div style="left: 50%; top: 45%; transform: translate(-50%, -50%); position: absolute; color: white; font-size: 250px; font-family: Onest; font-weight: 700; word-wrap: break-word; display: flex; flex-direction: column; justify-items: center; align-items: center;">StudioCMS
+				<p style="font-size: 100px; margin: 0; font-family: Onest; font-weight: 400;">${post.data.description}</p>
+				</div></div>`,
 		width: 3840,
 		height: 2160,
 	}).toResponse({
@@ -51,11 +40,6 @@ export const GET: APIRoute = async ({ props, site }: APIContext) => {
 					name: 'Onset',
 					data: font400Data,
 					weight: 400,
-				},
-				{
-					name: 'Onset',
-					data: font700Data,
-					weight: 700,
 				},
 			],
 		},
