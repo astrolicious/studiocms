@@ -49,11 +49,13 @@ export const GET: APIRoute = async ({ props }: APIContext) => {
 					name: 'Onset',
 					data: font400Data,
 					weight: 400,
+					style: 'normal',
 				},
 				{
 					name: 'Onset',
 					data: font800Data,
 					weight: 800,
+					style: 'normal',
 				},
 			],
 		},
