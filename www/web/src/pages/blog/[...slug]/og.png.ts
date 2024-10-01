@@ -19,13 +19,11 @@ export const getStaticPaths = (async () => {
 	}));
 }) satisfies GetStaticPaths;
 
-// This function fetches a font file from a given base URL and path, and returns it as an ArrayBuffer.
-const getPublicFonts = async (base: string, path: string) => {
-	return await (await fetch(new URL(path, base))).arrayBuffer();
-};
-
-export const GET: APIRoute = async ({ props, url }: APIContext) => {
+export const GET: APIRoute = async ({ props, url, site }: APIContext) => {
 	const { post } = props;
+	const getPublicFonts = async (path: string) => {
+		return await (await fetch(new URL(path, site))).arrayBuffer();
+	};
 
 	const astroContainer = await AstroContainer.create();
 
@@ -44,12 +42,12 @@ export const GET: APIRoute = async ({ props, url }: APIContext) => {
 			fonts: [
 				{
 					name: 'Onset',
-					data: await getPublicFonts(url.origin, '/font/Onest-Bold.ttf'),
+					data: await getPublicFonts('/font/Onest-Bold.ttf'),
 					weight: 700,
 				},
 				{
 					name: 'Onset',
-					data: await getPublicFonts(url.origin, '/font/Onest-Regular.ttf'),
+					data: await getPublicFonts('/font/Onest-Regular.ttf'),
 					weight: 400,
 				},
 			],
