@@ -7,7 +7,7 @@
 
 	position: relative;
 
-	/* TODO: Move gaps & radii to spacings.css */
+	/* Move gaps & radii to spacings.css later on */
 	gap: 0.5rem;
 
 	outline: none;

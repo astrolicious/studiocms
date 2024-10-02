@@ -43,9 +43,8 @@ code {
 	overflow-wrap: anywhere;
 }
 
-/* TODO: Move to layout & add mono font */
 code {
-	font-family: var(--__sl-font-mono);
+	font-family: monospace;
 }
 
 button {
