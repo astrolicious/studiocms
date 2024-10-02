@@ -71,8 +71,6 @@ class DropdownHelper {
 
 		const isMobile = window.matchMedia('screen and (max-width: 840px)').matches;
 
-		// TODO: Figure out dropdowns on mobile: 100% of parent
-		// On desktop: max-width: min-content;
 		const {
 			bottom,
 			left,
