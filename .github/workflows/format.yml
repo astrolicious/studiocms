@@ -43,3 +43,4 @@ jobs:
           branch: ${{ github.head_ref }}
           commit_user_name: astrolicious
           commit_user_email: noreply@studiocms.xyz
+          commit_author: Actions <actions@github.com>
