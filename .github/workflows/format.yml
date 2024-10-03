@@ -1,0 +1,44 @@
+name: 'Format Code'
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  format:
+    runs-on: ubuntu-latest
+    env:
+      NODE_OPTIONS: "--max_old_space_size=4096"
+    steps:
+      - name: Check out code using Git
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup PNPM
+        uses: pnpm/action-setup@v3
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: '.node-version'
+          cache: pnpm
+      - name: Install dependencies
+        run: pnpm ci:install
+        shell: bash
+
+      - name: Format code
+        run: pnpm run lint:fix
+      - name: Commit changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: '[ci] lint'
+          branch: ${{ github.head_ref }}
+          commit_user_name: astrolicious
+          commit_user_email: no-reply@studiocms.xyz
+          commit_author: StudioCMS <no-reply@studiocms.xyz>
