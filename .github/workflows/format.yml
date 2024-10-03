@@ -2,14 +2,12 @@ name: 'Format Code'
 
 on:
   workflow_dispatch:
-  pull_request:
   push:
     branches:
       - main
 
 permissions:
   contents: write
-  pull-requests: write
 
 jobs:
   format:
