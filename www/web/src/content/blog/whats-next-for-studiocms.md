@@ -1,13 +1,11 @@
 ---
-title: Whats next for StudioCMS?
-description: New development team member, and dashboard project!
+title: Welcoming our latest maintainer!
+description: Welcoming our newest member, and paving the road to our dashboard overhaul.
 publishDate: 2024-10-03
 ogVariant: fall
 author: adam-matthiesen
 ---
-## What's Next for StudioCMS?
 
-Astro Studio is sunsetting, we’ve updated our branding, and we’re proud to announce our first sponsorship thanks to Turso. But what’s on the horizon for StudioCMS? We invite you to join us as we continue improving and expanding our CMS to meet the needs of our growing community.
 
 Recently, we welcomed one of our newest community members into the StudioCMS family, not just as a contributor, but as a **development team member** — [Louis Escher](https://github.com/louisescher). Louis has brought an incredible skill set to our project, especially in the realm of design!
 
