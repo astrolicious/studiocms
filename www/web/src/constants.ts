@@ -1,3 +1,4 @@
+// Keywords for the marquee
 export const marqueeKeywords = [
 	'#CMS',
 	'#Astrolicious',

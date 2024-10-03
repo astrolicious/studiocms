@@ -1,5 +1,5 @@
 ---
-import { Image } from 'astro:assets';
+import { Image, getImage } from 'astro:assets';
 import { type CollectionEntry, getEntry } from 'astro:content';
 
 export interface Props {
@@ -10,22 +10,33 @@ export interface Props {
 const { post, index } = Astro.props;
 
 const href = `/blog/${post.slug}`;
-const {
-	title,
-	description,
-	publishDate,
-	hero: { image, alt },
-	author,
-} = post.data;
+const { title, description, publishDate, author } = post.data;
 
 const authorData = await getEntry(author);
 const { name, avatar } = authorData.data;
+
+let postOgImage = `/blog/${post.slug}/og.png`;
+let postOgDescription = post.data.description;
+
+if (post.data.hero) {
+	const heroImage = post.data.hero.image;
+	const heroImageWebp = (await getImage({ src: heroImage, format: 'webp' })).src;
+	postOgImage = heroImageWebp;
+	postOgDescription = post.data.hero.alt;
+}
+
+const imageProps = {
+	src: postOgImage,
+	alt: postOgDescription,
+	width: 3840,
+	height: 2160,
+};
 ---
 
 <a {href}>
     <section class="group flex flex-col justify-between h-full">
         <div>
-            <Image src={ image } alt={ alt } class="aspect-video rounded-lg border border-neutral-800" loading={index < 6 ? 'eager' : 'lazy'} />
+            <Image {...imageProps} class="aspect-video rounded-lg border border-neutral-800" loading={index < 6 ? 'eager' : 'lazy'} />
             <h2 class="text-2xl my-2 font-bold group-hover:text-indigo-400 transition-colors">{ title }</h2>
             <span class="mb-4 block text-ellipsis ">{ description }</span>
         </div>

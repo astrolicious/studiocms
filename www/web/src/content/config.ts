@@ -9,10 +9,25 @@ const blogCollection = defineCollection({
 				message: 'Description must be less than 50 characters',
 			}),
 			publishDate: z.date(),
-			hero: z.object({
-				image: image(),
-				alt: z.string(),
-			}),
+			hero: z
+				.object({
+					image: image(),
+					alt: z.string(),
+				})
+				.optional(),
+			ogVariant: z
+				.union([
+					z.literal('accent'),
+					z.literal('blue-purple'),
+					z.literal('blue-yellow'),
+					z.literal('fall'),
+					z.literal('green-accent'),
+					z.literal('red'),
+					z.literal('spring'),
+					z.literal('summer'),
+					z.literal('winter'),
+				])
+				.optional(),
 			author: reference('authors'),
 			tags: z.array(z.string()).optional(),
 		}),
@@ -38,19 +53,19 @@ const featuresCollection = defineCollection({
 	}),
 });
 
-const testimonialsCollection = defineCollection({
-	type: 'data',
-	schema: ({ image }) =>
-		z.object({
-			name: z.string(),
-			comment: z.string(),
-			avatar: image(),
-		}),
-});
+// const testimonialsCollection = defineCollection({
+// 	type: 'data',
+// 	schema: ({ image }) =>
+// 		z.object({
+// 			name: z.string(),
+// 			comment: z.string(),
+// 			avatar: image(),
+// 		}),
+// });
 
 export const collections = {
 	blog: blogCollection,
 	authors: authorsCollection,
 	features: featuresCollection,
-	testimonials: testimonialsCollection,
+	// testimonials: testimonialsCollection,
 };
