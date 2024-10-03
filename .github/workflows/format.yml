@@ -22,10 +22,10 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version-file: '.node-version'
           cache: pnpm
       - name: Install dependencies
-        run: pnpm i
+        run: pnpm ci:install
         shell: bash
 
       - name: Format code
