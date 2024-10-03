@@ -1,6 +1,6 @@
 ---
 title: Welcoming our latest maintainer!
-description: Welcoming our newest member, and paving the road to our dashboard overhaul.
+description: Welcoming our newest member, and dashboard!
 publishDate: 2024-10-03
 ogVariant: fall
 author: adam-matthiesen
