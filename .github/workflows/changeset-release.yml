@@ -8,20 +8,11 @@ on:
 
 concurrency: ${{ github.workflow }}-${{ github.ref }}
 
+# Updated as per: https://github.com/changesets/action/issues/387#issuecomment-2336411095
 permissions:
     contents: write
     pull-requests: write
-    issues: write
     id-token: write
-    actions: read
-    checks: read
-    deployments: read
-    discussions: read
-    packages: read
-    pages: read
-    repository-projects: read
-    security-events: read
-    statuses: read
 
 jobs:
   release:
@@ -32,7 +23,7 @@ jobs:
         uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4
 
       - name: Setup pnpm (corepack enabled)
-        uses: pnpm/action-setup@v2
+        uses: pnpm/action-setup@v3
 
       - name: Setup Node.js 20.x
         uses: actions/setup-node@0a44ba7841725637a19e28fa30b79a866c81b0a6 # v4
@@ -52,7 +43,7 @@ jobs:
             version: pnpm ci:version
             publish: pnpm ci:publish
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.STUDIOCMS_SERVICE_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Add Label to CI PR
@@ -60,4 +51,4 @@ jobs:
         run: gh pr edit "$PR_URL" --add-label "ci"
         env:
           PR_URL: ${{ steps.changesets.outputs.pull_request_url }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.STUDIOCMS_SERVICE_TOKEN }}
