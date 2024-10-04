@@ -142,6 +142,7 @@ jobs:
           BUILD_LOG: ${{ steps.publish.outputs.build }}
           PUBLISH_LOG: ${{ steps.publish.outputs.publish }}
         with:
+          github-token: ${{ secrets.STUDIOCMS_SERVICE_TOKEN }}
           script: |
             let changeset = { releases: [] };
             try {
