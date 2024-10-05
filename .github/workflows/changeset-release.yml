@@ -38,7 +38,7 @@ jobs:
         id: changesets
         uses: changesets/action@v1
         with:
-            setupGitUser: false
+            setupGitUser: true
             commit: "👷 [ci]: Version Packages"
             title: "👷 [ci]: Ready for Release"
             version: pnpm ci:version
