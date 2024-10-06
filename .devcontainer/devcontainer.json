@@ -15,8 +15,7 @@
         "astro-build.houston",
         "biomejs.biome",
         "eamodio.gitlens",
-        "redhat.vscode-yaml",
-        "ZainChen.json"
+        "redhat.vscode-yaml"
       ]
     }
   }
