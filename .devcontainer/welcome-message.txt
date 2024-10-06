@@ -1,0 +1,3 @@
+👋 Welcome to StudioCMS!
+
+🛠️ Your environment is fully setup with all required software installed.
