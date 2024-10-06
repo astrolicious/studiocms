@@ -1,4 +1,3 @@
 👋 Welcome to StudioCMS!
 
-🛠️ Your environment is fully setup with all required software installed. Tests will
-   be running shortly in a separate terminal tab.
+🛠️ Your environment is fully setup with all required software installed.
