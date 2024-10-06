@@ -3,7 +3,6 @@
   "build": {
     "dockerfile": "Dockerfile"
   },
-  "postStartCommand": "nvm install 20.14.0",
   "postCreateCommand": "sudo corepack enable pnpm && pnpm config set store-dir /home/node/.pnpm-store && PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=1 pnpm install",
   "waitFor": "postCreateCommand",
   "customizations": {
