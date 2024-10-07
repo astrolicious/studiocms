@@ -5,4 +5,4 @@
 - `proto install` - ProtoCLI will install and ensure correct versions for all engines and package managers
 - `pnpm install` - Install all dependencies for the monorepo
 
-The monorepo will then be ready to develop
+🎉 The monorepo will then be ready to develop
