@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/devcontainers/javascript-node:0-20
+FROM mcr.microsoft.com/devcontainers/javascript-node:1-20@sha256:f28172ab4f8cf57dacadc4d2aecf6d108bd9881617bd133b16ddcff6e6eef340
 
 # We uninstall pnpm here, since we enable the corepack version in the postCreateCommand
 # This ensures we respect the "packageManager" version in package.json
