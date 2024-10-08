@@ -12,9 +12,9 @@ jobs:
 
     steps:
       - name: Update PR
-        uses: mscharley/dependency-changesets-action@63f9c50be694116c9a16c3d6b47e3e42a14a9424 # v1.0.11
+        uses: mscharley/dependency-changesets-action@2ca9c8db686d12d7dad1e60bc4230fb293b21e6c # v1.1.0
         with:
-          token: ${{ secrets.DEPENDENCY_UPDATE_GITHUB_TOKEN }}
+          token: ${{ secrets.STUDIOCMS_SERVICE_TOKEN }}
           use-conventional-commits: true
-          author-name: Renovate Changesets
-          author-email: github+renovate@studiocms.xyz
+          author-name: StudioCMS
+          author-email: no-reply@studiocms.xyz

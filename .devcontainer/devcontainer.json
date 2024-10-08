@@ -1,0 +1,19 @@
+{
+  "name": "StudioCMS Workspace",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  "postCreateCommand": "pnpm config set store-dir /home/node/.pnpm-store && PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=1 pnpm install",
+  "waitFor": "postCreateCommand",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "astro-build.astro-vscode",
+        "astro-build.houston",
+        "biomejs.biome",
+        "eamodio.gitlens",
+        "redhat.vscode-yaml"
+      ]
+    }
+  }
+}
