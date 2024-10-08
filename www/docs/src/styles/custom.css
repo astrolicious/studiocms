@@ -38,6 +38,11 @@ code, starlight-file-tree {
 	border-radius: 4px;
 }
 
+.expressive-code figure {
+	box-shadow: none !important;
+	filter: drop-shadow(var(--ec-frm-frameBoxShdCssVal)) !important;
+}
+
 .expressive-code figure.frame figcaption {
 	border-top-right-radius: 4px !important;
 	border-top-left-radius: 4px !important;
