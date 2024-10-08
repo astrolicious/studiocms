@@ -1,0 +1,183 @@
+---
+title: Button Component
+---
+
+import { Button } from '@studiocms/ui/components';
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import PreviewCard from '~/components/PreviewCard.astro';
+
+## Usage 
+<Tabs>
+  <TabItem label="Preview">
+    <PreviewCard>
+      <Button color='primary'>
+        Button
+      </Button>
+    </PreviewCard>
+  </TabItem>
+  <TabItem label="Code">
+    ```astro
+    ---
+    import { Button } from '@studiocms/ui/components';
+    ---
+
+    <Button color="primary">
+      Button
+    </Button>
+    ```
+  </TabItem>
+</Tabs>
+
+### Disabled
+<Tabs>
+  <TabItem label="Preview">
+    <PreviewCard>
+      <Button color='primary' disabled>
+        Button
+      </Button>
+    </PreviewCard>
+  </TabItem>
+  <TabItem label="Code">
+    ```astro
+    ---
+    import { Button } from '@studiocms/ui/components';
+    ---
+
+    <Button color="primary" disabled>
+      Button
+    </Button>
+    ```
+  </TabItem>
+</Tabs>
+
+### Sizes
+<Tabs>
+  <TabItem label="Preview">
+    <PreviewCard>
+      <Button color='primary' size='sm'>
+        Button (sm)
+      </Button>
+      <Button color='primary'>
+        Button (default)
+      </Button>
+      <Button color='primary' size='lg'>
+        Button (lg)
+      </Button>
+    </PreviewCard>
+  </TabItem>
+  <TabItem label="Code">
+    ```astro
+    ---
+    import { Button } from '@studiocms/ui/components';
+    ---
+
+    <Button color='primary' size='sm'>
+      Button (sm)
+    </Button>
+    <Button color='primary'>
+      Button (default)
+    </Button>
+    <Button color='primary' size='lg'>
+      Button (lg)
+    </Button>
+    ```
+  </TabItem>
+</Tabs>
+
+### Colors
+<Tabs>
+  <TabItem label="Preview">
+    <PreviewCard>
+      <Button color='default'>
+        Default
+      </Button>
+      <Button color='primary'>
+        Primary
+      </Button>
+      <Button color='success'>
+        Success
+      </Button>
+      <Button color='warning'>
+        Warning
+      </Button>
+      <Button color='danger'>
+        Danger
+      </Button>
+    </PreviewCard>
+  </TabItem>
+  <TabItem label="Code">
+    ```astro
+    ---
+    import { Button } from '@studiocms/ui/components';
+    ---
+
+    <Button color='default'>
+      Default
+    </Button>
+    <Button color='primary'>
+      Primary
+    </Button>
+    <Button color='success'>
+      Success
+    </Button>
+    <Button color='warning'>
+      Warning
+    </Button>
+    <Button color='danger'>
+      Danger
+    </Button>
+    ```
+  </TabItem>
+</Tabs>
+
+### Variants
+<Tabs>
+  <TabItem label="Preview">
+    <PreviewCard>
+      <Button color='primary'>
+        Default
+      </Button>
+      <Button color='primary' variant="outlined">
+        Outlined
+      </Button>
+      <Button color='primary' variant="flat">
+        Flat
+      </Button>
+    </PreviewCard>
+  </TabItem>
+  <TabItem label="Code">
+    ```astro
+    ---
+    import { Button } from '@studiocms/ui/components';
+    ---
+
+    <Button color='primary'>
+      Default
+    </Button>
+    <Button color='primary' variant="outlined">
+      Outlined
+    </Button>
+    <Button color='primary' variant="flat">
+      Flat
+    </Button>
+    ```
+  </TabItem>
+</Tabs>
+
+### Polymorphic (rendered as anchor tag)
+<Tabs>
+  <TabItem label="Preview">
+    <PreviewCard>
+      <Button color='primary' as='a' href="https://studiocms.xyz">
+        studiocms.xyz
+      </Button>
+    </PreviewCard>
+  </TabItem>
+  <TabItem label="Preview">
+    <PreviewCard>
+      <Button color='primary' as='a' href="https://studiocms.xyz">
+        studiocms.xyz
+      </Button>
+    </PreviewCard>
+  </TabItem>
+</Tabs>

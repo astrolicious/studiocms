@@ -26,6 +26,7 @@
     "starlight-versions": "catalog:docs",
     "typedoc": "catalog:docs",
     "typedoc-plugin-markdown": "catalog:docs",
-    "typescript": "catalog:"
+    "typescript": "catalog:",
+    "@studiocms/ui": "workspace:*"
   }
 }

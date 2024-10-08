@@ -58,6 +58,7 @@ export default defineConfig({
 			customCss: [
 				'@fontsource-variable/onest/index.css',
 				'./src/styles/custom.css',
+				'@studiocms/ui/css/global.css'
 			],
 			editLink: {
 				baseUrl: 'https://github.com/astrolicious/studiocms/tree/main/www/docs',
@@ -98,6 +99,13 @@ export default defineConfig({
 				{
 					label: 'Customizing StudioCMS',
 					items: [
+						{
+							label: '@studiocms/ui',
+							items: [
+								{ label: 'Getting Started', link: 'customizing/studiocms-ui/getting-started' },
+								{ label: 'Components', autogenerate: { directory: 'customizing/studiocms-ui/components' } }
+							]
+						},
 						{
 							label: '@studiocms/renderers',
 							autogenerate: { directory: 'customizing/studiocms-renderers' },
