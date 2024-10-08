@@ -12,7 +12,7 @@
 	--sl-color-gray-6: #191919;
 	--sl-color-black: #0f0f0f;
 
-	--sl-font: 'Onest Variable';
+	--sl-font: "Onest Variable";
 }
 /* Light mode colors. */
 :root[data-theme="light"] {
@@ -34,7 +34,8 @@
 	border-radius: 8px;
 }
 
-code, starlight-file-tree {
+code,
+starlight-file-tree {
 	border-radius: 4px;
 }
 
@@ -56,4 +57,10 @@ code, starlight-file-tree {
 aside.starlight-aside {
 	border-top-right-radius: 4px;
 	border-bottom-right-radius: 4px;
+}
+
+@media (max-width: 50rem) {
+	.hero > img {
+		width: min(50%, 16rem);
+	}
 }
