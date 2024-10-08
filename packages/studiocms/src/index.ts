@@ -3,7 +3,7 @@ import type { StudioCMSPluginOptions } from '@studiocms/core/types';
 import integration from './integration';
 
 /**
- * # Astro StudioCMS Integration
+ * # StudioCMS Integration
  *
  * A CMS built for Astro by the Astro Community for the Astro Community.
  *
