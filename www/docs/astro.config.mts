@@ -55,10 +55,7 @@ export default defineConfig({
 				discord: 'https://chat.studiocms.xyz',
 				youtube: 'https://www.youtube.com/@StudioCMS',
 			},
-			customCss: [
-				'@fontsource-variable/onest/index.css',
-				'./src/styles/custom.css',
-			],
+			customCss: ['@fontsource-variable/onest/index.css', './src/styles/custom.css'],
 			editLink: {
 				baseUrl: 'https://github.com/astrolicious/studiocms/tree/main/www/docs',
 			},
@@ -75,14 +72,14 @@ export default defineConfig({
 					tag: 'meta',
 					attrs: {
 						property: 'og:image',
-						content: `${site}og.png?v=1`,
+						content: `${site}og.jpg?v=1`,
 					},
 				},
 				{
 					tag: 'meta',
 					attrs: {
 						property: 'twitter:image',
-						content: `${site}og.png?v=1`,
+						content: `${site}og.jpg?v=1`,
 					},
 				},
 			],
