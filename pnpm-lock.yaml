@@ -857,6 +857,9 @@ importers:
       '@astrojs/starlight':
         specifier: 'catalog:'
         version: 0.28.2(astro@4.15.9(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))
+      '@fontsource-variable/onest':
+        specifier: ^5.1.0
+        version: 5.1.0
       '@shoelace-style/shoelace':
         specifier: catalog:docs
         version: 2.16.0(@types/react@18.3.5)

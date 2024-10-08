@@ -38,7 +38,7 @@ export default defineConfig({
 			credits: true,
 			tagline: 'A dedicated CMS for Astro DB. Built from the ground up by the Astro community.',
 			expressiveCode: {
-				themes: ['houston', 'starlight-light'],
+				themes: ['material-theme-darker', 'starlight-light'],
 				defaultProps: {
 					wrap: true,
 				},
@@ -55,7 +55,10 @@ export default defineConfig({
 				discord: 'https://chat.studiocms.xyz',
 				youtube: 'https://www.youtube.com/@StudioCMS',
 			},
-			customCss: ['./src/styles/custom.css'],
+			customCss: [
+				'@fontsource-variable/onest/index.css',
+				'./src/styles/custom.css',
+			],
 			editLink: {
 				baseUrl: 'https://github.com/astrolicious/studiocms/tree/main/www/docs',
 			},

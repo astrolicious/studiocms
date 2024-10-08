@@ -12,6 +12,7 @@
   "dependencies": {
     "@astrojs/check": "catalog:",
     "@astrojs/starlight": "catalog:",
+    "@fontsource-variable/onest": "^5.1.0",
     "@shoelace-style/shoelace": "catalog:docs",
     "@types/hast": "catalog:docs",
     "astro": "catalog:",
