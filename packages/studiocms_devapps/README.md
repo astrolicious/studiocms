@@ -61,11 +61,16 @@ The following env variables set (`@astrojs/db`):
 #### Preview
 
 - Toolbar app
-   ![toolbar](./assets/preview-toolbar.png)
+
+![toolbar](./assets/preview-toolbar.png)
+
 - Toolbar app Embedded
-   ![toolbar-embedded](./assets/preview-embeddedapp.png)
+
+![toolbar-embedded](./assets/preview-embeddedapp.png)
+
 - Full page View
-   ![pageview](./assets/preview-page.png)
+
+![pageview](./assets/preview-page.png)
 
 ## Licensing
 
