@@ -30,7 +30,8 @@
   },
   "sideEffects": false,
   "files": [
-    "src"
+    "src",
+    "assets"
   ],
   "exports": {
     ".": "./src/index.ts"
