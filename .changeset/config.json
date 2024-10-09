@@ -10,6 +10,7 @@
       "@studiocms/betaresources",
       "@studiocms/core",
       "@studiocms/dashboard",
+      "@studiocms/devapps",
       "@studiocms/frontend",
       "@studiocms/imagehandler",
       "@studiocms/renderers",
