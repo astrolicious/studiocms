@@ -1,3 +1,4 @@
+import config from 'virtual:studiocms-devapps/libsql-viewer';
 import { defineToolbarApp } from 'astro/toolbar';
 
 export default defineToolbarApp({
@@ -7,7 +8,7 @@ export default defineToolbarApp({
 		appWindow.style.height = '80vh';
 
 		const link = document.createElement('a');
-		link.href = '/_studiocms-devapps/libsql-viewer';
+		link.href = config.endpointPath;
 		link.target = '_blank';
 		link.innerText = 'Open as page';
 		Object.assign(link.style, {
@@ -23,7 +24,7 @@ export default defineToolbarApp({
 		appWindow.appendChild(link);
 
 		const viewerIframe = document.createElement('iframe');
-		viewerIframe.src = '/_studiocms-devapps/libsql-viewer';
+		viewerIframe.src = config.endpointPath;
 		Object.assign(viewerIframe.style, {
 			height: '100%',
 			width: '100%',

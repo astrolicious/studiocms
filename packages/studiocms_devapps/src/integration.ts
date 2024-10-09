@@ -1,6 +1,12 @@
-import { createResolver, defineIntegration, injectDevRoute } from 'astro-integration-kit';
+import {
+	addVirtualImports,
+	createResolver,
+	defineIntegration,
+	injectDevRoute,
+} from 'astro-integration-kit';
 import { name, version } from '../package.json';
 import { optionsSchema } from './schema';
+import { pathGenerator } from './utils/pathGenerator';
 
 // Main Integration
 export default defineIntegration({
@@ -9,6 +15,7 @@ export default defineIntegration({
 	setup({
 		name,
 		options: {
+			endpointPath,
 			appsConfig: { libSQLViewer },
 			verbose,
 		},
@@ -28,14 +35,27 @@ export default defineIntegration({
 						logger.info(`[${name}] Verbose Mode`);
 					}
 
+					// Generate Endpoint Path
+					const EndpointPath = pathGenerator(endpointPath);
+
 					// Enforce dev mode only
 					if (command === 'dev') {
-						// Add Dev Toolbar App
+						// Add Virtual Imports for app configs
+						addVirtualImports(params, {
+							name,
+							imports: {
+								'virtual:studiocms-devapps/libsql-viewer': `export default ${JSON.stringify({ endpointPath: EndpointPath(libSQLViewer.endpoint) })};`,
+							},
+						});
+
+						//// Add Dev Toolbar Apps
+
+						// libSQLViewer
 						if (libSQLViewer.enabled) {
 							verbose && logger.info('Adding Dev Toolbar App: libSQLViewer');
 							injectDevRoute(params, {
 								entrypoint: resolve('routes/libsql-viewer.astro'),
-								pattern: '/_studiocms-devapps/libsql-viewer',
+								pattern: EndpointPath(libSQLViewer.endpoint),
 							});
 							addDevToolbarApp({
 								name: 'libSQL Viewer',
