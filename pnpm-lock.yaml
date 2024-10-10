@@ -903,6 +903,9 @@ importers:
       '@shoelace-style/shoelace':
         specifier: catalog:docs
         version: 2.16.0(@types/react@18.3.5)
+      '@studiocms/ui':
+        specifier: workspace:*
+        version: link:../../packages/studiocms_ui
       '@types/hast':
         specifier: catalog:docs
         version: 3.0.4
