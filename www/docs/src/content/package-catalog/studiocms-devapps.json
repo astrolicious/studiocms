@@ -2,7 +2,7 @@
   "$schema": "../../../.astro/collections/package-catalog.schema.json",
   "name": "@studiocms/devapps",
   "description": "A Collection of useful tools available during dev mode in Astro.",
-  "docsLink": "/package-catalog/studiocms-packages/studiocms-devapps/",
+  "docsLink": "/package-catalog/studiocms-integrations/studiocms-devapps/",
   "githubURL": "https://github.com/astrolicious/studiocms/tree/main/packages/studiocms_devapps/",
   "isScoped": true,
   "scope": "@studiocms",
