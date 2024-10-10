@@ -19,7 +19,18 @@ const packageCatalog = defineCollection({
 	}),
 });
 
+export const baseSchema = z.object({
+	type: z.literal('base').optional().default('base'),
+});
+
+export const integrationSchema = baseSchema.extend({
+	type: z.literal('integration'),
+	githubIntegrationURL: z.string().url(),
+	released: z.boolean().optional().default(true),
+});
+
+export const docsCollectionSchema = z.union([baseSchema, integrationSchema]);
 export const collections = {
-	docs: defineCollection({ schema: docsSchema() }),
+	docs: defineCollection({ schema: docsSchema({ extend: docsCollectionSchema }) }),
 	'package-catalog': packageCatalog,
 };
