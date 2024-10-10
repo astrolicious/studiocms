@@ -38,6 +38,9 @@ const sortedPackages = () => {
 			return communityPlugins.sort((a, b) => b.name.localeCompare(a.name));
 	}
 };
+
+const isPlugin =
+	Astro.props.pkgType === 'studiocms-plugin' || Astro.props.pkgType === 'community-plugin';
 ---
 
 <div>
@@ -49,6 +52,7 @@ const sortedPackages = () => {
             isScoped={pkg.isScoped}
             scope={pkg.scope}
             released={pkg.released}
+            isPlugin={isPlugin}
             />
 
         <p>{pkg.description}</p>

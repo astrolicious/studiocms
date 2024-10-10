@@ -1,5 +1,5 @@
 ---
-import { Icon } from '@astrojs/starlight/components';
+import { Badge, Icon } from '@astrojs/starlight/components';
 import Version from './Version.astro';
 
 interface Props {
@@ -8,17 +8,18 @@ interface Props {
 	scope: string;
 	githubURL: string;
 	released?: boolean;
+	isPlugin?: boolean;
 }
 
-const { title, githubURL, isScoped, scope = '@studiocms', released = true } = Astro.props;
+const { title, githubURL, isScoped, scope = '@studiocms', released = true, isPlugin } = Astro.props;
 ---
 
 <div class="wrapper">
 	<h4 id="_top">
 		{isScoped ? (
-            <span class="scope">{scope}/</span><span>{title.replace(`${scope}/`, '')}</span>
+            <span class="scope">{scope}/</span><span>{title.replace(`${scope}/`, '')} {isPlugin && <Badge text="Plugin" variant='tip' />}</span>
             ) : (
-            <span>{title}</span>
+            <span>{title} {isPlugin && <Badge text="Plugin" variant='tip' />}</span>
             )}
 	</h4>
 	<div class="integration-metadata">
