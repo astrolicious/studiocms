@@ -643,17 +643,17 @@ importers:
         version: 0.14.0
       astro:
         specifier: catalog:min
-        version: 4.15.1(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4)
+        version: 4.15.1(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.6.3)
       astro-integration-kit:
         specifier: 'catalog:'
-        version: 0.16.1(astro@4.15.1(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.5.4))
+        version: 0.16.1(astro@4.15.1(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.6.3))
     devDependencies:
       typescript:
         specifier: 'catalog:'
-        version: 5.5.4
+        version: 5.6.3
       vite:
         specifier: 'catalog:'
-        version: 5.4.2(@types/node@22.0.0)
+        version: 5.4.8(@types/node@22.0.0)
 
   packages/studiocms_frontend:
     dependencies:
