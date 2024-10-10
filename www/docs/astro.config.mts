@@ -127,6 +127,10 @@ export default defineConfig({
 						{
 							label: 'Customizing StudioCMS',
 							items: [
+								{
+									label: '@studiocms/renderers',
+									autogenerate: { directory: 'customizing/studiocms-renderers' },
+								},
                 {
                   label: '@studiocms/ui',
                   items: [
@@ -134,10 +138,6 @@ export default defineConfig({
                     { label: 'Components', autogenerate: { directory: 'customizing/studiocms-ui/components' } }
                   ]
                 },
-								{
-									label: '@studiocms/renderers',
-									autogenerate: { directory: 'customizing/studiocms-renderers' },
-								},
 							],
 						},
 					],
