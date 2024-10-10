@@ -1,0 +1,43 @@
+name: CI / Tests
+
+# Tests coming soon
+
+on:
+  workflow_dispatch:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+    contents: write
+    pull-requests: write
+    id-token: write
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check out code using Git
+      uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4
+      with:
+        ref: ${{ github.head_ref }}
+        token: ${{ secrets.GITHUB_TOKEN }}
+      
+    - name: Setup PNPM
+      uses: pnpm/action-setup@v3
+
+    - name: Setup Node
+      uses: actions/setup-node@0a44ba7841725637a19e28fa30b79a866c81b0a6 # v4
+      with:
+        node-version-file: '.node-version'
+        cache: pnpm
+
+    - name: Install dependencies
+      run: pnpm ci:install
+      shell: bash
+
+    - name: Lint code
+      run: pnpm ci:lint
+      shell: bash

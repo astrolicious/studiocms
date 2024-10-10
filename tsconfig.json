@@ -15,6 +15,7 @@
     "packages/studiocms_ui/**/*"
   ],
   "compilerOptions": {
+    "baseUrl": ".",
     "composite": true,
     "declaration": true,
     "declarationMap": true,
