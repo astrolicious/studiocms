@@ -6,7 +6,7 @@ import { getCoolifyURL } from '../hostUtils';
 import { getFilePathToPackage, makeTypedocOpts } from './typedocHelpers';
 
 // Create Starlight TypeDoc Plugins for different parts of the Astro StudioCMS Project
-// studiocms TypeDoc Plugin
+// studiocms
 const [tdStudioCMS, tdStudioCMS_SB] = createStarlightTypeDocPlugin();
 // @studiocms/core
 const [tdCore, tdCore_SB] = createStarlightTypeDocPlugin();
@@ -24,6 +24,8 @@ const [tdRenderers, tdRenderers_SB] = createStarlightTypeDocPlugin();
 const [tdRobotsTxt, tdRobotsTxt_SB] = createStarlightTypeDocPlugin();
 // @studiocms/devapps
 const [tdDevApps, tdDevApps_SB] = createStarlightTypeDocPlugin();
+// @studiocms/blog
+const [tdBlog, tdBlog_SB] = createStarlightTypeDocPlugin();
 
 // Define the Site URL
 const site = getCoolifyURL(true) || 'https://docs.studiocms.xyz/';
@@ -146,6 +148,7 @@ export default defineConfig({
 							collapsed: true,
 							items: [
 								tdStudioCMS_SB,
+								tdBlog_SB,
 								tdDevApps_SB,
 								{
 									label: 'Internal Packages',
@@ -346,6 +349,17 @@ export default defineConfig({
 							getFilePathToPackage('studiocms_devapps', 'src/schema/index.ts'),
 							getFilePathToPackage('studiocms_devapps', 'src/schema/appsConfig.ts'),
 							getFilePathToPackage('studiocms_devapps', 'src/apps/libsqlViewer.ts'),
+						],
+					})
+				),
+				tdBlog(
+					makeTypedocOpts({
+						name: '@studiocms/blog',
+						output: 'studiocms-blog',
+						dir: 'studiocms_blog',
+						entryPoints: [
+							getFilePathToPackage('studiocms_blog', 'index.ts'),
+							getFilePathToPackage('studiocms_blog', 'schema.ts'),
 						],
 					})
 				),
