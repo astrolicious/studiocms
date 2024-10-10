@@ -52,6 +52,12 @@ catalogs:
       specifier: ^5.4.8
       version: 5.4.8
   docs:
+    '@11ty/eleventy-fetch':
+      specifier: ^4.0.1
+      version: 4.0.1
+    '@lorenzo_lewis/starlight-utils':
+      specifier: ^0.2.0
+      version: 0.2.0
     '@shoelace-style/shoelace':
       specifier: ^2.16.0
       version: 2.16.0
@@ -64,6 +70,12 @@ catalogs:
     hast:
       specifier: ^1.0.0
       version: 1.0.0
+    hast-util-select:
+      specifier: ^6.0.2
+      version: 6.0.2
+    p-retry:
+      specifier: ^6.2.0
+      version: 6.2.0
     rehype:
       specifier: ^13.0.1
       version: 13.0.1
@@ -80,9 +92,6 @@ catalogs:
       specifier: ^4.2.9
       version: 4.2.9
   landing:
-    '@fontsource-variable/onest':
-      specifier: 5.1.0
-      version: 5.1.0
     '@tailwindcss/typography':
       specifier: ^0.5.15
       version: 0.5.15
@@ -167,6 +176,9 @@ catalogs:
     '@astrojs/react':
       specifier: ^3.6.2
       version: 3.6.2
+    '@fontsource-variable/onest':
+      specifier: 5.1.0
+      version: 5.1.0
     '@iconify-json/heroicons':
       specifier: ^1.2.0
       version: 1.2.0
@@ -874,7 +886,7 @@ importers:
   www/docs:
     dependencies:
       '@11ty/eleventy-fetch':
-        specifier: ^4.0.1
+        specifier: catalog:docs
         version: 4.0.1
       '@astrojs/check':
         specifier: 'catalog:'
@@ -883,10 +895,10 @@ importers:
         specifier: 'catalog:'
         version: 0.28.2(astro@4.15.12(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.6.3))
       '@fontsource-variable/onest':
-        specifier: ^5.1.0
+        specifier: catalog:studiocms-shared
         version: 5.1.0
       '@lorenzo_lewis/starlight-utils':
-        specifier: ^0.2.0
+        specifier: catalog:docs
         version: 0.2.0(@astrojs/starlight@0.28.2(astro@4.15.12(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.6.3)))(astro@4.15.12(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.6.3))
       '@shoelace-style/shoelace':
         specifier: catalog:docs
@@ -904,10 +916,10 @@ importers:
         specifier: catalog:docs
         version: 1.0.0
       hast-util-select:
-        specifier: ^6.0.2
+        specifier: catalog:docs
         version: 6.0.2
       p-retry:
-        specifier: ^6.2.0
+        specifier: catalog:docs
         version: 6.2.0
       rehype:
         specifier: catalog:docs
@@ -940,7 +952,7 @@ importers:
         specifier: 'catalog:'
         version: 5.1.0(astro@4.15.12(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.6.3))(tailwindcss@3.4.7)
       '@fontsource-variable/onest':
-        specifier: catalog:landing
+        specifier: catalog:studiocms-shared
         version: 5.1.0
       '@iconify-json/heroicons':
         specifier: catalog:studiocms-shared
