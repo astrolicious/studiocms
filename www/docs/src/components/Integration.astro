@@ -4,23 +4,44 @@ import Version from './Version.astro';
 
 interface Props {
 	title: string;
-	isScoped: boolean;
-	scope: string;
 	githubURL: string;
 	released?: boolean;
 	isPlugin?: boolean;
 }
 
-const { title, githubURL, isScoped, scope = '@studiocms', released = true, isPlugin } = Astro.props;
+const { title, githubURL, released = true, isPlugin } = Astro.props;
+
+function parsePackageName(packageName: string): {
+	scoped: boolean;
+	scope: string | null;
+	name: string;
+} {
+	// Check if the package is scoped
+	if (packageName.startsWith('@')) {
+		const parts = packageName.split('/');
+		return {
+			scoped: true,
+			scope: parts[0], // the scope (e.g., '@scope')
+			name: parts[1] || '', // the package name after the slash (e.g., 'packagename')
+		};
+	}
+	return {
+		scoped: false,
+		scope: null, // no scope for unscoped packages
+		name: packageName, // just the package name
+	};
+}
+
+const { scoped, scope, name } = parsePackageName(title);
 ---
 
 <div class="wrapper">
 	<h4 id="_top">
-		{isScoped ? (
-            <span class="scope">{scope}/</span><span>{title.replace(`${scope}/`, '')} {isPlugin && <Badge text="Plugin" variant='tip' />}</span>
-            ) : (
-            <span>{title} {isPlugin && <Badge text="Plugin" variant='tip' />}</span>
-            )}
+        {
+            scoped 
+            ? <span class="scope">{scope}/</span><span>{name} {isPlugin && <Badge text="Plugin" variant='tip' />}</span> 
+            : <span>{name} {isPlugin && <Badge text="Plugin" variant='tip' />}</span>
+        }
 	</h4>
 	<div class="integration-metadata">
 		{released ? <Version pkgName={title} /> : <code>N/A</code>}

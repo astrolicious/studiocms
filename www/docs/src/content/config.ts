@@ -1,4 +1,4 @@
-import { defineCollection } from 'astro:content';
+import { defineCollection, reference } from 'astro:content';
 import { docsSchema } from '@astrojs/starlight/schema';
 import { z } from 'astro/zod';
 
@@ -9,8 +9,6 @@ const packageCatalog = defineCollection({
 		description: z.string(),
 		docsLink: z.string(),
 		githubURL: z.string(),
-		isScoped: z.boolean().optional().default(true),
-		scope: z.string().optional().default('@studiocms'),
 		catalog: z
 			.union([z.literal('studiocms'), z.literal('studiocms-plugin'), z.literal('community-plugin')])
 			.optional()
@@ -25,8 +23,7 @@ export const baseSchema = z.object({
 
 export const integrationSchema = baseSchema.extend({
 	type: z.literal('integration'),
-	githubIntegrationURL: z.string().url(),
-	released: z.boolean().optional().default(true),
+	catalogEntry: reference('package-catalog'),
 });
 
 export const docsCollectionSchema = z.union([baseSchema, integrationSchema]);

@@ -1,4 +1,5 @@
 ---
+import { getEntry } from 'astro:content';
 import { Icon } from '@astrojs/starlight/components';
 import Default from '@astrojs/starlight/components/PageTitle.astro';
 import type { Props } from '@astrojs/starlight/props';
@@ -28,6 +29,17 @@ function parsePackageName(packageName: string): {
 }
 
 const { scoped, scope, name } = parsePackageName(data.title);
+
+const { data: entryData } =
+	data.type === 'integration'
+		? await getEntry(data.catalogEntry)
+		: {
+				data: {
+					name: '',
+					released: false,
+					githubURL: '',
+				},
+			};
 ---
 
 {
@@ -41,17 +53,17 @@ const { scoped, scope, name } = parsePackageName(data.title);
                 }
 			</h1>
 			<div class="integration-metadata">
-				{ data.released ? <Version pkgName={data.title} /> : <code>N/A</code>}
-				<a href={data.githubIntegrationURL}>
+				{ entryData.released ? <Version pkgName={entryData.name} /> : <code>N/A</code>}
+				<a href={entryData.githubURL}>
 					<Icon size="1rem" name="github" /> GitHub
 				</a>
-				<a href={'https://www.npmjs.com/package/' + data.title}>
+				<a href={'https://www.npmjs.com/package/' + entryData.name}>
 					<svg width="16" height="16" viewBox="0 0 576 512" fill="currentColor" aria-hidden="true">
 						<path d="M288 288h-32v-64h32v64zm288-128v192H288v32H160v-32H0V160h576zm-416 32H32v128h64v-96h32v96h32V192zm160 0H192v160h64v-32h64V192zm224 0H352v128h64v-96h32v96h32v-96h32v96h32V192z" />
 					</svg>
 					npm
 				</a>
-				<a href={data.githubIntegrationURL + 'CHANGELOG.md'}>
+				<a href={entryData.githubURL + 'CHANGELOG.md'}>
 					<Icon size="1rem" name="list-format" /> Changelog
 				</a>
 			</div>
