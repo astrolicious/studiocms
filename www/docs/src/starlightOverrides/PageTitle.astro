@@ -28,8 +28,6 @@ function parsePackageName(packageName: string): {
 	};
 }
 
-const { scoped, scope, name } = parsePackageName(data.title);
-
 const { data: entryData } =
 	data.type === 'integration'
 		? await getEntry(data.catalogEntry)
@@ -40,6 +38,8 @@ const { data: entryData } =
 					githubURL: '',
 				},
 			};
+
+const { scoped, scope, name } = parsePackageName(entryData.name);
 ---
 
 {
