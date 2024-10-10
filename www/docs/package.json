@@ -10,9 +10,12 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@11ty/eleventy-fetch": "^4.0.1",
+    "p-retry": "^6.2.0",
     "@astrojs/check": "catalog:",
     "@astrojs/starlight": "catalog:",
     "@fontsource-variable/onest": "^5.1.0",
+    "@lorenzo_lewis/starlight-utils": "^0.2.0",
     "@shoelace-style/shoelace": "catalog:docs",
     "@types/hast": "catalog:docs",
     "astro": "catalog:",

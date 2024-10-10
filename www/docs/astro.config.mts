@@ -1,28 +1,29 @@
 import starlight from '@astrojs/starlight';
+import starlightUtils from '@lorenzo_lewis/starlight-utils';
 import { defineConfig } from 'astro/config';
 import { createStarlightTypeDocPlugin } from 'starlight-typedoc';
-import starlightVersions from 'starlight-versions';
 import { getCoolifyURL } from '../hostUtils';
-import { savedVersions } from './savedVersions';
 import { getFilePathToPackage, makeTypedocOpts } from './typedocHelpers';
 
 // Create Starlight TypeDoc Plugins for different parts of the Astro StudioCMS Project
 // studiocms TypeDoc Plugin
-const [tdStudioCMS] = createStarlightTypeDocPlugin();
+const [tdStudioCMS, tdStudioCMS_SB] = createStarlightTypeDocPlugin();
 // @studiocms/core
-const [tdCore] = createStarlightTypeDocPlugin();
+const [tdCore, tdCore_SB] = createStarlightTypeDocPlugin();
 // @studiocms/dashboard
-const [tdDashboard] = createStarlightTypeDocPlugin();
+const [tdDashboard, tdDashboard_SB] = createStarlightTypeDocPlugin();
 // @studiocms/auth
-const [tdAuth] = createStarlightTypeDocPlugin();
+const [tdAuth, tdAuth_SB] = createStarlightTypeDocPlugin();
 // @studiocms/frontend
-const [tdFrontend] = createStarlightTypeDocPlugin();
+const [tdFrontend, tdFrontend_SB] = createStarlightTypeDocPlugin();
 // @studiocms/imagehandler
-const [tdImageHandler] = createStarlightTypeDocPlugin();
+const [tdImageHandler, tdImageHandler_SB] = createStarlightTypeDocPlugin();
 // @studiocms/renderers
-const [tdRenderers] = createStarlightTypeDocPlugin();
+const [tdRenderers, tdRenderers_SB] = createStarlightTypeDocPlugin();
 // @studiocms/robotstxt
-const [tdRobotsTxt] = createStarlightTypeDocPlugin();
+const [tdRobotsTxt, tdRobotsTxt_SB] = createStarlightTypeDocPlugin();
+// @studiocms/devapps
+const [tdDevApps, tdDevApps_SB] = createStarlightTypeDocPlugin();
 
 // Define the Site URL
 const site = getCoolifyURL(true) || 'https://docs.studiocms.xyz/';
@@ -85,45 +86,86 @@ export default defineConfig({
 			],
 			sidebar: [
 				{
-					label: 'Start Here',
-					autogenerate: { directory: 'start-here' },
-				},
-				{
-					label: 'Plugins',
-					autogenerate: { directory: 'plugins' },
-				},
-				{
-					label: 'Customizing StudioCMS',
+					label: 'Docs',
 					items: [
 						{
-							label: '@studiocms/renderers',
-							autogenerate: { directory: 'customizing/studiocms-renderers' },
+							label: 'Start Here',
+							autogenerate: { directory: 'start-here' },
+						},
+						{
+							label: 'Understanding StudioCMS',
+							autogenerate: { directory: 'how-it-works' },
+						},
+						{
+							label: 'Package Catalog',
+							items: [
+								{
+									label: 'Package List',
+									link: '/package-catalog',
+									badge: { text: 'New', variant: 'success' },
+								},
+								{
+									label: 'StudioCMS Integrations',
+									autogenerate: { directory: 'package-catalog/studiocms-integrations' },
+									collapsed: true,
+								},
+								{
+									label: 'Community Integrations',
+									autogenerate: { directory: 'package-catalog/community-integrations' },
+									collapsed: true,
+								},
+							],
+						},
+						{
+							label: 'Customizing StudioCMS',
+							items: [
+								{
+									label: '@studiocms/renderers',
+									autogenerate: { directory: 'customizing/studiocms-renderers' },
+								},
+							],
 						},
 					],
 				},
 				{
-					label: 'Understanding StudioCMS',
-					autogenerate: { directory: 'how-it-works' },
-				},
-				{
-					label: 'Configuration Reference',
-					autogenerate: { directory: 'config-reference' },
-					collapsed: true,
-				},
-				{
-					label: 'TypeDoc',
-					badge: {
-						text: 'Auto Generated',
-						variant: 'tip',
-					},
-					collapsed: true,
-					autogenerate: { directory: 'typedoc' },
+					label: 'References',
+					items: [
+						{
+							label: 'Configuration Reference',
+							autogenerate: { directory: 'config-reference' },
+							collapsed: false,
+						},
+						{
+							label: 'TypeDoc',
+							badge: {
+								text: 'Auto Generated',
+								variant: 'tip',
+							},
+							collapsed: true,
+							items: [
+								tdStudioCMS_SB,
+								tdDevApps_SB,
+								{
+									label: 'Internal Packages',
+									collapsed: true,
+									items: [
+										tdCore_SB,
+										tdDashboard_SB,
+										tdAuth_SB,
+										tdFrontend_SB,
+										tdImageHandler_SB,
+										tdRenderers_SB,
+										tdRobotsTxt_SB,
+									],
+								},
+							],
+						},
+					],
 				},
 			],
 			plugins: [
-				starlightVersions({
-					versions: savedVersions,
-					current: { label: 'Latest' },
+				starlightUtils({
+					multiSidebar: { switcherStyle: 'horizontalList' },
 				}),
 				tdStudioCMS(
 					makeTypedocOpts({
@@ -140,7 +182,7 @@ export default defineConfig({
 				tdAuth(
 					makeTypedocOpts({
 						name: '@studiocms/auth',
-						output: 'studiocms-integrations/auth',
+						output: 'studiocms-auth',
 						dir: 'studiocms_auth',
 						entryPoints: [
 							getFilePathToPackage('studiocms_auth', 'src/index.ts'),
@@ -159,7 +201,7 @@ export default defineConfig({
 				tdCore(
 					makeTypedocOpts({
 						name: '@studiocms/core',
-						output: 'studiocms-integrations/core',
+						output: 'studiocms-core',
 						dir: 'studiocms_core',
 						entryPoints: [
 							getFilePathToPackage('studiocms_core', 'src/index.ts'),
@@ -209,7 +251,7 @@ export default defineConfig({
 				tdDashboard(
 					makeTypedocOpts({
 						name: '@studiocms/dashboard',
-						output: 'studiocms-integrations/dashboard',
+						output: 'studiocms-dashboard',
 						dir: 'studiocms_dashboard',
 						entryPoints: [
 							getFilePathToPackage('studiocms_dashboard', 'src/index.ts'),
@@ -227,7 +269,7 @@ export default defineConfig({
 				tdFrontend(
 					makeTypedocOpts({
 						name: '@studiocms/frontend',
-						output: 'studiocms-integrations/frontend',
+						output: 'studiocms-frontend',
 						dir: 'studiocms_frontend',
 						entryPoints: [
 							getFilePathToPackage('studiocms_frontend', 'src/index.ts'),
@@ -239,7 +281,7 @@ export default defineConfig({
 				tdImageHandler(
 					makeTypedocOpts({
 						name: '@studiocms/imagehandler',
-						output: 'studiocms-integrations/imagehandler',
+						output: 'studiocms-imagehandler',
 						dir: 'studiocms_imagehandler',
 						entryPoints: [
 							getFilePathToPackage('studiocms_imagehandler', 'src/index.ts'),
@@ -256,7 +298,7 @@ export default defineConfig({
 				tdRenderers(
 					makeTypedocOpts({
 						name: '@studiocms/renderers',
-						output: 'studiocms-integrations/renderers',
+						output: 'studiocms-renderers',
 						dir: 'studiocms_renderers',
 						entryPoints: [
 							getFilePathToPackage('studiocms_renderers', 'src/index.ts'),
@@ -280,13 +322,28 @@ export default defineConfig({
 				tdRobotsTxt(
 					makeTypedocOpts({
 						name: '@studiocms/robotstxt',
-						output: 'studiocms-integrations/robotstxt',
+						output: 'studiocms-robotstxt',
 						dir: 'studiocms_robotstxt',
 						entryPoints: [
 							getFilePathToPackage('studiocms_robotstxt', 'src/index.ts'),
 							getFilePathToPackage('studiocms_robotstxt', 'src/core.ts'),
 							getFilePathToPackage('studiocms_robotstxt', 'src/consts.ts'),
 							getFilePathToPackage('studiocms_robotstxt', 'src/utils/measureExecutionTime.ts'),
+						],
+					})
+				),
+				tdDevApps(
+					makeTypedocOpts({
+						name: '@studiocms/devapps',
+						output: 'studiocms-devapps',
+						dir: 'studiocms_devapps',
+						entryPoints: [
+							getFilePathToPackage('studiocms_devapps', 'src/index.ts'),
+							getFilePathToPackage('studiocms_devapps', 'src/integration.ts'),
+							getFilePathToPackage('studiocms_devapps', 'src/utils/pathGenerator.ts'),
+							getFilePathToPackage('studiocms_devapps', 'src/schema/index.ts'),
+							getFilePathToPackage('studiocms_devapps', 'src/schema/appsConfig.ts'),
+							getFilePathToPackage('studiocms_devapps', 'src/apps/libsqlViewer.ts'),
 						],
 					})
 				),

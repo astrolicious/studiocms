@@ -1,0 +1,122 @@
+---
+title: "@studiocms/devapps"
+description: "A Collection of useful tools available during dev mode in Astro"
+---
+
+import { PackageManagers } from 'starlight-package-managers';
+import { Steps, Tabs, TabItem } from '@astrojs/starlight/components';
+
+# Introduction
+
+A Collection[^1] of useful tools available during dev mode in Astro.
+
+## Installation
+
+<Tabs>
+  <TabItem label="Astro Method">
+<Steps>
+1. Install the package and add to your astro config using the following command:
+
+   <PackageManagers type="exec" pkg="astro" args="add @studiocms/devapps" />
+
+2. Update your config file as shown under [Example Config](#example-config) below.
+</Steps>
+  </TabItem>
+  <TabItem label="Manual Method">
+<Steps>
+1. Install the package using the following command:
+
+   <PackageManagers pkg="@studiocms/devapps" />
+
+2. Add `@studiocms/blog` to your astro config file:
+
+   ```js title="astro.config.mjs" ins={3, 9}
+   import { defineConfig } from 'astro/config';
+   import db from '@astrojs/db';
+   import devApps from '@studiocms/devapps';
+
+   export default defineConfig({
+      site: "https://example.com",
+      integrations: [
+          db(),
+          devApps(),
+      ],
+   });
+   ```
+</Steps>
+  </TabItem>
+</Tabs>
+
+## Usage
+
+All tools will only be available during `astro dev` and will not be available during production deployments!
+
+### Example config
+
+```js title="astro.config.mjs"
+import { defineConfig } from 'astro/config';
+import db from '@astrojs/db';
+import devApps from '@studiocms/devapps';
+
+export default defineConfig({
+  site: "https://example.com",
+  integrations: [
+    db(),
+    devApps(),
+  ],
+});
+```
+
+### Config Options
+
+Full list of options available for the `devApps` integration, with default values shown. **All options are optional**.
+
+```ts
+// Options for the devApps integration
+devApps({
+  /* Apps Config */
+  appsConfig: {
+    /* libSQL Viewer - Config */
+    libSQLViewer: {
+      /* Enable or disable the libSQL Viewer */
+      enabled: true,
+      /* Endpoint Path for libSQLViewer */
+      endpointPath: '/libsql-viewer',
+    },
+  },
+  /* Endpoint Path for apps that use endpoints */
+  endpointPath: '/_studiocms-devapps',
+  /* Enable or disable Verbose logging */
+  verbose: false,
+})
+```
+
+## Tools
+
+### libSQL Viewer
+
+Development tool to view the SQL tables in the libSQL database in the browser. The tool rely's on the `@astrojs/db` libSQL remote database connection credentials.
+
+#### Requirements
+
+The following env variables set (Also used for `@astrojs/db`):
+- **`ASTRO_DB_REMOTE_URL`**
+- **`ASTRO_DB_APP_TOKEN`**
+
+#### Preview Usage
+
+- Toolbar app (Closed)
+
+![Astro DevToolbarApp](./assets/devapps-1-toolbar-app-closed.png)
+
+- Toolbar app (Expanded)
+
+![Astro DevToolbarApp (Expanded)](./assets/devapps-1-toolbar-app-expanded.png)
+
+- Full Page view
+
+![Full Page view](./assets/devapps-1-full-page-view.png)
+
+#### **Footnotes**
+
+[^1]: There are plans to add more Developement Apps to this package in the future.
