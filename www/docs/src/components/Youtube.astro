@@ -8,13 +8,19 @@ interface Props {
 
 const { id, title } = Astro.props;
 ---
-<div>
+<div class="youtube-wrapper">
     <YouTube id={id} title={title} />
 </div>
 
 <style>
+  .youtube-wrapper {
+    margin-bottom: 4rem;
+  }
+
   :global(lite-youtube) {
     margin-left: auto;
     margin-right: auto;
+    border-radius: 8px;
+    border: 1px solid var(--sl-color-gray-6);
   }
 </style>
