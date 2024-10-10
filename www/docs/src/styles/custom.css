@@ -14,6 +14,7 @@
 
 	--sl-font: "Onest Variable";
 }
+
 /* Light mode colors. */
 :root[data-theme="light"] {
 	--sl-color-accent-low: #3a158b;
@@ -30,6 +31,11 @@
 	--sl-color-black: #ffffff;
 }
 
+/* This is Turso's Branding Colors for the sponsors sidebar section */
+[data-theme="light"] .turso-logo > path {
+	fill: #183134;
+}
+
 .card-grid .card {
 	border-radius: 8px;
 }
@@ -37,11 +43,6 @@
 code,
 starlight-file-tree {
 	border-radius: 4px;
-}
-
-.expressive-code figure {
-	box-shadow: none !important;
-	filter: drop-shadow(var(--ec-frm-frameBoxShdCssVal)) !important;
 }
 
 .expressive-code figure.frame figcaption {
@@ -57,10 +58,4 @@ starlight-file-tree {
 aside.starlight-aside {
 	border-top-right-radius: 4px;
 	border-bottom-right-radius: 4px;
-}
-
-@media (max-width: 50rem) {
-	.hero > img {
-		width: min(50%, 16rem);
-	}
 }

@@ -1,0 +1,63 @@
+---
+import { getCollection } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+import Integration from './Integration.astro';
+import ReadMore from './ReadMore.astro';
+
+interface Props {
+	pkgType: CollectionEntry<'package-catalog'>['data']['catalog'];
+}
+
+const packages = await getCollection('package-catalog');
+
+const studioCMS: CollectionEntry<'package-catalog'>['data'][] = [];
+const studioCMSPlugins: CollectionEntry<'package-catalog'>['data'][] = [];
+const communityPlugins: CollectionEntry<'package-catalog'>['data'][] = [];
+
+for (const pkg of packages) {
+	switch (pkg.data.catalog) {
+		case 'studiocms':
+			studioCMS.push(pkg.data);
+			break;
+		case 'studiocms-plugin':
+			studioCMSPlugins.push(pkg.data);
+			break;
+		case 'community-plugin':
+			communityPlugins.push(pkg.data);
+			break;
+	}
+}
+
+const sortedPackages = () => {
+	switch (Astro.props.pkgType) {
+		case 'studiocms':
+			return studioCMS.sort((a, b) => b.name.localeCompare(a.name));
+		case 'studiocms-plugin':
+			return studioCMSPlugins.sort((a, b) => b.name.localeCompare(a.name));
+		case 'community-plugin':
+			return communityPlugins.sort((a, b) => b.name.localeCompare(a.name));
+	}
+};
+
+const isPlugin =
+	Astro.props.pkgType === 'studiocms-plugin' || Astro.props.pkgType === 'community-plugin';
+---
+
+<div>
+
+    { sortedPackages().map((pkg, index) => (
+        <Integration
+            title={pkg.name}
+            githubURL={pkg.githubURL}
+            released={pkg.released}
+            isPlugin={isPlugin}
+            />
+
+        <p>{pkg.description}</p>
+
+        <ReadMore>For more information checkout the <a href={pkg.docsLink}>documentation page</a></ReadMore>
+
+        <>{ index < sortedPackages().length - 1 && <hr /> }</>
+    )) }
+
+</div>

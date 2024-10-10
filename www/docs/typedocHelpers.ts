@@ -23,7 +23,6 @@ export function makeTypedocOpts(o: {
 		pagination: true,
 		typeDoc: {
 			skipErrorChecking: true,
-			readme: getFilePathToPackage(o.dir, 'README.md'),
 			gitRemote: 'https://github.com/astrolicious/studiocms/blob',
 			gitRevision: 'main',
 			includeVersion: true,
@@ -31,8 +30,6 @@ export function makeTypedocOpts(o: {
 			expandParameters: true,
 			useCodeBlocks: true,
 			useHTMLAnchors: true,
-			alwaysCreateEntryPointModule: false,
-			mergeReadme: true,
 			sourceLinkExternal: true,
 			sourceLinkTemplate:
 				'https://github.com/astrolicious/studiocms/blob/{gitRevision}/{path}#L{line}',
