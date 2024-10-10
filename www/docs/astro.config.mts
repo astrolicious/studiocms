@@ -102,7 +102,7 @@ export default defineConfig({
 						{
 							label: '@studiocms/ui',
 							items: [
-								{ label: 'Getting Started', link: 'customizing/studiocms-ui/getting-started' },
+								{ label: 'Getting Started', link: 'customizing/studiocms-ui/' },
 								{ label: 'Components', autogenerate: { directory: 'customizing/studiocms-ui/components' } }
 							]
 						},
