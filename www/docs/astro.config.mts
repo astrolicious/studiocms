@@ -47,6 +47,7 @@ export default defineConfig({
 			components: {
 				SiteTitle: './src/starlightOverrides/SiteTitle.astro',
 				PageTitle: './src/starlightOverrides/PageTitle.astro',
+				Sidebar: './src/starlightOverrides/SideBar.astro',
 			},
 			logo: {
 				dark: '../assets/logo-light.svg',

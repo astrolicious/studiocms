@@ -30,6 +30,10 @@
 	--sl-color-black: #ffffff;
 }
 
+[data-theme="light"] .turso-logo > path {
+	fill: #183134;
+}
+
 .card-grid .card {
 	border-radius: 8px;
 }
