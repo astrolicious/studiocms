@@ -88,7 +88,7 @@ export default defineConfig({
 			],
 			sidebar: [
 				{
-					label: 'Docs',
+					label: 'Learn',
 					items: [
 						{
 							label: 'Start Here',
