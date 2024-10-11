@@ -69,3 +69,17 @@ aside.starlight-aside {
 #starlight__sidebar [aria-current="page"] span {
 	color: black !important;
 }
+
+[data-theme="light"] #starlight__sidebar [aria-current="page"] span {
+	color: white !important;
+}
+
+button[aria-label="Menu"][aria-controls="starlight__sidebar"] {
+	background-color: var(--sl-color-white);
+	padding: 0.5rem;
+}
+
+[data-theme="light"] button[aria-label="Menu"][aria-controls="starlight__sidebar"] {
+	background-color: var(--sl-color-black);
+	padding: 0.5rem;
+}

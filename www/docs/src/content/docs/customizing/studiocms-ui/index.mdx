@@ -5,6 +5,12 @@ description: Install @studiocms/ui in your own project and make use of our compo
 
 import { PackageManagers } from 'starlight-package-managers';
 
+:::caution
+If you want to avoid bundling issues, please set the `experimental.directRenderScript` flag in your `astro.config.mjs` file to true. 
+This flag is accessible from Astro v4.5.0 onwards. If you are using v5.0.0(-beta) of Astro, you do not need to set this flag as it has
+become stable.
+:::
+
 `@studiocms/ui` is the UI library that we use to build StudioCMS. The library is agnostic, meaning that you can use it
 in your own Astro projects! 
 
@@ -25,3 +31,11 @@ import { Button } from '@studiocms/ui/components';
 
 <Button />
 ```
+
+:::danger[About Accessibility]
+As of right now, `@studiocms/ui` is nowhere near being accessible. We are still missing crucial support for keyboard navigation,
+screen readers etc. This is by design, as although this library is publicly accessible, we still focus on building StudioCMS with it.
+
+We will add support for keyboard navigation and screenreaders at a later time, once we perform the planned accessibility audit for StudioCMS.
+Should you however want to contribute, and add these features yourself, feel free to!
+:::

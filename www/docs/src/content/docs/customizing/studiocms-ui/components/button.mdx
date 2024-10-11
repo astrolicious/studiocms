@@ -1,10 +1,11 @@
 ---
-title: Button Component
+title: Button
 ---
 
 import { Button } from '@studiocms/ui/components';
 import { Tabs, TabItem } from '@astrojs/starlight/components';
 import PreviewCard from '~/components/PreviewCard.astro';
+import './test.css';
 
 A button component with support for different colors, sizes and states out of the box. You can also customize it to your needs!
 
@@ -23,7 +24,7 @@ Using the button component is easy. Check out the example below:
   <TabItem label="Code">
     ```astro
     ---
-    import { Button } from '@studiocms/ui/components';
+    import { Button } from '@studiocms/ui/components/Button';
     ---
 
     <Button color="primary">
@@ -216,28 +217,44 @@ Here's an example where the button is an `<a>` tag instead of a `<button>`:
 
 As mentioned earlier, you can apply your custom styles to the button component! Here's a gradient button to show you how it's done:
 
+:::danger[Custom styles in production]
+Due to Astro bundling CSS in an honestly, weird way, your custom styles will get overwritten in production **unless you use `!important` or make 
+them inline-styles!**
+:::
+
 <Tabs>
   <TabItem label="Preview">
     <PreviewCard>
       <Button style="background-image: linear-gradient(to top right, #a07cee, #4ff8d2); color: black; font-weight: 600;">
-        studiocms.xyz
+        Custom Button
       </Button>
     </PreviewCard>
   </TabItem>
-  <TabItem label="Code">
+  <TabItem label="Code (with inline styles)">
+    ```astro
+    ---
+    import { Button } from '@studiocms/ui/components';
+    ---
+  
+    <Button style="background-image: linear-gradient(to top right, #a07cee, #4ff8d2); color: black; font-weight: 600;">
+      Custom Button
+    </Button>
+    ```
+  </TabItem>
+  <TabItem label="Code (with !important)">
     ```astro
     ---
     import { Button } from '@studiocms/ui/components';
     ---
   
     <Button class="custom-btn">
-      studiocms.xyz
+      Custom Button
     </Button>
     <style>
       .custom-btn {
-        background-image: linear-gradient(to top right, #a07cee, #4ff8d2);
-        color: black;
-        font-weight: 600;
+        background-image: linear-gradient(to top right, #a07cee, #4ff8d2) !important;
+        color: black !important;
+        font-weight: 600 !important;
       }
     </style>
     ```
