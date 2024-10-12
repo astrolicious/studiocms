@@ -4,43 +4,39 @@ import type { CollectionEntry } from 'astro:content';
 import Integration from './Integration.astro';
 import ReadMore from './ReadMore.astro';
 
+type PackageCatalogDataType = CollectionEntry<'package-catalog'>['data'];
+
 interface Props {
-	pkgType: CollectionEntry<'package-catalog'>['data']['catalog'];
+	pkgType: PackageCatalogDataType['catalog'];
 }
 
 const packages = await getCollection('package-catalog');
 
-const studioCMS: CollectionEntry<'package-catalog'>['data'][] = [];
-const studioCMSPlugins: CollectionEntry<'package-catalog'>['data'][] = [];
-const communityPlugins: CollectionEntry<'package-catalog'>['data'][] = [];
+const applySorting = (packages: PackageCatalogDataType[]) =>
+	packages.sort((a, b) => {
+		const isScopedA = a.name.startsWith('@');
+		const isScopedB = b.name.startsWith('@');
 
-for (const pkg of packages) {
-	switch (pkg.data.catalog) {
-		case 'studiocms':
-			studioCMS.push(pkg.data);
-			break;
-		case 'studiocms-plugin':
-			studioCMSPlugins.push(pkg.data);
-			break;
-		case 'community-plugin':
-			communityPlugins.push(pkg.data);
-			break;
-	}
-}
+		// Non-scoped packages come first
+		if (!isScopedA && isScopedB) return -1;
+		if (isScopedA && !isScopedB) return 1;
+
+		// If both are scoped or non-scoped, sort alphabetically
+		return a.name.localeCompare(b.name);
+	});
 
 const sortedPackages = () => {
 	switch (Astro.props.pkgType) {
 		case 'studiocms':
-			return studioCMS.sort((a, b) => b.name.localeCompare(a.name));
-		case 'studiocms-plugin':
-			return studioCMSPlugins.sort((a, b) => b.name.localeCompare(a.name));
-		case 'community-plugin':
-			return communityPlugins.sort((a, b) => b.name.localeCompare(a.name));
+			return applySorting(
+				packages.filter((pkg) => pkg.data.catalog === 'studiocms').map((pkg) => pkg.data)
+			);
+		case 'community':
+			return applySorting(
+				packages.filter((pkg) => pkg.data.catalog === 'community').map((pkg) => pkg.data)
+			);
 	}
 };
-
-const isPlugin =
-	Astro.props.pkgType === 'studiocms-plugin' || Astro.props.pkgType === 'community-plugin';
 ---
 
 <div>
@@ -50,7 +46,7 @@ const isPlugin =
             title={pkg.name}
             githubURL={pkg.githubURL}
             released={pkg.released}
-            isPlugin={isPlugin}
+            isPlugin={pkg.isPlugin}
             />
 
         <p>{pkg.description}</p>

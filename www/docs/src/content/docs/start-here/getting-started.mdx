@@ -114,8 +114,8 @@ Thanks to the power of Astro running StudioCMS is as easy as running the dev com
 
 To start your Astro project, run the following commands in your terminal:
 
-    <PackageManagers type="exec" args="astro db push # Add '--remote' if using a remote database" />
-    <PackageManagers type="run" args="dev --remote" />
+    <PackageManagers type="exec" args="astro db push --remote" />
+    <PackageManagers type="run" args="dev --remote # '--remote' can be removed if you have set the scripts in your package.json" />
 
 After running the commands, you should see a message indicating that your project is running at `localhost:4321`. When first setting up StudioCMS, you will prompted to finish configuring StudioCMS at http://localhost:4321/start
 
