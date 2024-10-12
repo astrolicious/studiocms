@@ -4,56 +4,47 @@ import type { CollectionEntry } from 'astro:content';
 import Integration from './Integration.astro';
 import ReadMore from './ReadMore.astro';
 
-type PackageCatalogDataType = CollectionEntry<'package-catalog'>['data'];
-
 interface Props {
-	pkgType: PackageCatalogDataType['catalog'];
+	pkgType: CollectionEntry<'package-catalog'>['data']['catalog'];
 }
 
-const packages = await getCollection('package-catalog');
+const { pkgType } = Astro.props;
 
-const applySorting = (packages: PackageCatalogDataType[]) =>
-	packages.sort((a, b) => {
-		const isScopedA = a.name.startsWith('@');
-		const isScopedB = b.name.startsWith('@');
+const packages = (await getCollection('package-catalog'))
+	.filter(({ data }) => data.catalog === pkgType)
+	.sort(({ data: { name: a } }, { data: { name: b } }) => {
+		const isScopedA = a.startsWith('@');
+		const isScopedB = b.startsWith('@');
 
 		// Non-scoped packages come first
 		if (!isScopedA && isScopedB) return -1;
 		if (isScopedA && !isScopedB) return 1;
 
 		// If both are scoped or non-scoped, sort alphabetically
-		return a.name.localeCompare(b.name);
-	});
-
-const sortedPackages = () => {
-	switch (Astro.props.pkgType) {
-		case 'studiocms':
-			return applySorting(
-				packages.filter((pkg) => pkg.data.catalog === 'studiocms').map((pkg) => pkg.data)
-			);
-		case 'community':
-			return applySorting(
-				packages.filter((pkg) => pkg.data.catalog === 'community').map((pkg) => pkg.data)
-			);
-	}
-};
+		return a.localeCompare(b);
+	})
+	.map(({ data }) => data);
 ---
 
 <div>
 
-    { sortedPackages().map((pkg, index) => (
-        <Integration
-            title={pkg.name}
-            githubURL={pkg.githubURL}
-            released={pkg.released}
-            isPlugin={pkg.isPlugin}
-            />
+    { 
+        packages.map(({ 
+            name: title, 
+            githubURL, 
+            released, 
+            isPlugin, 
+            description, 
+            docsLink: href
+        }, index) => (
+            <Integration {title} {githubURL} {released} {isPlugin} />
 
-        <p>{pkg.description}</p>
+            <p>{description}</p>
 
-        <ReadMore>For more information checkout the <a href={pkg.docsLink}>documentation page</a></ReadMore>
+            <ReadMore>For more information checkout the <a {href}>documentation page</a></ReadMore>
 
-        <>{ index < sortedPackages().length - 1 && <hr /> }</>
-    )) }
+            <>{ index < packages.length - 1 && <hr /> }</>
+        )) 
+    }
 
 </div>
