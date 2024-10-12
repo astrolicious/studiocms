@@ -4,5 +4,6 @@
   "description": "This Astro integration enables tracking real-world website performance and storing the data in Astro DB.",
   "docsLink": "/package-catalog/community-integrations/web-vitals/",
   "githubURL": "https://github.com/withastro/astro/tree/main/packages/integrations/web-vitals/",
-  "catalog": "community-plugin"
+  "catalog": "community",
+  "isPlugin": true
 }

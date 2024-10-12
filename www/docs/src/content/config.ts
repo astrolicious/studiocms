@@ -10,9 +10,10 @@ const packageCatalog = defineCollection({
 		docsLink: z.string(),
 		githubURL: z.string(),
 		catalog: z
-			.union([z.literal('studiocms'), z.literal('studiocms-plugin'), z.literal('community-plugin')])
+			.union([z.literal('studiocms'), z.literal('community')])
 			.optional()
-			.default('studiocms-plugin'),
+			.default('studiocms'),
+		isPlugin: z.boolean().optional().default(false),
 		released: z.boolean().optional().default(true),
 	}),
 });
