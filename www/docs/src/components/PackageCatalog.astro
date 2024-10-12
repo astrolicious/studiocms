@@ -5,13 +5,13 @@ import Integration from './Integration.astro';
 import ReadMore from './ReadMore.astro';
 
 interface Props {
-	pkgType: CollectionEntry<'package-catalog'>['data']['catalog'];
+	catalog: CollectionEntry<'package-catalog'>['data']['catalog'];
 }
 
-const { pkgType } = Astro.props;
+const { catalog } = Astro.props;
 
 const packages = (await getCollection('package-catalog'))
-	.filter(({ data }) => data.catalog === pkgType)
+	.filter(({ data }) => data.catalog === catalog)
 	.sort(({ data: { name: a } }, { data: { name: b } }) => {
 		const isScopedA = a.startsWith('@');
 		const isScopedB = b.startsWith('@');
