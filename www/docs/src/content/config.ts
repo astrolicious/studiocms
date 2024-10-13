@@ -12,6 +12,7 @@ const packageCatalogSchema = z.object({
 		.optional()
 		.default('studiocms'),
 	isPlugin: z.boolean().optional().default(false),
+	publiclyUsable: z.boolean().optional().default(false),
 	released: z.boolean().optional().default(true),
 });
 

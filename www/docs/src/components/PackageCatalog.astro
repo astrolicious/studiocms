@@ -35,9 +35,10 @@ const packages = (await getCollection('package-catalog'))
             released, 
             isPlugin, 
             description, 
-            docsLink: href
+            docsLink: href,
+            publiclyUsable
         }, index) => (
-            <Integration {title} {githubURL} {released} {isPlugin} />
+            <Integration {title} {githubURL} {released} {isPlugin} {publiclyUsable} />
 
             <p>{description}</p>
 

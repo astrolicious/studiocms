@@ -7,9 +7,10 @@ interface Props {
 	githubURL: string;
 	released?: boolean;
 	isPlugin?: boolean;
+	publiclyUsable?: boolean;
 }
 
-const { title, githubURL, released = true, isPlugin } = Astro.props;
+const { title, githubURL, released = true, isPlugin = false, publiclyUsable = false } = Astro.props;
 
 function parsePackageName(packageName: string): {
 	scoped: boolean;
@@ -33,14 +34,40 @@ function parsePackageName(packageName: string): {
 }
 
 const { scoped, scope, name } = parsePackageName(title);
+
+const generateBadgeMeta = (
+	isPlugin: boolean,
+	publiclyUsable: boolean
+): {
+	text: string;
+	variant: 'tip' | 'success' | 'note' | 'danger' | 'caution' | 'default' | undefined;
+} | null => {
+	if (isPlugin) {
+		return {
+			text: 'Plugin',
+			variant: 'tip',
+		};
+	}
+	if (publiclyUsable) {
+		return {
+			text: 'Publicly Usable',
+			variant: 'caution',
+		};
+	}
+	return null;
+};
+
+const badgeMeta = generateBadgeMeta(isPlugin, publiclyUsable);
+
+const showBadge = badgeMeta !== null;
 ---
 
 <div class="wrapper">
 	<h4 id="_top">
         {
             scoped 
-            ? <span class="scope">{scope}/</span><span>{name} {isPlugin && <Badge text="Plugin" variant='tip' />}</span> 
-            : <span>{name} {isPlugin && <Badge text="Plugin" variant='tip' />}</span>
+            ? <span class="scope">{scope}/</span><span>{name} { showBadge && <Badge {...badgeMeta} />}</span> 
+            : <span>{name} { showBadge && <Badge {...badgeMeta} />}</span>
         }
 	</h4>
 	<div class="integration-metadata">
