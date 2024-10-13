@@ -2,12 +2,12 @@
 ---
 
 <div class="sponsors">
-	<h2 class="sponsors-title">Sponsored By</h2>
+	<span class="sponsors-title">Sponsored By</span>
 	<a
 		href="https://turso.tech"
 		aria-label="Turso Tech"
-        target="_blank" 
-        rel="sponsored"
+		target="_blank" 
+		rel="sponsored"
 	>
     {/* Turso Tech Logo (Adapted for light/dark mode using CSS in the main custom.css file) */}
     <svg class="turso-logo" height="40" viewBox="0 0 821 240" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -25,15 +25,20 @@
 	.sponsors {
 		display: flex;
 		flex-wrap: wrap;
-		gap: 0 1.5rem;
+		margin-top: 1rem;
+		border-top: 1px solid var(--sl-color-gray-4);
+		padding-top: 1rem;
+		padding-bottom: 1rem;
 	}
+
 	a {
 		display: flex;
 		align-items: center;
 		min-height: 3rem;
 		opacity: 0.75;
-        margin: auto;
+		margin: auto;
 	}
+
 	a:hover {
 		opacity: 1;
 	}
@@ -50,7 +55,6 @@
 		font-family: var(--__sl-font-mono);
 		line-height: var(--sl-line-height-headings);
 		margin: 0 0 0.5rem;
-        text-align: center;
+		text-align: center;
 	}
-
 </style>

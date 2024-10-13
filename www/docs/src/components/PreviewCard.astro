@@ -1,4 +1,12 @@
-<div class="preview-card not-content">
+---
+type Props = {
+  vertical?: boolean;
+  gapSize?: 'sm' | 'md' | 'lg';
+};
+
+const { vertical = false, gapSize = 'md' } = Astro.props;
+---
+<div class="preview-card not-content" class:list={[vertical && "vertical", gapSize]}>
   <slot />
 </div>
 <style>
@@ -10,5 +18,17 @@
     align-items: center;
     justify-content: center;
     gap: 1rem;
+  }
+
+  .preview-card.vertical {
+    flex-direction: column;
+  }
+
+  .preview-card.sm {
+    gap: .5rem;
+  }
+
+  .preview-card.lg {
+    gap: 2rem;
   }
 </style>
