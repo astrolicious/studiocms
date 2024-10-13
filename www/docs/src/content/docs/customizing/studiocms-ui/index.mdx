@@ -5,6 +5,7 @@ catalogEntry: studiocms-ui
 description: Install @studiocms/ui in your own project and make use of our components!
 ---
 
+
 import { PackageManagers } from 'starlight-package-managers';
 
 `@studiocms/ui` is the UI library that we use to build StudioCMS. The library is agnostic, meaning that you can use it
@@ -26,6 +27,14 @@ import { Button } from '@studiocms/ui/components';
 ---
 
 <Button />
+```
+
+Include the styles by importing `@studiocms/ui/styles/global.css` in your page layout.
+
+```astro
+---
+import '@studiocms/ui/styles/global.css';
+---
 ```
 
 :::danger[About Accessibility]
