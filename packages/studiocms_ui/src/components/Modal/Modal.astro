@@ -26,7 +26,7 @@ const { id, size = 'md', dismissable = true, isForm = false, buttons = [] } = As
 >
   <div class="modal-header">
     <slot name="header" />
-    {dismissable && (
+    {(dismissable || buttons.length === 0) && (
       <button class="x-mark-container" id={`${id}-btn-x`}>
         <Icon name="x-mark" width={24} height={24} class={'dismiss-icon'} />
       </button>
@@ -58,6 +58,7 @@ const { id, size = 'md', dismissable = true, isForm = false, buttons = [] } = As
     box-shadow: 0px 6px 8px hsl(var(--shadow));
     animation: hide .25s ease;
     overflow: visible;
+    margin: auto;
   }
 
   .modal.sm {
@@ -69,7 +70,7 @@ const { id, size = 'md', dismissable = true, isForm = false, buttons = [] } = As
   }
 
   .modal.lg {
-    width: 512px;
+    width: 608px;
   }
 
   .modal[open] {
