@@ -75,6 +75,14 @@ const { scoped, scope, name } = parsePackageName(entryData.name);
 	)
 }
 
+{ data.type === 'redirect' ? (
+<div id="redirect-link" data-href={data.redirect} />
+<script is:inline>
+	const redirectLink = document.getElementById('redirect-link');
+	location.href = redirectLink.dataset.href;
+</script>
+) : null }
+
 <style>
 	.wrapper {
 		display: flex;
