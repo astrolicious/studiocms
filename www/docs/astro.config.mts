@@ -1,5 +1,6 @@
 import starlight from '@astrojs/starlight';
 import starlightUtils from '@lorenzo_lewis/starlight-utils';
+import { rendererRich, transformerTwoslash } from '@shikijs/twoslash';
 import { defineConfig } from 'astro/config';
 import { getCoolifyURL } from '../hostUtils';
 import { typeDocPlugins, typeDocSideBarEntry } from './typedoc.config';
@@ -9,6 +10,19 @@ const site = getCoolifyURL(true) || 'https://docs.studiocms.xyz/';
 
 export default defineConfig({
 	site,
+	markdown: {
+		shikiConfig: {
+			themes: {
+				light: 'catppuccin-latte',
+				dark: 'dark-plus',
+			},
+			transformers: [
+				// @ts-expect-error - version mismatch
+				transformerTwoslash({ renderer: rendererRich() }),
+			],
+			wrap: true,
+		},
+	},
 	integrations: [
 		starlight({
 			title: 'StudioCMS',
@@ -17,12 +31,7 @@ export default defineConfig({
 			lastUpdated: true,
 			credits: true,
 			tagline: 'A dedicated CMS for Astro DB. Built from the ground up by the Astro community.',
-			expressiveCode: {
-				themes: ['material-theme-darker', 'starlight-light'],
-				defaultProps: {
-					wrap: true,
-				},
-			},
+			expressiveCode: false,
 			components: {
 				SiteTitle: './src/starlightOverrides/SiteTitle.astro',
 				PageTitle: './src/starlightOverrides/PageTitle.astro',
@@ -37,7 +46,11 @@ export default defineConfig({
 				discord: 'https://chat.studiocms.xyz',
 				youtube: 'https://www.youtube.com/@StudioCMS',
 			},
-			customCss: ['@fontsource-variable/onest/index.css', './src/styles/custom.css'],
+			customCss: [
+				'@fontsource-variable/onest/index.css',
+				'@shikijs/twoslash/style-rich.css',
+				'./src/styles/custom.css',
+			],
 			editLink: {
 				baseUrl: 'https://github.com/astrolicious/studiocms/tree/main/www/docs',
 			},

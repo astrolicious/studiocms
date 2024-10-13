@@ -891,6 +891,12 @@ importers:
       '@astrojs/check':
         specifier: 'catalog:'
         version: 0.9.3(typescript@5.6.3)
+      '@astrojs/db':
+        specifier: 'catalog:'
+        version: 0.14.2(@cloudflare/workers-types@4.20240725.0)(@types/react@18.3.5)(react@18.3.1)
+      '@astrojs/node':
+        specifier: 'catalog:'
+        version: 8.3.3(astro@4.15.12(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.6.3))
       '@astrojs/starlight':
         specifier: 'catalog:'
         version: 0.28.2(astro@4.15.12(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.6.3))
@@ -900,6 +906,9 @@ importers:
       '@lorenzo_lewis/starlight-utils':
         specifier: catalog:docs
         version: 0.2.0(@astrojs/starlight@0.28.2(astro@4.15.12(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.6.3)))(astro@4.15.12(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.6.3))
+      '@shikijs/twoslash':
+        specifier: ^1.22.0
+        version: 1.22.0(typescript@5.6.3)
       '@shoelace-style/shoelace':
         specifier: catalog:docs
         version: 2.16.0(@types/react@18.3.5)
@@ -933,6 +942,9 @@ importers:
       starlight-typedoc:
         specifier: catalog:docs
         version: 0.16.0(@astrojs/starlight@0.28.2(astro@4.15.12(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.6.3)))(astro@4.15.12(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.6.3))(typedoc-plugin-markdown@4.2.9(typedoc@0.26.8(typescript@5.6.3)))(typedoc@0.26.8(typescript@5.6.3))
+      studiocms:
+        specifier: workspace:*
+        version: link:../../packages/studiocms
       typedoc:
         specifier: catalog:docs
         version: 0.26.8(typescript@5.6.3)
@@ -2790,6 +2802,9 @@ packages:
   '@shikijs/transformers@1.14.1':
     resolution: {integrity: sha512-JJqL8QBVCJh3L61jqqEXgFq1cTycwjcGj7aSmqOEsbxnETM9hRlaB74QuXvY/fVJNjbNt8nvWo0VwAXKvMSLRg==}
 
+  '@shikijs/twoslash@1.22.0':
+    resolution: {integrity: sha512-r5F/x4GTh18XzhAREehgT9lCDFZlISBSIsOFZQQaqjiOLG81PIqJN1I1D6XY58UN9OJt+3mffuKq19K4FOJKJA==}
+
   '@shikijs/types@1.22.0':
     resolution: {integrity: sha512-Fw/Nr7FGFhlQqHfxzZY8Cwtwk5E9nKDUgeLjZgt3UuhcM3yJR9xj3ZGNravZZok8XmEZMiYkSMTPlPkULB8nww==}
 
@@ -2933,6 +2948,11 @@ packages:
 
   '@types/yauzl@2.10.3':
     resolution: {integrity: sha512-oJoftv0LSuaDZE3Le4DbKX+KS9G36NzOeSap90UIK0yMA/NhKJhqlSGtNDORNRaIbQfzjXDrQa0ytJ6mNRGz/Q==}
+
+  '@typescript/vfs@1.6.0':
+    resolution: {integrity: sha512-hvJUjNVeBMp77qPINuUvYXj4FyWeeMMKZkxEATEU3hqBAQ7qdTBCUFT7Sp0Zu0faeEtFf+ldXxMEDr/bk73ISg==}
+    peerDependencies:
+      typescript: '*'
 
   '@ungap/structured-clone@1.2.0':
     resolution: {integrity: sha512-zuVdFrMJiuCDQUMCzQaD6KL28MjnqqN8XnAqiEq9PNm/hCPTSGfrXCOfwj1ow4LFb/tNymJPwsNbVePc1xFqrQ==}
@@ -5647,6 +5667,14 @@ packages:
     engines: {node: '>=18.0.0'}
     hasBin: true
 
+  twoslash-protocol@0.2.12:
+    resolution: {integrity: sha512-5qZLXVYfZ9ABdjqbvPc4RWMr7PrpPaaDSeaYY55vl/w1j6H6kzsWK/urAEIXlzYlyrFmyz1UbwIt+AA0ck+wbg==}
+
+  twoslash@0.2.12:
+    resolution: {integrity: sha512-tEHPASMqi7kqwfJbkk7hc/4EhlrKCSLcur+TcvYki3vhIfaRMXnXjaYFgXpoZRbT6GdprD4tGuVBEmTpUgLBsw==}
+    peerDependencies:
+      typescript: '*'
+
   type-fest@2.19.0:
     resolution: {integrity: sha512-RAH822pAdBgcNMAfWnCBU3CFZcfZ/i1eZjwFU/dsLKumyuuP3niueg2UAukXYF0E2AAoc82ZSSf9J0WQBinzHA==}
     engines: {node: '>=12.20'}
@@ -6321,6 +6349,14 @@ snapshots:
   '@astrojs/node@8.3.3(astro@4.15.12(@types/node@20.14.13)(rollup@4.21.0)(typescript@5.6.3))':
     dependencies:
       astro: 4.15.12(@types/node@20.14.13)(rollup@4.21.0)(typescript@5.6.3)
+      send: 0.18.0
+      server-destroy: 1.0.1
+    transitivePeerDependencies:
+      - supports-color
+
+  '@astrojs/node@8.3.3(astro@4.15.12(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.6.3))':
+    dependencies:
+      astro: 4.15.12(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.6.3)
       send: 0.18.0
       server-destroy: 1.0.1
     transitivePeerDependencies:
@@ -7153,7 +7189,7 @@ snapshots:
     dependencies:
       '@ctrl/tinycolor': 4.1.0
       hast-util-select: 6.0.2
-      hast-util-to-html: 9.0.1
+      hast-util-to-html: 9.0.3
       hast-util-to-text: 4.0.2
       hastscript: 9.0.0
       postcss: 8.4.47
@@ -8006,7 +8042,7 @@ snapshots:
 
   '@shikijs/core@1.16.2':
     dependencies:
-      '@shikijs/vscode-textmate': 9.2.0
+      '@shikijs/vscode-textmate': 9.3.0
       '@types/hast': 3.0.4
 
   '@shikijs/core@1.22.0':
@@ -8032,6 +8068,15 @@ snapshots:
   '@shikijs/transformers@1.14.1':
     dependencies:
       shiki: 1.14.1
+
+  '@shikijs/twoslash@1.22.0(typescript@5.6.3)':
+    dependencies:
+      '@shikijs/core': 1.22.0
+      '@shikijs/types': 1.22.0
+      twoslash: 0.2.12(typescript@5.6.3)
+    transitivePeerDependencies:
+      - supports-color
+      - typescript
 
   '@shikijs/types@1.22.0':
     dependencies:
@@ -8204,6 +8249,13 @@ snapshots:
     dependencies:
       '@types/node': 22.0.0
     optional: true
+
+  '@typescript/vfs@1.6.0(typescript@5.6.3)':
+    dependencies:
+      debug: 4.3.7
+      typescript: 5.6.3
+    transitivePeerDependencies:
+      - supports-color
 
   '@ungap/structured-clone@1.2.0': {}
 
@@ -11823,6 +11875,16 @@ snapshots:
       get-tsconfig: 4.7.6
     optionalDependencies:
       fsevents: 2.3.3
+
+  twoslash-protocol@0.2.12: {}
+
+  twoslash@0.2.12(typescript@5.6.3):
+    dependencies:
+      '@typescript/vfs': 1.6.0(typescript@5.6.3)
+      twoslash-protocol: 0.2.12
+      typescript: 5.6.3
+    transitivePeerDependencies:
+      - supports-color
 
   type-fest@2.19.0: {}
 

@@ -17,6 +17,7 @@
     "@fontsource-variable/onest": "catalog:studiocms-shared",
     "@lorenzo_lewis/starlight-utils": "catalog:docs",
     "@shoelace-style/shoelace": "catalog:docs",
+    "@shikijs/twoslash": "^1.22.0",
     "@types/hast": "catalog:docs",
     "astro": "catalog:",
     "astro-embed": "catalog:docs",
@@ -28,6 +29,11 @@
     "starlight-typedoc": "catalog:docs",
     "typedoc": "catalog:docs",
     "typedoc-plugin-markdown": "catalog:docs",
-    "typescript": "catalog:"
+    "typescript": "catalog:",
+    "@astrojs/db": "catalog:",
+    "@astrojs/node": "catalog:",
+    "studiocms": "workspace:*"
+  },
+  "devDependencies": {
   }
 }
