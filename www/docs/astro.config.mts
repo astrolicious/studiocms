@@ -21,7 +21,15 @@ export default defineConfig({
 			},
 			transformers: [
 				// @ts-expect-error - version mismatch
-				transformerTwoslash({ renderer: rendererRich() }),
+				transformerTwoslash({ 
+					renderer: rendererRich(),
+					twoslashOptions: {
+						compilerOptions: {
+							// Set module resolution to "Bundler"
+							moduleResolution: 100,
+						},
+					},
+				}),
 			],
 			wrap: true,
 		},

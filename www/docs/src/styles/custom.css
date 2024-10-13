@@ -85,7 +85,9 @@ button[aria-label="Menu"][aria-controls="starlight__sidebar"] {
 }
 
 [data-theme="dark"] .astro-code,
-[data-theme="dark"] .astro-code span {
+[data-theme="dark"] .astro-code span,
+[data-theme="dark"] .shiki,
+[data-theme="dark"] .shiki span {
 	color: var(--shiki-dark) !important;
 	background-color: var(--shiki-dark-bg) !important;
 	/* Optional, if you also want font styles */
@@ -95,5 +97,23 @@ button[aria-label="Menu"][aria-controls="starlight__sidebar"] {
 }
 
 .astro-code {
-	overflow: visible;
+	overflow: visible !important;
+}
+
+.twoslash-popup-container {
+	white-space: nowrap !important;
+	word-break: normal !important;
+	overflow-wrap: normal !important;
+	max-width: 512px !important;
+	width: 512px !important;
+}
+
+.twoslash-popup-container * {
+	white-space: wrap !important;
+	word-break: normal !important;
+	overflow-wrap: normal !important;
+}
+
+main[data-pagefind-body] {
+	overflow: hidden !important;
 }
