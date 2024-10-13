@@ -19,7 +19,7 @@ A simple input component with support for easy labels and placeholders.
   <TabItem label="Code">
     ```astro
     ---
-    import { Input } from '@studiocms/ui/components/Button';
+    import { Input } from '@studiocms/ui/components';
     ---
 
     <Input label="Label" placeholder="Placeholder" />
@@ -40,7 +40,7 @@ You can set the input's type to `password` using the `type` prop.
   <TabItem label="Code">
     ```astro "type='password'"
     ---
-    import { Input } from '@studiocms/ui/components/Button';
+    import { Input } from '@studiocms/ui/components';
     ---
 
     <Input label="Label" placeholder="Placeholder" type='password' />
@@ -61,7 +61,7 @@ You can disable the input altogether by using the `disabled` prop.
   <TabItem label="Code">
     ```astro "disabled"
     ---
-    import { Input } from '@studiocms/ui/components/Button';
+    import { Input } from '@studiocms/ui/components';
     ---
 
     <Input label="Label" placeholder="Placeholder" disabled />
@@ -85,7 +85,7 @@ the `FormData` returned by a submission. Here's an example showing how to set bo
   <TabItem label="Code">
     ```astro "isRequired" "name=\"example-input\""
     ---
-    import { Input } from '@studiocms/ui/components/Button';
+    import { Input } from '@studiocms/ui/components';
     ---
 
     <Input label="Label" placeholder="Placeholder" isRequired name="example-input"/>
