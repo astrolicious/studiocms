@@ -1,5 +1,6 @@
 import starlight from '@astrojs/starlight';
 import starlightUtils from '@lorenzo_lewis/starlight-utils';
+import { rendererRich, transformerTwoslash } from '@shikijs/twoslash';
 import { defineConfig } from 'astro/config';
 import { getCoolifyURL } from '../hostUtils';
 import { typeDocPlugins, typeDocSideBarEntry } from './typedoc.config';
@@ -11,6 +12,19 @@ export default defineConfig({
 	site,
 	experimental: {
 		directRenderScript: true,
+  },
+	markdown: {
+		shikiConfig: {
+			themes: {
+				light: 'catppuccin-latte',
+				dark: 'dark-plus',
+			},
+			transformers: [
+				// @ts-expect-error - version mismatch
+				transformerTwoslash({ renderer: rendererRich() }),
+			],
+			wrap: true,
+		},
 	},
 	integrations: [
 		starlight({
@@ -20,12 +34,7 @@ export default defineConfig({
 			lastUpdated: true,
 			credits: true,
 			tagline: 'A dedicated CMS for Astro DB. Built from the ground up by the Astro community.',
-			expressiveCode: {
-				themes: ['material-theme-darker', 'starlight-light'],
-				defaultProps: {
-					wrap: true,
-				},
-			},
+			expressiveCode: false,
 			components: {
 				SiteTitle: './src/starlightOverrides/SiteTitle.astro',
 				PageTitle: './src/starlightOverrides/PageTitle.astro',
@@ -43,6 +52,7 @@ export default defineConfig({
 			customCss: [
 				'@fontsource-variable/onest/index.css',
 				'./src/styles/custom.css',
+				'@shikijs/twoslash/style-rich.css',
 				'@studiocms/ui/css/global.css'
 			],
 			editLink: {
