@@ -37,11 +37,11 @@ A dropdown component that takes care of all the annoying bits for you, with adde
     <Button color="primary" id="modal-trigger">
       Trigger Modal
     </Button>
-    <script>
+    ```
+    ```ts twoslash
     import { ModalHelper } from '@studiocms/ui/components';
 
     const modal = new ModalHelper('modal', 'modal-trigger');
-    </script>
     ```
   </TabItem>
 </Tabs>
@@ -106,12 +106,11 @@ You can change the modal's size to one of three presets.
     </Button>
 
     <!-- Other modals and triggers omitted for simplicity -->
-
-    <script>
+    ```
+    ```ts twoslash
     import { ModalHelper } from '@studiocms/ui/components';
 
     const modal = new ModalHelper('modal', 'modal-trigger');
-    </script>
     ```
   </TabItem>
 </Tabs>
@@ -152,11 +151,11 @@ You can change whether a modal can be dismissed by clicking outside of it via th
     <Button color="primary" id="modal-trigger">
       Non-Dismissable
     </Button>
-    <script>
+    ```
+    ```ts twoslash
     import { ModalHelper } from '@studiocms/ui/components';
 
     const modal = new ModalHelper('modal', 'modal-trigger');
-    </script>
     ```
   </TabItem>
 </Tabs>
@@ -199,11 +198,11 @@ Modals support both a `Cancel` and a `Confirm` button. You can use both at the s
     <Button color="primary" id="modal-trigger">
       Buttons
     </Button>
-    <script>
+    ```
+    ```ts twoslash
     import { ModalHelper } from '@studiocms/ui/components';
 
     const modal = new ModalHelper('modal', 'modal-trigger');
-    </script>
     ```
   </TabItem>
 </Tabs>
@@ -216,7 +215,7 @@ The order of the `button` prop array does not influence the order of the buttons
 
 If you want to implement functionality based on which of the buttons is clicked, you can register a callback on each of them. 
 
-```ts ins={5-7,9-11}
+```ts twoslash ins={5-7,9-11}
 import { ModalHelper } from '@studiocms/ui/components';
 
 const modal = new ModalHelper('modal', 'modal-trigger');
@@ -237,7 +236,7 @@ This only changes their types, not their text.
 
 By using the `registerConfirmCallback` function, you can retrieve the `FormData` after the `Confirm` button is clicked. Any inputs in the modal will be included.
 
-```ts "formData"
+```ts twoslash "formData"
 import { ModalHelper } from '@studiocms/ui/components';
 
 const modal = new ModalHelper('modal', 'modal-trigger');
@@ -251,7 +250,7 @@ modal.registerConfirmCallback((formData) => {
 
 You can add multiple triggers to your modal by using the `bindTrigger` function in combination with an element's ID.
 
-```ts ins={4-5}
+```ts twoslash ins={4-5}
 import { ModalHelper } from '@studiocms/ui/components';
 
 const modal = new ModalHelper('modal', 'modal-trigger');
@@ -263,7 +262,7 @@ modal.bindTrigger('modal-trigger-three');
 
 Similar to [dropdowns](/customizing/studiocms-ui/components/dropdown), modals can be shown and hidden programatically:
 
-```ts ins={5-6}
+```ts twoslash ins={5-6}
 import { ModalHelper } from '@studiocms/ui/components';
 
 const modal = new ModalHelper('modal', 'modal-trigger');

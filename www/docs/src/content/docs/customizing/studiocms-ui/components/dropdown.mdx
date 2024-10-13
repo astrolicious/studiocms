@@ -42,11 +42,11 @@ A dropdown component that takes care of all the annoying bits for you, with adde
         Trigger Dropdown
       </Button>
     </Dropdown>
-    <script>
+    ```
+    ```ts twoslash
     import { DropdownHelper } from '@studiocms/ui/components';
 
     const dropdown = new DropdownHelper('dropdown');
-    </script>
     ```
   </TabItem>
 </Tabs>
@@ -98,12 +98,11 @@ You can change the dropdowns position by supplying the `align` prop.
     </Dropdown>
     
     <!-- Other buttons omitted for simplicity -->
-
-    <script>
+    ```
+    ```ts twoslash
     import { DropdownHelper } from '@studiocms/ui/components';
 
     const dropdown = new DropdownHelper('dropdown');
-    </script>
     ```
   </TabItem>
 </Tabs>
@@ -140,12 +139,11 @@ You can tell the dropdown wrapper to only show the dropdown when it's children a
         Right Click
       </Button>
     </Dropdown>
-
-    <script>
+    ```
+    ```ts twoslash
     import { DropdownHelper } from '@studiocms/ui/components';
 
     const dropdown = new DropdownHelper('dropdown');
-    </script>
     ```
   </TabItem>
 </Tabs>
@@ -209,12 +207,11 @@ No, you read that right. You can customize the options too. You can individually
         Customized Options
       </Button>
     </Dropdown>
-
-    <script>
+    ```
+    ```ts twoslash
     import { DropdownHelper } from '@studiocms/ui/components';
 
     const dropdown = new DropdownHelper('dropdown');
-    </script>
     ```
   </TabItem>
 </Tabs>
@@ -225,8 +222,7 @@ You know how, this entire page, we've been assigning our `DropdownHelper` to a v
 you to acces some built-in functions for programatically toggling, showing and hiding the dropdown. You can even register a callback for when one of the 
 dropdowns options has been clicked!
 
-```astro
-<script>
+```ts twoslash
 import { DropdownHelper } from '@studiocms/ui/components';
 
 const dropdown = new DropdownHelper('dropdown');
@@ -242,7 +238,6 @@ dropdown.toggle();
 // Instead of toggling, you can simply show or hide the dropdown:
 dropdown.show();
 dropdown.hide();
-</script>
 ```
 
 {/* All the helpers are in here 🥲 */}

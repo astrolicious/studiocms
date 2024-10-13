@@ -33,7 +33,8 @@ This component requires a **helper**. Make sure to read the documentation carefu
     <Button color="primary" id="trigger">
       Show Toast
     </Button>
-    <script>
+    ```
+    ```ts twoslash
     import { toast } from '@studiocms/ui/components';
 
     const trigger = document.getElementById('usage-trigger')!;
@@ -44,7 +45,6 @@ This component requires a **helper**. Make sure to read the documentation carefu
         type: 'info',
       });
     });
-    </script>
     ```
   </TabItem>
 </Tabs>
@@ -82,7 +82,7 @@ import { Toaster } from '@studiocms/ui/components';
 
 Or you can set it individually for every toast like this:
 
-```ts
+```ts twoslash
 import { toast } from '@studiocms/ui/components';
 
 toast({
@@ -98,7 +98,7 @@ toast({
 Sometimes, you don't need a toast to expire after a set time. Instead of setting the toast to only expire after 31 days, you can set it
 to be persistent by setting `persistent` to `true`:
 
-```ts
+```ts twoslash
 import { toast } from '@studiocms/ui/components';
 
 toast({
@@ -113,7 +113,7 @@ toast({
 
 Unless a toast is persistent, you can choose to hide the close button by setting the `closeButton` option to `false`:
 
-```ts
+```ts twoslash
 import { toast } from '@studiocms/ui/components';
 
 toast({

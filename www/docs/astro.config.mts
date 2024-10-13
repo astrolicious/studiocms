@@ -83,6 +83,7 @@ export default defineConfig({
 						renderMarkdown,
 						renderMarkdownInline,
 					}),
+					explicitTrigger: true,
 					twoslashOptions: {
 						compilerOptions: {
 							// Set module resolution to "Bundler"
