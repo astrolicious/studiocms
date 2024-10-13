@@ -82,6 +82,7 @@ button[aria-label="Menu"][aria-controls="starlight__sidebar"] {
 [data-theme="light"] button[aria-label="Menu"][aria-controls="starlight__sidebar"] {
 	background-color: var(--sl-color-black);
 	padding: 0.5rem;
+}
 
 [data-theme="dark"] .astro-code,
 [data-theme="dark"] .astro-code span {
