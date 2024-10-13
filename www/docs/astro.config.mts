@@ -51,9 +51,9 @@ export default defineConfig({
 			},
 			customCss: [
 				'@fontsource-variable/onest/index.css',
-				'./src/styles/custom.css',
 				'@shikijs/twoslash/style-rich.css',
-				'@studiocms/ui/css/global.css'
+				'@studiocms/ui/css/global.css',
+				'./src/styles/custom.css',
 			],
 			editLink: {
 				baseUrl: 'https://github.com/astrolicious/studiocms/tree/main/www/docs',

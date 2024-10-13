@@ -32,7 +32,7 @@
     "typescript": "catalog:",
     "@astrojs/db": "catalog:",
     "@astrojs/node": "catalog:",
-    "studiocms": "workspace:*"
+    "studiocms": "workspace:*",
     "@studiocms/ui": "workspace:*"
   }
 }
