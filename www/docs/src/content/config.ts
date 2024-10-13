@@ -25,7 +25,12 @@ const integrationSchema = baseSchema.extend({
 	catalogEntry: reference('package-catalog'),
 });
 
-const docsCollectionSchema = z.union([baseSchema, integrationSchema]);
+const redirectSchema = baseSchema.extend({
+	type: z.literal('redirect'),
+	redirect: z.string(),
+});
+
+const docsCollectionSchema = z.union([baseSchema, integrationSchema, redirectSchema]);
 
 export const collections = {
 	docs: defineCollection({
