@@ -7,9 +7,7 @@ type Props = {
 		| 'bottom-left'
 		| 'bottom-right'
 		| 'bottom-center';
-	class?: string;
 	duration?: number;
-	expand?: boolean;
 	closeButton?: boolean;
 	offset?: number;
 	gap?: number;
@@ -17,9 +15,7 @@ type Props = {
 
 const {
 	position = 'top-center',
-	class: className,
 	duration = 4000,
-	expand = false,
 	closeButton = false,
 	offset = 32,
 	gap = 8,
@@ -28,10 +24,8 @@ const {
 <div 
   id="toaster" 
   class:list={[
-    expand && "expand",
     closeButton && "closeable",
     position,
-    className,
   ]},
 >
   <div 
@@ -78,7 +72,7 @@ const {
     const toastContainer = document.createElement('div');
     const toastID = generateID('toast');
     toastContainer.id = toastID;
-    toastContainer.classList.add('toast-container', props.type, `${props.closeButton && "closeable"}`);
+    toastContainer.classList.add('toast-container', props.type, `${props.closeButton || props.persistent && "closeable"}`);
 
     const toastHeader = document.createElement('div');
     toastHeader.classList.add('toast-header');
@@ -108,7 +102,7 @@ const {
     toastHeaderLeftSide.appendChild(toastTitle);
     toastHeader.appendChild(toastHeaderLeftSide);
     
-    if (props.closeButton) {
+    if (props.closeButton || props.persistent) {
       const closeIconContainer = document.createElement('button');
       closeIconContainer.classList.add('close-icon-container')
       closeIconContainer.addEventListener('click', () => removeToast(toastID));
@@ -177,7 +171,8 @@ const {
     left: 50%;
     transform: translateX(-50%);
   }
-
+</style>
+<style is:global>
   .toast-container {
     pointer-events: all;
     padding: 1rem;
@@ -192,6 +187,7 @@ const {
     overflow: hidden;
     margin-bottom: var(--gap);
     animation: toast-pop-in .25s ease forwards;
+    z-index: 90;
   }
 
   .toast-header {
