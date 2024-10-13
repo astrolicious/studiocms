@@ -17,7 +17,7 @@
     "@fontsource-variable/onest": "catalog:studiocms-shared",
     "@lorenzo_lewis/starlight-utils": "catalog:docs",
     "@shoelace-style/shoelace": "catalog:docs",
-    "@shikijs/twoslash": "^1.22.0",
+    "@shikijs/twoslash": "^1.16.2",
     "@types/hast": "catalog:docs",
     "astro": "catalog:",
     "astro-embed": "catalog:docs",

@@ -16,11 +16,10 @@ export default defineConfig({
 	markdown: {
 		shikiConfig: {
 			themes: {
-				light: 'catppuccin-latte',
+				light: 'light-plus',
 				dark: 'dark-plus',
 			},
 			transformers: [
-				// @ts-expect-error - version mismatch
 				transformerTwoslash({ 
 					renderer: rendererRich(),
 					twoslashOptions: {
