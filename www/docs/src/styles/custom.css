@@ -105,7 +105,7 @@ button[aria-label="Menu"][aria-controls="starlight__sidebar"] {
 	word-break: normal !important;
 	overflow-wrap: normal !important;
 	max-width: 512px !important;
-	width: 512px !important;
+	width: max-content !important;
 }
 
 .twoslash-popup-container * {
