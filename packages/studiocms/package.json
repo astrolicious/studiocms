@@ -38,7 +38,10 @@
     "src"
   ],
   "exports": {
-    ".": "./src/index.ts",
+    ".": {
+      "types": "./src/index.d.ts",
+      "import": "./src/index.ts"
+    },
     "./blog": "./src/blog/index.ts"
   },
   "type": "module",
