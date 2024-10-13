@@ -11,6 +11,8 @@ import { gfmFromMarkdown } from 'mdast-util-gfm';
 import { defaultHandlers, toHast } from 'mdast-util-to-hast';
 import type { ShikiTransformerContextCommon } from 'shiki';
 
+import JS from 'shiki/langs/javascript.mjs'
+
 // Define the Site URL
 const site = getCoolifyURL(true) || 'https://docs.studiocms.xyz/';
 
@@ -67,6 +69,9 @@ export default defineConfig({
   },
 	markdown: {
 		shikiConfig: {
+			langs: [
+				...JS,
+			],
 			themes: {
 				light: 'light-plus',
 				dark: 'dark-plus',
