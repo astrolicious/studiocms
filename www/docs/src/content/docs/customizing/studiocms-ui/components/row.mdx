@@ -33,25 +33,11 @@ A small `flex: row` wrapper. Abstracts all the flex weirdness away into a compon
   </TabItem>
 </Tabs>
 
-### align-items: center
-
-You can pass the `alignCenter` prop to add the `align-items: center` CSS property to the row.
-
-```astro
----
-import { Row } from '@studiocms/ui/components';
----
-
-<Row alignCenter>
-  <!-- Content -->
-</Row>
-```
-
 ### `align-items: center`
 
 You can pass the `alignCenter` prop to add the `align-items: center` CSS property to the row.
 
-```astro
+```astro "alignCenter"
 ---
 import { Row } from '@studiocms/ui/components';
 ---
@@ -86,7 +72,7 @@ You can change the gap size of the row via the `gapSize` prop, which can be set 
     </PreviewCard>
   </TabItem>
   <TabItem label="Code">
-    ```astro
+    ```astro "gapSize=\"sm\""
     ---
     import { Row } from '@studiocms/ui/components';
     ---

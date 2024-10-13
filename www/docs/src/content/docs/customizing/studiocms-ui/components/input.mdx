@@ -38,7 +38,7 @@ You can set the input's type to `password` using the `type` prop.
     </PreviewCard>
   </TabItem>
   <TabItem label="Code">
-    ```astro
+    ```astro "type='password'"
     ---
     import { Input } from '@studiocms/ui/components/Button';
     ---
@@ -59,7 +59,7 @@ You can disable the input altogether by using the `disabled` prop.
     </PreviewCard>
   </TabItem>
   <TabItem label="Code">
-    ```astro
+    ```astro "disabled"
     ---
     import { Input } from '@studiocms/ui/components/Button';
     ---
@@ -83,12 +83,12 @@ the `FormData` returned by a submission. Here's an example showing how to set bo
     </PreviewCard>
   </TabItem>
   <TabItem label="Code">
-    ```astro
+    ```astro "isRequired" "name=\"example-input\""
     ---
     import { Input } from '@studiocms/ui/components/Button';
     ---
 
-    <Input label="Label" placeholder="Placeholder" isRequired name="example-input" />
+    <Input label="Label" placeholder="Placeholder" isRequired name="example-input"/>
     ```
   </TabItem>
 </Tabs>

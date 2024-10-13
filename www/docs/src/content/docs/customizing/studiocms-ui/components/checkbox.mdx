@@ -35,21 +35,21 @@ There's three different sizes for checkboxes:
   <TabItem label="Preview">
     <PreviewCard>
       <Row>
-        <Checkbox label="Small" color="primary" size='sm' defaultChecked />
+        <Checkbox label="Small" color="primary" size="sm" defaultChecked />
         <Checkbox label="Medium" color="primary" defaultChecked />
-        <Checkbox label="Large" color="primary" size='lg' defaultChecked />
+        <Checkbox label="Large" color="primary" size="lg" defaultChecked />
       </Row>
     </PreviewCard>
   </TabItem>
   <TabItem label="Code">
-    ```astro
+    ```astro /size="[a-z]+"/
     ---
     import { Checkbox } from '@studiocms/ui/components';
     ---
 
-    <Checkbox label="Small" color="primary" size='sm' defaultChecked />
+    <Checkbox label="Small" color="primary" size="sm" defaultChecked />
     <Checkbox label="Medium" color="primary" defaultChecked />
-    <Checkbox label="Large" color="primary" size='lg' defaultChecked />
+    <Checkbox label="Large" color="primary" size="lg" defaultChecked />
     ```
   </TabItem>
 </Tabs>
@@ -71,7 +71,7 @@ The checkbox component supports all default colorways.
     </PreviewCard>
   </TabItem>
   <TabItem label="Code">
-    ```astro
+    ```astro /color="[a-z]+"/
     ---
     import { Checkbox } from '@studiocms/ui/components';
     ---
@@ -99,7 +99,7 @@ the `FormData` returned by a submission. Here's an example showing how to set bo
     </PreviewCard>
   </TabItem>
   <TabItem label="Code">
-    ```astro
+    ```astro ins={8-9}
     ---
     import { Checkbox } from '@studiocms/ui/components';
     ---

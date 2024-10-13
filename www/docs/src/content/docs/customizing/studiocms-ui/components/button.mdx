@@ -46,7 +46,7 @@ You can disable the button component via the `disabled` attribute:
     </PreviewCard>
   </TabItem>
   <TabItem label="Code">
-    ```astro
+    ```astro "disabled"
     ---
     import { Button } from '@studiocms/ui/components';
     ---
@@ -77,7 +77,7 @@ The button component supports three different sizes out of the box:
     </PreviewCard>
   </TabItem>
   <TabItem label="Code">
-    ```astro
+    ```astro /size='(?:sm|lg)'/
     ---
     import { Button } from '@studiocms/ui/components';
     ---
@@ -125,7 +125,7 @@ There is five default colorways that can be used right away:
     </PreviewCard>
   </TabItem>
   <TabItem label="Code">
-    ```astro
+    ```astro /color='[a-z]+'/
     ---
     import { Button } from '@studiocms/ui/components';
     ---
@@ -168,7 +168,7 @@ In addition to colors, the button component can be displayed in three different 
     </PreviewCard>
   </TabItem>
   <TabItem label="Code">
-    ```astro
+    ```astro /variant=\"[a-z]+\"/
     ---
     import { Button } from '@studiocms/ui/components';
     ---
@@ -200,7 +200,7 @@ Here's an example where the button is an `<a>` tag instead of a `<button>`:
     </PreviewCard>
   </TabItem>
   <TabItem label="Code">
-    ```astro
+    ```astro "as='a'"
     ---
     import { Button } from '@studiocms/ui/components';
     ---
@@ -230,7 +230,7 @@ them inline-styles!**
     </PreviewCard>
   </TabItem>
   <TabItem label="Code (with inline styles)">
-    ```astro
+    ```astro /style="(?:[^"]*)"/
     ---
     import { Button } from '@studiocms/ui/components';
     ---
@@ -241,7 +241,7 @@ them inline-styles!**
     ```
   </TabItem>
   <TabItem label="Code (with !important)">
-    ```astro
+    ```astro ins={9-13}
     ---
     import { Button } from '@studiocms/ui/components';
     ---

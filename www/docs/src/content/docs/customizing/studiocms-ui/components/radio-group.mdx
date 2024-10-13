@@ -44,7 +44,7 @@ You can change a radio group to be displayed horizontally by using the `horizont
     </PreviewCard>
   </TabItem>
   <TabItem label="Code">
-    ```astro
+    ```astro "horizontal"
     ---
     import { RadioGroup } from '@studiocms/ui/components';
     ---
@@ -72,7 +72,7 @@ You can set a default selected option via the `defaultValue` prop.
     </PreviewCard>
   </TabItem>
   <TabItem label="Code">
-    ```astro
+    ```astro "defaultValue='opt-1'"
     ---
     import { RadioGroup } from '@studiocms/ui/components';
     ---
@@ -106,7 +106,7 @@ The radio group component supports all default colorways.
     </PreviewCard>
   </TabItem>
   <TabItem label="Code">
-    ```astro
+    ```astro "color=\"primary\""
     ---
     import { RadioGroup } from '@studiocms/ui/components';
     ---
@@ -136,7 +136,7 @@ below shows how to do the latter:
     </PreviewCard>
   </TabItem>
   <TabItem label="Code">
-    ```astro
+    ```astro "disabled: true"
     ---
     import { RadioGroup } from '@studiocms/ui/components';
     ---
@@ -161,7 +161,7 @@ Inputs have full form support. You can use the `isRequired` and `name` attribute
 The first one does what it says it does, while the latter sets the `name` attribute so you can access the input in, for example,
 the `FormData` returned by a submission. Here's an example showing how to set both of them:
 
-```astro
+```astro "isRequired" "name='required-radio'"
 ---
 import { RadioGroup } from '@studiocms/ui/components';
 ---

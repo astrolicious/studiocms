@@ -89,7 +89,7 @@ You can change the modal's size to one of three presets.
     </PreviewCard>
   </TabItem>
   <TabItem label="Code">
-    ```astro
+    ```astro /size="[a-z]+"/
     ---
     import { Modal, Button } from '@studiocms/ui/components';
     ---
@@ -137,7 +137,7 @@ You can change whether a modal can be dismissed by clicking outside of it via th
     </PreviewCard>
   </TabItem>
   <TabItem label="Code">
-    ```astro
+    ```astro "dismissable={false}"
     ---
     import { Modal, Button } from '@studiocms/ui/components';
     ---
@@ -184,7 +184,7 @@ Modals support both a `Cancel` and a `Confirm` button. You can use both at the s
     </PreviewCard>
   </TabItem>
   <TabItem label="Code">
-    ```astro
+    ```astro "buttons={['cancel','confirm']}"
     ---
     import { Modal, Button } from '@studiocms/ui/components';
     ---
@@ -216,7 +216,7 @@ The order of the `button` prop array does not influence the order of the buttons
 
 If you want to implement functionality based on which of the buttons is clicked, you can register a callback on each of them. 
 
-```ts
+```ts ins={5-7,9-11}
 import { ModalHelper } from '@studiocms/ui/components';
 
 const modal = new ModalHelper('modal', 'modal-trigger');
@@ -237,7 +237,7 @@ This only changes their types, not their text.
 
 By using the `registerConfirmCallback` function, you can retrieve the `FormData` after the `Confirm` button is clicked. Any inputs in the modal will be included.
 
-```ts
+```ts "formData"
 import { ModalHelper } from '@studiocms/ui/components';
 
 const modal = new ModalHelper('modal', 'modal-trigger');
@@ -251,7 +251,7 @@ modal.registerConfirmCallback((formData) => {
 
 You can add multiple triggers to your modal by using the `bindTrigger` function in combination with an element's ID.
 
-```ts
+```ts ins={4-5}
 import { ModalHelper } from '@studiocms/ui/components';
 
 const modal = new ModalHelper('modal', 'modal-trigger');
@@ -263,7 +263,7 @@ modal.bindTrigger('modal-trigger-three');
 
 Similar to [dropdowns](/customizing/studiocms-ui/components/dropdown), modals can be shown and hidden programatically:
 
-```ts
+```ts ins={5-6}
 import { ModalHelper } from '@studiocms/ui/components';
 
 const modal = new ModalHelper('modal', 'modal-trigger');
