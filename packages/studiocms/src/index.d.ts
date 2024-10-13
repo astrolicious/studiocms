@@ -1,8 +1,6 @@
-import type { StudioCMSOptionsSchema } from '@studiocms/core/schemas';
+import type { StudioCMSOptions } from '@studiocms/core/schemas';
 import type { StudioCMSPluginOptions } from '@studiocms/core/types';
 import type { AstroIntegration } from 'astro';
-
-type StudioCMSOptions = typeof StudioCMSOptionsSchema._input;
 
 /**
  * # Astro Studio CMS Integration
@@ -11,7 +9,7 @@ type StudioCMSOptions = typeof StudioCMSOptionsSchema._input;
  *
  * Checkout our [GitHub Repo `@astrolicious/studiocms`](https://github.com/astrolicious/studiocms)
  *
- * Check out [Astro-StudioCMS.xyz](https://astro-studiocms.xyz) or the Built-in JSDocs *(Hover Docs like this)* for more information.
+ * Check out [StudioCMS.xyz](https://astro-studiocms.xyz) or the Built-in JSDocs *(Hover Docs like this)* for more information.
  *
  * > **Note: Astro SSR adapters that are configured for Image Optimization will automatically take full control of the Image Optimization Service. Making the `imageService` option in this integration not have any effect.**
  *
@@ -34,9 +32,9 @@ export default studioCMS;
  * to provide better intellisense and type checking.
  *
  * @example
- * ```js
+ * ```ts
  * // studiocms.config.mjs
- * import { defineStudioCMSConfig } from '@astrolicious/studiocms';
+ * import { defineStudioCMSConfig } from 'studiocms';
  *
  * export default defineStudioCMSConfig({
  *  dbStartPage: true,
