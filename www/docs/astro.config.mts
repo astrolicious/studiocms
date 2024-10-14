@@ -14,10 +14,8 @@ import JS from 'shiki/langs/javascript.mjs';
 import TSX from 'shiki/langs/tsx.mjs';
 import starlightImageZoom from 'starlight-image-zoom';
 import { getCoolifyURL } from '../hostUtils';
-import colorizedBrackets from './src/shikiTransformers/colorizedBrackets';
-import { addCopyButton } from './src/shikiTransformers/copyButton';
-import { metaTitle } from './src/shikiTransformers/metaTitle';
-import { renderMarkdown, renderMarkdownInline } from './src/twoslashRenderers';
+import { addCopyButton, colorizedBrackets, metaTitle } from './src/shiki/transformers';
+import { renderMarkdown, renderMarkdownInline } from './src/shiki/twoslashRenderers';
 import { typeDocPlugins, typeDocSideBarEntry } from './typedoc.config';
 
 // Define the Site URL

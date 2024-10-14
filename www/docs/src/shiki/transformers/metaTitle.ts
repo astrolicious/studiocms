@@ -37,3 +37,5 @@ export function metaTitle(): ShikiTransformer {
 		},
 	};
 }
+
+export default metaTitle;
