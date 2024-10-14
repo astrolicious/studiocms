@@ -7,11 +7,7 @@ export function parseMetaTitleWords(meta?: string): string[] {
 	// Regular expression to match title="word"
 	const match = Array.from(meta.matchAll(/title="([^"]+)"/g));
 
-	return (
-		match
-			// No need to escape backslashes in this case
-			.map((v) => v[1])
-	);
+	return match.map((v) => v[1]);
 }
 
 /**
