@@ -1,6 +1,6 @@
 import type { StarlightPlugin } from '@astrojs/starlight/types';
 import { createStarlightTypeDocPlugin } from 'starlight-typedoc';
-import { getFilePathToPackage, makeTypedocOpts } from './typedocHelpers';
+import { getFilePathToPackage, makeTypedocOpts } from './src/typedocHelpers';
 
 // Create Starlight TypeDoc Plugins for different parts of the Astro StudioCMS Project
 

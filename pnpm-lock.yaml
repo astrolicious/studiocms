@@ -891,12 +891,6 @@ importers:
       '@astrojs/check':
         specifier: 'catalog:'
         version: 0.9.3(typescript@5.6.3)
-      '@astrojs/db':
-        specifier: 'catalog:'
-        version: 0.14.2(@cloudflare/workers-types@4.20240725.0)(@types/react@18.3.5)(react@18.3.1)
-      '@astrojs/node':
-        specifier: 'catalog:'
-        version: 8.3.3(astro@4.16.2(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.6.3))
       '@astrojs/starlight':
         specifier: 'catalog:'
         version: 0.28.2(astro@4.16.2(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.6.3))
@@ -906,9 +900,12 @@ importers:
       '@lorenzo_lewis/starlight-utils':
         specifier: catalog:docs
         version: 0.2.0(@astrojs/starlight@0.28.2(astro@4.16.2(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.6.3)))(astro@4.16.2(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.6.3))
+      '@shikijs/transformers':
+        specifier: 1.22.0
+        version: 1.22.0
       '@shikijs/twoslash':
-        specifier: 1.16.2
-        version: 1.16.2(typescript@5.6.3)
+        specifier: 1.22.0
+        version: 1.22.0(typescript@5.6.3)
       '@shoelace-style/shoelace':
         specifier: catalog:docs
         version: 2.16.0(@types/react@18.3.5)
@@ -949,17 +946,14 @@ importers:
         specifier: 'catalog:'
         version: 0.33.4
       shiki:
-        specifier: 1.16.2
-        version: 1.16.2
+        specifier: 1.22.0
+        version: 1.22.0
       starlight-package-managers:
         specifier: catalog:docs
         version: 0.7.0(@astrojs/starlight@0.28.2(astro@4.16.2(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.6.3)))(astro@4.16.2(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.6.3))
       starlight-typedoc:
         specifier: catalog:docs
         version: 0.16.0(@astrojs/starlight@0.28.2(astro@4.16.2(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.6.3)))(astro@4.16.2(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.6.3))(typedoc-plugin-markdown@4.2.9(typedoc@0.26.8(typescript@5.6.3)))(typedoc@0.26.8(typescript@5.6.3))
-      studiocms:
-        specifier: workspace:*
-        version: link:../../packages/studiocms
       typedoc:
         specifier: catalog:docs
         version: 0.26.8(typescript@5.6.3)
@@ -969,6 +963,22 @@ importers:
       typescript:
         specifier: 'catalog:'
         version: 5.6.3
+    devDependencies:
+      '@astrojs/db':
+        specifier: 'catalog:'
+        version: 0.14.2(@cloudflare/workers-types@4.20240725.0)(@types/react@18.3.5)(react@18.3.1)
+      '@astrojs/node':
+        specifier: 'catalog:'
+        version: 8.3.3(astro@4.16.2(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.6.3))
+      '@astrojs/react':
+        specifier: 3.6.2
+        version: 3.6.2(@types/react-dom@18.3.0)(@types/react@18.3.5)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(vite@5.4.8(@types/node@22.0.0))
+      '@studiocms/renderers':
+        specifier: workspace:*
+        version: link:../../packages/studiocms_renderers
+      studiocms:
+        specifier: workspace:*
+        version: link:../../packages/studiocms
 
   www/web:
     dependencies:
@@ -2817,8 +2827,11 @@ packages:
   '@shikijs/transformers@1.14.1':
     resolution: {integrity: sha512-JJqL8QBVCJh3L61jqqEXgFq1cTycwjcGj7aSmqOEsbxnETM9hRlaB74QuXvY/fVJNjbNt8nvWo0VwAXKvMSLRg==}
 
-  '@shikijs/twoslash@1.16.2':
-    resolution: {integrity: sha512-WzlCd7KnyfhBvGYb7tAbrxK1a9Rn2tQvAyv36RcggT418O3K5JRygiYAtf11qQjV1Q25TicczaosjPUVStFW0A==}
+  '@shikijs/transformers@1.22.0':
+    resolution: {integrity: sha512-k7iMOYuGQA62KwAuJOQBgH2IQb5vP8uiB3lMvAMGUgAMMurePOx3Z7oNqJdcpxqZP6I9cc7nc4DNqSKduCxmdg==}
+
+  '@shikijs/twoslash@1.22.0':
+    resolution: {integrity: sha512-r5F/x4GTh18XzhAREehgT9lCDFZlISBSIsOFZQQaqjiOLG81PIqJN1I1D6XY58UN9OJt+3mffuKq19K4FOJKJA==}
 
   '@shikijs/types@1.22.0':
     resolution: {integrity: sha512-Fw/Nr7FGFhlQqHfxzZY8Cwtwk5E9nKDUgeLjZgt3UuhcM3yJR9xj3ZGNravZZok8XmEZMiYkSMTPlPkULB8nww==}
@@ -6714,15 +6727,15 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@babel/plugin-transform-react-jsx-self@7.24.7(@babel/core@7.25.2)':
+  '@babel/plugin-transform-react-jsx-self@7.24.7(@babel/core@7.25.7)':
     dependencies:
-      '@babel/core': 7.25.2
-      '@babel/helper-plugin-utils': 7.24.8
+      '@babel/core': 7.25.7
+      '@babel/helper-plugin-utils': 7.25.7
 
-  '@babel/plugin-transform-react-jsx-source@7.24.7(@babel/core@7.25.2)':
+  '@babel/plugin-transform-react-jsx-source@7.24.7(@babel/core@7.25.7)':
     dependencies:
-      '@babel/core': 7.25.2
-      '@babel/helper-plugin-utils': 7.24.8
+      '@babel/core': 7.25.7
+      '@babel/helper-plugin-utils': 7.25.7
 
   '@babel/plugin-transform-react-jsx@7.25.7(@babel/core@7.25.7)':
     dependencies:
@@ -7212,7 +7225,7 @@ snapshots:
   '@expressive-code/plugin-shiki@0.35.6':
     dependencies:
       '@expressive-code/core': 0.35.6
-      shiki: 1.16.2
+      shiki: 1.22.0
 
   '@expressive-code/plugin-text-markers@0.35.6':
     dependencies:
@@ -8075,9 +8088,14 @@ snapshots:
     dependencies:
       shiki: 1.14.1
 
-  '@shikijs/twoslash@1.16.2(typescript@5.6.3)':
+  '@shikijs/transformers@1.22.0':
     dependencies:
-      '@shikijs/core': 1.16.2
+      shiki: 1.22.0
+
+  '@shikijs/twoslash@1.22.0(typescript@5.6.3)':
+    dependencies:
+      '@shikijs/core': 1.22.0
+      '@shikijs/types': 1.22.0
       twoslash: 0.2.12(typescript@5.6.3)
     transitivePeerDependencies:
       - supports-color
@@ -8446,9 +8464,9 @@ snapshots:
 
   '@vitejs/plugin-react@4.3.1(vite@5.4.8(@types/node@22.0.0))':
     dependencies:
-      '@babel/core': 7.25.2
-      '@babel/plugin-transform-react-jsx-self': 7.24.7(@babel/core@7.25.2)
-      '@babel/plugin-transform-react-jsx-source': 7.24.7(@babel/core@7.25.2)
+      '@babel/core': 7.25.7
+      '@babel/plugin-transform-react-jsx-self': 7.24.7(@babel/core@7.25.7)
+      '@babel/plugin-transform-react-jsx-source': 7.24.7(@babel/core@7.25.7)
       '@types/babel__core': 7.20.5
       react-refresh: 0.14.2
       vite: 5.4.8(@types/node@22.0.0)
@@ -11730,7 +11748,7 @@ snapshots:
       lunr: 2.3.9
       markdown-it: 14.1.0
       minimatch: 9.0.5
-      shiki: 1.16.2
+      shiki: 1.22.0
       typescript: 5.6.3
       yaml: 2.5.1
 

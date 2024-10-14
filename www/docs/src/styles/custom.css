@@ -136,8 +136,8 @@ main[data-pagefind-body] {
 }
 
 .twoslash-popup-docs-tag-name {
-	color: #8839EF !important;
-	--shiki-dark: #C586C0 !important;
+	color: #8839ef !important;
+	--shiki-dark: #c586c0 !important;
 	font-style: italic;
 	--shiki-dark-font-style: italic;
 }
@@ -166,13 +166,19 @@ main[data-pagefind-body] {
 	--shiki-dark: var(--sl-color-gray-2);
 }
 
+.twoslash-popup-container {
+	background-color: var(--twoslash-popup-bg) !important;
+	--shiki-dark-bg: #1e1e1e !important;
+}
+
 .twoslash-popup-container .shiki {
 	border: none !important;
 	outline: none !important;
 	padding: 0 !important;
 }
 
-.twoslash-popup-container .shiki code, .twoslash-popup-container .shiki code span {
+.twoslash-popup-container .shiki code,
+.twoslash-popup-container .shiki code span {
 	white-space: preserve !important;
 }
 
@@ -186,7 +192,37 @@ main[data-pagefind-body] {
 	content: none !important;
 }
 
-.twoslash-popup-code, .twoslash-popup-docs {
+.twoslash-popup-code,
+.twoslash-popup-docs {
 	max-height: 200px !important;
 	overflow: auto !important;
+}
+
+.highlighted {
+	display: inline-block !important;
+	margin: 0 -12px !important;
+	padding: 0 12px !important;
+	background-color: var(--sl-color-gray-5) !important;
+	--shiki-dark-bg: var(--sl-color-gray-5) !important;
+}
+
+.diff {
+	display: inline-block !important;
+	margin: 0 -12px !important;
+	padding: 0 12px !important;
+}
+
+.diff.add {
+	background-color: #0505 !important;
+	--shiki-dark-bg: #0505 !important;
+}
+
+.diff.remove {
+	background-color: #8005 !important;
+	--shiki-dark-bg: #8005 !important;
+}
+
+.diff:before {
+	position: absolute !important;
+	left: 40px !important;
 }

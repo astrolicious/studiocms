@@ -17,7 +17,8 @@
     "@fontsource-variable/onest": "catalog:studiocms-shared",
     "@lorenzo_lewis/starlight-utils": "catalog:docs",
     "@shoelace-style/shoelace": "catalog:docs",
-    "@shikijs/twoslash": "1.16.2",
+    "@shikijs/twoslash": "1.22.0",
+    "@shikijs/transformers": "1.22.0",
     "@types/hast": "catalog:docs",
     "astro": "catalog:",
     "astro-embed": "catalog:docs",
@@ -30,13 +31,17 @@
     "typedoc": "catalog:docs",
     "typedoc-plugin-markdown": "catalog:docs",
     "typescript": "catalog:",
-    "@astrojs/db": "catalog:",
-    "@astrojs/node": "catalog:",
-    "studiocms": "workspace:*",
     "@studiocms/ui": "workspace:*",
     "mdast-util-from-markdown": "^2.0.1",
     "mdast-util-gfm": "^3.0.0",
     "mdast-util-to-hast": "^13.2.0",
-    "shiki": "1.16.2"
+    "shiki": "1.22.0"
+  },
+  "devDependencies": {
+    "@astrojs/db": "catalog:",
+    "@astrojs/node": "catalog:",
+    "studiocms": "workspace:*",
+    "@astrojs/react": "3.6.2",
+    "@studiocms/renderers": "workspace:*"
   }
 }

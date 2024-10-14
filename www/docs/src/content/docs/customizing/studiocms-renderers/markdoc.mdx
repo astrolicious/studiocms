@@ -38,13 +38,13 @@ Normally, users will not need to install the `@studiocms/renderers` package dire
 
         When using only the `astro.config.mjs` file, you can add the MarkDoc React renderer to your configuration like so:
 
-        ```js title="astro.config.mjs" ins={5-6, 14, 19-21} mark={17}
+        ```ts twoslash
         import { defineConfig } from 'astro/config';
         import db from '@astrojs/db';
         import node from '@astrojs/node';
         import studioCMS from 'studiocms';
-        import react from '@astrojs/react';
-        import markDocRenderReact from '@studiocms/renderers/exports/markdoc/react';
+        import react from '@astrojs/react'; // [!code ++]
+        import markDocRenderReact from '@studiocms/renderers/exports/markdoc/react'; // [!code ++]
 
         export default defineConfig({
             site: 'https://demo.astro-studiocms.xyz/',
@@ -52,14 +52,14 @@ Normally, users will not need to install the `@studiocms/renderers` package dire
             adapter: node({ mode: "standalone" }),
             integrations: [
                 db(),
-                react(),
+                react(), // [!code ++]
                 studioCMS({
                     rendererConfig: {
-                        renderer: "markdoc",
+                        renderer: "markdoc", // [!code highlight]
                         markdocConfig: {
-                            renderType: markDocRenderReact({
-                                // Define your custom React components here
-                            }), 
+                            renderType: markDocRenderReact({ // [!code ++]
+                                // Define your custom React components here // [!code ++]
+                            }),  // [!code ++]
                         }
                     },
                 }),
