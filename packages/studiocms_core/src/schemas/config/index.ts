@@ -64,4 +64,4 @@ export const StudioCMSOptionsSchema = z
 	.optional()
 	.default({});
 
-export type StudioCMSOptions = z.infer<typeof StudioCMSOptionsSchema>;
+export type StudioCMSOptions = typeof StudioCMSOptionsSchema._input;
