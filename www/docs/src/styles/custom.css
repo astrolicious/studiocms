@@ -269,7 +269,6 @@ main[data-pagefind-body] {
 }
 
 .diff > span {
-	display: inline-block !important;
 	background-color: transparent !important;
 	--shiki-dark-bg: transparent !important;
 }
