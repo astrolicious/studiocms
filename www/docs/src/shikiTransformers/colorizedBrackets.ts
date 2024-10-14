@@ -124,7 +124,6 @@ export default function shikiColorizedBrackets(
 	};
 	const transformer: ShikiTransformer = {
 		name: 'colorizedBrackets',
-		// @ts-nocheck
 		preprocess(code, options) {
 			// includeExplanation is a valid option for codeToTokens
 			// but is missing from the type definition here
@@ -238,7 +237,6 @@ function splitBracketTokens(
 				// explanation end in token range
 				(explanation.end >= tokenStart && explanation.end <= tokenEnd)
 		);
-		// @ts-nocheck
 		token.explanation = overlappingExplanations.map((exp, i) => explanations[i]);
 	}
 	return tokens;
