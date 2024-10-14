@@ -35,14 +35,12 @@
     "mdast-util-from-markdown": "^2.0.1",
     "mdast-util-gfm": "^3.0.0",
     "mdast-util-to-hast": "^13.2.0",
-    "shiki": "1.22.0"
-  },
-  "devDependencies": {
+    "shiki": "1.22.0",
     "@astrojs/db": "catalog:",
     "@astrojs/node": "catalog:",
-    "@astrojs/web-vitals": "3.0.0",
+    "@astrojs/web-vitals": "catalog:",
     "studiocms": "workspace:*",
-    "@astrojs/react": "3.6.2",
+    "@astrojs/react": "catalog:studiocms-shared",
     "@studiocms/renderers": "workspace:*",
     "@studiocms/blog": "workspace:*",
     "@studiocms/devapps": "workspace:*"

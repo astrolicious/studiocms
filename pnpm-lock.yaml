@@ -891,9 +891,21 @@ importers:
       '@astrojs/check':
         specifier: 'catalog:'
         version: 0.9.3(typescript@5.6.3)
+      '@astrojs/db':
+        specifier: 'catalog:'
+        version: 0.14.2(@cloudflare/workers-types@4.20240725.0)(@types/react@18.3.5)(react@18.3.1)
+      '@astrojs/node':
+        specifier: 'catalog:'
+        version: 8.3.3(astro@4.16.2(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.6.3))
+      '@astrojs/react':
+        specifier: catalog:studiocms-shared
+        version: 3.6.2(@types/react-dom@18.3.0)(@types/react@18.3.5)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(vite@5.4.8(@types/node@22.0.0))
       '@astrojs/starlight':
         specifier: 'catalog:'
         version: 0.28.3(astro@4.16.2(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.6.3))
+      '@astrojs/web-vitals':
+        specifier: 'catalog:'
+        version: 3.0.0(@astrojs/db@0.14.2(@cloudflare/workers-types@4.20240725.0)(@types/react@18.3.5)(react@18.3.1))
       '@fontsource-variable/onest':
         specifier: catalog:studiocms-shared
         version: 5.1.0
@@ -909,6 +921,15 @@ importers:
       '@shoelace-style/shoelace':
         specifier: catalog:docs
         version: 2.16.0(@types/react@18.3.5)
+      '@studiocms/blog':
+        specifier: workspace:*
+        version: link:../../packages/studiocms_blog
+      '@studiocms/devapps':
+        specifier: workspace:*
+        version: link:../../packages/studiocms_devapps
+      '@studiocms/renderers':
+        specifier: workspace:*
+        version: link:../../packages/studiocms_renderers
       '@studiocms/ui':
         specifier: workspace:*
         version: link:../../packages/studiocms_ui
@@ -954,6 +975,9 @@ importers:
       starlight-typedoc:
         specifier: catalog:docs
         version: 0.16.0(@astrojs/starlight@0.28.3(astro@4.16.2(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.6.3)))(astro@4.16.2(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.6.3))(typedoc-plugin-markdown@4.2.9(typedoc@0.26.8(typescript@5.6.3)))(typedoc@0.26.8(typescript@5.6.3))
+      studiocms:
+        specifier: workspace:*
+        version: link:../../packages/studiocms
       typedoc:
         specifier: catalog:docs
         version: 0.26.8(typescript@5.6.3)
@@ -963,31 +987,6 @@ importers:
       typescript:
         specifier: 'catalog:'
         version: 5.6.3
-    devDependencies:
-      '@astrojs/db':
-        specifier: 'catalog:'
-        version: 0.14.2(@cloudflare/workers-types@4.20240725.0)(@types/react@18.3.5)(react@18.3.1)
-      '@astrojs/node':
-        specifier: 'catalog:'
-        version: 8.3.3(astro@4.16.2(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.6.3))
-      '@astrojs/react':
-        specifier: 3.6.2
-        version: 3.6.2(@types/react-dom@18.3.0)(@types/react@18.3.5)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(vite@5.4.8(@types/node@22.0.0))
-      '@astrojs/web-vitals':
-        specifier: 3.0.0
-        version: 3.0.0(@astrojs/db@0.14.2(@cloudflare/workers-types@4.20240725.0)(@types/react@18.3.5)(react@18.3.1))
-      '@studiocms/blog':
-        specifier: workspace:*
-        version: link:../../packages/studiocms_blog
-      '@studiocms/devapps':
-        specifier: workspace:*
-        version: link:../../packages/studiocms_devapps
-      '@studiocms/renderers':
-        specifier: workspace:*
-        version: link:../../packages/studiocms_renderers
-      studiocms:
-        specifier: workspace:*
-        version: link:../../packages/studiocms
 
   www/web:
     dependencies:
