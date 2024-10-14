@@ -57,9 +57,7 @@ This Astro integration enables tracking real-world website performance and stori
       integrations: [
           db(),
           webVitals(), // [!code ++]
-          studioCMS({
-              dbStartPage: true, // After the first time running the dev server and following the instructions at http://localhost:4321/start this will be set to false.
-          }),
+          studioCMS(),
       ],
    });
    ```

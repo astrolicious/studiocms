@@ -53,9 +53,7 @@ This Astro integration enables the StudioCMS Blog feature in your Astro project.
       adapter: node({ mode: "standalone" }),
       integrations: [
           db(),
-          studioCMS({
-              dbStartPage: true, // After the first time running the dev server and following the instructions at http://localhost:4321/start this will be set to false.
-          }),
+          studioCMS(),
           studioCMSBlog({ // [!code ++]
             config: { // [!code ++]
               title: "My StudioCMS Blog", // [!code ++]
