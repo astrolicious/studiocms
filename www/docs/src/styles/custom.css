@@ -13,6 +13,10 @@
 	--sl-color-black: #0f0f0f;
 
 	--sl-font: "Onest Variable";
+
+	/* Shiki Custom copy button tokens */
+	--copy-button: var(--sl-color-gray-3);
+	--copy-button-success: #00c200;
 }
 
 /* Light mode colors. */
