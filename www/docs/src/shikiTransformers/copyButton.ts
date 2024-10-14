@@ -24,11 +24,12 @@ export function addCopyButton(options?: { toggle?: number }): ShikiTransformer {
 					h('span', { class: 'ready' }, [
 						h(
 							'svg',
-							{ xmlns: 'http://www.w3.org/2000/svg', width: 24, height: 24, viewBox: '0 0 24 24' },
+							{ xmlns: 'http://www.w3.org/2000/svg', fill: 'none', width: 24, height: 24, viewBox: '0 0 24 24', stroke: 'var(--copy-button)', strokeWidth: "1.5" },
 							[
 								h('path', {
-									d: 'M9 18q-.825 0-1.413-.588T7 16V4q0-.825.588-1.413T9 2h9q.825 0 1.413.588T20 4v12q0 .825-.588 1.413T18 18H9Zm0-2h9V4H9v12Zm-4 6q-.825 0-1.413-.588T3 20V7q0-.425.288-.713T4 6q.425 0 .713.288T5 7v13h10q.425 0 .713.288T16 21q0 .425-.288.713T15 22H5Zm4-6V4v12Z',
-									fill: 'var(--copy-button)',
+									strokeLinecap: "round",
+									strokeLinejoin: "round",
+									d: 'M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 0 1-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 0 1 1.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 0 0-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 0 1-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 0 0-3.375-3.375h-1.5a1.125 1.125 0 0 1-1.125-1.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H9.75',
 								}),
 							]
 						),
@@ -36,11 +37,12 @@ export function addCopyButton(options?: { toggle?: number }): ShikiTransformer {
 					h('span', { class: 'success' }, [
 						h(
 							'svg',
-							{ xmlns: 'http://www.w3.org/2000/svg', width: 24, height: 24, viewBox: '0 0 24 24' },
+							{ xmlns: 'http://www.w3.org/2000/svg', width: 24, height: 24, viewBox: '0 0 24 24', strokeWidth: "1.5", fill: "none", stroke: 'var(--copy-button-success)' },
 							[
 								h('path', {
-									d: 'm10.6 16.2l7.05-7.05l-1.4-1.4l-5.65 5.65l-2.85-2.85l-1.4 1.4l4.25 4.25ZM5 21q-.825 0-1.413-.588T3 19V5q0-.825.588-1.413T5 3h14q.825 0 1.413.588T21 5v14q0 .825-.588 1.413T19 21H5Z',
-									fill: 'var(--copy-button-success)',
+									strokeLinecap: "round",
+									strokeLinejoin: "round",
+									d: 'm4.5 12.75 6 6 9-13.5',
 								}),
 							]
 						),

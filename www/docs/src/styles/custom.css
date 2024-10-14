@@ -12,22 +12,24 @@
 	--sl-color-gray-6: #191919;
 	--sl-color-black: #0f0f0f;
 
+	--sl-custom-code-color: var(--sl-color-gray-5);
+
 	--sl-font: "Onest Variable";
 
 	/* Shiki Custom copy button tokens */
 	--copy-button: var(--sl-color-gray-3);
-	--copy-button-success: #00c200;
+	--copy-button-success: #74f074;
 
 	/* Shiki Color tokens */
-	--hightlighted-word-bg: var(--sl-color-gray-6);
-	--highlighted-word-dark-bg: var(--sl-color-gray-4);
-	--highlighted-error-bg: #8005;
+	--highlighted-word-bg: var(--sl-color-gray-6);
+	--highlighted-word-dark-bg: var(--sl-color-gray-5);
+	--highlighted-error-bg: #88000033;
 	--highlighted-error-dark-bg: #8005;
 	--highlighted-warning-bg: #ff8c00;
 	--highlighted-warning-dark-bg: #ff8c00;
-	--diff-add-bg: #0505;
-	--diff-add-dark-bg: #0505;
-	--diff-remove-bg: #8005;
+	--diff-add-bg: #1b8f1b33;
+	--diff-add-dark-bg: #1b8f1b33;
+	--diff-remove-bg: #88000033;
 	--diff-remove-dark-bg: #8005;
 }
 
@@ -45,6 +47,8 @@
 	--sl-color-gray-6: #cecece;
 	--sl-color-gray-7: #f8f4fe;
 	--sl-color-black: #ffffff;
+
+	--sl-custom-code-color: #dddddd;
 }
 
 /* This is Turso's Branding Colors for the sponsors sidebar section */
@@ -101,9 +105,9 @@ button[aria-label="Menu"][aria-controls="starlight__sidebar"] {
 }
 
 [data-theme="dark"] .astro-code,
-[data-theme="dark"] .astro-code span,
+[data-theme="dark"] .astro-code span:not(.ready),
 [data-theme="dark"] .shiki,
-[data-theme="dark"] .shiki span {
+[data-theme="dark"] .shiki span:not(.ready) {
 	color: var(--shiki-dark) !important;
 	background-color: var(--shiki-dark-bg) !important;
 	/* Optional, if you also want font styles */
@@ -174,7 +178,7 @@ main[data-pagefind-body] {
 	margin-right: .75rem !important;
 }
 
-.twoslash-popup-docs-tag-value code:first-of-type:not(:has(.shiki))::after {
+.twoslash-popup-docs-tag-value code:first-of-type:not(:has(.shiki)):not(.shiki code)::after {
 	content: "—";
 	position: absolute;
 	top: 50%;
@@ -220,7 +224,7 @@ main[data-pagefind-body] {
 	display: inline-block !important;
 	margin: 0 -12px !important;
 	padding: 0 12px !important;
-	background-color: var(--hightlighted-word-bg) !important;
+	background-color: var(--highlighted-word-bg) !important;
 }
 
 [data-theme="dark"] .highlighted:not(.error):not(.warning) {
@@ -249,7 +253,7 @@ main[data-pagefind-body] {
 }
 
 .highlighted-word {
-	background-color: var(--hightlighted-word-bg) !important;
+	background-color: var(--highlighted-word-bg) !important;
 	padding: .125rem !important;
 	border-radius: 4px !important;
 	position: relative !important;
@@ -266,6 +270,10 @@ main[data-pagefind-body] {
 	display: inline-block !important;
 	margin: 0 -12px !important;
 	padding: 0 12px !important;
+}
+
+.diff, .highlighted {
+	border-radius: 4px;
 }
 
 .diff > span {
@@ -300,9 +308,11 @@ pre button.copy {
 	width: 28px !important;
 	padding: 0.125rem !important;
 	display: flex !important;
-	border: 2px solid var(--sl-color-gray-4) !important;
+	border: 1px solid var(--sl-color-gray-4) !important;
 	border-radius: 4px !important;
 	cursor: pointer !important;
+	opacity: 0;
+	transition: all .15s ease;
 
 	& span {
 		width: 100% !important;
@@ -323,12 +333,17 @@ pre button.copy {
 
 		& .ready {
 			display: none !important;
+			background-color: transparent !important;
 		}
 	}
 }
 
 pre button.copy:hover {
-	border-color: var(--sl-color-gray-3) !important;
+	background-color: var(--sl-color-gray-5);
+}
+
+.astro-code:hover button.copy {
+	opacity: 1;
 }
 
 pre span.title {
@@ -343,4 +358,8 @@ pre span.title {
 	padding-right: 0.5rem !important;
 	border: 1px solid var(--sl-color-gray-5) !important;
 	border-radius: 4px !important;
+}
+
+.sl-markdown-content code:not(:where(.not-content *)) {
+	background-color: var(--sl-custom-code-color);
 }
