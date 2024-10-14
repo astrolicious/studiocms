@@ -9,6 +9,22 @@ import ReadMore from '~/components/ReadMore.astro';
 
 StudioCMS Integration config options schema Reference
 
+```ts twoslash title="studiocms.config.mjs"
+import { defineStudioCMSConfig } from 'studiocms';
+// ---cut---
+// Default Values shown
+export default defineStudioCMSConfig({
+  dbStartPage: true,
+  rendererConfig: {},
+  imageService: {},
+  defaultFrontEndConfig: {},
+  dashboardConfig: {},
+  includedIntegrations: {},
+  dateLocale: 'en-us',
+  verbose: false,
+});
+```
+
 ## `dbStartPage`
 
 Project Initialization Page - Used during First time setup to create your database configuration.
