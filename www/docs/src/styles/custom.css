@@ -98,7 +98,7 @@ button[aria-label="Menu"][aria-controls="starlight__sidebar"] {
 
 .astro-code {
 	overflow: visible !important;
-	margin-top: 1rem !important;
+	margin-top: 1.5rem !important;
 	padding-top: 1rem !important;
 	border-radius: .5rem;
 }
@@ -261,7 +261,7 @@ pre button.copy {
 	width: 28px !important;
 	padding: 0.125rem !important;
 	display: flex !important;
-	border: 2px solid var(--sl-color-gray-2) !important;
+	border: 2px solid var(--sl-color-gray-4) !important;
 	border-radius: 4px !important;
 	cursor: pointer !important;
 
@@ -286,6 +286,10 @@ pre button.copy {
 			display: none !important;
 		}
 	}
+}
+
+pre button.copy:hover {
+	border-color: var(--sl-color-gray-3) !important;
 }
 
 pre span.title {
