@@ -33,7 +33,6 @@ catalogs:
   docs:
     "@11ty/eleventy-fetch": ^4.0.1
     "@lorenzo_lewis/starlight-utils": ^0.2.0
-    '@shoelace-style/shoelace': ^2.16.0
     "@types/hast": ^3.0.4
     astro-embed: ^0.7.2
     hast: ^1.0.0

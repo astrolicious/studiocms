@@ -58,9 +58,6 @@ catalogs:
     '@lorenzo_lewis/starlight-utils':
       specifier: ^0.2.0
       version: 0.2.0
-    '@shoelace-style/shoelace':
-      specifier: ^2.16.0
-      version: 2.16.0
     '@types/hast':
       specifier: ^3.0.4
       version: 3.0.4
@@ -915,9 +912,6 @@ importers:
       '@shikijs/twoslash':
         specifier: 1.22.0
         version: 1.22.0(typescript@5.6.3)
-      '@shoelace-style/shoelace':
-        specifier: catalog:docs
-        version: 2.16.0(@types/react@18.3.5)
       '@studiocms/blog':
         specifier: workspace:*
         version: link:../../packages/studiocms_blog
@@ -969,6 +963,9 @@ importers:
       shiki:
         specifier: 1.22.0
         version: 1.22.0
+      starlight-image-zoom:
+        specifier: ^0.8.0
+        version: 0.8.0(@astrojs/starlight@0.28.3(astro@4.16.3(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.6.3)))
       starlight-typedoc:
         specifier: catalog:docs
         version: 0.16.0(@astrojs/starlight@0.28.3(astro@4.16.3(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.6.3)))(astro@4.16.3(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.6.3))(typedoc-plugin-markdown@4.2.9(typedoc@0.26.8(typescript@5.6.3)))(typedoc@0.26.8(typescript@5.6.3))
@@ -5503,6 +5500,12 @@ packages:
 
   sprintf-js@1.0.3:
     resolution: {integrity: sha512-D9cPgkvLlV3t3IzL0D0YLvGA9Ahk4PcvVwUbN0dSGr1aP0Nrt4AEnTUbuGvquEC0mA64Gqt1fzirlRs5ibXx8g==}
+
+  starlight-image-zoom@0.8.0:
+    resolution: {integrity: sha512-+YDqCyihQescGs9hJoyTQt+KHEq9s6zIv8ksBMjPjwOrVicXtY0pM4hHj8yO1r2znud4gTytyGt25kAOmRyP9A==}
+    engines: {node: '>=18'}
+    peerDependencies:
+      '@astrojs/starlight': '>=0.22.0'
 
   starlight-typedoc@0.16.0:
     resolution: {integrity: sha512-9B2kmX8S2J3cHenlf+TqVV+ogIrOolf8UxMu0f/lWDX/XVQDAjr44j0/y8k7Nfc+V6TmndsJbRIOpAmPAIvxAg==}
@@ -11699,6 +11702,13 @@ snapshots:
       signal-exit: 3.0.7
 
   sprintf-js@1.0.3: {}
+
+  starlight-image-zoom@0.8.0(@astrojs/starlight@0.28.3(astro@4.16.3(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.6.3))):
+    dependencies:
+      '@astrojs/starlight': 0.28.3(astro@4.16.3(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.6.3))
+      rehype-raw: 7.0.0
+      unist-util-visit: 5.0.0
+      unist-util-visit-parents: 6.0.1
 
   starlight-typedoc@0.16.0(@astrojs/starlight@0.28.3(astro@4.16.3(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.6.3)))(astro@4.16.3(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.6.3))(typedoc-plugin-markdown@4.2.9(typedoc@0.26.8(typescript@5.6.3)))(typedoc@0.26.8(typescript@5.6.3)):
     dependencies:

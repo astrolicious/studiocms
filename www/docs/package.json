@@ -16,7 +16,6 @@
     "@astrojs/starlight": "catalog:",
     "@fontsource-variable/onest": "catalog:studiocms-shared",
     "@lorenzo_lewis/starlight-utils": "catalog:docs",
-    "@shoelace-style/shoelace": "catalog:docs",
     "@shikijs/twoslash": "1.22.0",
     "@shikijs/transformers": "1.22.0",
     "@types/hast": "catalog:docs",
@@ -43,6 +42,7 @@
     "@astrojs/react": "catalog:studiocms-shared",
     "@studiocms/renderers": "workspace:*",
     "@studiocms/blog": "workspace:*",
-    "@studiocms/devapps": "workspace:*"
+    "@studiocms/devapps": "workspace:*",
+    "starlight-image-zoom": "^0.8.0"
   }
 }

@@ -3,6 +3,7 @@
 	--sl-color-accent-low: #6545aa;
 	--sl-color-accent: #a581f3;
 	--sl-color-accent-high: #cdb9f8;
+	--sl-color-accent-bleached: rgba(205, 185, 248, 0.1);
 	--sl-color-white: #ffffff;
 	--sl-color-gray-1: #d1d1d1;
 	--sl-color-gray-2: #b4b4b4;
@@ -38,6 +39,7 @@
 	--sl-color-accent-low: #3a158b;
 	--sl-color-accent: #6545aa;
 	--sl-color-accent-high: #a581f3;
+	--sl-color-accent-bleached: rgba(15, 15, 15, .1);
 	--sl-color-white: #1f1f1f;
 	--sl-color-gray-1: #202020;
 	--sl-color-gray-2: #383838;
@@ -362,4 +364,27 @@ pre span.title {
 
 .sl-markdown-content code:not(:where(.not-content *)) {
 	background-color: var(--sl-custom-code-color);
+}
+
+.sl-link-button {
+	background-color: var(--sl-color-accent-bleached) !important;
+	color: white !important;
+	transition: all .15s ease !important;
+}
+
+[data-theme="light"] .sl-link-button {
+	color: black !important;
+}
+
+.sl-link-button:hover {
+	background-color: var(--sl-color-accent-high) !important;
+	color: black !important;
+}
+
+.sl-link-button:first-of-type svg {
+	transition: transform .15s ease !important;
+}
+
+.sl-link-button:first-of-type:hover > svg {
+	transform: translateX(5px);
 }

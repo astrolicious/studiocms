@@ -12,6 +12,7 @@ import { rendererRich, transformerTwoslash } from '@shikijs/twoslash';
 import { defineConfig } from 'astro/config';
 import JS from 'shiki/langs/javascript.mjs';
 import TSX from 'shiki/langs/tsx.mjs';
+import starlightImageZoom from 'starlight-image-zoom';
 import { getCoolifyURL } from '../hostUtils';
 import colorizedBrackets from './src/shikiTransformers/colorizedBrackets';
 import { addCopyButton } from './src/shikiTransformers/copyButton';
@@ -194,6 +195,7 @@ export default defineConfig({
 					multiSidebar: { switcherStyle: 'horizontalList' },
 				}),
 				...typeDocPlugins,
+				starlightImageZoom(),
 			],
 		}),
 	],
