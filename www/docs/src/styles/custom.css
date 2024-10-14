@@ -21,16 +21,12 @@
 	/* Shiki Color tokens */
 	--hightlighted-word-bg: var(--sl-color-gray-5);
 	--highlighted-word-dark-bg: var(--sl-color-gray-5);
-
 	--highlighted-error-bg: #8005;
 	--highlighted-error-dark-bg: #8005;
-
 	--highlighted-warning-bg: #ff8c00;
 	--highlighted-warning-dark-bg: #ff8c00;
-
 	--diff-add-bg: #0505;
 	--diff-add-dark-bg: #0505;
-
 	--diff-remove-bg: #8005;
 	--diff-remove-dark-bg: #8005;
 }
