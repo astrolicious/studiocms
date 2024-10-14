@@ -17,6 +17,22 @@
 	/* Shiki Custom copy button tokens */
 	--copy-button: var(--sl-color-gray-3);
 	--copy-button-success: #00c200;
+
+	/* Shiki Color tokens */
+	--hightlighted-word-bg: var(--sl-color-gray-5);
+	--highlighted-word-dark-bg: var(--sl-color-gray-5);
+
+	--highlighted-error-bg: #8005;
+	--highlighted-error-dark-bg: #8005;
+
+	--highlighted-warning-bg: #ff8c00;
+	--highlighted-warning-dark-bg: #ff8c00;
+
+	--diff-add-bg: #0505;
+	--diff-add-dark-bg: #0505;
+
+	--diff-remove-bg: #8005;
+	--diff-remove-dark-bg: #8005;
 }
 
 /* Light mode colors. */
@@ -208,28 +224,28 @@ main[data-pagefind-body] {
 	display: inline-block !important;
 	margin: 0 -12px !important;
 	padding: 0 12px !important;
-	background-color: var(--sl-color-gray-5) !important;
-	--shiki-dark-bg: var(--sl-color-gray-5) !important;
+	background-color: var(--hightlighted-word-bg) !important;
+	--shiki-dark-bg: var(--highlighted-word-dark-bg) !important;
 }
 
 .highlighted.error {
-	background-color: #8005 !important;
-	--shiki-dark-bg: #8005 !important;
+	background-color: var(--highlighted-error-bg) !important;
+	--shiki-dark-bg: var(--highlighted-error-dark-bg) !important;
 }
 
 .highlighted.warning {
-	background-color: #ff8c00 !important;
-	--shiki-dark-bg: #ff8c00 !important;
+	background-color: var(--highlighted-warning-bg) !important;
+	--shiki-dark-bg: var(--highlighted-warning-dark-bg) !important;
 }
 
 .highlighted-word {
-	background-color: var(--sl-color-gray-5) !important;
+	background-color: var(--hightlighted-word-bg) !important;
 	padding: .125rem !important;
 	border-radius: 4px !important;
 	position: relative !important;
 	display: inline-block !important;
 	line-height: 1 !important;
-	--shiki-dark-bg: var(--sl-color-gray-5) !important;
+	--shiki-dark-bg: var(--highlighted-word-dark-bg) !important;
 }
 
 .diff {
@@ -239,13 +255,13 @@ main[data-pagefind-body] {
 }
 
 .diff.add {
-	background-color: #0505 !important;
-	--shiki-dark-bg: #0505 !important;
+	background-color: var(--diff-add-bg) !important;
+	--shiki-dark-bg: var(--diff-add-dark-bg) !important;
 }
 
 .diff.remove {
-	background-color: #8005 !important;
-	--shiki-dark-bg: #8005 !important;
+	background-color: var(--diff-remove-bg) !important;
+	--shiki-dark-bg: var(--diff-remove-dark-bg) !important;
 }
 
 .diff:before {
