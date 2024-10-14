@@ -98,6 +98,8 @@ button[aria-label="Menu"][aria-controls="starlight__sidebar"] {
 
 .astro-code {
 	overflow: visible !important;
+	margin-top: 1rem !important;
+	padding-top: 1rem !important;
 	border-radius: .5rem;
 }
 
@@ -295,6 +297,6 @@ pre span.title {
 	padding: 0.1rem !important;
 	padding-left: 0.5rem !important;
 	padding-right: 0.5rem !important;
-	border: 1px solid var(--sl-color-gray-2) !important;
+	border: 1px solid var(--sl-color-gray-5) !important;
 	border-radius: 4px !important;
 }
