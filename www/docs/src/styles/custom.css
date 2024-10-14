@@ -14,6 +14,7 @@
 
 	--sl-font: "Onest Variable";
 }
+
 /* Light mode colors. */
 :root[data-theme="light"] {
 	--sl-color-accent-low: #3a158b;
@@ -59,8 +60,34 @@ aside.starlight-aside {
 	border-bottom-right-radius: 4px;
 }
 
+@media (max-width: 50rem) {
+	.hero > img {
+		width: min(50%, 16rem);
+	}
+}
+
+#starlight__sidebar [aria-current="page"] span {
+	color: black !important;
+}
+
+[data-theme="light"] #starlight__sidebar [aria-current="page"] span {
+	color: white !important;
+}
+
+button[aria-label="Menu"][aria-controls="starlight__sidebar"] {
+	background-color: var(--sl-color-white);
+	padding: 0.5rem;
+}
+
+[data-theme="light"] button[aria-label="Menu"][aria-controls="starlight__sidebar"] {
+	background-color: var(--sl-color-black);
+	padding: 0.5rem;
+}
+
 [data-theme="dark"] .astro-code,
-[data-theme="dark"] .astro-code span {
+[data-theme="dark"] .astro-code span,
+[data-theme="dark"] .shiki,
+[data-theme="dark"] .shiki span {
 	color: var(--shiki-dark) !important;
 	background-color: var(--shiki-dark-bg) !important;
 	/* Optional, if you also want font styles */
@@ -70,5 +97,96 @@ aside.starlight-aside {
 }
 
 .astro-code {
-	overflow: visible;
+	overflow: visible !important;
+	border-radius: .5rem;
+}
+
+.twoslash-popup-container {
+	white-space: nowrap !important;
+	word-break: normal !important;
+	overflow-wrap: normal !important;
+	max-width: 512px !important;
+	width: max-content !important;
+}
+
+.twoslash-popup-container * {
+	white-space: wrap !important;
+	word-break: normal !important;
+	overflow-wrap: normal !important;
+}
+
+main[data-pagefind-body] {
+	overflow: hidden !important;
+}
+
+.twoslash-popup-docs {
+	font-size: 1em !important;
+	color: var(--sl-color-white) !important;
+	font-family: var(--sl-font) !important;
+}
+
+.twoslash-popup-docs code:not(:has(.shiki)) {
+	color: var(--sl-color-white) !important;
+	background-color: var(--sl-color-gray-5) !important;
+	padding: .125rem !important;
+	border-radius: 4px !important;
+	position: relative !important;
+	display: inline-block !important;
+	line-height: 1 !important;
+}
+
+.twoslash-popup-docs-tag-name {
+	color: #8839EF !important;
+	--shiki-dark: #C586C0 !important;
+	font-style: italic;
+	--shiki-dark-font-style: italic;
+}
+
+.twoslash-popup-docs-tag-value {
+	color: var(--sl-color-gray-2) !important;
+	--shiki-dark: var(--sl-color-gray-2);
+}
+
+.twoslash-popup-docs.twoslash-popup-docs-tags {
+	font-size: 14px !important;
+	margin: 0 !important;
+}
+
+.twoslash-popup-docs-tag-value code:first-of-type {
+	margin-right: .75rem !important;
+}
+
+.twoslash-popup-docs-tag-value code:first-of-type:not(:has(.shiki))::after {
+	content: "—";
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	right: -.75rem;
+	color: var(--sl-color-gray-2) !important;
+	--shiki-dark: var(--sl-color-gray-2);
+}
+
+.twoslash-popup-container .shiki {
+	border: none !important;
+	outline: none !important;
+	padding: 0 !important;
+}
+
+.twoslash-popup-container .shiki code, .twoslash-popup-container .shiki code span {
+	white-space: preserve !important;
+}
+
+.twoslash-popup-container .shiki code {
+	margin: 0 !important;
+	background-color: transparent !important;
+	line-height: normal !important;
+}
+
+.twoslash-popup-container .shiki code span::after {
+	content: none !important;
+}
+
+.twoslash-popup-code, .twoslash-popup-docs {
+	max-height: 200px !important;
+	overflow: auto !important;
 }

@@ -8,7 +8,7 @@ catalog:
   '@astrojs/web-vitals': ^3.0.0
   '@astrojs/node': ^8.3.3
   '@types/node': ^20.14.11
-  astro: ^4.15.12
+  astro: ^4.16
   astro-integration-kit: ^0.16.1
   astro-theme-provider: ^0.6.1
   sharp: ^0.33.4
@@ -17,7 +17,7 @@ catalog:
 
 catalogs:
   min:
-    astro: ">=4.15"
+    astro: ">=4.16"
     '@astrojs/db': ">=0.14"
     astro-integration-kit: ">=0.16"
     vite: ^4 || ^5
