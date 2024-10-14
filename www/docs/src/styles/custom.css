@@ -253,8 +253,8 @@ pre:has(code) {
 
 pre button.copy {
 	position: absolute !important;
-	right: 8px !important;
-	top: 8px !important;
+	right: 10px !important;
+	top: 10px !important;
 	height: 28px !important;
 	width: 28px !important;
 	padding: 0.125rem !important;
