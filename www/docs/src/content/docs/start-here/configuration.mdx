@@ -18,8 +18,7 @@ This page shows you how and where to define the StudioCMS Config. For more infor
 
 ## Using the `astro.config.mjs` file:
 
-```ts twoslash
-// astro.config.mjs
+```ts twoslash title="astro.config.mjs"
 import db from '@astrojs/db';
 import node from '@astrojs/node';
 import studioCMS from 'studiocms';
@@ -60,8 +59,7 @@ This file will be automatically picked up and will overwrite any options passed 
 
 ### Example Config
 
-```ts twoslash
-// astro.config.mjs
+```ts twoslash title="astro.config.mjs"
 import db from '@astrojs/db';
 import node from '@astrojs/node';
 import studioCMS from 'studiocms';
@@ -75,8 +73,7 @@ export default defineConfig({
 });
 ```
 
-```ts twoslash
-// studiocms.config.mjs
+```ts twoslash title="studiocms.config.mjs"
 import { defineStudioCMSConfig } from "studiocms";
 
 export default defineStudioCMSConfig({
