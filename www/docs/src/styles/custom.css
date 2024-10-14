@@ -285,3 +285,16 @@ pre button.copy {
 		}
 	}
 }
+
+pre span.title {
+	position: absolute !important;
+	top: -14px !important;
+	left: 10px !important;
+	font-size: 0.75rem !important;
+	color: var(--sl-color-gray-2) !important;
+	padding: 0.1rem !important;
+	padding-left: 0.5rem !important;
+	padding-right: 0.5rem !important;
+	border: 1px solid var(--sl-color-gray-2) !important;
+	border-radius: 4px !important;
+}

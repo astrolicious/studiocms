@@ -15,6 +15,7 @@ import TSX from 'shiki/langs/tsx.mjs';
 import { getCoolifyURL } from '../hostUtils';
 import colorizedBrackets from './src/shikiTransformers/colorizedBrackets';
 import { addCopyButton } from './src/shikiTransformers/copyButton';
+import { metaTitle } from './src/shikiTransformers/metaTitle';
 import { renderMarkdown, renderMarkdownInline } from './src/twoslashRenderers';
 import { typeDocPlugins, typeDocSideBarEntry } from './typedoc.config';
 
@@ -37,6 +38,7 @@ export default defineConfig({
 			},
 			transformers: [
 				addCopyButton(),
+				metaTitle(),
 				colorizedBrackets(),
 				transformerMetaHighlight(),
 				transformerMetaWordHighlight(),
