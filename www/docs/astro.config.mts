@@ -90,7 +90,10 @@ export default defineConfig({
 				'@fontsource-variable/onest/index.css',
 				'@shikijs/twoslash/style-rich.css',
 				'@studiocms/ui/css/global.css',
-				'./src/styles/custom.css',
+				'./src/styles/shiki.css',
+				'./src/styles/sponsorcolors.css',
+				'./src/styles/starlight.css',
+				'./src/styles/twoslash.css',
 			],
 			editLink: {
 				baseUrl: 'https://github.com/astrolicious/studiocms/tree/main/www/docs',
