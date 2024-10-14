@@ -198,11 +198,31 @@ main[data-pagefind-body] {
 	overflow: auto !important;
 }
 
-.highlighted {
+.highlighted:not(.error):not(.warning) {
 	display: inline-block !important;
 	margin: 0 -12px !important;
 	padding: 0 12px !important;
 	background-color: var(--sl-color-gray-5) !important;
+	--shiki-dark-bg: var(--sl-color-gray-5) !important;
+}
+
+.highlighted.error {
+	background-color: #8005 !important;
+	--shiki-dark-bg: #8005 !important;
+}
+
+.highlighted.warning {
+	background-color: #ff8c00 !important;
+	--shiki-dark-bg: #ff8c00 !important;
+}
+
+.highlighted-word {
+	background-color: var(--sl-color-gray-5) !important;
+	padding: .125rem !important;
+	border-radius: 4px !important;
+	position: relative !important;
+	display: inline-block !important;
+	line-height: 1 !important;
 	--shiki-dark-bg: var(--sl-color-gray-5) !important;
 }
 

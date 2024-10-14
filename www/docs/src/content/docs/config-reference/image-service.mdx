@@ -9,17 +9,20 @@ sidebar:
 
 ## Usage
 
-```js title="astro.config.mjs"  {2-11}
+```ts twoslash {2-11}
+import studioCMS from 'studiocms';
+// ---cut---
+// @noErrors
 studioCMS({
   imageService: {
     useUnpic: false,
-    unpicConfig {
+    unpicConfig: {
         fallbackService: "unsplash",
         placeholder: 'blurhash',
         layout: 'constrained',
     },
-    astroImageServiceConfig: "squoosh",
-    cdnPlugin: "cloudinary",
+    astroImageServiceConfig: "sharp",
+    cdnPlugin: "cloudinary-js",
   },
 }),
 ```

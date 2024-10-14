@@ -9,7 +9,7 @@ sidebar:
     variant: 'caution'
 ---
 
-import { PackageManagers } from 'starlight-package-managers';
+import PackageManagers from '~/components/PackageManagers.astro';
 import { Steps, Tabs, TabItem } from '@astrojs/starlight/components';
 
 # Introduction
@@ -36,16 +36,17 @@ A Collection[^1] of useful tools available during dev mode in Astro.
 
 2. Add `@studiocms/blog` to your astro config file:
 
-   ```js title="astro.config.mjs" ins={3, 9}
+   ```ts twoslash
+   // astro.config.mjs
    import { defineConfig } from 'astro/config';
    import db from '@astrojs/db';
-   import devApps from '@studiocms/devapps';
+   import devApps from '@studiocms/devapps'; // [!code ++]
 
    export default defineConfig({
       site: "https://example.com",
       integrations: [
           db(),
-          devApps(),
+          devApps(), // [!code ++]
       ],
    });
    ```
@@ -59,7 +60,8 @@ All tools will only be available during `astro dev` and will not be available du
 
 ### Example config
 
-```js title="astro.config.mjs"
+```ts twoslash
+// astro.config.mjs
 import { defineConfig } from 'astro/config';
 import db from '@astrojs/db';
 import devApps from '@studiocms/devapps';
@@ -77,7 +79,9 @@ export default defineConfig({
 
 Full list of options available for the `devApps` integration, with default values shown. **All options are optional**.
 
-```ts
+```ts twoslash
+import devApps from '@studiocms/devapps';
+// ---cut---
 // Options for the devApps integration
 devApps({
   /* Apps Config */
@@ -87,7 +91,7 @@ devApps({
       /* Enable or disable the libSQL Viewer */
       enabled: true,
       /* Endpoint Path for libSQLViewer */
-      endpointPath: '/libsql-viewer',
+      endpoint: '/libsql-viewer',
     },
   },
   /* Endpoint Path for apps that use endpoints */

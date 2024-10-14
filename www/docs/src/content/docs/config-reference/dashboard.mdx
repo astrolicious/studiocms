@@ -9,7 +9,10 @@ sidebar:
 
 ## Usage
 
-```js title="astro.config.mjs"  {2-24}
+```ts twoslash {2-24}
+import studioCMS from 'studiocms';
+// ---cut---
+// @noErrors
 studioCMS({
   dashboardConfig: {
     dashboardEnabled: true,
@@ -33,7 +36,7 @@ studioCMS({
             }
         }
     }
-  }, // DEFAULT - This injects a dashboard to setup your dashboard data.
+  },
 })
 ```
 

@@ -9,7 +9,7 @@ sidebar:
     variant: 'tip'
 ---
 
-import { PackageManagers } from 'starlight-package-managers';
+import PackageManagers from '~/components/PackageManagers.astro';
 import Gallery from '~/components/Gallery.astro';
 import { webVitalsImages } from "~/assets/index.ts";
 import { Steps, Tabs, TabItem } from '@astrojs/starlight/components';
@@ -42,19 +42,21 @@ This Astro integration enables tracking real-world website performance and stori
 
 2. Add `@astrojs/web-vitals` to your astro config file:
 
-   ```js title="astro.config.mjs" ins={3, 12}
+   ```ts twoslash
+   // astro.config.mjs
    import node from '@astrojs/node';
    import studioCMS from 'studiocms';
-   import webVitals from '@astrojs/web-vitals';
+   import db from '@astrojs/db';
+   import webVitals from '@astrojs/web-vitals'; // [!code ++]
    import { defineConfig } from 'astro/config';
 
    export default defineConfig({
-      site: 'https://demo.astro-studiocms.xyz/',
+      site: 'https://demo.studiocms.xyz/',
       output: 'server',
       adapter: node({ mode: "standalone" }),
       integrations: [
           db(),
-          webVitals(),
+          webVitals(), // [!code ++]
           studioCMS({
               dbStartPage: true, // After the first time running the dev server and following the instructions at http://localhost:4321/start this will be set to false.
           }),

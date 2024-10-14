@@ -20,7 +20,9 @@ Project Initialization Page - Used during First time setup to create your databa
 
 ### Usage
 
-```js title="astro.config.mjs" {2}
+```ts twoslash {2}
+import studioCMS from 'studiocms';
+// ---cut---
 studioCMS({
     dbStartPage: true, // DEFAULT - This injects a start page to setup your DB data.
 })
@@ -77,7 +79,9 @@ Date locale used for formatting dates
 
 ### Usage
 
-```js title="astro.config.mjs"  {2}
+```ts twoslash {2}
+import studioCMS from 'studiocms';
+// ---cut---
 studioCMS({
     dateLocale: 'en-us',
 })
@@ -93,15 +97,18 @@ studioCMS({
 
 ## `verbose`
 
-- **Type:** `boolean| undefined`
-- **Default:** `true`
+- **Type:** `boolean | undefined`
+- **Default:** `false`
 
 `verbose` enables verbose logging.
 
 ### Usage
 
-```js title="astro.config.mjs"  {2}
+```ts twoslash {2}
+import studioCMS from 'studiocms';
+// ---cut---
+// @noErrors
 studioCMS({
-  verbose: true, // DEFAULT - This enables verbose logging in studioCMS.
+  verbose: true,
 }),
 ```

@@ -13,12 +13,14 @@ The default renderer for StudioCMS is the `marked` renderer. This renderer is us
 
 ### Usage
 
-```js title="astro.config.mjs" {3}
-  studioCMS({
-      rendererConfig: {
-        renderer: 'marked'
-      },
-  })
+```ts twoslash {3}
+import studioCMS from 'studiocms';
+// ---cut---
+studioCMS({
+  rendererConfig: {
+    renderer: 'marked'
+  },
+})
 ```
 
 ### Configuration
@@ -31,12 +33,14 @@ Custom MDX renderer that allows the end user to provide a highly customizable MD
 
 ### Usage
 
-```js title="astro.config.mjs" {3}
-  studioCMS({
-      rendererConfig: {
-        renderer: 'mdx'
-      },
-  })
+```ts twoslash {3}
+import studioCMS from 'studiocms';
+// ---cut---
+studioCMS({
+  rendererConfig: {
+    renderer: 'mdx'
+  },
+})
 ```
 
 ### Configuration
@@ -49,12 +53,14 @@ In addition to `Marked`, StudioCMS provides an alternative with Markdoc, offerin
 
 ### Usage
 
-```js title="astro.config.mjs" {3}
-  studioCMS({
-      rendererConfig: {
-        renderer: 'markdoc'
-      },
-  })
+```ts twoslash {3}
+import studioCMS from 'studiocms';
+// ---cut---
+studioCMS({
+  rendererConfig: {
+    renderer: 'markdoc'
+  },
+})
 ```
 
 ### Configuration
@@ -73,12 +79,14 @@ The default Astro renderer for their markdown content. This renderer adapts the 
 
 ### Usage
 
-```js title="astro.config.mjs" {3}
-  studioCMS({
-      rendererConfig: {
-        renderer: 'astro'
-      },
-  })
+```ts twoslash {3}
+import studioCMS from 'studiocms';
+// ---cut---
+studioCMS({
+  rendererConfig: {
+    renderer: 'astro'
+  },
+})
 ```
 
 ### Configuration

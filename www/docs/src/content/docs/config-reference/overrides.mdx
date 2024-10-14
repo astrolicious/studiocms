@@ -9,7 +9,10 @@ sidebar:
 
 ## Usage
 
-```js title="astro.config.mjs"  {2-6}
+```ts twoslash {2-6}
+import studioCMS from 'studiocms';
+// ---cut---
+// @noErrors
 studioCMS({
   overrides: {
     CustomImageOverride: "./src/components/MyCustomImage.astro",

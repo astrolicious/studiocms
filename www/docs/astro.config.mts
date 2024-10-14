@@ -4,6 +4,7 @@ import {
 	transformerMetaHighlight,
 	transformerMetaWordHighlight,
 	transformerNotationDiff,
+	transformerNotationErrorLevel,
 	transformerNotationHighlight,
 	transformerNotationWordHighlight,
 } from '@shikijs/transformers';
@@ -37,6 +38,7 @@ export default defineConfig({
 				transformerNotationDiff(),
 				transformerNotationHighlight(),
 				transformerNotationWordHighlight(),
+				transformerNotationErrorLevel(),
 				transformerTwoslash({
 					renderer: rendererRich({
 						renderMarkdown,

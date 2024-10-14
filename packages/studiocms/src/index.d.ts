@@ -14,7 +14,7 @@ import type { AstroIntegration } from 'astro';
  * > **Note: Astro SSR adapters that are configured for Image Optimization will automatically take full control of the Image Optimization Service. Making the `imageService` option in this integration not have any effect.**
  *
  */
-declare function studioCMS(options: StudioCMSOptions): AstroIntegration & {};
+declare function studioCMS(options?: StudioCMSOptions): AstroIntegration & {};
 
 export default studioCMS;
 
@@ -46,7 +46,7 @@ export default studioCMS;
  * ```
  *
  */
-declare function defineStudioCMSConfig(config: StudioCMSOptions): StudioCMSOptions;
+declare function defineStudioCMSConfig(config?: StudioCMSOptions): StudioCMSOptions;
 
 declare function defineStudioCMSPlugin(options: StudioCMSPluginOptions): void;
 

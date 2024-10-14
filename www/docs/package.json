@@ -40,8 +40,11 @@
   "devDependencies": {
     "@astrojs/db": "catalog:",
     "@astrojs/node": "catalog:",
+    "@astrojs/web-vitals": "3.0.0",
     "studiocms": "workspace:*",
     "@astrojs/react": "3.6.2",
-    "@studiocms/renderers": "workspace:*"
+    "@studiocms/renderers": "workspace:*",
+    "@studiocms/blog": "workspace:*",
+    "@studiocms/devapps": "workspace:*"
   }
 }

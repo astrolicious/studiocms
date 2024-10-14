@@ -18,12 +18,14 @@ The Markdown Content Renderer to use for rendering pages within StudioCMS
 
 ### Usage
 
-```js title="astro.config.mjs"  {3}
-  studioCMS({
-      rendererConfig: {
-        renderer: 'marked'
-      },
-  })
+```ts twoslash {3}
+import studioCMS from 'studiocms';
+// ---cut---
+studioCMS({
+  rendererConfig: {
+    renderer: 'marked'
+  },
+})
 ```
 
 ## `markedConfig`

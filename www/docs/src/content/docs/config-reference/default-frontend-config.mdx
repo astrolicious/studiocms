@@ -9,7 +9,10 @@ sidebar:
 
 ## Usage
 
-```js title="astro.config.mjs" {2-9}
+```ts twoslash {2-9}
+import studioCMS from 'studiocms';
+// ---cut---
+// @noErrors
 studioCMS({
   defaultFrontEndConfig: {
     injectDefaultFrontEndRoutes: true,
@@ -59,8 +62,12 @@ HTML Default Header - The default head configuration for the Frontend
 ### Usage
 
 
-```js title="astro.config.mjs" {2-4}
+```ts twoslash {3-13}
+import studioCMS from 'studiocms';
+// ---cut---
+// @noErrors
 studioCMS({
+  defaultFrontEndConfig: {
     htmlDefaultHead: [
         { tag: 'title', content: 'My Awesome Site' },
         {
@@ -72,6 +79,7 @@ studioCMS({
           }
         }
     ],
+  },
 })
 ```
 
