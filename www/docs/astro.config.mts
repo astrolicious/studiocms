@@ -13,6 +13,8 @@ import { defineConfig } from 'astro/config';
 import JS from 'shiki/langs/javascript.mjs';
 import TSX from 'shiki/langs/tsx.mjs';
 import { getCoolifyURL } from '../hostUtils';
+import colorizedBrackets from './src/shikiTransformers/colorizedBrackets';
+import { addCopyButton } from './src/shikiTransformers/copyButton';
 import { renderMarkdown, renderMarkdownInline } from './src/twoslashRenderers';
 import { typeDocPlugins, typeDocSideBarEntry } from './typedoc.config';
 
@@ -34,6 +36,8 @@ export default defineConfig({
 				dark: 'dark-plus',
 			},
 			transformers: [
+				addCopyButton(),
+				colorizedBrackets(),
 				transformerMetaHighlight(),
 				transformerMetaWordHighlight(),
 				transformerNotationDiff(),

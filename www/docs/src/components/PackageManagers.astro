@@ -2,6 +2,7 @@
 import { Code } from 'astro:components';
 import { TabItem, Tabs } from '@astrojs/starlight/components';
 import type { ComponentProps } from 'astro/types';
+import { addCopyButton } from '~/shikiTransformers/copyButton';
 
 import {
 	type CommandOptions,
@@ -49,7 +50,13 @@ function getTabItemProps(pkgManager: PackageManager) {
     <Tabs syncKey="package-managers">
       {getSupportedPkgManagers(type, pkgManagers).map((pkgManager) => (
         <TabItem {...getTabItemProps(pkgManager)}>
-          <Code code={getCommand(pkgManager, type, pkg, options)} lang="bash" themes={{ light: 'light-plus', dark: "dark-plus" }} wrap/>
+          <Code 
+		  	code={getCommand(pkgManager, type, pkg, options)} 
+			lang="bash" 
+			themes={{ light: 'light-plus', dark: "dark-plus" }}
+			transformers={[addCopyButton()]}
+			wrap
+			/>
         </TabItem>
       ))}
     </Tabs>

@@ -246,3 +246,42 @@ main[data-pagefind-body] {
 	position: absolute !important;
 	left: 40px !important;
 }
+
+pre:has(code) {
+	position: relative;
+}
+
+pre button.copy {
+	position: absolute !important;
+	right: 8px !important;
+	top: 8px !important;
+	height: 28px !important;
+	width: 28px !important;
+	padding: 0.125rem !important;
+	display: flex !important;
+	border: 2px solid var(--sl-color-gray-2) !important;
+	border-radius: 4px !important;
+	cursor: pointer !important;
+
+	& span {
+		width: 100% !important;
+		aspect-ratio: 1 / 1 !important;
+		background-repeat: no-repeat !important;
+		background-position: center !important;
+		background-size: cover !important;
+	}
+
+	& .success {
+		display: none;
+	}
+
+	&.copied {
+		& .success {
+			display: block !important;
+		}
+
+		& .ready {
+			display: none !important;
+		}
+	}
+}
