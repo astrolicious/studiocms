@@ -19,8 +19,8 @@
 	--copy-button-success: #00c200;
 
 	/* Shiki Color tokens */
-	--hightlighted-word-bg: var(--sl-color-gray-5);
-	--highlighted-word-dark-bg: var(--sl-color-gray-5);
+	--hightlighted-word-bg: var(--sl-color-gray-6);
+	--highlighted-word-dark-bg: var(--sl-color-gray-4);
 	--highlighted-error-bg: #8005;
 	--highlighted-error-dark-bg: #8005;
 	--highlighted-warning-bg: #ff8c00;
@@ -221,6 +221,10 @@ main[data-pagefind-body] {
 	margin: 0 -12px !important;
 	padding: 0 12px !important;
 	background-color: var(--hightlighted-word-bg) !important;
+}
+
+[data-theme="dark"] .highlighted:not(.error):not(.warning) {
+	background-color: var(--highlighted-word-dark-bg) !important;
 	--shiki-dark-bg: var(--highlighted-word-dark-bg) !important;
 }
 
@@ -229,8 +233,18 @@ main[data-pagefind-body] {
 	--shiki-dark-bg: var(--highlighted-error-dark-bg) !important;
 }
 
+[data-theme="dark"] .highlighted.error {
+	background-color: var(--highlighted-error-dark-bg) !important;
+	--shiki-dark-bg: var(--highlighted-error-dark-bg) !important;
+}
+
 .highlighted.warning {
 	background-color: var(--highlighted-warning-bg) !important;
+	--shiki-dark-bg: var(--highlighted-warning-dark-bg) !important;
+}
+
+[data-theme="dark"] .highlighted.warning {
+	background-color: var(--highlighted-warning-dark-bg) !important;
 	--shiki-dark-bg: var(--highlighted-warning-dark-bg) !important;
 }
 
@@ -241,6 +255,10 @@ main[data-pagefind-body] {
 	position: relative !important;
 	display: inline-block !important;
 	line-height: 1 !important;
+}
+
+[data-theme="dark"] .highlighted-word {
+	background-color: var(--highlighted-word-dark-bg) !important;
 	--shiki-dark-bg: var(--highlighted-word-dark-bg) !important;
 }
 
@@ -251,16 +269,31 @@ main[data-pagefind-body] {
 }
 
 .diff.add {
+	display: inline-block !important;
+	margin: 0 -12px !important;
+	padding: 0 12px !important;
 	background-color: var(--diff-add-bg) !important;
+}
+
+[data-theme="dark"] .diff.add {
+	background-color: var(--diff-add-dark-bg) !important;
 	--shiki-dark-bg: var(--diff-add-dark-bg) !important;
 }
 
 .diff.remove {
+	display: inline-block !important;
+	margin: 0 -12px !important;
+	padding: 0 12px !important;
 	background-color: var(--diff-remove-bg) !important;
+}
+
+[data-theme="dark"] .diff.remove {
+	background-color: var(--diff-remove-dark-bg) !important;
 	--shiki-dark-bg: var(--diff-remove-dark-bg) !important;
 }
 
-.diff:before {
+.diff:before,
+[data-theme="dark"] .diff:before {
 	position: absolute !important;
 	left: 40px !important;
 }
