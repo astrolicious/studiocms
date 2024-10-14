@@ -38,10 +38,7 @@
     "src"
   ],
   "exports": {
-    ".": {
-      "types": "./src/index.d.ts",
-      "import": "./src/index.ts"
-    },
+    ".": "./src/index.ts",
     "./blog": "./src/blog/index.ts"
   },
   "type": "module",
