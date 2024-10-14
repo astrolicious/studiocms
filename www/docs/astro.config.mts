@@ -11,6 +11,7 @@ import {
 import { rendererRich, transformerTwoslash } from '@shikijs/twoslash';
 import { defineConfig } from 'astro/config';
 import JS from 'shiki/langs/javascript.mjs';
+import TSX from 'shiki/langs/tsx.mjs';
 import { getCoolifyURL } from '../hostUtils';
 import { renderMarkdown, renderMarkdownInline } from './src/twoslashRenderers';
 import { typeDocPlugins, typeDocSideBarEntry } from './typedoc.config';
@@ -27,7 +28,7 @@ export default defineConfig({
 		syntaxHighlight: 'shiki',
 		shikiConfig: {
 			wrap: true,
-			langs: [...JS],
+			langs: [...JS, ...TSX],
 			themes: {
 				light: 'light-plus',
 				dark: 'dark-plus',
