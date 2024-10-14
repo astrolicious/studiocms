@@ -268,32 +268,23 @@ main[data-pagefind-body] {
 	padding: 0 12px !important;
 }
 
-.diff.add {
+.diff > span {
 	display: inline-block !important;
-	margin: 0 -12px !important;
-	padding: 0 12px !important;
-	background-color: var(--diff-add-bg) !important;
+	background-color: transparent !important;
+	--shiki-dark-bg: transparent !important;
 }
 
-[data-theme="dark"] .diff.add {
-	background-color: var(--diff-add-dark-bg) !important;
-	--shiki-dark-bg: var(--diff-add-dark-bg) !important;
+.diff.add {
+	background-color: var(--diff-add-bg);
+	--shiki-dark-bg: var(--diff-add-dark-bg);
 }
 
 .diff.remove {
-	display: inline-block !important;
-	margin: 0 -12px !important;
-	padding: 0 12px !important;
-	background-color: var(--diff-remove-bg) !important;
+	background-color: var(--diff-remove-bg);
+	--shiki-dark-bg: var(--diff-remove-dark-bg);
 }
 
-[data-theme="dark"] .diff.remove {
-	background-color: var(--diff-remove-dark-bg) !important;
-	--shiki-dark-bg: var(--diff-remove-dark-bg) !important;
-}
-
-.diff:before,
-[data-theme="dark"] .diff:before {
+.diff:before {
 	position: absolute !important;
 	left: 40px !important;
 }
