@@ -4,7 +4,7 @@ catalog:
   '@astrojs/rss': ^4.0.7
   '@astrojs/check': ^0.9.3
   '@astrojs/tailwind': ^5.1.0
-  '@astrojs/starlight': ^0.28.2
+  '@astrojs/starlight': ^0.28.3
   '@astrojs/web-vitals': ^3.0.0
   '@astrojs/node': ^8.3.3
   '@types/node': ^20.14.11
