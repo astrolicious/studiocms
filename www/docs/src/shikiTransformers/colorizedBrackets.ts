@@ -92,7 +92,7 @@ export interface BracketPair {
  *
  * @param options
  * @param options.themes - custom themes; all Shiki built-in themes are supported without additional configuration
- * @param options.bracketPairs - bracket definitions; be default [], {}, (), and <> (TS-only)
+ * @param options.bracketPairs - bracket definitions; default [], {}, (), and <> (TS-only)
  * @param options.langs - language-specific overrides for themes and bracketPairs
  * @returns Shiki transformer
  */
