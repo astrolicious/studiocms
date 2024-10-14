@@ -60,7 +60,7 @@ rehype()
 
 	.studio-tag {
 		--highlight-color: var(--sl-color-accent);
-		--shade-color: var(--sl-color-accent-low);
+		--shade-color: var(--sl-color-accent-low);;
 		--highlight-position: 0%;
 
 		/* Pull inline axis out so it meets the viewport edge on smaller viewports. */
@@ -101,12 +101,10 @@ rehype()
 		line-height: var(--sl-line-height-headings);
 		font-size: var(--sl-text-xs);
 		font-family: var(--__sl-font-mono);
-	}
-	
-	:root[data-theme="light"] .studio-tag {
-		--shade-color: var(--sl-color-accent-high);
-	}
 
+		/* Firefox */
+		z-index: -1;
+	}
 	:global([dir='rtl']) .studio-tag:not(:where([dir='rtl'] [dir='ltr'] *)) {
 		--highlight-position: 100%;
 	}
