@@ -13,6 +13,10 @@
 	--sl-color-gray-6: #191919;
 	--sl-color-black: #0f0f0f;
 
+	--landing-card-2nd-accent-low: #3a158b;
+	--landing-card-2nd-accent: #6545aa;
+	--landing-card-2nd-accent-high: #a581f3;
+
 	--sl-custom-code-color: var(--sl-color-gray-5);
 
 	--sl-font: "Onest Variable";
@@ -33,6 +37,10 @@
 	--sl-color-gray-6: #cecece;
 	--sl-color-gray-7: #f8f4fe;
 	--sl-color-black: #ffffff;
+
+	--landing-card-2nd-accent-low: #6545aa;
+	--landing-card-2nd-accent: #a581f3;
+	--landing-card-2nd-high: #cdb9f8;
 
 	--sl-custom-code-color: #dddddd;
 }
@@ -104,4 +112,9 @@ button[aria-label="Menu"][aria-controls="starlight__sidebar"] {
 [data-theme="light"] button[aria-label="Menu"][aria-controls="starlight__sidebar"] {
 	background-color: var(--sl-color-black);
 	padding: 0.5rem;
+}
+
+.card-grid {
+	margin-top: 1.5rem !important;
+	margin-bottom: 1.5rem !important;
 }
