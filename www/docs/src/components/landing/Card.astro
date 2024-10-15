@@ -9,7 +9,7 @@ export type Props = Parameters<typeof StarlightCard>[0];
 
 <style>
 	.landing-card {
-		--card-bg: rgba(23, 25, 30, 0.8);
+		--card-bg: var(--sl-color-bg-nav) !important;
 		display: contents;
 		color: var(--sl-color-white);
 		margin-top: 1rem !important;
@@ -37,7 +37,6 @@ export type Props = Parameters<typeof StarlightCard>[0];
 		border-radius: 0.25rem;
 		color: var(--sl-color-gray-7);
 	}
-
 
 	.landing-card :global(.card) {
 		--sl-card-bg: var(--sl-color-accent-low);

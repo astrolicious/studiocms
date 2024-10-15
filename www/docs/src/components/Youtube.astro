@@ -8,7 +8,7 @@ interface Props {
 
 const { id, title } = Astro.props;
 ---
-<YouTube id={id} title={title} posterQuality='max'/>
+<YouTube id={id} title={title} />
 
 <style is:global>
 lite-youtube {
@@ -22,6 +22,9 @@ lite-youtube {
   background-size: cover !important;
   cursor: pointer !important;
   max-width: 100% !important;
+	border-radius: 8px !important;
+  overflow: hidden !important;
+  border: 1px solid var(--sl-color-gray-4) !important;
 }
 
 /* gradient */
