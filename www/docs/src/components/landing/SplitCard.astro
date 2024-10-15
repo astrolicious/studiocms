@@ -28,6 +28,10 @@ export type Props = Parameters<typeof Card>[0];
 		color: var(--sl-color-white);
 	}
 
+    .split > :global(*) {
+        padding: 1rem;
+    }
+
 	@media screen and (min-width: 78rem) {
 		.split {
 			flex-direction: row;
