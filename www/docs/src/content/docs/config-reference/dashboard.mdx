@@ -9,11 +9,10 @@ sidebar:
 
 ## Usage
 
-```ts twoslash {2-24}
-import studioCMS from 'studiocms';
+```ts twoslash {2-24} title="studiocms.config.mjs"
+import { defineStudioCMSConfig } from 'studiocms';
 // ---cut---
-// @noErrors
-studioCMS({
+export default defineStudioCMSConfig({
   dashboardConfig: {
     dashboardEnabled: true,
     faviconURL: "/favicon.ico",
@@ -21,9 +20,9 @@ studioCMS({
     AuthConfig: {
         providers: {
             github: true,
-            usernameAndPassword: true
+            usernameAndPassword: true,
         },
-        enabled: true
+        enabled: true,
     },
     UnoCSSConfigOverride: {
         injectReset: true,
@@ -31,11 +30,11 @@ studioCMS({
         presetsConfig: {
             presetDaisyUI: {
                 themes: ['dark', 'light'],
-                lightTheme: ['light'],
-                darkTheme: ['dark'],
-            }
-        }
-    }
+                lightTheme: 'light',
+                darkTheme: 'dark',
+            },
+        },
+    },
   },
 })
 ```

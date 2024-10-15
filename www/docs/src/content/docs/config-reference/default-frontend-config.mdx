@@ -9,11 +9,10 @@ sidebar:
 
 ## Usage
 
-```ts twoslash {2-9}
-import studioCMS from 'studiocms';
+```ts twoslash {2-9} title="studiocms.config.mjs"
+import { defineStudioCMSConfig } from 'studiocms';
 // ---cut---
-// @noErrors
-studioCMS({
+export default defineStudioCMSConfig({
   defaultFrontEndConfig: {
     injectDefaultFrontEndRoutes: true,
     inject404Route: true,
@@ -62,11 +61,10 @@ HTML Default Header - The default head configuration for the Frontend
 ### Usage
 
 
-```ts twoslash {3-13}
-import studioCMS from 'studiocms';
+```ts twoslash {3-13} title="studiocms.config.mjs"
+import { defineStudioCMSConfig } from 'studiocms';
 // ---cut---
-// @noErrors
-studioCMS({
+export default defineStudioCMSConfig({
   defaultFrontEndConfig: {
     htmlDefaultHead: [
         { tag: 'title', content: 'My Awesome Site' },

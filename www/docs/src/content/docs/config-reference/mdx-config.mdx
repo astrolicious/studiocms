@@ -11,11 +11,10 @@ import ReadMore from '~/components/ReadMore.astro';
 
 ## Usage
 
-```ts twoslash {3-8}
-import studioCMS from 'studiocms';
+```ts twoslash {3-8} title="studiocms.config.mjs"
+import { defineStudioCMSConfig } from 'studiocms';
 // ---cut---
-// @noErrors
-studioCMS({
+export default defineStudioCMSConfig({
   rendererConfig: {
     mdxConfig: {
       remarkPlugins: [],
@@ -23,8 +22,8 @@ studioCMS({
       recmaPlugins: [],
       remarkRehypeOptions: {},
     },
-  }
-}),
+  },
+})
 ```
 
 This property has the following options:

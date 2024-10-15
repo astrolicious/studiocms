@@ -9,22 +9,21 @@ sidebar:
 
 ## Usage
 
-```ts twoslash {2-11}
-import studioCMS from 'studiocms';
+```ts twoslash {2-11} title="studiocms.config.mjs"
+import { defineStudioCMSConfig } from 'studiocms';
 // ---cut---
-// @noErrors
-studioCMS({
+export default defineStudioCMSConfig({
   imageService: {
     useUnpic: false,
     unpicConfig: {
-        fallbackService: "unsplash",
+        fallbackService: "sharp",
         placeholder: 'blurhash',
         layout: 'constrained',
     },
     astroImageServiceConfig: "sharp",
     cdnPlugin: "cloudinary-js",
   },
-}),
+})
 ```
 
 ### `useUnpic`

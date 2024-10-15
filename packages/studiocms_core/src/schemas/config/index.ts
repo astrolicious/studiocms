@@ -4,12 +4,16 @@ import { dashboardConfigSchema } from './dashboard';
 import { DefaultFrontEndConfigSchema } from './defaultFrontend';
 import { imageServiceSchema } from './imageService';
 import { includedIntegrationsSchema } from './integrations';
-import { type StudioCMSRendererConfig, StudioCMSRendererConfigSchema } from './rendererConfig';
+import {
+	type CustomRenderer,
+	type StudioCMSRendererConfig,
+	StudioCMSRendererConfigSchema,
+} from './rendererConfig';
 
 //
 // Exported Schemas for use in other internal packages
 //
-export { StudioCMSRendererConfigSchema, type StudioCMSRendererConfig };
+export { StudioCMSRendererConfigSchema, type StudioCMSRendererConfig, type CustomRenderer };
 export { dashboardConfigSchema, DefaultFrontEndConfigSchema, imageServiceSchema, overridesSchema };
 
 //

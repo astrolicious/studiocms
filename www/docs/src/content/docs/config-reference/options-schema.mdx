@@ -36,10 +36,10 @@ Project Initialization Page - Used during First time setup to create your databa
 
 ### Usage
 
-```ts twoslash {2}
-import studioCMS from 'studiocms';
+```ts twoslash {2} title="studiocms.config.mjs"
+import { defineStudioCMSConfig } from 'studiocms';
 // ---cut---
-studioCMS({
+export default defineStudioCMSConfig({
     dbStartPage: true, // DEFAULT - This injects a start page to setup your DB data.
 })
 ```
@@ -95,10 +95,10 @@ Date locale used for formatting dates
 
 ### Usage
 
-```ts twoslash {2}
-import studioCMS from 'studiocms';
+```ts twoslash {2} title="studiocms.config.mjs"
+import { defineStudioCMSConfig } from 'studiocms';
 // ---cut---
-studioCMS({
+export default defineStudioCMSConfig({
     dateLocale: 'en-us',
 })
 ```
@@ -120,11 +120,10 @@ studioCMS({
 
 ### Usage
 
-```ts twoslash {2}
-import studioCMS from 'studiocms';
+```ts twoslash {2} title="studiocms.config.mjs"
+import { defineStudioCMSConfig } from 'studiocms';
 // ---cut---
-// @noErrors
-studioCMS({
+export default defineStudioCMSConfig({
   verbose: true,
-}),
+})
 ```
