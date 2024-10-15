@@ -8,6 +8,7 @@ sidebar:
      variant: "success"
 ---
 import { Aside } from '@astrojs/starlight/components';
+import ReadMore from '~/components/ReadMore.astro';
 
 For StudioCMS to work correctly, you must set up the correct environment variables. These variables are essential for establishing a secure connection to Astro DB and authenticating with the StudioCMS API. Without correctly configuring these environment variables, the application will not function as intended.
 
@@ -30,6 +31,8 @@ StudioCMS makes use of Astro's new Experimental [`astro:env`](https://docs.astro
 ASTRO_DB_REMOTE_URL=libsql://your.server.io
 ASTRO_DB_APP_TOKEN=token-to-your-remote-url
 ```
+
+<ReadMore>For more information about `@astrojs/db` see, the [Astro docs for Astro DB](https://docs.astro.build/en/guides/astro-db/)</ReadMore>
 
 ## Authentication Environment Variables
 
