@@ -84,6 +84,7 @@ export default defineConfig({
 				github: 'https://github.com/astrolicious/studiocms',
 				discord: 'https://chat.studiocms.xyz',
 				youtube: 'https://www.youtube.com/@StudioCMS',
+				'x.com': 'https://x.com/_studiocms',
 			},
 			customCss: [
 				'@shikijs/twoslash/style-rich.css',
