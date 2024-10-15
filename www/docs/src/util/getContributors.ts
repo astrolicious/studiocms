@@ -7,16 +7,6 @@ export interface Contributor {
 	avatar_url?: string;
 }
 
-interface Commit {
-	author: {
-		login: string;
-		id: number;
-	};
-	commit: {
-		message: string;
-	};
-}
-
 const printError = (e: Error) =>
 	console.warn(`[error]  /src/util/getContributors.ts\n         ${e?.message ?? e}`);
 
@@ -66,5 +56,5 @@ export async function getAllContributors(repo: string) {
 	const endpoint = `repos/${repo}/contributors`;
 	const contributors: Contributor[] = await recursiveFetch(endpoint);
 
-	return contributors;
+	return contributors.filter((c) => !c.login.includes('[bot]'));
 }
