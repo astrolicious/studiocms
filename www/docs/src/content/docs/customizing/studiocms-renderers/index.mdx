@@ -117,11 +117,11 @@ import { defineStudioCMSConfig, type CustomRenderer } from 'studiocms';
 // ---cut---
 const customRenderer: CustomRenderer = {
   name: 'CustomRenderer',
-  renderer: async (content: string): Promise<string> => {
+  renderer: async (content: string) => {
     // Custom rendering logic here
     return content;
-  }
-}
+  },
+};
 
 export default defineStudioCMSConfig({
   rendererConfig: {

@@ -6,6 +6,7 @@ import { imageServiceSchema } from './imageService';
 import { includedIntegrationsSchema } from './integrations';
 import {
 	type CustomRenderer,
+	type Renderer,
 	type StudioCMSRendererConfig,
 	StudioCMSRendererConfigSchema,
 } from './rendererConfig';
@@ -13,7 +14,12 @@ import {
 //
 // Exported Schemas for use in other internal packages
 //
-export { StudioCMSRendererConfigSchema, type StudioCMSRendererConfig, type CustomRenderer };
+export {
+	StudioCMSRendererConfigSchema,
+	type StudioCMSRendererConfig,
+	type CustomRenderer,
+	type Renderer,
+};
 export { dashboardConfigSchema, DefaultFrontEndConfigSchema, imageServiceSchema, overridesSchema };
 
 //
