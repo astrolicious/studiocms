@@ -22,8 +22,8 @@ Thanks to @5t3ph for https://smolcss.dev/#smol-avatar-list!
 						<Image
 							alt={item.login}
 							title={item.login}
-							width={32}
-							height={32}
+							width={64}
+							height={64}
 							src={`https://avatars.githubusercontent.com/u/${item.id}?s=64`}
 							loading="eager"
 						/>
@@ -47,6 +47,7 @@ Thanks to @5t3ph for https://smolcss.dev/#smol-avatar-list!
 		list-style: none;
 		padding: var(--avatar-border);
 		font-size: var(--avatar-size);
+		align-items: center;
 	}
 
 	.avatar-list li {
@@ -54,6 +55,7 @@ Thanks to @5t3ph for https://smolcss.dev/#smol-avatar-list!
 			var(--avatar-outline-offset) + var(--avatar-outline-width) + var(--avatar-row-spacing) / 2
 		);
 		margin: var(--avatar-row-margin) var(--avatar-overlap) var(--avatar-row-margin) 0;
+		align-items: center;
 	}
 
 	.avatar-list img,
