@@ -26,6 +26,9 @@ export default defineConfig({
 	experimental: {
 		directRenderScript: true,
 	},
+	image: {
+		remotePatterns: [{ protocol: 'https' }],
+	},
 	markdown: {
 		syntaxHighlight: 'shiki',
 		shikiConfig: {
