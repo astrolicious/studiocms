@@ -1,0 +1,14 @@
+---
+import { getAllContributors } from '../util/getContributors';
+import FacePile from './FacePile.astro';
+
+export interface Props {
+	githubRepo?: `${string}/${string}`;
+}
+
+const { githubRepo = 'astrolicious/studiocms' } = Astro.props;
+
+const contributors = await getAllContributors(githubRepo);
+---
+
+<FacePile {contributors} />
