@@ -74,6 +74,7 @@ export default defineConfig({
 				SiteTitle: './src/starlightOverrides/SiteTitle.astro',
 				PageTitle: './src/starlightOverrides/PageTitle.astro',
 				Sidebar: './src/starlightOverrides/SideBar.astro',
+				Head: './src/starlightOverrides/Head.astro',
 			},
 			logo: {
 				dark: '../assets/logo-light.svg',
@@ -85,7 +86,6 @@ export default defineConfig({
 				youtube: 'https://www.youtube.com/@StudioCMS',
 			},
 			customCss: [
-				'@fontsource-variable/onest/index.css',
 				'@shikijs/twoslash/style-rich.css',
 				'@studiocms/ui/css/global.css',
 				'./src/styles/shiki.css',
