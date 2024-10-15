@@ -64,11 +64,11 @@
 	color: black !important;
 }
 
-.sl-link-button:first-of-type svg {
+.sl-link-button:first-of-type:not(.discord-button) svg {
 	transition: transform .15s ease !important;
 }
 
-.sl-link-button:first-of-type:hover > svg {
+.sl-link-button:first-of-type:hover:not(.discord-button) > svg {
 	transform: translateX(5px);
 }
 
