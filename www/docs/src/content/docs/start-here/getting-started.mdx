@@ -19,16 +19,12 @@ To start using StudioCMS, you'll need:
 - An Astro project
 - A libSQL provider or self-hosted libSQL server
 - The StudioCMS integration
+
 ## Prepare your database
 
-StudioCMS uses `@astrojs/db` to connect to your libSQL database. the following `.env` variables are required for Astro DB to connect to your provider
+StudioCMS uses `@astrojs/db` to connect to your libSQL database. You can use any libSQL provider or self-hosted libSQL server.
 
-```bash title=".env"
-ASTRO_DB_REMOTE_URL=libsql://your-database.turso.io
-ASTRO_DB_APP_TOKEN=eyJhbGciOiJF...3ahJpTkKDw
-```
-
-<ReadMore>For more information about these environment varibales, see [Using libSQL with `@astrojs/db`](/start-here/environment-variables/#if-using-libsql-with-astrojsdb)</ReadMore>
+<ReadMore>For more information about the required environment variables see, [Database URL and Token for `@astrojs/db`](/start-here/environment-variables/#database-url-and-token-for-astrojsdb)</ReadMore>
 
 ### Getting started with Turso
 
