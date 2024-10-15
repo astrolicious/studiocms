@@ -53,7 +53,7 @@
 	background-color: var(--sl-color-accent-bleached) !important;
 	color: white !important;
 	transition: all .15s ease !important;
-	gap: 1rem;
+	gap: 1rem !important;
 }
 
 [data-theme="light"] .sl-link-button {
