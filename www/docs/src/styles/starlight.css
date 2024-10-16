@@ -150,7 +150,13 @@ button[aria-label="Menu"][aria-controls="starlight__sidebar"] {
 
 .sl-markdown-content .heading-wrapper svg {
 	display: inline;
-	width: var(--icon-size);
+	width: var(--icon-size) !important;
+	height: var(--icon-size) !important;
+}
+
+.sl-markdown-content :is(img, picture, video, canvas, svg, iframe):not(:where(.not-content *)) {
+	display: block;
+	height: auto;
 }
 
 /* Prevent double or triple clicks from potentially selecting the anchor link a11y text. */
@@ -179,7 +185,7 @@ button[aria-label="Menu"][aria-controls="starlight__sidebar"] {
 		gap: var(--icon-spacing);
 		margin-inline-start: calc(-1 * (var(--icon-size) + var(--icon-spacing)));
 	}
-	
+
 	.sl-markdown-content .heading-wrapper > :first-child,
 	.sl-markdown-content .anchor-link {
 		margin: 0;
