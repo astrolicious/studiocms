@@ -34,7 +34,7 @@ const { siteTitle, siteTitleHref } = Astro.props;
         </>
       )
     }
-    <span class:list={{ 'sr-only': config.logo?.replacesTitle }}>
+    <span class:list={[ config.logo?.replacesTitle && 'sr-only' ]}>
       {siteTitle} 
     </span>
   </a>
@@ -75,6 +75,23 @@ const { siteTitle, siteTitleHref } = Astro.props;
     font-size: var(--sl-text-h4);
   }
 
+
+
+  @media screen and (max-width: 520px) {
+    .site-title a:first-of-type {
+      border-right: 1px solid var(--sl-color-gray-5);
+      padding-right: 1rem;
+    }
+
+    .site-title a:first-of-type span {
+      display: none;
+    }
+
+    .site-title a:last-of-type {
+      margin-left: .5rem;
+    }
+  }
+
 	img {
 		height: calc(var(--sl-nav-height) - 2 * var(--sl-nav-pad-y));
 		width: auto;
@@ -82,9 +99,11 @@ const { siteTitle, siteTitleHref } = Astro.props;
 		object-fit: contain;
 		object-position: 0 50%;
 	}
+
   div:not(:last-child) {
     border-inline-end: 1px solid var(--sl-color-gray-5);
   }
+
   div {
     margin-left: 1rem;
     align-self: center;
@@ -123,6 +142,25 @@ const { siteTitle, siteTitleHref } = Astro.props;
     }
     .site-title > a{
       font-size: var(--sl-text-sm);
+    }
+  }
+
+  @media screen and (max-width: 440px) {
+    .external-links {
+      margin-left: .5rem;
+      padding-right: .5rem;
+    }
+
+    .site-title {
+      padding-right: .5rem;
+    }
+
+    .site-title > a:first-of-type {
+      padding-right: .5rem;
+    }
+
+    .site-title > a:last-of-type {
+      margin-left: 0;
     }
   }
 </style>
