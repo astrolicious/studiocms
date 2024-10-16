@@ -133,7 +133,7 @@ const studiocmsUIPaths: string[] = ['packages/studiocms_ui/', 'playgrounds/ui/']
 
 const studiocmsDocsPaths: string[] = ['www/docs/'] as const;
 
-const studiocmsWebsitePaths: string[] = ['www/web/', 'www/assets/'] as const;
+const studiocmsWebsitePaths: string[] = ['www/web/', 'www/assets/', 'www/hostUtils/'] as const;
 
 export async function getContributorBreakdown(githubRepo?: string): Promise<Breakdown[]> {
 	let repo = 'astrolicious/studiocms';

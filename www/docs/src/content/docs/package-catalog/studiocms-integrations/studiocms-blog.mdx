@@ -14,7 +14,7 @@ import { Steps, Tabs, TabItem } from '@astrojs/starlight/components';
 
 # Introduction
 
-#### Powered by [`astro-theme-provider`](https://github.com/astrolicious/astro-theme-provider) by [Bryce Russell](https://github.com/BryceRussell)
+**Powered by [`astro-theme-provider`](https://github.com/astrolicious/astro-theme-provider) by [Bryce Russell](https://github.com/BryceRussell)**
 
 This Astro integration enables the StudioCMS Blog feature in your Astro project. This integration will allow you to create, edit, and delete blog posts in the StudioCMS dashboard.
 
@@ -50,8 +50,8 @@ This Astro integration enables the StudioCMS Blog feature in your Astro project.
       output: 'server',
       adapter: node({ mode: "standalone" }),
       integrations: [
-          db(),
-          studioCMS(),
+          db(), // REQUIRED
+          studioCMS(), // REQUIRED
           studioCMSBlog({ // [!code ++]
             config: { // [!code ++]
               title: "My StudioCMS Blog", // [!code ++]
@@ -80,9 +80,9 @@ This integration will add the following new routes to your StudioCMS Controlled 
 ```ts twoslash title="astro.config.mjs"
 import { defineConfig } from 'astro/config';
 import node from '@astrojs/node';
-import db from '@astrojs/db';
-import studioCMS from 'studiocms';
-import studioCMSBlog from '@studiocms/blog';
+import db from '@astrojs/db'; // [!code highlight:2]
+import studioCMS from 'studiocms'; 
+import studioCMSBlog from '@studiocms/blog'; // [!code ++]
 
 // https://astro.build/config
 export default defineConfig({
@@ -90,14 +90,14 @@ export default defineConfig({
   output: "server",
   adapter: node({ mode: "standalone" }),
   integrations: [ 
-    db(), // REQUIRED - `@astrojs/db` must be included in the integrations list
-    studioCMS(), // REQUIRED - StudioCMS must be included in the integrations list
-    studioCMSBlog({
-      config: {
-        title: "My StudioCMS Blog",
-        description: "A Simple Blog build with Astro, Astrojs/DB, and StudioCMS.",
-      },
-    }), 
+    db(), // REQUIRED // [!code highlight:2]
+    studioCMS(), // REQUIRED 
+    studioCMSBlog({ // [!code ++]
+      config: { // [!code ++]
+        title: "My StudioCMS Blog", // [!code ++]
+        description: "A Simple Blog build with Astro, Astrojs/DB, and StudioCMS.", // [!code ++]
+      }, // [!code ++]
+    }), // [!code ++]
   ],
 });
 ```

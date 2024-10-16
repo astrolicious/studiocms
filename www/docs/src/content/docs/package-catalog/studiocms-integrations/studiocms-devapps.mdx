@@ -61,14 +61,14 @@ All tools will only be available during `astro dev` and will not be available du
 
 ```ts twoslash title="astro.config.mjs"
 import { defineConfig } from 'astro/config';
-import db from '@astrojs/db';
-import devApps from '@studiocms/devapps';
+import db from '@astrojs/db'; // [!code highlight]
+import devApps from '@studiocms/devapps'; // [!code ++]
 
 export default defineConfig({
   site: "https://example.com",
   integrations: [
-    db(),
-    devApps(),
+    db(), // REQUIRED // [!code highlight]
+    devApps(/* See Config Options Below */), // [!code ++]
   ],
 });
 ```
@@ -79,9 +79,8 @@ Full list of options available for the `devApps` integration, with default value
 
 ```ts twoslash
 import devApps from '@studiocms/devapps';
-// ---cut---
-// Options for the devApps integration
 devApps({
+// ---cut---
   /* Apps Config */
   appsConfig: {
     /* libSQL Viewer - Config */
@@ -95,7 +94,8 @@ devApps({
   /* Endpoint Path for apps that use endpoints */
   endpointPath: '/_studiocms-devapps',
   /* Enable or disable Verbose logging */
-  verbose: false,
+  verbose: false
+// ---cut-after---
 })
 ```
 

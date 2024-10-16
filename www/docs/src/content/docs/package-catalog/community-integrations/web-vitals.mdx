@@ -54,7 +54,7 @@ This Astro integration enables tracking real-world website performance and stori
       output: 'server',
       adapter: node({ mode: "standalone" }),
       integrations: [
-          db(),
+          db(), // REQUIRED // [!code highlight]
           webVitals(), // [!code ++]
           studioCMS(),
       ],
