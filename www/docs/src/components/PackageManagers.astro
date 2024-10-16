@@ -51,12 +51,12 @@ function getTabItemProps(pkgManager: PackageManager) {
       {getSupportedPkgManagers(type, pkgManagers).map((pkgManager) => (
         <TabItem {...getTabItemProps(pkgManager)}>
           <Code 
-		  	code={getCommand(pkgManager, type, pkg, options)} 
-			lang="bash" 
-			themes={{ light: 'light-plus', dark: "dark-plus" }}
-			transformers={[addCopyButton()]}
-			wrap
-			/>
+						code={getCommand(pkgManager, type, pkg, options)} 
+						lang="bash" 
+						themes={{ light: 'light-plus', dark: "dark-plus" }}
+						transformers={[addCopyButton()]}
+						wrap
+					/>
         </TabItem>
       ))}
     </Tabs>

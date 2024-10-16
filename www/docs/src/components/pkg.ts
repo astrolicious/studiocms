@@ -1,6 +1,6 @@
-const pkgManagers = ['npm', 'yarn', 'pnpm'] as const;
+const pkgManagers = ['npm', 'yarn', 'pnpm', 'bun'] as const;
 
-const defaultPkgManagers: PackageManager[] = ['npm', 'yarn', 'pnpm'];
+const defaultPkgManagers: PackageManager[] = ['npm', 'yarn', 'pnpm', 'bun'];
 
 const commands: Commands = {
 	npm: {
@@ -27,12 +27,21 @@ const commands: Commands = {
 		run: 'pnpm run',
 		remove: 'pnpm remove',
 	},
+	bun: {
+		add: 'bun add',
+		create: 'bun create',
+		devOption: '-D',
+		exec: 'bunx',
+		run: 'bun',
+		remove: 'bun remove',
+	},
 };
 
 const icons: Record<PackageManager, string | undefined> = {
 	npm: 'seti:npm',
 	yarn: 'seti:yarn',
 	pnpm: 'pnpm',
+	bun: 'bun',
 };
 
 export function getSupportedPkgManagers(
