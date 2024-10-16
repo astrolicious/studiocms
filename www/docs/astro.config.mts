@@ -166,6 +166,7 @@ export default defineConfig({
 								},
 								{
 									label: '@studiocms/ui',
+									badge: { text: 'New', variant: 'success' },
 									items: [
 										{ label: 'Getting Started', link: 'customizing/studiocms-ui/' },
 										{
