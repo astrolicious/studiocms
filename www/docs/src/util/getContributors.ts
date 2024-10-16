@@ -75,15 +75,14 @@ export async function getAllContributors(repo: string) {
 }
 
 export async function getContributorsByPath(paths: string[], repo: string) {
-	const ignoredCommitKeywords = /(typo|broken link)/i;
 	const contributors: Contributor[] = [];
 
 	for (const path of paths) {
 		const endpoint = `repos/${repo}/commits?path=${path}`;
 		const commits: Commit[] = await recursiveFetch(endpoint);
 
-		for (const { author, commit } of commits) {
-			if (ignoredCommitKeywords.test(commit.message) || !author) continue;
+		for (const { author } of commits) {
+			if (!author) continue;
 			const contributor = contributors.find((contributor) => contributor.id === author.id);
 
 			if (!contributor) {
@@ -107,6 +106,8 @@ const studiocmsPaths: string[] = [
 	// OLD Paths
 	'packages/studioCMS/',
 	// NEW Paths
+	'README.md',
+	'playgrounds/node/',
 	'packages/studiocms/',
 	'packages/studiocms_assets/',
 	'packages/studiocms_auth/',
@@ -121,18 +122,18 @@ const studiocmsPaths: string[] = [
 
 const studiocmsPluginPaths: string[] = [
 	// OLD Paths
-	'packages/studioCMSBlog',
+	'packages/studioCMSBlog/',
 	// NEW Paths
 	'packages/studiocms_blog/',
 ] as const;
 
 const studiocmsDevAppsPaths: string[] = ['packages/studiocms_devapps/'] as const;
 
-const studiocmsUIPaths: string[] = ['packages/studiocms_ui/'] as const;
+const studiocmsUIPaths: string[] = ['packages/studiocms_ui/', 'playgrounds/ui/'] as const;
 
 const studiocmsDocsPaths: string[] = ['www/docs/'] as const;
 
-const studiocmsWebsitePaths: string[] = ['www/web/'] as const;
+const studiocmsWebsitePaths: string[] = ['www/web/', 'www/assets/'] as const;
 
 export async function getContributorBreakdown(githubRepo?: string): Promise<Breakdown[]> {
 	let repo = 'astrolicious/studiocms';
