@@ -191,3 +191,7 @@ button[aria-label="Menu"][aria-controls="starlight__sidebar"] {
 		margin: 0;
 	}
 }
+
+a {
+	text-decoration: none;
+}
