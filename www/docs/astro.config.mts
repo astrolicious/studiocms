@@ -1,25 +1,12 @@
 import starlight from '@astrojs/starlight';
 import starlightUtils from '@lorenzo_lewis/starlight-utils';
-import {
-	transformerMetaHighlight,
-	transformerMetaWordHighlight,
-	transformerNotationDiff,
-	transformerNotationErrorLevel,
-	transformerNotationHighlight,
-	transformerNotationWordHighlight,
-} from '@shikijs/transformers';
-import { rendererRich, transformerTwoslash } from '@shikijs/twoslash';
 import { defineConfig } from 'astro/config';
-import rehypeAutolinkHeadings from 'rehype-autolink-headings';
-import rehypeExternalLinks from 'rehype-external-links';
-import rehypeSlug from 'rehype-slug';
 import JS from 'shiki/langs/javascript.mjs';
 import TSX from 'shiki/langs/tsx.mjs';
 import starlightImageZoom from 'starlight-image-zoom';
-import { getCoolifyURL } from '../hostUtils';
-import { autolinkConfig } from './src/plugins/rehypeAutolink';
-import { addCopyButton, colorizedBrackets, metaTitle } from './src/shiki/transformers';
-import { renderMarkdown, renderMarkdownInline } from './src/shiki/twoslashRenderers';
+import getCoolifyURL from '../hostUtils';
+import rehypePluginKit from './src/plugins/rehypePluginKit';
+import { transformerKit } from './src/shiki';
 import { typeDocPlugins, typeDocSideBarEntry } from './typedoc.config';
 
 // Define the Site URL
@@ -34,23 +21,7 @@ export default defineConfig({
 		remotePatterns: [{ protocol: 'https' }],
 	},
 	markdown: {
-		rehypePlugins: [
-			rehypeSlug,
-			[rehypeAutolinkHeadings, autolinkConfig],
-			[
-				rehypeExternalLinks,
-				{
-					content: {
-						type: 'text',
-						value: ' ↗',
-					},
-					properties: {
-						target: '_blank',
-					},
-					rel: ['noopener', 'noreferrer'],
-				},
-			],
-		],
+		rehypePlugins: rehypePluginKit,
 		syntaxHighlight: 'shiki',
 		shikiConfig: {
 			wrap: true,
@@ -59,30 +30,7 @@ export default defineConfig({
 				light: 'light-plus',
 				dark: 'dark-plus',
 			},
-			transformers: [
-				addCopyButton(),
-				metaTitle(),
-				colorizedBrackets(),
-				transformerMetaHighlight(),
-				transformerMetaWordHighlight(),
-				transformerNotationDiff(),
-				transformerNotationHighlight(),
-				transformerNotationWordHighlight(),
-				transformerNotationErrorLevel(),
-				transformerTwoslash({
-					renderer: rendererRich({
-						renderMarkdown,
-						renderMarkdownInline,
-					}),
-					explicitTrigger: true,
-					twoslashOptions: {
-						compilerOptions: {
-							// Set module resolution to "Bundler"
-							moduleResolution: 100,
-						},
-					},
-				}),
-			],
+			transformers: transformerKit,
 		},
 	},
 	integrations: [

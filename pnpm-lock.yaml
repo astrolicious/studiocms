@@ -981,6 +981,9 @@ importers:
       shiki:
         specifier: 1.22.0
         version: 1.22.0
+      shiki-transformer-color-highlight:
+        specifier: ^0.2.0
+        version: 0.2.0
       starlight-image-zoom:
         specifier: ^0.8.0
         version: 0.8.0(@astrojs/starlight@0.28.3(astro@4.16.3(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.6.3)))
@@ -999,6 +1002,9 @@ importers:
       typescript:
         specifier: 'catalog:'
         version: 5.6.3
+      unified:
+        specifier: ^11.0.5
+        version: 11.0.5
 
   www/web:
     dependencies:
@@ -3488,6 +3494,9 @@ packages:
   colorette@2.0.20:
     resolution: {integrity: sha512-IfEDxwoWIjkeXL1eXcDiow4UbKjhLdq6/EuSVR9GMN7KVH3r9gQ83e73hsz1Nd1T3ijd5xv1wcWRYO+D6kCI2w==}
 
+  colorjs.io@0.5.2:
+    resolution: {integrity: sha512-twmVoizEW7ylZSN32OgKdXRmo1qg+wT5/6C3xu5b9QsWzSFAhHLn2xd8ro0diCsKfCj1RdaTP/nrcW+vAoQPIw==}
+
   combined-stream@1.0.8:
     resolution: {integrity: sha512-FQN4MRfuJeHf7cBbBMJFXhKSDq+2kAArBlmRBvcvFE5BB1HZKXtSFASDhdlz9zOYwxh8lDdnvmMOe/+5cdoEdg==}
     engines: {node: '>= 0.8'}
@@ -5477,6 +5486,9 @@ packages:
   shebang-regex@3.0.0:
     resolution: {integrity: sha512-7++dFhtcx3353uBaq8DDR4NuxBetBzC7ZQOhmTQInHEd6bSrXdiEyzCvG07Z44UYdLShWUyXt5M/yhz8ekcb1A==}
     engines: {node: '>=8'}
+
+  shiki-transformer-color-highlight@0.2.0:
+    resolution: {integrity: sha512-KvQYFqhf7gdZCr1GcwWHqPS/sYl0RgwhCET95Sf3N8UX2yHUBqJbis9CbkR+KcnGxR6PWO4I/jB3Q64+yquNrQ==}
 
   shiki@1.14.1:
     resolution: {integrity: sha512-FujAN40NEejeXdzPt+3sZ3F2dx1U24BY2XTY01+MG8mbxCiA2XukXdcbyMyLAHJ/1AUUnQd1tZlvIjefWWEJeA==}
@@ -9229,6 +9241,8 @@ snapshots:
 
   colorette@2.0.20: {}
 
+  colorjs.io@0.5.2: {}
+
   combined-stream@1.0.8:
     dependencies:
       delayed-stream: 1.0.0
@@ -11711,6 +11725,12 @@ snapshots:
   shebang-regex@1.0.0: {}
 
   shebang-regex@3.0.0: {}
+
+  shiki-transformer-color-highlight@0.2.0:
+    dependencies:
+      '@shikijs/core': 1.22.0
+      '@shikijs/types': 1.22.0
+      colorjs.io: 0.5.2
 
   shiki@1.14.1:
     dependencies:

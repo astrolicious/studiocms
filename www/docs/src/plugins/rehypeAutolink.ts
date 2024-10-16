@@ -1,11 +1,9 @@
 import { toString as toStr } from 'hast-util-to-string';
 import { h } from 'hastscript';
 import { escape as esc } from 'html-escaper';
+import rehypeAutoLink from 'rehype-autolink-headings';
 import type { Options as rehypeAutolinkHeadingsOptions } from 'rehype-autolink-headings';
-
-const createSROnlyLabel = (text: string) => {
-	return h('span', { 'is:raw': true, class: 'sr-only' }, `'Read the “', ${esc(text)}, '” section'`);
-};
+import type { RehypePlugin } from './rehype.types';
 
 const AnchorLinkIcon = h(
 	'span',
@@ -28,15 +26,27 @@ const AnchorLinkIcon = h(
 	)
 );
 
-export const autolinkConfig: rehypeAutolinkHeadingsOptions = {
-	properties: {
-		class: 'anchor-link',
-	},
-	behavior: 'after',
-	group: ({ tagName }) =>
-		h('div', {
-			tabIndex: -1,
-			class: `heading-wrapper level-${tagName}`,
-		}),
-	content: (heading) => [AnchorLinkIcon, createSROnlyLabel(toStr(heading))],
+const createSROnlyLabel = (text: string) => {
+	return h('span', { 'is:raw': true, class: 'sr-only' }, `'Read the “', ${esc(text)}, '” section'`);
 };
+
+export { AnchorLinkIcon, createSROnlyLabel };
+
+// biome-ignore lint/suspicious/noExplicitAny: any is used to match the generic type
+export const rehypeAutolinkHeadings: [RehypePlugin, any] = [
+	rehypeAutoLink,
+	{
+		properties: {
+			class: 'anchor-link',
+		},
+		behavior: 'after',
+		group: ({ tagName }) =>
+			h('div', {
+				tabIndex: -1,
+				class: `heading-wrapper level-${tagName}`,
+			}),
+		content: (heading) => [AnchorLinkIcon, createSROnlyLabel(toStr(heading))],
+	} as rehypeAutolinkHeadingsOptions,
+];
+
+export default rehypeAutolinkHeadings;
