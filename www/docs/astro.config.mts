@@ -10,10 +10,14 @@ import {
 } from '@shikijs/transformers';
 import { rendererRich, transformerTwoslash } from '@shikijs/twoslash';
 import { defineConfig } from 'astro/config';
+import rehypeAutolinkHeadings from 'rehype-autolink-headings';
+import rehypeExternalLinks from 'rehype-external-links';
+import rehypeSlug from 'rehype-slug';
 import JS from 'shiki/langs/javascript.mjs';
 import TSX from 'shiki/langs/tsx.mjs';
 import starlightImageZoom from 'starlight-image-zoom';
 import { getCoolifyURL } from '../hostUtils';
+import { autolinkConfig } from './src/plugins/rehypeAutolink';
 import { addCopyButton, colorizedBrackets, metaTitle } from './src/shiki/transformers';
 import { renderMarkdown, renderMarkdownInline } from './src/shiki/twoslashRenderers';
 import { typeDocPlugins, typeDocSideBarEntry } from './typedoc.config';
@@ -30,6 +34,23 @@ export default defineConfig({
 		remotePatterns: [{ protocol: 'https' }],
 	},
 	markdown: {
+		rehypePlugins: [
+			rehypeSlug,
+			[rehypeAutolinkHeadings, autolinkConfig],
+			[
+				rehypeExternalLinks,
+				{
+					content: {
+						type: 'text',
+						value: ' ↗',
+					},
+					properties: {
+						target: '_blank',
+					},
+					rel: ['noopener', 'noreferrer'],
+				},
+			],
+		],
 		syntaxHighlight: 'shiki',
 		shikiConfig: {
 			wrap: true,

@@ -119,3 +119,69 @@ button[aria-label="Menu"][aria-controls="starlight__sidebar"] {
 	margin-top: 1.5rem !important;
 	margin-bottom: 1.5rem !important;
 }
+
+/* Custom styles for heading anchor links. */
+.sl-markdown-content .heading-wrapper {
+	--icon-size: 1.5rem;
+	--icon-spacing: 0.25em;
+	line-height: var(--sl-line-height-headings);
+	align-items: center;
+}
+
+/* Headings after non-headings have more spacing. */
+.sl-markdown-content :not(.heading-wrapper) + :is(.heading-wrapper):not(:where(.not-content *)) {
+	margin-top: 1.5em;
+}
+
+.sl-markdown-content .heading-wrapper > :first-child {
+	margin-inline-end: calc(var(--icon-size) + var(--icon-spacing));
+	display: inline;
+}
+
+.sl-markdown-content .anchor-link {
+	margin-inline-start: calc(-1 * (var(--icon-size)));
+	color: var(--sl-color-gray-3);
+}
+
+.sl-markdown-content .anchor-link:hover,
+.sl-markdown-content .anchor-link:focus {
+	color: var(--sl-color-text-accent);
+}
+
+.sl-markdown-content .heading-wrapper svg {
+	display: inline;
+	width: var(--icon-size);
+}
+
+/* Prevent double or triple clicks from potentially selecting the anchor link a11y text. */
+.sl-markdown-content .anchor-link .sr-only {
+	-webkit-user-select: none;
+	user-select: none;
+}
+
+@media (hover: hover) {
+	.sl-markdown-content .anchor-link {
+		opacity: 0;
+	}
+}
+
+.sl-markdown-content .heading-wrapper:hover > .anchor-link,
+.sl-markdown-content .anchor-link:focus {
+	opacity: 1;
+}
+
+/* Float anchor links to the left of headings on larger screens. */
+@media (min-width: 95em) {
+	.sl-markdown-content .heading-wrapper {
+		display: flex;
+		flex-direction: row-reverse;
+		justify-content: flex-end;
+		gap: var(--icon-spacing);
+		margin-inline-start: calc(-1 * (var(--icon-size) + var(--icon-spacing)));
+	}
+	
+	.sl-markdown-content .heading-wrapper > :first-child,
+	.sl-markdown-content .anchor-link {
+		margin: 0;
+	}
+}
