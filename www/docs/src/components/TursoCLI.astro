@@ -1,0 +1,60 @@
+---
+import Code from './Code.astro';
+
+type TursoCLICommands = 'db' | 'auth';
+
+const tursoCLICommands = {
+	auth: {
+		login: 'turso auth login',
+		logout: 'turso auth logout',
+		signup: 'turso auth signup',
+		token: 'turso auth token',
+		whoami: 'turso auth whoami',
+		'api-tokens.mint': 'turso auth api-tokens mint',
+		'api-tokens.list': 'turso auth api-tokens list',
+		'api-tokens.revoke': 'turso auth api-tokens revoke',
+	},
+	db: {
+		list: 'turso db list',
+		create: 'turso db create',
+		show: 'turso db show',
+		destroy: 'turso db destroy',
+		inspect: 'turso db inspect',
+		shell: 'turso db shell',
+		locations: 'turso db locations',
+		'tokens.create': 'turso db tokens create',
+		'tokens.invalidate': 'turso db tokens invalidate',
+		'config.attach.allow': 'turso db config attach allow',
+		'config.attach.disallow': 'turso db config attach disallow',
+		'config.attach.show': 'turso db config attach show',
+	},
+};
+
+type AuthCommands = keyof typeof tursoCLICommands.auth;
+type DBCommands = keyof typeof tursoCLICommands.db;
+
+const commandBuilder = (
+	tursoCli: TursoCLICommands,
+	type: AuthCommands | DBCommands,
+	arg: string
+) => {
+	let cmd = tursoCLICommands[tursoCli][type];
+
+	if (!cmd) {
+		throw new Error(`Command not found for '${tursoCli}' and '${type}'`);
+	}
+
+	return `${cmd} ${arg}`;
+};
+
+interface Props {
+	tursoCli: TursoCLICommands;
+	type: DBCommands | AuthCommands;
+	arg: string;
+}
+
+const { tursoCli, type, arg } = Astro.props;
+
+const code = commandBuilder(tursoCli, type, arg);
+---
+<Code {code} lang="sh" />

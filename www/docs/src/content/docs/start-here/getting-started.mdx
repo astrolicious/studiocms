@@ -9,6 +9,7 @@ sidebar:
 ---
 
 import PackageManagers from '~/components/PackageManagers.astro';
+import TursoCLI from '~/components/TursoCLI.astro';
 import { Aside, Steps, Tabs, TabItem } from '@astrojs/starlight/components';
 import ReadMore from '~/components/ReadMore.astro';
 
@@ -32,15 +33,11 @@ StudioCMS uses `@astrojs/db` to connect to your libSQL database. You can use any
 1. Install the [Turso CLI](https://docs.turso.tech/cli/installation)
 2. [Login or signup](https://docs.turso.tech/cli/authentication) to Turso.
 3. Create a new database.
-   ```bash
-   turso db create studiocms
-   ```
+   <TursoCLI tursoCli='db' type='create' arg='studiocms' />
 4. Get and Set `ASTRO_DB_REMOTE_URL`
 
    4a. Run the `show` command to see information about the newly created database:
-      ```bash 
-      turso db show studiocms
-      ```
+      <TursoCLI tursoCli='db' type='show' arg='studiocms' />
 
    4b. Copy the URL value and set it as the value for `ASTRO_DB_REMOTE_URL`.
       ```bash title=".env"
@@ -50,9 +47,7 @@ StudioCMS uses `@astrojs/db` to connect to your libSQL database. You can use any
 5. Get and Set `ASTRO_DB_APP_TOKEN`
 
    5a. Create a new token to authenticate requests to the database:
-      ```bash
-      turso db tokens create studiocms
-      ```
+      <TursoCLI tursoCli='db' type='tokens.create' arg='studiocms' />
 
    5b. Copy the output of the command and set it as the value for `ASTRO_DB_APP_TOKEN`.
       ```bash title=".env"

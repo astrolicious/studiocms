@@ -1,8 +1,7 @@
 ---
-import { Code } from 'astro:components';
-import { TabItem, Tabs } from '@astrojs/starlight/components';
+import { Aside, TabItem, Tabs } from '@astrojs/starlight/components';
 import type { ComponentProps } from 'astro/types';
-import { addCopyButton } from '~/shiki/transformers/copyButton';
+import Code from './Code.astro';
 
 import {
 	type CommandOptions,
@@ -29,7 +28,7 @@ const {
 	icons = true,
 	pkg,
 	pkgManagers,
-	title = undefined,
+	title = 'Terminal',
 	type = 'add',
 	...options
 } = Astro.props;
@@ -50,13 +49,12 @@ function getTabItemProps(pkgManager: PackageManager) {
     <Tabs syncKey="package-managers">
       {getSupportedPkgManagers(type, pkgManagers).map((pkgManager) => (
         <TabItem {...getTabItemProps(pkgManager)}>
-          <Code 
-						code={getCommand(pkgManager, type, pkg, options)} 
-						lang="bash" 
-						themes={{ light: 'light-plus', dark: "dark-plus" }}
-						transformers={[addCopyButton()]}
-						wrap
-					/>
+			<Code 
+				code={getCommand(pkgManager, type, pkg, options)} 
+				lang="bash"
+				{title}
+				/>
+		  { pkgManager === 'bun' && <Aside type={'caution'} title='CAUTION'>While Bun does support Astro, There are known issues both in dev and in production. Issues should be reported to the <a target="_blank" rel="noopener noreferrer" href="https://github.com/oven-sh/bun">Bun project ⤴</a>. We don't recommend using this beyond experimentation & testing for the time being.</Aside>}
         </TabItem>
       ))}
     </Tabs>
