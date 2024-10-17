@@ -109,8 +109,8 @@ catalogs:
       version: 3.4.7
   min:
     '@astrojs/db':
-      specifier: '>=0.14'
-      version: 0.14.0
+      specifier: '>=0.14.2'
+      version: 0.14.2
     astro:
       specifier: '>=4.16'
       version: 4.16.2
@@ -276,7 +276,7 @@ importers:
     dependencies:
       '@astrojs/db':
         specifier: catalog:min
-        version: 0.14.0(@cloudflare/workers-types@4.20240725.0)(@types/react@18.3.5)(react@18.3.1)
+        version: 0.14.2(@cloudflare/workers-types@4.20240725.0)(@types/react@18.3.5)(react@18.3.1)
       '@cloudinary/url-gen':
         specifier: catalog:studiocms-imagehandler
         version: 1.19.0
@@ -425,7 +425,7 @@ importers:
     dependencies:
       '@astrojs/db':
         specifier: catalog:min
-        version: 0.14.0(@cloudflare/workers-types@4.20240725.0)(@types/react@18.3.5)(react@18.3.1)
+        version: 0.14.2(@cloudflare/workers-types@4.20240725.0)(@types/react@18.3.5)(react@18.3.1)
       '@inox-tools/runtime-logger':
         specifier: catalog:studiocms-shared
         version: 0.3.1(astro@4.16.2(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.6.3))
@@ -521,7 +521,7 @@ importers:
     dependencies:
       '@astrojs/db':
         specifier: catalog:min
-        version: 0.14.0(@cloudflare/workers-types@4.20240725.0)(@types/react@18.3.5)(react@18.3.1)
+        version: 0.14.2(@cloudflare/workers-types@4.20240725.0)(@types/react@18.3.5)(react@18.3.1)
       '@markdoc/markdoc':
         specifier: catalog:studiocms-shared
         version: 0.4.0(@types/react@18.3.5)(react@18.3.1)
@@ -640,16 +640,31 @@ importers:
     dependencies:
       '@astrojs/db':
         specifier: catalog:min
-        version: 0.14.0(@cloudflare/workers-types@4.20240725.0)(@types/react@18.3.5)(react@18.3.1)
+        version: 0.14.2(@cloudflare/workers-types@4.20240725.0)(@types/react@18.3.5)(react@18.3.1)
       '@libsql/client':
         specifier: ^0.14.0
         version: 0.14.0
+      '@studiocms/core':
+        specifier: workspace:*
+        version: link:../studiocms_core
+      '@types/cheerio':
+        specifier: ^0.22.35
+        version: 0.22.35
+      '@types/turndown':
+        specifier: ^5.0.5
+        version: 5.0.5
       astro:
         specifier: catalog:min
         version: 4.16.2(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.6.3)
       astro-integration-kit:
         specifier: 'catalog:'
         version: 0.16.1(astro@4.16.2(@types/node@22.0.0)(rollup@4.21.0)(typescript@5.6.3))
+      cheerio:
+        specifier: ^1.0.0
+        version: 1.0.0
+      turndown:
+        specifier: ^7.2.0
+        version: 7.2.0
     devDependencies:
       typescript:
         specifier: 'catalog:'
@@ -1117,9 +1132,6 @@ packages:
 
   '@astrojs/compiler@2.10.3':
     resolution: {integrity: sha512-bL/O7YBxsFt55YHU021oL+xz+B/9HvGNId3F9xURN16aeqDK9juHGktdkCSXz+U4nqFACq6ZFvWomOzhV+zfPw==}
-
-  '@astrojs/db@0.14.0':
-    resolution: {integrity: sha512-8If3Z0FN2Mdto/jrKGQ4sisrO/rpGdteogPmZCjvTnSzNo5GECFBkxflpOyWX4Xw9qaU865f1BeDgGdU27xeXg==}
 
   '@astrojs/db@0.14.2':
     resolution: {integrity: sha512-eMudd6KupdcUr3sN58g5qagpCX5PApFy1zRrfPnOMvE6Ndnx+vQtjOkZPgqQ+5vTJ04GrMwzuqhjRB0waaJVoA==}
@@ -2169,41 +2181,15 @@ packages:
   '@jridgewell/trace-mapping@0.3.25':
     resolution: {integrity: sha512-vNk6aEwybGtawWmy/PzwnGDOjCkLWSD2wqvjGGAgOAwCGWySYXfYoxt00IJkTF+8Lb57DwOb3Aa0o9CApepiYQ==}
 
-  '@libsql/client@0.10.0':
-    resolution: {integrity: sha512-2ERn08T4XOVx34yBtUPq0RDjAdd9TJ5qNH/izugr208ml2F94mk92qC64kXyDVQINodWJvp3kAdq6P4zTtCZ7g==}
-
   '@libsql/client@0.14.0':
     resolution: {integrity: sha512-/9HEKfn6fwXB5aTEEoMeFh4CtG0ZzbncBb1e++OCdVpgKZ/xyMsIVYXm0w7Pv4RUel803vE6LwniB3PqD72R0Q==}
-
-  '@libsql/core@0.10.0':
-    resolution: {integrity: sha512-rqynAXGaiSpTsykOZdBtI1N4z4O+KZ6mt33K/aHeXAY0gSIfK/ctxuWa0Y1Bjo4FMz1idBTCXz4Ps5kITOvZZw==}
 
   '@libsql/core@0.14.0':
     resolution: {integrity: sha512-nhbuXf7GP3PSZgdCY2Ecj8vz187ptHlZQ0VRc751oB2C1W8jQUXKKklvt7t1LJiUTQBVJuadF628eUk+3cRi4Q==}
 
-  '@libsql/darwin-arm64@0.3.19':
-    resolution: {integrity: sha512-rmOqsLcDI65zzxlUOoEiPJLhqmbFsZF6p4UJQ2kMqB+Kc0Rt5/A1OAdOZ/Wo8fQfJWjR1IbkbpEINFioyKf+nQ==}
-    cpu: [arm64]
-    os: [darwin]
-
-  '@libsql/darwin-arm64@0.4.1':
-    resolution: {integrity: sha512-XICT9/OyU8Aa9Iv1xZIHgvM09n/1OQUk3VC+s5uavzdiGHrDMkOWzN47JN7/FiMa/NWrcgoEiDMk3+e7mE53Ig==}
-    cpu: [arm64]
-    os: [darwin]
-
   '@libsql/darwin-arm64@0.4.6':
     resolution: {integrity: sha512-45i604CJ2Lubbg7NqtDodjarF6VgST8rS5R8xB++MoRqixtDns9PZ6tocT9pRJDWuTWEiy2sjthPOFWMKwYAsg==}
     cpu: [arm64]
-    os: [darwin]
-
-  '@libsql/darwin-x64@0.3.19':
-    resolution: {integrity: sha512-q9O55B646zU+644SMmOQL3FIfpmEvdWpRpzubwFc2trsa+zoBlSkHuzU9v/C+UNoPHQVRMP7KQctJ455I/h/xw==}
-    cpu: [x64]
-    os: [darwin]
-
-  '@libsql/darwin-x64@0.4.1':
-    resolution: {integrity: sha512-pSKxhRrhu4SsTD+IBRZXcs1SkwMdeAG1tv6Z/Ctp/sOEYrgkU8MDKLqkOr9NsmwpK4S0+JdwjkLMyhTkct/5TQ==}
-    cpu: [x64]
     os: [darwin]
 
   '@libsql/darwin-x64@0.4.6':
@@ -2211,14 +2197,8 @@ packages:
     cpu: [x64]
     os: [darwin]
 
-  '@libsql/hrana-client@0.6.2':
-    resolution: {integrity: sha512-MWxgD7mXLNf9FXXiM0bc90wCjZSpErWKr5mGza7ERy2FJNNMXd7JIOv+DepBA1FQTIfI8TFO4/QDYgaQC0goNw==}
-
   '@libsql/hrana-client@0.7.0':
     resolution: {integrity: sha512-OF8fFQSkbL7vJY9rfuegK1R7sPgQ6kFMkDamiEccNUvieQ+3urzfDFI616oPl8V7T9zRmnTkSjMOImYCAVRVuw==}
-
-  '@libsql/isomorphic-fetch@0.2.1':
-    resolution: {integrity: sha512-Sv07QP1Aw8A5OOrmKgRUBKe2fFhF2hpGJhtHe3d1aRnTESZCGkn//0zDycMKTGamVWb3oLYRroOsCV8Ukes9GA==}
 
   '@libsql/isomorphic-fetch@0.3.1':
     resolution: {integrity: sha512-6kK3SUK5Uu56zPq/Las620n5aS9xJq+jMBcNSOmjhNf/MUvdyji4vrMTqD7ptY7/4/CAVEAYDeotUz60LNQHtw==}
@@ -2227,28 +2207,8 @@ packages:
   '@libsql/isomorphic-ws@0.1.5':
     resolution: {integrity: sha512-DtLWIH29onUYR00i0GlQ3UdcTRC6EP4u9w/h9LxpUZJWRMARk6dQwZ6Jkd+QdwVpuAOrdxt18v0K2uIYR3fwFg==}
 
-  '@libsql/linux-arm64-gnu@0.3.19':
-    resolution: {integrity: sha512-mgeAUU1oqqh57k7I3cQyU6Trpdsdt607eFyEmH5QO7dv303ti+LjUvh1pp21QWV6WX7wZyjeJV1/VzEImB+jRg==}
-    cpu: [arm64]
-    os: [linux]
-
-  '@libsql/linux-arm64-gnu@0.4.1':
-    resolution: {integrity: sha512-9lpvb24tO2qZd9nq5dlq3ESA3hSKYWBIK7lJjfiCM6f7a70AUwBY9QoPJV9q4gILIyVnR1YBGrlm50nnb+dYgw==}
-    cpu: [arm64]
-    os: [linux]
-
   '@libsql/linux-arm64-gnu@0.4.6':
     resolution: {integrity: sha512-DMPavVyY6vYPAYcQR1iOotHszg+5xSjHSg6F9kNecPX0KKdGq84zuPJmORfKOPtaWvzPewNFdML/e+s1fu09XQ==}
-    cpu: [arm64]
-    os: [linux]
-
-  '@libsql/linux-arm64-musl@0.3.19':
-    resolution: {integrity: sha512-VEZtxghyK6zwGzU9PHohvNxthruSxBEnRrX7BSL5jQ62tN4n2JNepJ6SdzXp70pdzTfwroOj/eMwiPt94gkVRg==}
-    cpu: [arm64]
-    os: [linux]
-
-  '@libsql/linux-arm64-musl@0.4.1':
-    resolution: {integrity: sha512-lyxi+lFxE+NcBRDMQCxCtDg3c4WcKAbc9u63d5+B23Vm+UgphD9XY4seu+tGrBy1MU2tuNVix7r9S7ECpAaVrA==}
     cpu: [arm64]
     os: [linux]
 
@@ -2257,28 +2217,8 @@ packages:
     cpu: [arm64]
     os: [linux]
 
-  '@libsql/linux-x64-gnu@0.3.19':
-    resolution: {integrity: sha512-2t/J7LD5w2f63wGihEO+0GxfTyYIyLGEvTFEsMO16XI5o7IS9vcSHrxsvAJs4w2Pf907uDjmc7fUfMg6L82BrQ==}
-    cpu: [x64]
-    os: [linux]
-
-  '@libsql/linux-x64-gnu@0.4.1':
-    resolution: {integrity: sha512-psvuQ3UFBEmDFV8ZHG+WkUHIJiWv+elZ+zIPvOVedlIKdxG1O+8WthWUAhFHOGnbiyzc4sAZ4c3de1oCvyHxyQ==}
-    cpu: [x64]
-    os: [linux]
-
   '@libsql/linux-x64-gnu@0.4.6':
     resolution: {integrity: sha512-0ggx+5RwEbYabIlDBBAvavdfIJCZ757u6nDZtBeQIhzW99EKbWG3lvkXHM3qudFb/pDWSUY4RFBm6vVtF1cJGA==}
-    cpu: [x64]
-    os: [linux]
-
-  '@libsql/linux-x64-musl@0.3.19':
-    resolution: {integrity: sha512-BLsXyJaL8gZD8+3W2LU08lDEd9MIgGds0yPy5iNPp8tfhXx3pV/Fge2GErN0FC+nzt4DYQtjL+A9GUMglQefXQ==}
-    cpu: [x64]
-    os: [linux]
-
-  '@libsql/linux-x64-musl@0.4.1':
-    resolution: {integrity: sha512-PDidJ3AhGDqosGg3OAZzGxMFIbnuOALya4BoezJKl667AFv3x7BBQ30H81Mngsq3Fh8RkJkXSdWfL91+Txb1iA==}
     cpu: [x64]
     os: [linux]
 
@@ -2286,16 +2226,6 @@ packages:
     resolution: {integrity: sha512-SWNrv7Hz72QWlbM/ZsbL35MPopZavqCUmQz2HNDZ55t0F+kt8pXuP+bbI2KvmaQ7wdsoqAA4qBmjol0+bh4ndw==}
     cpu: [x64]
     os: [linux]
-
-  '@libsql/win32-x64-msvc@0.3.19':
-    resolution: {integrity: sha512-ay1X9AobE4BpzG0XPw1gplyLZPGHIgJOovvW23gUrukRegiUP62uzhpRbKNogLlUOynyXeq//prHgPXiebUfWg==}
-    cpu: [x64]
-    os: [win32]
-
-  '@libsql/win32-x64-msvc@0.4.1':
-    resolution: {integrity: sha512-IdODVqV/PrdOnHA/004uWyorZQuRsB7U7bCRCE3vXgABj3eJLJGc6cv2C6ksEaEoVxJbD8k53H4VVAGrtYwXzQ==}
-    cpu: [x64]
-    os: [win32]
 
   '@libsql/win32-x64-msvc@0.4.6':
     resolution: {integrity: sha512-Q0axn110zDNELfkEog3Nl8p9BU4eI/UvgaHevGyOiSDN7s0KPfj0j6jwVHk4oz3o/d/Gg3DRIxomZ4ftfTOy/g==}
@@ -2360,6 +2290,9 @@ packages:
 
   '@mdx-js/mdx@3.0.1':
     resolution: {integrity: sha512-eIQ4QTrOWyL3LWEe/bu6Taqzq2HQvHcyTMaOrI95P2/LmJE7AsfPfgJGuFLPVqBUE1BC1rik3VIhU+s9u72arA==}
+
+  '@mixmark-io/domino@2.2.0':
+    resolution: {integrity: sha512-Y28PR25bHXUg88kCV7nivXrP2Nj2RueZ3/l/jdx6J9f8J4nsEGcgX0Qe6lt7Pa+J79+kPiJU3LguR6O/6zrLOw==}
 
   '@moonrepo/cli@1.28.3':
     resolution: {integrity: sha512-/zBs8RPOsGddZ5KmzQsoE9DPWN67+nVcF6nPFipNNe7ufC876SoVR7n4kkyMOzcgfoF+c/NEv+5fFPweKsmAsA==}
@@ -2910,6 +2843,9 @@ packages:
   '@types/braces@3.0.4':
     resolution: {integrity: sha512-0WR3b8eaISjEW7RpZnclONaLFDf7buaowRHdqLp4vLj54AsSAYWfh3DRbfiYJY9XDxMgx1B4sE1Afw2PGpuHOA==}
 
+  '@types/cheerio@0.22.35':
+    resolution: {integrity: sha512-yD57BchKRvTV+JD53UZ6PD8KWY5g5rvvMLRnZR3EQBCZXiDT/HR+pKpMzFGlWNhFrXlo7VPZXtKvIEwZkAWOIA==}
+
   '@types/cookie@0.6.0':
     resolution: {integrity: sha512-4Kh9a6B2bQciAhf7FSuMRRkUWecJgJu9nPnx3yzpsfXX/c50REIqpHY4C82bXP90qrLtXtkDxTZosYO3UpOwlA==}
 
@@ -2990,6 +2926,9 @@ packages:
 
   '@types/trusted-types@2.0.7':
     resolution: {integrity: sha512-ScaPdn1dQczgbl0QFTeTOmVHFULt394XJgOQNoyVhZ6r2vLnMLJfBPd53SB52T/3G36VI1/g2MZaX0cwDuXsfw==}
+
+  '@types/turndown@5.0.5':
+    resolution: {integrity: sha512-TL2IgGgc7B5j78rIccBtlYAnkuv8nUQqhQc+DSYV5j9Be9XOcm/SKOVRuA47xAVI3680Tk9B1d8flK2GWT2+4w==}
 
   '@types/unist@2.0.10':
     resolution: {integrity: sha512-IfYcSBWE3hLpBg8+X2SEa8LVkJdJEkT2Ese2aaLs3ptGdVtABxndrMaxuFlQ1qdFf9Q5rDvDpxI3WwgvKFAsQA==}
@@ -4465,14 +4404,6 @@ packages:
     resolution: {integrity: sha512-bkQo+UqryW6Zmo/DsixYZE4Z9t2mzvNMhceyIhuMuInb3knm5Q+GNGMKveydJAj+Z6piN1SwI6eR/V0G+Z0BtA==}
     engines: {node: '>=18'}
 
-  libsql@0.3.19:
-    resolution: {integrity: sha512-Aj5cQ5uk/6fHdmeW0TiXK42FqUlwx7ytmMLPSaUQPin5HKKKuUPD62MAbN4OEweGBBI7q1BekoEN4gPUEL6MZA==}
-    os: [darwin, linux, win32]
-
-  libsql@0.4.1:
-    resolution: {integrity: sha512-qZlR9Yu1zMBeLChzkE/cKfoKV3Esp9cn9Vx5Zirn4AVhDWPcjYhKwbtJcMuHehgk3mH+fJr9qW+3vesBWbQpBg==}
-    os: [darwin, linux, win32]
-
   libsql@0.4.6:
     resolution: {integrity: sha512-F5M+ltteK6dCcpjMahrkgT96uFJvVI8aQ4r9f2AzHQjC7BkAYtvfMSTWGvRBezRgMUIU2h1Sy0pF9nOGOD5iyA==}
     os: [darwin, linux, win32]
@@ -5736,6 +5667,9 @@ packages:
     engines: {node: '>=18.0.0'}
     hasBin: true
 
+  turndown@7.2.0:
+    resolution: {integrity: sha512-eCZGBN4nNNqM9Owkv9HAtWRYfLA4h909E/WGAWWBpmB275ehNhZyk87/Tpvjbp0jjNl9XwCsbe6bm6CqFsgD+A==}
+
   twoslash-protocol@0.2.12:
     resolution: {integrity: sha512-5qZLXVYfZ9ABdjqbvPc4RWMr7PrpPaaDSeaYY55vl/w1j6H6kzsWK/urAEIXlzYlyrFmyz1UbwIt+AA0ck+wbg==}
 
@@ -6235,53 +6169,6 @@ snapshots:
       - prettier-plugin-astro
 
   '@astrojs/compiler@2.10.3': {}
-
-  '@astrojs/db@0.14.0(@cloudflare/workers-types@4.20240725.0)(@types/react@18.3.5)(react@18.3.1)':
-    dependencies:
-      '@astrojs/studio': 0.1.1
-      '@libsql/client': 0.10.0
-      async-listen: 3.0.1
-      deep-diff: 1.0.2
-      drizzle-orm: 0.31.4(@cloudflare/workers-types@4.20240725.0)(@libsql/client@0.10.0)(@types/react@18.3.5)(react@18.3.1)
-      github-slugger: 2.0.0
-      kleur: 4.1.5
-      nanoid: 5.0.7
-      open: 10.1.0
-      ora: 8.1.0
-      prompts: 2.4.2
-      strip-ansi: 7.1.0
-      yargs-parser: 21.1.1
-      zod: 3.23.8
-    transitivePeerDependencies:
-      - '@aws-sdk/client-rds-data'
-      - '@cloudflare/workers-types'
-      - '@electric-sql/pglite'
-      - '@neondatabase/serverless'
-      - '@op-engineering/op-sqlite'
-      - '@opentelemetry/api'
-      - '@planetscale/database'
-      - '@prisma/client'
-      - '@tidbcloud/serverless'
-      - '@types/better-sqlite3'
-      - '@types/pg'
-      - '@types/react'
-      - '@types/sql.js'
-      - '@vercel/postgres'
-      - '@xata.io/client'
-      - better-sqlite3
-      - bufferutil
-      - bun-types
-      - expo-sqlite
-      - knex
-      - kysely
-      - mysql2
-      - pg
-      - postgres
-      - prisma
-      - react
-      - sql.js
-      - sqlite3
-      - utf-8-validate
 
   '@astrojs/db@0.14.2(@cloudflare/workers-types@4.20240725.0)(@types/react@18.3.5)(react@18.3.1)':
     dependencies:
@@ -7525,17 +7412,6 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.0
 
-  '@libsql/client@0.10.0':
-    dependencies:
-      '@libsql/core': 0.10.0
-      '@libsql/hrana-client': 0.6.2
-      js-base64: 3.7.7
-      libsql: 0.4.1
-      promise-limit: 2.7.0
-    transitivePeerDependencies:
-      - bufferutil
-      - utf-8-validate
-
   '@libsql/client@0.14.0':
     dependencies:
       '@libsql/core': 0.14.0
@@ -7547,41 +7423,15 @@ snapshots:
       - bufferutil
       - utf-8-validate
 
-  '@libsql/core@0.10.0':
-    dependencies:
-      js-base64: 3.7.7
-
   '@libsql/core@0.14.0':
     dependencies:
       js-base64: 3.7.7
 
-  '@libsql/darwin-arm64@0.3.19':
-    optional: true
-
-  '@libsql/darwin-arm64@0.4.1':
-    optional: true
-
   '@libsql/darwin-arm64@0.4.6':
-    optional: true
-
-  '@libsql/darwin-x64@0.3.19':
-    optional: true
-
-  '@libsql/darwin-x64@0.4.1':
     optional: true
 
   '@libsql/darwin-x64@0.4.6':
     optional: true
-
-  '@libsql/hrana-client@0.6.2':
-    dependencies:
-      '@libsql/isomorphic-fetch': 0.2.1
-      '@libsql/isomorphic-ws': 0.1.5
-      js-base64: 3.7.7
-      node-fetch: 3.3.2
-    transitivePeerDependencies:
-      - bufferutil
-      - utf-8-validate
 
   '@libsql/hrana-client@0.7.0':
     dependencies:
@@ -7593,8 +7443,6 @@ snapshots:
       - bufferutil
       - utf-8-validate
 
-  '@libsql/isomorphic-fetch@0.2.1': {}
-
   '@libsql/isomorphic-fetch@0.3.1': {}
 
   '@libsql/isomorphic-ws@0.1.5':
@@ -7605,46 +7453,16 @@ snapshots:
       - bufferutil
       - utf-8-validate
 
-  '@libsql/linux-arm64-gnu@0.3.19':
-    optional: true
-
-  '@libsql/linux-arm64-gnu@0.4.1':
-    optional: true
-
   '@libsql/linux-arm64-gnu@0.4.6':
-    optional: true
-
-  '@libsql/linux-arm64-musl@0.3.19':
-    optional: true
-
-  '@libsql/linux-arm64-musl@0.4.1':
     optional: true
 
   '@libsql/linux-arm64-musl@0.4.6':
     optional: true
 
-  '@libsql/linux-x64-gnu@0.3.19':
-    optional: true
-
-  '@libsql/linux-x64-gnu@0.4.1':
-    optional: true
-
   '@libsql/linux-x64-gnu@0.4.6':
     optional: true
 
-  '@libsql/linux-x64-musl@0.3.19':
-    optional: true
-
-  '@libsql/linux-x64-musl@0.4.1':
-    optional: true
-
   '@libsql/linux-x64-musl@0.4.6':
-    optional: true
-
-  '@libsql/win32-x64-msvc@0.3.19':
-    optional: true
-
-  '@libsql/win32-x64-msvc@0.4.1':
     optional: true
 
   '@libsql/win32-x64-msvc@0.4.6':
@@ -7746,6 +7564,8 @@ snapshots:
       vfile: 6.0.3
     transitivePeerDependencies:
       - supports-color
+
+  '@mixmark-io/domino@2.2.0': {}
 
   '@moonrepo/cli@1.28.3':
     dependencies:
@@ -8227,6 +8047,10 @@ snapshots:
 
   '@types/braces@3.0.4': {}
 
+  '@types/cheerio@0.22.35':
+    dependencies:
+      '@types/node': 22.0.0
+
   '@types/cookie@0.6.0': {}
 
   '@types/debug@4.1.12':
@@ -8314,6 +8138,8 @@ snapshots:
       minipass: 4.2.8
 
   '@types/trusted-types@2.0.7': {}
+
+  '@types/turndown@5.0.5': {}
 
   '@types/unist@2.0.10': {}
 
@@ -9437,13 +9263,6 @@ snapshots:
 
   dotenv@8.6.0: {}
 
-  drizzle-orm@0.31.4(@cloudflare/workers-types@4.20240725.0)(@libsql/client@0.10.0)(@types/react@18.3.5)(react@18.3.1):
-    optionalDependencies:
-      '@cloudflare/workers-types': 4.20240725.0
-      '@libsql/client': 0.10.0
-      '@types/react': 18.3.5
-      react: 18.3.1
-
   drizzle-orm@0.31.4(@cloudflare/workers-types@4.20240725.0)(@libsql/client@0.14.0)(@types/react@18.3.5)(react@18.3.1):
     optionalDependencies:
       '@cloudflare/workers-types': 4.20240725.0
@@ -10223,33 +10042,6 @@ snapshots:
   kolorist@1.8.0: {}
 
   ky@1.5.0: {}
-
-  libsql@0.3.19:
-    dependencies:
-      '@neon-rs/load': 0.0.4
-      detect-libc: 2.0.2
-    optionalDependencies:
-      '@libsql/darwin-arm64': 0.3.19
-      '@libsql/darwin-x64': 0.3.19
-      '@libsql/linux-arm64-gnu': 0.3.19
-      '@libsql/linux-arm64-musl': 0.3.19
-      '@libsql/linux-x64-gnu': 0.3.19
-      '@libsql/linux-x64-musl': 0.3.19
-      '@libsql/win32-x64-msvc': 0.3.19
-
-  libsql@0.4.1:
-    dependencies:
-      '@neon-rs/load': 0.0.4
-      detect-libc: 2.0.2
-      libsql: 0.3.19
-    optionalDependencies:
-      '@libsql/darwin-arm64': 0.4.1
-      '@libsql/darwin-x64': 0.4.1
-      '@libsql/linux-arm64-gnu': 0.4.1
-      '@libsql/linux-arm64-musl': 0.4.1
-      '@libsql/linux-x64-gnu': 0.4.1
-      '@libsql/linux-x64-musl': 0.4.1
-      '@libsql/win32-x64-msvc': 0.4.1
 
   libsql@0.4.6:
     dependencies:
@@ -11989,6 +11781,10 @@ snapshots:
       get-tsconfig: 4.7.6
     optionalDependencies:
       fsevents: 2.3.3
+
+  turndown@7.2.0:
+    dependencies:
+      '@mixmark-io/domino': 2.2.0
 
   twoslash-protocol@0.2.12: {}
 

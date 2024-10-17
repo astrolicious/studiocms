@@ -38,8 +38,13 @@
   },
   "type": "module",
   "dependencies": {
+    "@studiocms/core": "workspace:*",
     "@libsql/client": "^0.14.0",
-    "astro-integration-kit": "catalog:"
+    "astro-integration-kit": "catalog:",
+    "cheerio": "^1.0.0",
+    "@types/cheerio": "^0.22.35",
+    "turndown": "^7.2.0",
+    "@types/turndown": "^5.0.5"
   },
   "peerDependencies": {
     "@astrojs/db": "catalog:min",
