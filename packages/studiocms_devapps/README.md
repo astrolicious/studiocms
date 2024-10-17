@@ -82,7 +82,9 @@ The following env variables set (`@astrojs/db`):
 
 #### Preview
 
-- TODO
+- Toolbar app
+
+![WP-importer](./assets/wp-importer.png)
 
 ## Licensing
 
