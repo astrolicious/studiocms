@@ -12,6 +12,7 @@ import PackageManagers from '~/components/PackageManagers.astro';
 import TursoCLI from '~/components/TursoCLI.astro';
 import { Aside, Steps, Tabs, TabItem } from '@astrojs/starlight/components';
 import ReadMore from '~/components/ReadMore.astro';
+import { sponsors, SponsorLink } from '~/share-link'
 
 ## Let's get started
 
@@ -30,8 +31,8 @@ StudioCMS uses `@astrojs/db` to connect to your libSQL database. You can use any
 ### Getting started with Turso
 
 <Steps>
-1. Install the [Turso CLI](https://docs.turso.tech/cli/installation)
-2. [Login or signup](https://docs.turso.tech/cli/authentication) to Turso.
+1. Install the <SponsorLink href={sponsors.turso.docs.installCLILink} text='Turso CLI'/>
+2. <SponsorLink href={sponsors.turso.docs.loginsignupLink} text='Login or signup'/> to Turso.
 3. Create a new database.
    <TursoCLI tursoCli='db' type='create' arg='studiocms' />
 4. Get and Set `ASTRO_DB_REMOTE_URL`
