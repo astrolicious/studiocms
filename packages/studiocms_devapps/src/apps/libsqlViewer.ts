@@ -1,11 +1,14 @@
 import config from 'virtual:studiocms-devapps/libsql-viewer';
 import { defineToolbarApp } from 'astro/toolbar';
+import { closeOnOutsideClick } from './utils';
 
 export default defineToolbarApp({
-	init(canvas) {
+	init(canvas, eventTarget) {
 		const appWindow = document.createElement('astro-dev-toolbar-window');
 		appWindow.style.width = '95%';
 		appWindow.style.height = '80vh';
+
+		closeOnOutsideClick(eventTarget);
 
 		const link = document.createElement('a');
 		link.href = config.endpointPath;
