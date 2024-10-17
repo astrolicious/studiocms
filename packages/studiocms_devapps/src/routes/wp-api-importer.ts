@@ -21,7 +21,7 @@ export const POST: APIRoute = async ({ request }: APIContext) => {
 		});
 	}
 
-	if (typeof url !== 'string' || typeof type !== 'string' || typeof useBlogPlugin !== 'string') {
+	if (typeof url !== 'string' || typeof type !== 'string') {
 		return new Response(null, {
 			status: 400,
 			statusText: 'Bad Request',
@@ -32,12 +32,14 @@ export const POST: APIRoute = async ({ request }: APIContext) => {
 		});
 	}
 
+	const useBlogPluginValue = useBlogPlugin === 'true';
+
 	switch (type) {
 		case 'pages':
 			await importPagesFromWPAPI(url);
 			break;
 		case 'posts':
-			await importPostsFromWPAPI(url, useBlogPlugin === 'true');
+			await importPostsFromWPAPI(url, useBlogPluginValue);
 			break;
 		default:
 			throw new Error('Invalid import type');

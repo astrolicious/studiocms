@@ -57,8 +57,11 @@ export const importPagesFromWPAPI = async (endpoint: string) => {
 	const url = apiEndpoint(endpoint, 'pages');
 	const pages: Page[] = await fetchAll(url);
 
+	console.log('pages', pages.length);
+
 	try {
 		for (const page of pages) {
+			console.log('importing page:', page.title.rendered);
 			await importPage(page);
 		}
 	} catch (error) {
@@ -94,10 +97,16 @@ const importPost = async (post: unknown, useBlogPkg: boolean) => {
 
 export const importPostsFromWPAPI = async (endpoint: string, useBlogPkg: boolean) => {
 	const url = apiEndpoint(endpoint, 'posts');
+
+	console.log('fetching posts from:', url.origin);
+
 	const posts: Page[] = await fetchAll(url);
+
+	console.log('posts', posts.length);
 
 	try {
 		for (const post of posts) {
+			console.log('importing post:', post.title.rendered);
 			await importPost(post, useBlogPkg);
 		}
 	} catch (error) {

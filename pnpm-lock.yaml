@@ -662,6 +662,9 @@ importers:
       cheerio:
         specifier: ^1.0.0
         version: 1.0.0
+      html-entities:
+        specifier: ^2.5.2
+        version: 2.5.2
       turndown:
         specifier: ^7.2.0
         version: 7.2.0

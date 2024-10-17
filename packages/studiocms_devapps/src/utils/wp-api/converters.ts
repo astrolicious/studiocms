@@ -1,5 +1,6 @@
 import path from 'node:path';
 import Config from 'virtual:studiocms-devapps/wp-api/configPath';
+import { decode } from 'html-entities';
 import TurndownService from 'turndown';
 import type { Page, Post } from '../../schema/wp-api';
 import type { PageContent, PageData } from './index';
@@ -16,12 +17,11 @@ export const ConvertToPageData = (page: unknown): PageData => {
 	const pageData: PageData = {
 		id: crypto.randomUUID(),
 		title: data.title.rendered,
-		description: stripHtml(data.excerpt.rendered),
+		description: decode(stripHtml(data.excerpt.rendered)),
 		slug: data.slug,
 		publishedAt: new Date(data.date_gmt),
 		updatedAt: new Date(data.modified_gmt),
 		showOnNav: false,
-		heroImage: '',
 		contentLang: 'default',
 		package: 'studiocms',
 	};
@@ -68,12 +68,11 @@ export const ConvertToPostData = (post: unknown, useBlogPkg: boolean): PageData 
 	const pageData: PageData = {
 		id: crypto.randomUUID(),
 		title: data.title.rendered,
-		description: stripHtml(data.excerpt.rendered),
+		description: decode(stripHtml(data.excerpt.rendered)),
 		slug: data.slug,
 		publishedAt: new Date(data.date_gmt),
 		updatedAt: new Date(data.modified_gmt),
 		showOnNav: false,
-		heroImage: '',
 		contentLang: 'default',
 		package: pkg,
 	};
