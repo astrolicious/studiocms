@@ -1,9 +1,50 @@
 ---
 import Code from './Code.astro';
 
-type TursoCLICommands = 'db' | 'auth';
+const tursoCliCommands = ['db', 'auth'] as const;
 
-const tursoCLICommands = {
+const tursoAuthCommands = [
+	'login',
+	'logout',
+	'signup',
+	'token',
+	'whoami',
+	'api-tokens.mint',
+	'api-tokens.list',
+	'api-tokens.revoke',
+] as const;
+
+const tursoDBCommands = [
+	'list',
+	'create',
+	'show',
+	'destroy',
+	'inspect',
+	'shell',
+	'locations',
+	'tokens.create',
+	'tokens.invalidate',
+	'config.attach.allow',
+	'config.attach.disallow',
+	'config.attach.show',
+] as const;
+
+const allCommands = [...tursoAuthCommands, ...tursoDBCommands] as const;
+
+type TursoCLICommands = (typeof tursoCliCommands)[number];
+
+type AuthCommands = (typeof tursoAuthCommands)[number];
+
+type DBCommands = (typeof tursoDBCommands)[number];
+
+type AllCommands = (typeof allCommands)[number];
+
+type Commands = {
+	auth: Record<AuthCommands, string>;
+	db: Record<DBCommands, string>;
+};
+
+const tursoCLICommands: Commands = {
 	auth: {
 		login: 'turso auth login',
 		logout: 'turso auth logout',
@@ -30,26 +71,26 @@ const tursoCLICommands = {
 	},
 };
 
-type AuthCommands = keyof typeof tursoCLICommands.auth;
-type DBCommands = keyof typeof tursoCLICommands.db;
+const commandBuilder = (tursoCli: TursoCLICommands, type: AllCommands, arg: string) => {
+	let command: string;
 
-const commandBuilder = (
-	tursoCli: TursoCLICommands,
-	type: AuthCommands | DBCommands,
-	arg: string
-) => {
-	let cmd = tursoCLICommands[tursoCli][type];
-
-	if (!cmd) {
-		throw new Error(`Command not found for '${tursoCli}' and '${type}'`);
+	switch (tursoCli) {
+		case 'auth':
+			command = tursoCLICommands.auth[type as AuthCommands];
+			break;
+		case 'db':
+			command = tursoCLICommands.db[type as DBCommands];
+			break;
+		default:
+			throw new Error(`Invalid Turso CLI command: ${tursoCli} ${type}`);
 	}
 
-	return `${cmd} ${arg}`;
+	return `${command} ${arg}`;
 };
 
 interface Props {
 	tursoCli: TursoCLICommands;
-	type: DBCommands | AuthCommands;
+	type: AllCommands;
 	arg: string;
 }
 
