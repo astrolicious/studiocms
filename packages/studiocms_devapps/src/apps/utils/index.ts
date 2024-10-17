@@ -1,7 +1,6 @@
 export function createWindowElement(content: string) {
 	const windowElement = document.createElement('astro-dev-toolbar-window');
 	windowElement.innerHTML = content;
-	// @ts-ignore
 	windowElement.placement = 'bottom-center';
 	return windowElement;
 }
@@ -24,7 +23,7 @@ export function closeOnOutsideClick(
 			})
 		);
 	}
-	// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+	// biome-ignore lint/suspicious/noExplicitAny: EventTarget is not a generic type
 	eventTarget.addEventListener('app-toggled', (event: any) => {
 		if (event.detail.state === true) {
 			document.addEventListener('click', onPageClick, true);
