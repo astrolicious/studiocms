@@ -14,14 +14,14 @@ export type PageData = typeof tsPageData.$inferInsert;
 export type PageContent = typeof tsPageContent.$inferInsert;
 
 const generatePageFromData = async (page: unknown) => {
-	const pageData = ConvertToPageData(page);
+	const pageData = await ConvertToPageData(page);
 	const pageContent = await ConvertToPageContent(pageData, page);
 
 	return { pageData, pageContent };
 };
 
 const generatePostFromData = async (post: unknown, useBlogPkg: boolean) => {
-	const pageData = ConvertToPostData(post, useBlogPkg);
+	const pageData = await ConvertToPostData(post, useBlogPkg);
 	const pageContent = await ConvertToPostContent(pageData, post);
 
 	return { pageData, pageContent };

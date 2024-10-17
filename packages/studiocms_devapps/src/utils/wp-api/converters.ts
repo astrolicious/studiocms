@@ -4,15 +4,27 @@ import { decode } from 'html-entities';
 import TurndownService from 'turndown';
 import type { Page, Post } from '../../schema/wp-api';
 import type { PageContent, PageData } from './index';
-import { cleanUpHtml, downloadAndUpdateImages, stripHtml } from './utils';
+import {
+	apiEndpoint,
+	cleanUpHtml,
+	downloadAndUpdateImages,
+	downloadPostImage,
+	stripHtml,
+} from './utils';
 
 const ASTROPUBLICFOLDER = path.resolve(Config.projectRoot, 'public');
 const WPImportFolder = path.resolve(ASTROPUBLICFOLDER, 'wp-import');
 const pagesImagesFolder = path.resolve(WPImportFolder, 'pages');
 const postsImagesFolder = path.resolve(WPImportFolder, 'posts');
 
-export const ConvertToPageData = (page: unknown): PageData => {
+export const ConvertToPageData = async (page: unknown): Promise<PageData> => {
 	const data = page as Page;
+
+	const titleImageId = data.featured_media;
+	const titleImageURL = apiEndpoint(`${titleImageId}`, 'media');
+	const titleImageResponse = await fetch(titleImageURL);
+	const titleImageJson = await titleImageResponse.json();
+	const titleImage = await downloadPostImage(titleImageJson.source_url, pagesImagesFolder);
 
 	const pageData: PageData = {
 		id: crypto.randomUUID(),
@@ -25,6 +37,10 @@ export const ConvertToPageData = (page: unknown): PageData => {
 		contentLang: 'default',
 		package: 'studiocms',
 	};
+
+	if (titleImage) {
+		pageData.heroImage = titleImage;
+	}
 
 	return pageData;
 };
@@ -60,8 +76,14 @@ export const ConvertToPageContent = async (
 	return pageContent;
 };
 
-export const ConvertToPostData = (post: unknown, useBlogPkg: boolean): PageData => {
+export const ConvertToPostData = async (post: unknown, useBlogPkg: boolean): Promise<PageData> => {
 	const data = post as Post;
+
+	const titleImageId = data.featured_media;
+	const titleImageURL = apiEndpoint(`${titleImageId}`, 'media');
+	const titleImageResponse = await fetch(titleImageURL);
+	const titleImageJson = await titleImageResponse.json();
+	const titleImage = await downloadPostImage(titleImageJson.source_url, pagesImagesFolder);
 
 	const pkg = useBlogPkg ? '@studiocms/blog' : 'studiocms';
 
@@ -76,6 +98,10 @@ export const ConvertToPostData = (post: unknown, useBlogPkg: boolean): PageData 
 		contentLang: 'default',
 		package: pkg,
 	};
+
+	if (titleImage) {
+		pageData.heroImage = titleImage;
+	}
 
 	return pageData;
 };

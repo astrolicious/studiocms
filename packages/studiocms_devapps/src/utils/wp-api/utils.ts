@@ -103,7 +103,7 @@ export const downloadAndUpdateImages = async (html: string, pathToFolder: string
 	return $.html();
 };
 
-export const apiEndpoint = (endpoint: string, type: 'posts' | 'pages') => {
+export const apiEndpoint = (endpoint: string, type: 'posts' | 'pages' | 'media') => {
 	if (!endpoint) {
 		throw new AstroError(
 			'Missing `endpoint` argument.',
