@@ -1,40 +1,6 @@
 import config from 'virtual:studiocms-devapps/wp-api-importer';
 import { defineToolbarApp } from 'astro/toolbar';
-
-export function createWindowElement(content: string) {
-	const windowElement = document.createElement('astro-dev-toolbar-window');
-	windowElement.innerHTML = content;
-	windowElement.placement = 'bottom-center';
-	return windowElement;
-}
-
-export function closeOnOutsideClick(
-	eventTarget: EventTarget,
-	additionalCheck?: (target: Element) => boolean
-) {
-	function onPageClick(event: MouseEvent) {
-		const target = event.target as Element | null;
-		if (!target) return;
-		if (!target.closest) return;
-		if (target.closest('astro-dev-toolbar')) return;
-		if (additionalCheck?.(target)) return;
-		eventTarget.dispatchEvent(
-			new CustomEvent('toggle-app', {
-				detail: {
-					state: false,
-				},
-			})
-		);
-	}
-	// biome-ignore lint/suspicious/noExplicitAny: <explanation>
-	eventTarget.addEventListener('app-toggled', (event: any) => {
-		if (event.detail.state === true) {
-			document.addEventListener('click', onPageClick, true);
-		} else {
-			document.removeEventListener('click', onPageClick, true);
-		}
-	});
-}
+import { closeOnOutsideClick, createWindowElement } from './utils';
 
 export default defineToolbarApp({
 	init(canvas, eventTarget) {
@@ -245,7 +211,9 @@ export default defineToolbarApp({
 				form.classList.remove('loading-active');
 
 				if (responseText === 'success') {
-					alert('Imported successfully!');
+					alert(
+						'Imported successfully! You can now view/edit the imported content in your StudioCMS dashboard.'
+					);
 				} else {
 					alert(`Failed to import: ${responseText}`);
 				}
