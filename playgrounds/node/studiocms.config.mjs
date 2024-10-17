@@ -1,4 +1,4 @@
-import { defineStudioCMSConfig } from 'studiocms';
+import { defineStudioCMSConfig } from '../../packages/studiocms/src';
 
 export default defineStudioCMSConfig({
 	dbStartPage: false,

@@ -38,3 +38,5 @@ export const getCoolifyURL = (returnHttps?: boolean) => {
 	}
 	return setHTTP(strippedUrl);
 };
+
+export default getCoolifyURL;

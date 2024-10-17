@@ -9,6 +9,7 @@ import Separator from '../components/Separator.astro';
 // import TestimonialCard from '../components/TestimonialCard.astro';
 import { GITHUB_URL, SPONSOR_URL } from '../constants';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import sponsors from '../share-link';
 
 const features = (await getCollection('features')).sort(
 	({ data: { sortOrder: a } }, { data: { sortOrder: b } }) => a - b
@@ -35,7 +36,7 @@ const features = (await getCollection('features')).sort(
   <section class='studiocms-container mx-auto px-8 py-10 relative -translate-y-20 md:-translate-y-32'>
     <h3 class='text-center text-3xl font-semibold block'>Sponsored by</h3>
     <div class='flex flex-row flex-wrap align-center justify-center mb-12 relative'>
-      <a href="https://turso.tech/" target="_blank" rel="sponsored">
+      <a href={sponsors.turso.web.sponsorLink} target="_blank" rel="sponsored">
         <Image src={'/sponsors/turso.svg'} alt={'Turso Logo'} width={410} height={120} class='dark:block hidden' loading={'eager'} />
         <Image src={'/sponsors/turso-dark.svg'} alt={'Turso Logo'} width={410} height={120} class='block dark:hidden' loading={'eager'} />
       </a>
