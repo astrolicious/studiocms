@@ -4,7 +4,7 @@ import webvitals from '@astrojs/web-vitals';
 import studioCMSBlog from '@studiocms/blog';
 import devapps from '@studiocms/devapps';
 import { defineConfig } from 'astro/config';
-import studioCMS from 'studiocms';
+import studioCMS from '../../packages/studiocms/src';
 import { getCoolifyURL } from '../../www/hostUtils';
 
 // https://astro.build/config
