@@ -50,14 +50,17 @@ const importPage = async (page: unknown) => {
 		throw new Error('Failed to insert page content');
 	}
 
-	console.log('- Imported new page from WP-API:', pageDataResult.title);
+	console.log('- Imported new page from WP-API: ', pageDataResult.title);
 };
 
 export const importPagesFromWPAPI = async (endpoint: string) => {
 	const url = apiEndpoint(endpoint, 'pages');
+
+	console.log('fetching pages from: ', url.origin);
+
 	const pages: Page[] = await fetchAll(url);
 
-	console.log('pages', pages.length);
+	console.log('Total pages: ', pages.length);
 
 	try {
 		for (const page of pages) {
@@ -98,18 +101,18 @@ const importPost = async (post: unknown, useBlogPkg: boolean) => {
 export const importPostsFromWPAPI = async (endpoint: string, useBlogPkg: boolean) => {
 	const url = apiEndpoint(endpoint, 'posts');
 
-	console.log('fetching posts from:', url.origin);
+	console.log('Fetching posts from: ', url.origin);
 
 	const posts: Page[] = await fetchAll(url);
 
-	console.log('posts', posts.length);
+	console.log('Total posts: ', posts.length);
 
 	try {
 		for (const post of posts) {
-			console.log('importing post:', post.title.rendered);
+			console.log('importing post: ', post.title.rendered);
 			await importPost(post, useBlogPkg);
 		}
 	} catch (error) {
-		console.error('Failed to import posts from WP-API:', error);
+		console.error('Failed to import posts from WP-API: ', error);
 	}
 };

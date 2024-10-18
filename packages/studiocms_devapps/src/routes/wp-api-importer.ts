@@ -8,8 +8,6 @@ export const POST: APIRoute = async ({ request }: APIContext) => {
 	const type = data.get('type');
 	const useBlogPlugin = data.get('useBlogPlugin');
 
-	console.log('data', url, type, useBlogPlugin);
-
 	if (!url || !type) {
 		return new Response(null, {
 			status: 400,
@@ -31,6 +29,8 @@ export const POST: APIRoute = async ({ request }: APIContext) => {
 			},
 		});
 	}
+
+	console.log('Starting Import:', url, '\n Type:', type, '\n useBlogPlugin:', useBlogPlugin);
 
 	const useBlogPluginValue = useBlogPlugin === 'true';
 

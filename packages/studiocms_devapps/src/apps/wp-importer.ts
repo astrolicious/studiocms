@@ -207,10 +207,11 @@ export default defineToolbarApp({
 					body: formData,
 				});
 
+				const responseStatus = response.status;
 				const responseText = response.statusText;
 				form.classList.remove('loading-active');
 
-				if (responseText === 'success') {
+				if (responseStatus === 200) {
 					alert(
 						'Imported successfully! You can now view/edit the imported content in your StudioCMS dashboard.'
 					);

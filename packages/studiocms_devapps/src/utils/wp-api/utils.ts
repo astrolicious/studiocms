@@ -49,6 +49,9 @@ export async function downloadImage(imageUrl: string | URL, destination: string 
 
 			const fileBuffer = Buffer.concat(chunks);
 			fs.writeFileSync(destination, fileBuffer, { flag: 'wx' });
+
+			console.log('Downloaded image:', imageUrl);
+
 			return true;
 		}
 
@@ -74,7 +77,7 @@ export const downloadPostImage = async (src: string, pathToFolder: string) => {
 	const destinationFile = path.resolve(pathToFolder, fileName);
 
 	if (fs.existsSync(destinationFile)) {
-		console.log(`Post image "${destinationFile}" already exists, skipping...`);
+		console.log(`Post/Page image "${destinationFile}" already exists, skipping...`);
 		return fileName;
 	}
 
@@ -107,7 +110,7 @@ export const apiEndpoint = (endpoint: string, type: 'posts' | 'pages' | 'media')
 	if (!endpoint) {
 		throw new AstroError(
 			'Missing `endpoint` argument.',
-			'Please pass a URL to your WordPress REST API endpoint as the `endpoint` option to the WordPress importer. Most commonly this looks something like `https://example.com/`'
+			'Please pass a URL to your WordPress website as the `endpoint` option to the WordPress importer. Most commonly this looks something like `https://example.com/`'
 		);
 	}
 	let newEndpoint = endpoint;
@@ -122,10 +125,15 @@ export const apiEndpoint = (endpoint: string, type: 'posts' | 'pages' | 'media')
  */
 // biome-ignore lint/suspicious/noExplicitAny: <explanation>
 export async function fetchAll(url: URL, page = 1, results: any[] = []) {
+	// Search params
 	url.searchParams.set('per_page', '100');
 	url.searchParams.set('page', String(page));
+
+	// Fetch
 	const response = await fetch(url);
 	let data = await response.json();
+
+	// Check for errors
 	if (!Array.isArray(data)) {
 		if (typeof data === 'object') {
 			data = Object.entries(data).map(([id, val]) => {
@@ -139,8 +147,20 @@ export async function fetchAll(url: URL, page = 1, results: any[] = []) {
 			);
 		}
 	}
+
+	// Append
 	results.push(...data);
+
+	// Check for pagination
 	const totalPages = Number.parseInt(response.headers.get('X-WP-TotalPages') || '1');
-	if (page < totalPages) return fetchAll(url, page + 1, results);
+	console.log('Fetched page', page, 'of', totalPages);
+
+	// Recurse
+	if (page < totalPages) {
+		console.log('Fetching next page...');
+		return fetchAll(url, page + 1, results);
+	}
+
+	// Done
 	return results;
 }
