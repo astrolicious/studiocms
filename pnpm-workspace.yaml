@@ -4,11 +4,11 @@ catalog:
   '@astrojs/rss': ^4.0.7
   '@astrojs/check': ^0.9.3
   '@astrojs/tailwind': ^5.1.0
-  '@astrojs/starlight': ^0.28.2
+  '@astrojs/starlight': ^0.28.3
   '@astrojs/web-vitals': ^3.0.0
   '@astrojs/node': ^8.3.3
   '@types/node': ^20.14.11
-  astro: ^4.15.12
+  astro: ^4.16.3
   astro-integration-kit: ^0.16.1
   astro-theme-provider: ^0.6.1
   sharp: ^0.33.4
@@ -17,7 +17,7 @@ catalog:
 
 catalogs:
   min:
-    astro: ">=4.15"
+    astro: ">=4.16"
     '@astrojs/db': ">=0.14"
     astro-integration-kit: ">=0.16"
     vite: ^4 || ^5
@@ -28,15 +28,16 @@ catalogs:
     tailwind-merge: ^2.5.2
     tailwind-scrollbar: ^3.1.0
     '@tailwindcss/typography': ^0.5.15
-    '@fontsource-variable/onest': 5.1.0
     astro-icon: ^1.1.1
     '@iconify-json/heroicons': ^1.2.0
   docs:
-    '@shoelace-style/shoelace': ^2.16.0
+    "@11ty/eleventy-fetch": ^4.0.1
+    "@lorenzo_lewis/starlight-utils": ^0.2.0
     "@types/hast": ^3.0.4
     astro-embed: ^0.7.2
     hast: ^1.0.0
     hast-util-select: ^6.0.2
+    p-retry: ^6.2.0
     rehype: ^13.0.1
     starlight-versions: ^0.3.0
     starlight-package-managers: ^0.7.0
@@ -51,6 +52,7 @@ catalogs:
     remark-rehype: ^11.1.0
     mdast-util-to-hast: ^13.2.0
   studiocms-shared:
+    '@fontsource-variable/onest': 5.1.0
     '@inox-tools/runtime-logger': ^0.3.1
     '@iconify-json/heroicons': ^1.2.0
     "@matthiesenxyz/astrolace": ^0.3.2

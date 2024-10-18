@@ -2,6 +2,9 @@ import { z } from 'astro/zod';
 
 export const AppsConfigSchema = z
 	.object({
+		/**
+		 * libSQLViewer App Config
+		 */
 		libSQLViewer: z
 			.object({
 				/**
