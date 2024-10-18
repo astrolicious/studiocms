@@ -13,3 +13,17 @@ declare module 'virtual:studiocms-devapps/libsql-viewer' {
 	};
 	export default value;
 }
+
+declare module 'virtual:studiocms-devapps/wp-api/configPath' {
+	const value: {
+		readonly projectRoot: string;
+	};
+	export default value;
+}
+
+declare module 'virtual:studiocms-devapps/wp-api-importer' {
+	const value: {
+		readonly endpointPath: string;
+	};
+	export default value;
+}
