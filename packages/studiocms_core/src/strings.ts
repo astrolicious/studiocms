@@ -9,9 +9,9 @@ export const CoreStrings = {
 };
 
 export const DbErrors = {
-	AstroConfigOutput: "Astro StudioCMS is only supported in 'Output: server' SSR mode.",
+	AstroConfigOutput: "StudioCMS is only supported in 'Output: server' SSR mode.",
 	AstroConfigSiteURL:
-		"Astro StudioCMS requires a 'site' configuration in your Astro Config. This can be your domain ( 'https://example.com' ) or localhost ( 'http://localhost:4321' - localhost should only be used during development and should not be used in production).",
+		"StudioCMS requires a 'site' configuration in your Astro Config. This can be your domain ( 'https://example.com' ) or localhost ( 'http://localhost:4321' - localhost should only be used during development and should not be used in production).",
 	DbStartPage:
 		'Start Page is Enabled.  This will be the only page available until you initialize your database and disable the config option forcing this page to be displayed. To get started, visit http://localhost:4321/start/ in your browser to initialize your database. And Setup your installation.',
 	astroDbMissingMessage: 'Astro DB Integration not found in Astro Config',
