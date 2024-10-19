@@ -12,7 +12,7 @@
   "dependencies": {
     "@astrojs/check": "catalog:",
     "@astrojs/tailwind": "catalog:",
-    "@fontsource-variable/onest": "catalog:landing",
+    "@fontsource-variable/onest": "catalog:studiocms-shared",
     "@iconify-json/heroicons": "catalog:studiocms-shared",
     "@resvg/resvg-js": "^2.6.2",
     "@tailwindcss/typography": "catalog:landing",

@@ -3,7 +3,7 @@ import ThemeManager from './ThemeManager.astro';
 import '@fontsource-variable/onest';
 import onestWoff2 from '@fontsource-variable/onest/files/onest-latin-wght-normal.woff2?url';
 
-const OgBanner = new URL('/og.png', Astro.url);
+const OgBanner = new URL('/og.jpg', Astro.url);
 interface Props {
 	title?: string;
 	desc?: string;
@@ -17,7 +17,7 @@ const studioTitle = `StudioCMS${title ? ` - ${title}` : ''}`;
 
 <head>
   <meta charset='utf-8' />
-  <link rel='icon' type='image/svg+xml' href='/favicon.svg' />
+  <link rel='shortcut icon' type='image/svg+xml' href='/favicon.svg' />
   <meta name='viewport' content='width=device-width, initial-scale=1' />
   <meta name='generator' content={Astro.generator} />
   <title>{studioTitle}</title>

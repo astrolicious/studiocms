@@ -9,18 +9,20 @@ sidebar:
 
 ## Usage
 
-```js title="astro.config.mjs"  {2-24}
-studioCMS({
+```ts twoslash {2-24} title="studiocms.config.mjs"
+import { defineStudioCMSConfig } from 'studiocms';
+// ---cut---
+export default defineStudioCMSConfig({
   dashboardConfig: {
     dashboardEnabled: true,
     faviconURL: "/favicon.ico",
-    dashboardRouteOverride: "/components/dashboard",
+    dashboardRouteOverride: "/dashboard",
     AuthConfig: {
         providers: {
             github: true,
-            usernameAndPassword: true
+            usernameAndPassword: true,
         },
-        enabled: true
+        enabled: true,
     },
     UnoCSSConfigOverride: {
         injectReset: true,
@@ -28,12 +30,12 @@ studioCMS({
         presetsConfig: {
             presetDaisyUI: {
                 themes: ['dark', 'light'],
-                lightTheme: ['light'],
-                darkTheme: ['dark'],
-            }
-        }
-    }
-  }, // DEFAULT - This injects a dashboard to setup your dashboard data.
+                lightTheme: 'light',
+                darkTheme: 'dark',
+            },
+        },
+    },
+  },
 })
 ```
 
@@ -42,7 +44,7 @@ studioCMS({
 - **Type:** `boolean | undefined`
 - **Default:** `true`
 
-Allows enabling or disabling of the Astro StudioCMS dashboard but still provide all the helpers and utilities to those who are customizing their setup. By disabling it will disable the dashboard and you will need to manage your content via the Astro Studio Dashboard at [Astro Studio](http://studio.astro.build) or with whatever access your libSQL server provides.
+Allows enabling or disabling of the StudioCMS dashboard but still provide all the helpers and utilities to those who are customizing their setup. By disabling it will disable the dashboard and you will need to manage your content via your database's dashboard with whatever access your libSQL server provides.
 
 
 ### `faviconURL`
@@ -156,7 +158,7 @@ Developer Options/Configuration.
 - **Type:** `boolean | undefined`
 - **Default:** `false`
 
-Allows the user to enable Astro's ZeroJS View Transition API for the Studio CMS Dashboard.
+Allows the user to enable Astro's ZeroJS View Transition API for the StudioCMS Dashboard.
 
 #### `testingAndDemoMode`
 
