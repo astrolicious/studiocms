@@ -22,7 +22,13 @@ export default defineConfig({
 				description: 'A simple blog built with Astro and StudioCMS',
 			},
 		}),
-		devapps(),
+		devapps({
+			appsConfig: {
+				wpApiImporter: {
+					enabled: true,
+				},
+			},
+		}),
 	],
 	image: {
 		remotePatterns: [
