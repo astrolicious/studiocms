@@ -11,7 +11,7 @@ export const optionsSchema = z
 		 */
 		endpointPath: z.string().optional().default('/_studiocms-devapps'),
 		/**
-		 * Verbose mode
+		 * Verbose logging mode
 		 * @default false
 		 */
 		verbose: z.boolean().optional().default(false),
