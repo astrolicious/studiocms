@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Git Repo Sync
     steps:
-    - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4
+    - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
       with:
         fetch-depth: 0
     - uses: MatthiesenXYZ/git-sync-action@5fedfb0ab1ab995f40a7e96b87fe029c08e63f22 # v1.1
