@@ -1,0 +1,58 @@
+{
+  "name": "@studiocms/devapps",
+  "version": "0.1.0-beta.7",
+  "description": "A dedicated CMS for Astro DB. Built from the ground up by the Astro community.",
+  "author": {
+    "name": "Adam Matthiesen | Jacob Jenkins | Paul Valladares",
+    "url": "https://studiocms.xyz"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/astrolicious/studiocms.git"
+  },
+  "contributors": [
+    "Adammatthiesen",
+    "jdtjenkins",
+    "dreyfus92"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "astro",
+    "astrodb",
+    "astrolicious",
+    "astro-integration",
+    "studiocms",
+    "withastro"
+  ],
+  "homepage": "https://studiocms.xyz",
+  "publishConfig": {
+    "access": "public"
+  },
+  "sideEffects": false,
+  "files": [
+    "src",
+    "assets"
+  ],
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "type": "module",
+  "dependencies": {
+    "@studiocms/core": "workspace:*",
+    "@libsql/client": "^0.14.0",
+    "astro-integration-kit": "catalog:",
+    "cheerio": "^1.0.0",
+    "@types/cheerio": "^0.22.35",
+    "turndown": "^7.2.0",
+    "@types/turndown": "^5.0.5",
+    "html-entities": "^2.5.2"
+  },
+  "peerDependencies": {
+    "@astrojs/db": "catalog:min",
+    "astro": "catalog:min"
+  },
+  "devDependencies": {
+    "vite": "catalog:",
+    "typescript": "catalog:"
+  }
+}
